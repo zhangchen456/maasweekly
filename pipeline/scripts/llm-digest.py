@@ -5,8 +5,13 @@
 本脚本读取其中缺 highlights 的日期，把 substantive 信源的行喂给 LLM，
 产出 highlights 写回 daily_changes.json。
 
-要点条目结构：
-  { "platform": "...", "text": "人话摘要", "type": "release|pricing|sunset|other" }
+要点条目结构（v2，按平台分组）：
+  {
+    "platform": "...", "logo_summary": "该平台今日一句话总评（≤40字）",
+    "items": [
+      { "text": "要点内容（模型名/价格等关键实体放句首或加粗概念）", "type": "release|pricing|sunset|other" }
+    ]
+  }
 
 工程约束：
 - 幂等：已有 highlights 的日期跳过（--force 可重做）
@@ -48,13 +53,25 @@ REQUEST_TIMEOUT = 120       # 秒
 
 PROMPT = """你是 MaaS（模型即服务）行业追踪站点的编辑。下面是各平台信源今日的变化数据（已过滤噪声，"新增"行是新出现的内容，"删除"行是被替换的旧内容，"变化"行是同一实体旧值→新值）。
 
-请提炼 3-6 条"今日要点"，要求：
-1. 每条一句话，说清楚：哪个平台、发生了什么（新模型上线/下线/价格调整/新功能/重要公告）
-2. 只提炼对 MaaS 行业观察者有信息量的事件；排行榜分数微调（±10 以内的 Elo 波动）、下载量计数变化不算要点
-3. 排行榜变化只有"新模型上榜"或"排名大幅变动"才值得提
-4. 用简体中文，模型名/产品名保留英文原名
-5. 严格输出 JSON 数组，不要 markdown 代码块，格式：
-[{"platform": "平台名", "text": "要点内容", "type": "release|pricing|sunset|other"}]
+请完成两件事：
+
+【一、按平台分组的"今日要点"】
+1. 以平台为维度组织：每个平台给一个 logo_summary（该平台今日动态的一句话总评，≤40字，概括性质如"旗舰模型发布+定价调整"）和 1-3 条 items
+2. 每条 item 一句话说清楚发生了什么（新模型上线/下线/价格调整/新功能/重要公告），关键实体（模型名、价格数字、日期）尽量放在句子前部
+3. 只提炼对 MaaS 行业观察者有信息量的事件；排行榜分数微调（±10 以内的 Elo 波动）、下载量计数变化不算要点
+4. 当日没有实质变化的平台不要输出
+
+【二、信源级变化解读】
+对输入数据中每个信源（platform+source_type 组合）给一段 2-3 句的 summary：这批增删变化合起来代表什么意思（例如"新增了 GPT-6 Astra 的输入/输出定价行，同时移除了旧的定价说明，对应新模型上架"）。解读要克制，只陈述数据可见的事实。
+
+要求：
+- 简体中文，模型名/产品名保留英文原名
+- 平台按事件重要性排序
+- 严格输出一个 JSON 对象（不要 markdown 代码块）：
+{
+  "highlights": [{"platform": "平台名", "logo_summary": "一句话总评", "items": [{"text": "要点", "type": "release|pricing|sunset|other"}]}],
+  "source_summaries": {"平台名|source_type": "2-3句解读"}
+}
 
 今日数据：
 """
@@ -78,28 +95,47 @@ def llm_call(api_key: str, base_url: str, model: str, prompt: str) -> str:
     return data["choices"][0]["message"]["content"]
 
 
-def parse_llm_json(text: str) -> list:
-    """解析 LLM 输出的 JSON 数组，容忍 markdown 代码块包裹。"""
+def parse_llm_json(text: str) -> dict:
+    """解析 LLM 输出的 JSON 对象（v3：{highlights, source_summaries}）。
+
+    highlights: [{platform, logo_summary, items: [{text, type}]}]
+    source_summaries: {"平台名|source_type": "解读"}
+    """
     t = text.strip()
     m = re.search(r"```(?:json)?\s*(.*?)```", t, re.S)
     if m:
         t = m.group(1).strip()
-    # 截取第一个 [ 到最后一个 ] 之间（防前后缀说明文字）
-    start, end = t.find("["), t.rfind("]")
+    start, end = t.find("{"), t.rfind("}")
     if start == -1 or end == -1:
-        raise ValueError(f"LLM 输出中找不到 JSON 数组: {text[:200]}")
-    items = json.loads(t[start:end + 1])
-    if not isinstance(items, list):
-        raise ValueError("LLM 输出不是数组")
-    out = []
-    for it in items:
-        if isinstance(it, dict) and it.get("platform") and it.get("text"):
-            out.append({
-                "platform": str(it["platform"]),
-                "text": str(it["text"]),
-                "type": it.get("type") or "other",
-            })
-    return out
+        raise ValueError(f"LLM 输出中找不到 JSON 对象: {text[:200]}")
+    obj = json.loads(t[start:end + 1])
+
+    # highlights（平台分组）
+    out_hl = []
+    for it in obj.get("highlights") or []:
+        if isinstance(it, dict) and it.get("platform") and isinstance(it.get("items"), list) and it["items"]:
+            parsed_items = []
+            for sub in it["items"]:
+                if isinstance(sub, dict) and sub.get("text"):
+                    parsed_items.append({
+                        "text": str(sub["text"]),
+                        "type": sub.get("type") or "other",
+                    })
+            if parsed_items:
+                out_hl.append({
+                    "platform": str(it["platform"]),
+                    "logo_summary": str(it.get("logo_summary") or ""),
+                    "items": parsed_items,
+                })
+
+    # source_summaries（信源解读）
+    out_ss = {}
+    ss = obj.get("source_summaries")
+    if isinstance(ss, dict):
+        for k, v in ss.items():
+            if isinstance(k, str) and isinstance(v, str) and v.strip():
+                out_ss[k] = v.strip()
+    return {"highlights": out_hl, "source_summaries": out_ss}
 
 
 def build_day_prompt(date_str: str, changed: list) -> str:
@@ -118,20 +154,20 @@ def build_day_prompt(date_str: str, changed: list) -> str:
     return PROMPT + "\n".join(parts)
 
 
-def process_day(day: dict, api_key: str, base_url: str, model: str) -> list | None:
-    """处理单日：substantive 信源喂 LLM，返回 highlights 或 None（失败）。"""
+def process_day(day: dict, api_key: str, base_url: str, model: str) -> dict | None:
+    """处理单日：substantive 信源喂 LLM，返回 {highlights, source_summaries} 或 None（失败）。"""
     changed = [c for c in day.get("changed", []) if c.get("kind") == "substantive"]
     if not changed:
-        return []
+        return {"highlights": [], "source_summaries": {}}
     prompt = build_day_prompt(day["date"], changed)
     print(f"  调用 LLM（prompt {len(prompt)} 字符）...", flush=True)
     try:
         raw = llm_call(api_key, base_url, model, prompt)
-        highlights = parse_llm_json(raw)
+        result = parse_llm_json(raw)
     except Exception as e:  # noqa: BLE001 —— 任何失败都降级为无 highlights
         print(f"  ✗ LLM 调用/解析失败，跳过该日期: {e}")
         return None
-    return highlights
+    return result
 
 
 def main():
@@ -169,12 +205,20 @@ def main():
     print(f"待处理 {len(targets)} 天: {[d['date'] for d in targets]}")
     for day in targets:
         print(f"\n[{day['date']}]")
-        hl = process_day(day, api_key, base_url, model)
-        if hl is None:
+        result = process_day(day, api_key, base_url, model)
+        if result is None:
             continue  # 失败降级：不写 highlights，前端用规则版预览
-        day["highlights"] = hl
-        for h in hl:
-            print(f"  • [{h['type']}] {h['platform']}: {h['text'][:60]}")
+        day["highlights"] = result["highlights"]
+        # 信源级解读挂到对应 changed 条目上（按 platform|source_type 匹配）
+        summaries = result["source_summaries"]
+        if summaries:
+            for c in day.get("changed", []):
+                key = f"{c.get('platform')}|{c.get('source_type')}"
+                if key in summaries:
+                    c["llm_summary"] = summaries[key]
+        for h in result["highlights"]:
+            for item in h["items"]:
+                print(f"  • [{item['type']}] {h['platform']}: {item['text'][:60]}")
 
     data["updated_at"] = datetime.now().isoformat(timespec="seconds")
     DST_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")

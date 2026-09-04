@@ -8,9 +8,9 @@
         "substantive": 20,
         "jitter": 1,
         "failed": 6,
-        "releases": 2,
-        "pricings": 2,
-        "sunsets": 0
+        "releases": 3,
+        "pricings": 4,
+        "sunsets": 2
       },
       "2026-09-02": {
         "substantive": 0,
@@ -23,46 +23,118 @@
     },
     "totals": {
       "substantive": 20,
-      "releases": 2,
-      "pricings": 2,
-      "sunsets": 0
+      "releases": 3,
+      "pricings": 4,
+      "sunsets": 2
     },
     "highlights": [
       {
         "platform": "OpenAI",
-        "text": "OpenAI 发布旗舰模型 GPT-6 Astra，面向企业 Trusted Access Program 开放 API 访问，定价 $10/MTok 输入、$50/MTok 输出，并新增 Async tool calling、Mid-turn steering 等控制功能。",
-        "type": "release",
-        "date": "2026-09-04"
+        "date": "2026-09-04",
+        "text": "GPT-6 Astra 今日发布，面向企业 Trusted Access Program，API 及 Plus/Pro/Business/Enterprise 计划即将开放",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-04",
+        "text": "GPT-6 Astra 定价：输入 $10/MTok，输出 $50/MTok，另有缓存和批量价格档位",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-04",
+        "text": "新增 Async tool calling、Mid-turn steering、Misalignment monitoring 等新功能",
+        "type": "other"
       },
       {
         "platform": "Google Vertex AI",
-        "text": "Google Vertex AI 上线 Gemini 3.8 Flash，主打长时编码与自主智能体场景，并推出 $0.75/$3.75 每百万 tokens 的入门定价及 50% Provisioned Throughput 促销信用。",
-        "type": "release",
-        "date": "2026-09-04"
-      },
-      {
-        "platform": "硅基流动",
-        "text": "硅基流动新增 zai-org/GLM-5.3、MiniMax-M2.5、Qwen3.5-397B-A17B、Nex-N2-Pro 等模型，同时宣布将于 2026-09-11 下线 Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型。",
-        "type": "other",
-        "date": "2026-09-04"
-      },
-      {
-        "platform": "硅基流动",
-        "text": "硅基流动调整 DeepSeek-V4-Flash 分时段定价及 DeepSeek-V4-Pro 缓存命中输入 tokens 价格，并宣布 /user/info 接口将停止服务。",
-        "type": "pricing",
-        "date": "2026-09-04"
+        "date": "2026-09-04",
+        "text": "Gemini 3.8 Flash 新模型上线，定位为长时编码和自主智能体",
+        "type": "release"
       },
       {
         "platform": "Google Vertex AI",
-        "text": "Google Vertex AI 新增 Gemini 3.5 Live Translate 定价（音频输入 $3.50/百万、输出 $21.00/百万），并扩展 Gemini 3.8 Flash 的音频 token 计费说明。",
-        "type": "pricing",
-        "date": "2026-09-04"
+        "date": "2026-09-04",
+        "text": "Gemini 3.8 Flash 等模型提供介绍性定价 $0.75/$3.75 每百万 tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-04",
+        "text": "Gemini 3.5 Live Translate 新增定价，音频输入 $3.50/百万，输出 $21.00/百万",
+        "type": "pricing"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-09-04",
+        "text": "zai-org/GLM-5.3 新模型上线",
+        "type": "release"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-09-04",
+        "text": "Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将于 2026-09-11 下线",
+        "type": "sunset"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-09-04",
+        "text": "DeepSeek-V4-Flash 分时段定价调整，DeepSeek-V4-Pro 缓存命中输入价格调整",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-04",
+        "text": "Claude Fable 5.1 和 Mythos 5.1 的水印支持扩展到音频文件",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-04",
+        "text": "新增 Claude Enterprise 端点（用户管理、支出限制）和 Analytics API 指南",
+        "type": "other"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-04",
+        "text": "定价页新增检索优化模型和语义表示模型",
+        "type": "other"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-04",
+        "text": "博客新增企业 AI 文章，移除视觉解析模型宣传",
+        "type": "other"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-09-04",
+        "text": "Imagine Image Quality 功能宣布于 11 月 2 日退役",
+        "type": "sunset"
+      },
+      {
+        "platform": "HuggingFace",
+        "date": "2026-09-04",
+        "text": "行业数据新增 Stable Diffusion v1.5 基础模型和微调记录",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-04",
+        "text": "新增 GPT-6 Astra 基准测试，包括不同推理努力级别",
+        "type": "other"
       },
       {
         "platform": "LMArena",
-        "text": "LMArena 排行榜新增 claude-fable-5.1-max（Elo 1765）、hy4-preview（1626）等模型，其中 claude-fable-5.1-max 大幅领先其他新上榜模型。",
-        "type": "other",
-        "date": "2026-09-04"
+        "date": "2026-09-04",
+        "text": "claude-fable-5.1-max 新上榜，Elo 1765",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-04",
+        "text": "gemini-3.8-flash-high 新上榜，Elo 1494",
+        "type": "other"
       }
     ],
     "story": {
