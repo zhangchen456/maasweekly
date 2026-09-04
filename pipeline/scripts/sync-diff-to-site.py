@@ -2,9 +2,11 @@
 """把 data/diff/*.json 聚合成站点"每日动态"数据源。
 
 输入: data/diff/YYYY-MM-DD.json (fetch_sources.py 产出)
-输出: site/src/data/daily_changes.json
+输出:
+  1. site/src/data/daily_changes.json —— 每日明细（最近 KEEP_DAYS 天）
+  2. site/src/data/weekly-digest.json —— 按 ISO 周聚合的归档索引
 
-结构:
+daily_changes.json 结构:
 {
   "updated_at": "...",
   "days": [
@@ -14,17 +16,26 @@
       "changed": [ {platform, source_type, url, status, kind, pairs,
                     added_count, removed_count, added_lines, removed_lines,
                     signal_preview, ...} ],   # 经 diff_clean 降噪/配对
+      "highlights": [...],                   # llm-digest.py 产出
       "first_fetch": [...],
       "failed": [...]
     }
   ]
 }
 
-只保留最近 N 天（默认 14），全量历史在 data/diff/。
+weekly-digest.json 结构（按周倒序）:
+[
+  {
+    "week": "2026-W36", "start": "2026-08-31", "end": "2026-09-06",
+    "days": {"2026-09-02": {substantive, jitter, failed, releases, pricings, sunsets}},
+    "totals": {substantive, releases, pricings, sunsets},
+    "highlights": [...]    # 当周全部每日要点（按日拼接）
+  }
+]
 """
 import json
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent.parent  # repo root
@@ -33,7 +44,51 @@ from diff_clean import filter_and_pair, humanize_line  # noqa: E402
 
 DIFF_DIR = BASE / "data" / "diff"
 DST_FILE = BASE / "site" / "src" / "data" / "daily_changes.json"
-KEEP_DAYS = 14
+WEEKLY_FILE = BASE / "site" / "src" / "data" / "weekly-digest.json"
+KEEP_DAYS = 60
+
+
+def iso_week(d: str) -> tuple:
+    """日期字符串 -> (ISO 周标识 "2026-W36", 周一日期, 周日日期)。"""
+    dt = datetime.strptime(d, "%Y-%m-%d").date()
+    monday = dt - timedelta(days=dt.weekday())
+    sunday = monday + timedelta(days=6)
+    return (f"{monday.isocalendar()[0]}-W{monday.isocalendar()[1]:02d}",
+            monday.strftime("%Y-%m-%d"), sunday.strftime("%Y-%m-%d"))
+
+
+def build_weekly(days: list) -> list:
+    """把每日数据按 ISO 周聚合。"""
+    weeks = {}
+    for d in days:
+        # ISO 周跨年时 isocalendar 年份可能与日期年份不同，标识统一用周一所在 ISO 年
+        wk, start, end = iso_week(d["date"])
+        w = weeks.setdefault(wk, {
+            "week": wk, "start": start, "end": end, "days": {}, "totals": {},
+            "highlights": [],
+        })
+        substantive = [c for c in d.get("changed", []) if c.get("kind") == "substantive"]
+        jitter = [c for c in d.get("changed", []) if c.get("kind") == "jitter"]
+        hl = d.get("highlights") or []
+        w["days"][d["date"]] = {
+            "substantive": len(substantive),
+            "jitter": len(jitter),
+            "failed": len(d.get("failed", [])),
+            "releases": sum(1 for h in hl if h.get("type") == "release"),
+            "pricings": sum(1 for h in hl if h.get("type") == "pricing"),
+            "sunsets": sum(1 for h in hl if h.get("type") == "sunset"),
+        }
+        for h in hl:
+            w["highlights"].append({**h, "date": d["date"]})
+    # 汇总
+    for w in weeks.values():
+        w["totals"] = {
+            "substantive": sum(v["substantive"] for v in w["days"].values()),
+            "releases": sum(v["releases"] for v in w["days"].values()),
+            "pricings": sum(v["pricings"] for v in w["days"].values()),
+            "sunsets": sum(v["sunsets"] for v in w["days"].values()),
+        }
+    return sorted(weeks.values(), key=lambda w: w["start"], reverse=True)
 
 
 def main():
@@ -95,9 +150,24 @@ def main():
     }
     DST_FILE.parent.mkdir(parents=True, exist_ok=True)
     DST_FILE.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # 周聚合归档
+    weekly = build_weekly(days)
+    # 保留已有周度串讲（llm-weekly-digest.py 产出，按周幂等）
+    try:
+        prev_w = json.loads(WEEKLY_FILE.read_text(encoding="utf-8"))
+        prev_story = {w["week"]: w.get("story") for w in prev_w if w.get("story")}
+    except (FileNotFoundError, json.JSONDecodeError):
+        prev_story = {}
+    for w in weekly:
+        if w["week"] in prev_story:
+            w["story"] = prev_story[w["week"]]
+    WEEKLY_FILE.write_text(json.dumps(weekly, ensure_ascii=False, indent=2), encoding="utf-8")
+
     total_changed = sum(len(d["changed"]) for d in days)
     total_sub = sum(1 for d in days for c in d["changed"] if c["kind"] == "substantive")
-    print(f"Done: {len(days)} days, {total_changed} changed items ({total_sub} substantive) -> {DST_FILE}")
+    print(f"Done: {len(days)} days, {total_changed} changed items ({total_sub} substantive), "
+          f"{len(weekly)} weeks -> {DST_FILE.name} + {WEEKLY_FILE.name}")
 
 
 if __name__ == "__main__":
