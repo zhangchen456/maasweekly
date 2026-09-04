@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-04T14:17:57.060086 -->
+<!-- fetched: 2026-09-04T14:53:54.124155 -->
 
 [
   {
@@ -719,7 +719,7 @@
   {
     "_id": "621ffdc036468d709f17434d",
     "id": "openai-community/gpt2",
-    "likes": 3607,
+    "likes": 3609,
     "private": false,
     "downloads": 14071683,
     "tags": [

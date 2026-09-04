@@ -1,11 +1,11 @@
 {
   "date": "2026-09-04",
-  "fetched_at": "2026-09-04T14:17:58.583121",
+  "fetched_at": "2026-09-04T14:53:56.043763",
   "stats": {
     "total": 67,
-    "success": 62,
-    "failed": 5,
-    "changed": 27,
+    "success": 61,
+    "failed": 6,
+    "changed": 26,
     "unchanged": 35
   },
   "changes": [
@@ -13,19 +13,8 @@
       "platform": "火山方舟",
       "source_type": "model_list",
       "url": "https://www.volcengine.com/docs/82379/1330310",
-      "status": "changed",
-      "added_count": 1,
-      "removed_count": 5,
-      "added_lines": [
-        "最近更新时间：2026.09.02 21:31:18"
-      ],
-      "removed_lines": [
-        "SDK 升级与使用说明",
-        "最近更新时间：2026.09.02 15:30:27",
-        "知识型视频智能问答解决方案",
-        "视频高光提取及检索解决方案",
-        "音视频知识问答核心流程"
-      ]
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11071)"
     },
     {
       "platform": "火山方舟",
@@ -682,14 +671,14 @@
       "source_type": "changelog",
       "url": "https://x.ai/news",
       "status": "first_fetch",
-      "content_length": 746
+      "content_length": 749
     },
     {
       "platform": "xAI",
       "source_type": "blog",
       "url": "https://x.ai/news",
       "status": "first_fetch",
-      "content_length": 746
+      "content_length": 749
     },
     {
       "platform": "HuggingFace",
