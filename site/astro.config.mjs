@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://week.maas.click',
+  site: 'https://daily.maas.click',
   markdown: {
     shikiConfig: {
       theme: 'github-dark',

@@ -1,0 +1,156 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// 周归档页：/daily/2026-W36/
+// 数据源：weekly-digest.json（周级统计 + 串讲 + 每日要点）
+//        daily_changes.json（该周各日明细，KEEP_DAYS 窗口内）
+export async function getStaticPaths() {
+  const weeklyPath = path.join(process.cwd(), 'src/data/weekly-digest.json');
+  let weeks: any[] = [];
+  try { weeks = JSON.parse(fs.readFileSync(weeklyPath, 'utf-8')); } catch {}
+  return weeks.map((w) => ({
+    params: { week: w.week },
+    props: { week: w },
+  }));
+}
+
+const { week } = Astro.props;
+
+// 拉该周各日明细
+const dailyPath = path.join(process.cwd(), 'src/data/daily_changes.json');
+let daysByDate: Record<string, any> = {};
+try {
+  const daily = JSON.parse(fs.readFileSync(dailyPath, 'utf-8'));
+  daysByDate = Object.fromEntries((daily.days || []).map((d: any) => [d.date, d]));
+} catch {}
+
+const weekDays = Object.keys(week.days || {}).sort().reverse();
+
+const HL_TYPE: Record<string, { label: string; cls: string }> = {
+  release: { label: '发布', cls: 't-release' },
+  pricing: { label: '调价', cls: 't-pricing' },
+  sunset: { label: '下线', cls: 't-sunset' },
+  other: { label: '动态', cls: 't-other' },
+};
+
+const fmtDate = (d: string) => { const [, m, dd] = d.split('-'); return `${+m}.${+dd}`; };
+const weekday = (d: string) => '周' + '一二三四五六日'[new Date(d).getDay()];
+---
+<Layout title={`${week.week} 周归档 — MaaS Daily`} description={`${week.start} ~ ${week.end} MaaS 平台每日动态归档：${week.totals?.substantive ?? 0} 个实质变化`}>
+  <header class="hero">
+    <div class="hero-main">
+      <a href="/" class="back-link">← 返回今日</a>
+      <div class="eyebrow">WEEKLY ARCHIVE · {week.week}</div>
+      <h1>{fmtDate(week.start)} — {fmtDate(week.end)}</h1>
+    </div>
+    <aside class="hero-aside">
+      <div class="pulse">
+        <div class="pulse-item"><strong>{week.totals?.substantive ?? 0}</strong><span>实质变化</span></div>
+        <div class="pulse-item"><strong>{week.totals?.releases ?? 0}</strong><span>发布</span></div>
+        <div class="pulse-item"><strong>{week.totals?.pricings ?? 0}</strong><span>调价</span></div>
+        <div class="pulse-item"><strong>{week.totals?.sunsets ?? 0}</strong><span>下线</span></div>
+      </div>
+    </aside>
+  </header>
+
+  {week.story && (
+    <section class="section story-sec">
+      <div class="section-heading reveal">
+        <div class="section-no">AI / REVIEW</div>
+        <h2>{week.story.theme}</h2>
+      </div>
+      <div class="week-story reveal">
+        {week.story.story.split('\n').filter((p: string) => p.trim()).map((p: string) => <p>{p}</p>)}
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="section-heading reveal">
+      <div class="section-no">DAILY / DIGEST</div>
+      <h2>逐日要点</h2>
+      <p class="section-note">该周每日 AI 要点，按日倒序。</p>
+    </div>
+    {weekDays.map((date) => {
+      const highlights = (daysByDate[date]?.highlights || []).length
+        ? daysByDate[date].highlights
+        : (week.highlights || []).filter((h: any) => h.date === date).map(({ date: _d, ...h }: any) => h);
+      const stats = week.days[date] || {};
+      return (
+        <article class="day-block reveal">
+          <div class="day-head">
+            <h3>{fmtDate(date)} <span class="weekday">{weekday(date)}</span></h3>
+            <div class="day-stats">
+              <span class="stat">{stats.substantive ?? 0} 实质变化</span>
+              {stats.releases ? <span class="stat c-release">{stats.releases} 发布</span> : ''}
+              {stats.pricings ? <span class="stat c-pricing">{stats.pricings} 调价</span> : ''}
+              {stats.sunsets ? <span class="stat c-sunset">{stats.sunsets} 下线</span> : ''}
+            </div>
+          </div>
+          {highlights.length > 0 ? (
+            <ul class="hl-list">
+              {highlights.map((h: any) => (
+                <li class={`hl-item ${HL_TYPE[h.type]?.cls || 't-other'}`}>
+                  <span class="hl-type">{HL_TYPE[h.type]?.label || '动态'}</span>
+                  <span class="hl-platform">{h.platform}</span>
+                  <span class="hl-text">{h.text}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div class="no-hl">当日无 AI 要点（{stats.substantive ?? 0} 个信源有实质变化，明细见每日 diff 数据）</div>
+          )}
+        </article>
+      );
+    })}
+  </section>
+
+  <p class="footnote">周归档由 sync-diff-to-site.py 自动聚合 · 完整 diff 明细在数据保留窗口（60 天）内可查</p>
+</Layout>
+
+<style>
+  .hero { padding: 36px 0 26px; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, .6fr); gap: 50px; align-items: end; }
+  .back-link { display: inline-block; color: var(--muted); text-decoration: none; font: 500 11px/1 "SF Mono", monospace; letter-spacing: .05em; margin-bottom: 18px; }
+  .back-link:hover { color: var(--acid); }
+  .eyebrow { display: flex; align-items: center; gap: 12px; color: var(--acid); font: 700 12px/1.2 "SF Mono", monospace; letter-spacing: .14em; text-transform: uppercase; }
+  .eyebrow::before { content: ""; width: 38px; height: 1px; background: currentColor; }
+  .hero h1 { margin: 14px 0 0; font: 700 clamp(36px, 5vw, 56px)/1 "SF Mono", monospace; letter-spacing: -.04em; }
+  .pulse { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .pulse-item { padding: 16px 14px; background: color-mix(in srgb, var(--ink) 92%, transparent); }
+  .pulse strong { display: block; color: var(--acid); font: 700 22px/1 "SF Mono", monospace; }
+  .pulse span { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
+
+  .story-sec { margin-top: 30px; }
+  .week-story { border: 1px solid color-mix(in srgb, var(--acid) 30%, transparent); border-radius: 14px; background: linear-gradient(135deg, var(--acid-dim), transparent 65%); padding: 26px 30px; }
+  .week-story p { margin: 0 0 14px; color: var(--paper-soft); font-size: 15px; line-height: 1.85; }
+  .week-story p:last-child { margin-bottom: 0; }
+
+  .day-block { margin-bottom: 34px; border-left: 2px solid var(--line-strong); padding-left: 26px; }
+  .day-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+  .day-head h3 { margin: 0; font: 700 22px/1 "SF Mono", monospace; letter-spacing: -.02em; }
+  .weekday { font-size: 13px; color: var(--muted); font-weight: 500; margin-left: 6px; }
+  .day-stats { display: flex; gap: 14px; font: 500 11px/1 "SF Mono", monospace; color: var(--muted); }
+  .c-release { color: var(--acid); }
+  .c-pricing { color: var(--amber); }
+  .c-sunset { color: var(--red); }
+
+  .hl-list { list-style: none; display: grid; gap: 8px; margin: 0; padding: 0; }
+  .hl-item { display: flex; align-items: baseline; gap: 10px; padding: 12px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); font-size: 14px; line-height: 1.7; flex-wrap: wrap; }
+  .hl-type { flex: none; font: 700 10px/1 "SF Mono", monospace; letter-spacing: .08em; padding: 4px 8px; border-radius: 5px; margin-top: 3px; }
+  .t-release .hl-type { color: var(--acid); background: var(--acid-dim); }
+  .t-pricing .hl-type { color: var(--amber); background: var(--amber-dim); }
+  .t-sunset .hl-type { color: var(--red); background: var(--red-dim); }
+  .t-other .hl-type { color: var(--cyan); background: color-mix(in srgb, var(--cyan) 12%, transparent); }
+  .hl-platform { flex: none; font-family: "Songti SC", serif; font-weight: 700; color: var(--paper-soft); }
+  .hl-text { color: var(--paper-soft); min-width: 200px; flex: 1; }
+  .no-hl { padding: 16px 20px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); font-size: 13px; }
+
+  .footnote { margin-top: 30px; color: var(--muted); font: 500 11px/1.8 "SF Mono", monospace; letter-spacing: .03em; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 24px; }
+    .day-block { padding-left: 16px; }
+  }
+</style>

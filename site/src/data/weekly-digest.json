@@ -1,0 +1,73 @@
+[
+  {
+    "week": "2026-W36",
+    "start": "2026-08-31",
+    "end": "2026-09-06",
+    "days": {
+      "2026-09-04": {
+        "substantive": 20,
+        "jitter": 1,
+        "failed": 6,
+        "releases": 2,
+        "pricings": 2,
+        "sunsets": 0
+      },
+      "2026-09-02": {
+        "substantive": 0,
+        "jitter": 0,
+        "failed": 10,
+        "releases": 0,
+        "pricings": 0,
+        "sunsets": 0
+      }
+    },
+    "totals": {
+      "substantive": 20,
+      "releases": 2,
+      "pricings": 2,
+      "sunsets": 0
+    },
+    "highlights": [
+      {
+        "platform": "OpenAI",
+        "text": "OpenAI 发布旗舰模型 GPT-6 Astra，面向企业 Trusted Access Program 开放 API 访问，定价 $10/MTok 输入、$50/MTok 输出，并新增 Async tool calling、Mid-turn steering 等控制功能。",
+        "type": "release",
+        "date": "2026-09-04"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "text": "Google Vertex AI 上线 Gemini 3.8 Flash，主打长时编码与自主智能体场景，并推出 $0.75/$3.75 每百万 tokens 的入门定价及 50% Provisioned Throughput 促销信用。",
+        "type": "release",
+        "date": "2026-09-04"
+      },
+      {
+        "platform": "硅基流动",
+        "text": "硅基流动新增 zai-org/GLM-5.3、MiniMax-M2.5、Qwen3.5-397B-A17B、Nex-N2-Pro 等模型，同时宣布将于 2026-09-11 下线 Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型。",
+        "type": "other",
+        "date": "2026-09-04"
+      },
+      {
+        "platform": "硅基流动",
+        "text": "硅基流动调整 DeepSeek-V4-Flash 分时段定价及 DeepSeek-V4-Pro 缓存命中输入 tokens 价格，并宣布 /user/info 接口将停止服务。",
+        "type": "pricing",
+        "date": "2026-09-04"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "text": "Google Vertex AI 新增 Gemini 3.5 Live Translate 定价（音频输入 $3.50/百万、输出 $21.00/百万），并扩展 Gemini 3.8 Flash 的音频 token 计费说明。",
+        "type": "pricing",
+        "date": "2026-09-04"
+      },
+      {
+        "platform": "LMArena",
+        "text": "LMArena 排行榜新增 claude-fable-5.1-max（Elo 1765）、hy4-preview（1626）等模型，其中 claude-fable-5.1-max 大幅领先其他新上榜模型。",
+        "type": "other",
+        "date": "2026-09-04"
+      }
+    ],
+    "story": {
+      "theme": "新模型发布与下线清理并行周",
+      "story": "本周（2026-W36）MaaS 行业呈现\"上新与清理并行\"的双线节奏。9 月 4 日成为密集发布日：OpenAI 推出旗舰模型 GPT-6 Astra，面向企业 Trusted Access Program 开放 API，定价 $10/MTok 输入、$50/MTok 输出，并新增 Async tool calling、Mid-turn steering 等长时任务控制功能；同日 Google Vertex AI 上线 Gemini 3.8 Flash，主打长时编码与自主智能体，入门定价 $0.75/$3.75 每百万 tokens，并提供 50% Provisioned Throughput 促销信用，同时新增 Gemini 3.5 Live Translate 定价（音频输入 $3.50/百万、输出 $21.00/百万）。LMArena 排行榜上，claude-fable-5.1-max 以 Elo 1765 大幅领先其他新上榜模型（如 hy4-preview 的 1626），显示头部模型性能差距依然显著。\n\n与上新同样引人注目的是硅基流动的\"快上快下\"策略：9 月 4 日新增 zai-org/GLM-5.3、MiniMax-M2.5、Qwen3.5-397B-A17B、Nex-N2-Pro 等模型，同时宣布 9 月 11 日将下线其中三款，并调整 DeepSeek-V4-Flash 分时段定价及 DeepSeek-V4-Pro 缓存命中价格。这种短期上架模式或反映平台在试探市场需求，但也提示开发者需警惕模型生命周期风险。此外，OpenAI 明确 GPT-6 Astra 在欧盟数据驻留场景下不可用 Fast mode，xAI 则预告 Imagine 图像质量功能将于 11 月 2 日退役，合规与功能清理成为本周另一暗线。整体看，本周是头部模型密集发布与中小平台快速试错并行的调整期，价格锚点（如 Gemini 3.8 Flash 的 $0.75 入门价）与性能锚点（Elo 1765）为后续对比提供了基准。"
+    }
+  }
+]

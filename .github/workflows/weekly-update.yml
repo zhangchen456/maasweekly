@@ -70,6 +70,14 @@ jobs:
         if: steps.mode.outputs.mode != 'aggregate'
         run: python3 pipeline/scripts/sync-diff-to-site.py
 
+      # ---- 周度串讲（LLM，失败不阻塞）----
+      - name: LLM weekly story
+        if: steps.mode.outputs.mode != 'aggregate'
+        run: python3 pipeline/scripts/llm-weekly-digest.py --all
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+        continue-on-error: true
+
       # ---- 导入周报 ----
       - name: Import weekly reports
         if: steps.mode.outputs.mode != 'aggregate'
