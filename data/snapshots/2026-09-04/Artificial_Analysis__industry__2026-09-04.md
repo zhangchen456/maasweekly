@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-04T14:53:54.588209 -->
+<!-- fetched: 2026-09-04T16:17:33.629423 -->
 
 AI Model & API Providers Analysis | Artificial Analysis
 Artificial Analysis
@@ -207,7 +207,7 @@ AA-Briefcase is a frontier agentic evaluation for long-horizon knowledge work, t
 AA-Briefcase EloAA-Briefcase Rubric Score (%)Analytical Quality & Presentation EloAA-Briefcase Elo vs. Cost per Task
 AA-Briefcase Elo
 AA-Briefcase is an agentic knowledge work benchmark developed by Artificial Analysis. AA-Briefcase Elo is a combined metric that aggregates rubric pass rate, analytical quality Elo and presentation Elo · Higher is better
-22 of 94 models
+23 of 95 models
 Add model from specific provider
 AA-Briefcase Elo
 AA-Briefcase Elo is a combined metric that aggregates analytical quality Elo, presentation Elo, and rubric pass rate, with rubric performance converted into Elo via synthetic head-to-head matches. Elo and 95% confidence interval bounds are clamped at 0.
@@ -276,62 +276,4 @@ Cost (USD) to run all evaluations in the Artificial Analysis Intelligence Index
 27 of 643 models
 Add model from specific provider
 OutputReasoningCache WriteCache ReadNon-Cache Input
-Cost to Run Artificial Analysis Intelligence Index
-The cost to run the evaluations in the Artificial Analysis Intelligence Index, calculated using the model's input, cache hit, cache write, reasoning, and answer token prices and the number of tokens used across evaluations (excluding repeats).
-Cache Hit, Input, and Output PricingBlended PriceBlended Price (Stacked)Cache DiscountIntelligence Index vs. PriceIntelligence Index vs. Price (Log, Inverted)
-Pricing: Cache Hit, Input, and Output
-Price (USD per M Tokens)
-27 of 643 models
-Add model from specific provider
-Cache HitInputOutput
-Cache Hit
-Price per token for cached prompts (previously processed), typically offering a significant discount compared to regular input price, represented as USD per million tokens. The values shown here are the cache hit price; cache write and cache storage are billed separately and vary by provider — see "Cache pricing by provider" for detail.
-4 more notes
-Speed & Latency
-Comparison of first-party API performance
-SpeedLatencyEnd-to-End Response TimeIntelligence Index vs. Speed
-Output Speed
-Output tokens per second · Higher is better
-27 of 643 models
-Add model from specific provider
-Output Speed
-Tokens per second received while the model is generating tokens (ie. after first chunk has been received from the API for models which support streaming).
-Model Performance Representation
-Figures represent performance of the model's first-party API (e.g. OpenAI for o1) or the median across providers where a first-party API is not available (e.g. Meta's Llama models).
-Time per TaskIntelligence Index vs. Time per TaskCost vs. Time per Task
-Time per Intelligence Index Task
-Weighted average decode time (minutes) per task; excludes TTFT and overhead time · Lower is better
-27 of 643 models
-Time per Intelligence Index Task
-The weighted average time (seconds) per Artificial Analysis Intelligence Index task. This is calculated by dividing output tokens per task by output speed, weighted by the relative weights of each benchmark in the Intelligence Index.
-Providers
-Endpoint Accuracy Index: gpt-oss-120b (high)
-v1.0 · Composite of BFCL v4-500, HLE-250 and AA-LCR-25 run against each provider endpoint · Percentage of the reference endpoint, with 95% confidence interval · Higher is better
-15 of 15 providers
-Reference (100%)Within referenceBelow reference
-Endpoint Accuracy Index
-Composite measure of how much of a model's accuracy a given provider endpoint preserves, from re-running BFCL v4-500, HLE-250 and AA-LCR-25 against that endpoint. Where a self-hosted reference endpoint exists, scores are expressed as a percentage of that reference (100 = matches reference); lower scores indicate accuracy lost to quantisation, sampling defaults, or other endpoint-side configuration. Scores are point-in-time snapshots. Methodology.
-Output Speed vs. Price: gpt-oss-120b (high)
-Output tokens per second · USD per 1M tokens (blended) · 10,000 input tokens
-15 of 15 providers
-Most attractive quadrant
-Pareto line
-AmazonAzureBasetenCerebrasCoreWeaveDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailSambaNovaScalewayTogether AI
-Emerging Provider Competition
-Smaller, emerging providers are offering high output speed and at competitive prices.
-3 more notes
-Pricing (Cache Hit, Input, and Output): gpt-oss-120b (high)
-Price (USD per M Tokens) · Lower is better · 10,000 input tokens
-15 of 15 providers
-Cache HitInputOutput
-Cache Hit
-Price per token for cached prompts (previously processed), typically offering a significant discount compared to regular input price, represented as USD per million tokens. The values shown here are the cache hit price; cache write and cache storage are billed separately and vary by provider — see "Cache pricing by provider" for detail.
-3 more notes
-SpeedSpeed Over Time
-Output Speed: gpt-oss-120b (high)
-Output speed: output tokens per second · 10,000 input tokens
-15 of 15 providers
-Output Speed
-Tokens per second received while the model is generating tokens (ie. after first chunk has been received from the API for models which support streaming).
-Model Performance Representation
-Figures represent performance of the model's first-party API (e.g. OpenAI for o1) or the median across providers where a first-party API is not available (e.g. Meta's Llama models).
+{"@context":"https://schema.org","@type":"Dataset","name":"Cost to Run Artificial Analysis Intelligence Index","creator":{"@type":"Organization","name":"Artificial Analysis","url":"https://artificialanalysis.ai"},"description":"Cost (USD) to run all evaluations in the Artificial Analysis Intelligence Index · Evaluation results measured independently by Artificial Analysis","measurementTechnique":"Independent test run by Artificial Analysis on dedicated hardware.","spatialCoverage":"Worldwide","keywords":["analytics","llm","AI","benchmark","model","gpt","claude"],"license":"https://artificialanalysis.ai/docs/legal/Terms-of-Use.pdf","isAccessibleForFree":true,"citation":"Artificial Analysis (2025). LLM benchmarks dataset. https://artificialanalysis.ai","data":[{"label":"Muse Glimmer (high)","answerCost":7.437462,"reasoningCost":63.82461599999999,"cacheWriteCost":3.2248646499999998,"cacheReadCost":15.443122200000001,"nonCacheInputCost":3.8477099499999996,"detailsUrl":"/models/muse-glimmer"},{"label":"gpt-oss-120b (high)","answerCost":3.9491442,"reasoningCost":48.854217600000005,"cacheWriteCost":40.43652735,"cacheReadCost":0,"nonCacheInputCost":1.8105514499999997,"detailsUrl":"/models/gpt-oss-120b"},{"label":"GLM-5.3-Flash","answerCost":7.1651405,"reasoningCost":67.2252705,"cacheWriteCost":9.547226876895001,"cacheReadCost":52.188140155338196,"nonCacheInputCost":1.89511605,"detailsUrl":"/models/glm-5-3-flash"},{"label":"Gemini 3.5 Flash-Lite","answerCost":14.31587,"reasoningCost":94.184985,"cacheWriteCost":30.03242094127402,"cacheReadCost":10.912336265872597,"nonCacheInputCost":3.9439401,"detailsUrl":"/models/gemini-3-5-flash-lite"},{"label":"GPT-5.6 Luna (max)","answerCost":7.0
