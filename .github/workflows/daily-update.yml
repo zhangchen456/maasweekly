@@ -1,7 +1,8 @@
 name: 每日信源抓取与站点更新
 
 # 每天北京时间 08:30（UTC 00:30）抓取全部信源，产出 diff，
-# 同步到站点数据源并构建部署。也支持手动触发。
+# 同步到站点数据源并构建部署到 aliyun-099（mw.zhangchen456.xyz）。
+# 也支持手动触发。
 on:
   schedule:
     - cron: '30 0 * * *'  # UTC 00:30 = 北京时间 08:30
@@ -13,21 +14,21 @@ on:
         default: false
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 # 同一时间只允许一个实例，避免并发抓取写快照
 concurrency:
   group: daily-update
   cancel-in-progress: false
 
+env:
+  DEPLOY_HOST: 47.237.135.97
+  DEPLOY_USER: maasdeploy
+  DEPLOY_PATH: /var/www/maasweekly/
+
 jobs:
   update-and-deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -71,18 +72,16 @@ jobs:
           npm ci
           npm run build
 
-      # ---- 5. 部署 GitHub Pages ----
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      # ---- 5. 部署到 aliyun-099 ----
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ env.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site/dist
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy via rsync
+        run: rsync -az --delete site/dist/ ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}
 
       # ---- 6. 把新抓取的数据提交回仓库（快照+diff+站点数据源）----
       - name: Commit new data
