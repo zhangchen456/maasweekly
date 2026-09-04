@@ -1,0 +1,17 @@
+{
+  "name": "讯飞星辰MaaS",
+  "name_en": "iFLYTEK Xingchen MaaS",
+  "region": "china",
+  "vendor": "xfyun",
+  "official_site": "https://maas.xfyun.cn/",
+  "sources": {
+    "model_list": null,
+    "pricing": null,
+    "changelog": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+    "api_docs": "https://maas.xfyun.cn/docs",
+    "github": "https://github.com/iflytek",
+    "blog": null,
+    "model_marketplace": "https://maas.xfyun.cn/modelSquare"
+  },
+  "notes": "平台为 React SPA，页面 URL 直抓无效（仅返回空壳）。更新日志走公开公告 API（JSON，含新增模型/功能迭代/计费变更），模型广场 /modelSquare 与定价页为 CSR 需浏览器渲染，暂不抓取。Coding Plan / Token Plan 动态也在公告 API 中。"
+}

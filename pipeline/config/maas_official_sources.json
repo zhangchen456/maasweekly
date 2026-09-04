@@ -286,6 +286,23 @@
         "model_marketplace": null
       },
       "notes": "docs.x.ai/docs/models 标题为 'Grok Models & Pricing'，一个页面同时覆盖模型列表与定价（含输入/输出/缓存价），200公开。x.ai 主站与 /news 对 curl 返回403（严格反爬），浏览器可访问；自动化抓取建议用 docs.x.ai 或 GitHub。xai-org 为官方开源组织。"
+    },
+    {
+      "name": "讯飞星辰MaaS",
+      "name_en": "iFLYTEK Xingchen MaaS",
+      "region": "china",
+      "vendor": "xfyun",
+      "official_site": "https://maas.xfyun.cn/",
+      "sources": {
+        "model_list": null,
+        "pricing": null,
+        "changelog": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+        "api_docs": "https://maas.xfyun.cn/docs",
+        "github": "https://github.com/iflytek",
+        "blog": null,
+        "model_marketplace": "https://maas.xfyun.cn/modelSquare"
+      },
+      "notes": "平台为 React SPA，页面 URL 直抓无效（仅返回空壳）。更新日志走公开公告 API（JSON，含新增模型/功能迭代/计费变更），模型广场 /modelSquare 与定价页为 CSR 需浏览器渲染，暂不抓取。Coding Plan / Token Plan 动态也在公告 API 中。"
     }
   ],
   "industry_sources": [

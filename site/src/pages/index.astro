@@ -70,6 +70,24 @@ function extractChips(title) {
   return chips.filter(c => c.label);
 }
 
+// 安全截断：避免把 markdown 粗体/链接标记从中间切断（产生未闭合的 **）
+function truncateMd(s: string, n: number) {
+  if (!s) return '';
+  if (s.length <= n) return s;
+  let cut = s.slice(0, n);
+  // 截断后 ** 数量为奇数（有不闭合的粗体），先尝试在空白处回退
+  if ((cut.match(/\*\*/g) || []).length % 2 === 1) {
+    const lastSpace = cut.lastIndexOf('（');
+    if (lastSpace > n * 0.5) cut = cut.slice(0, lastSpace);
+  }
+  // 仍不闭合则去掉截断侧的 **
+  if ((cut.match(/\*\*/g) || []).length % 2 === 1) {
+    const lastMark = cut.lastIndexOf('**');
+    cut = cut.slice(0, lastMark) + cut.slice(lastMark + 2);
+  }
+  return cut;
+}
+
 // 关键落地节点(从 watchpoints 取前 3 条)
 const landedNodes = watchpoints?.rows?.slice(0, 3) || [];
 
@@ -184,7 +202,7 @@ const trendCount = trends.length;
         {landedNodes.map((row: string[]) => (
           <article class="watch-card reveal">
             <div class="watch-tag" set:html={md(row[0])}></div>
-            <h3 set:html={md((row[1] || '').slice(0, 40))}></h3>
+            <h3 set:html={md(truncateMd(row[1] || '', 40))}></h3>
             <p set:html={md(row[2] || '')}></p>
           </article>
         ))}
@@ -239,7 +257,7 @@ const trendCount = trends.length;
         {watchNodes.map((row: string[], i: number) => (
           <article class={`time-card ${i === 0 ? 'urgent' : ''} reveal`}>
             <div class="time-date" set:html={md(row[0])}></div>
-            <h3 set:html={md((row[1] || '').slice(0, 30))}></h3>
+            <h3 set:html={md(truncateMd(row[1] || '', 30))}></h3>
             <p class="time-platform" set:html={md(row[2] || '')}></p>
           </article>
         ))}
