@@ -3,15 +3,15 @@ import Layout from '../layouts/Layout.astro';
 import fs from 'node:fs';
 import path from 'node:path';
 
-// 读取每日变化数据（sync-diff-to-site.py 产出）
+// 读取每日变化数据（sync-diff-to-site.py + llm-digest.py 产出）
 const dataPath = path.join(process.cwd(), 'src/data/daily_changes.json');
 const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 const days: any[] = data.days || [];
 const updated_at = data.updated_at || '';
 
 // 汇总统计
-const totalChanged = days.reduce((s, d) => s + (d.changed?.length || 0), 0);
-const totalFailed = days.reduce((s, d) => s + (d.failed?.length || 0), 0);
+const totalSubstantive = days.reduce((s, d) => s + (d.changed?.filter((c: any) => c.kind === 'substantive').length || 0), 0);
+const totalJitter = days.reduce((s, d) => s + (d.changed?.filter((c: any) => c.kind === 'jitter').length || 0), 0);
 const coveredDays = days.length;
 
 // 源类型中文标签
@@ -26,8 +26,34 @@ const TYPE_LABEL: Record<string, string> = {
   industry: '行业数据',
 };
 
+// 要点条目 type 徽标
+const HL_TYPE: Record<string, { label: string; cls: string }> = {
+  release: { label: '发布', cls: 't-release' },
+  pricing: { label: '调价', cls: 't-pricing' },
+  sunset: { label: '下线', cls: 't-sunset' },
+  other: { label: '动态', cls: 't-other' },
+};
+
 function typeLabel(t: string) {
   return TYPE_LABEL[t] || t;
+}
+
+// 模型 ID / 语义化行高亮：把可识别的实体标记出来（构建期处理，避免运行时 JS）
+function highlightEntities(line: string) {
+  // org/Model-Name 或连续 kebab-case 模型 ID
+  const re = /([A-Za-z][\w.\-]*\/[\w.\-]+|(?<![A-Za-z])[a-z][a-z0-9]*(?:-[a-z0-9.]+){1,8}(?![A-Za-z]))/g;
+  const out: { text: string; hl?: boolean }[] = [];
+  let last = 0;
+  for (const m of line.matchAll(re)) {
+    const idx = m.index ?? 0;
+    // 过短/纯数字段不算实体
+    if (m[0].length < 4 || /^\d/.test(m[0])) { continue; }
+    if (idx > last) out.push({ text: line.slice(last, idx) });
+    out.push({ text: m[0], hl: true });
+    last = idx + m[0].length;
+  }
+  if (last < line.length) out.push({ text: line.slice(last) });
+  return out.length ? out : [{ text: line }];
 }
 ---
 <Layout title="每日动态 — MaaS Weekly" description="各 MaaS 平台信源每日变化追踪：模型列表、定价、更新日志的增量 diff">
@@ -35,13 +61,13 @@ function typeLabel(t: string) {
     <div class="hero-main">
       <div class="eyebrow">DAILY DIFF · SIGNAL FEED</div>
       <h1>每日动态</h1>
-      <p class="dek">自动抓取 16 个平台 + 行业信源，与上一次快照逐行对比，展示模型列表、定价页与更新日志的增量变化。数据每天更新。</p>
+      <p class="dek">自动抓取 16 个平台 + 行业信源，与上一次快照逐行对比。已过滤页面抖动噪声，按"实质变化 / 常规波动"分层展示；每日要点由 AI 从增量中提炼。数据每天更新。</p>
     </div>
     <aside class="hero-aside">
       <div class="pulse">
-        <div class="pulse-item"><strong>{String(totalChanged).padStart(2, '0')}</strong><span>近期变化条目</span></div>
-        <div class="pulse-item"><strong>{String(coveredDays).padStart(2, '0')}</strong><span>覆盖天数</span></div>
+        <div class="pulse-item"><strong>{String(totalSubstantive).padStart(2, '0')}</strong><span>实质变化条目</span></div>
         <div class="pulse-item"><strong>{days[0]?.stats?.total ?? '—'}</strong><span>监控信源</span></div>
+        <div class="pulse-item"><strong>{String(totalJitter).padStart(2, '0')}</strong><span>常规波动(已折叠)</span></div>
         <div class="pulse-item"><strong>{days[0]?.date?.slice(5).replace('-', '.') ?? '—'}</strong><span>最近抓取</span></div>
       </div>
     </aside>
@@ -54,7 +80,10 @@ function typeLabel(t: string) {
       </div>
     )}
 
-    {days.map((d, i) => (
+    {days.map((d, i) => {
+      const substantive = d.changed?.filter((c: any) => c.kind === 'substantive') || [];
+      const jitter = d.changed?.filter((c: any) => c.kind === 'jitter') || [];
+      return (
       <article class={`day-block ${i === 0 ? 'latest' : ''}`}>
         <div class="day-head">
           <div class="day-date">
@@ -62,34 +91,73 @@ function typeLabel(t: string) {
             <h2>{d.date}</h2>
           </div>
           <div class="day-stats">
+            <span class="stat"><span class="dot changed"></span>实质变化 {substantive.length}</span>
             <span class="stat"><span class="dot ok"></span>成功 {d.stats?.success ?? '—'}</span>
-            <span class="stat"><span class="dot changed"></span>变化 {d.changed?.length || 0}</span>
             <span class="stat"><span class="dot fail"></span>失败 {d.failed?.length || 0}</span>
             <span class="stat muted">共 {d.stats?.total ?? '—'} 个信源</span>
           </div>
         </div>
 
-        {d.changed?.length > 0 ? (
+        {/* AI 提炼的今日要点（LLM 失败时回退到信源级预览行） */}
+        {d.highlights?.length > 0 && (
+          <div class="hl-block">
+            <div class="hl-title"><span class="hl-badge">AI</span> 今日要点</div>
+            <ul class="hl-list">
+              {d.highlights.map((h: any) => (
+                <li class={`hl-item ${HL_TYPE[h.type]?.cls || 't-other'}`}>
+                  <span class="hl-type">{HL_TYPE[h.type]?.label || '动态'}</span>
+                  <span class="hl-platform">{h.platform}</span>
+                  <span class="hl-text">{h.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {substantive.length > 0 ? (
           <div class="change-list">
-            {d.changed.map((c: any) => (
+            {substantive.map((c: any) => (
               <details class="change-card">
                 <summary style="list-style:none;cursor:pointer">
                   <div class="card-meta">
                     <span class="platform">{c.platform}</span>
                     <span class="source-type">{typeLabel(c.source_type)}</span>
-                    <span class="delta">+{c.added_count ?? 0} / -{c.removed_count ?? 0}</span>
+                    {c.pairs?.length > 0 && <span class="delta">~{c.pairs.length} 处变更</span>}
+                    {(c.added_count ?? 0) + (c.removed_count ?? 0) > 0 && (
+                      <span class="delta">+{c.added_count ?? 0} / -{c.removed_count ?? 0}</span>
+                    )}
                     <a class="src-link" href={c.url} target="_blank" rel="noopener" onclick="event.stopPropagation()">来源 ↗</a>
                   </div>
-                  {c.added_lines?.length > 0 && (
-                    <div class="added-preview">{c.added_lines[0].slice(0, 120)}{c.added_lines[0].length > 120 ? '…' : ''}</div>
+                  {c.signal_preview && (
+                    <div class="added-preview">
+                      {highlightEntities(c.signal_preview).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}
+                    </div>
                   )}
                 </summary>
                 <div class="diff-body">
+                  {c.pairs?.length > 0 && (
+                    <div class="diff-sec">
+                      <div class="diff-label paired">变更 {c.pairs.length} 处（旧 → 新）</div>
+                      <ul class="line-list">
+                        {c.pairs.slice(0, 20).map((p: any) => (
+                          <li class="line paired">
+                            <span class="pair-old">{p.before.slice(0, 160)}</span>
+                            <span class="pair-arrow">→</span>
+                            <span class="pair-new">{p.after.slice(0, 160)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   {c.added_lines?.length > 0 && (
                     <div class="diff-sec">
                       <div class="diff-label added">新增 {c.added_lines.length} 行</div>
                       <ul class="line-list">
-                        {c.added_lines.slice(0, 15).map((l: string) => <li class="line added">{l.slice(0, 220)}</li>)}
+                        {c.added_lines.slice(0, 15).map((l: string) => (
+                          <li class="line added">
+                            {highlightEntities(l.slice(0, 220)).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   )}
@@ -101,12 +169,34 @@ function typeLabel(t: string) {
                       </ul>
                     </div>
                   )}
+                  {(c.added_lines?.length > 15 || c.removed_lines?.length > 8) && (
+                    <p class="truncated-note">展示前 15 条新增 / 8 条删除，完整数据见仓库 data/diff/ 目录</p>
+                  )}
                 </div>
               </details>
             ))}
           </div>
-        ) : (
+        ) : d.highlights?.length === 0 && jitter.length > 0 ? (
+          <div class="no-change">当日无实质变化</div>
+        ) : d.changed?.length === 0 ? (
           <div class="no-change">当日无变化{d.first_fetch?.length ? `（${d.first_fetch.length} 个信源首次抓取建立基线）` : ''}</div>
+        ) : (
+          <div class="no-change">当日无实质变化</div>
+        )}
+
+        {/* 常规波动：排行榜分数抖动 / 计数变化等，折叠为单行 */}
+        {jitter.length > 0 && (
+          <details class="jitter-block">
+            <summary style="list-style:none;cursor:pointer">
+              <span class="jitter-label">◌ {jitter.length} 个信源仅有常规波动</span>
+              <span class="jitter-names">{jitter.map((c: any) => c.platform).join(' · ')}</span>
+            </summary>
+            <ul class="jitter-list">
+              {jitter.map((c: any) => (
+                <li><span class="platform">{c.platform}</span> · {typeLabel(c.source_type)} — 数据抖动 {(c.raw_added_count ?? 0) + (c.raw_removed_count ?? 0)} 行，已过滤</li>
+              ))}
+            </ul>
+          </details>
         )}
 
         {d.failed?.length > 0 && (
@@ -120,9 +210,10 @@ function typeLabel(t: string) {
           </details>
         )}
       </article>
-    ))}
+      );
+    })}
 
-    <p class="footnote">数据由 fetch_sources.py 每日自动抓取生成 · 最近同步: {updated_at.slice(0, 19).replace('T', ' ')} · 完整历史快照见仓库 data/ 目录</p>
+    <p class="footnote">数据由 fetch_sources.py 每日自动抓取生成，经 diff_clean 降噪过滤与 LLM 要点提炼 · 最近同步: {updated_at.slice(0, 19).replace('T', ' ')} · 完整历史快照见仓库 data/ 目录</p>
   </section>
 </Layout>
 
@@ -159,6 +250,20 @@ function typeLabel(t: string) {
   .dot.changed { background: var(--amber); }
   .dot.fail { background: var(--red); }
 
+  /* ===== 今日要点（LLM 提炼） ===== */
+  .hl-block { margin-bottom: 22px; border: 1px solid color-mix(in srgb, var(--acid) 35%, transparent); border-radius: 14px; background: linear-gradient(135deg, var(--acid-dim), transparent 65%); padding: 18px 22px; }
+  .hl-title { display: flex; align-items: center; gap: 10px; font: 700 13px/1 "SF Mono", monospace; letter-spacing: .08em; color: var(--paper-soft); margin-bottom: 14px; text-transform: uppercase; }
+  .hl-badge { color: var(--ink); background: var(--acid); border-radius: 5px; padding: 3px 7px; font-size: 10px; font-weight: 800; }
+  .hl-list { list-style: none; display: grid; gap: 10px; }
+  .hl-item { display: flex; align-items: baseline; gap: 10px; font-size: 14.5px; line-height: 1.7; flex-wrap: wrap; }
+  .hl-type { flex: none; font: 700 10px/1 "SF Mono", monospace; letter-spacing: .08em; padding: 4px 8px; border-radius: 5px; margin-top: 3px; }
+  .t-release .hl-type { color: var(--acid); background: var(--acid-dim); }
+  .t-pricing .hl-type { color: var(--amber); background: var(--amber-dim); }
+  .t-sunset .hl-type { color: var(--red); background: var(--red-dim); }
+  .t-other .hl-type { color: var(--cyan); background: color-mix(in srgb, var(--cyan) 12%, transparent); }
+  .hl-platform { flex: none; font-family: "Songti SC", serif; font-weight: 700; color: var(--paper-soft); }
+  .hl-text { color: var(--paper-soft); min-width: 200px; flex: 1; }
+
   .change-list { display: grid; gap: 12px; }
   .change-card { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); overflow: hidden; transition: border-color .2s ease; }
   .change-card:hover { border-color: var(--line-strong); }
@@ -170,18 +275,35 @@ function typeLabel(t: string) {
   .delta { color: var(--amber); font: 700 12px/1 "SF Mono", monospace; }
   .src-link { margin-left: auto; color: var(--muted); font: 500 11px/1 "SF Mono", monospace; text-decoration: none; border-bottom: 1px dotted var(--muted); }
   .src-link:hover { color: var(--acid); border-color: var(--acid); }
-  .added-preview { padding: 0 22px 16px; color: var(--muted); font-size: 13px; line-height: 1.6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .added-preview { padding: 0 22px 16px; color: var(--paper-soft); font-size: 13.5px; line-height: 1.6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .diff-body { padding: 6px 22px 20px; border-top: 1px solid var(--line); }
   .diff-sec { margin-top: 14px; }
   .diff-label { font: 700 10px/1 "SF Mono", monospace; letter-spacing: .1em; margin-bottom: 10px; }
   .diff-label.added { color: var(--acid); }
   .diff-label.removed { color: var(--red); }
+  .diff-label.paired { color: var(--cyan); }
   .line-list { list-style: none; display: grid; gap: 6px; }
   .line { font: 400 12px/1.6 "SF Mono", monospace; padding: 8px 12px; border-radius: 6px; word-break: break-all; }
   .line.added { color: var(--paper-soft); background: var(--acid-dim); border-left: 2px solid var(--acid); }
   .line.removed { color: var(--muted); background: var(--red-dim); border-left: 2px solid var(--red); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--red) 55%, transparent); }
+  .line.paired { display: flex; align-items: baseline; gap: 10px; color: var(--paper-soft); background: color-mix(in srgb, var(--cyan) 7%, transparent); border-left: 2px solid var(--cyan); flex-wrap: wrap; }
+  .pair-old { color: var(--muted); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--red) 45%, transparent); }
+  .pair-arrow { color: var(--cyan); flex: none; }
+  .pair-new { color: var(--paper-soft); }
+  .ent { font: 700 12px/1.6 "SF Mono", monospace; color: var(--acid); background: var(--acid-dim); padding: 1px 5px; border-radius: 4px; }
+  .truncated-note { margin: 12px 0 0; color: var(--muted); font-size: 11px; }
 
   .no-change { padding: 22px 26px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); font-size: 13.5px; }
+
+  /* 常规波动折叠区 */
+  .jitter-block { margin-top: 12px; border: 1px dashed var(--line); border-radius: 12px; background: transparent; }
+  .jitter-block summary::-webkit-details-marker { display: none; }
+  .jitter-block summary { display: flex; align-items: baseline; gap: 12px; padding: 12px 18px; flex-wrap: wrap; }
+  .jitter-label { color: var(--muted); font: 700 12px/1 "SF Mono", monospace; }
+  .jitter-names { color: var(--muted); font-size: 12px; opacity: .75; }
+  .jitter-list { list-style: none; padding: 0 18px 14px; display: grid; gap: 6px; }
+  .jitter-list li { color: var(--muted); font-size: 12.5px; }
+  .jitter-list .platform { color: var(--paper-soft); font-size: 13px; }
 
   .fail-block { margin-top: 12px; border: 1px solid color-mix(in srgb, var(--red) 35%, transparent); border-radius: 12px; background: var(--red-dim); }
   .fail-block summary::-webkit-details-marker { display: none; }
