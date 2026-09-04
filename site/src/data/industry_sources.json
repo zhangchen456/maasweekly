@@ -1,0 +1,23 @@
+[
+  {
+    "name": "HuggingFace",
+    "type": "model_hub",
+    "url": "https://huggingface.co/models",
+    "api_url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+    "notes": "200。有公开 REST API：/api/models 支持 sort=trending / lastModified / downloads、direction=-1、limit、search 等参数，适合按日抓取趋势模型；同时有 /api/models?pipeline_tag=... 按任务类型过滤。另有 /api/models/{id} 获取单模型详情。"
+  },
+  {
+    "name": "Artificial Analysis",
+    "type": "benchmark",
+    "url": "https://artificialanalysis.ai/",
+    "api_url": null,
+    "notes": "200。独立评测机构（非官方），无公开 API；模型智能/速度/价格对比数据在页面内，可通过页面抓取或官方 CSV 下载获取。数据为聚合第三方评测，适合周报趋势参照。"
+  },
+  {
+    "name": "LMArena",
+    "type": "benchmark",
+    "url": "https://lmarena.ai/",
+    "api_url": "https://lmarena.ai/leaderboard",
+    "notes": "200。官方榜单页为 lmarena.ai/leaderboard（原 chat.lmsys.org），实时 Elo 排名，支持按 Category/Model/StyleControl 过滤；无面向公众的文档化 REST API，榜单数据需页面抓取或社区维护的镜像（如需自动化，可用其 leaderboard 页内嵌的 JSON 数据）。"
+  }
+]

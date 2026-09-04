@@ -1,0 +1,300 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const platforms = await getCollection('platforms');
+
+// 按区域分组
+const chinaPlatforms = platforms.filter(p => p.data.region === 'china');
+const overseasPlatforms = platforms.filter(p => p.data.region === 'overseas');
+
+// 读取行业源
+const industryPath = path.join(process.cwd(), 'src/data/industry_sources.json');
+let industrySources = [];
+try {
+  industrySources = JSON.parse(fs.readFileSync(industryPath, 'utf-8'));
+} catch (e) {
+  // noop
+}
+
+// 第三方渠道按 type 分组
+const typeGroups = [
+  { key: 'benchmark', label: '第三方评测 / 榜单', desc: '独立第三方 · 回答「好不好」' },
+  { key: 'community', label: '开发者社区', desc: '真实使用反馈 · 回答「好不好用」' },
+  { key: 'business', label: '融资 / IPO / 财报', desc: '商业维度 · 回答「赚不赚钱」' },
+  { key: 'research', label: '学术动态', desc: '技术前瞻' },
+  { key: 'infra', label: '算力 / 硬件', desc: '供给维度' },
+  { key: 'media', label: '行业媒体', desc: '汇总聚合' },
+  { key: 'policy', label: '政策 / 监管', desc: '合规维度' },
+];
+
+const accessibilityMeta = {
+  direct: { label: '可直接抓取', cls: 'acc-direct' },
+  search: { label: '需搜索聚合', cls: 'acc-search' },
+  browser: { label: '需浏览器', cls: 'acc-browser' },
+  cron: { label: '定时任务', cls: 'acc-cron' },
+};
+
+const sourceLabels = {
+  model_list: '模型列表',
+  pricing: '定价',
+  changelog: '更新日志',
+  api_docs: 'API 文档',
+  github: 'GitHub',
+  blog: '博客/新闻',
+  model_marketplace: '模型广场',
+};
+
+const sourcePriority = ['model_list', 'pricing', 'changelog', 'api_docs', 'github', 'blog', 'model_marketplace'];
+---
+
+<Layout title="信源目录 — MaaS Weekly" description="全球 MaaS 平台官方信源 + 第三方追踪渠道清单">
+  <h1>信源目录</h1>
+  <p class="page-desc">官方信源解决「有什么」· 第三方榜单解决「好不好」· 社区解决「好不好用」· 融资财报解决「赚不赚钱」。所有 URL 均于 2026-09-02 验证可用。</p>
+
+  <section>
+    <h2 class="region-header">国内平台（{chinaPlatforms.length}）</h2>
+    <div class="platform-grid">
+      {chinaPlatforms.map((p) => (
+        <div class="platform-card">
+          <div class="platform-header">
+            <h3>{p.data.name}</h3>
+            <span class="platform-en">{p.data.name_en}</span>
+            <a href={p.data.official_site} class="official-link" target="_blank" rel="noopener">官网 ↗</a>
+          </div>
+          <div class="source-list">
+            {sourcePriority.map((key) => (
+              p.data.sources[key] ? (
+                <div class="source-item">
+                  <span class="source-label">{sourceLabels[key]}</span>
+                  <a href={p.data.sources[key]} target="_blank" rel="noopener">{p.data.sources[key].replace(/^https?:\/\//, '')} ↗</a>
+                </div>
+              ) : null
+            ))}
+          </div>
+          {p.data.notes && <details class="platform-notes"><summary>备注</summary><p>{p.data.notes}</p></details>}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2 class="region-header">海外平台（{overseasPlatforms.length}）</h2>
+    <div class="platform-grid">
+      {overseasPlatforms.map((p) => (
+        <div class="platform-card">
+          <div class="platform-header">
+            <h3>{p.data.name}</h3>
+            <span class="platform-en">{p.data.name_en}</span>
+            <a href={p.data.official_site} class="official-link" target="_blank" rel="noopener">官网 ↗</a>
+          </div>
+          <div class="source-list">
+            {sourcePriority.map((key) => (
+              p.data.sources[key] ? (
+                <div class="source-item">
+                  <span class="source-label">{sourceLabels[key]}</span>
+                  <a href={p.data.sources[key]} target="_blank" rel="noopener">{p.data.sources[key].replace(/^https?:\/\//, '')} ↗</a>
+                </div>
+              ) : null
+            ))}
+          </div>
+          {p.data.notes && <details class="platform-notes"><summary>备注</summary><p>{p.data.notes}</p></details>}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2 class="region-header">第三方追踪渠道（{industrySources.length}）</h2>
+    <p class="page-desc">按维度分组 · 徽标为可获取性（可直接抓取 / 需搜索聚合 / 需浏览器 / 定时任务）</p>
+
+    {typeGroups.map((g) => {
+      const items = industrySources.filter(s => s.type === g.key);
+      if (items.length === 0) return null;
+      return (
+        <div class="type-group">
+          <h3 class="type-header">{g.label} <span class="type-desc">{g.desc}</span> <span class="type-count">{items.length}</span></h3>
+          <div class="platform-grid">
+            {items.map((s) => {
+              const acc = accessibilityMeta[s.accessibility] || { label: s.accessibility, cls: '' };
+              return (
+                <div class="platform-card">
+                  <div class="platform-header">
+                    <h3>{s.name}</h3>
+                    <span class="acc-badge {acc.cls}">{acc.label}</span>
+                    {s.value && <span class="value-chip">{s.value}</span>}
+                    {s.url && <a href={s.url} class="official-link" target="_blank" rel="noopener">访问 ↗</a>}
+                  </div>
+                  {s.api_url && (
+                    <div class="source-list">
+                      <div class="source-item">
+                        <span class="source-label">API</span>
+                        <a href={s.api_url} target="_blank" rel="noopener">{s.api_url.replace(/^https?:\/\//, '')} ↗</a>
+                      </div>
+                    </div>
+                  )}
+                  {s.notes && <details class="platform-notes"><summary>备注</summary><p>{s.notes}</p></details>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    })}
+  </section>
+</Layout>
+
+<style>
+  h1 {
+    font-size: 1.8em;
+    margin-bottom: 8px;
+  }
+
+  .page-desc {
+    color: var(--color-text-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .region-header {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 32px 0 16px;
+    color: var(--color-accent);
+  }
+
+  .type-group {
+    margin-bottom: 28px;
+  }
+
+  .type-header {
+    font-size: 1.05em;
+    font-weight: 600;
+    margin: 20px 0 12px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .type-desc {
+    color: var(--color-text-muted);
+    font-size: 12.5px;
+    font-weight: 400;
+  }
+
+  .type-count {
+    color: var(--color-text-muted);
+    font-size: 12px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 1px 8px;
+  }
+
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: 16px;
+  }
+
+  .platform-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .platform-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .platform-header h3 {
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+
+  .platform-en {
+    color: var(--color-text-muted);
+    font-size: 13px;
+  }
+
+  .official-link {
+    margin-left: auto;
+    font-size: 13px;
+    text-decoration: none;
+  }
+
+  .acc-badge {
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 9999px;
+    padding: 2px 9px;
+    border: none;
+  }
+
+  .acc-direct { color: var(--status-active-text); background: var(--status-active-bg); }
+  .acc-search { color: var(--status-stable-text); background: var(--status-stable-bg); }
+  .acc-browser { color: var(--status-critical-text); background: var(--status-critical-bg); }
+  .acc-cron { color: #1f6c9f; background: #e1f3fe; }
+
+  .value-chip {
+    color: var(--color-text-muted);
+    font-size: 11.5px;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 1px 8px;
+  }
+
+  .source-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .source-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .source-label {
+    min-width: 70px;
+    color: var(--color-text-muted);
+    font-size: 12px;
+  }
+
+  .source-item a {
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .source-item a:hover {
+    text-decoration: underline;
+  }
+
+  .platform-notes {
+    margin-top: 12px;
+    font-size: 13px;
+  }
+
+  .platform-notes summary {
+    cursor: pointer;
+    color: var(--color-text-muted);
+  }
+
+  .platform-notes p {
+    margin-top: 8px;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+</style>

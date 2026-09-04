@@ -1,0 +1,544 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { marked } from 'marked';
+import fs from 'node:fs';
+import path from 'node:path';
+
+marked.setOptions({ breaks: true, gfm: true });
+const md = (s: string) => marked.parse(s || '') as string;
+
+// 读取实时信源
+const liveFeedsPath = path.join(process.cwd(), 'src/data/live_feeds.json');
+const liveFeeds = JSON.parse(fs.readFileSync(liveFeedsPath, 'utf-8'));
+
+// 取最新一期结构化数据
+const structured = await getCollection('weeklyStructured');
+structured.sort((a, b) => b.data.date.localeCompare(a.data.date));
+const latest = structured[0];
+const data = latest?.data;
+
+const headline = data?.headline || [];
+const platforms = data?.platforms || [];
+const summaryTable = data?.summary_table;
+const trends = data?.trends || [];
+const watchpoints = data?.watchpoints;
+const eventIndex = data?.event_index || [];
+
+// 周报列表(底部)
+const reports = await getCollection('weekly', ({ data }) => data.date <= new Date().toISOString().slice(0, 10));
+reports.sort((a, b) => b.data.date.localeCompare(a.data.date));
+const recentReports = reports.slice(0, 8);
+
+// 头条分两栏:第一张大卡(跨两行) + 其余小卡
+const topHeadline = headline[0];
+const restHeadlines = headline.slice(1, 4);
+
+// 头条标题格式化: —— 替换为换行 + em
+function fmtTitle(t) {
+  if (!t) return '';
+  return t.replace(/——/g, '<br/><em>').replace(/（[^）]*）/, '</em>');
+}
+function fmtTitleShort(t) {
+  if (!t) return '';
+  return t.replace(/——/g, '<br/><em>');
+}
+
+// 从标题提取参数 chip (如 770B/49B 或 770B MoE，49B激活)
+function extractChips(title) {
+  if (!title) return [];
+  const chips = [];
+  // 优先匹配 X/Y 格式
+  let m = title.match(/(\d+\.?\d*[BMK])\s*\/\s*(\d+\.?\d*[BMK])/);
+  if (m) {
+    chips.push({ label: `${m[1]} 总参`, cls: '' });
+    chips.push({ label: `${m[2]} 激活`, cls: '' });
+  } else {
+    // 匹配 XXXB MoE，YYB激活 格式
+    const all = [...title.matchAll(/(\d+\.?\d*[BMK])\s*(?:MoE|总参|总参数|激活)?/g)];
+    if (all.length >= 2) {
+      chips.push({ label: `${all[0][1]} 总参`, cls: '' });
+      chips.push({ label: `${all[1][1]} 激活`, cls: '' });
+    } else if (all.length === 1) {
+      chips.push({ label: all[0][1], cls: '' });
+    }
+  }
+  // 上下文
+  if (/1M|百万/.test(title)) chips.push({ label: '1M 上下文', cls: 'amber' });
+  if (/Apache/.test(title)) chips.push({ label: 'Apache 2.0', cls: 'acid' });
+  else if (/MIT/.test(title)) chips.push({ label: 'MIT', cls: 'acid' });
+  return chips.filter(c => c.label);
+}
+
+// 关键落地节点(从 watchpoints 取前 3 条)
+const landedNodes = watchpoints?.rows?.slice(0, 3) || [];
+
+// 时间线关注(从 watchpoints 取后 4 条)
+const watchNodes = watchpoints?.rows?.slice(3, 7) || [];
+
+// pulse 数据
+const openCount = headline.filter((h: any) => h.level === 'critical').length;
+const platformCount = platforms.length;
+const sunsetCount = headline.filter((h: any) => h.title?.includes('下线') || h.title?.includes('停服')).length;
+const trendCount = trends.length;
+---
+
+<Layout title="MaaS Weekly — 全球 MaaS 平台周度追踪">
+  {/* Hero */}
+  <header class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">SIGNAL REPORT · {reports.length > 0 ? `ISSUE ${reports.length}` : ''}</div>
+      <h1>MaaS 平台<br/>周度追踪报告 <span>{data?.date?.replace(/-/g, '.')}</span></h1>
+    </div>
+    <aside class="hero-aside">
+      <div class="period-label">TRACKING PERIOD</div>
+      <div class="period" set:html={data?.period?.replace(/-/g, '.').replace(/ ~ /, ' — ')}></div>
+      <div class="pulse">
+        <div class="pulse-item"><strong>{String(openCount).padStart(2,'0')}</strong><span>头条事件</span></div>
+        <div class="pulse-item"><strong>{String(platformCount).padStart(2,'0')}</strong><span>追踪平台</span></div>
+        <div class="pulse-item"><strong>{String(sunsetCount).padStart(2,'0')}</strong><span>下线节点</span></div>
+        <div class="pulse-item"><strong>{String(trendCount).padStart(2,'0')}</strong><span>趋势洞察</span></div>
+      </div>
+    </aside>
+  </header>
+
+  {/* 实时信源:横向滚动播报 */}
+  {liveFeeds.length > 0 && (
+    <div class="ticker">
+      <div class="ticker-label"><span class="live-pulse"></span> LIVE</div>
+      <div class="ticker-track">
+        <div class="ticker-content">
+          {liveFeeds.map((f) => (
+            <a href={f.url} target="_blank" rel="noopener" class="ticker-item">
+              <span class="ticker-platform">{f.platform}</span>
+              <span class="ticker-title">{f.title}</span>
+              <span class="ticker-date">{f.date}</span>
+            </a>
+          ))}
+          {/* 复制一份保证滚动连续 */}
+          {liveFeeds.map((f) => (
+            <a href={f.url} target="_blank" rel="noopener" class="ticker-item" aria-hidden="true">
+              <span class="ticker-platform">{f.platform}</span>
+              <span class="ticker-title">{f.title}</span>
+              <span class="ticker-date">{f.date}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  {/* 01 头条 */}
+  <section class="section" id="headlines">
+    <div class="section-heading reveal">
+      <div class="section-no">01 / LEAD</div>
+      <h2>本周头条</h2>
+      <p class="section-note">本周最重大的模型发布、开源与平台变化。点击卡片展开详情。</p>
+    </div>
+    <div class="headline-grid">
+      {topHeadline && (
+        <article class="headline-card hero-card reveal">
+          <details open>
+            <summary style="list-style:none;cursor:pointer">
+              <div class="card-meta"><span>{topHeadline.platform || 'TOP'} · {topHeadline.date_mentioned || ''}</span><span class="card-index">01</span></div>
+              <h3 class="headline-title" set:html={fmtTitle(topHeadline.title)}></h3>
+              {extractChips(topHeadline.title).length > 0 && (
+                <div class="price-pair">
+                  {extractChips(topHeadline.title).map(c => <span class={`price-chip ${c.cls}`}>{c.label}</span>)}
+                </div>
+              )}
+            </summary>
+            <div class="detail-list prose" set:html={md(topHeadline.detail_markdown)}></div>
+          </details>
+        </article>
+      )}
+      {restHeadlines.map((h: any, i: number) => (
+        <article class="headline-card reveal">
+          <details>
+            <summary style="list-style:none;cursor:pointer">
+              <div class="card-meta"><span>{h.platform || 'WATCH'} · {h.date_mentioned || ''}</span><span class="card-index">{String(i + 2).padStart(2,'0')}</span></div>
+              <h3 class="headline-title" set:html={fmtTitleShort(h.title)}></h3>
+              {extractChips(h.title).length > 0 && (
+                <div class="price-pair">
+                  {extractChips(h.title).map(c => <span class={`price-chip ${c.cls}`}>{c.label}</span>)}
+                </div>
+              )}
+              {h.summary && !extractChips(h.title).length && <span class="price-chip amber">{h.summary.slice(0, 24)}</span>}
+            </summary>
+            <div class="detail-list prose" set:html={md(h.detail_markdown)}></div>
+          </details>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  {/* 02 关键节点落地 */}
+  {landedNodes.length > 0 && (
+    <section class="section" id="landed">
+      <div class="section-heading reveal">
+        <div class="section-no">02 / LANDED</div>
+        <h2>关键节点落地</h2>
+        <p class="section-note">本周已执行的存量节点,相关业务应确认迁移与成本变化是否完成闭环。</p>
+      </div>
+      <div class="watch-grid">
+        {landedNodes.map((row: string[]) => (
+          <article class="watch-card reveal">
+            <div class="watch-tag" set:html={md(row[0])}></div>
+            <h3 set:html={md((row[1] || '').slice(0, 40))}></h3>
+            <p set:html={md(row[2] || '')}></p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {/* 03 平台状态矩阵 */}
+  {summaryTable && summaryTable.rows?.length > 0 && (
+    <section class="section" id="platforms">
+      <div class="section-heading reveal">
+        <div class="section-no">03 / MATRIX</div>
+        <h2>平台状态矩阵</h2>
+        <p class="section-note">绿色表示本周活跃或处于事件兑现期,黄色表示整体稳定。</p>
+      </div>
+      <div class="platform-panel reveal">
+        <div class="table-tools">
+          <p><span id="rowCount">{summaryTable.rows.length}</span> 个平台信号 / 更新至 {data?.date?.slice(5).replace('-','.')}</p>
+          <label class="filter-wrap"><input id="platformFilter" class="filter-input" type="search" placeholder="筛选平台或动态…" aria-label="筛选平台" /></label>
+        </div>
+        <table>
+          <thead><tr><th>平台</th><th>状态</th><th>本周动态</th><th>关注节点</th></tr></thead>
+          <tbody id="platformRows">
+            {summaryTable.rows.map((row: string[]) => {
+              const plat = platforms.find((p: any) => p.name?.includes(row[0]) || row[0]?.includes(p.name?.split('（')[0]));
+              const status = plat?.status || 'stable';
+              return (
+                <tr>
+                  <td class="platform-name">{row[0]}</td>
+                  <td><span class={`status ${status}`}>{status === 'active' ? '活跃' : status === 'critical' ? '重大' : '稳定'}</span></td>
+                  <td set:html={md(row[2] || '')}></td>
+                  <td class="next" set:html={md(row[3] || '—')}></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <div id="noResult" class="no-result">没有匹配的平台信号</div>
+      </div>
+    </section>
+  )}
+
+  {/* 04 下一步关注 */}
+  {watchNodes.length > 0 && (
+    <section class="section" id="timeline">
+      <div class="section-heading reveal">
+        <div class="section-no">04 / CALENDAR</div>
+        <h2>下一步关注</h2>
+        <p class="section-note">近期关键时间节点,提前准备迁移与方案确认。</p>
+      </div>
+      <div class="timeline">
+        {watchNodes.map((row: string[], i: number) => (
+          <article class={`time-card ${i === 0 ? 'urgent' : ''} reveal`}>
+            <div class="time-date" set:html={md(row[0])}></div>
+            <h3 set:html={md((row[1] || '').slice(0, 30))}></h3>
+            <p class="time-platform" set:html={md(row[2] || '')}></p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {/* 05 格局变化 */}
+  {trends.length > 0 && (
+    <section class="section" id="insights">
+      <div class="section-heading reveal">
+        <div class="section-no">05 / READOUT</div>
+        <h2>格局变化</h2>
+        <p class="section-note">本周趋势洞察,解读事件背后的产业格局演变。</p>
+      </div>
+      <div class="insight-wrap">
+        <article class="super-week reveal">
+          <div class="kicker">TREND · {data?.date?.slice(5).replace('-','.')}</div>
+          <h3>{(trends[0]?.title || '趋势').replace(/["""]/g, '').split(/——|，/)[0].slice(0, 8)}</h3>
+          <div class="super-week-body" set:html={md((trends[0]?.body_markdown || '').split('。').slice(0, 2).join('。') + '。')}></div>
+        </article>
+        <div class="insight-stack">
+          {trends.slice(1, 4).map((t: any, i: number) => (
+            <article class="insight-card reveal">
+              <div class="insight-num">{String(i + 2).padStart(2, '0')}</div>
+              <div>
+                <h3 set:html={md(t.title)}></h3>
+                <div class="insight-body prose" set:html={md(t.body_markdown.slice(0, 200) + '…')}></div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {/* 周报归档 */}
+  <section class="section" id="archive">
+    <div class="section-heading reveal">
+      <div class="section-no">06 / ARCHIVE</div>
+      <h2>周报归档</h2>
+      <p class="section-note">共 {reports.length} 期完整周报,按日期倒序排列。</p>
+    </div>
+    <div class="archive-grid reveal">
+      {recentReports.map((r) => (
+        <a href={`/weekly/${r.id}`} class="archive-card">
+          <div class="archive-date">{r.data.date}</div>
+          <div class="archive-arrow">→</div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<script is:inline>
+  // 平台筛选
+  const filter = document.getElementById('platformFilter');
+  const rows = [...document.querySelectorAll('#platformRows tr')];
+  const count = document.getElementById('rowCount');
+  const noResult = document.getElementById('noResult');
+  filter?.addEventListener('input', () => {
+    const query = filter.value.trim().toLowerCase();
+    let visible = 0;
+    rows.forEach((row) => {
+      const match = row.textContent.toLowerCase().includes(query);
+      row.hidden = !match;
+      if (match) visible += 1;
+    });
+    count.textContent = visible;
+    noResult.style.display = visible ? 'none' : 'block';
+  });
+</script>
+
+<style>
+  /* 实时信源滚动条 */
+  .ticker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+  .ticker-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font: 700 11px/1 "SF Mono", monospace;
+    letter-spacing: .12em;
+    color: var(--red);
+    padding: 10px 14px 10px 0;
+    border-right: 1px solid var(--line);
+    margin-left: 0;
+    flex-shrink: 0;
+    z-index: 2;
+    background: var(--ink);
+    position: relative;
+  }
+  .live-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 0 3px var(--red-dim);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
+  .ticker-track {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  }
+  .ticker-content {
+    display: flex;
+    gap: 32px;
+    animation: ticker-scroll 60s linear infinite;
+    white-space: nowrap;
+    padding: 10px 0;
+  }
+  .ticker-content:hover {
+    animation-play-state: paused;
+  }
+  @keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--paper);
+    font-size: 12.5px;
+    flex-shrink: 0;
+    transition: color .15s;
+  }
+  .ticker-item:hover {
+    color: var(--acid);
+  }
+  .ticker-platform {
+    font: 700 11px/1 "SF Mono", monospace;
+    color: var(--acid);
+    letter-spacing: .04em;
+  }
+  .ticker-title {
+    color: var(--paper-soft);
+  }
+  .ticker-date {
+    font: 500 10px/1 "SF Mono", monospace;
+    color: var(--muted);
+    padding-left: 8px;
+    border-left: 1px solid var(--line);
+  }
+
+
+  /* Hero */
+  .hero {
+    min-height: 320px;
+    padding: 40px 0 36px;
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(260px, .65fr);
+    gap: 50px;
+    align-items: end;
+  }
+  .hero::after {
+    content: "01";
+    position: absolute;
+    z-index: -1;
+    right: -42px;
+    top: -28px;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--acid-dim);
+    font: 800 360px/.9 "SF Mono", monospace;
+    letter-spacing: -.13em;
+    opacity: .4;
+  }
+  .eyebrow { display: flex; align-items: center; gap: 12px; color: var(--acid); font: 700 12px/1.2 "SF Mono", monospace; letter-spacing: .14em; text-transform: uppercase; }
+  .eyebrow::before { content: ""; width: 38px; height: 1px; background: currentColor; }
+  .hero h1 { max-width: 800px; margin: 16px 0 12px; font-size: clamp(40px, 6vw, 72px); line-height: .98; letter-spacing: -.06em; }
+  .hero h1 span { display: block; color: var(--acid); font-family: "SF Mono", monospace; font-size: .38em; letter-spacing: -.035em; margin-top: 12px; }
+  .dek { max-width: 650px; margin: 0; color: var(--paper-soft); font-size: 16px; line-height: 1.7; }
+  .hero-aside { border-left: 1px solid var(--line-strong); padding-left: 28px; }
+  .period-label { color: var(--muted); font: 700 11px/1 "SF Mono", monospace; letter-spacing: .13em; text-transform: uppercase; }
+  .period { margin: 12px 0 28px; font: 600 17px/1.45 "SF Mono", monospace; color: var(--paper); }
+  .pulse { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .pulse-item { padding: 16px 14px; background: color-mix(in srgb, var(--ink) 92%, transparent); }
+  .pulse strong { display: block; color: var(--acid); font: 700 24px/1 "SF Mono", monospace; }
+  .pulse span { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
+
+  /* 头条卡片 */
+  .headline-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 18px; }
+  .headline-card {
+    position: relative;
+    min-height: 320px;
+    padding: 30px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--ink-2) 94%, transparent), color-mix(in srgb, var(--ink) 90%, transparent));
+    box-shadow: var(--shadow);
+    transition: transform .28s ease, border-color .28s ease;
+  }
+  .headline-card:hover { transform: translateY(-5px); border-color: var(--red-dim); }
+  .headline-card.hero-card { grid-row: span 2; min-height: 658px; }
+  .headline-card.hero-card .headline-title { font-size: clamp(30px, 3.5vw, 48px); }
+  .headline-card::before { content: ""; position: absolute; width: 220px; height: 220px; top: -140px; right: -110px; border: 1px solid var(--red); border-radius: 50%; box-shadow: 0 0 80px var(--red-dim); opacity: .5; }
+  .card-meta { display: flex; justify-content: space-between; gap: 20px; align-items: center; color: var(--red); font: 700 11px/1 "SF Mono", monospace; letter-spacing: .1em; }
+  .card-index { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid currentColor; border-radius: 50%; }
+  .headline-title { max-width: 600px; margin: 24px 0 18px; font-size: 32px; line-height: 1.14; }
+  .headline-title :global(em) { display: block; margin-top: 8px; color: var(--muted); font: 500 16px/1.5 "SF Mono", monospace; font-style: normal; letter-spacing: 0; }
+  .price-pair { display: flex; gap: 8px; margin: 14px 0 0; flex-wrap: wrap; }
+  .detail-list { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 15px; line-height: 1.75; color: var(--paper-soft); }
+  .detail-list :global(p) { margin: .4em 0; }
+  .detail-list :global(strong) { font-weight: 700; }
+  .headline-card details summary::-webkit-details-marker { display: none; }
+
+  /* 关键节点 */
+  .watch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .watch-card { min-height: 190px; padding: 24px; border-top: 2px solid var(--amber); background: var(--amber-dim); border-radius: 4px 4px var(--radius) var(--radius); transition: transform .2s ease; }
+  .watch-card:hover { transform: translateY(-3px); }
+  .watch-tag { color: var(--amber); font: 700 10px/1 "SF Mono", monospace; letter-spacing: .12em; }
+  .watch-card h3 { margin: 36px 0 12px; font-size: 21px; line-height: 1.2; }
+  .watch-card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+  /* 平台矩阵 */
+  .platform-panel { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--panel); box-shadow: var(--shadow); }
+  .table-tools { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+  .table-tools p { margin: 0; color: var(--muted); font-size: 12px; }
+  .filter-wrap { position: relative; }
+  .filter-wrap::before { content: "⌕"; position: absolute; left: 13px; top: 9px; color: var(--muted); pointer-events: none; }
+  .filter-input { width: 210px; border: 1px solid var(--line); border-radius: 99px; background: var(--ink); color: var(--paper); padding: 9px 14px 9px 34px; font: 13px/1 "PingFang SC", sans-serif; }
+  table { width: 100%; border-collapse: collapse; }
+  th { padding: 14px 20px; color: var(--muted); font: 700 10px/1 "SF Mono", monospace; text-align: left; letter-spacing: .12em; text-transform: uppercase; }
+  td { padding: 18px 20px; border-top: 1px solid var(--line); vertical-align: middle; font-size: 14px; }
+  tbody tr { transition: background .18s ease; }
+  tbody tr:hover { background: var(--acid-dim); }
+  .platform-name { font-family: "Songti SC", serif; font-size: 16px; font-weight: 700; }
+  .next { color: var(--acid); font: 700 12px/1.4 "SF Mono", monospace; white-space: nowrap; }
+  .no-result { display: none; padding: 30px; text-align: center; color: var(--muted); }
+
+  /* 时间线 */
+  .timeline { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; padding-top: 38px; }
+  .timeline::before { content: ""; position: absolute; left: 2%; right: 2%; top: 12px; height: 1px; background: linear-gradient(90deg, var(--red), var(--amber), var(--acid)); }
+  .time-card { position: relative; min-height: 240px; padding: 26px 22px; border: 1px solid var(--line); background: var(--panel); border-radius: 4px; }
+  .time-card::before { content: ""; position: absolute; top: -32px; left: 22px; width: 11px; height: 11px; background: var(--ink); border: 3px solid var(--amber); border-radius: 50%; }
+  .time-card.urgent::before { border-color: var(--red); box-shadow: 0 0 18px var(--red); }
+  .time-date { color: var(--amber); font: 800 23px/1 "SF Mono", monospace; }
+  .time-card.urgent .time-date { color: var(--red); }
+  .time-card h3 { margin: 24px 0 16px; font-size: 20px; line-height: 1.25; }
+  .time-platform { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+  /* 格局 */
+  .insight-wrap { display: grid; grid-template-columns: .68fr 1.32fr; gap: 18px; }
+  .super-week { position: relative; min-height: 460px; padding: 32px; border-radius: var(--radius); overflow: hidden; color: var(--ink); background: var(--acid); }
+  .super-week::after { content: ""; }
+  .super-week .kicker { font: 800 11px/1 "SF Mono", monospace; letter-spacing: .14em; }
+  .super-week h3 { margin: 70px 0 20px; font-size: clamp(38px, 5vw, 58px); line-height: .98; letter-spacing: -.06em; }
+  .super-week p { max-width: 320px; font-size: 14px; line-height: 1.75; }
+  .insight-stack { display: grid; gap: 12px; }
+  .insight-card { display: grid; grid-template-columns: 60px 1fr; gap: 20px; padding: 26px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+  .insight-num { color: var(--cyan); font: 800 28px/1 "SF Mono", monospace; }
+  .insight-card h3 { margin: 0 0 8px; font-size: 20px; line-height: 1.2; }
+  .insight-body { color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+  /* 归档 */
+  .archive-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+  .archive-card { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); text-decoration: none; color: var(--paper); transition: transform .2s ease, border-color .2s ease; }
+  .archive-card:hover { transform: translateY(-3px); border-color: var(--acid); }
+  .archive-date { font: 700 15px/1 "SF Mono", monospace; }
+  .archive-arrow { color: var(--muted); transition: color .2s, transform .2s; }
+  .archive-card:hover .archive-arrow { color: var(--acid); transform: translateX(3px); }
+
+  @media (max-width: 900px) {
+    .hero { min-height: auto; grid-template-columns: 1fr; gap: 40px; padding-top: 60px; }
+    .hero-aside { max-width: 520px; }
+    .headline-grid { grid-template-columns: 1fr; }
+    .headline-card.hero-card { min-height: auto; grid-row: auto; }
+    .watch-grid, .timeline { grid-template-columns: 1fr 1fr; }
+    .timeline { row-gap: 50px; }
+    .timeline::before { display: none; }
+    .time-card::before { top: -8px; }
+    .insight-wrap { grid-template-columns: 1fr; }
+    .super-week { min-height: 360px; }
+  }
+  @media (max-width: 650px) {
+    .hero { padding: 40px 0 50px; }
+    .hero h1 { font-size: 42px; }
+    .watch-grid, .timeline { grid-template-columns: 1fr; }
+    .table-tools { flex-direction: column; align-items: flex-start; }
+    .filter-input { width: 100%; }
+    .platform-panel { overflow-x: auto; }
+    table { min-width: 640px; }
+    .insight-card { grid-template-columns: 1fr; gap: 10px; }
+  }
+</style>

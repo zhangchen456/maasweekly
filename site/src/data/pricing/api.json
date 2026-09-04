@@ -1,0 +1,57 @@
+{
+  "source": "各平台 API 定价（周报追踪整理）",
+  "snapshot_date": "2026-09-01",
+  "note": "定价来自 MaaS 周度追踪报告（2026-09-01 期）已核验条目。单位为元/百万 tokens（人民币）或标注币种。标注「待补充」的为尚未核验具体数值的条目。",
+  "api_list": [
+    {
+      "model": "腾讯混元 Hy4 Preview",
+      "vendor": "腾讯云 TokenHub",
+      "input": "¥6",
+      "output": "¥18",
+      "cache_hit_input": "¥0.3",
+      "context": "1M",
+      "note": "2026-08-28 发布并开源（770B MoE / 49B 激活），OpenRouter 同步上架",
+      "status": "verified"
+    },
+    {
+      "model": "Qwen3.8-Flash-Next",
+      "vendor": "阿里百炼",
+      "input": "$0.10 (AA 参考)",
+      "output": "—",
+      "cache_hit_input": "—",
+      "context": "262K (YaRN 1M)",
+      "note": "2026-08-26 开源（125B 总参 / 6B 激活），生产 API 对应 Qwen3.8-Flash",
+      "status": "verified"
+    },
+    {
+      "model": "GLM-5.3-Flash",
+      "vendor": "智谱 Z.ai",
+      "input": "限时折扣约 Opus 4.8 的 1/40",
+      "output": "—",
+      "cache_hit_input": "—",
+      "context": "1M",
+      "note": "2026-08-26 发布，MIT 协议；AA 综合智能指数 57 分追平 Opus 4.8",
+      "status": "verified"
+    },
+    {
+      "model": "DeepSeek-V4-Pro",
+      "vendor": "火山方舟",
+      "input": "8/28 调价生效（同步官方峰谷）",
+      "output": "—",
+      "cache_hit_input": "—",
+      "context": "—",
+      "note": "继 8/21 deepseek-v4-flash 上调后第二步同步 DeepSeek 官方定价",
+      "status": "verified"
+    },
+    {
+      "model": "Kimi K3",
+      "vendor": "月之暗面",
+      "input": "待补充",
+      "output": "待补充",
+      "cache_hit_input": "待补充",
+      "context": "—",
+      "note": "K3 全面接棒（K2.5 于 8/31 下线），2.88 万亿参数 KDA 架构",
+      "status": "pending"
+    }
+  ]
+}

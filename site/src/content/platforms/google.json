@@ -1,0 +1,17 @@
+{
+  "name": "Google Gemini API",
+  "name_en": "Google Gemini API (AI Studio / ai.google.dev)",
+  "region": "overseas",
+  "vendor": "google",
+  "official_site": "https://ai.google.dev/",
+  "sources": {
+    "model_list": "https://ai.google.dev/gemini-api/docs/models",
+    "pricing": "https://ai.google.dev/gemini-api/docs/pricing",
+    "changelog": "https://ai.google.dev/gemini-api/docs/changelog",
+    "api_docs": "https://ai.google.dev/gemini-api/docs/api-reference",
+    "github": "https://github.com/google-gemini",
+    "blog": "https://blog.google/technology/ai/",
+    "model_marketplace": "https://aistudio.google.com/"
+  },
+  "notes": "注意：ai.google.dev 对无 cookie 的 curl 会 302 重定向到 Google 登录，但页面内容实际公开可读（web_fetch 已确认 Models/Pricing 内容，含 Gemini 3.x 各档位输入/输出/缓存价）。与 Vertex AI 是两套独立体系。AI Studio(aistudio.google.com)可免费试用与获取 API Key。"
+}

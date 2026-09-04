@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+function readJson(p) {
+  try { return JSON.parse(fs.readFileSync(path.join(process.cwd(), p), 'utf-8')); }
+  catch (e) { return null; }
+}
+
+const openrouter = readJson('src/data/leaderboards/openrouter.json');
+const lmarena = readJson('src/data/leaderboards/lmarena.json');
+const aa = readJson('src/data/leaderboards/aa.json');
+
+const maxTokens = openrouter ? Math.max(...openrouter.top.map(m => m.tokens_t)) : 1;
+---
+
+<Layout title="能力榜单 — MaaS Weekly" description="第三方评测：OpenRouter 调用量 / LMArena Elo / AA 智能指数，交叉验证谁强">
+  <h1>能力榜单</h1>
+  <p class="page-desc">用多个独立第三方榜单交叉验证「谁的模型好」——不依赖平台自说自话。快照日期见各榜脚注，均为每周抓取存档。</p>
+
+  <section class="board-section">
+    <div class="board-head">
+      <h2>OpenRouter 调用量 Top10</h2>
+      <span class="snap">快照 {openrouter.snapshot_date} · 7 日窗口</span>
+    </div>
+    <div class="bar-list">
+      {openrouter.top.map((m) => (
+        <div class="bar-row">
+          <span class="bar-rank">{m.rank}</span>
+          <div class="bar-main">
+            <div class="bar-top">
+              <span class="bar-model">{m.model}</span>
+              <span class="bar-vendor">{m.vendor}</span>
+              <span class="bar-val">{m.tokens_t}T tokens</span>
+              {m.is_new
+                ? <span class="pill pill-new">新上榜</span>
+                : (m.change_pct != null ? <span class="pill {m.change_pct >= 0 ? 'pill-up' : 'pill-down'}">{m.change_pct > 0 ? '+' : ''}{m.change_pct}%</span> : null)}
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:{(m.tokens_t / maxTokens * 100).toFixed(1)}%"></div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+    <p class="board-note">数据口径：按 OpenRouter API 实际 token 处理量（含 prompt+completion）排名，反映开发者采用而非质量；不反映全市场流量。环比为与上一周 token 量变化。</p>
+  </section>
+
+  <section class="board-section">
+    <div class="board-head">
+      <h2>LMArena Elo 榜</h2>
+      <span class="snap">快照 {lmarena.snapshot_date}</span>
+    </div>
+    <table class="rank-table">
+      <thead><tr><th>#</th><th>模型</th><th>厂商</th><th>Elo</th><th>备注</th></tr></thead>
+      <tbody>
+        {lmarena.top.map((m) => (
+          <tr>
+            <td class="c-rank">{m.rank}</td>
+            <td class="c-model">{m.model}</td>
+            <td class="c-vendor">{m.vendor}</td>
+            <td class="c-elo">{m.elo ?? '—'}</td>
+            <td class="c-note">{m.note ?? ''}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="board-note">数据口径：全球用户匿名两两盲测投票，Elo 机制计分，反映真实使用偏好（{lmarena.note}）。</p>
+  </section>
+
+  <section class="board-section">
+    <div class="board-head">
+      <h2>AA 智能指数</h2>
+      <span class="snap">快照 {aa.snapshot_date}</span>
+    </div>
+    <table class="rank-table">
+      <thead><tr><th>#</th><th>模型</th><th>厂商</th><th>智能指数</th><th>备注</th></tr></thead>
+      <tbody>
+        {aa.top.map((m) => (
+          <tr>
+            <td class="c-rank">{m.rank}</td>
+            <td class="c-model">{m.model}</td>
+            <td class="c-vendor">{m.vendor}</td>
+            <td class="c-elo">{m.score}</td>
+            <td class="c-note">{m.note ?? ''}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="board-note">数据口径：综合 10 项权威基准（GDPval-AA / Terminal-Bench / GPQA Diamond / SciCode 等）加权，{aa.note}</p>
+  </section>
+</Layout>
+
+<style>
+  h1 { font-size: 1.8em; margin-bottom: 8px; }
+  .page-desc { color: var(--color-text-muted); font-size: 14px; margin-bottom: 28px; }
+
+  .board-section { margin-bottom: 36px; }
+  .board-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .board-head h2 { font-size: 1.3em; font-weight: 600; color: var(--color-accent); }
+  .snap { color: var(--color-text-muted); font-size: 12px; }
+
+  /* OpenRouter 条形图 */
+  .bar-list { display: flex; flex-direction: column; gap: 10px; }
+  .bar-row { display: flex; gap: 10px; align-items: center; }
+  .bar-rank {
+    width: 22px; height: 22px; line-height: 22px; text-align: center;
+    background: var(--color-surface); border: 1px solid var(--color-border);
+    border-radius: 6px; font-size: 12px; font-weight: 600; color: var(--color-text-muted); flex-shrink: 0;
+  }
+  .bar-main { flex: 1; min-width: 0; }
+  .bar-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font-size: 13px; margin-bottom: 3px; }
+  .bar-model { font-weight: 600; }
+  .bar-vendor { color: var(--color-text-muted); font-size: 12px; }
+  .bar-val { margin-left: auto; color: var(--color-text-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .bar-track { height: 10px; background: var(--color-surface-alt); border: 1px solid var(--color-border); border-radius: 5px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--color-text); border-radius: 5px; }
+
+  .pill { font-size: 11px; font-weight: 600; border-radius: 9999px; padding: 2px 8px; border: none; }
+  .pill-new { color: var(--status-active-text); background: var(--status-active-bg); }
+  .pill-up { color: var(--status-active-text); background: var(--status-active-bg); }
+  .pill-down { color: var(--status-critical-text); background: var(--status-critical-bg); }
+
+  /* 排名表 */
+  .rank-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .rank-table th, .rank-table td { border-bottom: 1px solid var(--color-border); padding: 11px 12px; text-align: left; }
+  .rank-table th { color: var(--color-text-muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .c-rank { width: 40px; color: var(--color-text-muted); font-family: "SF Mono", monospace; }
+  .c-model { font-weight: 600; }
+  .c-vendor { color: var(--color-text-muted); }
+  .c-elo { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .c-note { color: var(--color-text-muted); font-size: 12.5px; }
+
+  .board-note { color: var(--color-text-muted); font-size: 12.5px; margin-top: 16px; background: var(--color-surface-alt); border: 1px solid var(--color-border); border-radius: 8px; padding: 12px 16px; }
+</style>

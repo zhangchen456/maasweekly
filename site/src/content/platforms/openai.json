@@ -1,0 +1,17 @@
+{
+  "name": "OpenAI",
+  "name_en": "OpenAI",
+  "region": "overseas",
+  "vendor": "openai",
+  "official_site": "https://platform.openai.com/",
+  "sources": {
+    "model_list": "https://platform.openai.com/docs/models",
+    "pricing": "https://platform.openai.com/docs/pricing",
+    "changelog": "https://platform.openai.com/docs/changelog",
+    "api_docs": "https://platform.openai.com/docs/api-reference",
+    "github": "https://github.com/openai",
+    "blog": "https://openai.com/news/",
+    "model_marketplace": null
+  },
+  "notes": "platform.openai.com/docs/models、/docs/pricing（含输入/输出/缓存价）、/docs/changelog 均200公开。openai.com/news/ 对 curl 返回403（反爬）但浏览器可正常访问。platform.openai.com 根域名需登录（控制台）。提供 /v1/models API。"
+}

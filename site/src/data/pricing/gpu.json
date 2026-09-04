@@ -1,0 +1,13 @@
+{
+  "source": "国内 GPU 算力租赁行情聚合",
+  "source_url": "https://xie.infoq.cn/article/c50dddc894d2b0b538f4b78f7",
+  "snapshot_date": "2026-08",
+  "note": "聚合自算家云 / AutoDL / 润云 / 极智算等平台与社区行情（2026-08 参考价，实际以平台实时报价为准）。包月按 24/7 折算，价格随供需波动。",
+  "gpu_list": [
+    { "gpu": "RTX 4090", "hourly_cny": "1.24 ~ 2.8", "monthly_cny": "1000 ~ 2800", "use": "推理 / 绘图 / 微调入门", "source": "算家云 / AutoDL 等" },
+    { "gpu": "A100 80G", "hourly_cny": "≈ 3.6", "monthly_cny": "4000 ~ 15000", "use": "中等规模训练 / 微调", "source": "AutoDL / 极智算" },
+    { "gpu": "H100 80G", "hourly_cny": "≈ 20", "monthly_cny": "50000 ~ 88000", "use": "高端训练", "source": "InfoQ 评测 / 行情" },
+    { "gpu": "H200", "hourly_cny": "—", "monthly_cny": "72000 ~ 75000", "use": "高端训练", "source": "社区行情 2026-07" },
+    { "gpu": "昇腾 910C", "hourly_cny": "—", "monthly_cny": "≈ 60000", "use": "国产替代训练/推理", "source": "社区行情 2026-07" }
+  ]
+}

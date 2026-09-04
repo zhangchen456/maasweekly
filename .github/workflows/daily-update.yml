@@ -1,0 +1,99 @@
+name: 每日信源抓取与站点更新
+
+# 每天北京时间 08:30（UTC 00:30）抓取全部信源，产出 diff，
+# 同步到站点数据源并构建部署。也支持手动触发。
+on:
+  schedule:
+    - cron: '30 0 * * *'  # UTC 00:30 = 北京时间 08:30
+  workflow_dispatch:
+    inputs:
+      skip_fetch:
+        description: '跳过抓取，仅重新构建站点'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只允许一个实例，避免并发抓取写快照
+concurrency:
+  group: daily-update
+  cancel-in-progress: false
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: site/package-lock.json
+
+      # ---- 1. 抓取信源（可跳过）----
+      - name: Fetch sources & generate diff
+        if: ${{ !inputs.skip_fetch }}
+        run: python3 pipeline/scripts/fetch_sources.py
+        env:
+          TZ: Asia/Shanghai
+
+      # ---- 2. 同步 diff 数据到站点 ----
+      - name: Sync diff data to site
+        if: ${{ !inputs.skip_fetch }}
+        run: python3 pipeline/scripts/sync-diff-to-site.py
+
+      # ---- 3. 抓取文章配图（可选，失败不阻塞）----
+      - name: Fetch article images
+        if: ${{ !inputs.skip_fetch }}
+        run: python3 site/scripts/fetch-images.py
+        continue-on-error: true
+
+      # ---- 4. 构建站点 ----
+      - name: Build site
+        working-directory: site
+        run: |
+          npm ci
+          npm run build
+
+      # ---- 5. 部署 GitHub Pages ----
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      # ---- 6. 把新抓取的数据提交回仓库（快照+diff+站点数据源）----
+      - name: Commit new data
+        if: ${{ !inputs.skip_fetch }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ site/src/data/
+          if git diff --cached --quiet; then
+            echo "无数据变化，跳过提交"
+          else
+            git commit -m "data: 每日信源抓取 $(date +'%Y-%m-%d')"
+            git push
+          fi
