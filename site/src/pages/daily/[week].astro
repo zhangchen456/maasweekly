@@ -74,9 +74,11 @@ const weekday = (d: string) => '周' + '一二三四五六日'[new Date(d).getDa
       <p class="section-note">该周每日 AI 要点，按日倒序。</p>
     </div>
     {weekDays.map((date) => {
-      const highlights = (daysByDate[date]?.highlights || []).length
-        ? daysByDate[date].highlights
-        : (week.highlights || []).filter((h: any) => h.date === date).map(({ date: _d, ...h }: any) => h);
+      // 优先取 daily_changes.json 的 v3 分组 highlights（带 logo_summary），否则用展平结构
+      const grouped = daysByDate[date]?.highlights || [];
+      const flat = grouped.length
+        ? grouped.flatMap((g: any) => g.items.map((item: any) => ({ ...item, platform: g.platform })))
+        : (week.highlights || []).filter((h: any) => h.date === date);
       const stats = week.days[date] || {};
       return (
         <article class="day-block reveal">
@@ -89,9 +91,9 @@ const weekday = (d: string) => '周' + '一二三四五六日'[new Date(d).getDa
               {stats.sunsets ? <span class="stat c-sunset">{stats.sunsets} 下线</span> : ''}
             </div>
           </div>
-          {highlights.length > 0 ? (
+          {flat.length > 0 ? (
             <ul class="hl-list">
-              {highlights.map((h: any) => (
+              {flat.map((h: any) => (
                 <li class={`hl-item ${HL_TYPE[h.type]?.cls || 't-other'}`}>
                   <span class="hl-type">{HL_TYPE[h.type]?.label || '动态'}</span>
                   <span class="hl-platform">{h.platform}</span>

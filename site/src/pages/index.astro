@@ -1,39 +1,39 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { logoFor } from '../lib/platforms';
 import fs from 'node:fs';
 import path from 'node:path';
 
 // ===== 数据源 =====
-// 每日动态（sync-diff-to-site.py + llm-digest.py 产出）
 const dataPath = path.join(process.cwd(), 'src/data/daily_changes.json');
 const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 const days: any[] = data.days || [];
-const today = days[0]; // 最新一天
-const prevDay = days[1];
+const today = days[0];
 
-// 周聚合归档（sync-diff-to-site.py + llm-weekly-digest.py 产出）
 const weeklyPath = path.join(process.cwd(), 'src/data/weekly-digest.json');
 let weeks: any[] = [];
 try { weeks = JSON.parse(fs.readFileSync(weeklyPath, 'utf-8')); } catch {}
-const currentWeek = weeks[0]; // 当前/最近一周
-const pastWeeks = weeks.slice(1); // 已完结周（归档列表）
+const currentWeek = weeks[0];
+const pastWeeks = weeks.slice(1);
 
-// 周报（降级为归档入口）
 const reports = await getCollection('weekly', ({ data }) => data.date <= new Date().toISOString().slice(0, 10));
 reports.sort((a, b) => b.data.date.localeCompare(a.data.date));
 const latestReport = reports[0];
 
-// 实时信源
-const liveFeedsPath = path.join(process.cwd(), 'src/data/live_feeds.json');
-const liveFeeds = JSON.parse(fs.readFileSync(liveFeedsPath, 'utf-8'));
-
 // ===== 今日数据拆分 =====
 const substantive = today?.changed?.filter((c: any) => c.kind === 'substantive') || [];
-const jitter = today?.changed?.filter((c: any) => c.kind === 'jitter') || [];
-const highlights = today?.highlights || [];
+const highlights = today?.highlights || []; // v3: [{platform, logo_summary, items:[{text,type}]}]
 
-// 源类型中文标签
+// 要点按平台分组（已经是 v3 结构）
+// 有要点或实质变化的平台集合（信号明细按平台分组展示）
+const platformsInSignals: Record<string, any[]> = {};
+for (const c of substantive) {
+  (platformsInSignals[c.platform] ||= []).push(c);
+}
+// 平台排序：有 highlights 的平台在前，其余按实质变化数
+const platformOrder = [...new Set([...highlights.map((h: any) => h.platform), ...Object.keys(platformsInSignals)])];
+
 const TYPE_LABEL: Record<string, string> = {
   model_list: '模型列表', pricing: '定价', changelog: '更新日志', blog: '博客',
   api_docs: 'API 文档', github: 'GitHub', model_marketplace: '模型广场', industry: '行业数据',
@@ -46,9 +46,14 @@ const HL_TYPE: Record<string, { label: string; cls: string }> = {
 };
 const typeLabel = (t: string) => TYPE_LABEL[t] || t;
 
-// 模型 ID 实体高亮
+// 日期格式化：2026-09-04 -> 2026.09.04 / 9.4
+const dateLong = today?.date?.replace(/-/g, '.') || '';
+const dateShort = today?.date ? (() => { const [, m, d] = today.date.split('-'); return `${+m}.${+d}`; })() : '';
+const weekday = today?.date ? '周' + '一二三四五六日'[new Date(today.date).getDay()] : '';
+
+// 模型 ID / 关键实体高亮（返回段数组，模板内渲染为 code.ent）
 function highlightEntities(line: string) {
-  const re = /([A-Za-z][\w.\-]*\/[\w.\-]+|(?<![A-Za-z])[a-z][a-z0-9]*(?:-[a-z0-9.]+){1,8}(?![A-Za-z]))/g;
+  const re = /([A-Za-z][\w.\-]*\/[\w.\-]+|(?<![A-Za-z])[a-z][a-z0-9]*(?:-[a-z0-9.]+){1,8}(?![A-Za-z])|[A-Z][a-zA-Z]*\s?\d+(?:\.\d+)*(?:\s?(?:Flash|Pro|Max|Astra|Terra|Luna))?)/g;
   const out: { text: string; hl?: boolean }[] = [];
   let last = 0;
   for (const m of line.matchAll(re)) {
@@ -62,192 +67,180 @@ function highlightEntities(line: string) {
   return out.length ? out : [{ text: line }];
 }
 
-// 周日期格式化：2026-08-31 ~ 2026-09-06 -> 8.31 — 9.6
-function fmtWeekRange(w: any) {
+const fmtWeekRange = (w: any) => {
   const f = (d: string) => { const [, m, dd] = d.split('-'); return `${+m}.${+dd}`; };
   return `${f(w.start)} — ${f(w.end)}`;
-}
+};
+
+// 周故事段落
+const storyParas = (currentWeek?.story?.story || '').split('\n').filter((p: string) => p.trim());
+// 周要点按平台统计（v3 展平后已存 weekly-digest 的 highlights）
+const weekHighlightCount = currentWeek?.highlights?.length || 0;
 ---
 <Layout title="MaaS Daily — 全球 MaaS 平台每日追踪" description="每日自动追踪全球 MaaS 平台：模型发布、定价变更、API 更新。AI 要点提炼 + 逐日信号明细，过期内容按周归档。">
-  {/* ===== HERO ===== */}
+  {/* ===== HERO：日期为主体 ===== */}
   <header class="hero">
     <div class="hero-main">
-      <div class="eyebrow">DAILY SIGNAL · {today?.date?.replace(/-/g, '.') || ''}</div>
-      <h1>MaaS 每日动态</h1>
-      <p class="dek">每天 08:30 自动抓取 16 个平台 + 行业信源，AI 提炼当日要点，过滤页面抖动噪声。过期内容按周归档，周报深度分析保留。</p>
+      <div class="eyebrow">MAAS DAILY SIGNAL</div>
+      <h1 class="date-hero">
+        <span class="date-big">{dateShort}</span>
+        <span class="date-side">
+          <span class="date-year">{dateLong}</span>
+          <span class="date-week">{weekday} · 今日动态</span>
+        </span>
+      </h1>
+      <p class="dek">每天 08:30 自动抓取 16 个平台 + 行业信源，AI 提炼当日要点。过期内容按周归档，深度周报保留。</p>
     </div>
     <aside class="hero-aside">
       <div class="pulse">
-        <div class="pulse-item"><strong>{String(substantive.length).padStart(2, '0')}</strong><span>今日实质变化</span></div>
-        <div class="pulse-item"><strong>{String(highlights.length).padStart(2, '0')}</strong><span>AI 要点</span></div>
+        <div class="pulse-item"><strong>{String(substantive.length).padStart(2, '0')}</strong><span>实质变化</span></div>
+        <div class="pulse-item"><strong>{String(highlights.reduce((s: number, h: any) => s + h.items.length, 0)).padStart(2, '0')}</strong><span>AI 要点</span></div>
         <div class="pulse-item"><strong>{today?.stats?.total ?? '—'}</strong><span>监控信源</span></div>
         <div class="pulse-item"><strong>{today?.stats?.success ?? '—'}</strong><span>抓取成功</span></div>
       </div>
     </aside>
   </header>
 
-  {/* ===== LIVE 滚动条 ===== */}
-  {liveFeeds.length > 0 && (
-    <div class="ticker">
-      <div class="ticker-label"><span class="live-pulse"></span> LIVE</div>
-      <div class="ticker-track">
-        <div class="ticker-content">
-          {liveFeeds.map((f) => (
-            <a href={f.url} target="_blank" rel="noopener" class="ticker-item">
-              <span class="ticker-platform">{f.platform}</span>
-              <span class="ticker-title">{f.title}</span>
-              <span class="ticker-date">{f.date}</span>
-            </a>
-          ))}
-          {liveFeeds.map((f) => (
-            <a href={f.url} target="_blank" rel="noopener" class="ticker-item" aria-hidden="true">
-              <span class="ticker-platform">{f.platform}</span>
-              <span class="ticker-title">{f.title}</span>
-              <span class="ticker-date">{f.date}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-  )}
-
   <main class="daily-main">
-    {/* ===== 01 今日要点 ===== */}
+    {/* ===== 01 今日要点（按平台分组 + logo） ===== */}
     <section class="section" id="digest">
       <div class="section-heading reveal">
         <div class="section-no">01 / DIGEST</div>
         <h2>今日要点</h2>
-        <p class="section-note">AI 从当日增量中提炼{today?.date ? `（${today.date}）` : ''}。</p>
+        <p class="section-note">AI 按平台提炼当日动态，关键实体高亮。</p>
       </div>
       {highlights.length > 0 ? (
-        <ul class="hl-list">
+        <div class="platform-grid">
           {highlights.map((h: any) => (
-            <li class={`hl-item reveal ${HL_TYPE[h.type]?.cls || 't-other'}`}>
-              <span class="hl-type">{HL_TYPE[h.type]?.label || '动态'}</span>
-              <span class="hl-platform">{h.platform}</span>
-              <span class="hl-text">{h.text}</span>
-            </li>
+            <article class="platform-card reveal">
+              <header class="pc-head">
+                {logoFor(h.platform) ? <img class="pc-logo" src={logoFor(h.platform)} alt={h.platform} loading="lazy" /> : <span class="pc-logo pc-logo-fallback">{h.platform.slice(0, 1)}</span>}
+                <div class="pc-title">
+                  <h3>{h.platform}</h3>
+                  <p class="pc-summary">{h.logo_summary}</p>
+                </div>
+              </header>
+              <ul class="pc-items">
+                {h.items.map((item: any) => (
+                  <li class={`pc-item ${HL_TYPE[item.type]?.cls || 't-other'}`}>
+                    <span class="hl-type">{HL_TYPE[item.type]?.label || '动态'}</span>
+                    <span class="pc-text">{highlightEntities(item.text).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
           ))}
-        </ul>
+        </div>
       ) : (
         <div class="empty-day">今日暂无 AI 要点（LLM 未运行或当日无实质变化），信号明细见下方。</div>
       )}
     </section>
 
-    {/* ===== 02 今日信号明细 ===== */}
+    {/* ===== 02 今日信号明细（按平台分组 + logo + LLM 解读） ===== */}
     <section class="section" id="signals">
       <div class="section-heading reveal">
         <div class="section-no">02 / SIGNALS</div>
         <h2>今日信号明细</h2>
-        <p class="section-note">{substantive.length} 个信源有实质变化{jitter.length ? `，${jitter.length} 个仅常规波动（已折叠）` : ''}。点击卡片展开逐行 diff。</p>
+        <p class="section-note">{platformOrder.length} 个平台有实质变化，按平台分组。每条附 AI 变化解读，点击展开逐行 diff。</p>
       </div>
-      <div class="change-list">
-        {substantive.map((c: any) => (
-          <details class="change-card reveal">
-            <summary style="list-style:none;cursor:pointer">
-              <div class="card-meta">
-                <span class="platform">{c.platform}</span>
-                <span class="source-type">{typeLabel(c.source_type)}</span>
-                {c.pairs?.length > 0 && <span class="delta">~{c.pairs.length} 处变更</span>}
-                {(c.added_count ?? 0) + (c.removed_count ?? 0) > 0 && (
-                  <span class="delta">+{c.added_count ?? 0} / -{c.removed_count ?? 0}</span>
-                )}
-                <a class="src-link" href={c.url} target="_blank" rel="noopener" onclick="event.stopPropagation()">来源 ↗</a>
-              </div>
-              {c.signal_preview && (
-                <div class="added-preview">
-                  {highlightEntities(c.signal_preview).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}
-                </div>
-              )}
-            </summary>
-            <div class="diff-body">
-              {c.pairs?.length > 0 && (
-                <div class="diff-sec">
-                  <div class="diff-label paired">变更 {c.pairs.length} 处（旧 → 新）</div>
-                  <ul class="line-list">
-                    {c.pairs.slice(0, 20).map((p: any) => (
-                      <li class="line paired">
-                        <span class="pair-old">{p.before.slice(0, 160)}</span>
-                        <span class="pair-arrow">→</span>
-                        <span class="pair-new">{p.after.slice(0, 160)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {c.added_lines?.length > 0 && (
-                <div class="diff-sec">
-                  <div class="diff-label added">新增 {c.added_lines.length} 行</div>
-                  <ul class="line-list">
-                    {c.added_lines.slice(0, 15).map((l: string) => (
-                      <li class="line added">
-                        {highlightEntities(l.slice(0, 220)).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {c.removed_lines?.length > 0 && (
-                <div class="diff-sec">
-                  <div class="diff-label removed">删除 {c.removed_lines.length} 行</div>
-                  <ul class="line-list">
-                    {c.removed_lines.slice(0, 8).map((l: string) => <li class="line removed">{l.slice(0, 220)}</li>)}
-                  </ul>
-                </div>
-              )}
+      {platformOrder.map((platform) => {
+        const sources = platformsInSignals[platform] || [];
+        const hl = highlights.find((h: any) => h.platform === platform);
+        return (
+          <div class="signal-platform reveal">
+            <header class="sp-head">
+              {logoFor(platform) ? <img class="pc-logo" src={logoFor(platform)} alt={platform} loading="lazy" /> : <span class="pc-logo pc-logo-fallback">{platform.slice(0, 1)}</span>}
+              <h3>{platform}</h3>
+              {hl?.logo_summary && <span class="sp-summary">{hl.logo_summary}</span>}
+              <span class="sp-count">{sources.length} 个信源</span>
+            </header>
+            <div class="sp-sources">
+              {sources.map((c: any) => (
+                <details class="change-card">
+                  <summary style="list-style:none;cursor:pointer">
+                    <div class="card-meta">
+                      <span class="source-type">{typeLabel(c.source_type)}</span>
+                      {c.pairs?.length > 0 && <span class="delta">~{c.pairs.length} 处变更</span>}
+                      {(c.added_count ?? 0) + (c.removed_count ?? 0) > 0 && (
+                        <span class="delta">+{c.added_count ?? 0} / -{c.removed_count ?? 0}</span>
+                      )}
+                      <a class="src-link" href={c.url} target="_blank" rel="noopener" onclick="event.stopPropagation()">来源 ↗</a>
+                    </div>
+                    {c.llm_summary ? (
+                      <p class="llm-summary">{c.llm_summary}</p>
+                    ) : c.signal_preview ? (
+                      <p class="added-preview">{highlightEntities(c.signal_preview).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</p>
+                    ) : null}
+                  </summary>
+                  <div class="diff-body">
+                    {c.pairs?.length > 0 && (
+                      <div class="diff-sec">
+                        <div class="diff-label paired">变更 {c.pairs.length} 处（旧 → 新）</div>
+                        <ul class="line-list">
+                          {c.pairs.slice(0, 20).map((p: any) => (
+                            <li class="line paired">
+                              <span class="pair-old">{p.before.slice(0, 160)}</span>
+                              <span class="pair-arrow">→</span>
+                              <span class="pair-new">{p.after.slice(0, 160)}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {c.added_lines?.length > 0 && (
+                      <div class="diff-sec">
+                        <div class="diff-label added">新增 {c.added_lines.length} 行</div>
+                        <ul class="line-list">
+                          {c.added_lines.slice(0, 15).map((l: string) => (
+                            <li class="line added">{highlightEntities(l.slice(0, 220)).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {c.removed_lines?.length > 0 && (
+                      <div class="diff-sec">
+                        <div class="diff-label removed">删除 {c.removed_lines.length} 行</div>
+                        <ul class="line-list">
+                          {c.removed_lines.slice(0, 8).map((l: string) => <li class="line removed">{l.slice(0, 220)}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </details>
+              ))}
             </div>
-          </details>
-        ))}
-      </div>
-
-      {jitter.length > 0 && (
-        <details class="jitter-block">
-          <summary style="list-style:none;cursor:pointer">
-            <span class="jitter-label">◌ {jitter.length} 个信源仅有常规波动</span>
-            <span class="jitter-names">{jitter.map((c: any) => c.platform).join(' · ')}</span>
-          </summary>
-          <ul class="jitter-list">
-            {jitter.map((c: any) => (
-              <li><span class="platform">{c.platform}</span> · {typeLabel(c.source_type)} — 数据抖动 {(c.raw_added_count ?? 0) + (c.raw_removed_count ?? 0)} 行，已过滤</li>
-            ))}
-          </ul>
-        </details>
-      )}
-
-      {today?.failed?.length > 0 && (
-        <details class="fail-block">
-          <summary style="list-style:none;cursor:pointer"><span class="fail-label">⚠ {today.failed.length} 个信源抓取失败</span></summary>
-          <ul>
-            {today.failed.map((f: any) => (
-              <li><span class="platform">{f.platform}</span> · {typeLabel(f.source_type)} — {f.error?.slice(0, 140)}</li>
-            ))}
-          </ul>
-        </details>
-      )}
+          </div>
+        );
+      })}
     </section>
 
-    {/* ===== 03 本周回顾 ===== */}
+    {/* ===== 03 本周回顾（结构化） ===== */}
     {currentWeek && (
       <section class="section" id="week">
         <div class="section-heading reveal">
           <div class="section-no">03 / WEEK</div>
           <h2>本周回顾</h2>
-          <p class="section-note">{currentWeek.week}（{fmtWeekRange(currentWeek)}）{currentWeek.story ? ' · AI 串讲' : ''}</p>
+          <p class="section-note">{currentWeek.week}（{fmtWeekRange(currentWeek)}）</p>
         </div>
-        {currentWeek.story ? (
-          <div class="week-story reveal">
-            <div class="story-theme">{currentWeek.story.theme}</div>
-            {currentWeek.story.story.split('\n').filter((p: string) => p.trim()).map((p: string) => <p>{p}</p>)}
+        <div class="week-panel reveal">
+          <div class="week-side">
+            <div class="week-theme-card">
+              <div class="wt-kicker">WEEK THEME</div>
+              <div class="wt-theme">{currentWeek.story?.theme || '数据积累中'}</div>
+            </div>
+            <div class="week-metrics">
+              <div class="wm-item"><strong>{currentWeek.totals?.substantive ?? 0}</strong><span>实质变化</span></div>
+              <div class="wm-item c-release"><strong>{currentWeek.totals?.releases ?? 0}</strong><span>发布</span></div>
+              <div class="wm-item c-pricing"><strong>{currentWeek.totals?.pricings ?? 0}</strong><span>调价</span></div>
+              <div class="wm-item c-sunset"><strong>{currentWeek.totals?.sunsets ?? 0}</strong><span>下线</span></div>
+            </div>
+            <a class="wt-link" href={`/daily/${currentWeek.week}/`}>本周逐日要点 →</a>
           </div>
-        ) : (
-          <div class="empty-day">本周串讲将在周末生成（需一周数据收齐）。当前统计：{currentWeek.totals?.substantive ?? 0} 个实质变化，{currentWeek.totals?.releases ?? 0} 次发布，{currentWeek.totals?.pricings ?? 0} 次调价。</div>
-        )}
-        <div class="week-totals reveal">
-          <span class="wt-item"><strong>{currentWeek.totals?.substantive ?? 0}</strong> 实质变化</span>
-          <span class="wt-item"><strong>{currentWeek.totals?.releases ?? 0}</strong> 发布</span>
-          <span class="wt-item"><strong>{currentWeek.totals?.pricings ?? 0}</strong> 调价</span>
-          <span class="wt-item"><strong>{currentWeek.totals?.sunsets ?? 0}</strong> 下线</span>
-          <a class="wt-link" href={`/daily/${currentWeek.week}/`}>本周全部要点 →</a>
+          <div class="week-body">
+            {storyParas.length > 0 ? storyParas.map((p: string) => <p>{highlightEntities(p).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</p>) : (
+              <p class="week-pending">本周串讲将在周末数据收齐后生成。当前已积累 {weekHighlightCount} 条要点。</p>
+            )}
+          </div>
         </div>
       </section>
     )}
@@ -297,12 +290,13 @@ function fmtWeekRange(w: any) {
     </section>
   </main>
 
-  <p class="footnote">数据由 fetch_sources.py 每日自动抓取生成 · 经 diff_clean 降噪与 LLM 要点提炼 · 完整历史见仓库 data/ 目录</p>
+  <p class="footnote">数据由 fetch_sources.py 每日自动抓取 · 经 diff_clean 降噪与 LLM 要点提炼 · 完整历史见仓库 data/ 目录</p>
 </Layout>
 
 <style>
+  /* ===== HERO：日期为主体 ===== */
   .hero {
-    padding: 44px 0 30px;
+    padding: 40px 0 30px;
     display: grid;
     grid-template-columns: minmax(0, 1.6fr) minmax(280px, .6fr);
     gap: 50px;
@@ -310,57 +304,59 @@ function fmtWeekRange(w: any) {
   }
   .eyebrow { display: flex; align-items: center; gap: 12px; color: var(--acid); font: 700 12px/1.2 "SF Mono", monospace; letter-spacing: .14em; text-transform: uppercase; }
   .eyebrow::before { content: ""; width: 38px; height: 1px; background: currentColor; }
-  .hero h1 { margin: 16px 0 14px; font-size: clamp(40px, 6vw, 68px); line-height: 1; letter-spacing: -.06em; }
-  .dek { max-width: 620px; margin: 0; color: var(--paper-soft); font-size: 15px; line-height: 1.8; }
+  .date-hero { display: flex; align-items: baseline; gap: 20px; margin: 10px 0 16px; }
+  .date-big { font: 800 clamp(88px, 14vw, 150px)/0.9 "SF Mono", monospace; letter-spacing: -.06em; color: var(--paper); }
+  .date-side { display: grid; gap: 8px; }
+  .date-year { font: 700 20px/1 "SF Mono", monospace; color: var(--acid); letter-spacing: .04em; }
+  .date-week { font: 600 15px/1.4 "Songti SC", serif; color: var(--paper-soft); }
+  .dek { max-width: 620px; margin: 0; color: var(--paper-soft); font-size: 14.5px; line-height: 1.8; }
   .pulse { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
   .pulse-item { padding: 16px 14px; background: color-mix(in srgb, var(--ink) 92%, transparent); }
   .pulse strong { display: block; color: var(--acid); font: 700 22px/1 "SF Mono", monospace; }
   .pulse span { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
 
-  /* LIVE ticker */
-  .ticker { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; }
-  .ticker-label { display: flex; align-items: center; gap: 6px; font: 700 11px/1 "SF Mono", monospace; letter-spacing: .12em; color: var(--red); padding: 10px 14px 10px 0; border-right: 1px solid var(--line); flex-shrink: 0; z-index: 2; background: var(--ink); position: relative; }
-  .live-pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 3px var(--red-dim); animation: pulse 2s ease-in-out infinite; }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
-  .ticker-track { flex: 1; overflow: hidden; position: relative; mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%); }
-  .ticker-content { display: flex; gap: 32px; animation: ticker-scroll 60s linear infinite; white-space: nowrap; padding: 10px 0; }
-  .ticker-content:hover { animation-play-state: paused; }
-  @keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  .ticker-item { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--paper); font-size: 12.5px; flex-shrink: 0; transition: color .15s; }
-  .ticker-item:hover { color: var(--acid); }
-  .ticker-platform { font: 700 11px/1 "SF Mono", monospace; color: var(--acid); letter-spacing: .04em; }
-  .ticker-title { color: var(--paper-soft); }
-  .ticker-date { font: 500 10px/1 "SF Mono", monospace; color: var(--muted); padding-left: 8px; border-left: 1px solid var(--line); }
+  .daily-main { margin-top: 44px; }
 
-  .daily-main { margin-top: 48px; }
-
-  /* 01 要点 */
-  .hl-list { list-style: none; display: grid; gap: 10px; margin: 0; padding: 0; }
-  .hl-item { display: flex; align-items: baseline; gap: 10px; padding: 14px 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); font-size: 14.5px; line-height: 1.7; flex-wrap: wrap; }
+  /* ===== 01 平台卡片 ===== */
+  .platform-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 14px; }
+  .platform-card { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 22px 24px; transition: border-color .2s ease, transform .2s ease; }
+  .platform-card:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+  .pc-head { display: flex; align-items: center; gap: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .pc-logo { width: 36px; height: 36px; border-radius: 9px; background: var(--ink); border: 1px solid var(--line); padding: 5px; object-fit: contain; flex: none; }
+  .pc-logo-fallback { display: grid; place-items: center; font: 700 16px/1 "Songti SC", serif; color: var(--acid); }
+  .pc-title h3 { margin: 0; font-family: "Songti SC", serif; font-size: 17px; font-weight: 700; }
+  .pc-summary { margin: 3px 0 0; color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+  .pc-items { list-style: none; display: grid; gap: 10px; margin: 14px 0 0; padding: 0; }
+  .pc-item { display: flex; align-items: baseline; gap: 10px; font-size: 13.8px; line-height: 1.7; }
   .hl-type { flex: none; font: 700 10px/1 "SF Mono", monospace; letter-spacing: .08em; padding: 4px 8px; border-radius: 5px; margin-top: 3px; }
   .t-release .hl-type { color: var(--acid); background: var(--acid-dim); }
   .t-pricing .hl-type { color: var(--amber); background: var(--amber-dim); }
   .t-sunset .hl-type { color: var(--red); background: var(--red-dim); }
   .t-other .hl-type { color: var(--cyan); background: color-mix(in srgb, var(--cyan) 12%, transparent); }
-  .hl-platform { flex: none; font-family: "Songti SC", serif; font-weight: 700; color: var(--paper-soft); }
-  .hl-text { color: var(--paper-soft); min-width: 200px; flex: 1; }
+  .pc-text { color: var(--paper-soft); }
+  .ent { font: 700 .92em/1.6 "SF Mono", monospace; color: var(--acid); background: var(--acid-dim); padding: 1px 5px; border-radius: 4px; }
 
-  /* 02 信号明细 */
-  .change-list { display: grid; gap: 12px; }
+  /* ===== 02 信号明细（按平台分组） ===== */
+  .signal-platform { margin-bottom: 26px; }
+  .sp-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .sp-head h3 { margin: 0; font-family: "Songti SC", serif; font-size: 18px; font-weight: 700; }
+  .sp-summary { color: var(--muted); font-size: 12.5px; }
+  .sp-count { margin-left: auto; color: var(--muted); font: 600 11px/1 "SF Mono", monospace; }
+  .sp-sources { display: grid; gap: 10px; margin-left: 48px; }
   .change-card { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); overflow: hidden; transition: border-color .2s ease; }
   .change-card:hover { border-color: var(--line-strong); }
   .change-card[open] { border-color: var(--amber); }
   .change-card summary::-webkit-details-marker { display: none; }
-  .card-meta { display: flex; align-items: center; gap: 16px; padding: 16px 22px; flex-wrap: wrap; }
-  .platform { font-family: "Songti SC", serif; font-weight: 700; font-size: 16px; }
+  .card-meta { display: flex; align-items: center; gap: 14px; padding: 13px 20px; flex-wrap: wrap; }
   .source-type { color: var(--cyan); font: 700 11px/1 "SF Mono", monospace; letter-spacing: .06em; padding: 5px 9px; background: color-mix(in srgb, var(--cyan) 12%, transparent); border-radius: 6px; }
   .delta { color: var(--amber); font: 700 12px/1 "SF Mono", monospace; }
   .src-link { margin-left: auto; color: var(--muted); font: 500 11px/1 "SF Mono", monospace; text-decoration: none; border-bottom: 1px dotted var(--muted); }
   .src-link:hover { color: var(--acid); border-color: var(--acid); }
-  .added-preview { padding: 0 22px 16px; color: var(--paper-soft); font-size: 13.5px; line-height: 1.6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .diff-body { padding: 6px 22px 20px; border-top: 1px solid var(--line); }
-  .diff-sec { margin-top: 14px; }
-  .diff-label { font: 700 10px/1 "SF Mono", monospace; letter-spacing: .1em; margin-bottom: 10px; }
+  .llm-summary { margin: 0; padding: 0 20px 14px; color: var(--paper-soft); font-size: 13.2px; line-height: 1.75; }
+  .added-preview { margin: 0; padding: 0 20px 14px; color: var(--muted); font-size: 12.5px; line-height: 1.6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .diff-body { padding: 6px 20px 18px; border-top: 1px solid var(--line); }
+  .diff-sec { margin-top: 12px; }
+  .diff-label { font: 700 10px/1 "SF Mono", monospace; letter-spacing: .1em; margin-bottom: 8px; }
   .diff-label.added { color: var(--acid); }
   .diff-label.removed { color: var(--red); }
   .diff-label.paired { color: var(--cyan); }
@@ -372,36 +368,30 @@ function fmtWeekRange(w: any) {
   .pair-old { color: var(--muted); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--red) 45%, transparent); }
   .pair-arrow { color: var(--cyan); flex: none; }
   .pair-new { color: var(--paper-soft); }
-  .ent { font: 700 12px/1.6 "SF Mono", monospace; color: var(--acid); background: var(--acid-dim); padding: 1px 5px; border-radius: 4px; }
-  .jitter-block { margin-top: 12px; border: 1px dashed var(--line); border-radius: 12px; background: transparent; }
-  .jitter-block summary::-webkit-details-marker { display: none; }
-  .jitter-block summary { display: flex; align-items: baseline; gap: 12px; padding: 12px 18px; flex-wrap: wrap; }
-  .jitter-label { color: var(--muted); font: 700 12px/1 "SF Mono", monospace; }
-  .jitter-names { color: var(--muted); font-size: 12px; opacity: .75; }
-  .jitter-list { list-style: none; padding: 0 18px 14px; display: grid; gap: 6px; }
-  .jitter-list li { color: var(--muted); font-size: 12.5px; }
-  .jitter-list .platform { color: var(--paper-soft); font-size: 13px; }
-  .fail-block { margin-top: 12px; border: 1px solid color-mix(in srgb, var(--red) 35%, transparent); border-radius: 12px; background: var(--red-dim); }
-  .fail-block summary::-webkit-details-marker { display: none; }
-  .fail-label { display: block; padding: 13px 20px; color: var(--red); font: 700 12px/1 "SF Mono", monospace; }
-  .fail-block ul { list-style: none; padding: 0 20px 16px; display: grid; gap: 6px; }
-  .fail-block li { color: var(--muted); font-size: 12.5px; }
-  .fail-block .platform { color: var(--paper-soft); }
-
-  /* 03 本周回顾 */
-  .week-story { border: 1px solid color-mix(in srgb, var(--acid) 30%, transparent); border-radius: 14px; background: linear-gradient(135deg, var(--acid-dim), transparent 65%); padding: 26px 30px; }
-  .story-theme { font: 700 20px/1.3 "Songti SC", serif; color: var(--paper); margin-bottom: 16px; }
-  .week-story p { margin: 0 0 14px; color: var(--paper-soft); font-size: 15px; line-height: 1.85; }
-  .week-story p:last-child { margin-bottom: 0; }
-  .week-totals { display: flex; gap: 22px; align-items: center; margin-top: 16px; padding: 16px 20px; border: 1px solid var(--line); border-radius: 12px; flex-wrap: wrap; }
-  .wt-item { color: var(--muted); font-size: 13px; }
-  .wt-item strong { color: var(--acid); font: 700 18px/1 "SF Mono", monospace; margin-right: 6px; }
-  .wt-link { margin-left: auto; color: var(--acid); font: 700 12px/1 "SF Mono", monospace; text-decoration: none; border-bottom: 1px dotted var(--acid); }
-  .wt-link:hover { opacity: .8; }
 
   .empty-day { padding: 22px 26px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); font-size: 13.5px; }
 
-  /* 04 周度归档 */
+  /* ===== 03 本周回顾（结构化面板） ===== */
+  .week-panel { display: grid; grid-template-columns: 320px 1fr; gap: 0; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--panel); }
+  .week-side { padding: 28px; border-right: 1px solid var(--line); background: linear-gradient(160deg, var(--acid-dim), transparent 70%); display: flex; flex-direction: column; gap: 22px; }
+  .week-theme-card { display: grid; gap: 10px; }
+  .wt-kicker { color: var(--acid); font: 700 10px/1 "SF Mono", monospace; letter-spacing: .14em; }
+  .wt-theme { font-family: "Songti SC", serif; font-size: 22px; font-weight: 700; line-height: 1.35; color: var(--paper); }
+  .week-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .wm-item { padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--ink) 88%, transparent); }
+  .wm-item strong { display: block; font: 700 26px/1 "SF Mono", monospace; color: var(--paper); }
+  .wm-item.c-release strong { color: var(--acid); }
+  .wm-item.c-pricing strong { color: var(--amber); }
+  .wm-item.c-sunset strong { color: var(--red); }
+  .wm-item span { display: block; margin-top: 6px; color: var(--muted); font-size: 11.5px; }
+  .wt-link { margin-top: auto; color: var(--acid); font: 700 12px/1 "SF Mono", monospace; text-decoration: none; border-bottom: 1px dotted var(--acid); align-self: flex-start; }
+  .wt-link:hover { opacity: .8; }
+  .week-body { padding: 28px 30px; }
+  .week-body p { margin: 0 0 16px; color: var(--paper-soft); font-size: 15px; line-height: 1.9; }
+  .week-body p:last-child { margin-bottom: 0; }
+  .week-pending { color: var(--muted); }
+
+  /* ===== 04 归档 ===== */
   .archive-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
   .archive-card { display: grid; gap: 6px; padding: 18px 22px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); text-decoration: none; color: var(--paper); transition: transform .2s ease, border-color .2s ease; }
   .archive-card:hover { transform: translateY(-3px); border-color: var(--acid); }
@@ -411,7 +401,7 @@ function fmtWeekRange(w: any) {
   .archive-arrow { color: var(--muted); justify-self: end; transition: color .2s, transform .2s; }
   .archive-card:hover .archive-arrow { color: var(--acid); transform: translateX(3px); }
 
-  /* 05 周报入口 */
+  /* ===== 05 周报 ===== */
   .weekly-cta { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; }
   .weekly-latest { display: grid; gap: 10px; padding: 28px 30px; border-radius: var(--radius); background: var(--acid); color: var(--ink); text-decoration: none; transition: transform .2s ease; }
   .weekly-latest:hover { transform: translateY(-4px); }
@@ -428,7 +418,10 @@ function fmtWeekRange(w: any) {
 
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; gap: 30px; }
-    .card-meta { gap: 10px; }
+    .platform-grid { grid-template-columns: 1fr; }
+    .week-panel { grid-template-columns: 1fr; }
+    .week-side { border-right: none; border-bottom: 1px solid var(--line); }
+    .sp-sources { margin-left: 0; }
     .weekly-cta { grid-template-columns: 1fr; }
   }
 </style>

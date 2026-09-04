@@ -70,16 +70,22 @@ def build_weekly(days: list) -> list:
         substantive = [c for c in d.get("changed", []) if c.get("kind") == "substantive"]
         jitter = [c for c in d.get("changed", []) if c.get("kind") == "jitter"]
         hl = d.get("highlights") or []
+        # v3 highlights 是平台分组结构 [{platform, logo_summary, items:[{text,type}]}]，
+        # 展平为 item 级再统计/拼接
+        flat = []
+        for h in hl:
+            for item in h.get("items", []):
+                flat.append({"platform": h.get("platform"), "date": d["date"],
+                             "text": item.get("text"), "type": item.get("type")})
         w["days"][d["date"]] = {
             "substantive": len(substantive),
             "jitter": len(jitter),
             "failed": len(d.get("failed", [])),
-            "releases": sum(1 for h in hl if h.get("type") == "release"),
-            "pricings": sum(1 for h in hl if h.get("type") == "pricing"),
-            "sunsets": sum(1 for h in hl if h.get("type") == "sunset"),
+            "releases": sum(1 for h in flat if h.get("type") == "release"),
+            "pricings": sum(1 for h in flat if h.get("type") == "pricing"),
+            "sunsets": sum(1 for h in flat if h.get("type") == "sunset"),
         }
-        for h in hl:
-            w["highlights"].append({**h, "date": d["date"]})
+        w["highlights"].extend(flat)
     # 汇总
     for w in weeks.values():
         w["totals"] = {
@@ -134,15 +140,26 @@ def main():
             "failed": failed,
         })
 
-    # 保留已有 highlights（llm-digest.py 产出，按日期幂等）
+    # 保留已有 highlights 和 llm_summary（llm-digest.py 产出，按日期幂等）
     try:
         prev = json.loads(DST_FILE.read_text(encoding="utf-8"))
-        prev_hl = {d["date"]: d.get("highlights") for d in prev.get("days", []) if d.get("highlights")}
+        prev_days = {d["date"]: d for d in prev.get("days", [])}
     except (FileNotFoundError, json.JSONDecodeError):
-        prev_hl = {}
+        prev_days = {}
     for d in days:
-        if d["date"] in prev_hl:
-            d["highlights"] = prev_hl[d["date"]]
+        pd = prev_days.get(d["date"])
+        if not pd:
+            continue
+        if pd.get("highlights"):
+            d["highlights"] = pd["highlights"]
+        # 信源级 LLM 解读挂回重建的 changed 条目
+        prev_sum = {f"{c.get('platform')}|{c.get('source_type')}": c.get("llm_summary")
+                    for c in pd.get("changed", []) if c.get("llm_summary")}
+        if prev_sum:
+            for c in d["changed"]:
+                key = f"{c.get('platform')}|{c.get('source_type')}"
+                if key in prev_sum:
+                    c["llm_summary"] = prev_sum[key]
 
     out = {
         "updated_at": datetime.now().isoformat(timespec="seconds"),
