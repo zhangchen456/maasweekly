@@ -54,10 +54,18 @@ jobs:
         env:
           TZ: Asia/Shanghai
 
-      # ---- 2. 同步 diff 数据到站点 ----
+      # ---- 2. 同步 diff 数据到站点（含 diff_clean 降噪/配对/分类）----
       - name: Sync diff data to site
         if: ${{ !inputs.skip_fetch }}
         run: python3 pipeline/scripts/sync-diff-to-site.py
+
+      # ---- 2.2 LLM 提炼"今日要点"（失败不阻塞，前端回退规则版预览）----
+      - name: LLM digest highlights
+        if: ${{ !inputs.skip_fetch }}
+        run: python3 pipeline/scripts/llm-digest.py
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+        continue-on-error: true
 
       # ---- 2.5 从 diff 提炼热点事件到首页 LIVE 滚动条 ----
       - name: Extract live events
