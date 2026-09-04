@@ -2,6 +2,10 @@
 
 全球 MaaS 平台追踪站：周度报告 + 每日信源变化（热点每天更新），数据由自动抓取管线驱动。
 
+线上地址：**https://week.maas.click** （`https://mw.zhangchen456.xyz` 为同站旧域名，保留可用）
+
+部署：aliyun-099（47.237.135.97）nginx 静态站，目录 `/var/www/maasweekly`，由 GitHub Actions rsync 更新。
+
 ## 仓库结构
 
 ```
