@@ -1,0 +1,100 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// 归档索引页：/weekly/
+// 汇总两类归档：AI 周度归档（每日动态按周聚合）+ 深度周报（人工/Agent 写作）
+
+// 周度归档（每日动态聚合）
+const weeklyPath = path.join(process.cwd(), 'src/data/weekly-digest.json');
+let weeks: any[] = [];
+try { weeks = JSON.parse(fs.readFileSync(weeklyPath, 'utf-8')); } catch {}
+
+// 深度周报
+const reports = await getCollection('weekly', ({ data }) => data.date <= new Date().toISOString().slice(0, 10));
+reports.sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+const fmtWeekRange = (w: any) => {
+  const f = (d: string) => { const [, m, dd] = d.split('-'); return `${+m}.${+dd}`; };
+  return `${f(w.start)} — ${f(w.end)}`;
+};
+---
+<Layout title="归档 — MaaS Daily" description="MaaS Daily 归档：每日动态按周聚合 + 深度周报全部期数">
+  <header class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">ARCHIVE</div>
+      <h1>归档</h1>
+      <p class="dek">每日动态按周聚合归档，以及 {reports.length} 期深度周报。</p>
+    </div>
+  </header>
+
+  {/* 周度归档 */}
+  <section class="section">
+    <div class="section-heading reveal">
+      <div class="section-no">01 / DAILY</div>
+      <h2>周度归档</h2>
+      <p class="section-note">每日动态按 ISO 周聚合，含 AI 周度串讲与逐日要点。</p>
+    </div>
+    {weeks.length > 0 ? (
+      <div class="archive-grid">
+        {weeks.map((w) => (
+          <a href={`/daily/${w.week}/`} class="archive-card reveal">
+            <div class="archive-week">{w.week}</div>
+            <div class="archive-range">{fmtWeekRange(w)}</div>
+            <div class="archive-stats">{w.totals?.substantive ?? 0} 变化 · {w.totals?.releases ?? 0} 发布 · {w.totals?.pricings ?? 0} 调价</div>
+            <div class="archive-arrow">→</div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="empty-day">周度归档数据积累中。</div>
+    )}
+  </section>
+
+  {/* 深度周报 */}
+  <section class="section">
+    <div class="section-heading reveal">
+      <div class="section-no">02 / WEEKLY</div>
+      <h2>深度周报</h2>
+      <p class="section-note">共 {reports.length} 期完整周报，按日期倒序。</p>
+    </div>
+    <div class="report-grid">
+      {reports.map((r) => (
+        <a href={`/weekly/${r.id}/`} class="report-card reveal">
+          <div class="report-date">{r.data.date}</div>
+          <div class="report-period">{r.data.period || ''}</div>
+          <div class="report-arrow">→</div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero { padding: 44px 0 30px; }
+  .eyebrow { display: flex; align-items: center; gap: 12px; color: var(--acid); font: 700 12px/1.2 "SF Mono", monospace; letter-spacing: .14em; text-transform: uppercase; }
+  .eyebrow::before { content: ""; width: 38px; height: 1px; background: currentColor; }
+  .hero h1 { margin: 16px 0 14px; font-size: clamp(40px, 6vw, 64px); line-height: 1; letter-spacing: -.06em; }
+  .dek { max-width: 620px; margin: 0; color: var(--paper-soft); font-size: 15px; line-height: 1.8; }
+
+  .archive-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .archive-card { display: grid; gap: 6px; padding: 18px 22px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); text-decoration: none; color: var(--paper); transition: transform .2s ease, border-color .2s ease; }
+  .archive-card:hover { transform: translateY(-3px); border-color: var(--acid); }
+  .archive-week { font: 700 17px/1 "SF Mono", monospace; color: var(--acid); }
+  .archive-range { color: var(--paper-soft); font-size: 13px; }
+  .archive-stats { color: var(--muted); font-size: 12px; }
+  .archive-arrow { color: var(--muted); justify-self: end; transition: color .2s, transform .2s; }
+  .archive-card:hover .archive-arrow { color: var(--acid); transform: translateX(3px); }
+
+  .report-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+  .report-card { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 16px 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); text-decoration: none; color: var(--paper); transition: transform .2s ease, border-color .2s ease; }
+  .report-card:hover { transform: translateY(-2px); border-color: var(--acid); }
+  .report-date { font: 700 15px/1 "SF Mono", monospace; }
+  .report-period { color: var(--muted); font-size: 11.5px; }
+  .report-arrow { color: var(--muted); transition: color .2s, transform .2s; }
+  .report-card:hover .report-arrow { color: var(--acid); transform: translateX(3px); }
+
+  .empty-day { padding: 22px 26px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); font-size: 13.5px; }
+</style>
