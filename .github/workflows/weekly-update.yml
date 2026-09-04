@@ -2,7 +2,7 @@ name: 周报数据准备
 
 # 每周一北京时间 09:00（UTC 01:00）跑一次：抓取 + 汇总本周 diff，
 # 为周报写作准备素材。周报 Markdown 本身由人工/Agent 写好后放入 data/weekly/，
-# 再通过手动触发本工作流的 "import" 模式导入站点并构建。
+# 再通过手动触发本工作流的 "import" 模式导入站点并构建部署。
 on:
   schedule:
     - cron: '0 1 * * 1'  # UTC 01:00 周一 = 北京时间 09:00
@@ -19,8 +19,11 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
+
+env:
+  DEPLOY_HOST: 47.237.135.97
+  DEPLOY_USER: maasdeploy
+  DEPLOY_PATH: /var/www/maasweekly/
 
 concurrency:
   group: weekly-update
@@ -29,9 +32,6 @@ concurrency:
 jobs:
   weekly:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -67,7 +67,7 @@ jobs:
           TZ: Asia/Shanghai
 
       - name: Sync diff data to site
-        if: steps.mode.outputs.mode != 'import'
+        if: steps.mode.outputs.mode != 'aggregate'
         run: python3 pipeline/scripts/sync-diff-to-site.py
 
       # ---- 导入周报 ----
@@ -85,20 +85,17 @@ jobs:
           npm ci
           npm run build
 
-      - name: Setup Pages
+      - name: Setup SSH key
         if: steps.mode.outputs.mode != 'aggregate'
-        uses: actions/configure-pages@v5
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ env.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Upload artifact
+      - name: Deploy via rsync
         if: steps.mode.outputs.mode != 'aggregate'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site/dist
-
-      - name: Deploy to GitHub Pages
-        if: steps.mode.outputs.mode != 'aggregate'
-        id: deployment
-        uses: actions/deploy-pages@v4
+        run: rsync -az --delete site/dist/ ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}
 
       # ---- 提交数据 ----
       - name: Commit new data
