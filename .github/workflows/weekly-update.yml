@@ -1,0 +1,114 @@
+name: 周报数据准备
+
+# 每周一北京时间 09:00（UTC 01:00）跑一次：抓取 + 汇总本周 diff，
+# 为周报写作准备素材。周报 Markdown 本身由人工/Agent 写好后放入 data/weekly/，
+# 再通过手动触发本工作流的 "import" 模式导入站点并构建。
+on:
+  schedule:
+    - cron: '0 1 * * 1'  # UTC 01:00 周一 = 北京时间 09:00
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '运行模式'
+        type: choice
+        default: 'aggregate'
+        options:
+          - aggregate   # 只抓取+汇总本周 diff 素材
+          - import      # 导入 data/weekly 新周报到站点并构建部署
+          - full        # 抓取 + 导入 + 构建部署
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: weekly-update
+  cancel-in-progress: false
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: site/package-lock.json
+
+      - name: Resolve mode
+        id: mode
+        run: |
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            echo "mode=full" >> "$GITHUB_OUTPUT"
+          else
+            echo "mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ---- 抓取 + 汇总 diff ----
+      - name: Fetch sources & generate diff
+        if: steps.mode.outputs.mode != 'import'
+        run: python3 pipeline/scripts/fetch_sources.py
+        env:
+          TZ: Asia/Shanghai
+
+      - name: Sync diff data to site
+        if: steps.mode.outputs.mode != 'import'
+        run: python3 pipeline/scripts/sync-diff-to-site.py
+
+      # ---- 导入周报 ----
+      - name: Import weekly reports
+        if: steps.mode.outputs.mode != 'aggregate'
+        run: |
+          python3 site/scripts/import-weekly.py
+          python3 site/scripts/extract-structured.py
+
+      # ---- 构建部署 ----
+      - name: Build site
+        if: steps.mode.outputs.mode != 'aggregate'
+        working-directory: site
+        run: |
+          npm ci
+          npm run build
+
+      - name: Setup Pages
+        if: steps.mode.outputs.mode != 'aggregate'
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        if: steps.mode.outputs.mode != 'aggregate'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+      - name: Deploy to GitHub Pages
+        if: steps.mode.outputs.mode != 'aggregate'
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      # ---- 提交数据 ----
+      - name: Commit new data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ site/src/content/ site/src/data/
+          if git diff --cached --quiet; then
+            echo "无数据变化，跳过提交"
+          else
+            git commit -m "data: 周报更新 $(date +'%Y-%m-%d')"
+            git push
+          fi

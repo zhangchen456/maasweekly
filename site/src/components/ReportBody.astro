@@ -1,0 +1,469 @@
+---
+import { marked } from 'marked';
+
+marked.setOptions({ breaks: true, gfm: true });
+const md = (s: string) => marked.parse(s || '') as string;
+
+interface Props {
+  data: any;
+}
+
+const { data } = Astro.props;
+
+const headline = data?.headline || [];
+const platforms = data?.platforms || [];
+const summaryTable = data?.summary_table;
+const trends = data?.trends || [];
+const watchpoints = data?.watchpoints;
+const eventIndex = data?.event_index || [];
+---
+
+<div class="report-body">
+  {/* 顶部汇总表 */}
+  {summaryTable && summaryTable.rows?.length > 0 && (
+    <section class="summary-wrap">
+      <div class="section-label">平台状态速览</div>
+      <table class="summary-table">
+        <tbody>
+          {summaryTable.rows.map((row: string[]) => {
+            const plat = platforms.find((p: any) => p.name?.includes(row[0]) || row[0]?.includes(p.name?.split('（')[0]));
+            const status = plat?.status || 'stable';
+            return (
+              <tr>
+                <td class="c-platform">
+                  <span class={`status-dot ${status}`}></span>
+                  <span set:html={md(row[0])}></span>
+                </td>
+                <td class="c-status" set:html={md(row[2])}></td>
+                <td class="c-watch" set:html={md(row[3])}></td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </section>
+  )}
+
+  {/* 头条区 */}
+  {headline.length > 0 && (
+    <section class="headlines">
+      <div class="section-label">本周头条</div>
+      <div class="headline-list">
+        {headline.map((h: any) => (
+          <details class="headline-card" open={h.rank <= 3}>
+            <summary class="headline-summary">
+              <span class="headline-rank">{String(h.rank).padStart(2, '0')}</span>
+              <span class="headline-main">
+                <span class="headline-title-line">
+                  {h.platform && <span class="tag">{h.platform}</span>}
+                  <span class={`status-badge ${h.level}`}>
+                    {h.level === 'critical' ? '头条' : '关注'}
+                  </span>
+                  {h.is_new !== null && (
+                    <span class={`tag ${h.is_new ? 'tag-new' : 'tag-follow'}`}>
+                      {h.is_new ? '新增' : '跟进'}
+                    </span>
+                  )}
+                </span>
+                <span class="headline-title">{h.title}</span>
+              </span>
+            </summary>
+            <div class="headline-detail prose" set:html={md(h.detail_markdown)} />
+          </details>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {/* 各平台追踪 */}
+  {platforms.length > 0 && (
+    <section class="fold-section">
+      <details class="collapsible">
+        <summary>各平台详细追踪<span class="fold-count">{platforms.length} 个平台</span></summary>
+        <div class="collapsible-body">
+          <div class="platform-list">
+            {platforms.map((p: any) => (
+              <div class="platform-block">
+                <div class="platform-head">
+                  <span class={`status-dot ${p.status}`}></span>
+                  <span class="platform-name">{p.name}</span>
+                  <span class="platform-status">{p.status_text}</span>
+                </div>
+                {p.this_week?.length > 0 && (
+                  <div class="platform-sub">
+                    <div class="platform-sublabel">本周动态</div>
+                    <ul class="platform-items">
+                      {p.this_week.map((item: string) => (
+                        <li set:html={md(item)}></li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {p.recent?.length > 0 && (
+                  <details class="platform-recent">
+                    <summary>近期回顾 <span class="fold-count">{p.recent.length} 条</span></summary>
+                    <ul class="platform-items">
+                      {p.recent.map((item: string) => (
+                        <li set:html={md(item)}></li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </details>
+    </section>
+  )}
+
+  {/* 趋势洞察 */}
+  {trends.length > 0 && (
+    <section class="fold-section">
+      <details class="collapsible">
+        <summary>趋势洞察<span class="fold-count">{trends.length} 条</span></summary>
+        <div class="collapsible-body">
+          <div class="trend-list">
+            {trends.map((t: any, i: number) => (
+              <div class="trend-block">
+                <h3 class="trend-title">{String(i + 1).padStart(2, '0')}. {t.title}</h3>
+                <div class="trend-body prose" set:html={md(t.body_markdown)} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </details>
+    </section>
+  )}
+
+  {/* 关注时间点 */}
+  {watchpoints && watchpoints.rows?.length > 0 && (
+    <section class="fold-section">
+      <details class="collapsible">
+        <summary>关注时间点<span class="fold-count">{watchpoints.rows.length} 项</span></summary>
+        <div class="collapsible-body">
+          <table class="watchpoints-table">
+            <tbody>
+              {watchpoints.rows.map((row: string[]) => (
+                <tr>
+                  <td class="c-date" set:html={md(row[0])}></td>
+                  <td set:html={md(row[1])}></td>
+                  {row[2] && <td class="c-plat" set:html={md(row[2])}></td>}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </section>
+  )}
+
+  {/* 事件索引 */}
+  {eventIndex.length > 0 && (
+    <section class="fold-section">
+      <details class="collapsible">
+        <summary>已报道事件索引<span class="fold-count">{eventIndex.length} 期</span></summary>
+        <div class="collapsible-body">
+          <ul class="event-index-list">
+            {eventIndex.map((e: any) => (
+              <li>
+                <span class="event-date">[{e.date}]</span>
+                <span set:html={md(e.text)}></span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </details>
+    </section>
+  )}
+</div>
+
+<style>
+  .report-body {
+    margin-top: 32px;
+  }
+
+  /* 汇总表 */
+  .summary-wrap {
+    margin-bottom: 40px;
+  }
+
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+
+  .summary-table td {
+    border-top: 1px solid var(--line);
+    padding: 12px 0;
+    vertical-align: top;
+  }
+
+  .summary-table tr:last-child td {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .c-platform {
+    width: 26%;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .c-status {
+    color: var(--paper);
+  }
+
+  .c-watch {
+    width: 32%;
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  /* 头条卡片 */
+  .headline-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .headline-card {
+    border-top: 1px solid var(--line);
+  }
+
+  .headline-card:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .headline-summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 16px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .headline-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .headline-rank {
+    font-size: 11px;
+    color: var(--muted);
+    flex-shrink: 0;
+    width: 22px;
+    padding-top: 2px;
+    font-weight: 700;
+  }
+
+  .headline-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .headline-title-line {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .headline-title {
+    font-weight: 700;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--paper);
+  }
+
+  .tag-new { color: var(--red); background: var(--red-dim); border-color: var(--red); }
+  .tag-follow { color: var(--muted); }
+
+  .headline-detail {
+    padding: 0 0 18px 36px;
+    font-size: 12.5px;
+  }
+
+  .headline-detail :global(p) { margin: 0.4em 0; }
+  .headline-detail :global(strong) { font-weight: 700; }
+
+  /* 平台块 */
+  .platform-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .platform-block {
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .platform-block:first-child {
+    border-top: none;
+    padding-top: 4px;
+  }
+
+  .platform-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .platform-name {
+    font-weight: 700;
+    font-size: 13.5px;
+  }
+
+  .platform-status {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .platform-sub {
+    margin-bottom: 10px;
+  }
+
+  .platform-sublabel {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .platform-items {
+    list-style: none;
+    padding: 0;
+  }
+
+  .platform-items li {
+    padding: 6px 0 6px 14px;
+    position: relative;
+    font-size: 12.5px;
+    line-height: 1.6;
+    border-top: 1px solid var(--line);
+  }
+
+  .platform-items li:first-child {
+    border-top: none;
+  }
+
+  .platform-items li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 3px;
+    height: 3px;
+    background: var(--muted);
+  }
+
+  .platform-recent {
+    margin-top: 8px;
+  }
+
+  .platform-recent > summary {
+    list-style: none;
+    cursor: pointer;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 6px 0;
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .platform-recent > summary::-webkit-details-marker { display: none; }
+  .platform-recent > summary::after { content: '+'; font-weight: 400; }
+  .platform-recent[open] > summary::after { content: '−'; }
+
+  /* 趋势 */
+  .trend-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .trend-block {
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .trend-block:first-child {
+    border-top: none;
+    padding-top: 4px;
+  }
+
+  .trend-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .trend-body {
+    font-size: 12.5px;
+  }
+
+  /* 时间点表 */
+  .watchpoints-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+
+  .watchpoints-table td {
+    border-top: 1px solid var(--line);
+    padding: 10px 0;
+    vertical-align: top;
+  }
+
+  .watchpoints-table tr:last-child td {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .c-date {
+    width: 22%;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .c-plat {
+    width: 24%;
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  /* 事件索引 */
+  .event-index-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .event-index-list li {
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .event-index-list li:first-child {
+    border-top: none;
+  }
+
+  .event-date {
+    font-weight: 700;
+    color: var(--acid);
+    margin-right: 8px;
+  }
+
+  /* section label 复用全局 */
+  .fold-section {
+    margin-bottom: 4px;
+  }
+</style>

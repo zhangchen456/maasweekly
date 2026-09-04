@@ -1,0 +1,314 @@
+{
+  "meta": {
+    "title": "全球主流 MaaS 平台官方信源清单",
+    "generated_at": "2026-09-02",
+    "purpose": "用于自动化数据采集与周报生成",
+    "verification": "所有 URL 均于 2026-09-02 通过 curl/web_fetch 验证。HTTP 状态码标注于各条 notes 中；标注'浏览器可访问'的页面为 curl 被反爬拦截（403/302），但实际公开可用",
+    "fields": {
+      "model_list": "P0 官方文档模型列表页",
+      "pricing": "P0 官方 API/开发者定价页",
+      "changelog": "P0 更新日志/发布公告",
+      "api_docs": "P1 API 参考文档入口",
+      "github": "P1 官方 GitHub 仓库",
+      "blog": "P1 官方博客/新闻",
+      "model_marketplace": "P2 模型广场/控制台（多为登录后可见）"
+    }
+  },
+  "platforms": [
+    {
+      "name": "火山方舟",
+      "name_en": "Volcano Ark",
+      "region": "china",
+      "vendor": "volcengine",
+      "official_site": "https://www.volcengine.com/product/ark",
+      "sources": {
+        "model_list": "https://www.volcengine.com/docs/82379/1330310",
+        "pricing": "https://www.volcengine.com/docs/82379/1544106",
+        "changelog": "https://www.volcengine.com/docs/82379/1159177",
+        "api_docs": "https://www.volcengine.com/docs/82379/1263279",
+        "github": "https://github.com/volcengine",
+        "blog": "https://www.volcengine.com/blog",
+        "model_marketplace": "https://console.volcengine.com/ark/region:ark+cn-beijing/model"
+      },
+      "notes": "模型列表(1330310)/模型服务价格(1544106, 含输入/输出/缓存)/产品更新公告(1159177, 另有模型发布公告1159178)均为200公开可抓取。控制台模型广场需登录。docs 82379 为方舟大模型服务平台文档中心。"
+    },
+    {
+      "name": "阿里百炼",
+      "name_en": "Alibaba Bailian (Model Studio)",
+      "region": "china",
+      "vendor": "alibaba",
+      "official_site": "https://bailian.console.aliyun.com",
+      "sources": {
+        "model_list": "https://help.aliyun.com/zh/model-studio/models",
+        "pricing": "https://help.aliyun.com/zh/model-studio/model-pricing",
+        "changelog": "https://help.aliyun.com/zh/model-studio/release-notes",
+        "api_docs": "https://help.aliyun.com/zh/model-studio/developer-reference",
+        "github": "https://github.com/QwenLM",
+        "blog": "https://qwenlm.github.io/blog/",
+        "model_marketplace": "https://bailian.console.aliyun.com/?tab=model"
+      },
+      "notes": "模型列表(models, 列出qwen/deepseek/kimi/glm/minimax等)/模型价格(model-pricing)/产品动态(release-notes)均200公开可抓取。控制台模型广场需登录。QwenLM 为通义千问官方开源组织。文档站同时提供 API 在线调试。"
+    },
+    {
+      "name": "百度千帆",
+      "name_en": "Baidu Qianfan",
+      "region": "china",
+      "vendor": "baidu",
+      "official_site": "https://qianfan.cloud.baidu.com/",
+      "sources": {
+        "model_list": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+        "pricing": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+        "changelog": "https://cloud.baidu.com/doc/qianfan/s/Mmh8l4qwj",
+        "api_docs": "https://cloud.baidu.com/doc/qianfan/index.html",
+        "github": "https://github.com/baidu",
+        "blog": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp",
+        "model_marketplace": "https://qianfan.cloud.baidu.com/model"
+      },
+      "notes": "模型列表(rmh4stp0j)/模型服务计费(wmh4sv6ya)/更新动态(Mmh8l4qwj)/模型更新记录(Kmh4stnjp)均200。文档为JS渲染，静态抓取只能拿到框架，建议用浏览器渲染或官方SDK。控制台模型广场需登录。github 选 baidu 母公司（文心/PaddlePaddle 等开源）。"
+    },
+    {
+      "name": "腾讯混元/TokenHub",
+      "name_en": "Tencent Hunyuan / TokenHub",
+      "region": "china",
+      "vendor": "tencent",
+      "official_site": "https://cloud.tencent.com/product/hunyuan",
+      "sources": {
+        "model_list": "https://cloud.tencent.com/document/product/1729/104753",
+        "pricing": "https://cloud.tencent.com/document/product/1729/97731",
+        "changelog": "https://cloud.tencent.com/document/product/1729/132069",
+        "api_docs": "https://cloud.tencent.com/document/product/1729/101848",
+        "github": "https://github.com/Tencent-Hunyuan",
+        "blog": "https://cloud.tencent.com/developer/column/",
+        "model_marketplace": "https://console.cloud.tencent.com/tokenhub/"
+      },
+      "notes": "产品概述(104753, 含模型列表)/混元生文计费概述(97731, 含输入/输出/缓存价)/产品公告(132069, 另有API更新历史101849)均200。api_docs 取混元大模型API概览(101848)。注意 tokenhub.cloud.tencent.com 域名不可访问，TokenHub 控制台实际地址为 console.cloud.tencent.com/tokenhub/（需登录）。Tencent-Hunyuan 为混元官方开源组织。"
+    },
+    {
+      "name": "硅基流动",
+      "name_en": "SiliconFlow",
+      "region": "china",
+      "vendor": "siliconflow",
+      "official_site": "https://siliconflow.cn/",
+      "sources": {
+        "model_list": "https://cloud.siliconflow.cn/models",
+        "pricing": "https://siliconflow.cn/pricing",
+        "changelog": "https://docs.siliconflow.cn/docs/release-notes/overview",
+        "api_docs": "https://docs.siliconflow.cn/docs/api/chat-completions-post",
+        "github": "https://github.com/siliconflow",
+        "blog": "https://siliconflow.cn/blog",
+        "model_marketplace": "https://cloud.siliconflow.cn/models"
+      },
+      "notes": "模型广场(cloud.siliconflow.cn/models)公开无需登录，可按类别筛选且展示各模型单价，可作为模型列表+价格数据源。更新公告(release-notes/overview)为官方 changelog。文档真实路径为 /docs/...（无 cn 前缀），提供 llms.txt 及 /v1/models 兼容API可直接抓取。"
+    },
+    {
+      "name": "智谱AI",
+      "name_en": "Zhipu AI (Z.ai)",
+      "region": "china",
+      "vendor": "zhipu",
+      "official_site": "https://open.bigmodel.cn/",
+      "sources": {
+        "model_list": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+        "pricing": "https://bigmodel.cn/pricing",
+        "changelog": "https://docs.bigmodel.cn/cn/update/new-releases",
+        "api_docs": "https://open.bigmodel.cn/dev/api",
+        "github": "https://github.com/zai-org",
+        "blog": "https://www.bigmodel.cn/news",
+        "model_marketplace": "https://open.bigmodel.cn/console"
+      },
+      "notes": "模型概览(docs.bigmodel.cn/cn/guide/start/model-overview)/更新日志(new-releases)/产品价格(bigmodel.cn/pricing)均200。open.bigmodel.cn/pricing 也可作为模型+价格页。zai-org 为智谱/Z.ai官方开源组织（GLM），THUDM 为清华系。海外站为 z.ai。控制台需登录。"
+    },
+    {
+      "name": "Kimi",
+      "name_en": "Kimi (Moonshot AI)",
+      "region": "china",
+      "vendor": "moonshot",
+      "official_site": "https://platform.moonshot.cn/",
+      "sources": {
+        "model_list": "https://platform.kimi.com/docs/api/models-overview",
+        "pricing": "https://platform.kimi.com/docs/pricing/chat",
+        "changelog": "https://platform.kimi.com/docs/changelog",
+        "api_docs": "https://platform.kimi.com/docs/api-reference",
+        "github": "https://github.com/MoonshotAI",
+        "blog": "https://www.moonshot.cn/news",
+        "model_marketplace": null
+      },
+      "notes": "重要：Kimi 开放平台文档已从 platform.moonshot.cn 迁移到 platform.kimi.com（旧域名仍可访问，均200）。模型参数参考(api/models-overview)/模型推理价格说明(pricing/chat)/平台新功能发布记录(changelog)为当前官方页。文档提供 llms.txt。github 用 MoonshotAI 官方组织。"
+    },
+    {
+      "name": "MiniMax",
+      "name_en": "MiniMax",
+      "region": "china",
+      "vendor": "minimax",
+      "official_site": "https://platform.minimaxi.com/",
+      "sources": {
+        "model_list": "https://platform.minimaxi.com/docs/guides/models-intro",
+        "pricing": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+        "changelog": "https://www.minimaxi.com/news",
+        "api_docs": "https://platform.minimaxi.com/docs/api-reference/",
+        "github": "https://github.com/MiniMax-AI",
+        "blog": "https://www.minimaxi.com/news",
+        "model_marketplace": null
+      },
+      "notes": "模型概览(models-intro)/按量计费(pricing-paygo, 含语言/语音/视频/图像价格)均200公开。无独立 changelog 页，用官网新闻资讯(www.minimaxi.com/news)替代。文档提供 llms.txt，API 兼容 OpenAI/Anthropic 规范。"
+    },
+    {
+      "name": "DeepSeek",
+      "name_en": "DeepSeek",
+      "region": "china",
+      "vendor": "deepseek",
+      "official_site": "https://platform.deepseek.com/",
+      "sources": {
+        "model_list": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+        "pricing": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+        "changelog": "https://api-docs.deepseek.com/zh-cn/news/",
+        "api_docs": "https://api-docs.deepseek.com/zh-cn/",
+        "github": "https://github.com/deepseek-ai",
+        "blog": "https://api-docs.deepseek.com/zh-cn/news/",
+        "model_marketplace": null
+      },
+      "notes": "官方定价页(quick_start/pricing)同时列出全部模型（deepseek-chat/deepseek-reasoner/V3.2等），兼具模型列表与价格功能。news 页为更新日志。平台控制台 platform.deepseek.com 需登录。文档站公开可直接抓取，支持 /models API。"
+    },
+    {
+      "name": "OpenAI",
+      "name_en": "OpenAI",
+      "region": "overseas",
+      "vendor": "openai",
+      "official_site": "https://platform.openai.com/",
+      "sources": {
+        "model_list": "https://platform.openai.com/docs/models",
+        "pricing": "https://platform.openai.com/docs/pricing",
+        "changelog": "https://platform.openai.com/docs/changelog",
+        "api_docs": "https://platform.openai.com/docs/api-reference",
+        "github": "https://github.com/openai",
+        "blog": "https://openai.com/news/",
+        "model_marketplace": null
+      },
+      "notes": "platform.openai.com/docs/models、/docs/pricing（含输入/输出/缓存价）、/docs/changelog 均200公开。openai.com/news/ 对 curl 返回403（反爬）但浏览器可正常访问。platform.openai.com 根域名需登录（控制台）。提供 /v1/models API。"
+    },
+    {
+      "name": "Anthropic",
+      "name_en": "Anthropic (Claude)",
+      "region": "overseas",
+      "vendor": "anthropic",
+      "official_site": "https://www.anthropic.com/",
+      "sources": {
+        "model_list": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+        "pricing": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+        "changelog": "https://docs.anthropic.com/en/release-notes/api",
+        "api_docs": "https://docs.anthropic.com/en/api/",
+        "github": "https://github.com/anthropics",
+        "blog": "https://www.anthropic.com/news",
+        "model_marketplace": null
+      },
+      "notes": "模型概览(models/overview 含各模型ID与定价对比)/API定价(docs pricing)/API Release Notes 均200公开。此处为 API/开发者定价（企业/商用套餐在 www.anthropic.com/pricing）。docs 提供 llms.txt 便于抓取。"
+    },
+    {
+      "name": "Google Gemini API",
+      "name_en": "Google Gemini API (AI Studio / ai.google.dev)",
+      "region": "overseas",
+      "vendor": "google",
+      "official_site": "https://ai.google.dev/",
+      "sources": {
+        "model_list": "https://ai.google.dev/gemini-api/docs/models",
+        "pricing": "https://ai.google.dev/gemini-api/docs/pricing",
+        "changelog": "https://ai.google.dev/gemini-api/docs/changelog",
+        "api_docs": "https://ai.google.dev/gemini-api/docs/api-reference",
+        "github": "https://github.com/google-gemini",
+        "blog": "https://blog.google/technology/ai/",
+        "model_marketplace": "https://aistudio.google.com/"
+      },
+      "notes": "注意：ai.google.dev 对无 cookie 的 curl 会 302 重定向到 Google 登录，但页面内容实际公开可读（web_fetch 已确认 Models/Pricing 内容，含 Gemini 3.x 各档位输入/输出/缓存价）。与 Vertex AI 是两套独立体系。AI Studio(aistudio.google.com)可免费试用与获取 API Key。"
+    },
+    {
+      "name": "Google Vertex AI",
+      "name_en": "Google Vertex AI",
+      "region": "overseas",
+      "vendor": "google",
+      "official_site": "https://cloud.google.com/vertex-ai",
+      "sources": {
+        "model_list": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+        "pricing": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+        "changelog": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+        "api_docs": "https://cloud.google.com/vertex-ai/generative-ai/docs/reference/rest",
+        "github": "https://github.com/GoogleCloudPlatform",
+        "blog": "https://cloud.google.com/blog/products/ai-machine-learning",
+        "model_marketplace": "https://console.cloud.google.com/vertex-ai/publishers"
+      },
+      "notes": "模型页(learn/models)/定价(pricing, 企业级, 含第三方模型如 Llama/GLM/Qwen 及缓存价)/Release Notes 均200公开。Model Garden(console.cloud.google.com/vertex-ai/publishers)需登录。此为 Google 云上 MaaS 的企业入口。"
+    },
+    {
+      "name": "Mistral AI",
+      "name_en": "Mistral AI",
+      "region": "overseas",
+      "vendor": "mistral",
+      "official_site": "https://mistral.ai/",
+      "sources": {
+        "model_list": "https://docs.mistral.ai/getting-started/models/models_overview/",
+        "pricing": "https://mistral.ai/pricing",
+        "changelog": "https://mistral.ai/news/",
+        "api_docs": "https://docs.mistral.ai/api/",
+        "github": "https://github.com/mistralai",
+        "blog": "https://mistral.ai/news/",
+        "model_marketplace": "https://console.mistral.ai/"
+      },
+      "notes": "模型概览(models_overview)/官网定价(mistral.ai/pricing)/文档API 均200。Mistral 无独立 changelog 页（docs 的 /updates 已404），用官方 news 页替代。console.mistral.ai 为 La Plateforme 控制台（307→登录）。"
+    },
+    {
+      "name": "Cohere",
+      "name_en": "Cohere",
+      "region": "overseas",
+      "vendor": "cohere",
+      "official_site": "https://cohere.com/",
+      "sources": {
+        "model_list": "https://docs.cohere.com/docs/models",
+        "pricing": "https://cohere.com/pricing",
+        "changelog": "https://docs.cohere.com/changelog",
+        "api_docs": "https://docs.cohere.com/reference/about",
+        "github": "https://github.com/cohere-ai",
+        "blog": "https://txt.cohere.com/",
+        "model_marketplace": "https://dashboard.cohere.com/"
+      },
+      "notes": "模型文档(docs/models)/定价(cohere.com/pricing)/Changelog(docs.cohere.com/changelog)均200公开。txt.cohere.com 为官方技术博客。dashboard.cohere.com 控制台需登录。docs 提供 llms.txt 便于抓取。"
+    },
+    {
+      "name": "xAI",
+      "name_en": "xAI (Grok)",
+      "region": "overseas",
+      "vendor": "xai",
+      "official_site": "https://x.ai/",
+      "sources": {
+        "model_list": "https://docs.x.ai/docs/models",
+        "pricing": "https://docs.x.ai/docs/models",
+        "changelog": "https://x.ai/news",
+        "api_docs": "https://docs.x.ai/api-reference",
+        "github": "https://github.com/xai-org",
+        "blog": "https://x.ai/news",
+        "model_marketplace": null
+      },
+      "notes": "docs.x.ai/docs/models 标题为 'Grok Models & Pricing'，一个页面同时覆盖模型列表与定价（含输入/输出/缓存价），200公开。x.ai 主站与 /news 对 curl 返回403（严格反爬），浏览器可访问；自动化抓取建议用 docs.x.ai 或 GitHub。xai-org 为官方开源组织。"
+    }
+  ],
+  "industry_sources": [
+    {
+      "name": "HuggingFace",
+      "type": "model_hub",
+      "url": "https://huggingface.co/models",
+      "api_url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+      "notes": "200。有公开 REST API：/api/models 支持 sort=trending / lastModified / downloads、direction=-1、limit、search 等参数，适合按日抓取趋势模型；同时有 /api/models?pipeline_tag=... 按任务类型过滤。另有 /api/models/{id} 获取单模型详情。"
+    },
+    {
+      "name": "Artificial Analysis",
+      "type": "benchmark",
+      "url": "https://artificialanalysis.ai/",
+      "api_url": null,
+      "notes": "200。独立评测机构（非官方），无公开 API；模型智能/速度/价格对比数据在页面内，可通过页面抓取或官方 CSV 下载获取。数据为聚合第三方评测，适合周报趋势参照。"
+    },
+    {
+      "name": "LMArena",
+      "type": "benchmark",
+      "url": "https://lmarena.ai/",
+      "api_url": "https://lmarena.ai/leaderboard",
+      "notes": "200。官方榜单页为 lmarena.ai/leaderboard（原 chat.lmsys.org），实时 Elo 排名，支持按 Category/Model/StyleControl 过滤；无面向公众的文档化 REST API，榜单数据需页面抓取或社区维护的镜像（如需自动化，可用其 leaderboard 页内嵌的 JSON 数据）。"
+    }
+  ]
+}

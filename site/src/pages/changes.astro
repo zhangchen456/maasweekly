@@ -1,0 +1,200 @@
+---
+import Layout from '../layouts/Layout.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// 读取每日变化数据（sync-diff-to-site.py 产出）
+const dataPath = path.join(process.cwd(), 'src/data/daily_changes.json');
+const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+const days: any[] = data.days || [];
+const updated_at = data.updated_at || '';
+
+// 汇总统计
+const totalChanged = days.reduce((s, d) => s + (d.changed?.length || 0), 0);
+const totalFailed = days.reduce((s, d) => s + (d.failed?.length || 0), 0);
+const coveredDays = days.length;
+
+// 源类型中文标签
+const TYPE_LABEL: Record<string, string> = {
+  model_list: '模型列表',
+  pricing: '定价',
+  changelog: '更新日志',
+  blog: '博客',
+  api_docs: 'API 文档',
+  github: 'GitHub',
+  model_marketplace: '模型广场',
+  industry: '行业数据',
+};
+
+function typeLabel(t: string) {
+  return TYPE_LABEL[t] || t;
+}
+---
+<Layout title="每日动态 — MaaS Weekly" description="各 MaaS 平台信源每日变化追踪：模型列表、定价、更新日志的增量 diff">
+  <header class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">DAILY DIFF · SIGNAL FEED</div>
+      <h1>每日动态</h1>
+      <p class="dek">自动抓取 16 个平台 + 行业信源，与上一次快照逐行对比，展示模型列表、定价页与更新日志的增量变化。数据每天更新。</p>
+    </div>
+    <aside class="hero-aside">
+      <div class="pulse">
+        <div class="pulse-item"><strong>{String(totalChanged).padStart(2, '0')}</strong><span>近期变化条目</span></div>
+        <div class="pulse-item"><strong>{String(coveredDays).padStart(2, '0')}</strong><span>覆盖天数</span></div>
+        <div class="pulse-item"><strong>{days[0]?.stats?.total ?? '—'}</strong><span>监控信源</span></div>
+        <div class="pulse-item"><strong>{days[0]?.date?.slice(5).replace('-', '.') ?? '—'}</strong><span>最近抓取</span></div>
+      </div>
+    </aside>
+  </header>
+
+  <section class="section" style="margin-top: 40px">
+    {days.length === 0 && (
+      <div class="empty">
+        <p>暂无抓取数据。每日自动任务运行后，这里会展示各平台的增量变化。</p>
+      </div>
+    )}
+
+    {days.map((d, i) => (
+      <article class={`day-block ${i === 0 ? 'latest' : ''}`}>
+        <div class="day-head">
+          <div class="day-date">
+            <span class="day-no">{i === 0 ? '最新' : `${i + 1}`}</span>
+            <h2>{d.date}</h2>
+          </div>
+          <div class="day-stats">
+            <span class="stat"><span class="dot ok"></span>成功 {d.stats?.success ?? '—'}</span>
+            <span class="stat"><span class="dot changed"></span>变化 {d.changed?.length || 0}</span>
+            <span class="stat"><span class="dot fail"></span>失败 {d.failed?.length || 0}</span>
+            <span class="stat muted">共 {d.stats?.total ?? '—'} 个信源</span>
+          </div>
+        </div>
+
+        {d.changed?.length > 0 ? (
+          <div class="change-list">
+            {d.changed.map((c: any) => (
+              <details class="change-card">
+                <summary style="list-style:none;cursor:pointer">
+                  <div class="card-meta">
+                    <span class="platform">{c.platform}</span>
+                    <span class="source-type">{typeLabel(c.source_type)}</span>
+                    <span class="delta">+{c.added_count ?? 0} / -{c.removed_count ?? 0}</span>
+                    <a class="src-link" href={c.url} target="_blank" rel="noopener" onclick="event.stopPropagation()">来源 ↗</a>
+                  </div>
+                  {c.added_lines?.length > 0 && (
+                    <div class="added-preview">{c.added_lines[0].slice(0, 120)}{c.added_lines[0].length > 120 ? '…' : ''}</div>
+                  )}
+                </summary>
+                <div class="diff-body">
+                  {c.added_lines?.length > 0 && (
+                    <div class="diff-sec">
+                      <div class="diff-label added">新增 {c.added_lines.length} 行</div>
+                      <ul class="line-list">
+                        {c.added_lines.slice(0, 15).map((l: string) => <li class="line added">{l.slice(0, 220)}</li>)}
+                      </ul>
+                    </div>
+                  )}
+                  {c.removed_lines?.length > 0 && (
+                    <div class="diff-sec">
+                      <div class="diff-label removed">删除 {c.removed_lines.length} 行</div>
+                      <ul class="line-list">
+                        {c.removed_lines.slice(0, 8).map((l: string) => <li class="line removed">{l.slice(0, 220)}</li>)}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </details>
+            ))}
+          </div>
+        ) : (
+          <div class="no-change">当日无变化{d.first_fetch?.length ? `（${d.first_fetch.length} 个信源首次抓取建立基线）` : ''}</div>
+        )}
+
+        {d.failed?.length > 0 && (
+          <details class="fail-block">
+            <summary style="list-style:none;cursor:pointer"><span class="fail-label">⚠ {d.failed.length} 个信源抓取失败</span></summary>
+            <ul>
+              {d.failed.map((f: any) => (
+                <li><span class="platform">{f.platform}</span> · {typeLabel(f.source_type)} — {f.error?.slice(0, 140)}</li>
+              ))}
+            </ul>
+          </details>
+        )}
+      </article>
+    ))}
+
+    <p class="footnote">数据由 fetch_sources.py 每日自动抓取生成 · 最近同步: {updated_at.slice(0, 19).replace('T', ' ')} · 完整历史快照见仓库 data/ 目录</p>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    padding: 44px 0 30px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(280px, .6fr);
+    gap: 50px;
+    align-items: end;
+  }
+  .eyebrow { display: flex; align-items: center; gap: 12px; color: var(--acid); font: 700 12px/1.2 "SF Mono", monospace; letter-spacing: .14em; text-transform: uppercase; }
+  .eyebrow::before { content: ""; width: 38px; height: 1px; background: currentColor; }
+  .hero h1 { margin: 16px 0 14px; font-size: clamp(40px, 6vw, 68px); line-height: 1; letter-spacing: -.06em; }
+  .dek { max-width: 620px; margin: 0; color: var(--paper-soft); font-size: 15px; line-height: 1.8; }
+  .pulse { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .pulse-item { padding: 16px 14px; background: color-mix(in srgb, var(--ink) 92%, transparent); }
+  .pulse strong { display: block; color: var(--acid); font: 700 22px/1 "SF Mono", monospace; }
+  .pulse span { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
+
+  .empty { padding: 40px; border: 1px dashed var(--line-strong); border-radius: var(--radius); color: var(--muted); text-align: center; }
+
+  .day-block { margin-bottom: 56px; border-left: 2px solid var(--line-strong); padding-left: 34px; position: relative; }
+  .day-block.latest { border-left-color: var(--acid); }
+  .day-block.latest::before { content: ""; position: absolute; left: -8px; top: 8px; width: 14px; height: 14px; background: var(--acid); border-radius: 50%; box-shadow: 0 0 18px var(--acid-dim); }
+  .day-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap; margin-bottom: 20px; }
+  .day-date { display: flex; align-items: baseline; gap: 14px; }
+  .day-date h2 { font: 700 26px/1 "SF Mono", monospace; letter-spacing: -.02em; }
+  .day-no { color: var(--acid); font: 700 10px/1 "SF Mono", monospace; letter-spacing: .12em; padding: 5px 9px; border: 1px solid var(--acid); border-radius: 99px; }
+  .day-stats { display: flex; gap: 18px; font: 500 12px/1 "SF Mono", monospace; color: var(--muted); flex-wrap: wrap; }
+  .stat { display: inline-flex; align-items: center; gap: 7px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .dot.ok { background: var(--acid); }
+  .dot.changed { background: var(--amber); }
+  .dot.fail { background: var(--red); }
+
+  .change-list { display: grid; gap: 12px; }
+  .change-card { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); overflow: hidden; transition: border-color .2s ease; }
+  .change-card:hover { border-color: var(--line-strong); }
+  .change-card[open] { border-color: var(--amber); }
+  .change-card summary::-webkit-details-marker { display: none; }
+  .card-meta { display: flex; align-items: center; gap: 16px; padding: 16px 22px; flex-wrap: wrap; }
+  .platform { font-family: "Songti SC", serif; font-weight: 700; font-size: 16px; }
+  .source-type { color: var(--cyan); font: 700 11px/1 "SF Mono", monospace; letter-spacing: .06em; padding: 5px 9px; background: color-mix(in srgb, var(--cyan) 12%, transparent); border-radius: 6px; }
+  .delta { color: var(--amber); font: 700 12px/1 "SF Mono", monospace; }
+  .src-link { margin-left: auto; color: var(--muted); font: 500 11px/1 "SF Mono", monospace; text-decoration: none; border-bottom: 1px dotted var(--muted); }
+  .src-link:hover { color: var(--acid); border-color: var(--acid); }
+  .added-preview { padding: 0 22px 16px; color: var(--muted); font-size: 13px; line-height: 1.6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .diff-body { padding: 6px 22px 20px; border-top: 1px solid var(--line); }
+  .diff-sec { margin-top: 14px; }
+  .diff-label { font: 700 10px/1 "SF Mono", monospace; letter-spacing: .1em; margin-bottom: 10px; }
+  .diff-label.added { color: var(--acid); }
+  .diff-label.removed { color: var(--red); }
+  .line-list { list-style: none; display: grid; gap: 6px; }
+  .line { font: 400 12px/1.6 "SF Mono", monospace; padding: 8px 12px; border-radius: 6px; word-break: break-all; }
+  .line.added { color: var(--paper-soft); background: var(--acid-dim); border-left: 2px solid var(--acid); }
+  .line.removed { color: var(--muted); background: var(--red-dim); border-left: 2px solid var(--red); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--red) 55%, transparent); }
+
+  .no-change { padding: 22px 26px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); font-size: 13.5px; }
+
+  .fail-block { margin-top: 12px; border: 1px solid color-mix(in srgb, var(--red) 35%, transparent); border-radius: 12px; background: var(--red-dim); }
+  .fail-block summary::-webkit-details-marker { display: none; }
+  .fail-label { display: block; padding: 13px 20px; color: var(--red); font: 700 12px/1 "SF Mono", monospace; }
+  .fail-block ul { list-style: none; padding: 0 20px 16px; display: grid; gap: 6px; }
+  .fail-block li { color: var(--muted); font-size: 12.5px; }
+  .fail-block .platform { color: var(--paper-soft); }
+
+  .footnote { margin-top: 20px; color: var(--muted); font: 500 11px/1.8 "SF Mono", monospace; letter-spacing: .03em; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 30px; }
+    .day-block { padding-left: 20px; }
+    .card-meta { gap: 10px; }
+  }
+</style>

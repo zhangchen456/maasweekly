@@ -1,0 +1,129 @@
+# MaaS 平台每日追踪任务配置
+
+name: MaaS 平台每日追踪
+description: 追踪国内大模型 MaaS 平台产品进展
+
+# 执行周期
+schedule:
+  daily: "03:00"  # 每天凌晨 3 点
+
+# ⚠️ 时间验证机制
+time_validation:
+  enabled: true
+  rules:
+    - name: "IPO/上市时间检查"
+      pattern: "IPO|上市辅导|上市流程|递交招股书"
+      check: "如果信息中提到'预计 YYYY-MM 完成'，且该日期早于当前日期超过 1 个月，则标记为过期信息"
+      action: "标注为'时间异常，需核实'，不列为重大更新"
+    - name: "发布时间一致性"
+      pattern: "发布时间|发布日期"
+      check: "对比文章标注的发布时间和内容中的时间描述"
+      action: "如果时间矛盾，标注为'时间异常'"
+  description: |
+    搜索 API 可能返回历史文章。处理每条信息时：
+    1. 检查内容中是否有"预计 XX 年 XX 月完成"等时间描述
+    2. 如果该时间早于当前日期超过 1 个月，标记为过期
+    3. 对比文章标注的发布时间和内容中的时间描述
+    4. 发现矛盾时，标注"时间异常，需核实"
+    5. 不过滤，但降低优先级，不列为"重大更新"
+
+# ⚠️ API 速率限制应对策略
+rate_limit_handling:
+  search_delay_seconds: 3   # 每次搜索后休眠 3 秒
+  fetch_delay_seconds: 2    # 每次抓取后休眠 2 秒
+  max_retries: 2            # 失败后最多重试 2 次
+  retry_delay_seconds: 5    # 重试前休眠 5 秒
+  description: |
+    由于搜索 API 有速率限制，执行任务时需遵循以下节奏控制：
+    1. 每次 web_search 调用后，等待 3 秒再进行下一次搜索
+    2. 每次 web_fetch 调用后，等待 2 秒再进行下一次抓取
+    3. 如果遇到速率限制错误，等待 5 秒后重试，最多重试 2 次
+    4. 如果某个平台搜索失败，跳过并继续下一个，不要阻塞整体任务
+    5. 任务执行时间预计延长至 10-15 分钟，这是正常的
+
+# 追踪范围
+scope:
+  # 云厂商
+  cloud_vendors:
+    - name: 火山方舟
+      keywords: ["火山方舟", "字节", "Doubao", "豆包", "方舟"]
+      focus: ["新模型", "定价", "功能"]
+    - name: 阿里百炼
+      keywords: ["阿里百炼", "百炼", "Qwen", "通义"]
+      focus: ["新模型", "定价", "功能"]
+    - name: 百度千帆
+      keywords: ["百度千帆", "千帆", "文心", "ERNIE"]
+      focus: ["新模型", "定价", "功能"]
+    - name: 腾讯混元
+      keywords: ["腾讯混元", "混元", "Hunyuan"]
+      focus: ["新模型", "定价", "功能"]
+  
+  # 独立平台
+  independent_platforms:
+    - name: 硅基流动
+      keywords: ["硅基流动", "SiliconFlow"]
+      focus: ["新模型", "定价", "性能"]
+    - name: 智谱 AI
+      keywords: ["智谱", "GLM", "BigModel"]
+      focus: ["新模型", "定价", "技术架构"]
+    - name: Kimi
+      keywords: ["Kimi", "月之暗面", "Moonshot"]
+      focus: ["新模型", "Agent能力", "定价"]
+    - name: MiniMax
+      keywords: ["MiniMax", "海螺AI"]
+      focus: ["新模型", "定价", "技术架构"]
+    - name: DeepSeek
+      keywords: ["DeepSeek", "深度求索"]
+      focus: ["新模型", "定价", "开源"]
+
+# 关注维度
+focus_areas:
+  - 新功能/产品模块发布
+  - 模型上下架、版本更新
+  - API 定价策略变化
+  - 生态合作、开发者工具
+  - 技术架构演进（推理加速、长上下文等）
+  - Agent 能力更新
+  - 多模态能力
+
+# ⚠️ 搜索时间过滤
+search_time_filter:
+  enabled: true
+  default_lookback_days: 7
+  description: |
+    搜索时尽量获取最新信息：
+    1. 使用 web_search 的 date_after 参数过滤最近 7 天的内容
+    2. 如果搜索结果不足，逐步放宽到 14 天、30 天
+    3. 优先使用 freshness=day 或 freshness=week 参数
+    4. 对于 IPO、融资等事件，额外验证时间线是否合理
+
+# ⚠️ 去重机制
+deduplication:
+  enabled: true
+  cross_day_check: true
+  lookback_days: 3
+  description: |
+    避免连续多天重复报道同一事件。执行前检查：
+    1. 读取过去 3 天的报告：`cronjob/reports/maas-platform/daily/YYYY-MM-DD.md`
+    2. 提取已报道的事件标题/关键词
+    3. 如果今天发现的事件已被报道过：
+       - 无新进展 → 跳过，不重复报道
+       - 有新进展 → 标注"跟进报道"，引用原报道日期
+    4. 在报告末尾添加"已报道事件索引"，方便后续去重
+  event_index_format: |
+    ## 已报道事件索引（供去重参考）
+    - 2026-05-05: 智谱GLM-5V-Turbo发布、MiniMax M2.7发布、DeepSeek V4定价更新
+    - 2026-05-04: [事件列表]
+    - 2026-05-03: [事件列表]
+
+# 输出配置
+output:
+  daily_dir: cronjob/reports/maas-platform/daily/
+  baseline: cronjob/reports/maas-platform/baseline.md
+
+# 输出格式
+output_format:
+  summary_table: true      # 生成平台状态汇总表
+  key_updates: true        # 突出显示重要更新
+  timeline: true           # 关注时间点
+  event_index: true        # 已报道事件索引

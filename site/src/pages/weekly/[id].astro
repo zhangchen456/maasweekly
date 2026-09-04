@@ -1,0 +1,94 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ReportBody from '../../components/ReportBody.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const reports = await getCollection('weekly');
+  return reports.map((report) => ({
+    params: { id: report.id },
+    props: { report },
+  }));
+}
+
+const { report } = Astro.props;
+
+// 取结构化数据
+const structured = await getCollection('weeklyStructured', (e) => e.id === report.id);
+const data = structured[0]?.data;
+---
+
+<Layout title={`${report.data.title} — MaaS Weekly`} description={report.data.period || report.data.date}>
+  <article class="report-page">
+    <a href="/" class="back-link">← 返回时间线</a>
+
+    <header class="report-head">
+      <div class="report-meta">
+        <span class="report-tag">/// WEEKLY.{report.data.date}</span>
+        {report.data.period && <span class="report-period">{report.data.period}</span>}
+      </div>
+      <h1 class="report-title">MaaS 平台周度追踪</h1>
+      <p class="report-sub">第 {report.data.date} 期 · 完整周报归档</p>
+    </header>
+
+    {data && <ReportBody data={data} />}
+  </article>
+</Layout>
+
+<style>
+  .back-link {
+    display: inline-block;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .back-link:hover {
+    color: var(--color-accent);
+  }
+
+  .report-head {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--color-border-strong);
+  }
+
+  .report-meta {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    margin-bottom: 12px;
+  }
+
+  .report-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+  }
+
+  .report-period {
+    font-size: 11px;
+    color: var(--color-text-faint);
+    letter-spacing: 0.04em;
+  }
+
+  .report-title {
+    font-size: clamp(1.6em, 4vw, 2.2em);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .report-sub {
+    color: var(--color-text-muted);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+</style>
