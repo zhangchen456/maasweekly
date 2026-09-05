@@ -75,11 +75,6 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         continue-on-error: true
 
-      # ---- 2.5 从 diff 提炼热点事件到首页 LIVE 滚动条 ----
-      - name: Extract live events
-        if: ${{ !inputs.skip_fetch }}
-        run: python3 pipeline/scripts/extract-live-events.py
-
       # ---- 3. 抓取文章配图（可选，失败不阻塞）----
       - name: Fetch article images
         if: ${{ !inputs.skip_fetch }}
