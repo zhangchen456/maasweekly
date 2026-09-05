@@ -1,63 +1,26 @@
 ---
-// 通用排名表：columns 定义列（key/label/format），rows 为对象数组，vender 列自动接 logo。
 import { logoFor } from '../../lib/platforms';
-
-interface Column {
-  key: string;
-  label: string;
-  format?: (v: any, row: any) => string;
-}
-interface Props {
-  rows: any[];
-  columns: Column[];
-  caption?: string;
-}
+interface Column { key: string; label: string; format?: (v: any, row: any) => string; }
+interface Props { rows: any[]; columns: Column[]; caption?: string; }
 const { rows, columns, caption } = Astro.props;
-
-const fmt = (col: Column, row: any) =>
-  col.format ? col.format(row[col.key], row) : (row[col.key] ?? '—');
+const fmt = (col: Column, row: any) => col.format ? col.format(row[col.key], row) : (row[col.key] ?? '—');
+const metric = columns.find((c) => ['elo','score','median_cost_usd','tokens_t'].includes(c.key));
+const max = Math.max(Number.EPSILON,...rows.map(r=>Number(r[metric?.key || ''])||0));
 ---
-
-{caption && <p class="rt-caption">{caption}</p>}
-<div class="table-scroll">
-  <table class="rank-table">
-    <thead>
-      <tr>{columns.map((c) => <th>{c.label}</th>)}</tr>
-    </thead>
-    <tbody>
-      {rows.map((row) => (
-        <tr>
-          {columns.map((col) => (
-            col.key === 'vendor' ? (
-              <td class="c-vendor">
-                {logoFor(row.vendor)
-                  ? <img class="bd-logo" src={logoFor(row.vendor)} alt={row.vendor} loading="lazy" />
-                  : <span class="bd-logo bd-logo-fallback">{String(row.vendor).slice(0, 1)}</span>}
-                <span>{row.vendor}</span>
-              </td>
-            ) : (
-              <td class={`c-${col.key}`}>{fmt(col, row)}</td>
-            )
-          ))}
-        </tr>
-      ))}
-    </tbody>
-  </table>
+<div class="rank-widget" data-metric={metric?.label}>
+  <div class="table-tools"><label class="board-search"><span aria-hidden="true">⌕</span><input type="search" aria-label={`搜索${caption || '本榜模型、厂商或应用'}`} placeholder="搜索模型、厂商或应用…" /></label><span class="table-count" role="status">{rows.length} 条记录</span></div>
+  {caption && <p class="rt-caption">{caption}</p>}
+  <p class="compare-hint">点击列名排序 · 勾选最多 3 项，在本榜内比较</p>
+  <div class="comparison" hidden><div class="comparison-head"><strong>当前对比 <small>仅限本榜口径</small></strong><button type="button" class="clear-compare">清空</button></div><div class="comparison-items"></div></div>
+  <div class="table-scroll" tabindex="0" role="region" aria-label={caption || '可排序的榜单表格'}>
+    <table class="rank-table"><thead><tr><th scope="col"><span class="sr-only">对比选择</span></th>{columns.map(c=><th scope="col" aria-sort="none"><button type="button" data-sort={c.key}>{c.label}<span aria-hidden="true">↕</span></button></th>)}</tr></thead>
+    <tbody>{rows.map((row,i)=><tr data-order={i} data-name={row.model || row.app_name} data-metric={metric ? fmt(metric,row) : ''}>
+      <td><input class="compare-check" type="checkbox" aria-label={`对比 ${row.model || row.app_name}${row.harness ? ` · ${row.harness} · ${row.turn_range}` : ''}`} /></td>
+      {columns.map(col=><td class={`c-${col.key}`} data-value={row[col.key] ?? ''}>
+        {['vendor','app_name','harness'].includes(col.key) ? <span class="vendor-cell">{logoFor(String(row[col.key])) && <img class="bd-logo" src={logoFor(String(row[col.key]))} alt="" width="24" height="24" loading="lazy"/>}{row[col.key]}</span> : col===metric ? <span class="metric-cell"><span>{fmt(col,row)}</span><span class="metric-track" aria-hidden="true"><span style={`width:${Math.max(0,(Number(row[col.key])||0)/max*100)}%`}></span></span></span> : fmt(col,row)}
+      </td>)}
+    </tr>)}</tbody></table>
+  </div>
+  <p class="table-empty" hidden>没有匹配的记录。<button type="button" class="reset-search">清除搜索</button></p>
+  <p class="compare-status" role="status" aria-live="polite"></p>
 </div>
-
-<style>
-  .rt-caption { margin: 0 0 10px; color: var(--muted); font-size: 12.5px; }
-  .table-scroll { overflow-x: auto; }
-  .rank-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-  .rank-table th, .rank-table td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: middle; }
-  .rank-table th { color: var(--muted); font: 700 10.5px/1 "SF Mono", monospace; text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; padding-top: 0; }
-  .c-rank { color: var(--muted); font-family: "SF Mono", monospace; width: 42px; }
-  .c-model { font-weight: 600; color: var(--paper); }
-  .c-elo, .c-score { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--paper); }
-  .c-vendor { color: var(--muted); white-space: nowrap; }
-  .c-note { color: var(--muted); font-size: 12.5px; }
-  .bd-logo { width: 26px; height: 26px; border-radius: 7px; background: var(--ink); border: 1px solid var(--line); padding: 4px; object-fit: contain; flex: none; }
-  .bd-logo-fallback { display: inline-grid; place-items: center; font: 700 12px/1 "Songti SC", serif; color: var(--acid); vertical-align: middle; margin-right: 8px; }
-  .c-vendor { display: flex; align-items: center; gap: 8px; }
-  .c-vendor img { margin-right: 0; }
-</style>
