@@ -1,18 +1,135 @@
 {
-  "source": "OpenRouter AI Model Rankings",
+  "source": "OpenRouter Rankings",
   "source_url": "https://openrouter.ai/rankings",
-  "snapshot_date": "2026-08-31",
-  "note": "按 OpenRouter API 实际 token 处理量排名（7 日窗口），反映开发者采用而非质量；不反映全市场流量。环比 = 与上一周 token 量变化百分比。",
+  "snapshot_date": "2026-09-04",
+  "as_of": "2026-09-05T08:24:31.692Z",
+  "window": {
+    "start": "2026-08-29",
+    "end": "2026-09-04",
+    "grain": "rolling-7d"
+  },
+  "manual": false,
+  "note": "按 OpenRouter API 实际 token 处理量排名（7 日滚动窗口），反映开发者采用而非质量；不反映全市场流量。环比为与上一个 7 日窗口 token 量变化。",
   "top": [
-    { "rank": 1, "model": "DeepSeek V4 Flash 0731", "vendor": "deepseek", "tokens_t": 12.2, "change_pct": 5 },
-    { "rank": 2, "model": "Ox Alpha", "vendor": "stealth (GLM-5.3-Flash 匿名)", "tokens_t": 9.75, "change_pct": 44 },
-    { "rank": 3, "model": "GPT-5.6 Luna", "vendor": "openai", "tokens_t": 8.48, "change_pct": 89 },
-    { "rank": 4, "model": "GLM 5.3 Flash", "vendor": "z-ai", "tokens_t": 8.14, "change_pct": null, "is_new": true },
-    { "rank": 5, "model": "MiMo-V2.5", "vendor": "xiaomi", "tokens_t": 8.08, "change_pct": 17 },
-    { "rank": 6, "model": "Hy3", "vendor": "tencent", "tokens_t": 6.41, "change_pct": 17 },
-    { "rank": 7, "model": "DeepSeek V4 Flash 0423", "vendor": "deepseek", "tokens_t": 5.15, "change_pct": 7 },
-    { "rank": 8, "model": "Nemotron 3 Ultra (free)", "vendor": "nvidia", "tokens_t": 4.93, "change_pct": 4 },
-    { "rank": 9, "model": "Hy4 preview", "vendor": "tencent", "tokens_t": 4.01, "change_pct": null, "is_new": true },
-    { "rank": 10, "model": "Gemini 3.7 Flash", "vendor": "google", "tokens_t": 3.85, "change_pct": 91 }
+    {
+      "rank": 1,
+      "model": "Hy4 Preview 20260827",
+      "permaslug": "tencent/hy4-preview-20260827",
+      "vendor": "腾讯",
+      "vendor_key": "tencent",
+      "tokens_t": 13.57,
+      "tokens_raw": "13565318601093",
+      "prev_rank": 39,
+      "change_pct": 3629,
+      "is_new": false
+    },
+    {
+      "rank": 2,
+      "model": "GLM 5.3 Flash 20260826",
+      "permaslug": "z-ai/glm-5.3-flash-20260826",
+      "vendor": "智谱AI",
+      "vendor_key": "z-ai",
+      "tokens_t": 12.31,
+      "tokens_raw": "12314372063417",
+      "prev_rank": 10,
+      "change_pct": 273,
+      "is_new": false
+    },
+    {
+      "rank": 3,
+      "model": "DeepSeek V4 Flash 20260731",
+      "permaslug": "deepseek/deepseek-v4-flash-20260731",
+      "vendor": "DeepSeek",
+      "vendor_key": "deepseek",
+      "tokens_t": 11.92,
+      "tokens_raw": "11918462465990",
+      "prev_rank": 2,
+      "change_pct": -3,
+      "is_new": false
+    },
+    {
+      "rank": 4,
+      "model": "GPT 5.6 Luna 20260709",
+      "permaslug": "openai/gpt-5.6-luna-20260709",
+      "vendor": "OpenAI",
+      "vendor_key": "openai",
+      "tokens_t": 11.29,
+      "tokens_raw": "11290456225036",
+      "prev_rank": 5,
+      "change_pct": 87,
+      "is_new": false
+    },
+    {
+      "rank": 5,
+      "model": "MiniMax M3 20260531 (free)",
+      "permaslug": "minimax/minimax-m3-20260531:free",
+      "vendor": "MiniMax",
+      "vendor_key": "minimax",
+      "tokens_t": 5.48,
+      "tokens_raw": "5475445930495",
+      "prev_rank": 20,
+      "change_pct": 390,
+      "is_new": false
+    },
+    {
+      "rank": 6,
+      "model": "DeepSeek V4 Flash 20260423",
+      "permaslug": "deepseek/deepseek-v4-flash-20260423",
+      "vendor": "DeepSeek",
+      "vendor_key": "deepseek",
+      "tokens_t": 5.23,
+      "tokens_raw": "5229947100618",
+      "prev_rank": 8,
+      "change_pct": -4,
+      "is_new": false
+    },
+    {
+      "rank": 7,
+      "model": "Hy3 20260706",
+      "permaslug": "tencent/hy3-20260706",
+      "vendor": "腾讯",
+      "vendor_key": "tencent",
+      "tokens_t": 4.79,
+      "tokens_raw": "4794863832464",
+      "prev_rank": 4,
+      "change_pct": -28,
+      "is_new": false
+    },
+    {
+      "rank": 8,
+      "model": "Nemotron 3 Ultra 550b A55b 20260604 (free)",
+      "permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604:free",
+      "vendor": "NVIDIA",
+      "vendor_key": "nvidia",
+      "tokens_t": 3.88,
+      "tokens_raw": "3875316491196",
+      "prev_rank": 7,
+      "change_pct": -31,
+      "is_new": false
+    },
+    {
+      "rank": 9,
+      "model": "MiMo V2.5 20260422",
+      "permaslug": "xiaomi/mimo-v2.5-20260422",
+      "vendor": "Xiaomi",
+      "vendor_key": "xiaomi",
+      "tokens_t": 3.17,
+      "tokens_raw": "3168486028187",
+      "prev_rank": 3,
+      "change_pct": -71,
+      "is_new": false
+    },
+    {
+      "rank": 10,
+      "model": "GLM 5.3 20260816",
+      "permaslug": "z-ai/glm-5.3-20260816",
+      "vendor": "智谱AI",
+      "vendor_key": "z-ai",
+      "tokens_t": 2.62,
+      "tokens_raw": "2620688789304",
+      "prev_rank": 19,
+      "change_pct": 127,
+      "is_new": false
+    }
   ]
 }
