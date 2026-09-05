@@ -1,0 +1,52 @@
+---
+// 榜单区块壳：统一头部（标题/快照/徽标）+ 脚注（口径 note + 溯源链接）+ slot 数据体。
+interface Props {
+  title: string;
+  snap: string;
+  manual?: boolean;
+  cycle?: string;
+  note: string;
+  sourceUrl: string;
+  citation?: string;
+}
+const { title, snap, manual, cycle, note, sourceUrl, citation } = Astro.props;
+const CYCLE_LABEL: Record<string, string> = { daily: '日更', weekly: '周更', monthly: '月更' };
+---
+
+<section class="board">
+  <header class="board-head">
+    <h3>{title}</h3>
+    <span class="board-meta">
+      <span class="snap">快照 {snap}</span>
+      {manual && <span class="badge badge-manual">手动维护</span>}
+      {cycle && <span class="badge badge-cycle">{CYCLE_LABEL[cycle] ?? cycle}</span>}
+    </span>
+  </header>
+  <slot />
+  <footer class="board-foot">
+    <p class="board-note">{note} <a href={sourceUrl} target="_blank" rel="noopener">source ↗</a></p>
+    {citation && <p class="board-cite">{citation}</p>}
+  </footer>
+</section>
+
+<style>
+  .board { margin-bottom: 46px; }
+  .board-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .board-head h3 {
+    margin: 0; font-family: "Songti SC", serif; font-size: 21px; font-weight: 700; letter-spacing: -.01em;
+  }
+  .board-meta { display: flex; align-items: center; gap: 8px; }
+  .snap { color: var(--muted); font: 500 11.5px/1 "SF Mono", monospace; letter-spacing: .02em; }
+  .badge { font: 700 10px/1 "SF Mono", monospace; letter-spacing: .06em; padding: 4px 8px; border-radius: 5px; }
+  .badge-manual { color: var(--amber); background: var(--amber-dim); }
+  .badge-cycle { color: var(--cyan); background: color-mix(in srgb, var(--cyan) 12%, transparent); }
+
+  .board-foot { margin-top: 16px; }
+  .board-note {
+    margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.7;
+    background: var(--ink-2); border: 1px solid var(--line); border-radius: 9px; padding: 12px 16px;
+  }
+  .board-note a { color: var(--acid); text-decoration: none; }
+  .board-note a:hover { text-decoration: underline; }
+  .board-cite { margin: 8px 0 0; color: var(--muted); font: 500 11px/1.5 "SF Mono", monospace; opacity: .8; }
+</style>
