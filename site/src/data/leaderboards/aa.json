@@ -1,14 +1,15 @@
 {
   "source": "Artificial Analysis Intelligence Index",
   "source_url": "https://artificialanalysis.ai/",
-  "snapshot_date": "2026-08-28",
-  "note": "综合 10 项权威评测基准（GDPval-AA、Terminal-Bench、GPQA Diamond、SciCode 等）加权，覆盖数学/科学/编程/推理。当前快照共 183 款模型。中国模型：Kimi K3 (Max) 57 分（189 款中第 4，开源权重最高排名）；GLM-5.3-Flash 57 分追平 Claude Opus 4.8。",
+  "snapshot_date": "2026-09-05",
+  "manual": true,
+  "update_cycle": "weekly",
+  "note": "综合 10 项权威评测基准（v4.2：AA-Briefcase / GDPval-AA v2 / 𝜏³-Banking / Terminal-Bench v2.1 / SciCode / HLE / GDP.pdf / CritPt / AA-Omniscience / AA-LCR）加权。共 643 款模型，本表取前列。",
   "top": [
-    { "rank": 1, "model": "Claude Opus 5", "vendor": "Anthropic", "score": 63.0 },
-    { "rank": 2, "model": "Claude Fable 5", "vendor": "Anthropic", "score": 62.1 },
-    { "rank": 3, "model": "Grok 4.6", "vendor": "xAI", "score": 60.9 },
-    { "rank": 4, "model": "Kimi K3 (Max)", "vendor": "Moonshot AI", "score": 57.0, "note": "开源权重最高排名" },
-    { "rank": 4, "model": "GLM-5.3-Flash", "vendor": "Z.ai", "score": 57.0, "note": "追平 Claude Opus 4.8" },
-    { "rank": 6, "model": "GPT-5.5 (xhigh)", "vendor": "OpenAI", "score": 54.0 }
+    { "rank": 1, "model": "Claude Fable 5.1 (max)", "vendor": "Anthropic", "score": 66.0, "note": "史上最高分" },
+    { "rank": 2, "model": "Claude Opus 5 (max)", "vendor": "Anthropic", "score": 63.0 },
+    { "rank": 3, "model": "Claude Fable 5 (max)", "vendor": "Anthropic", "score": 62.0 },
+    { "rank": 4, "model": "GPT-5.6 Sol (max)", "vendor": "OpenAI", "score": 61.0 },
+    { "rank": 4, "model": "Grok 4.6 (high)", "vendor": "xAI", "score": 61.0 }
   ]
 }

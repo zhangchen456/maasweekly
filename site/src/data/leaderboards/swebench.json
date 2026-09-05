@@ -1,0 +1,20 @@
+{
+  "source": "SWE-bench Verified",
+  "source_url": "https://www.swebench.com/",
+  "snapshot_date": "2026-09-05",
+  "manual": true,
+  "update_cycle": "weekly",
+  "note": "500 个真实 GitHub issue 修复率（pass@1，人工校验子集）。官榜按「agent + 模型」组合排名，本表取标准化 harness mini-SWE-agent 口径的 2026 年提交行，保证模型间可比；第三方 harness 更高组合见官网。",
+  "top": [
+    { "rank": 1, "model": "Claude 4.5 Opus (high)", "vendor": "Anthropic", "score": 76.8 },
+    { "rank": 2, "model": "Gemini 3 Flash (high)", "vendor": "Google Gemini API", "score": 75.8 },
+    { "rank": 2, "model": "MiniMax M2.5 (high)", "vendor": "MiniMax", "score": 75.8 },
+    { "rank": 4, "model": "Claude 4.6 Opus", "vendor": "Anthropic", "score": 75.6 },
+    { "rank": 5, "model": "GLM 5 (high)", "vendor": "智谱AI", "score": 72.8 },
+    { "rank": 5, "model": "GPT 5.2 (high)", "vendor": "OpenAI", "score": 72.8 },
+    { "rank": 5, "model": "GPT 5.2 Codex", "vendor": "OpenAI", "score": 72.8 },
+    { "rank": 8, "model": "Claude 4.5 Sonnet (high)", "vendor": "Anthropic", "score": 71.4 },
+    { "rank": 9, "model": "Kimi K2.5 (high)", "vendor": "Kimi", "score": 70.8 },
+    { "rank": 10, "model": "DeepSeek V3.2 (high)", "vendor": "DeepSeek", "score": 70.0 }
+  ]
+}
