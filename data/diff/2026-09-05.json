@@ -1,12 +1,12 @@
 {
   "date": "2026-09-05",
-  "fetched_at": "2026-09-05T09:03:27.639217",
+  "fetched_at": "2026-09-05T22:46:21.737862",
   "stats": {
     "total": 68,
-    "success": 61,
-    "failed": 7,
+    "success": 60,
+    "failed": 8,
     "changed": 19,
-    "unchanged": 42
+    "unchanged": 41
   },
   "changes": [
     {
@@ -20,22 +20,15 @@
       "platform": "火山方舟",
       "source_type": "pricing",
       "url": "https://www.volcengine.com/docs/82379/1544106",
-      "status": "changed",
-      "added_count": 1,
-      "removed_count": 1,
-      "added_lines": [
-        "最近更新时间：2026.09.04 20:25:30"
-      ],
-      "removed_lines": [
-        "最近更新时间：2026.09.03 21:38:27"
-      ]
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11071)"
     },
     {
       "platform": "火山方舟",
       "source_type": "changelog",
       "url": "https://www.volcengine.com/docs/82379/1159177",
       "status": "fetch_failed",
-      "error": "提取后内容过短 (raw_len=4606)"
+      "error": "提取后内容过短 (raw_len=11071)"
     },
     {
       "platform": "火山方舟",
@@ -510,7 +503,13 @@
       "platform": "Cohere",
       "source_type": "model_list",
       "url": "https://docs.cohere.com/docs/models",
-      "status": "unchanged"
+      "status": "changed",
+      "added_count": 0,
+      "removed_count": 1,
+      "added_lines": [],
+      "removed_lines": [
+        "Safety Modes"
+      ]
     },
     {
       "platform": "Cohere",
@@ -558,8 +557,8 @@
       "added_count": 2,
       "removed_count": 2,
       "added_lines": [
-        "20.81.183.80",
-        "Cloudflare Ray ID: a36150621cfce5f9"
+        "172.184.213.161",
+        "Cloudflare Ray ID: a36605d2f999ee17"
       ],
       "removed_lines": [
         "130.131.215.212",
@@ -574,8 +573,8 @@
       "added_count": 2,
       "removed_count": 2,
       "added_lines": [
-        "20.81.183.80",
-        "Cloudflare Ray ID: a361506258f80c3d"
+        "172.184.213.161",
+        "Cloudflare Ray ID: a36605d3391ab8b6"
       ],
       "removed_lines": [
         "130.131.215.212",
@@ -593,38 +592,38 @@
       "source_type": "industry",
       "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
       "status": "changed",
-      "added_count": 32,
-      "removed_count": 32,
+      "added_count": 33,
+      "removed_count": 33,
       "added_lines": [
-        "\"downloads\": 14607268,",
-        "\"downloads\": 15824278,",
-        "\"downloads\": 16471818,",
-        "\"downloads\": 16826360,",
-        "\"downloads\": 17810578,",
-        "\"downloads\": 18075521,",
-        "\"downloads\": 20569141,",
-        "\"downloads\": 20848248,",
-        "\"downloads\": 21472601,",
-        "\"downloads\": 21936261,",
-        "\"downloads\": 23372327,",
-        "\"downloads\": 24544088,",
-        "\"downloads\": 25078707,",
-        "\"downloads\": 253789790,",
-        "\"downloads\": 38033030,",
-        "\"downloads\": 46830184,",
-        "\"downloads\": 58675189,",
-        "\"downloads\": 58803103,",
-        "\"downloads\": 66603948,",
-        "\"downloads\": 86547620,",
-        "\"likes\": 1162,",
-        "\"likes\": 1179,",
-        "\"likes\": 123,",
-        "\"likes\": 1366,",
-        "\"likes\": 1576,",
-        "\"likes\": 1689,",
-        "\"likes\": 2945,",
-        "\"likes\": 3468,",
-        "\"likes\": 3656,",
+        "\"downloads\": 14739982,",
+        "\"downloads\": 16523260,",
+        "\"downloads\": 17148930,",
+        "\"downloads\": 17724748,",
+        "\"downloads\": 17833129,",
+        "\"downloads\": 18234369,",
+        "\"downloads\": 20289370,",
+        "\"downloads\": 20755211,",
+        "\"downloads\": 21596830,",
+        "\"downloads\": 21952078,",
+        "\"downloads\": 23536975,",
+        "\"downloads\": 24516181,",
+        "\"downloads\": 24614629,",
+        "\"downloads\": 255006933,",
+        "\"downloads\": 38226728,",
+        "\"downloads\": 46947395,",
+        "\"downloads\": 56175564,",
+        "\"downloads\": 58946174,",
+        "\"downloads\": 66535522,",
+        "\"downloads\": 87038108,",
+        "\"likes\": 1163,",
+        "\"likes\": 1187,",
+        "\"likes\": 124,",
+        "\"likes\": 1367,",
+        "\"likes\": 1577,",
+        "\"likes\": 1695,",
+        "\"likes\": 2952,",
+        "\"likes\": 3469,",
+        "\"likes\": 3664,",
         "\"likes\": 428,"
       ],
       "removed_lines": [

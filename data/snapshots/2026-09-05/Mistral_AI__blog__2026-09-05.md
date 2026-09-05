@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-05T09:03:21.125214 -->
+<!-- fetched: 2026-09-05T22:46:16.748405 -->
 
 Latest news | Mistral
 Contact sales

@@ -1,13 +1,13 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-05T09:03:26.053525 -->
+<!-- fetched: 2026-09-05T22:46:20.765018 -->
 
 [
   {
     "_id": "621ffdc136468d709f180294",
     "id": "sentence-transformers/all-MiniLM-L6-v2",
-    "likes": 5513,
+    "likes": 5527,
     "private": false,
-    "downloads": 253789790,
+    "downloads": 255006933,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -67,7 +67,7 @@
     "id": "cross-encoder/ms-marco-MiniLM-L6-v2",
     "likes": 311,
     "private": false,
-    "downloads": 86547620,
+    "downloads": 87038108,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -98,7 +98,7 @@
     "id": "BAAI/bge-small-en-v1.5",
     "likes": 548,
     "private": false,
-    "downloads": 66603948,
+    "downloads": 66535522,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -133,7 +133,7 @@
     "id": "google/electra-base-discriminator",
     "likes": 158,
     "private": false,
-    "downloads": 58803103,
+    "downloads": 58946174,
     "tags": [
       "transformers",
       "pytorch",
@@ -155,9 +155,9 @@
   {
     "_id": "621ffdc036468d709f174338",
     "id": "google-bert/bert-base-uncased",
-    "likes": 2945,
+    "likes": 2952,
     "private": false,
-    "downloads": 58675189,
+    "downloads": 56175564,
     "tags": [
       "transformers",
       "pytorch",
@@ -188,9 +188,9 @@
   {
     "_id": "621ffdc136468d709f1802ec",
     "id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-    "likes": 1366,
+    "likes": 1367,
     "private": false,
-    "downloads": 46830184,
+    "downloads": 46947395,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -268,9 +268,9 @@
   {
     "_id": "65b53851e602b6c2c96e78da",
     "id": "BAAI/bge-m3",
-    "likes": 3468,
+    "likes": 3469,
     "private": false,
-    "downloads": 38033030,
+    "downloads": 38226728,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -297,39 +297,11 @@
     "modelId": "BAAI/bge-m3"
   },
   {
-    "_id": "69037c2ff37fdfe285722818",
-    "id": "amazon/chronos-2",
-    "likes": 428,
-    "private": false,
-    "downloads": 25078707,
-    "tags": [
-      "chronos-forecasting",
-      "safetensors",
-      "t5",
-      "time series",
-      "forecasting",
-      "foundation models",
-      "pretrained models",
-      "time-series-forecasting",
-      "dataset:autogluon/chronos_datasets",
-      "dataset:Salesforce/GiftEvalPretrain",
-      "arxiv:2403.07815",
-      "arxiv:2510.15821",
-      "license:apache-2.0",
-      "region:us",
-      "deploy:sagemaker"
-    ],
-    "pipeline_tag": "time-series-forecasting",
-    "library_name": "chronos-forecasting",
-    "createdAt": "2025-10-30T14:54:39.000Z",
-    "modelId": "amazon/chronos-2"
-  },
-  {
     "_id": "621ffdc136468d709f180297",
     "id": "sentence-transformers/all-mpnet-base-v2",
     "likes": 1350,
     "private": false,
-    "downloads": 24544088,
+    "downloads": 24614629,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -381,11 +353,39 @@
     "modelId": "sentence-transformers/all-mpnet-base-v2"
   },
   {
+    "_id": "69037c2ff37fdfe285722818",
+    "id": "amazon/chronos-2",
+    "likes": 428,
+    "private": false,
+    "downloads": 24516181,
+    "tags": [
+      "chronos-forecasting",
+      "safetensors",
+      "t5",
+      "time series",
+      "forecasting",
+      "foundation models",
+      "pretrained models",
+      "time-series-forecasting",
+      "dataset:autogluon/chronos_datasets",
+      "dataset:Salesforce/GiftEvalPretrain",
+      "arxiv:2403.07815",
+      "arxiv:2510.15821",
+      "license:apache-2.0",
+      "region:us",
+      "deploy:sagemaker"
+    ],
+    "pipeline_tag": "time-series-forecasting",
+    "library_name": "chronos-forecasting",
+    "createdAt": "2025-10-30T14:54:39.000Z",
+    "modelId": "amazon/chronos-2"
+  },
+  {
     "_id": "621ffdc036468d709f174358",
     "id": "google-t5/t5-small",
-    "likes": 597,
+    "likes": 598,
     "private": false,
-    "downloads": 23372327,
+    "downloads": 23536975,
     "tags": [
       "transformers",
       "pytorch",
@@ -426,9 +426,9 @@
   {
     "_id": "680da718233834890aa01f51",
     "id": "Qwen/Qwen3-0.6B",
-    "likes": 1576,
+    "likes": 1577,
     "private": false,
-    "downloads": 21936261,
+    "downloads": 21952078,
     "tags": [
       "transformers",
       "safetensors",
@@ -453,9 +453,9 @@
   {
     "_id": "621ffdc036468d709f174364",
     "id": "FacebookAI/xlm-roberta-base",
-    "likes": 894,
+    "likes": 895,
     "private": false,
-    "downloads": 21472601,
+    "downloads": 21596830,
     "tags": [
       "transformers",
       "pytorch",
@@ -572,29 +572,11 @@
     "modelId": "FacebookAI/xlm-roberta-base"
   },
   {
-    "_id": "6a6bd1dc7034404148ec9107",
-    "id": "Comfy-Org/MiniMax-H3",
-    "likes": 1689,
-    "private": false,
-    "downloads": 20848248,
-    "tags": [
-      "diffusion-single-file",
-      "comfyui",
-      "base_model:MiniMaxAI/MiniMax-H3",
-      "base_model:finetune:MiniMaxAI/MiniMax-H3",
-      "license:other",
-      "region:us"
-    ],
-    "library_name": "diffusion-single-file",
-    "createdAt": "2026-07-30T22:36:12.000Z",
-    "modelId": "Comfy-Org/MiniMax-H3"
-  },
-  {
     "_id": "621ffdc136468d709f17ea62",
     "id": "openai/clip-vit-base-patch32",
-    "likes": 1179,
+    "likes": 1187,
     "private": false,
-    "downloads": 20569141,
+    "downloads": 20755211,
     "tags": [
       "transformers",
       "pytorch",
@@ -614,11 +596,29 @@
     "modelId": "openai/clip-vit-base-patch32"
   },
   {
+    "_id": "6a6bd1dc7034404148ec9107",
+    "id": "Comfy-Org/MiniMax-H3",
+    "likes": 1695,
+    "private": false,
+    "downloads": 20289370,
+    "tags": [
+      "diffusion-single-file",
+      "comfyui",
+      "base_model:MiniMaxAI/MiniMax-H3",
+      "base_model:finetune:MiniMaxAI/MiniMax-H3",
+      "license:other",
+      "region:us"
+    ],
+    "library_name": "diffusion-single-file",
+    "createdAt": "2026-07-30T22:36:12.000Z",
+    "modelId": "Comfy-Org/MiniMax-H3"
+  },
+  {
     "_id": "65f44de295b7d70871c368eb",
     "id": "BAAI/bge-reranker-v2-m3",
-    "likes": 1162,
+    "likes": 1163,
     "private": false,
-    "downloads": 18075521,
+    "downloads": 18234369,
     "tags": [
       "sentence-transformers",
       "safetensors",
@@ -640,11 +640,33 @@
     "modelId": "BAAI/bge-reranker-v2-m3"
   },
   {
+    "_id": "67449267a8b7b9f766e74310",
+    "id": "trl-internal-testing/tiny-Qwen2ForCausalLM-2.5",
+    "likes": 21,
+    "private": false,
+    "downloads": 17833129,
+    "tags": [
+      "transformers",
+      "safetensors",
+      "qwen2",
+      "text-generation",
+      "trl",
+      "conversational",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us"
+    ],
+    "pipeline_tag": "text-generation",
+    "library_name": "transformers",
+    "createdAt": "2024-11-25T15:06:15.000Z",
+    "modelId": "trl-internal-testing/tiny-Qwen2ForCausalLM-2.5"
+  },
+  {
     "_id": "639c045c34967bcf4564bdc5",
     "id": "timm/mobilenetv3_small_100.lamb_in1k",
     "likes": 103,
     "private": false,
-    "downloads": 17810578,
+    "downloads": 17724748,
     "tags": [
       "timm",
       "pytorch",
@@ -663,33 +685,30 @@
     "modelId": "timm/mobilenetv3_small_100.lamb_in1k"
   },
   {
-    "_id": "67449267a8b7b9f766e74310",
-    "id": "trl-internal-testing/tiny-Qwen2ForCausalLM-2.5",
-    "likes": 21,
+    "_id": "66d0dccb3866d4d3087d3a9f",
+    "id": "Comfy-Org/stable-diffusion-v1-5-archive",
+    "likes": 124,
     "private": false,
-    "downloads": 16826360,
+    "downloads": 17148930,
     "tags": [
-      "transformers",
-      "safetensors",
-      "qwen2",
-      "text-generation",
-      "trl",
-      "conversational",
-      "text-generation-inference",
-      "endpoints_compatible",
+      "diffusion-single-file",
+      "comfyui",
+      "en",
+      "base_model:runwayml/stable-diffusion-v1-5",
+      "base_model:finetune:runwayml/stable-diffusion-v1-5",
+      "license:creativeml-openrail-m",
       "region:us"
     ],
-    "pipeline_tag": "text-generation",
-    "library_name": "transformers",
-    "createdAt": "2024-11-25T15:06:15.000Z",
-    "modelId": "trl-internal-testing/tiny-Qwen2ForCausalLM-2.5"
+    "library_name": "diffusion-single-file",
+    "createdAt": "2024-08-29T20:40:43.000Z",
+    "modelId": "Comfy-Org/stable-diffusion-v1-5-archive"
   },
   {
     "_id": "65c7188324e59a0e4f89d863",
     "id": "nomic-ai/nomic-embed-text-v1.5",
     "likes": 901,
     "private": false,
-    "downloads": 16471818,
+    "downloads": 16523260,
     "tags": [
       "sentence-transformers",
       "onnx",
@@ -717,30 +736,11 @@
     "modelId": "nomic-ai/nomic-embed-text-v1.5"
   },
   {
-    "_id": "66d0dccb3866d4d3087d3a9f",
-    "id": "Comfy-Org/stable-diffusion-v1-5-archive",
-    "likes": 123,
-    "private": false,
-    "downloads": 15824278,
-    "tags": [
-      "diffusion-single-file",
-      "comfyui",
-      "en",
-      "base_model:runwayml/stable-diffusion-v1-5",
-      "base_model:finetune:runwayml/stable-diffusion-v1-5",
-      "license:creativeml-openrail-m",
-      "region:us"
-    ],
-    "library_name": "diffusion-single-file",
-    "createdAt": "2024-08-29T20:40:43.000Z",
-    "modelId": "Comfy-Org/stable-diffusion-v1-5-archive"
-  },
-  {
     "_id": "621ffdc036468d709f17434d",
     "id": "openai-community/gpt2",
-    "likes": 3656,
+    "likes": 3664,
     "private": false,
-    "downloads": 14607268,
+    "downloads": 14739982,
     "tags": [
       "transformers",
       "pytorch",

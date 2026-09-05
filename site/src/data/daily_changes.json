@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-09-05T01:03:39",
+  "updated_at": "2026-09-05T14:46:21",
   "days": [
     {
       "date": "2026-09-05",
       "stats": {
         "total": 68,
-        "success": 61,
-        "failed": 7,
+        "success": 60,
+        "failed": 8,
         "changed": 19,
-        "unchanged": 42
+        "unchanged": 41
       },
       "changed": [
         {
@@ -356,28 +356,6 @@
           "llm_summary": "定价页删除了 $4,300 的价格信息，仅保留页面标题，可能意味着价格信息被移除或页面正在重构，具体原因从数据中无法判断。"
         },
         {
-          "platform": "xAI",
-          "source_type": "changelog",
-          "url": "https://x.ai/news",
-          "status": "changed",
-          "added_count": 0,
-          "removed_count": 0,
-          "added_lines": [],
-          "removed_lines": [],
-          "kind": "substantive",
-          "pairs": [
-            {
-              "key": "cloudflare ray id",
-              "before": "Cloudflare Ray ID: a35b146c1c6368e8",
-              "after": "Cloudflare Ray ID: a36150621cfce5f9"
-            }
-          ],
-          "signal_preview": "Cloudflare Ray ID: a36150621cfce5f9",
-          "raw_added_count": 2,
-          "raw_removed_count": 2,
-          "llm_summary": "仅 Cloudflare Ray ID 发生变化，属于页面请求标识的正常变动，无实质内容更新。"
-        },
-        {
           "platform": "Artificial Analysis",
           "source_type": "industry",
           "url": "https://artificialanalysis.ai/",
@@ -483,19 +461,43 @@
           "llm_summary": "榜单新增 claude-fable-5.1-max（1763分）、grok-4.6-high（1625分）、gemini-omni-1.1-flash（1515分）等多款新模型，同时更新了部分既有模型的 Elo 分数，整体榜单格局发生明显变化。"
         },
         {
-          "platform": "火山方舟",
-          "source_type": "pricing",
-          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "platform": "Cohere",
+          "source_type": "model_list",
+          "url": "https://docs.cohere.com/docs/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "Safety Modes"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 1
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://x.ai/news",
           "status": "changed",
           "added_count": 0,
           "removed_count": 0,
           "added_lines": [],
           "removed_lines": [],
           "kind": "jitter",
-          "pairs": [],
+          "pairs": [
+            {
+              "key": "cloudflare ray id",
+              "before": "Cloudflare Ray ID: a35b146c1c6368e8",
+              "after": "Cloudflare Ray ID: a36605d2f999ee17"
+            }
+          ],
           "signal_preview": "",
-          "raw_added_count": 1,
-          "raw_removed_count": 1
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "llm_summary": "仅 Cloudflare Ray ID 发生变化，属于页面请求标识的正常变动，无实质内容更新。"
         },
         {
           "platform": "xAI",
@@ -511,7 +513,7 @@
             {
               "key": "cloudflare ray id",
               "before": "Cloudflare Ray ID: a35b146c5a53393c",
-              "after": "Cloudflare Ray ID: a361506258f80c3d"
+              "after": "Cloudflare Ray ID: a36605d3391ab8b6"
             }
           ],
           "signal_preview": "",
@@ -530,8 +532,8 @@
           "kind": "jitter",
           "pairs": [],
           "signal_preview": "",
-          "raw_added_count": 32,
-          "raw_removed_count": 32
+          "raw_added_count": 33,
+          "raw_removed_count": 33
         }
       ],
       "first_fetch": [],
@@ -545,10 +547,17 @@
         },
         {
           "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
           "source_type": "changelog",
           "url": "https://www.volcengine.com/docs/82379/1159177",
           "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=4606)"
+          "error": "提取后内容过短 (raw_len=11071)"
         },
         {
           "platform": "腾讯混元/TokenHub",

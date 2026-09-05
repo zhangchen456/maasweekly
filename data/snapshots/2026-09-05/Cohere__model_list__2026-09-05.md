@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-05T09:03:21.826347 -->
+<!-- fetched: 2026-09-05T22:46:16.847680 -->
 
 An Overview of Cohere's Models | Cohere
 For AI agents: a documentation index is available at the root level at /llms.txt. Append /llms.txt to any URL for a page-level index, or .md for the markdown version of any page.
@@ -57,7 +57,6 @@ Retrieval Augmented Generation (RAG)
 Tool Use
 Tokens and Tokenizers
 Summarizing Text
-Safety Modes
 Embeddings (Vectors, Search, Retrieval)
 Introduction to Embeddings at Cohere
 Semantic Search with Embeddings
