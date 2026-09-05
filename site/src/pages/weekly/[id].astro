@@ -18,7 +18,7 @@ const structured = await getCollection('weeklyStructured', (e) => e.id === repor
 const data = structured[0]?.data;
 ---
 
-<Layout title={`${report.data.title} — MaaS Weekly`} description={report.data.period || report.data.date}>
+<Layout title={`${report.data.title} — MaaS Daily`} description={report.data.period || report.data.date}>
   <article class="report-page">
     <a href="/" class="back-link">← 返回首页</a>
 
