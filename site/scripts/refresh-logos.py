@@ -3,7 +3,7 @@
 Run from any directory: python3 site/scripts/refresh-logos.py [--platform NAME]
 Only run deliberately when refreshing branding; daily reports use the local registry.
 """
-import argparse, concurrent.futures, datetime, hashlib, html, json, pathlib, re, subprocess, xml.etree.ElementTree as ET
+import base64, argparse, concurrent.futures, datetime, hashlib, html, json, pathlib, re, subprocess, xml.etree.ElementTree as ET
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / 'src/data/platform-logos.json'
 DEST = ROOT / 'public/logos/official'
@@ -29,6 +29,12 @@ def refresh(row):
     for url in row['candidates']:
         result = subprocess.run(['curl', '--fail', '--silent', '--show-error', '--location', '--max-time', '25', '--max-filesize', '2097152', '--proto', '=https', '--proto-redir', '=https', '--user-agent', 'Mozilla/5.0', url], capture_output=True)
         payload = result.stdout
+        if url.startswith('data:image/') and ';base64,' in url:
+            try:
+                payload = base64.b64decode(url.split(';base64,', 1)[1], validate=True)
+                result.returncode = 0
+            except ValueError:
+                pass
         if row.get('svg_marker') and result.returncode == 0:
             page = payload.decode('utf-8', 'replace')
             start = page.find(row['svg_marker'])

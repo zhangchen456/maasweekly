@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import '../styles/leaderboards.css';
 import BoardSection from '../components/leaderboards/BoardSection.astro';
 import RankTable from '../components/leaderboards/RankTable.astro';
 import { logoFor } from '../lib/platforms';
@@ -48,7 +49,7 @@ const costCols = [
   { key: 'harness', label: 'Harness' },
   { key: 'model', label: '模型' },
   { key: 'turn_range', label: '轮次' },
-  { key: 'median_cost_usd', label: '$ / 会话', format: (v) => (v != null ? `$${Number(v).toFixed(2)}` : '—') },
+  { key: 'median_cost_usd', label: '$ / 会话', format: (v) => (v != null ? `$${Number(v).toFixed(Number(v) < 0.01 ? 4 : 2)}` : '—') },
 ];
 const appCols = [
   { key: 'rank', label: '#' },
@@ -62,11 +63,10 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
 ---
 
 <Layout title="榜单 — MaaS Daily" description="两大板块：OpenRouter 开发者采用数据（调用量/厂商份额/会话成本/应用榜）+ 能力榜（LMArena / AA / SuperCLUE / SWE-bench / Terminal-Bench）交叉验证">
-  <h1>榜单</h1>
-  <p class="page-desc">
-    采用与能力分开看：OpenRouter 数据回答「开发者实际在用什么」，五个能力榜回答「谁的模型好」。快照日期与维护方式见各榜脚注，多榜交叉、不依赖平台自说自话。
-  </p>
-
+  <header class="boards-hero">
+    <div><div class="boards-kicker">MODEL INTELLIGENCE / 榜单观察</div><h1>用数据，找到合适的模型。</h1><p>从真实调用到能力评测，换一个角度看模型。选择榜单，搜索、排序，再做比较。</p></div>
+    <nav class="board-shortcuts" aria-label="榜单分区"><a href="#adoption"><span>01 / ADOPTION</span><strong>谁在被使用 <span>↗</span></strong><small>调用量 · 份额 · 成本 · 应用</small></a><a href="#benchmarks"><span>02 / BENCHMARKS</span><strong>谁更擅长 <span>↗</span></strong><small>偏好 · 智能 · 中文 · 编程 · Agent</small></a></nav>
+  </header>
   <!-- ===== 01 / ADOPTION ===== -->
   <section class="section" id="adoption">
     <div class="section-heading">
@@ -75,8 +75,10 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
       <p class="section-note">按经 OpenRouter API 路由的真实 token 量统计，每日自动抓取。它衡量采用而非质量，只反映 OpenRouter 流量而非全市场。</p>
     </div>
 
+<div class="board-switches" role="group" aria-label="采用数据视图"><button type="button" data-board="board-usage" aria-controls="board-usage" aria-pressed="true">模型调用量</button><button type="button" data-board="board-share" aria-controls="board-share" aria-pressed="false">厂商份额</button><button type="button" data-board="board-cost" aria-controls="board-cost" aria-pressed="false">会话成本</button><button type="button" data-board="board-apps" aria-controls="board-apps" aria-pressed="false">热门应用</button></div>
     {openrouter && (
       <BoardSection
+        id="board-usage"
         title="模型调用量 Top10"
         snap={openrouter.snapshot_date}
         manual={openrouter.manual ?? true}
@@ -87,12 +89,12 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
       >
         <div class="bar-list">
           {openrouter.top.map((m) => (
-            <div class="bar-row">
+            <details class="bar-entry"><summary class="bar-row">
               <span class="bar-rank">{m.rank}</span>
               <div class="bar-main">
                 <div class="bar-top">
                   <span class="bar-model">{m.model}</span>
-                  <span class="bar-vendor">{m.vendor}</span>
+                  <span class="bar-vendor vendor-cell">{logoFor(m.vendor) && <img class="bd-logo" src={logoFor(m.vendor)} alt="" width="24" height="24" loading="lazy" />}{m.vendor}</span>
                   <span class="bar-val">{m.tokens_t}T tokens</span>
                   {m.is_new
                     ? <span class="pill pill-new">新上榜</span>
@@ -107,7 +109,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
                   <div class="bar-fill" style={`width:${(m.tokens_t / maxTokens * 100).toFixed(1)}%`}></div>
                 </div>
               </div>
-            </div>
+            </summary><div class="bar-detail"><strong>{m.model}</strong><span>{m.vendor} · 当前排名 #{m.rank}</span><p>本期调用量 {m.tokens_t}T tokens{m.change_pct != null ? `，较上期 ${fmtPct(m.change_pct)}` : ''}。调用量反映采用情况，不等同于模型能力。</p><a href={openrouter.source_url} target="_blank" rel="noopener">查看 OpenRouter 原榜 ↗</a></div></details>
           ))}
         </div>
       </BoardSection>
@@ -115,6 +117,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
 
     {marketShare && (
       <BoardSection
+        id="board-share"
         title="厂商份额"
         snap={marketShare.snapshot_date}
         manual={marketShare.manual ?? true}
@@ -124,7 +127,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
       >
         <div class="bar-list">
           {marketShare.shares.map((s) => (
-            <div class="bar-row">
+            <details class="bar-entry"><summary class="bar-row">
               <span class="bar-rank">{s.rank}</span>
               <div class="bar-main">
                 <div class="bar-top">
@@ -141,7 +144,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
                   <div class="bar-fill bar-fill-share" style={`width:${(s.share_pct / maxShare * 100).toFixed(1)}%`}></div>
                 </div>
               </div>
-            </div>
+            </summary><div class="bar-detail"><strong>{s.vendor}</strong><p>占 OpenRouter 本期流量 {s.share_pct.toFixed(1)}%{s.change_pp != null ? `，较上期 ${fmtPp(s.change_pp)}` : ''}。份额变化以百分点计。</p><a href={marketShare.source_url} target="_blank" rel="noopener">查看份额来源 ↗</a></div></details>
           ))}
         </div>
       </BoardSection>
@@ -149,6 +152,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
 
     {sessionCost && (
       <BoardSection
+        id="board-cost"
         title="编程 Agent 会话成本"
         snap={sessionCost.snapshot_date}
         manual={sessionCost.manual ?? true}
@@ -162,6 +166,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
 
     {topApps && (
       <BoardSection
+        id="board-apps"
         title="Top Apps · 应用榜"
         snap={topApps.snapshot_date}
         manual={topApps.manual ?? true}
@@ -189,8 +194,10 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
       <p class="section-note">五个独立第三方评测，口径互补：真实使用偏好（LMArena）、综合智能（AA）、中文场景（SuperCLUE）、工程实战（SWE-bench）、Agent 任务（Terminal-Bench）。</p>
     </div>
 
+<div class="board-switches" role="group" aria-label="能力评测视图"><button type="button" data-board="board-arena" aria-controls="board-arena" aria-pressed="true">LMArena</button><button type="button" data-board="board-aa" aria-controls="board-aa" aria-pressed="false">AA 智能指数</button><button type="button" data-board="board-clue" aria-controls="board-clue" aria-pressed="false">SuperCLUE</button><button type="button" data-board="board-swe" aria-controls="board-swe" aria-pressed="false">SWE-bench</button><button type="button" data-board="board-terminal" aria-controls="board-terminal" aria-pressed="false">Terminal-Bench</button></div>
     {lmarena && (
       <BoardSection
+        id="board-arena"
         title="LMArena Elo 榜"
         snap={lmarena.snapshot_date}
         manual={lmarena.manual}
@@ -204,6 +211,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
 
     {aa && (
       <BoardSection
+        id="board-aa"
         title="AA 智能指数"
         snap={aa.snapshot_date}
         manual={aa.manual}
@@ -217,6 +225,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
 
     {superclue && (
       <BoardSection
+        id="board-clue"
         title="SuperCLUE 智能指数（中文）"
         snap={superclue.snapshot_date}
         manual={superclue.manual}
@@ -230,6 +239,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
 
     {swebench && (
       <BoardSection
+        id="board-swe"
         title="SWE-bench Verified"
         snap={swebench.snapshot_date}
         manual={swebench.manual}
@@ -243,6 +253,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
 
     {terminalBench && (
       <BoardSection
+        id="board-terminal"
         title="Terminal-Bench 2.1"
         snap={terminalBench.snapshot_date}
         manual={terminalBench.manual}
@@ -254,6 +265,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
       </BoardSection>
     )}
   </section>
+  <script src="../scripts/leaderboards.ts"></script>
 </Layout>
 
 <style>

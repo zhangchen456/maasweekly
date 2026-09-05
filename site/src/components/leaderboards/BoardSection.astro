@@ -1,6 +1,7 @@
 ---
 // 榜单区块壳：统一头部（标题/快照/徽标）+ 脚注（口径 note + 溯源链接）+ slot 数据体。
 interface Props {
+  id: string;
   title: string;
   snap: string;
   manual?: boolean;
@@ -9,11 +10,11 @@ interface Props {
   sourceUrl: string;
   citation?: string;
 }
-const { title, snap, manual, cycle, note, sourceUrl, citation } = Astro.props;
+const { id, title, snap, manual, cycle, note, sourceUrl, citation } = Astro.props;
 const CYCLE_LABEL: Record<string, string> = { daily: '日更', weekly: '周更', monthly: '月更' };
 ---
 
-<section class="board">
+<section class="board" id={id} aria-label={title}>
   <header class="board-head">
     <h3>{title}</h3>
     <span class="board-meta">
@@ -22,31 +23,10 @@ const CYCLE_LABEL: Record<string, string> = { daily: '日更', weekly: '周更',
       {cycle && <span class="badge badge-cycle">{CYCLE_LABEL[cycle] ?? cycle}</span>}
     </span>
   </header>
-  <slot />
-  <footer class="board-foot">
-    <p class="board-note">{note} <a href={sourceUrl} target="_blank" rel="noopener">source ↗</a></p>
+  <div class="board-content"><slot /></div>
+  <div class="board-foot">
+    <details class="board-method"><summary>数据口径与更新说明 <span>＋</span></summary><p class="board-note">{note}</p>{manual && <p class="board-note">该榜单由人工维护，数据截至 {snap}。</p>}</details>
+    <a class="board-source" href={sourceUrl} target="_blank" rel="noopener">查看原始榜单 ↗</a>
     {citation && <p class="board-cite">{citation}</p>}
-  </footer>
+  </div>
 </section>
-
-<style>
-  .board { margin-bottom: 46px; }
-  .board-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
-  .board-head h3 {
-    margin: 0; font-family: "Songti SC", serif; font-size: 21px; font-weight: 700; letter-spacing: -.01em;
-  }
-  .board-meta { display: flex; align-items: center; gap: 8px; }
-  .snap { color: var(--muted); font: 500 11.5px/1 "SF Mono", monospace; letter-spacing: .02em; }
-  .badge { font: 700 10px/1 "SF Mono", monospace; letter-spacing: .06em; padding: 4px 8px; border-radius: 5px; }
-  .badge-manual { color: var(--amber); background: var(--amber-dim); }
-  .badge-cycle { color: var(--cyan); background: color-mix(in srgb, var(--cyan) 12%, transparent); }
-
-  .board-foot { margin-top: 16px; }
-  .board-note {
-    margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.7;
-    background: var(--ink-2); border: 1px solid var(--line); border-radius: 9px; padding: 12px 16px;
-  }
-  .board-note a { color: var(--acid); text-decoration: none; }
-  .board-note a:hover { text-decoration: underline; }
-  .board-cite { margin: 8px 0 0; color: var(--muted); font: 500 11px/1.5 "SF Mono", monospace; opacity: .8; }
-</style>

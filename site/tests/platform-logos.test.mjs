@@ -1,5 +1,5 @@
 import { logoFor } from '../src/lib/platforms.ts';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 const root = new URL('../../', import.meta.url);
@@ -20,3 +20,16 @@ assert.equal(logoFor(' OPEN AI '), logoFor('OpenAI'));
 assert.notEqual(logoFor('Gemini'), logoFor('Vertex AI'));
 assert.equal(logoFor('unknown-platform'), undefined);
 console.log('Logo registry: platforms, aliases, daily data and file hashes passed.');
+
+for (const file of readdirSync(new URL('site/src/data/leaderboards/', root)).filter(f=>f.endsWith('.json'))) {
+  const visit = (value) => {
+    if (Array.isArray(value)) return value.forEach(visit);
+    if (!value || typeof value !== 'object') return;
+    for (const [key, child] of Object.entries(value)) {
+      if (['vendor','app_name','harness'].includes(key) && typeof child === 'string') assert.ok(logoFor(child), `${file}: missing logo for ${child}`);
+      else if (typeof child === 'object') visit(child);
+    }
+  };
+  visit(read(`site/src/data/leaderboards/${file}`));
+}
+console.log('All leaderboard vendors and applications have local logo mappings.');
