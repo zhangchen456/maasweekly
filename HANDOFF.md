@@ -11,7 +11,7 @@
 
 AI 驱动的 MaaS 平台追踪站，两个内容层次：
 
-1. **每日动态**（自动）：每天 08:30 自动抓取 17 个平台 + 行业信源（共 68 个 URL），与上一次快照逐行 diff，增量变化展示在 `/changes` 页，热点事件提炼到首页 LIVE 滚动条
+1. **每日动态**（自动）：每天凌晨 05:00 自动抓取 17 个平台 + 行业信源（共 68 个 URL），与上一次快照逐行 diff，增量变化展示在 `/changes` 页，热点事件提炼到首页 LIVE 滚动条
 2. **周度报告**（人工/Agent 写作）：完整行业周报，53 期历史存档（2025-10 ~ 2026-09），结构化渲染首页
 
 运营状态：**全自动运行，日常无需人工介入**。人工要做的事只有一件——每周写周报（见第五节）。
@@ -21,7 +21,7 @@ AI 驱动的 MaaS 平台追踪站，两个内容层次：
 ## 二、架构与数据流
 
 ```
-┌────────────── GitHub Actions（每日 08:30 北京时间）──────────────┐
+┌────────────── GitHub Actions（每日凌晨 05:00 北京时间）──────────────┐
 │                                                                  │
 │  fetch_sources.py          抓 68 个信源 → data/snapshots/日期/    │
 │       ↓                  与最近快照 diff → data/diff/日期.md|json │
@@ -43,7 +43,7 @@ AI 驱动的 MaaS 平台追踪站，两个内容层次：
 
 | 工作流 | 触发 | 内容 |
 |--------|------|------|
-| `daily-update.yml` | 每日 08:30 定时 / 手动 | 全链路（上图）。手动可勾选 skip_fetch 只重新构建 |
+| `daily-update.yml` | 每日凌晨 05:00 定时 / 手动 | 全链路（上图）。手动可勾选 skip_fetch 只重新构建 |
 | `deploy.yml` | push 到 main / 手动 | 仅构建+部署（1-2 分钟）。push 触发已排除 `data/**` 和 `site/src/data/**`（Actions 自动提交的数据，防止循环触发） |
 | `weekly-update.yml` | 每周一 09:00 / 手动 | 三模式：aggregate（只抓取汇总）/ import（导入新周报并部署）/ full（全做） |
 
@@ -121,7 +121,7 @@ maasweekly/
 
 ### 每天要做的事
 
-**没有**。08:30 自动跑。想看结果：https://week.maas.click/changes 。Actions 执行记录：https://github.com/zhangchen456/maasweekly/actions
+**没有**。05:00 自动跑。想看结果：https://week.maas.click/changes 。Actions 执行记录：https://github.com/zhangchen456/maasweekly/actions
 
 ### 每周写周报（唯一的人工环节）
 
@@ -138,7 +138,7 @@ push 到 main 即可（deploy.yml 自动触发，约 1.5 分钟）。或本地�
 
 1. 编辑 `pipeline/config/maas_official_sources.json`（platforms 数组，sources 支持 model_list/pricing/changelog/api_docs/github/blog/model_marketplace 七个维度，可为 null）
 2. 跑 `python3 site/scripts/split-sources.py` 更新站点信源页数据
-3. push（自动部署信源页）；信源抓取无需重启任何东西，下次 08:30 生效
+3. push（自动部署信源页）；信源抓取无需重启任何东西，下次 05:00 生效
 
 **加信源的经验**（踩过的坑）：
 

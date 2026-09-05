@@ -27,7 +27,7 @@ maasweekly/
 │   ├── daily/                   # 早期每日追踪报告（7 月前）
 │   └── weekly-archive-early/    # 更早期手写周报存档
 └── .github/workflows/       # 自动化
-    ├── daily-update.yml     # 每天 08:30 抓取 + 构建 + 部署
+    ├── daily-update.yml     # 每天凌晨 05:00 抓取 + 构建 + 部署
     └── weekly-update.yml    # 每周一 09:00 抓取汇总 + 周报导入 + 部署
 ```
 
@@ -35,7 +35,7 @@ maasweekly/
 
 ### 每日（热点信息每天更新）
 
-`daily-update.yml` 每天北京时间 08:30 执行：
+`daily-update.yml` 每天北京时间凌晨 05:00 执行：
 
 1. `fetch_sources.py` 抓取全部信源（模型列表 / 定价 / 更新日志 / 博客）
 2. 与最近一次快照逐行 diff，产出 `data/diff/YYYY-MM-DD.md|json`
