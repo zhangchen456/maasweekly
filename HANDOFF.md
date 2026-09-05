@@ -160,7 +160,7 @@ push 到 main 即可（deploy.yml 自动触发，约 1.5 分钟）。或本地�
 1. **diff 噪声**：按行集合对比对部分 SPA/动态页面有误报（页面元素抖动算"变化"）。今天 27 个"变化"信源里估计有一部分是噪声。方案：跑一两周积累数据后，对高噪声信源加指纹过滤（只对比含模型名/价格模式的行）
 2. **live 事件提炼准确率**：规则式约 80-90%。中文公告格式多样，已知漏报场景：不含"发布/上线"关键词的新模型公告。方案：积累误报样本后加规则，或换 LLM 提炼（Actions 里加一个 API 调用，有持续成本）
 3. **讯飞星辰只有 changelog 信源**：模型列表/定价是 CSR 无公开 API。要覆盖需上 headless 浏览器（playwright），成本较高，价值待定
-4. **榜单/价格页数据是静态的**：`src/data/leaderboards/`、`src/data/pricing/` 手工维护，没有接入抓取管线。这些页面数据已一个多月未更新
+4. **榜单数据分两轨**：OpenRouter 四个数据集（调用量/厂商份额/会话成本/Top Apps）已接入自动抓取——`pipeline/scripts/fetch-leaderboards.py` 每日随 daily-update 运行（需 GitHub secret `OPENROUTER_API_KEY`；失败降级保留旧快照）。五个能力榜（LMArena/AA/SuperCLUE/SWE-bench/Terminal-Bench）仍为**手工维护**（JSON 带 `manual: true`），更新流程：改 `site/src/data/leaderboards/*.json` → 本地 `node site/tests/leaderboards.test.mjs` 验证 → push。**注意**：`site/src/data/**` 在 deploy.yml 的 paths-ignore 里，手工更新 JSON 后 push 不会触发自动部署——手动 workflow_dispatch 触发 deploy.yml，或等次日 05:00 daily-update 上线。数据来源：LMArena/SuperCLUE/SWE-bench/Terminal-Bench 快照可在 `data/snapshots/` 的每日抓取里找到现成素材（fetch_sources 已抓这两个信源页）
 5. **fetch-images.py 依赖代理网络**：CI 里无代理，海外图片抓取部分失败（continue-on-error 不阻塞）。需要时设 `FETCH_IMAGES_PROXY`
 6. **skill4u.conf.bak 被 include 产生 nginx warn**：服务器上老问题，与本项目无关但每次 nginx -t 都有警告，可顺手清理（把 .bak 移出 sites-enabled）
 
