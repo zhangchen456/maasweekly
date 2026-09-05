@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { logoFor } from '../lib/platforms';
 import { getCollection } from 'astro:content';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -60,7 +61,7 @@ const sourcePriority = ['model_list', 'pricing', 'changelog', 'api_docs', 'githu
       {chinaPlatforms.map((p) => (
         <div class="platform-card">
           <div class="platform-header">
-            <h3>{p.data.name}</h3>
+            <h3 class="platform-name">{logoFor(p.data.name) && <img class="platform-logo" src={logoFor(p.data.name)} alt="" width="32" height="32" loading="lazy" />}{p.data.name}</h3>
             <span class="platform-en">{p.data.name_en}</span>
             <a href={p.data.official_site} class="official-link" target="_blank" rel="noopener">官网 ↗</a>
           </div>
@@ -86,7 +87,7 @@ const sourcePriority = ['model_list', 'pricing', 'changelog', 'api_docs', 'githu
       {overseasPlatforms.map((p) => (
         <div class="platform-card">
           <div class="platform-header">
-            <h3>{p.data.name}</h3>
+            <h3 class="platform-name">{logoFor(p.data.name) && <img class="platform-logo" src={logoFor(p.data.name)} alt="" width="32" height="32" loading="lazy" />}{p.data.name}</h3>
             <span class="platform-en">{p.data.name_en}</span>
             <a href={p.data.official_site} class="official-link" target="_blank" rel="noopener">官网 ↗</a>
           </div>

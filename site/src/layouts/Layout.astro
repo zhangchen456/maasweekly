@@ -1,9 +1,11 @@
 ---
+import '../styles/product.css';
 interface Props {
   title: string;
   description?: string;
 }
 
+const activePath = Astro.url.pathname;
 const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、定价变更、API 更新一网打尽" } = Astro.props;
 ---
 
@@ -18,7 +20,7 @@ const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、
     <title>{title}</title>
     <script is:inline>
       (function () {
-        const saved = localStorage.getItem('maas-theme');
+        let saved; try { saved = localStorage.getItem('maas-theme'); } catch {}
         if (saved === 'light') {
           document.documentElement.setAttribute('data-theme', 'light');
         } else {
@@ -28,15 +30,16 @@ const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、
     </script>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">跳到内容</a>
     <header class="topbar">
       <div class="shell topbar-inner">
         <a href="/" class="brand"><span class="brand-mark"></span> MAAS / DAILY</a>
         <nav class="nav" aria-label="页面导航">
-          <a href="/">今日</a>
-          <a href="/leaderboards">榜单</a>
-          <a href="/pricing">价格</a>
-          <a href="/sources">信源</a>
-          <a href="/weekly">归档</a>
+          <a href="/" aria-current={(activePath === '/') ? 'page' : undefined}>今日</a>
+          <a href="/leaderboards" aria-current={(activePath.startsWith('/leaderboards')) ? 'page' : undefined}>榜单</a>
+          <a href="/pricing" aria-current={(activePath.startsWith('/pricing')) ? 'page' : undefined}>价格</a>
+          <a href="/sources" aria-current={(activePath.startsWith('/sources')) ? 'page' : undefined}>信源</a>
+          <a href="/weekly" aria-current={(activePath.startsWith('/weekly') || activePath.startsWith('/daily')) ? 'page' : undefined}>归档</a>
         </nav>
         <button class="theme-toggle" aria-label="切换主题" title="切换深/浅色">
           <span class="theme-icon-light">☀</span>
@@ -44,7 +47,7 @@ const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、
         </button>
       </div>
     </header>
-    <main>
+    <main id="main-content">
       <div class="shell">
         <slot />
       </div>
@@ -61,8 +64,9 @@ const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、
         const cur = document.documentElement.getAttribute('data-theme');
         const next = cur === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('maas-theme', next);
+        try { localStorage.setItem('maas-theme', next); } catch {}
       });
+      document.documentElement.classList.add('motion-ready');
       // reveal 动画
       const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -209,7 +213,7 @@ const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、
 
       /* reveal 动画 */
       .reveal { opacity: 1; transform: none; }
-      .reveal:not(.in) { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.75,.25,1); }
+      .motion-ready .reveal:not(.in) { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.75,.25,1); }
       .reveal.in { opacity: 1; transform: none; }
 
       /* footer */
@@ -237,13 +241,15 @@ const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、
       .prose th { background: var(--ink-2); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
 
       @media (max-width: 900px) {
-        .nav { display: none; }
+        .topbar-inner { flex-wrap: wrap; gap: 12px; padding-top: 16px; }
+        .nav { order: 3; width: 100%; justify-content: space-between; padding-bottom: 12px; }
         .section-heading { grid-template-columns: 54px 1fr; gap: 10px; }
         .section-note { grid-column: 1 / -1; margin-top: 6px; }
         .section { margin-top: 70px; }
       }
       @media (prefers-reduced-motion: reduce) {
-        .reveal { opacity: 1; transform: none; transition: none; }
+        *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+        .motion-ready .reveal:not(.in) { opacity: 1; transform: none; }
       }
     </style>
   </body>

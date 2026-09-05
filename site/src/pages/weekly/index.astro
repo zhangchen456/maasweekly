@@ -35,7 +35,7 @@ const fmtWeekRange = (w: any) => {
     <div class="section-heading reveal">
       <div class="section-no">01 / DAILY</div>
       <h2>周度归档</h2>
-      <p class="section-note">每日动态按 ISO 周聚合，含 AI 周度串讲与逐日要点。</p>
+      <p class="section-note">每日动态按周聚合，含周度回顾与逐日要点。</p>
     </div>
     {weeks.length > 0 ? (
       <div class="archive-grid">
@@ -43,7 +43,7 @@ const fmtWeekRange = (w: any) => {
           <a href={`/daily/${w.week}/`} class="archive-card reveal">
             <div class="archive-week">{w.week}</div>
             <div class="archive-range">{fmtWeekRange(w)}</div>
-            <div class="archive-stats">{w.totals?.substantive ?? 0} 变化 · {w.totals?.releases ?? 0} 发布 · {w.totals?.pricings ?? 0} 调价</div>
+            <div class="archive-stats">{w.totals?.substantive ?? 0} 项变化 · {w.totals?.releases ?? 0} 发布 · {w.totals?.pricings ?? 0} 调价</div>
             <div class="archive-arrow">→</div>
           </a>
         ))}

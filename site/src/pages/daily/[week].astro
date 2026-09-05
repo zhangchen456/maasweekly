@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { logoFor } from '../../lib/platforms';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -36,7 +37,7 @@ const HL_TYPE: Record<string, { label: string; cls: string }> = {
 };
 
 const fmtDate = (d: string) => { const [, m, dd] = d.split('-'); return `${+m}.${+dd}`; };
-const weekday = (d: string) => '周' + '一二三四五六日'[new Date(d).getDay()];
+const weekday = (d: string) => '周' + '日一二三四五六'[new Date(d).getDay()];
 ---
 <Layout title={`${week.week} 周归档 — MaaS Daily`} description={`${week.start} ~ ${week.end} MaaS 平台每日动态归档：${week.totals?.substantive ?? 0} 个实质变化`}>
   <header class="hero">
@@ -47,7 +48,7 @@ const weekday = (d: string) => '周' + '一二三四五六日'[new Date(d).getDa
     </div>
     <aside class="hero-aside">
       <div class="pulse">
-        <div class="pulse-item"><strong>{week.totals?.substantive ?? 0}</strong><span>实质变化</span></div>
+        <div class="pulse-item"><strong>{week.totals?.substantive ?? 0}</strong><span>平台变化</span></div>
         <div class="pulse-item"><strong>{week.totals?.releases ?? 0}</strong><span>发布</span></div>
         <div class="pulse-item"><strong>{week.totals?.pricings ?? 0}</strong><span>调价</span></div>
         <div class="pulse-item"><strong>{week.totals?.sunsets ?? 0}</strong><span>下线</span></div>
@@ -58,7 +59,7 @@ const weekday = (d: string) => '周' + '一二三四五六日'[new Date(d).getDa
   {week.story && (
     <section class="section story-sec">
       <div class="section-heading reveal">
-        <div class="section-no">AI / REVIEW</div>
+        <div class="section-no">REVIEW</div>
         <h2>{week.story.theme}</h2>
       </div>
       <div class="week-story reveal">
@@ -71,7 +72,7 @@ const weekday = (d: string) => '周' + '一二三四五六日'[new Date(d).getDa
     <div class="section-heading reveal">
       <div class="section-no">DAILY / DIGEST</div>
       <h2>逐日要点</h2>
-      <p class="section-note">该周每日 AI 要点，按日倒序。</p>
+      <p class="section-note">该周每日要点，按日倒序。</p>
     </div>
     {weekDays.map((date) => {
       // 优先取 daily_changes.json 的 v3 分组 highlights（带 logo_summary），否则用展平结构
@@ -85,7 +86,7 @@ const weekday = (d: string) => '周' + '一二三四五六日'[new Date(d).getDa
           <div class="day-head">
             <h3>{fmtDate(date)} <span class="weekday">{weekday(date)}</span></h3>
             <div class="day-stats">
-              <span class="stat">{stats.substantive ?? 0} 实质变化</span>
+              <span class="stat">{stats.substantive ?? 0} 项变化</span>
               {stats.releases ? <span class="stat c-release">{stats.releases} 发布</span> : ''}
               {stats.pricings ? <span class="stat c-pricing">{stats.pricings} 调价</span> : ''}
               {stats.sunsets ? <span class="stat c-sunset">{stats.sunsets} 下线</span> : ''}
@@ -96,20 +97,20 @@ const weekday = (d: string) => '周' + '一二三四五六日'[new Date(d).getDa
               {flat.map((h: any) => (
                 <li class={`hl-item ${HL_TYPE[h.type]?.cls || 't-other'}`}>
                   <span class="hl-type">{HL_TYPE[h.type]?.label || '动态'}</span>
-                  <span class="hl-platform">{h.platform}</span>
+                  <span class="hl-platform platform-name">{logoFor(h.platform) && <img class="platform-logo" src={logoFor(h.platform)} alt="" width="28" height="28" loading="lazy" />}{h.platform}</span>
                   <span class="hl-text">{h.text}</span>
                 </li>
               ))}
             </ul>
           ) : (
-            <div class="no-hl">当日无 AI 要点（{stats.substantive ?? 0} 个信源有实质变化，明细见每日 diff 数据）</div>
+            <div class="no-hl">当日无要点（{stats.substantive ?? 0} 个信源有变化）</div>
           )}
         </article>
       );
     })}
   </section>
 
-  <p class="footnote">周归档由 sync-diff-to-site.py 自动聚合 · 完整 diff 明细在数据保留窗口（60 天）内可查</p>
+  <p class="footnote">本周动态自动归档 · 每日要点与周度串讲</p>
 </Layout>
 
 <style>

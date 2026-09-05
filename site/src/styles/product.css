@@ -1,0 +1,37 @@
+/* Shared product chrome; tokens deliberately override the editorial base. */
+html:root[data-theme="dark"] { --ink:#111513; --ink-2:#191e1b; --panel:#181e1a; --panel-solid:#181e1a; --paper:#edf1ed; --paper-soft:#bcc5bd; --muted:#94a197; --acid:#b5d8aa; --acid-dim:#b5d8aa12; --line:#d5e5d415; --line-strong:#d5e5d435; --bg-grad:radial-gradient(ellipse at 80% 0%,#aec8a609,transparent 45%),linear-gradient(#111513,#111513); --noise-opacity:.06; --radius:16px; }
+html:root[data-theme="light"] { --ink:#f6f7f3; --ink-2:#ebeee7; --paper:#252e25; --paper-soft:#495548; --muted:#687565; --acid:#37652c; --acid-dim:#37652c0c; --bg-grad:linear-gradient(#f6f7f3,#f6f7f3); --radius:16px; }
+body .shell { width:min(1240px,calc(100% - 64px)); }
+body .topbar-inner { min-height:72px; }
+body .brand { font-size:13px; letter-spacing:.04em; }
+body .brand-mark { width:17px; height:20px; border-radius:3px 9px 3px 9px; box-shadow:none; transform:rotate(-12deg); }
+body .nav { gap:8px; font-size:13px; }
+body .nav a { padding:7px 17px; border-radius:7px; }
+body .nav a[aria-current="page"] { color:var(--paper); background:var(--acid-dim); }
+body h1,body h2,body h3 { font-family:"Avenir Next","PingFang SC","Microsoft YaHei",sans-serif; }
+body .section { margin-top:64px; }
+body .section-heading { grid-template-columns:auto 1fr; gap:12px 20px; margin-bottom:24px; }
+body .section h2 { font-size:26px; letter-spacing:-.04em; }
+body .section-no { font-size:10px; letter-spacing:.08em; color:var(--muted); }
+body .section-note { font-size:12px; margin-top:0; }
+button,input,select { font:inherit; }
+button,a,input,select,summary { -webkit-tap-highlight-color:transparent; }
+button { cursor:pointer; }
+button:active { transform:translateY(1px); }
+:focus-visible { outline:2px solid var(--acid); outline-offset:5px; }
+[hidden] { display:none !important; }
+.sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+.skip-link { position:fixed; top:8px; left:16px; transform:translateY(-160%); z-index:110; background:var(--acid); color:var(--ink); padding:10px 20px; border-radius:8px; }
+.skip-link:focus { transform:none; }
+body footer { margin-top:32px; }
+body .footer-title { font-family:"Avenir Next","PingFang SC",sans-serif; font-size:14px; margin-bottom:8px; }
+@media(max-width:900px) { body .shell { width:calc(100% - 32px); } body .nav a { padding:6px 12px; } }
+@media(max-width:480px) { body .section-heading { gap:10px; } body .section h2 { font-size:23px; } body .section-no { font-size:9px; } }
+html, html body { overflow-x:clip; }
+.motion-ready .reveal { transition:opacity .45s ease,transform .45s cubic-bezier(.2,.75,.25,1); }
+[id^="signal-"] { scroll-margin-top:100px; }
+@media(max-width:900px) { section, [id^="signal-"] { scroll-margin-top:128px; } }
+
+/* Official light-surface assets retain their original brand colors in both themes. */
+:root body img.pc-logo, :root body .platform-logo { object-fit:contain; background:#fff; border:1px solid #dce2dc; border-radius:8px; padding:4px; flex-shrink:0; }
+.platform-name { display:inline-flex; align-items:center; gap:10px; }
