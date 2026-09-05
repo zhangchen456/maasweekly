@@ -1,11 +1,11 @@
 name: 每日信源抓取与站点更新
 
-# 每天北京时间 08:30（UTC 00:30）抓取全部信源，产出 diff，
+# 每天北京时间凌晨 05:00（UTC 21:00 前一日）抓取全部信源，产出 diff，
 # 同步到站点数据源并构建部署到 aliyun-099（daily.maas.click，旧域名 301 跳转）。
 # 也支持手动触发。
 on:
   schedule:
-    - cron: '30 0 * * *'  # UTC 00:30 = 北京时间 08:30
+    - cron: '0 21 * * *'  # UTC 21:00（前一日）= 北京时间 05:00
   workflow_dispatch:
     inputs:
       skip_fetch:

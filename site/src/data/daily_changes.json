@@ -1,6 +1,702 @@
 {
-  "updated_at": "2026-09-04T21:55:51",
+  "updated_at": "2026-09-05T01:03:39",
   "days": [
+    {
+      "date": "2026-09-05",
+      "stats": {
+        "total": 68,
+        "success": 61,
+        "failed": 7,
+        "changed": 19,
+        "unchanged": 42
+      },
+      "changed": [
+        {
+          "platform": "智谱AI",
+          "source_type": "model_list",
+          "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Coding Plan",
+            "Managed Agents (Beta)"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Managed Agents (Beta)",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "llm_summary": "新增 Coding Plan 和 Managed Agents (Beta) 两个条目，表明平台在原有模型列表基础上扩展了产品线，新增了面向开发者的编程计划和代理管理功能。"
+        },
+        {
+          "platform": "智谱AI",
+          "source_type": "changelog",
+          "url": "https://docs.bigmodel.cn/cn/update/new-releases",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "Coding Plan",
+            "Managed Agents (Beta)",
+            "模型与产品发布记录 - 智谱AI开放文档"
+          ],
+          "removed_lines": [
+            "新品发布 - 智谱AI开放文档",
+            "最新模型和产品发布公告"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Managed Agents (Beta)",
+          "raw_added_count": 3,
+          "raw_removed_count": 2,
+          "llm_summary": "changelog 同步新增 Coding Plan 和 Managed Agents (Beta)，同时将文档标题从'新品发布'改为'模型与产品发布记录'，删除旧公告，说明平台对发布记录进行了重新整理和归档。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 3,
+          "added_lines": [
+            "Architectural visualization with Astra",
+            "Building games with Astra"
+          ],
+          "removed_lines": [
+            "Codex as a platform: build on the open agent harness",
+            "GPT‑6 Astra is rolling out today for enterprises in our Trusted Access Program⁠, with access through API and our Plus, Pro, Business and Enterprise plans coming in the coming days.",
+            "Scaling cyber defenders with Daybreak"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Architectural visualization with Astra",
+          "raw_added_count": 2,
+          "raw_removed_count": 3,
+          "llm_summary": "新增 Architectural visualization with Astra 和 Building games with Astra 两个应用案例，同时删除 Codex as a platform 和 Scaling cyber defenders 等旧条目，反映 OpenAI 正在更新其模型应用展示页面，突出 Astra 的落地场景。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 3,
+          "added_lines": [
+            "Architectural visualization with Astra",
+            "Building games with Astra"
+          ],
+          "removed_lines": [
+            "Codex as a platform: build on the open agent harness",
+            "GPT‑6 Astra is rolling out today for enterprises in our Trusted Access Program⁠, with access through API and our Plus, Pro, Business and Enterprise plans coming in the coming days.",
+            "Scaling cyber defenders with Daybreak"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Architectural visualization with Astra",
+          "raw_added_count": 2,
+          "raw_removed_count": 3,
+          "llm_summary": "pricing 页面与 model_list 同步更新，新增两个 Astra 应用案例条目并删除三个旧条目，但未涉及具体价格数字变化，推测是页面结构调整而非定价变动。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "Architectural visualization with Astra",
+            "Building games with Astra"
+          ],
+          "removed_lines": [
+            "Codex as a platform: build on the open agent harness",
+            "Scaling cyber defenders with Daybreak"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Architectural visualization with Astra",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "llm_summary": "changelog 同样新增两个 Astra 应用案例并删除两个旧条目，与 model_list 和 pricing 保持一致，说明 OpenAI 正在统一更新 Astra 相关的展示内容。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Version 1.30.0 of the ant CLI adds ant apply, which creates and updates agents, environments, skills, memory stores, and deployments from files in your repository. Describe each resource in a file, run ant apply, and approve the plan it prints. Commit the claude-lock.json lockfile it writes so that later runs, on your machine or in CI, update the same resources instead of creating new ones. See Manage resources as code with ant apply."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Version 1.30.0 of the ant CLI adds ant apply, which creates and updates agents, environments, skills, memory stores, and deployments from files in your repository. Describe each resource in a file, run ant apply, and approve the plan it prints. Commit the claude-lock.json lockfile it writes so that later runs, on your machine or in CI, update the same resources instead of creating new ones. See Manage resources as code with ant apply.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "llm_summary": "新增 ant CLI v1.30.0 版本说明，引入 ant apply 命令，这是 Anthropic 开发工具链的一次功能扩展，支持从仓库文件声明式管理 agents 和 environments 等资源。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "model_list",
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 5,
+          "added_lines": [
+            "| Lyria 3.5"
+          ],
+          "removed_lines": [
+            "lyria-3.5-clip-preview",
+            "lyria-3.5-pro-preview",
+            "| Lyria 3.5 Clip",
+            "| Lyria 3.5 Pro",
+            "| Previous generation music generation model for 30-second clips."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-03 UTC.",
+              "after": "Last updated 2026-09-04 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-03 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-04 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-04 UTC.",
+          "raw_added_count": 3,
+          "raw_removed_count": 7,
+          "llm_summary": "模型列表将 Lyria 3.5 从预览版（lyria-3.5-clip-preview、lyria-3.5-pro-preview）整合为单一正式版 Lyria 3.5，删除 Clip 和 Pro 两个子型号，表明音乐生成模型从预览阶段进入正式发布阶段。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 5,
+          "added_lines": [
+            "Google's music generation model.",
+            "| Lyria 3.5 (Full Song)"
+          ],
+          "removed_lines": [
+            "Google's family of music generation models. Preview models may change",
+            "before becoming stable and have more restrictive rate limits.",
+            "lyria-3.5-clip-preview and lyria-3.5-pro-preview",
+            "| Lyria 3.5 Clip Preview (30s)",
+            "| Lyria 3.5 Pro Preview (Full Song)"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-03 UTC.",
+              "after": "Last updated 2026-09-04 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-03 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-04 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Google's music generation model.",
+          "raw_added_count": 4,
+          "raw_removed_count": 7,
+          "llm_summary": "定价页同步更新，新增 Lyria 3.5 (Full Song) 定价行，删除 Clip Preview 和 Pro Preview 的定价，说明正式版定价已取代预览版定价，且不再区分 Clip 和 Pro 两个档位。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "changelog",
+          "url": "https://ai.google.dev/gemini-api/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 4,
+          "added_lines": [
+            "generation model:"
+          ],
+          "removed_lines": [
+            "Optimized for 30-second clips, loops, and rapid experimentation.",
+            "generation models:",
+            "lyria-3.5-clip-preview:",
+            "lyria-3.5-pro-preview:"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-03 UTC.",
+              "after": "Last updated 2026-09-04 UTC."
+            },
+            {
+              "key": "high-fidelity",
+              "before": "Both models support text and image inputs and generate high-fidelity 44.1 kHz",
+              "after": "The model supports text and image inputs and generates high-fidelity 44.1 kHz"
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-03 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-04 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-04 UTC.",
+          "raw_added_count": 4,
+          "raw_removed_count": 7,
+          "llm_summary": "changelog 将描述从'Both models support...'改为'The model supports...'，删除 Clip 和 Pro 预览版的说明，与 model_list 和 pricing 的整合一致，确认 Lyria 3.5 已合并为单一正式版。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Create your best tracks yet with Lyria 3.5 in Gemini."
+          ],
+          "removed_lines": [
+            "Start the semester with one year of Gemini, on us"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Create your best tracks yet with Lyria 3.5 in Gemini.",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "llm_summary": "新增博客文章'Create your best tracks yet with Lyria 3.5 in Gemini'，删除'Start the semester with one year of Gemini'，说明博客焦点从教育推广转向 Lyria 3.5 正式版的音乐生成能力宣传。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "Global | $120.00 | $120.00 |",
+            "Global | $216.00 | $216.00 |",
+            "Show discount options"
+          ],
+          "removed_lines": [
+            "Total price /1M (USD)"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "alphaevolve agent price /",
+              "before": "AlphaEvolve agent price /1M (USD) |",
+              "after": "AlphaEvolve agent price /1M (USD)"
+            },
+            {
+              "key": "price per",
+              "before": "Price per 1M input tokens | $2.00 | $4.00 |",
+              "after": "Price per 1M input tokens | $2.00 | $4.00"
+            },
+            {
+              "key": "price per",
+              "before": "Price per 1M output and thinking tokens | $12.00 | $24.00 |",
+              "after": "Price per 1M output and thinking tokens | $12.00 | $24.00"
+            },
+            {
+              "key": "price per",
+              "before": "Price per 1M output and thinking tokens | $9.00 | $18.00 |",
+              "after": "Price per 1M output and thinking tokens | $9.00 | $18.00"
+            }
+          ],
+          "signal_preview": "Global | $120.00 | $120.00 |",
+          "raw_added_count": 8,
+          "raw_removed_count": 6,
+          "llm_summary": "定价表新增 Global 档价格（$120.00 和 $216.00），移除 Total price /1M 汇总行，并新增 Show discount options 选项，表明定价结构从单一汇总价改为分区域定价，并增加了折扣展示功能。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "By Sachin Mathapati • 5-minute read",
+            "Developers & Practitioners",
+            "Spanner migrations: Automating dual-write with Antigravity CLI for minimal disruption"
+          ],
+          "removed_lines": [
+            "By Bin Song • 4-minute read",
+            "How AlloyDB ScaNN scales vector search to 10 billion vectors"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "By Sachin Mathapati • 5-minute read",
+          "raw_added_count": 3,
+          "raw_removed_count": 2,
+          "llm_summary": "博客新增 Spanner 迁移相关文章（Automating dual-write with Antigravity CLI），删除 AlloyDB ScaNN 向量搜索文章，反映博客内容从数据库向量搜索转向数据库迁移工具。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "pricing",
+          "url": "https://cohere.com/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Pricing | Secure and Scalable Enterprise AI | Cohere"
+          ],
+          "removed_lines": [
+            "$4,300Pricing | Secure and Scalable Enterprise AI | Cohere"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Pricing | Secure and Scalable Enterprise AI | Cohere",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "llm_summary": "定价页删除了 $4,300 的价格信息，仅保留页面标题，可能意味着价格信息被移除或页面正在重构，具体原因从数据中无法判断。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://x.ai/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "cloudflare ray id",
+              "before": "Cloudflare Ray ID: a35b146c1c6368e8",
+              "after": "Cloudflare Ray ID: a36150621cfce5f9"
+            }
+          ],
+          "signal_preview": "Cloudflare Ray ID: a36150621cfce5f9",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "llm_summary": "仅 Cloudflare Ray ID 发生变化，属于页面请求标识的正常变动，无实质内容更新。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 17,
+          "removed_count": 0,
+          "added_lines": [
+            "3 more notes",
+            "4 more notes",
+            "AA-LCR v1.1",
+            "Agentic knowledge work, (Elo-500)/2000",
+            "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailSambaNovaScalewayTogether AI",
+            "Announcing Artificial Analysis Intelligence Index v4.2",
+            "AnthropicOpenAIMetaSpaceXAIKimiZ AIGoogleAlibabaDeepSeekMBZUAI Institute of Foundation ModelsMiniMaxThinking Machines",
+            "AnthropicOpenAIMetaSpaceXAIKimiZ AIGoogleDeepSeekOther Models",
+            "Artificial Analysis Intelligence Index v4.2 includes: AA-Briefcase, GDPval-AA v2, 𝜏³-Banking, Terminal-Bench v2.1, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them.",
+            "Artificial Analysis Intelligence Index v4.2 incorporates 10 evaluations: AA-Briefcase, GDPval-AA v2, 𝜏³-Banking, Terminal-Bench v2.1, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1",
+            "Cache Hit, Input, and Output PricingBlended PriceBlended Price (Stacked)Cache DiscountIntelligence Index vs. PriceIntelligence Index vs. Price (Log, Inverted)",
+            "Cache HitInputOutput",
+            "Claude Fable 5.1 (Adaptive Reasoning, Medium Effort, Default Fallback)See more",
+            "Comparison of first-party API performance",
+            "Composite measure of how much of a model's accuracy a given provider endpoint preserves, from re-running BFCL v4-500, HLE-250 and AA-LCR-25 against that endpoint. Where a self-hosted reference endpoint exists, scores are expressed as a percentage of that reference (100 = matches reference); lower scores indicate accuracy lost to quantisation, sampling defaults, or other endpoint-side configuration. Scores are point-in-time snapshots. Methodology.",
+            "Emerging Provider Competition",
+            "Endpoint Accuracy Index"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Agentic knowledge work, (Elo-500)/2000",
+          "raw_added_count": 63,
+          "raw_removed_count": 25,
+          "llm_summary": "发布 Intelligence Index v4.2，新增 AA-LCR v1.1 基准和 Agentic knowledge work 评分维度，评测体系从 10 项扩展，同时新增多家模型提供商和模型列表，反映评测覆盖范围扩大。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 26,
+          "removed_count": 6,
+          "added_lines": [
+            "4reve-2.11301±8",
+            "5Bytedancedreamina-seedance-2.5-720p1482±12",
+            "claude-fable-5.1-max1763+16/-16",
+            "claude-fable-51629+8/-8",
+            "claude-opus-5-high1662+7/-7",
+            "flux-3-video1494",
+            "gemini-3.1-flash-image (nano-banana-2) [web-search]1388±4",
+            "gemini-omni-1.1-flash1515±15",
+            "gemini-omni-flash1511±10",
+            "gpt-image-2 (medium)1461±4",
+            "grok-4.6-high1625+11/-11",
+            "grok-imagine-image-2.0 (low)1315",
+            "happyhorse-1.01427±13",
+            "hy4-preview1623",
+            "mai-image-2.51400±4",
+            "mai-image-2.61332±7",
+            "mai-image-2.61439±10",
+            "minimax-h31462±10",
+            "muse-image1279±6",
+            "muse-image1403±5",
+            "muse-video1456±15",
+            "qwen-image-3.0-pro1254±7",
+            "qwen3.8-flash-next1625",
+            "qwen3.8-max-09021689",
+            "qwen3.8-max1670",
+            "sora-2-pro1367±7"
+          ],
+          "removed_lines": [
+            "4reve-2.11302±8",
+            "5Bytedancedreamina-seedance-2.5-720p1476±14",
+            "claude-fable-5.1-max1765+23/-23",
+            "claude-fable-51628+8/-8",
+            "claude-opus-5-high1661+7/-7",
+            "flux-3-video1495"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "seedance-2.0-720p1479",
+              "before": "4Bytedancedreamina-seedance-2.0-720p1479±9",
+              "after": "6Bytedancedreamina-seedance-2.0-720p1479±8"
+            },
+            {
+              "key": "bytedanceseedream-",
+              "before": "6Bytedanceseedream-5.0-pro1395±4",
+              "after": "6Bytedanceseedream-5.0-pro1394±4"
+            },
+            {
+              "key": "bytedanceseedream-",
+              "before": "8Bytedanceseedream-5.0-pro1258±5",
+              "after": "8Bytedanceseedream-5.0-pro1258±4"
+            },
+            {
+              "key": "gemini-3.1-flash-image",
+              "before": "gemini-3.1-flash-image (nano-banana-2) [web-search]1263±5",
+              "after": "gemini-3.1-flash-image (nano-banana-2) [web-search]1261±5"
+            }
+          ],
+          "signal_preview": "reve-2.1: 1301±8",
+          "raw_added_count": 31,
+          "raw_removed_count": 31,
+          "llm_summary": "榜单新增 claude-fable-5.1-max（1763分）、grok-4.6-high（1625分）、gemini-omni-1.1-flash（1515分）等多款新模型，同时更新了部分既有模型的 Elo 分数，整体榜单格局发生明显变化。"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://x.ai/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [
+            {
+              "key": "cloudflare ray id",
+              "before": "Cloudflare Ray ID: a35b146c5a53393c",
+              "after": "Cloudflare Ray ID: a361506258f80c3d"
+            }
+          ],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 2
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 32,
+          "raw_removed_count": 32
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "model_list",
+          "url": "https://cloud.tencent.com/document/product/1729/104753",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=29182)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "pricing",
+          "url": "https://cloud.tencent.com/document/product/1729/97731",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=29182)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "changelog",
+          "url": "https://cloud.tencent.com/document/product/1729/132069",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=29182)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "blog",
+          "url": "https://cloud.tencent.com/developer/column/",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=29182)"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://openai.com/news/",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=9951)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "Lyria 3.5 正式版发布，预览版下架",
+          "items": [
+            {
+              "text": "Lyria 3.5 正式版上线，取代 lyria-3.5-clip-preview 和 lyria-3.5-pro-preview 两个预览版",
+              "type": "release"
+            },
+            {
+              "text": "定价页新增 Lyria 3.5 (Full Song) 定价行，移除 Clip Preview 和 Pro Preview 定价",
+              "type": "pricing"
+            },
+            {
+              "text": "博客发布新文章：Create your best tracks yet with Lyria 3.5 in Gemini",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "Astra 应用案例更新，旧内容下架",
+          "items": [
+            {
+              "text": "model_list 新增 Architectural visualization with Astra 和 Building games with Astra 两个应用案例",
+              "type": "release"
+            },
+            {
+              "text": "移除 Codex as a platform 和 Scaling cyber defenders with Daybreak 等旧条目",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "智谱AI",
+          "logo_summary": "新增 Coding Plan 与 Managed Agents",
+          "items": [
+            {
+              "text": "模型列表新增 Coding Plan 和 Managed Agents (Beta) 两个条目",
+              "type": "release"
+            },
+            {
+              "text": "changelog 同步更新，文档标题从'新品发布'改为'模型与产品发布记录'",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "定价结构调整，新增 Global 价格档",
+          "items": [
+            {
+              "text": "pricing 新增 Global 档价格（$120.00 和 $216.00），移除 Total price /1M 汇总行",
+              "type": "pricing"
+            },
+            {
+              "text": "博客更新为 Spanner 迁移相关文章，移除 AlloyDB ScaNN 向量搜索文章",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "ant CLI 发布 v1.30.0",
+          "items": [
+            {
+              "text": "ant CLI v1.30.0 新增 ant apply 命令，支持从仓库文件创建和更新 agents、environments 等资源",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "定价页价格信息被移除",
+          "items": [
+            {
+              "text": "pricing 页面删除 $4,300 价格信息，仅保留标题",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "发布 Intelligence Index v4.2",
+          "items": [
+            {
+              "text": "Artificial Analysis Intelligence Index v4.2 发布，包含 AA-Briefcase、GDPval-AA v2 等 10 项评测",
+              "type": "release"
+            },
+            {
+              "text": "新增 AA-LCR v1.1 基准和 Agentic knowledge work 评分维度",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "多款新模型上榜，榜单更新",
+          "items": [
+            {
+              "text": "claude-fable-5.1-max 以 1763 分位居榜首，grok-4.6-high 以 1625 分上榜",
+              "type": "release"
+            },
+            {
+              "text": "新增 gemini-omni-1.1-flash、flux-3-video、gpt-image-2 等多款模型",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-09-04",
       "stats": {

@@ -1,0 +1,1459 @@
+<!-- url: see sources config -->
+<!-- fetched: 2026-09-05T09:03:14.110040 -->
+
+Changelog | OpenAI API
+For the complete documentation index, see llms.txt. Markdown versions of documentation pages are available by appending
+.md to the page URL.
+ChatGPT
+Start searching
+API Dashboard
+Try ChatGPT
+Search the API docs
+Search docs
+Suggested
+responses createreasoning_effortrealtimeprompt caching
+Primary navigation
+Search docs
+Suggested
+responses createreasoning_effortrealtimeprompt caching
+Overview Models Agents Tools Voice & Audio Production API reference
+OverviewModelsAgentsToolsVoice & AudioProductionAPI referenceDocsOverview
+Home
+Get started
+Quickstart
+Using GPT-6 Astra
+Key concepts
+Core concepts
+Responses API
+Conversation state
+Background mode
+Streaming
+WebSocket mode
+Mid-turn steering
+Multi-agent
+Webhooks
+File inputs
+Compaction
+Counting tokens
+SDKs and CLI
+OpenAI SDK
+OpenAI CLI
+Resources
+Changelog
+Deprecations
+Supported countries
+OpenAI Crawlers
+Terms and policies
+Legacy APIs
+Agent Builder
+Overview
+Migration guide
+Node reference
+Safety in building agents
+Evals
+Getting started
+Working with evals
+Prompt optimizer
+External models
+Best practices
+Graders
+Fine-tuning
+Optimization cycle
+Supervised fine-tuning
+Vision fine-tuning
+Direct preference optimization
+Reinforcement fine-tuning
+RFT use cases
+Best practices
+Assistants API
+Migration guide
+Model catalog
+Choose a model
+Pricing
+Model selection
+Text and code
+Text generation
+Code generation
+Structured output
+Prompting
+Overview
+Prompt engineering
+Citation formatting
+Migration guide
+Prompt generation
+Frontend prompting
+Reasoning
+Reasoning models
+Reasoning best practices
+Images and video
+Images and vision
+Image input cost calculator
+Image generation
+Video generation
+Realtime and audio
+Audio and speech
+Overview
+Voice agents
+Specialized models
+Deep research
+Embeddings
+Moderation
+Overview
+Agents SDK
+Quickstart
+Agent definitions
+Models and providers
+Running agents
+Sandbox agents
+Orchestration
+Guardrails
+Results and state
+Integrations and observability
+Evaluate agent workflows
+ChatKit
+Overview
+Customize
+Widgets
+Actions
+Advanced integrations
+Overview
+Function calling
+Search and retrieval
+Web search
+File search
+Retrieval
+Connect tools and data
+MCP and Connectors
+Secure MCP Tunnel
+Build tool workflows
+Skills
+Tool search
+Programmatic tool calling
+Async tool calling
+Computer and code
+Shell
+Computer use
+Apply Patch
+Local shell
+Code interpreter
+Media
+Image generation
+Overview
+Get started
+Voice agents
+Live translation
+Realtime prompting guide
+Audio
+Audio and speech
+Transcription
+File transcription
+Realtime transcription
+Speech generation
+Connection methods
+WebRTC
+WebSocket
+SIP
+Sessions and operations
+Managing conversations
+Voice activity detection
+Realtime with tools
+Webhooks and server-side controls
+Managing costs
+Go live
+Production best practices
+Deployment checklist
+Performance and quality
+Latency optimization
+Predicted Outputs
+Fast mode
+Accuracy optimization
+Cost and throughput
+Cost optimization
+Prompt caching
+Batch
+Flex processing
+Safety and governance
+Safety best practices
+Red teaming
+Safety checks
+Safety classifiers
+Cybersecurity checks
+Misalignment monitoring
+Under-18 guidance
+CSAM guidance
+Content provenance
+Your data
+Permissions
+Infrastructure and access
+Terraform provider
+Overview
+Projects and access
+Service accounts
+Rate limits and spend
+Model, tool, and data controls
+Import and reconciliation
+Private Link
+IP allowlist
+Mutual TLS
+Workload identity federation
+Codex setup
+Federation rules
+Admin API
+X.509 certificates
+Kubernetes
+AWS
+Microsoft Azure
+Google Cloud
+Oracle Cloud Infrastructure
+GitHub Actions
+SPIFFE
+IP egress ranges
+Amazon Bedrock
+Operations
+Rate limits
+Spend limits
+Admin APIs
+Error codes
+Docs Use cases
+DocsUse casesDocsDocs
+Plugins Workspace Agents Commerce Ads
+PluginsWorkspace AgentsCommerceAdsDocsSelect...
+Home
+Quickstart
+Core concepts
+Plugin architecture
+Skills
+MCP server
+Plan
+Brainstorm use cases
+Define tools
+Build
+Build an MCP server
+Add UI to your MCP server (optional)
+Authenticate users
+Build skills
+Package your plugin
+Examples
+Test and publish
+Connect and test your plugin
+Submit and publish
+Submission error reference
+Conversion specs
+Restaurant reservation spec
+Get Quote spec
+Product checkout spec
+Guides
+UI guidelines
+Optimize Metadata
+Submit a Claude Code plugin
+Security & Privacy
+Troubleshooting
+Resources
+Changelog
+Plugin guidelines
+MCP server review requirements
+Plugin UI reference
+Checkout API reference
+Home
+Get started
+Trigger workspace agent runs
+Authenticate with Workspace Agent access tokens
+Home
+Guides
+Get started
+Best practices
+File Upload
+Overview
+Products
+API
+Overview
+Feeds
+Products
+Promotions
+Ads Overview
+Measurement
+Measurement Pixel
+Multiple Pixels (Advanced)
+Image Tag
+Conversions API
+Supported Events
+Advertiser API
+Overview
+API Partner Setup
+Quickstart
+Bulk API
+Product Feeds
+Delta Feeds API
+Campaign Targeting
+Conversion-Optimized Campaigns
+Custom Audiences
+API Reference
+Authentication
+Ad Account
+Campaigns
+Ad Groups
+Ads
+Insights
+Files
+Conversion Setup
+Overview Features Configuration Developers Security Administration Use Cases Resources
+OverviewFeaturesConfigurationDevelopersSecurityAdministrationUse CasesResourcesDocsOverview
+Home
+Get started
+Quickstart
+Use ChatGPT
+Get started with Work
+Import from another agent
+Foundations
+Prompting
+Personalize ChatGPT
+Skills & Plugins
+Permissions
+Explore
+What's new
+Models
+Pricing
+Glossary
+Available on
+ChatGPT desktop app
+Remote
+ChatGPT on the web
+Codex CLI
+Codex IDE extension
+Codex cloud
+Releases
+Changelog
+Feature Maturity
+Open Source
+Overview
+Workflows
+Projects and chats
+Sites
+Visualizations
+Scheduled tasks
+Long-running work
+Notifications
+Pets
+Codex Micro
+Capabilities
+Browser
+Computer use
+Voice
+Plugins
+Web search
+Image generation
+Image inputs
+Appshots
+Browser extension
+Work with files
+Reference
+Commands
+Slash commands
+Settings
+Troubleshooting
+Overview
+Customization
+Overview
+Memories
+Computer History
+Config file
+Config Basics
+Advanced Config
+Config Reference
+Environment Variables
+Sample Config
+Agent configuration
+AGENTS.md
+Subagents
+Speed
+Rules
+Extend ChatGPT and Codex
+Record & Replay
+MCP
+Linux
+Desktop app
+Windows
+Desktop app
+Windows sandbox
+WSL
+Overview
+Development workflows
+Code review
+Integrated terminal
+Extend and automate
+Build skills
+Build plugins
+Site tools (WebMCP)
+Hooks
+Environments
+Modes
+Local environments
+Cloud environment
+Git worktrees
+Build with Codex
+Codex SDK
+App Server
+MCP Server
+GitHub Action
+Non-interactive mode
+Third-party integrations
+GitHub
+GitLab (Beta)
+Slack
+Linear
+Reference
+CLI customization
+Developer commands
+Developer settings
+Overview
+Permissions
+Profiles
+Sandboxing
+Auto-review
+Agent approvals & security
+Internet access
+Codex Security
+Overview
+Codex Security plugin
+Quickstart
+Run a security scan
+Run a deep scan
+Review code changes
+Use the Security workbench
+Triage a backlog
+Fix findings
+Propose security hardening
+Write vulnerability reports
+Export and track findings
+Changelog
+Codex Security CLI
+Quickstart
+Run bulk scans
+Run scans in CI
+GitLab CI/CD
+Reference
+FAQ
+TypeScript SDK
+Codex Security cloud
+Setup
+Security Review
+Improving the threat model
+FAQ
+Cyber safety
+Models & Trusted Access
+Recommended configuration
+Overview
+Getting started
+Admin rollout guide
+ChatGPT Work
+ChatGPT Work Overview
+ChatGPT Work cloud security
+ChatGPT Work local security
+ChatGPT Work admin FAQ
+ChatGPT Work: usage and cost
+Identity and authentication
+Authentication overview
+Workload identity
+Personal Access Tokens
+Service accounts
+Workspace access, policy, and models
+Groups and provisioning
+User lifecycle management
+Roles and workspace permissions
+GPTs and Sharing
+Managed configuration
+Prisma AIRS
+HIPAA configuration
+Workspace model availability
+Plugin and connector controls
+Plugin controls
+Plugin management
+Skill controls
+Usage, governance, and compliance
+Governance
+Admin plugin
+Workspace analytics
+Analytics API
+Compliance API and audit events
+Deployment and model providers
+Manage app updates
+Windows app deployment
+Remote connections
+Amazon Bedrock
+Explore use cases
+Collections
+Home
+Videos
+Showcase
+OpenAI Academy
+Online trainings
+Community
+Codex Ambassadors
+Codex for Students
+Codex for Open Source
+Meetups
+Blog
+Company blog
+Developer blog
+Explore use cases
+Collections
+Home
+Videos
+Showcase
+OpenAI Academy
+Online trainings
+Community
+Codex Ambassadors
+Codex for Students
+Codex for Open Source
+Meetups
+Blog
+Company blog
+Developer blog
+Showcase Blog Cookbook Learn Community
+ShowcaseBlogCookbookLearnCommunityDocsSelect...
+All posts
+Recent
+Architectural visualization with Astra
+Building games with Astra
+Meet Rosalind Workbench: Empowering every scientist to be their own research team
+Automating repetitive work at OpenAI with Codex
+Meet the winners of OpenAI Build Week
+Topics
+General
+API
+Apps SDK
+Audio
+Codex
+Life sciences
+Home
+Topics
+Agents
+Evals
+Multimodal
+Text
+Guardrails
+Optimization
+ChatGPT
+Codex
+gpt-oss
+Contribute
+Cookbook on GitHub
+Home
+OpenAI Developers plugin
+Docs MCP
+Categories
+Demo apps
+Videos
+Topics
+Agents
+Audio & Voice
+Computer Use
+Codex
+Evals
+gpt-oss
+Fine-tuning
+Image generation
+Scaling
+Tools
+Video generation
+Community
+Programs
+Codex Ambassadors
+Codex for Students
+Codex for Open Source
+OpenAI for Startups
+Events
+Meetups
+Spaces
+Developer Forum
+Discord
+Reddit
+X
+API Dashboard
+Try ChatGPT
+Changelog
+Upcoming deprecations can be found on the deprecations page.
+September, 2026
+Sep 3
+Feature
+gpt-6-astra
+v1/responses
+v1/chat/completions
+Released GPT-6 Astra, our most capable model, built for the hardest end-to-end work.
+Use GPT-6 Astra for reasoning, coding, computer use, research, and document creation. It combines these capabilities to carry complex tasks from an initial request to a finished result, using the context and tools you provide.
+Key changes to consider when migrating:
+GPT-6 Astra does not support the none reasoning effort level.
+GPT-6 Astra does not support custom temperature or top_p values or log probabilities (logprobs).
+Tool calling requires the Responses API. If you use tools with Chat Completions, follow the Responses migration guide.
+Misalignment monitoring asynchronously checks for potential issues during agent work in supported Responses API requests. Checks can trigger safety alerts or stop a conversation for review.
+Start with Using GPT-6 Astra for capabilities, prompting, and migration guidance. Explore computer use for browser and desktop workflows, and see pricing for available inference tiers.
+Sep 3
+Feature
+v1/responses
+Added new controls for long-running work with GPT-6 Astra in the Responses API:
+Async tool calling: Let the model continue working while your application runs function or custom tools, then return results as they become available.
+Mid-turn steering: Send additional instructions while a response is in progress over WebSockets, so the model can incorporate corrections or changing requirements.
+Change reasoning effort mid-conversation: Increase effort for difficult work or reduce it for routine follow-ups while preserving the cached prompt prefix.
+Sep 2
+Update
+Updated API errors so applications can distinguish traffic that increases too quickly from temporary model overload.
+Traffic that increases too quickly can return a 429 error with the slow_down code. Temporary model overload returns a 503 error with the server_is_overloaded code. Both responses may include Retry-After. When the header is present, wait at least as long as it specifies before retrying. If it's missing, use exponential backoff. See the error codes guide and rate limits guide.
+Sep 1
+Update
+Connections to api.openai.com can now use IPv6.
+August, 2026
+Aug 29
+Feature
+Mutual TLS (mTLS) and X.509 workload identity federation are now generally available for the OpenAI API. Configure certificates and X.509 identity providers directly in the Platform console, with access controlled by your organization's roles and permissions.
+Aug 26
+Update
+whisper-1
+gpt-4o-transcribe
+gpt-4o-mini-transcribe
+gpt-4o-transcribe-diarize
+v1/audio/transcriptions
+v1/realtime
+Announced the deprecation of whisper-1, gpt-4o-transcribe, gpt-4o-mini-transcribe, and gpt-4o-transcribe-diarize. These models will shut down on February 26, 2027. Migrate to gpt-live-transcribe or gpt-transcribe. See the transcription guide and deprecations page.
+The Assistants API shut down on August 26, 2026. Migrate to the Responses API and Conversations API using the migration guide.
+Aug 21
+Feature
+API customers can now select regional processing for an individual request by using a prefixed domain with an API key from a project having Global geography. Existing eligibility, data retention control, endpoint, and model support requirements continue to apply. Learn more in the data controls guide.
+Aug 21
+Update
+gpt-5.6-sol
+GPT-5.6 Sol now costs $4 per million input tokens and $20 per million output tokens, representing 20% lower input pricing and 33% lower output pricing. GPT-5.6 Sol’s promotional pricing is available at least through November 21, 2026. See pricing details.
+Aug 20
+Feature
+Released the Prompt Caching dashboard on the OpenAI API platform. Track your cache hit rate over time, cache reads per write, and the breakdown of cache-read, cache-write, and uncached tokens to understand your caching efficiency and identify opportunities to improve. Filter metrics by model and service tier.
+Aug 20
+Update
+gpt-image-2
+gpt-image-2-2026-04-21
+v1/images/generations
+v1/images/edits
+v1/responses
+Transparent backgrounds are now available in preview for gpt-image-2 and gpt-image-2-2026-04-21 in the Images API and the Responses API image generation tool. Set background to transparent and use png or webp output; jpeg does not support transparent backgrounds. Learn more in the image generation guide.
+Aug 13
+Announcement
+Announced Ultrafast mode, a new API service tier for GPT-5.6 Sol that runs up to 14x faster than Standard processing. Available in limited preview to select customers. Sign up to receive updates on Ultrafast mode here.
+Aug 7
+Feature
+gpt-5.6-cyber
+gpt-daybreak-red-latest
+gpt-daybreak-blue-latest
+v1/responses
+Daybreak now offers two access tiers for approved defenders: Daybreak Blue and Daybreak Red. Use them to move from security findings to validated fixes in explicitly authorized engagements.
+Start with Daybreak Blue for most defensive security work. It provides access to general-purpose models such as GPT-5.6 Sol for vulnerability discovery, secure code review, detection engineering, incident response, malware analysis, and patch validation. Read more here.
+Daybreak Red provides separately approved access to purpose-trained models such as GPT-5.6 Cyber for authorized vulnerability reproduction, exploit validation, penetration testing, red teaming, and complex system analysis.
+These models require separate approval and provisioning. You can apply to join the Daybreak program here. More details on pricing here.
+Aug 6
+Update
+chat-latest
+Updated the chat-latest snapshot, which points to the latest model available in ChatGPT for Plus and Pro users. We recommend leveraging GPT-5.6 Sol for production API usage, but feel free to use this model to test the latest improvements for chat use cases. The underlying model snapshot will be regularly updated. Read more here.
+Aug 5
+Update
+gpt-5.6-sol
+gpt-5.6-terra
+gpt-5.6-luna
+Fast mode now supports long-context requests for GPT-5.6 Sol, GPT-5.6 Terra, and GPT-5.6 Luna. As of today, long-context prompts exceeding 272K tokens can run in Fast mode, delivering speeds up to 2.5× faster than the Standard tier. See pricing details.
+Aug 4
+Feature
+Customers can now filter and group data by API key in the Usage and Costs dashboards. The Usage API and Costs API also support the API key dimension for programmatic reporting and analysis.
+July, 2026
+Jul 30
+Update
+gpt-5.6-sol
+gpt-5.6-terra
+gpt-5.6-luna
+v1/responses
+v1/chat/completions
+Starting July 30, GPT-5.6 Luna costs 80% less, while GPT-5.6 Terra costs 20% less. See pricing details.
+We're also introducing Fast mode in the API, which replaces our Priority Processing offering. For GPT-5.6 Sol, Fast mode now delivers up to 2.5× faster speeds than standard processing at twice the price. This change is backward compatible: requests tagged priority will automatically use Fast mode.
+Jul 29
+Feature
+Released the official OpenAI Terraform provider for managing OpenAI API Platform resources as infrastructure as code.
+Provision and manage projects, users, groups, roles, access assignments, service accounts, certificates, invitations, and project-level rate limits. Use standard Terraform workflows to review and apply changes, import existing resources, and detect and reconcile configuration drift. Install the provider from the Terraform Registry.
+Jul 28
+Feature
+gpt-transcribe
+gpt-live-transcribe
+v1/audio/transcriptions
+v1/realtime
+Released GPT Transcribe for accurate file transcription and final transcripts of committed Realtime turns, along with GPT Live Transcribe for low-latency streaming transcription.
+Both models support free-form transcription context, keyword hints, and multiple expected input languages. Compare supported outputs and workflows in the transcription guide.
+Jul 22
+Feature
+Added hard spend limits for organizations and projects on the OpenAI API platform. Set a monthly cap that causes affected API requests to return a 429 error when tracked spend reaches the limit. Use spend alerts for notification before traffic is interrupted. Read more in the spend limits guide.
+Jul 9
+Feature
+gpt-5.6-sol
+gpt-5.6-terra
+gpt-5.6-luna
+v1/responses
+v1/chat/completions
+v1/batch
+Released the GPT-5.6 model family, including GPT-5.6 Sol for frontier capability, GPT-5.6 Terra for a balance of intelligence and cost, and GPT-5.6 Luna for efficient, high-volume workloads. The gpt-5.6 alias routes requests to gpt-5.6-sol.
+GPT-5.6 adds Programmatic Tool Calling, explicit prompt caching controls, persisted reasoning, max reasoning effort, and Pro mode, and Multi-agent orchestration in beta for the Responses API. GPT-5.6 also accepts images at their original dimensions with original or auto image detail.
+Jul 6
+Feature
+gpt-realtime-2.1
+gpt-realtime-2.1-mini
+v1/realtime
+Released GPT-Realtime-2.1, an updated realtime reasoning model with improved alphanumeric recognition, silence and noise handling, and interruption behavior. Also released GPT-Realtime-2.1 mini, a faster, lower-cost distilled reasoning model for realtime voice applications.
+June, 2026
+Jun 24
+Update
+chat-latest
+Updated the chat-latest snapshot, which points to the latest Instant model currently used in ChatGPT. We recommend leveraging GPT-5.5 for production API usage, but feel free to use this model to test the latest improvements for chat use cases. The underlying model snapshot will be regularly updated. Read more here.
+Jun 23
+Feature
+Released the Safety Usage Dashboard on the OpenAI API platform. The Safety dashboard shows blocked Responses requests based on safety_identifier values sent on requests to identify end users. Visit the Safety dashboard.
+Jun 9
+Feature
+v1/responses
+Web search can now return image results alongside regular text results. Use image search when your application needs current or web-grounded visuals, such as product photos, landmarks, places, events, or visual references. Read more in the web search guide.
+Jun 5
+Update
+Released a redesigned navigation for the OpenAI API platform, visit here.
+Jun 4
+Feature
+omni-moderation-latest
+v1/responses
+v1/chat/completions
+Added moderation scores to the Responses API and Chat Completions API. Pass a moderation object in a generation request to receive moderation results for both the model input and generated output in the same response.
+Learn more in the Moderation guide.
+Jun 3
+Update
+Announced the deprecation of reusable prompt objects, the Evals platform, and Agent Builder. See the deprecations page for shutdown timelines and migration guidance.
+Jun 2
+Update
+Starting June 2, 2026, eligible container sessions will be billed per minute with a 5-minute minimum, instead of being billed at the full 20-minute session rate. The underlying per-minute rate will remain the same.
+This update is intended to make billing more granular for shorter sessions and will lower effective cost for customers.
+You can find current built-in tool pricing in our API pricing docs.
+Jun 1
+Feature
+gpt-5.4
+gpt-5.5
+v1/responses
+OpenAI models are now available in Amazon Bedrock through an OpenAI-compatible Responses API endpoint. Supported models and features vary by AWS Region. Learn more.
+May, 2026
+May 29
+Update
+v1/responses
+v1/chat/completions
+v1/batch
+For organizations without ZDR enabled, prompt_cache_retention now defaults to 24h instead of in_memory, enabling extended prompt caching by default. Learn more.
+May 28
+Update
+chat-latest
+Released chat-latest snapshot which points to the latest Instant model currently used in ChatGPT. We recommend leveraging GPT-5.5 for production API usage, but feel free to use this model to test the latest improvements for chat use cases. The underlying model snapshot will be regularly updated. Read more here.
+May 26
+Feature
+Released workload identity federation. Trusted workloads can exchange externally issued identity tokens for short-lived OpenAI access tokens without storing long-lived API keys.
+May 26
+Update
+Added new Admin API capabilities for managing spend alerts, model allowlists, data retention settings, and hosted tool permissions, plus querying granular billing line items.
+May 19
+Feature
+Released Secure MCP Tunnel for enterprise customers. Secure MCP Tunnel lets supported OpenAI products including ChatGPT web, Codex, Responses API, and AgentKit connect to private or on-prem MCP servers through a customer-hosted tunnel-client without exposing those servers to the public internet.
+May 19
+Update
+You can now manage multiple IP allowlists and apply each one at the project level or across the whole organization. To configure them, go to Settings > Security > IP allowlist.
+May 12
+Update
+dall-e-2
+dall-e-3
+v1/realtime
+Deprecated DALL·E model snapshots and the Realtime API Beta.
+DALL·E model snapshots dall-e-2 and dall-e-3 were deprecated and removed from the API on May 12, 2026. We recommend using gpt-image-2, gpt-image-1, or gpt-image-1-mini instead.
+The Realtime API Beta was deprecated and removed from the API on May 12, 2026. If you are still using the beta interface, migrate to the released Realtime API. See the migration guide and the full deprecations page.
+May 11
+Feature
+v1/responses
+Added return_token_budget for the Responses API web search tool. Use it to opt in to longer GPT-5+ reasoning web search runs for high-effort research and evaluation workloads.
+May 7
+Feature
+gpt-realtime-2
+gpt-realtime-translate
+gpt-realtime-whisper
+v1/realtime
+v1/realtime/translations
+v1/realtime/transcription_sessions
+Released GPT-Realtime-2, a new realtime voice model with configurable reasoning for speech-to-speech agents, along with GPT-Realtime-Translate for streaming speech translation and GPT-Realtime-Whisper for streaming speech-to-text.
+Updated the Realtime and audio guide, added a dedicated Realtime translation guide, refreshed Realtime transcription for streaming transcripts, and moved realtime prompting guidance into Using realtime models.
+May 7
+Feature
+Released the OpenAI Developers plugin for Codex. This helps you build AI applications and agents in Codex with OpenAI Platform access and OpenAI API setup guidance.
+May 6
+Update
+The updated Agents SDK is now available in TypeScript, with support for sandbox agents and an open-source harness built in. Learn more here.
+May 5
+Update
+chat-latest
+Released chat-latest snapshot which points to the latest Instant model currently used in ChatGPT. We recommend leveraging GPT-5.5 for production API usage, but feel free to use this model to test our latest improvements for chat use cases. The underlying model snapshot will be regularly updated. Read more here.
+May 4
+Update
+Admin APIs are now supported in the OpenAI SDKs for Node, Python, Go, Ruby, and Java. See the Admin APIs guide for setup instructions and examples.
+April, 2026
+Apr 24
+Feature
+gpt-5.5
+gpt-5.5-pro
+v1/responses
+v1/chat/completions
+v1/batch
+Released GPT-5.5, a new frontier model for complex professional work, to the Chat Completions and Responses API, and released GPT-5.5 Pro for Responses API requests for tougher problems that benefit from more compute.
+GPT-5.5 supports a 1M token context window, image input, structured outputs, function calling, prompt caching, Batch, tool search, built-in computer use, hosted shell, apply patch, Skills, MCP, and web search. Key updates include:
+Reasoning effort now defaults to medium.
+When image_detail is unset or set to auto, the model now uses original behavior.
+Caching for GPT-5.5 only works with extended prompt caching. In-memory prompt caching is not supported.
+Learn more here.
+Apr 21
+Feature
+gpt-image-2
+v1/images/generations
+v1/images/edits
+v1/batch
+Released GPT Image 2, a state-of-the-art image generation model for image generation and editing. GPT Image 2 supports flexible image sizes, high-fidelity image inputs, token-based image pricing, and Batch API support with a 50% discount.
+Apr 15
+Update
+Updated the Agents SDK with new capabilities, including:
+running agents in controlled sandboxes;
+inspecting and customizing the open-source harness; and
+controlling when memories are created and where they're stored.
+March, 2026
+Mar 17
+Feature
+gpt-5.4-mini
+gpt-5.4-nano
+v1/responses
+v1/chat/completions
+Released GPT-5.4 mini and GPT-5.4 nano to the Chat Completions and Responses API. GPT-5.4 mini brings GPT-5.4-class capabilities to a faster, more efficient model for high-volume workloads, while GPT-5.4 nano is optimized for simple high-volume tasks where speed and cost matter most.
+GPT-5.4 mini supports tool search, built-in computer use, and compaction. GPT-5.4 nano supports compaction, but does not support tool search or computer use.
+Mar 16
+Update
+gpt-5.3-chat-latest
+Updated the gpt-5.3-chat-latest slug to point to the latest model currently used in ChatGPT.
+Mar 13
+Fix
+gpt-5.4
+v1/responses
+v1/chat/completions
+Updated our image encoder to fix a small bug with input_image inputs in GPT-5.4. Some image understanding use cases may now see improved quality. No action is required.
+Mar 12
+Feature
+sora-2
+sora-2-pro
+v1/videos
+v1/videos/characters
+v1/videos/extensions
+v1/batch
+Expanded the Sora API with reusable character references, longer generations up to 20 seconds, 1080p output for sora-2-pro, video extensions, and Batch API support for POST /v1/videos. 1080p generations on sora-2-pro are billed at $0.70 per second. Learn more here.
+Mar 12
+Update
+sora-2
+sora-2-pro
+v1/videos/edits
+v1/videos/{video_id}/remix
+Added POST /v1/videos/edits for editing existing videos. This will replace POST /v1/videos/{video_id}/remix, which will be deprecated in 6 months. Learn more here.
+Mar 5
+Feature
+gpt-5.4
+gpt-5.4-pro
+v1/responses
+v1/chat/completions
+Released GPT-5.4, our newest frontier model for professional work, to the Chat Completions and Responses API, and released GPT-5.4 Pro to the Responses API for tougher problems that benefit from more compute.
+Also released:
+Tool search in the Responses API, which lets models defer large tool surfaces until runtime to reduce token usage, preserve cache performance, and improve latency.
+Built-in Computer use support in GPT-5.4 through the Responses API computer tool for screenshot-based UI interaction.
+A 1M token context window and native Compaction support for longer-running agent workflows.
+Mar 3
+Feature
+gpt-5.3-chat-latest
+v1/chat/completions
+v1/responses
+Released gpt-5.3-chat-latest to the Chat Completions and Responses API. This model points to the GPT-5.3 Instant snapshot currently used in ChatGPT. Read more here.
+February, 2026
+Feb 24
+Feature
+v1/responses
+v1/chat/completions
+Expanded input_file support to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.
+Feb 24
+Feature
+v1/responses
+Released phase to the Responses API. It labels an assistant message as intermediate commentary (commentary) or the final answer (final_answer). Read more here.
+Feb 24
+Feature
+gpt-5.3-codex
+v1/responses
+Released gpt-5.3-codex to the Responses API. Read more here.
+Feb 23
+Feature
+v1/responses
+Launched WebSocket mode for the Responses API. Learn more here.
+Feb 23
+Feature
+gpt-realtime-1.5
+gpt-audio-1.5
+v1/realtime
+v1/chat/completions
+Released GPT-Realtime-1.5 to the Realtime API.
+Released gpt-audio-1.5 to the Chat Completions API. Read more here.
+Feb 10
+Feature
+gpt-image-1.5
+gpt-image-1
+gpt-image-1-mini
+chatgpt-image-latest
+v1/batch
+Batch API is now supported for GPT Image models: gpt-image-1.5, chatgpt-image-latest, gpt-image-1, and gpt-image-1-mini.
+Feb 10
+Update
+gpt-5.2-chat-latest
+Updated the gpt-5.2-chat-latest slug to point to the latest model currently used in ChatGPT.
+Feb 10
+Feature
+v1/responses
+Launched server-side compaction in the Responses API.
+Feb 10
+Feature
+v1/responses
+Launched support for Skills in the Responses API. We support Skills across both local execution and hosted container-based execution.
+Feb 10
+Feature
+v1/responses
+Launched a new Hosted Shell tool, as well as support for networking in containers.
+Feb 9
+Feature
+gpt-image-1.5
+gpt-image-1
+gpt-image-1-mini
+chatgpt-image-latest
+v1/images/edits
+Added support for application/json requests on /v1/images/edits for GPT image models. JSON requests use images (and optional mask) with image_url or file_id references instead of multipart uploads.
+Feb 3
+Update
+gpt-5.2
+gpt-5.2-codex
+We have optimized our inference stack for API customers and GPT-5.2 and GPT-5.2-Codex now run ~40% faster. Model and model weights are unchanged.
+January, 2026
+Jan 15
+Announcement
+Announced Open Responses: an open-source spec for building multi-provider, interoperable LLM interfaces built on top of the original OpenAI Responses API.
+Jan 14
+Feature
+gpt-5.2-codex
+v1/responses
+Released gpt-5.2-codex to the Responses API. GPT-5.2-Codex is a version of GPT-5.2 optimized for agentic coding tasks in Codex or similar environments. Read more here.
+Jan 13
+Feature
+v1/realtime
+Added dedicated SIP IP ranges for Realtime API. sip.api.openai.com does GeoIP routing, and will direct SIP traffic to the closest region. Learn more.
+Jan 13
+Update
+gpt-realtime-mini
+gpt-audio-mini
+Updated the gpt-realtime-mini and gpt-audio-mini slugs to point to the 2025-12-15 snapshots. If you need the previous model snapshots, use gpt-realtime-mini-2025-10-06 and gpt-audio-mini-2025-10-06.
+Jan 13
+Update
+sora-2
+Updated the sora-2 slug to point to sora-2-2025-12-08. If you need the previous model snapshot, use sora-2-2025-10-06.
+Jan 13
+Update
+gpt-4o-mini-tts
+gpt-4o-mini-transcribe
+Updated the gpt-4o-mini-tts and gpt-4o-mini-transcribe slugs to point to the 2025-12-15 snapshots. If you need the previous model snapshots, use gpt-4o-mini-tts-2025-03-20 and gpt-4o-mini-transcribe-2025-03-20. We currently recomend using gpt-4o-mini-transcribe over gpt-4o-transcribe for the best results.
+Jan 9
+Fix
+gpt-image-1.5
+chatgpt-image-latest
+Fixed an issue where gpt-image-1.5 and chatgpt-image-latest were incorrectly using high fidelity for image edits through /v1/images/edits, even when fidelity was explicitly set to low (the default).
+December, 2025
+Dec 19
+Update
+gpt-image-1.5
+chatgpt-image-latest
+Added gpt-image-1.5 and chatgpt-image-latest to the Responses API image generation tool.
+Dec 16
+Feature
+gpt-image-1.5
+chatgpt-image-latest
+Released gpt-image-1.5 and chatgpt-image-latest, our latest and most advanced models for image generation. Read more here.
+Dec 15
+Feature
+gpt-realtime-mini
+gpt-audio-mini
+gpt-4o-mini-transcribe
+gpt-4o-mini-tts
+Released four new dated audio snapshots. These updates deliver reliability, quality, and voice fidelity improvements for real-time, voice-driven applications. Read more here.
+gpt-realtime-mini-2025-12-15
+gpt-audio-mini-2025-12-15
+gpt-4o-mini-transcribe-2025-12-15
+gpt-4o-mini-tts-2025-12-15
+This launch also includes support for Custom voices for eligible customers.
+Dec 11
+Feature
+gpt-5.2
+gpt-5.2-chat-latest
+v1/responses
+v1/chat/completions
+Released GPT-5.2, the newest flagship model in the GPT-5 model family. GPT-5.2 shows improvements over the previous GPT-5.1 in:
+General intelligence
+Instruction following
+Accuracy and token efficiency
+Multimodality—especially vision
+Code generation—especially front-end UI creation
+Tool calling and context management in the API
+Spreadsheet understanding and creation.
+What's new in 5.2 is a new xhigh reasoning effort level, concise reasoning summaries, and new context management using compaction.
+Dec 11
+Feature
+v1/responses/compact
+Released client-side compaction. For long-running conversations with the Responses API, you can use the /responses/compact endpoint to shrink the context you send with each turn.
+Dec 4
+Feature
+gpt-5.1-codex-max
+v1/responses
+Released gpt-5.1-codex-max to the Responses API. GPT-5.1-Codex is our most intelligent coding model optimized for long-horizon, agentic coding tasks. Read more here.
+November, 2025
+Nov 20
+Feature
+v1/realtime
+Added support for DTMF key presses in the Realtime API. You can now receive DTMF events while using a Realtime sideband connection. See docs here for more information.
+Nov 13
+Feature
+gpt-5.1
+gpt-5.1-codex
+gpt-5.1-chat-latest
+gpt-5.1-codex-mini
+v1/responses
+v1/chat/completions
+Released GPT-5.1, the newest flagship model in the GPT-5 model family. GPT-5.1 is trained to be especially proficient in:
+Steerability and faster responses when less thinking's required
+Code generation and coding use cases
+Agentic workflows
+Note that GPT-5.1 defaults to a new none reasoning setting for faster responses when less thinking's required—different from the previous medium default setting in GPT-5.
+Nov 13
+Feature
+Released enhanced role-based access controls (RBAC). Role-based access control (RBAC) lets you decide who can do what across your organization and projects—both through the API and in the Dashboard.
+Nov 13
+Feature
+gpt-5.1-codex
+gpt-5.1-codex-mini
+v1/responses
+Released gpt-5.1-codex and gpt-5.1-codex-mini to the Responses API. GPT-5.1-Codex is a version of GPT-5.1 optimized for agentic coding tasks in Codex or similar environments. Read more here.
+Nov 13
+Feature
+Released extended prompt cache retention. Extended prompt cache retention keeps cached prefixes active for longer, up to a maximum of 24 hours. Extended Prompt Caching works by offloading the key/value tensors to GPU-local storage when memory is full, significantly increasing the storage capacity available for caching.
+October, 2025
+Oct 29
+Feature
+gpt-oss-safeguard-120b
+gpt-oss-safeguard-20b
+gpt-oss-safeguard-120b and gpt-oss-safeguard-20b are safety reasoning models built-upon gpt-oss. Read more here.
+Oct 24
+Feature
+Released Enterprise Key Management (EKM). Enterprise Key Management (EKM) allows you to encrypt your customer content at OpenAI using keys managed by your own external Key Management System (KMS).
+Oct 24
+Feature
+Released UK data residency.
+Oct 6
+Feature
+gpt-5-pro
+gpt-realtime-mini
+gpt-audio-mini
+gpt-image-1-mini
+sora-2
+sora-2-pro
+v1/responses
+v1/batch
+v1/chat/completions
+v1/videos
+v1/realtime
+v1/images/generations
+Released several new features at OpenAI DevDay:
+Released GPT-5 Pro, a version of GPT-5 that uses more compute to think harder and provide consistently better answers.
+Released GPT-Realtime mini and gpt-audio-mini for more cost-efficient speech to speech performance.
+Released gpt-image-1-mini for more cost-efficient image generation and editing.
+Launched v1/videos for rich, detailed, and dynamic video generation and remixing with our latest Sora 2 and Sora 2 Pro models.
+Launched Agent Builder for visually creating custom multi-agent workflows.
+Launched ChatKit, an embeddable chat interface for deploying agents.
+Released Trace Evals, Datasets, and Prompt Optimization tools.
+Evals: Released Third-Party Model Support.
+Launched Service health dashboard.
+Oct 1
+Feature
+Released IP allowlist. IP allowlisting restricts API access to only the IP addresses or ranges you specify.
+September, 2025
+Sep 26
+Feature
+v1/responses
+Added support for image and file as a tool call output in Responses API.
+Sep 23
+Feature
+gpt-5-codex
+v1/responses
+Launched special-purpose model gpt-5-codex, built and optimized for use with the Codex CLI.
+August, 2025
+Aug 28
+Feature
+v1/realtime
+The OpenAI Realtime API is now generally available. Learn more in our Realtime API guide.
+Aug 21
+Feature
+v1/responses
+Added support for connectors to the Responses API. Connectors are OpenAI-maintained MCP wrappers for popular services like Google apps, Dropbox, and more that can be used to give model read access to data stored in those services.
+Aug 20
+Feature
+v1/conversations
+v1/responses
+v1/assistants
+Released the Conversations API, which allows you to create and manage long-running conversations with the Responses API. See the migration guide to see a side-by-side comparison and learn how to migrate from an Assistants API integration to Responses and Conversations.
+Aug 7
+Feature
+v1/chat/completions
+v1/responses
+Released GPT-5 family of models in the API, including gpt-5, gpt-5-mini, and gpt-5-nano.
+Introduced the minimal reasoning effort value to optimize for fast responses in GPT-5 models (which support reasoning).
+Introduced custom tool call type, which allows for freeform inputs to and outputs from the model when tool calling.
+June, 2025
+Jun 27
+Feature
+Launched support for Priority processing. Priority processing delivers significantly lower and more consistent latency compared to Standard processing while keeping pay-as-you-go flexibility.
+Jun 24
+Feature
+o3-deep-research
+o3-deep-research-2025-06-26
+o4-mini-deep-research
+o4-mini-deep-research-2025-06-26
+v1/responses
+Released o3-deep-research and o4-mini-deep-research, deep research variants of our o-series reasoning models optimized for deep analysis and research tasks. Learn more in the deep research guide.
+Added support for async event handling with webhooks. Reduced and simplified pricing for the web search tool. Added support for the web search tool.
+Jun 13
+Feature
+v1/responses
+New reusable prompts are now available in the dashboard and Responses API. Via API, you can now reference templates created in the dashboard via the prompt parameter (with a prompt id, optional version) and supply dynamic variables that can include strings, images, or file inputs. Reusable prompts are not available in Chat Completions. Learn more.
+Jun 10
+Feature
+o3-pro
+v1/responses
+v1/batch
+Released o3-pro, a version of the o3 reasoning model that uses more compute to answer hard problems with better reasoning and consistency. Prices for the o3 model have also been reduced for all API requests, including batch and flex processing.
+Jun 4
+Feature
+v1/fine_tuning
+Added fine-tuning support with direct preference optimization for the models gpt-4.1-2025-04-14, gpt-4.1-mini-2025-04-14, and gpt-4.1-nano-2025-04-14.
+Jun 3
+Feature
+v1/chat/completions
+v1/realtime
+New model snapshots available for gpt-4o-audio-preview and gpt-4o-realtime-preview. Released Agents SDK for TypeScript.
+May, 2025
+May 20
+Feature
+v1/responses
+Added support for new built-in tools in the Responses API, including remote MCP servers and code interpreter. Learn more about tools.
+May 20
+Feature
+v1/responses
+v1/chat/completions
+Added support for using strict mode for tool schemas when using parallel tool calling with non-fine-tuned models.
+Added new schema features, including string validation for email and other patterns and specifying ranges for numbers and arrays.
+May 15
+Feature
+codex-mini-latest
+v1/responses
+v1/chat/completions
+Launched codex-mini-latest in the API, optimized for use with the Codex CLI.
+May 7
+Feature
+v1/fine-tuning
+v1/responses
+v1/chat/completions
+Launched support for reinforcement fine-tuning. Learn about available fine-tuning methods. gpt-4.1-nano is now available for fine-tuning.
+April, 2025
+Apr 30
+Feature
+Launched support for Enhanced API Budget Alerts & Auto-recharge Limits.
+Apr 23
+Feature
+v1/images/generations
+v1/images/edits
+Added a new image generation model, gpt-image-1. This model sets a new standard for image generation, with improved quality and instruction following.
+Updated the Image Generation and Edit endpoints to support new parameters specific to the gpt-image-1 model.
+Apr 16
+Feature
+v1/chat/completions
+v1/responses
+Added two new o-series reasoning models, o3 and o4-mini. They set a new standard for math, science, and coding, visual reasoning tasks, and technical writing.
+Launched Codex, our code generation CLI tool.
+Apr 14
+Feature
+gpt-4.1
+gpt-4.1-mini
+gpt-4.1-nano
+v1/responses
+v1/chat/completions
+v1/fine_tuning
+Added gpt-4.1, gpt-4.1-mini, and gpt-4.1-nano models to the API. These new models feature improved instruction following, coding, and a larger context window (up to 1M tokens). gpt-4.1 and gpt-4.1-mini are available for supervised fine-tuning. Announced deprecation of gpt-4.5-preview.
+March, 2025
+Mar 20
+Update
+v1/audio
+Added gpt-4o-mini-tts, gpt-4o-transcribe, gpt-4o-mini-transcribe, and whisper-1 models to the Audio API.
+Mar 19
+Feature
+o1-pro
+v1/responses
+v1/batch
+Released o1-pro, a version of the o1 reasoning model that uses more compute to answer hard problems with better reasoning and consistency.
+Mar 11
+Feature
+gpt-4o-search-preview
+gpt-4o-mini-search-preview
+computer-use-preview
+v1/chat/completions
+v1/assistants
+v1/responses
+Released several new models and tools and a new API for agentic workflows:
+Released the Responses API, a new API for creating and using agents and tools.
+Released a set of built-in tools for the Responses API: web search, file search, and computer use.
+Released the Agents SDK, an orchestration framework for designing, building, and deploying agents.
+Announced new models: gpt-4o-search-preview, gpt-4o-mini-search-preview, computer-use-preview.
+Announced plans to bring all Assistants API features to the easier to use Responses API, with an anticipated sunset date for Assistants in 2026 (after achieving full feature parity).
+Mar 3
+Feature
+v1/fine_tuning/jobs
+Added metadata field support to fine-tuning jobs.
+February, 2025
+Feb 27
+Feature
+GPT-4.5
+v1/chat/completions
+v1/assistants
+v1/batch
+Released a research preview of GPT-4.5—our largest and most capable chat model yet. GPT-4.5's high "EQ" and understanding of user intent make it better at creative tasks and agentic planning.
+Feb 25
+Feature
+Launched the API Usage Dashboard Update. This update addresses requests for additional data filters, such as project selection, date picker, and fine-grained intervals. There’s also better support for viewing usage across different products and service tiers.
+Feb 5
+Feature
+Introducing data residency in Europe. Read more here.
+January, 2025
+Jan 31
+Feature
+o3-mini
+o3-mini-2025-01-31
+v1/chat/completions
+Launched o3-mini, a new small reasoning model that is optimized for science, math, and coding tasks.
+Jan 21
+Feature
+o1
+Expanded access to o1 model. The o1 series of models are trained with reinforcement learning to perform complex reasoning.
+December, 2024
+Dec 18
+Feature
+Launched Admin API Key Rotations, enabling customers to programmatically rotate their admin api keys.
+Updated Admin API Invites, enabling customers to programmatically invite users to projects at the same time they are invited to organizations.
+Dec 17
+Feature
+o1
+gpt-4o
+gpt-4o-mini
+v1/fine_tuning
+v1/chat/completions
+v1/realtime
+Added new models for o1, gpt-4o-realtime, gpt-4o-audio and more.
+Added WebRTC connection method for the Realtime API.
+Added reasoning_effort parameter for o1 models.
+Added developer message role for o1 model. Note that o1-preview and o1-mini do not support system or developer messages.
+Launched Preference Fine-tuning using Direct Preference Optimization (DPO).
+Launched beta SDKs for Go and Java. Learn more.
+Added Realtime API support in the Python SDK.
+Dec 4
+Feature
+Launched Usage API, enabling customers to programmatically query activities and spending across OpenAI APIs.
+November, 2024
+Nov 20
+Update
+v1/chat/completions
+Released gpt-4o-2024-11-20, our newest model in the gpt-4o series.
+Nov 4
+Feature
+v1/chat/completions
+Released Predicted Outputs, which greatly reduces latency for model responses where much of the response is known ahead of time. This is most common when regenerating the content of documents and code files with only minor changes.
+October, 2024
+Oct 30
+Feature
+gpt-4o-realtime-preview
+gpt-4o-audio-preview
+v1/chat/completions
+Added five new voice types in the Realtime API and Chat Completions API.
+Oct 17
+Feature
+gpt-4o-audio-preview
+v1/chat/completions
+Released new gpt-4o-audio-preview model for chat completions, which supports both audio inputs and outputs. Uses the same underlying model as the Realtime API.
+Oct 1
+Feature
+v1/realtime
+v1/chat/completions
+v1/fine_tuning
+Released several new features at OpenAI DevDay in San Francisco:
+Realtime API: Build fast speech-to-speech experiences into your applications using a WebSockets interface.
+Model distillation: Platform for fine-tuning cost-efficient models with your outputs from a large frontier model.
+Image fine-tuning: Fine-tune GPT-4o with images and text to improve vision capabilities.
+Evals: Create and run custom evaluations to measure model performance on specific tasks.
+Prompt caching: Discounts and faster processing times on recently seen input tokens.
+Generate in playground: Easily generate prompts, function definitions, and structured output schemas in the playground using the Generate button.
+September, 2024
+Sep 26
+Feature
+omni-moderation-latest
+v1/moderations
+Released new omni-moderation-latest moderation model, which supports both images and text (for some categories), supports two new text-only harm categories, and has more accurate scores.
+Sep 12
+Feature
+o1-preview
+o1-mini
+v1/chat/completions
+Released o1-preview and o1-mini, new large language models trained with reinforcement learning to perform complex reasoning tasks.
+August, 2024
+Aug 29
+Feature
+v1/assistants
+Assistants API now supports including file search results used by the file search tool, and customizing ranking behavior.
+Aug 20
+Feature
+gpt-4o
+v1/fine_tuning
+GA release for gpt-4o-2024-08-06 fine-tuning—all API users can now fine-tune the latest GPT-4o model.
+Aug 15
+Update
+gpt-4o
+v1/chat/completions
+Released dynamic model for chatgpt-4o-latest—this model will point to the latest GPT-4o model used by ChatGPT.
+Aug 6
+Update
+Launched Structured Outputs—model outputs now reliably adhere to developer supplied JSON Schemas.
+Released gpt-4o-2024-08-06, our newest model in the gpt-4o series.
+Aug 1
+Update
+Launched Admin and Audit Log APIs, allowing customers to programmatically administer their organization and monitor changes using the audit logs. Audit logging must be enabled within settings.
+July, 2024
+Jul 24
+Update
+Launched self-serve SSO configuration, allowing Enterprise customers on custom and unlimited billing to set up authentication against their desired IDP.
+Jul 23
+Update
+Launched fine-tuning for GPT-4o mini, enabling even higher performance for specific use cases.
+Jul 18
+Update
+Released GPT-4o mini, our affordable an intelligent small model for fast, lightweight tasks.
+Jul 17
+Update
+Released Uploads to upload large files in multiple parts.
+June, 2024
+Jun 6
+Update
+Parallel function calling can be disabled in Chat Completions and the Assistants API by passing parallel_tool_calls=false.
+.NET SDK launched in Beta.
+Jun 3
+Update
+Added support for file search customizations.
+May, 2024
+May 15
+Update
+Added support for archiving projects . Only organization owners can access this functionality.
+Added support for setting cost limits on a per-project basis for pay as you go customers.
+May 13
+Update
+Released GPT-4o in the API. GPT-4o is our fastest and most affordable flagship model.
+May 9
+Update
+Added support for image inputs to the Assistants API.
+May 7
+Update
+Added support for fine-tuned models to the Batch API .
+May 6
+Update
+Added stream_options: {"include_usage": true} parameter to the Chat Completions and Completions APIs. Setting this gives developers access to usage stats when using streaming.
+May 2
+Update
+Added a new endpoint to delete a message from a thread in the Assistants API.
+April, 2024
+Apr 29
+Update
+Added a new function calling option tool_choice: "required" to the Chat Completions and Assistants APIs.
+Added a guide for the Batch API and Batch API support for embeddings models
+Apr 17
+Update
+Introduced a series of updates to the Assistants API , including a new file search tool allowing up to 10,000 files per assistant, new token controls, and support for tool choice.
+Apr 16
+Update
+Introduced project based hierarchy for organizing work by projects, including the ability to create API keys and manage rate and cost limits on a per-project basis (cost limits available only for Enterprise customers).
+Apr 15
+Update
+Released Batch API
+Apr 9
+Update
+Released GPT-4 Turbo with Vision in general availability in the API
+Apr 4
+Update
+Added support for seed in the fine-tuning API
+Added support for checkpoints in the fine-tuning API
+Added support for adding Messages when creating a Run in the Assistants API
+Apr 1
+Update
+Added support for filtering Messages by run_id in the Assistants API
+March, 2024
+Mar 29
+Update
+Added support for temperature and assistant message creation in the Assistants API
+Mar 14
+Update
+Added support for streaming in the Assistants API
+February, 2024
+Feb 9
+Update
+Added timestamp_granularities parameter to the Audio API
+Feb 1
+Update
+Released gpt-3.5-turbo-0125, an updated GPT-3.5 Turbo model
+January, 2024
+Jan 25
+Update
+Released embedding V3 models and an updated GPT-4 Turbo preview
+Added dimensions parameter to the Embeddings API
+December, 2023
+Dec 20
+Update
+Added additional_instructions parameter to run creation in the Assistants API
+Dec 15
+Update
+Added logprobs and top_logprobs parameters to the Chat Completions API
+Dec 14
+Update
+Changed function parameters argument on a tool call to be optional
+November, 2023
+Nov 30
+Update
+Released OpenAI Deno SDK
+Nov 6
+Update
+Released GPT-4 Turbo Preview, updated GPT-3.5 Turbo, GPT-4 Turbo with Vision, Assistants API, DALL·E 3 in the API, and text-to-speech API
+Deprecated the Chat Completions functions parameter in favor of tools
+Released OpenAI Python SDK V1.0
+October, 2023
+Oct 16
+Update
+Added encoding_format parameter to the Embeddings API
+Added max_tokens to the Moderation models
+Oct 6
+Update
+Added function calling support to the Fine-tuning API
+Ask AI
+Docs agent
+Loading docs agent...
