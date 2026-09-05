@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import BoardSection from '../components/leaderboards/BoardSection.astro';
+import RankTable from '../components/leaderboards/RankTable.astro';
+import { logoFor } from '../lib/platforms';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -8,129 +11,282 @@ function readJson(p) {
   catch (e) { return null; }
 }
 
+// ===== 板块 A：OpenRouter 开发者采用数据（自动抓取）=====
 const openrouter = readJson('src/data/leaderboards/openrouter.json');
+const marketShare = readJson('src/data/leaderboards/openrouter_market_share.json');
+const sessionCost = readJson('src/data/leaderboards/openrouter_session_cost.json');
+const topApps = readJson('src/data/leaderboards/openrouter_apps.json');
+
+const maxTokens = openrouter?.top?.length ? Math.max(...openrouter.top.map((m) => m.tokens_t)) : 1;
+const maxShare = marketShare?.shares?.length ? Math.max(...marketShare.shares.map((s) => s.share_pct)) : 1;
+// OpenRouter CC BY 4.0 引用（as_of 由抓取脚本写入）
+const orCitation = openrouter?.as_of
+  ? `Source: OpenRouter (openrouter.ai/rankings), as of ${openrouter.as_of} · CC BY 4.0`
+  : 'Source: OpenRouter (openrouter.ai/rankings) · CC BY 4.0';
+
+// ===== 板块 B：能力榜（首期手工维护）=====
 const lmarena = readJson('src/data/leaderboards/lmarena.json');
 const aa = readJson('src/data/leaderboards/aa.json');
+const superclue = readJson('src/data/leaderboards/superclue.json');
+const swebench = readJson('src/data/leaderboards/swebench.json');
+const terminalBench = readJson('src/data/leaderboards/terminal-bench.json');
 
-const maxTokens = openrouter ? Math.max(...openrouter.top.map(m => m.tokens_t)) : 1;
+// 能力榜通用列定义
+const benchCols = (metric: string, metricLabel: string) => [
+  { key: 'rank', label: '#' },
+  { key: 'model', label: '模型' },
+  { key: 'vendor', label: '厂商' },
+  { key: metric, label: metricLabel },
+  { key: 'note', label: '备注', format: (v) => v ?? '' },
+];
+
+// 会话成本表行（展平 harness × cell）
+const costRows = sessionCost?.apps?.flatMap((a) =>
+  a.cells.map((c) => ({ rank: '', harness: a.app_name, ...c }))
+) ?? [];
+const costCols = [
+  { key: 'harness', label: 'Harness' },
+  { key: 'model', label: '模型' },
+  { key: 'turn_range', label: '轮次' },
+  { key: 'median_cost_usd', label: '$ / 会话', format: (v) => (v != null ? `$${Number(v).toFixed(2)}` : '—') },
+];
+const appCols = [
+  { key: 'rank', label: '#' },
+  { key: 'app_name', label: '应用' },
+  { key: 'tokens_t', label: 'Tokens', format: (v) => (v != null ? `${v}T` : '—') },
+  { key: 'requests_k', label: '请求', format: (v) => (v != null ? `${v}k` : '—') },
+];
+
+const fmtPct = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}%`);
+const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
 ---
 
-<Layout title="能力榜单 — MaaS Daily" description="第三方评测：OpenRouter 调用量 / LMArena Elo / AA 智能指数，交叉验证谁强">
-  <h1>能力榜单</h1>
-  <p class="page-desc">用多个独立第三方榜单交叉验证「谁的模型好」——不依赖平台自说自话。快照日期见各榜脚注，均为每周抓取存档。</p>
+<Layout title="榜单 — MaaS Daily" description="两大板块：OpenRouter 开发者采用数据（调用量/厂商份额/会话成本/应用榜）+ 能力榜（LMArena / AA / SuperCLUE / SWE-bench / Terminal-Bench）交叉验证">
+  <h1>榜单</h1>
+  <p class="page-desc">
+    采用与能力分开看：OpenRouter 数据回答「开发者实际在用什么」，五个能力榜回答「谁的模型好」。快照日期与维护方式见各榜脚注，多榜交叉、不依赖平台自说自话。
+  </p>
 
-  <section class="board-section">
-    <div class="board-head">
-      <h2>OpenRouter 调用量 Top10</h2>
-      <span class="snap">快照 {openrouter.snapshot_date} · 7 日窗口</span>
+  <!-- ===== 01 / ADOPTION ===== -->
+  <section class="section" id="adoption">
+    <div class="section-heading">
+      <span class="section-no">01 / ADOPTION</span>
+      <h2>开发者采用 · OpenRouter</h2>
+      <p class="section-note">按经 OpenRouter API 路由的真实 token 量统计，每日自动抓取。它衡量采用而非质量，只反映 OpenRouter 流量而非全市场。</p>
     </div>
-    <div class="bar-list">
-      {openrouter.top.map((m) => (
-        <div class="bar-row">
-          <span class="bar-rank">{m.rank}</span>
-          <div class="bar-main">
-            <div class="bar-top">
-              <span class="bar-model">{m.model}</span>
-              <span class="bar-vendor">{m.vendor}</span>
-              <span class="bar-val">{m.tokens_t}T tokens</span>
-              {m.is_new
-                ? <span class="pill pill-new">新上榜</span>
-                : (m.change_pct != null ? <span class="pill {m.change_pct >= 0 ? 'pill-up' : 'pill-down'}">{m.change_pct > 0 ? '+' : ''}{m.change_pct}%</span> : null)}
+
+    {openrouter && (
+      <BoardSection
+        title="模型调用量 Top10"
+        snap={openrouter.snapshot_date}
+        manual={openrouter.manual ?? true}
+        cycle={openrouter.manual ? openrouter.update_cycle : undefined}
+        note={openrouter.note}
+        sourceUrl={openrouter.source_url}
+        citation={orCitation}
+      >
+        <div class="bar-list">
+          {openrouter.top.map((m) => (
+            <div class="bar-row">
+              <span class="bar-rank">{m.rank}</span>
+              <div class="bar-main">
+                <div class="bar-top">
+                  <span class="bar-model">{m.model}</span>
+                  <span class="bar-vendor">{m.vendor}</span>
+                  <span class="bar-val">{m.tokens_t}T tokens</span>
+                  {m.is_new
+                    ? <span class="pill pill-new">新上榜</span>
+                    : (m.change_pct != null
+                        ? <span class={`pill ${m.change_pct >= 0 ? 'pill-up' : 'pill-down'}`}>{fmtPct(m.change_pct)}</span>
+                        : <span class="pill pill-flat">—</span>)}
+                  {m.prev_rank != null && !m.is_new && (
+                    <span class="bar-prev">#{m.prev_rank} → #{m.rank}</span>
+                  )}
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill" style={`width:${(m.tokens_t / maxTokens * 100).toFixed(1)}%`}></div>
+                </div>
+              </div>
             </div>
-            <div class="bar-track">
-              <div class="bar-fill" style="width:{(m.tokens_t / maxTokens * 100).toFixed(1)}%"></div>
-            </div>
-          </div>
+          ))}
         </div>
-      ))}
-    </div>
-    <p class="board-note">数据口径：按 OpenRouter API 实际 token 处理量（含 prompt+completion）排名，反映开发者采用而非质量；不反映全市场流量。环比为与上一周 token 量变化。</p>
+      </BoardSection>
+    )}
+
+    {marketShare && (
+      <BoardSection
+        title="厂商份额"
+        snap={marketShare.snapshot_date}
+        manual={marketShare.manual ?? true}
+        cycle={marketShare.manual ? marketShare.update_cycle : undefined}
+        note={marketShare.note}
+        sourceUrl={marketShare.source_url}
+      >
+        <div class="bar-list">
+          {marketShare.shares.map((s) => (
+            <div class="bar-row">
+              <span class="bar-rank">{s.rank}</span>
+              <div class="bar-main">
+                <div class="bar-top">
+                  {logoFor(s.vendor)
+                    ? <img class="bd-logo" src={logoFor(s.vendor)} alt={s.vendor} loading="lazy" />
+                    : <span class="bd-logo bd-logo-fallback">{String(s.vendor).slice(0, 1)}</span>}
+                  <span class="bar-model">{s.vendor}</span>
+                  <span class="bar-val">{s.share_pct.toFixed(1)}%</span>
+                  {s.change_pp != null && (
+                    <span class={`pill ${s.change_pp >= 0 ? 'pill-up' : 'pill-down'}`}>{fmtPp(s.change_pp)}</span>
+                  )}
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill bar-fill-share" style={`width:${(s.share_pct / maxShare * 100).toFixed(1)}%`}></div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </BoardSection>
+    )}
+
+    {sessionCost && (
+      <BoardSection
+        title="编程 Agent 会话成本"
+        snap={sessionCost.snapshot_date}
+        manual={sessionCost.manual ?? true}
+        cycle={sessionCost.manual ? sessionCost.update_cycle : undefined}
+        note={sessionCost.note}
+        sourceUrl={sessionCost.source_url}
+      >
+        <RankTable rows={costRows} columns={costCols} />
+      </BoardSection>
+    )}
+
+    {topApps && (
+      <BoardSection
+        title="Top Apps · 应用榜"
+        snap={topApps.snapshot_date}
+        manual={topApps.manual ?? true}
+        cycle={topApps.manual ? topApps.update_cycle : undefined}
+        note={topApps.note}
+        sourceUrl={topApps.source_url}
+      >
+        <div class="apps-grid">
+          {topApps.popular && (
+            <RankTable rows={topApps.popular} columns={appCols} caption="按 token 消耗量" />
+          )}
+          {topApps.trending && (
+            <RankTable rows={topApps.trending} columns={appCols} caption="按增长趋势" />
+          )}
+        </div>
+      </BoardSection>
+    )}
   </section>
 
-  <section class="board-section">
-    <div class="board-head">
-      <h2>LMArena Elo 榜</h2>
-      <span class="snap">快照 {lmarena.snapshot_date}</span>
+  <!-- ===== 02 / BENCHMARKS ===== -->
+  <section class="section" id="benchmarks">
+    <div class="section-heading">
+      <span class="section-no">02 / BENCHMARKS</span>
+      <h2>能力榜</h2>
+      <p class="section-note">五个独立第三方评测，口径互补：真实使用偏好（LMArena）、综合智能（AA）、中文场景（SuperCLUE）、工程实战（SWE-bench）、Agent 任务（Terminal-Bench）。</p>
     </div>
-    <table class="rank-table">
-      <thead><tr><th>#</th><th>模型</th><th>厂商</th><th>Elo</th><th>备注</th></tr></thead>
-      <tbody>
-        {lmarena.top.map((m) => (
-          <tr>
-            <td class="c-rank">{m.rank}</td>
-            <td class="c-model">{m.model}</td>
-            <td class="c-vendor">{m.vendor}</td>
-            <td class="c-elo">{m.elo ?? '—'}</td>
-            <td class="c-note">{m.note ?? ''}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    <p class="board-note">数据口径：全球用户匿名两两盲测投票，Elo 机制计分，反映真实使用偏好（{lmarena.note}）。</p>
-  </section>
 
-  <section class="board-section">
-    <div class="board-head">
-      <h2>AA 智能指数</h2>
-      <span class="snap">快照 {aa.snapshot_date}</span>
-    </div>
-    <table class="rank-table">
-      <thead><tr><th>#</th><th>模型</th><th>厂商</th><th>智能指数</th><th>备注</th></tr></thead>
-      <tbody>
-        {aa.top.map((m) => (
-          <tr>
-            <td class="c-rank">{m.rank}</td>
-            <td class="c-model">{m.model}</td>
-            <td class="c-vendor">{m.vendor}</td>
-            <td class="c-elo">{m.score}</td>
-            <td class="c-note">{m.note ?? ''}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    <p class="board-note">数据口径：综合 10 项权威基准（GDPval-AA / Terminal-Bench / GPQA Diamond / SciCode 等）加权，{aa.note}</p>
+    {lmarena && (
+      <BoardSection
+        title="LMArena Elo 榜"
+        snap={lmarena.snapshot_date}
+        manual={lmarena.manual}
+        cycle={lmarena.update_cycle}
+        note={lmarena.note}
+        sourceUrl={lmarena.source_url}
+      >
+        <RankTable rows={lmarena.top} columns={benchCols('elo', 'Elo')} />
+      </BoardSection>
+    )}
+
+    {aa && (
+      <BoardSection
+        title="AA 智能指数"
+        snap={aa.snapshot_date}
+        manual={aa.manual}
+        cycle={aa.update_cycle}
+        note={aa.note}
+        sourceUrl={aa.source_url}
+      >
+        <RankTable rows={aa.top} columns={benchCols('score', '智能指数')} />
+      </BoardSection>
+    )}
+
+    {superclue && (
+      <BoardSection
+        title="SuperCLUE 智能指数（中文）"
+        snap={superclue.snapshot_date}
+        manual={superclue.manual}
+        cycle={superclue.update_cycle}
+        note={superclue.note}
+        sourceUrl={superclue.source_url}
+      >
+        <RankTable rows={superclue.top} columns={benchCols('score', '智能指数')} />
+      </BoardSection>
+    )}
+
+    {swebench && (
+      <BoardSection
+        title="SWE-bench Verified"
+        snap={swebench.snapshot_date}
+        manual={swebench.manual}
+        cycle={swebench.update_cycle}
+        note={swebench.note}
+        sourceUrl={swebench.source_url}
+      >
+        <RankTable rows={swebench.top} columns={benchCols('score', 'pass@1 %')} />
+      </BoardSection>
+    )}
+
+    {terminalBench && (
+      <BoardSection
+        title="Terminal-Bench 2.1"
+        snap={terminalBench.snapshot_date}
+        manual={terminalBench.manual}
+        cycle={terminalBench.update_cycle}
+        note={terminalBench.note}
+        sourceUrl={terminalBench.source_url}
+      >
+        <RankTable rows={terminalBench.top} columns={benchCols('score', '完成率 %')} />
+      </BoardSection>
+    )}
   </section>
 </Layout>
 
 <style>
-  h1 { font-size: 1.8em; margin-bottom: 8px; }
-  .page-desc { color: var(--color-text-muted); font-size: 14px; margin-bottom: 28px; }
+  h1 { font-family: "Songti SC", serif; font-size: 2.2em; font-weight: 600; letter-spacing: -.02em; margin-bottom: 8px; }
+  .page-desc { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 12px; max-width: 640px; }
 
-  .board-section { margin-bottom: 36px; }
-  .board-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
-  .board-head h2 { font-size: 1.3em; font-weight: 600; color: var(--color-accent); }
-  .snap { color: var(--color-text-muted); font-size: 12px; }
-
-  /* OpenRouter 条形图 */
+  /* 条形图（调用量 + 厂商份额共用） */
   .bar-list { display: flex; flex-direction: column; gap: 10px; }
   .bar-row { display: flex; gap: 10px; align-items: center; }
   .bar-rank {
     width: 22px; height: 22px; line-height: 22px; text-align: center;
-    background: var(--color-surface); border: 1px solid var(--color-border);
-    border-radius: 6px; font-size: 12px; font-weight: 600; color: var(--color-text-muted); flex-shrink: 0;
+    background: var(--ink-2); border: 1px solid var(--line);
+    border-radius: 6px; font: 600 12px/22px "SF Mono", monospace; color: var(--muted); flex-shrink: 0;
   }
   .bar-main { flex: 1; min-width: 0; }
-  .bar-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font-size: 13px; margin-bottom: 3px; }
-  .bar-model { font-weight: 600; }
-  .bar-vendor { color: var(--color-text-muted); font-size: 12px; }
-  .bar-val { margin-left: auto; color: var(--color-text-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
-  .bar-track { height: 10px; background: var(--color-surface-alt); border: 1px solid var(--color-border); border-radius: 5px; overflow: hidden; }
-  .bar-fill { height: 100%; background: var(--color-text); border-radius: 5px; }
+  .bar-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; margin-bottom: 4px; }
+  .bar-model { font-weight: 600; color: var(--paper); }
+  .bar-vendor { color: var(--muted); font-size: 12px; }
+  .bar-val { margin-left: auto; color: var(--muted); font: 500 12px/1 "SF Mono", monospace; font-variant-numeric: tabular-nums; }
+  .bar-prev { color: var(--muted); font: 500 11px/1 "SF Mono", monospace; opacity: .75; }
+  .bar-track { height: 10px; background: var(--ink-2); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--paper-soft); border-radius: 5px; }
+  .bar-fill-share { background: var(--acid); opacity: .55; }
 
-  .pill { font-size: 11px; font-weight: 600; border-radius: 9999px; padding: 2px 8px; border: none; }
-  .pill-new { color: var(--status-active-text); background: var(--status-active-bg); }
-  .pill-up { color: var(--status-active-text); background: var(--status-active-bg); }
-  .pill-down { color: var(--status-critical-text); background: var(--status-critical-bg); }
+  .bd-logo { width: 26px; height: 26px; border-radius: 7px; background: var(--ink); border: 1px solid var(--line); padding: 4px; object-fit: contain; flex: none; }
+  .bd-logo-fallback { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 7px; background: var(--ink); border: 1px solid var(--line); font: 700 12px/1 "Songti SC", serif; color: var(--acid); flex: none; }
 
-  /* 排名表 */
-  .rank-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-  .rank-table th, .rank-table td { border-bottom: 1px solid var(--color-border); padding: 11px 12px; text-align: left; }
-  .rank-table th { color: var(--color-text-muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
-  .c-rank { width: 40px; color: var(--color-text-muted); font-family: "SF Mono", monospace; }
-  .c-model { font-weight: 600; }
-  .c-vendor { color: var(--color-text-muted); }
-  .c-elo { font-variant-numeric: tabular-nums; font-weight: 600; }
-  .c-note { color: var(--color-text-muted); font-size: 12.5px; }
+  .pill { font: 700 11px/1 "SF Mono", monospace; border-radius: 9999px; padding: 4px 8px; }
+  .pill-new { color: var(--amber); background: var(--amber-dim); }
+  .pill-up { color: var(--acid); background: var(--acid-dim); }
+  .pill-down { color: var(--red); background: var(--red-dim); }
+  .pill-flat { color: var(--muted); background: color-mix(in srgb, var(--muted) 10%, transparent); }
 
-  .board-note { color: var(--color-text-muted); font-size: 12.5px; margin-top: 16px; background: var(--color-surface-alt); border: 1px solid var(--color-border); border-radius: 8px; padding: 12px 16px; }
+  .apps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 900px) { .apps-grid { grid-template-columns: 1fr; } }
 </style>

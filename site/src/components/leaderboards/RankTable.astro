@@ -1,0 +1,63 @@
+---
+// 通用排名表：columns 定义列（key/label/format），rows 为对象数组，vender 列自动接 logo。
+import { logoFor } from '../../lib/platforms';
+
+interface Column {
+  key: string;
+  label: string;
+  format?: (v: any, row: any) => string;
+}
+interface Props {
+  rows: any[];
+  columns: Column[];
+  caption?: string;
+}
+const { rows, columns, caption } = Astro.props;
+
+const fmt = (col: Column, row: any) =>
+  col.format ? col.format(row[col.key], row) : (row[col.key] ?? '—');
+---
+
+{caption && <p class="rt-caption">{caption}</p>}
+<div class="table-scroll">
+  <table class="rank-table">
+    <thead>
+      <tr>{columns.map((c) => <th>{c.label}</th>)}</tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr>
+          {columns.map((col) => (
+            col.key === 'vendor' ? (
+              <td class="c-vendor">
+                {logoFor(row.vendor)
+                  ? <img class="bd-logo" src={logoFor(row.vendor)} alt={row.vendor} loading="lazy" />
+                  : <span class="bd-logo bd-logo-fallback">{String(row.vendor).slice(0, 1)}</span>}
+                <span>{row.vendor}</span>
+              </td>
+            ) : (
+              <td class={`c-${col.key}`}>{fmt(col, row)}</td>
+            )
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .rt-caption { margin: 0 0 10px; color: var(--muted); font-size: 12.5px; }
+  .table-scroll { overflow-x: auto; }
+  .rank-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .rank-table th, .rank-table td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: middle; }
+  .rank-table th { color: var(--muted); font: 700 10.5px/1 "SF Mono", monospace; text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; padding-top: 0; }
+  .c-rank { color: var(--muted); font-family: "SF Mono", monospace; width: 42px; }
+  .c-model { font-weight: 600; color: var(--paper); }
+  .c-elo, .c-score { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--paper); }
+  .c-vendor { color: var(--muted); white-space: nowrap; }
+  .c-note { color: var(--muted); font-size: 12.5px; }
+  .bd-logo { width: 26px; height: 26px; border-radius: 7px; background: var(--ink); border: 1px solid var(--line); padding: 4px; object-fit: contain; flex: none; }
+  .bd-logo-fallback { display: inline-grid; place-items: center; font: 700 12px/1 "Songti SC", serif; color: var(--acid); vertical-align: middle; margin-right: 8px; }
+  .c-vendor { display: flex; align-items: center; gap: 8px; }
+  .c-vendor img { margin-right: 0; }
+</style>
