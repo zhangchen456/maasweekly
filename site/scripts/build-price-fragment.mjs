@@ -73,8 +73,8 @@ if (!bodyMatch) throw new Error('模板缺 <body>');
 let body = bodyMatch[1];
 // 去 main 包裹
 body = body.replace(/<\/?main[^>]*>/g, '');
-// 去 masthead（站点有导航），但保留其三个功能控件（主题切换/汇率快捷/更新时间徽标）：
-// 挪到 hero eyebrow 行右侧，避免 JS 因元素缺失崩溃
+// 去 masthead（站点已有导航和主题切换）。汇率快捷入口与更新时间徽标挪到
+// hero eyebrow 行右侧；保留隐藏的 theme 宿主，兼容独立模板的既有脚本。
 body = body.replace(
   /<header class="masthead[\s\S]*?<\/header>/,
   '');
@@ -84,17 +84,16 @@ body = body.replaceAll(
   'document.documentElement.dataset.theme',
   "document.getElementById('price-ledger').dataset.theme");
 
-// ---- 3b. masthead 的三个功能控件重植入 hero ----
-// masthead 被删后 theme/currency-shortcut/updated 三个 ID 无宿主，JS 会崩。
+// ---- 3b. masthead 的功能控件重植入 hero ----
 // 以工具条形式插在 hero 第一列顶部（eyebrow 同行右对齐）。
-const toolRow = `<div class="row between wrap" style="gap:10px"><span></span><div class="row" style="gap:8px"><button id="currency-shortcut" class="small" title="调整人民币估算汇率" style="font-size:10px;padding:5px 9px">¥ 人民币 · 汇率 7</button><span class="pill" style="font-size:10px"><i class="dot"></i><span id="updated">数据加载中</span></span><button id="theme" aria-label="切换深色外观" title="切换外观">◐</button></div></div>`;
+const toolRow = `<div class="row between wrap" style="gap:10px"><span></span><div class="row" style="gap:8px"><button id="currency-shortcut" class="small" title="调整人民币估算汇率" style="font-size:10px;padding:5px 9px">¥ 人民币 · 汇率 7</button><span class="pill" style="font-size:10px"><i class="dot"></i><span id="updated">数据加载中</span></span><button id="theme" hidden aria-label="切换深色外观">◐</button></div></div>`;
 // 插在 hero 第一个 div 的 eyebrow 之前
 body = body.replace(/(<section class="hero[^>]*">\s*<div>\s*)<div class="eyebrow">/,
   `$1${toolRow}<div class="eyebrow" style="margin-top:10px">`);
 
-// ---- 4. 拼片段：容器 div 包裹（CSS 变量与主题 data-theme 自持于容器）----
+// ---- 4. 拼片段：容器 div 包裹（主题变量由宿主页覆盖）----
 const fragment = `<!-- 价格台账片段（由 site/scripts/build-price-fragment.mjs 从 price-ledger.template.html 生成，勿手改） -->
-<div id="price-ledger" class="plw" data-theme="light">
+<div id="price-ledger" class="plw">
 <style>${css}</style>
 ${body.trim()}
 </div>

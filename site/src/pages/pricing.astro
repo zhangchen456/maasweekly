@@ -1,141 +1,131 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import '../styles/pricing.css';
 import fs from 'node:fs';
 import path from 'node:path';
 
 function readJson(p) {
   try { return JSON.parse(fs.readFileSync(path.join(process.cwd(), p), 'utf-8')); }
-  catch (e) { return null; }
+  catch { return null; }
 }
+
 function readFile(p) {
   try { return fs.readFileSync(path.join(process.cwd(), p), 'utf-8'); }
-  catch (e) { return null; }
+  catch { return null; }
+}
+
+function priceRange(value) {
+  const numbers = String(value).match(/[\d.]+/g)?.map(Number).filter(Number.isFinite) ?? [];
+  return { low: numbers[0] ?? 0, high: numbers.at(-1) ?? numbers[0] ?? 0 };
 }
 
 const ledger = readJson('src/data/pricing/ledger.json');
 const gpu = readJson('src/data/pricing/gpu.json');
 const chips = readJson('src/data/pricing/chips.json');
-// 已注入数据的台账片段（build 前由 render-price-ledger.mjs 产出；无数据时为 null 回退提示卡）
 const ledgerHtml = readFile('src/data/pricing/price-ledger.rendered.html');
 
 const ledgerDate = ledger?.meta?.published_at
   ? new Date(ledger.meta.published_at * 1000).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }).replace(/\//g, '.')
   : '—';
+const modelCount = new Set(ledger?.prices?.map((item) => `${item.provider}/${item.model}`) ?? []).size;
+const providerCount = ledger?.providers?.length ?? 0;
+const maxMonthly = Math.max(...(gpu?.gpu_list ?? []).map((item) => priceRange(item.monthly_cny).high), 1);
+const gpuRows = (gpu?.gpu_list ?? []).map((item) => {
+  const range = priceRange(item.monthly_cny);
+  const start = range.low ? Math.sqrt(range.low / maxMonthly) * 100 : 0;
+  const end = range.high ? Math.sqrt(range.high / maxMonthly) * 100 : 0;
+  return { ...item, start, width: Math.max(end - start, range.high ? 2.2 : 0) };
+});
+const chipGroups = Object.values((chips?.chips ?? []).reduce((groups, item) => {
+  groups[item.vendor] ??= { vendor: item.vendor, entries: [] };
+  groups[item.vendor].entries.push(item);
+  return groups;
+}, {}));
 ---
 
-<Layout title="价格与算力 — MaaS Daily" description="8 家厂商 API 定价台账、GPU 租赁行情、国产 AI 芯片动态">
-  <h1>价格与算力</h1>
-  <p class="page-desc">三个视角：API 调一次多少钱（成本）· GPU 租一台多少钱（供给）· 国产芯片进展如何（供给格局）。</p>
-
-  {ledgerHtml ? (
-    <div class="ledger-embed" set:html={ledgerHtml} />
-  ) : (
-    <div class="ledger-pending">价格台账数据生成中（每日 05:00 自动抓取八家官方定价页），稍后可刷新查看。</div>
-  )}
-
-  <section class="board-section">
-    <div class="board-head">
-      <h2>GPU 算力租赁行情</h2>
-      <span class="snap">快照 {gpu.snapshot_date} · 国内平台聚合</span>
-    </div>
-    <div class="table-scroll">
-      <table class="rank-table">
-        <thead>
-          <tr><th>卡型</th><th>时租参考</th><th>包月参考</th><th>适用场景</th><th>来源</th></tr>
-        </thead>
-        <tbody>
-          {gpu.gpu_list.map((g) => (
-            <tr>
-              <td class="c-model">{g.gpu}</td>
-              <td class="c-elo">{g.hourly_cny}</td>
-              <td class="c-elo">{g.monthly_cny}</td>
-              <td class="c-note">{g.use}</td>
-              <td class="c-vendor">{g.source}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    <div class="gpu-bars">
-      {gpu.gpu_list.filter(g => g.monthly_cny !== '—').map((g) => {
-        const v = parseFloat(String(g.monthly_cny).replace(/[^\d.]/g, ''));
-        return v ? (
-          <div class="gpu-bar-row">
-            <span class="gpu-bar-label">{g.gpu}</span>
-            <div class="gpu-bar-track">
-              <div class="gpu-bar-fill" style="width:{(v / 88000 * 100).toFixed(1)}%"></div>
-            </div>
-            <span class="gpu-bar-val">包月 {g.monthly_cny} 元</span>
-          </div>
-        ) : null;
-      })}
-    </div>
-    <p class="board-note">包月参考按 24/7 折算（时租 × 730），价格随供需波动，实际以平台实时报价为准。横条仅示意包月价量级相对关系。</p>
-  </section>
-
-  <section class="board-section">
-    <div class="board-head">
-      <h2>国产 AI 芯片动态</h2>
-      <span class="snap">快照 {chips.snapshot_date} · 公开报道</span>
-    </div>
-    <div class="chip-grid">
-      {chips.chips.map((c) => (
-        <div class="chip-card">
-          <div class="chip-vendor">{c.vendor}</div>
-          <div class="chip-value">{c.value}</div>
-          <div class="chip-metric">{c.metric}</div>
-          <div class="chip-note">{c.note}</div>
-          <div class="chip-source">{c.source}</div>
+<Layout title="价格与算力 — MaaS Daily" description="主流模型 API 定价、GPU 租赁行情与国产 AI 芯片动态">
+  <div class="pricing-page">
+    <header class="pricing-hero reveal">
+      <div class="pricing-intro">
+        <div class="pricing-kicker">COST &amp; COMPUTE / 价格观察</div>
+        <h1>把模型成本，<br />放回算力全景里。</h1>
+        <p>从一次 API 调用，到一张 GPU，再到国产芯片供给。三种价格尺度放在同一页，帮助你看清成本从哪里来。</p>
+        <div class="pricing-status" aria-label="数据概况">
+          <span><b>{providerCount}</b> 家 API 厂商</span>
+          <span><b>{modelCount}</b> 个模型</span>
+          <span>台账更新于 <b>{ledgerDate}</b></span>
         </div>
-      ))}
-    </div>
-    <p class="board-note">2026 年被业内视为国产 AI 芯片「全线兑现元年」：昇腾在政企/运营商份额超 70%，寒武纪登顶科创板市值，燧原等陆续 IPO。</p>
-  </section>
+      </div>
+      <nav class="pricing-index" aria-label="价格页面分区">
+        <a href="#api-pricing"><span>01</span><strong>API 调用</strong><small>每百万 tokens</small><i>↘</i></a>
+        <a href="#gpu-market"><span>02</span><strong>GPU 租赁</strong><small>时租与包月</small><i>↘</i></a>
+        <a href="#chip-supply"><span>03</span><strong>国产芯片</strong><small>出货与进展</small><i>↘</i></a>
+      </nav>
+    </header>
+
+    <section class="section pricing-section" id="api-pricing">
+      <div class="section-heading">
+        <span class="section-no">01 / API PRICING</span>
+        <h2>模型 API 价格台账</h2>
+        <p class="section-note">统一折算为人民币与每百万 tokens；可按厂商浏览、搜索模型，并把 2–5 个模型放入用量计算器比较。</p>
+      </div>
+      {ledgerHtml ? (
+        <div class="ledger-embed" set:html={ledgerHtml} />
+      ) : (
+        <div class="pricing-empty">价格台账正在生成。数据抓取完成后，这里会自动显示最新报价。</div>
+      )}
+    </section>
+
+    <section class="section pricing-section" id="gpu-market">
+      <div class="section-heading">
+        <span class="section-no">02 / GPU MARKET</span>
+        <h2>GPU 算力租赁行情</h2>
+        <p class="section-note">{gpu?.snapshot_date} 国内平台参考价。价格带按包月成本的平方根刻度展示，兼顾消费级与数据中心卡的量级差异。</p>
+      </div>
+      <div class="market-board reveal">
+        <div class="market-scale" aria-hidden="true"><span>低</span><span>包月成本区间</span><span>高</span></div>
+        <div class="market-list">
+          {gpuRows.map((item) => (
+            <article class="market-row">
+              <div class="market-model"><strong>{item.gpu}</strong><span>{item.use}</span></div>
+              <div class="market-prices">
+                <span><small>时租</small>{item.hourly_cny === '—' ? '暂无' : `¥${item.hourly_cny}`}</span>
+                <span><small>包月</small>{item.monthly_cny === '—' ? '暂无' : `¥${item.monthly_cny}`}</span>
+              </div>
+              <div class="market-range" aria-label={`${item.gpu} 包月参考 ${item.monthly_cny} 元`}>
+                <i style={`--range-start:${item.start.toFixed(1)}%;--range-width:${item.width.toFixed(1)}%`}></i>
+              </div>
+              <div class="market-source">{item.source}</div>
+            </article>
+          ))}
+        </div>
+        <footer class="data-note"><span>口径</span><p>包月参考按 24/7 折算，价格随供需和机房配置波动，实际以平台实时报价为准。</p></footer>
+      </div>
+    </section>
+
+    <section class="section pricing-section" id="chip-supply">
+      <div class="section-heading">
+        <span class="section-no">03 / CHIP SUPPLY</span>
+        <h2>国产 AI 芯片进展</h2>
+        <p class="section-note">{chips?.snapshot_date} 公开信息快照。按厂商归并关键经营与产品节点，避免把不同口径误读成同一排行榜。</p>
+      </div>
+      <div class="chip-board reveal">
+        {chipGroups.map((group, groupIndex) => (
+          <article class:list={["chip-group", { featured: groupIndex === 0 }]}>
+            <header><span>{String(groupIndex + 1).padStart(2, '0')}</span><h3>{group.vendor}</h3><small>{group.entries.length} 项信号</small></header>
+            <div class="chip-signals">
+              {group.entries.map((item) => (
+                <div class="chip-signal">
+                  <div><span>{item.metric}</span><strong>{item.value}</strong></div>
+                  <p>{item.note}</p>
+                  <small>{item.source}</small>
+                </div>
+              ))}
+            </div>
+          </article>
+        ))}
+        <footer class="data-note"><span>说明</span><p>{chips?.note}</p></footer>
+      </div>
+    </section>
+  </div>
 </Layout>
-
-<style>
-  h1 { font-family: 'Newsreader', 'Instrument Serif', Georgia, serif; font-size: 2.2em; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 8px; }
-  .page-desc { color: var(--color-text-muted); font-size: 14px; margin-bottom: 32px; max-width: 560px; }
-
-  .board-section { margin-bottom: 44px; }
-  .board-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
-  .board-head h2 { font-size: 1.3em; font-weight: 600; color: var(--color-text); }
-  .snap { color: var(--color-text-faint); font-size: 12px; font-family: "SF Mono", monospace; }
-
-  /* API 定价台账嵌入（追浪模板，样式自持于 .plw 容器内） */
-  .ledger-embed { width: min(1180px, calc(100% - 40px)); margin: 0 auto 44px; }
-  .ledger-embed .plw { margin: 0 -0px; }
-  @media (max-width: 720px) { .ledger-embed { width: calc(100% + 0px); } }
-  .ledger-pending { padding: 26px; border: 1px dashed var(--color-border); border-radius: 14px; color: var(--color-text-muted); font-size: 13.5px; margin-bottom: 44px; }
-
-  .table-scroll { overflow-x: auto; }
-  .rank-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 720px; }
-  .rank-table th, .rank-table td { border-bottom: 1px solid var(--color-border); padding: 11px 12px; text-align: left; vertical-align: top; }
-  .rank-table th { color: var(--color-text-muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
-  .c-model { font-weight: 600; white-space: nowrap; }
-  .c-vendor { color: var(--color-text-muted); white-space: nowrap; }
-  .c-elo { font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .c-note { color: var(--color-text-muted); font-size: 12.5px; }
-
-  .pill { font-size: 11px; font-weight: 600; border-radius: 9999px; padding: 2px 8px; border: none; margin-left: 6px; }
-  .pill-pending { color: var(--status-stable-text); background: var(--status-stable-bg); }
-
-  /* GPU 包月量级示意 */
-  .gpu-bars { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
-  .gpu-bar-row { display: flex; align-items: center; gap: 10px; font-size: 12.5px; }
-  .gpu-bar-label { width: 80px; color: var(--color-text-muted); flex-shrink: 0; }
-  .gpu-bar-track { flex: 1; height: 8px; background: var(--color-surface-alt); border: 1px solid var(--color-border); border-radius: 4px; overflow: hidden; }
-  .gpu-bar-fill { height: 100%; background: var(--color-text); border-radius: 4px; }
-  .gpu-bar-val { width: 120px; color: var(--color-text-muted); flex-shrink: 0; text-align: right; font-family: "SF Mono", monospace; }
-
-  /* 芯片卡片 */
-  .chip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
-  .chip-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 20px; }
-  .chip-vendor { font-size: 12px; font-weight: 600; color: var(--color-text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
-  .chip-value { font-size: 20px; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.01em; }
-  .chip-metric { font-size: 12.5px; color: var(--color-text-muted); margin-bottom: 8px; }
-  .chip-note { font-size: 12.5px; color: var(--color-text); line-height: 1.5; margin-bottom: 6px; }
-  .chip-source { font-size: 11.5px; color: var(--color-text-muted); }
-
-  .board-note { color: var(--color-text-muted); font-size: 12.5px; margin-top: 10px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 10px 14px; }
-</style>
