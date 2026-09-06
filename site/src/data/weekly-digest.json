@@ -1,5 +1,27 @@
 [
   {
+    "week": "2026-W37",
+    "start": "2026-09-07",
+    "end": "2026-09-13",
+    "days": {
+      "2026-09-07": {
+        "substantive": 2,
+        "jitter": 3,
+        "failed": 8,
+        "releases": 0,
+        "pricings": 0,
+        "sunsets": 0
+      }
+    },
+    "totals": {
+      "substantive": 2,
+      "releases": 0,
+      "pricings": 0,
+      "sunsets": 0
+    },
+    "highlights": []
+  },
+  {
     "week": "2026-W36",
     "start": "2026-08-31",
     "end": "2026-09-06",
@@ -8,9 +30,9 @@
         "substantive": 3,
         "jitter": 4,
         "failed": 6,
-        "releases": 0,
+        "releases": 2,
         "pricings": 0,
-        "sunsets": 0
+        "sunsets": 1
       },
       "2026-09-05": {
         "substantive": 15,
@@ -39,11 +61,35 @@
     },
     "totals": {
       "substantive": 38,
-      "releases": 9,
+      "releases": 11,
       "pricings": 7,
-      "sunsets": 2
+      "sunsets": 3
     },
     "highlights": [
+      {
+        "platform": "火山方舟",
+        "date": "2026-09-06",
+        "text": "文件输入接口由 File API 更名为 Files API，定价条目同步更新",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-06",
+        "text": "gpt-6-astra-max 以 1797 Elo 登顶，claude-fable-5.1-max 以 1762 紧随其后",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-06",
+        "text": "claude-opus-5-max、claude-opus-5-high、qwen3.8-max-0902、qwen3.8-flash-next 等新模型进入榜单",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-06",
+        "text": "sora-2-pro 从榜单移除",
+        "type": "sunset"
+      },
       {
         "platform": "Google Gemini API",
         "date": "2026-09-05",

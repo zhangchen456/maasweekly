@@ -1,6 +1,181 @@
 {
-  "updated_at": "2026-09-06T14:53:19",
+  "updated_at": "2026-09-06T22:43:13",
   "days": [
+    {
+      "date": "2026-09-07",
+      "stats": {
+        "total": 68,
+        "success": 60,
+        "failed": 8,
+        "changed": 5,
+        "unchanged": 55
+      },
+      "changed": [
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://x.ai/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "cloudflare ray id",
+              "before": "Cloudflare Ray ID: a368bb98fdc8f7d1",
+              "after": "Cloudflare Ray ID: a370fd9c6a4dad24"
+            }
+          ],
+          "signal_preview": "Cloudflare Ray ID: a370fd9c6a4dad24",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "llm_summary": "仅检测到 Cloudflare Ray ID 变化，属于基础设施层面的请求标识更新，无实质内容变动，不构成 MaaS 行业观察要点。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Claude Fable 5.1 (Max)",
+            "Hy4 preview"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Claude Fable 5.1 (Max)",
+          "raw_added_count": 12,
+          "raw_removed_count": 12,
+          "llm_summary": "新增了 Claude Fable 5.1 (Max) 和 Hy4 preview 两个条目，对应两款新模型进入竞技场评测列表，反映模型供给端有新面孔出现，但暂无具体性能或定价数据披露。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://x.ai/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [
+            {
+              "key": "cloudflare ray id",
+              "before": "Cloudflare Ray ID: a368bb98ab331e11",
+              "after": "Cloudflare Ray ID: a370fd9c1e4eb838"
+            }
+          ],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 2
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 31,
+          "raw_removed_count": 31
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 2
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "model_list",
+          "url": "https://cloud.tencent.com/document/product/1729/104753",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=29182)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "pricing",
+          "url": "https://cloud.tencent.com/document/product/1729/97731",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=29182)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "changelog",
+          "url": "https://cloud.tencent.com/document/product/1729/132069",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=29182)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "blog",
+          "url": "https://cloud.tencent.com/developer/column/",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=29182)"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://openai.com/news/",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=9951)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "LMArena",
+          "logo_summary": "新增两款模型进入竞技场榜单",
+          "items": [
+            {
+              "text": "Claude Fable 5.1 (Max) 与 Hy4 preview 今日新增进入 LMArena 行业榜单",
+              "type": "release"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-09-06",
       "stats": {
