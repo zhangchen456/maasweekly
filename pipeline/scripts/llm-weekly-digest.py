@@ -161,7 +161,8 @@ def main():
         week["story"] = story
         changed = True
         print(f"  主题: {story['theme']}")
-        print(f"  {story['story'][:100]}...")
+        preview = story.get("sections") or [{"body": story.get("story", "")}]
+        print(f"  {preview[0].get('title', '')} {preview[0].get('body', '')[:100]}...")
 
     if changed:
         WEEKLY_FILE.write_text(json.dumps(weekly, ensure_ascii=False, indent=2), encoding="utf-8")
