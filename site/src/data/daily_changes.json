@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-05T22:40:02",
+  "updated_at": "2026-09-06T14:53:19",
   "days": [
     {
       "date": "2026-09-06",
@@ -29,7 +29,7 @@
           "signal_preview": "文件输入(Files API)",
           "raw_added_count": 1,
           "raw_removed_count": 1,
-          "llm_summary": "新增了文件输入（Files API）的定价条目，同时删除了旧的 File API 条目，表明火山方舟将文件输入接口从 File API 迁移至 Files API，可能伴随功能或计费方式的调整。"
+          "llm_summary": "文件输入定价条目从 File API 更名为 Files API，属于接口命名规范化调整，定价本身未变，反映平台 API 版本更新。"
         },
         {
           "platform": "xAI",
@@ -51,7 +51,7 @@
           "signal_preview": "Cloudflare Ray ID: a368bb98fdc8f7d1",
           "raw_added_count": 2,
           "raw_removed_count": 2,
-          "llm_summary": "博客页面仅更新了 Cloudflare Ray ID，无实质内容变化，可能为缓存或访问标识变动，不构成行业动态。"
+          "llm_summary": "仅 Cloudflare Ray ID 变化，无实质内容更新，属于页面缓存或请求标识变动，不构成行业动态。"
         },
         {
           "platform": "LMArena",
@@ -94,7 +94,7 @@
           "signal_preview": "claude-fable-5.1-max: 1762 (+16/-16)",
           "raw_added_count": 9,
           "raw_removed_count": 9,
-          "llm_summary": "榜单新增了多个新模型条目（gpt-6-astra-max、claude-fable-5.1-max、claude-opus-5-max、claude-opus-5-high、qwen3.8-max-0902、qwen3.8-flash-next、grok-imagine-video-1.5-agent），同时删除了对应的旧条目，Elo 分数有微小波动（±1-2），反映模型版本更新或重新评估。"
+          "llm_summary": "榜单新增 gpt-6-astra-max、claude-fable-5.1-max、claude-opus-5 系列、qwen3.8 系列等多款新模型，同时移除 sora-2-pro，反映新模型集中上线评测。部分模型 Elo 值微调（±1 以内），属正常波动。"
         },
         {
           "platform": "火山方舟",
@@ -210,30 +210,35 @@
       ],
       "highlights": [
         {
-          "platform": "LMArena",
-          "logo_summary": "多款新模型上榜，GPT-6 Astra Max 登顶",
+          "platform": "火山方舟",
+          "logo_summary": "文件输入接口更名，API 命名调整",
           "items": [
             {
-              "text": "gpt-6-astra-max 新上榜，Elo 1797 位居榜首",
-              "type": "release"
-            },
-            {
-              "text": "claude-fable-5.1-max、claude-opus-5-max、claude-opus-5-high 新上榜，Elo 分别为 1762、1688、1661",
-              "type": "release"
-            },
-            {
-              "text": "qwen3.8-max-0902、qwen3.8-flash-next 新上榜，Elo 分别为 1686、1626",
-              "type": "release"
+              "text": "文件输入接口由 File API 更名为 Files API，定价条目同步更新",
+              "type": "other"
             }
           ]
         },
         {
-          "platform": "火山方舟",
-          "logo_summary": "文件输入 API 更名，功能升级",
+          "platform": "Anthropic",
+          "logo_summary": "claude-fable-5.1 输入价格下调",
+          "items": []
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "多款新模型上榜，旧模型下榜",
           "items": [
             {
-              "text": "文件输入接口由 File API 更名为 Files API",
-              "type": "other"
+              "text": "gpt-6-astra-max 以 1797 Elo 登顶，claude-fable-5.1-max 以 1762 紧随其后",
+              "type": "release"
+            },
+            {
+              "text": "claude-opus-5-max、claude-opus-5-high、qwen3.8-max-0902、qwen3.8-flash-next 等新模型进入榜单",
+              "type": "release"
+            },
+            {
+              "text": "sora-2-pro 从榜单移除",
+              "type": "sunset"
             }
           ]
         }

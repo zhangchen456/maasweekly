@@ -91,6 +91,7 @@ const weekday = (d: string) => '周' + '日一二三四五六'[new Date(d).getDa
       const flat = grouped.length
         ? grouped.flatMap((g: any) => g.items.map((item: any) => ({ ...item, platform: g.platform })))
         : (week.highlights || []).filter((h: any) => h.date === date);
+      const priceChanges = daysByDate[date]?.price_changes || [];
       const stats = week.days[date] || {};
       return (
         <article class="day-block reveal">
@@ -115,6 +116,24 @@ const weekday = (d: string) => '周' + '日一二三四五六'[new Date(d).getDa
             </ul>
           ) : (
             <div class="no-hl">当日无要点（{stats.substantive ?? 0} 个信源有变化）</div>
+          )}
+          {priceChanges.length > 0 && (
+            <details class="pcx-fold">
+              <summary>价格台账变化 {priceChanges.length} 条 <span>＋</span></summary>
+              <ul class="pcx-list">
+                {priceChanges.map((pc: any) => (
+                  <li class="pcx-item">
+                    <span class="pcx-vendor">{pc.provider}</span>
+                    <code class="ent">{pc.model}</code>
+                    <span class="pcx-comp">{pc.component}</span>
+                    <span class="pcx-vals">
+                      {pc.previous ? <><s>{pc.previous}</s> → </> : null}
+                      <strong>{pc.current}</strong> {pc.currency}/百万tokens
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </details>
           )}
         </article>
       );
@@ -167,6 +186,19 @@ const weekday = (d: string) => '周' + '日一二三四五六'[new Date(d).getDa
   .hl-platform { flex: none; font-family: "Songti SC", serif; font-weight: 700; color: var(--paper-soft); }
   .hl-text { color: var(--paper-soft); min-width: 200px; flex: 1; }
   .no-hl { padding: 16px 20px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); font-size: 13px; }
+  /* 价格台账变化折叠区 */
+  .pcx-fold { margin-top: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+  .pcx-fold summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 11px 18px; color: var(--muted); font-size: 12px; }
+  .pcx-fold summary::-webkit-details-marker { display: none; }
+  .pcx-fold[open] summary span { transform: rotate(45deg); }
+  .pcx-fold summary span { transition: transform .2s; }
+  .pcx-list { list-style: none; margin: 0; padding: 0 0 6px; }
+  .pcx-item { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 7px 18px; font-size: 12.5px; border-top: 1px solid var(--line); }
+  .pcx-vendor { min-width: 64px; color: var(--paper-soft); font-weight: 600; }
+  .pcx-comp { font: 500 10.5px/1 "SF Mono", monospace; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; }
+  .pcx-vals { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--paper-soft); }
+  .pcx-vals s { color: var(--muted); margin-right: 2px; }
+  .pcx-vals strong { color: var(--acid); font-weight: 700; }
 
   .footnote { margin-top: 30px; color: var(--muted); font: 500 11px/1.8 "SF Mono", monospace; letter-spacing: .03em; }
 
