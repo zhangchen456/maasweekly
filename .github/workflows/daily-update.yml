@@ -75,6 +75,22 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         continue-on-error: true
 
+      # ---- 2.4 八家厂商 API 价格结构化抓取（playwright；失败不阻塞，保留旧 ledger）----
+      - name: Fetch model pricing
+        if: ${{ !inputs.skip_fetch }}
+        run: |
+          pip install --quiet playwright beautifulsoup4
+          python3 -m playwright install chromium --with-deps
+          python3 pipeline/scripts/fetch-prices.py
+        continue-on-error: true
+
+      # ---- 2.45 价格解析器离线回归（防厂商页改版导致的解析器退化）----
+      - name: Pricing extractors regression
+        if: ${{ !inputs.skip_fetch }}
+        run: |
+          pip install --quiet beautifulsoup4
+          python3 tests/test_pricing_extractors.py
+
       # ---- 3. 抓取文章配图（可选，失败不阻塞）----
       - name: Fetch article images
         if: ${{ !inputs.skip_fetch }}
