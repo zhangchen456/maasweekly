@@ -76,6 +76,8 @@ const fmtWeekRange = (w: any) => {
 // 周故事：v4 优先 sections（[{title, body}]），回退旧纯文本 story 段落
 const storySections: { title: string; body: string }[] = currentWeek?.story?.sections || [];
 const storyParas = (currentWeek?.story?.story || '').split('\n').filter((p: string) => p.trim());
+// 当日价格变化事件（fetch-prices.py 产出，八家官方定价页结构化 diff）
+const priceChanges: any[] = today?.price_changes || [];
 // 周要点按平台统计（v3 展平后已存 weekly-digest 的 highlights）
 const weekHighlightCount = currentWeek?.highlights?.length || 0;
 ---
@@ -141,6 +143,28 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
         </div>
       ) : (
         <div class="empty-day">今日暂无要点，信号明细见下方。</div>
+      )}
+      {priceChanges.length > 0 && (
+        <div class="price-changes reveal">
+          <div class="pcx-head">
+            <span class="pcx-kicker">PRICE LEDGER</span>
+            <span>八家厂商官方定价页结构化 diff · <a href="/prices/">完整台账 ↗</a></span>
+          </div>
+          <ul class="pcx-list">
+            {priceChanges.slice(0, 12).map((pc: any) => (
+              <li class="pcx-item">
+                <span class="pcx-vendor">{pc.provider}</span>
+                <code class="ent">{pc.model}</code>
+                <span class="pcx-comp">{pc.component}</span>
+                <span class="pcx-vals">
+                  {pc.previous ? <><s>{pc.previous}</s> → </> : null}
+                  <strong>{pc.current}</strong> {pc.currency}/百万tokens
+                </span>
+              </li>
+            ))}
+          </ul>
+          {priceChanges.length > 12 && <p class="pcx-more">…共 {priceChanges.length} 条，完整见 <a href="/prices/">价格台账</a></p>}
+        </div>
       )}
     </section>
 
@@ -380,6 +404,21 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
   .pair-new { color: var(--paper-soft); }
 
   .empty-day { padding: 22px 26px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); font-size: 13.5px; }
+  /* 价格变化事件（八家官方定价页结构化 diff） */
+  .price-changes { margin-top: 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); overflow: hidden; }
+  .pcx-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 14px 20px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+  .pcx-head a { color: var(--acid); text-decoration: none; }
+  .pcx-kicker { font: 700 10px/1 "SF Mono", monospace; letter-spacing: .12em; color: var(--acid); }
+  .pcx-list { list-style: none; margin: 0; padding: 6px 0; }
+  .pcx-item { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 8px 20px; font-size: 13px; border-bottom: 1px solid var(--line); }
+  .pcx-item:last-child { border-bottom: 0; }
+  .pcx-vendor { min-width: 64px; color: var(--paper-soft); font-weight: 600; }
+  .pcx-comp { font: 500 11px/1 "SF Mono", monospace; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; }
+  .pcx-vals { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--paper-soft); }
+  .pcx-vals s { color: var(--muted); margin-right: 2px; }
+  .pcx-vals strong { color: var(--acid); font-weight: 700; }
+  .pcx-more { padding: 8px 20px; color: var(--muted); font-size: 12px; margin: 0; }
+  .pcx-more a { color: var(--acid); }
 
   /* ===== 03 本周回顾（结构化面板） ===== */
   .week-panel { display: grid; grid-template-columns: 320px 1fr; gap: 0; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--panel); }

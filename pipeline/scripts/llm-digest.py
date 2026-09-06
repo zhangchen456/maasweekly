@@ -138,8 +138,8 @@ def parse_llm_json(text: str) -> dict:
     return {"highlights": out_hl, "source_summaries": out_ss}
 
 
-def build_day_prompt(date_str: str, changed: list) -> str:
-    """把当日 substantive 信源组装成喂给 LLM 的文本。"""
+def build_day_prompt(date_str: str, changed: list, price_changes: list | None = None) -> str:
+    """把当日 substantive 信源 + 价格变化事件组装成喂给 LLM 的文本。"""
     parts = [f"日期：{date_str}\n"]
     for c in changed[:MAX_SOURCES]:
         if c.get("kind") != "substantive":
@@ -151,15 +151,26 @@ def build_day_prompt(date_str: str, changed: list) -> str:
             parts.append(f"  新增: {humanize_line(l)[:MAX_LINE_LEN]}")
         for l in (c.get("removed_lines") or [])[:6]:
             parts.append(f"  删除: {humanize_line(l)[:MAX_LINE_LEN]}")
+    # 价格变化事件（fetch-prices.py 结构化产出，来自 8 家厂商官方定价页 diff）
+    if price_changes:
+        parts.append("\n## 官方定价页价格变化（结构化，已按模型×计费组件归一）")
+        for pc in price_changes[:20]:
+            if "previous" in pc and pc.get("previous"):
+                parts.append(f"  {pc['provider']}/{pc['model']} {pc['component']}: "
+                             f"{pc['previous']} → {pc['current']} {pc.get('currency','')}/百万tokens")
+            else:
+                parts.append(f"  {pc['provider']}/{pc['model']} {pc['component']}: "
+                             f"新定价 {pc['current']} {pc.get('currency','')}/百万tokens")
     return PROMPT + "\n".join(parts)
 
 
 def process_day(day: dict, api_key: str, base_url: str, model: str) -> dict | None:
-    """处理单日：substantive 信源喂 LLM，返回 {highlights, source_summaries} 或 None（失败）。"""
+    """处理单日：substantive 信源 + 价格变化喂 LLM，返回 {highlights, source_summaries} 或 None（失败）。"""
     changed = [c for c in day.get("changed", []) if c.get("kind") == "substantive"]
-    if not changed:
+    price_changes = day.get("price_changes") or []
+    if not changed and not price_changes:
         return {"highlights": [], "source_summaries": {}}
-    prompt = build_day_prompt(day["date"], changed)
+    prompt = build_day_prompt(day["date"], changed, price_changes)
     print(f"  调用 LLM（prompt {len(prompt)} 字符）...", flush=True)
     try:
         raw = llm_call(api_key, base_url, model, prompt)

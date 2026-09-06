@@ -152,6 +152,9 @@ def main():
             continue
         if pd.get("highlights"):
             d["highlights"] = pd["highlights"]
+        # 价格变化事件（fetch-prices.py 产出，按日期幂等保留）
+        if pd.get("price_changes"):
+            d["price_changes"] = pd["price_changes"]
         # 信源级 LLM 解读挂回重建的 changed 条目
         prev_sum = {f"{c.get('platform')}|{c.get('source_type')}": c.get("llm_summary")
                     for c in pd.get("changed", []) if c.get("llm_summary")}

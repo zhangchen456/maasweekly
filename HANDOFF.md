@@ -87,12 +87,23 @@ maasweekly/
 |------|------|------|---------|
 | fetch_sources.py | pipeline/scripts | 抓全部信源产出 diff | `--platform 火山方舟` 单平台；`--max-sources 5` 限量 |
 | sync-diff-to-site.py | pipeline/scripts | 聚合 diff 到站点 | 无 |
-| llm-digest.py | pipeline/scripts | LLM 提炼今日要点 | 日期参数重做单日；`--force` 覆盖；`--all` 回填 |
+| llm-digest.py | pipeline/scripts | LLM 提炼今日要点（含价格变化事件输入） | 日期参数重做单日；`--force` 覆盖；`--all` 回填 |
 | fetch-leaderboards.py | pipeline/scripts | 抓 OpenRouter 榜单 | 失败保留旧快照 |
+| fetch-prices.py | pipeline/scripts | 八家厂商 API 价格结构化抓取（playwright） | `--dry-run`；`--only openai,deepseek` 单家 |
+| test_pricing_extractors.py | tests/ | 价格解析器离线回归（fixture，不需网络） | 无 |
 | import-weekly.py | site/scripts | data/weekly → content/weekly | 无 |
 | extract-structured.py | site/scripts | 周报 → 结构化 JSON | 无 |
 | split-sources.py | site/scripts | 信源总配置 → 每平台 JSON | 无 |
 | fetch-images.py | site/scripts | 抓文章配图 | `FETCH_IMAGES_PROXY` 环境变量可选代理 |
+| render-price-ledger.mjs | site/scripts | ledger.json 注入模板 → public/prices/ | 已挂 npm run build 前置 |
+
+**价格台账模块**（2026-09 迁移自追浪 app-core-service-001，代码在 `pipeline/pricing/`）：
+
+- 数据流：`fetch-prices.py`（playwright 渲染八家官方定价页，Kimi 多子页聚合）→ 每家 extractor 解析（`pipeline/pricing/extractors.py`，BeautifulSoup 表格展开）→ normalize 门禁（Decimal/证据链/稳定身份）→ `site/src/data/pricing/ledger.json`（模板消费）+ `ledger_history/<date>.json`（diff 基线）
+- 价格变化：与上轮 factdiff → `daily_changes.json` 当日 `price_changes` → llm-digest 喂给今日要点 + 首页 01 区块下「PRICE LEDGER」事件列表
+- 渲染：`/prices/`（追浪模板，搜索/多模型对比/汇率/用量估算，自包含直出）；`/pricing/` 保留 GPU/芯片板块 + 台账入口卡
+- 单家失败降级：记 `meta.failed_sources` 沿用上轮该家 facts（stale），页面显示「部分来源待更新」
+- 维护：厂商页改版导致某家解析失败时，更新 `extractors.py` 对应类并升 `adapter_version`，用 `tests/fixtures/pricing/` 的 fixture + 新页面 HTML 验证；汇率手动改 `pipeline/pricing/view_data.py` 的 `DEFAULT_FX`
 
 ---
 
