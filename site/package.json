@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/render-price-ledger.mjs && astro build",
+    "build": "node scripts/build-price-fragment.mjs && node scripts/render-price-ledger.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },

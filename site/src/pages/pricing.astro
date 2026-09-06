@@ -7,10 +7,16 @@ function readJson(p) {
   try { return JSON.parse(fs.readFileSync(path.join(process.cwd(), p), 'utf-8')); }
   catch (e) { return null; }
 }
+function readFile(p) {
+  try { return fs.readFileSync(path.join(process.cwd(), p), 'utf-8'); }
+  catch (e) { return null; }
+}
 
 const ledger = readJson('src/data/pricing/ledger.json');
 const gpu = readJson('src/data/pricing/gpu.json');
 const chips = readJson('src/data/pricing/chips.json');
+// 已注入数据的台账片段（build 前由 render-price-ledger.mjs 产出；无数据时为 null 回退提示卡）
+const ledgerHtml = readFile('src/data/pricing/price-ledger.rendered.html');
 
 const ledgerDate = ledger?.meta?.published_at
   ? new Date(ledger.meta.published_at * 1000).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }).replace(/\//g, '.')
@@ -21,19 +27,11 @@ const ledgerDate = ledger?.meta?.published_at
   <h1>价格与算力</h1>
   <p class="page-desc">三个视角：API 调一次多少钱（成本）· GPU 租一台多少钱（供给）· 国产芯片进展如何（供给格局）。</p>
 
-  <a class="ledger-cta" href="/prices/">
-    <div class="cta-main">
-      <span class="cta-kicker">API 定价台账 · 每日自动抓取八家官方定价页</span>
-      <span class="cta-title">模型价格观察台 <span class="cta-arrow">→</span></span>
-      <span class="cta-desc">OpenAI / Anthropic / Google / DeepSeek / Kimi / 智谱 / 豆包 / 通义——全量结构化报价，支持搜索、多模型对比、汇率与用量估算。</span>
-    </div>
-    <div class="cta-stats">
-      <div><strong>{ledger?.providers?.length ?? 8}</strong><span>厂商</span></div>
-      <div><strong>{ledger?.prices?.length ?? 0}</strong><span>条报价</span></div>
-      <div><strong>{new Set(ledger?.prices?.map((p) => p.model) ?? []).size ?? 0}</strong><span>个模型</span></div>
-      <div class="cta-date">{ledgerDate} 更新</div>
-    </div>
-  </a>
+  {ledgerHtml ? (
+    <div class="ledger-embed" set:html={ledgerHtml} />
+  ) : (
+    <div class="ledger-pending">价格台账数据生成中（每日 05:00 自动抓取八家官方定价页），稍后可刷新查看。</div>
+  )}
 
   <section class="board-section">
     <div class="board-head">
@@ -104,18 +102,11 @@ const ledgerDate = ledger?.meta?.published_at
   .board-head h2 { font-size: 1.3em; font-weight: 600; color: var(--color-text); }
   .snap { color: var(--color-text-faint); font-size: 12px; font-family: "SF Mono", monospace; }
 
-  /* API 定价台账入口卡 */
-  .ledger-cta { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; padding: 26px 30px; margin-bottom: 44px; border: 1px solid var(--color-border); border-radius: 16px; background: var(--color-bg-elevated, var(--color-bg)); text-decoration: none; color: inherit; transition: transform .2s ease, border-color .2s ease; }
-  .ledger-cta:hover { transform: translateY(-3px); border-color: var(--color-accent, #145dbf); }
-  .cta-kicker { display: block; font-size: 11px; letter-spacing: .1em; color: var(--color-text-faint); font-family: "SF Mono", monospace; margin-bottom: 10px; }
-  .cta-title { display: block; font-family: 'Newsreader', 'Instrument Serif', Georgia, serif; font-size: 28px; font-weight: 600; color: var(--color-text); }
-  .cta-arrow { color: var(--color-accent, #145dbf); transition: transform .2s; }
-  .ledger-cta:hover .cta-arrow { transform: translateX(4px); }
-  .cta-desc { display: block; margin-top: 8px; font-size: 13px; color: var(--color-text-muted); max-width: 560px; line-height: 1.7; }
-  .cta-stats { display: flex; gap: 28px; align-items: center; }
-  .cta-stats strong { display: block; font-size: 24px; font-weight: 650; font-variant-numeric: tabular-nums; color: var(--color-text); }
-  .cta-stats span { font-size: 11px; color: var(--color-text-faint); }
-  .cta-date { font-size: 11px; color: var(--color-text-faint); font-family: "SF Mono", monospace; }
+  /* API 定价台账嵌入（追浪模板，样式自持于 .plw 容器内） */
+  .ledger-embed { width: min(1180px, calc(100% - 40px)); margin: 0 auto 44px; }
+  .ledger-embed .plw { margin: 0 -0px; }
+  @media (max-width: 720px) { .ledger-embed { width: calc(100% + 0px); } }
+  .ledger-pending { padding: 26px; border: 1px dashed var(--color-border); border-radius: 14px; color: var(--color-text-muted); font-size: 13.5px; margin-bottom: 44px; }
 
   .table-scroll { overflow-x: auto; }
   .rank-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 720px; }

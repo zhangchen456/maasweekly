@@ -148,7 +148,7 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
         <div class="price-changes reveal">
           <div class="pcx-head">
             <span class="pcx-kicker">PRICE LEDGER</span>
-            <span>八家厂商官方定价页结构化 diff · <a href="/prices/">完整台账 ↗</a></span>
+            <span>八家厂商官方定价页结构化 diff · <a href="/pricing/">完整台账 ↗</a></span>
           </div>
           <ul class="pcx-list">
             {priceChanges.slice(0, 12).map((pc: any) => (
@@ -163,7 +163,7 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
               </li>
             ))}
           </ul>
-          {priceChanges.length > 12 && <p class="pcx-more">…共 {priceChanges.length} 条，完整见 <a href="/prices/">价格台账</a></p>}
+          {priceChanges.length > 12 && <p class="pcx-more">…共 {priceChanges.length} 条，完整见 <a href="/pricing/">价格台账</a></p>}
         </div>
       )}
     </section>
