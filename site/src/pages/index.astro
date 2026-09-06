@@ -73,7 +73,8 @@ const fmtWeekRange = (w: any) => {
   return `${f(w.start)} — ${f(w.end)}`;
 };
 
-// 周故事段落
+// 周故事：v4 优先 sections（[{title, body}]），回退旧纯文本 story 段落
+const storySections: { title: string; body: string }[] = currentWeek?.story?.sections || [];
 const storyParas = (currentWeek?.story?.story || '').split('\n').filter((p: string) => p.trim());
 // 周要点按平台统计（v3 展平后已存 weekly-digest 的 highlights）
 const weekHighlightCount = currentWeek?.highlights?.length || 0;
@@ -244,7 +245,16 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
             <a class="wt-link" href={`/daily/${currentWeek.week}/`}>本周逐日要点 →</a>
           </div>
           <div class="week-body">
-            {storyParas.length > 0 ? storyParas.map((p: string) => <p>{highlightEntities(p).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</p>) : (
+            {storySections.length > 0 ? (
+              <div class="story-sections">
+                {storySections.map((s, i: number) => (
+                  <div class="story-sec-item reveal" style={`--d:${i * 60}ms`}>
+                    <div class="ss-head"><span class="ss-no">{String(i + 1).padStart(2, '0')}</span><h3>{s.title}</h3></div>
+                    <p>{highlightEntities(s.body).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</p>
+                  </div>
+                ))}
+              </div>
+            ) : storyParas.length > 0 ? storyParas.map((p: string) => <p>{highlightEntities(p).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</p>) : (
               <p class="week-pending">本周串讲将在周末数据收齐后生成。当前已积累 {weekHighlightCount} 条要点。</p>
             )}
           </div>
@@ -390,6 +400,14 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
   .week-body p { margin: 0 0 16px; color: var(--paper-soft); font-size: 15px; line-height: 1.9; }
   .week-body p:last-child { margin-bottom: 0; }
   .week-pending { color: var(--muted); }
+  /* 周串讲结构化小节（v4） */
+  .story-sections { display: grid; gap: 14px; }
+  .story-sec-item { border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; background: var(--panel); transition: border-color .2s ease; }
+  .story-sec-item:hover { border-color: color-mix(in srgb, var(--acid) 45%, transparent); }
+  .ss-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+  .ss-no { font: 700 11px/1 "SF Mono", monospace; color: var(--acid); letter-spacing: .08em; }
+  .ss-head h3 { margin: 0; font-size: 14.5px; font-weight: 700; color: var(--paper); }
+  .story-sec-item p { margin: 0; color: var(--paper-soft); font-size: 13.8px; line-height: 1.85; }
 
   /* ===== 04 归档 ===== */
   .archive-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }

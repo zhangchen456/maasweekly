@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""LLM 周度串讲：把一周的每日要点与实质变化聚合成一篇观点性周度回顾。
+"""LLM 周度串讲：把一周的每日要点与实质变化聚合成结构化周度回顾。
 
 数据流：sync-diff-to-site.py 先跑（产出 weekly-digest.json），
 本脚本读取其中缺 story 的周（默认最新一周），把当周 highlights +
-每日 substantive 变化喂给 LLM，产出 story 写回 weekly-digest.json。
+每日 substantive 变化喂给 LLM，产出 {theme, sections:[{title, body}]}
+写回 weekly-digest.json（前端优先渲染 sections，兼容旧纯文本 story）。
 
 工程约束：
-- 幂等：已有 story 的周跳过（--force 可重做）
+- 幂等：已有 story/sections 的周跳过（--force 可重做）
 - 降级：LLM 失败时该周 story 留空，前端只显示统计聚合
 - 触发：weekly-update.yml 周一跑；也可手动补任意周
 
@@ -45,13 +46,14 @@ MAX_PREVIEW_PER_DAY = 30      # 每日 substantive 信源预览行上限
 
 PROMPT = """你是 MaaS（模型即服务）行业追踪站点的资深编辑。下面是本周各平台逐日的变化要点与信号（每日要点由 AI 提炼，信号行是降噪后的 diff 增量）。
 
-请写一段 300-500 字的周度串讲，要求：
+请写本周的周度串讲，要求：
 1. 不是流水账：归纳本周主线（比如"新模型密集发布周"/"调价周期"/"下线清理周"），把同平台、同主题的事件串起来讲
-2. 有观点但克制：只在数据支撑的范围内下判断（如"本周 X 家平台同步上架同一模型，说明…"），不做无依据预测
-3. 保留具体锚点：关键模型名、价格数字、日期要出现在正文里
-4. 简体中文，模型名/产品名保留英文原名，段落 2-3 段
-5. 严格输出 JSON 对象（不要 markdown 代码块）：
-{"theme": "一句话主题（≤20字）", "story": "串讲正文（纯文本，段落用\\n分隔）"}
+2. 分 2-4 个 section，每个 section 有一个小标题（如"密集发布：…"、"下线与清理"、"价格锚点"），标题本身要点出该节核心结论；节内正文 60-120 字，短段落，一句话一个事实
+3. 有观点但克制：只在数据支撑的范围内下判断（如"本周 X 家平台同步上架同一模型，说明…"），不做无依据预测
+4. 保留具体锚点：关键模型名、价格数字、日期要出现在正文里
+5. 简体中文，模型名/产品名保留英文原名
+6. 严格输出 JSON 对象（不要 markdown 代码块）：
+{"theme": "一句话主题（≤20字）", "sections": [{"title": "小节标题（≤16字，含核心结论）", "body": "小节正文（60-120字）"}]}
 
 本周数据：
 """
@@ -81,7 +83,8 @@ def build_week_prompt(week: dict, days_by_date: dict) -> str:
 
 
 def parse_story(raw: str) -> dict:
-    """解析 LLM 输出的 {theme, story} JSON 对象。"""
+    """解析 LLM 输出。新结构 {"theme", "sections": [{title, body}]}；
+    兼容旧纯文本 {"theme", "story"}（前端对两者都能渲染）。"""
     import re
     t = raw.strip()
     m = re.search(r"```(?:json)?\s*(.*?)```", t, re.S)
@@ -91,9 +94,14 @@ def parse_story(raw: str) -> dict:
     if start == -1 or end == -1:
         raise ValueError(f"LLM 输出中找不到 JSON 对象: {raw[:200]}")
     obj = json.loads(t[start:end + 1])
-    if not obj.get("story"):
-        raise ValueError("LLM 输出缺少 story 字段")
-    return {"theme": obj.get("theme", ""), "story": obj["story"]}
+    theme = obj.get("theme", "")
+    if obj.get("sections"):
+        sections = [s for s in obj["sections"] if s.get("title") and s.get("body")]
+        if sections:
+            return {"theme": theme, "sections": sections}
+    if obj.get("story"):
+        return {"theme": theme, "story": obj["story"]}
+    raise ValueError("LLM 输出缺少 sections 或 story 字段")
 
 
 def main():

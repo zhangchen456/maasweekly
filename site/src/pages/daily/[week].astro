@@ -62,9 +62,20 @@ const weekday = (d: string) => '周' + '日一二三四五六'[new Date(d).getDa
         <div class="section-no">REVIEW</div>
         <h2>{week.story.theme}</h2>
       </div>
-      <div class="week-story reveal">
-        {week.story.story.split('\n').filter((p: string) => p.trim()).map((p: string) => <p>{p}</p>)}
-      </div>
+      {week.story.sections?.length > 0 ? (
+        <div class="story-sections reveal">
+          {week.story.sections.map((s: any, i: number) => (
+            <div class="story-sec-item">
+              <div class="ss-head"><span class="ss-no">{String(i + 1).padStart(2, '0')}</span><h3>{s.title}</h3></div>
+              <p>{s.body}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="week-story reveal">
+          {week.story.story.split('\n').filter((p: string) => p.trim()).map((p: string) => <p>{p}</p>)}
+        </div>
+      )}
     </section>
   )}
 
@@ -129,6 +140,13 @@ const weekday = (d: string) => '周' + '日一二三四五六'[new Date(d).getDa
   .week-story { border: 1px solid color-mix(in srgb, var(--acid) 30%, transparent); border-radius: 14px; background: linear-gradient(135deg, var(--acid-dim), transparent 65%); padding: 26px 30px; }
   .week-story p { margin: 0 0 14px; color: var(--paper-soft); font-size: 15px; line-height: 1.85; }
   .week-story p:last-child { margin-bottom: 0; }
+  /* 周串讲结构化小节（v4） */
+  .story-sections { display: grid; gap: 14px; }
+  .story-sec-item { border: 1px solid color-mix(in srgb, var(--acid) 30%, transparent); border-radius: 12px; background: color-mix(in srgb, var(--ink) 92%, transparent); padding: 16px 20px; }
+  .ss-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+  .ss-no { font: 700 11px/1 "SF Mono", monospace; color: var(--acid); letter-spacing: .08em; }
+  .ss-head h3 { margin: 0; font-size: 14.5px; font-weight: 700; color: var(--paper); }
+  .story-sec-item p { margin: 0; color: var(--paper-soft); font-size: 13.8px; line-height: 1.85; }
 
   .day-block { margin-bottom: 34px; border-left: 2px solid var(--line-strong); padding-left: 26px; }
   .day-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
