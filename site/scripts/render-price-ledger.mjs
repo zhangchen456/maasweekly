@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');   // site/
 const fragmentPath = resolve(root, 'src/data/pricing/price-ledger.fragment.html');
 const ledgerPath = resolve(root, 'src/data/pricing/ledger.json');
+const logoRegistryPath = resolve(root, 'src/data/platform-logos.json');
 const outPath = resolve(root, 'src/data/pricing/price-ledger.rendered.html');
 
 const fragment = readFileSync(fragmentPath, 'utf-8');
@@ -25,8 +26,20 @@ if (!existsSync(ledgerPath)) {
   process.exit(0);
 }
 const ledger = JSON.parse(readFileSync(ledgerPath, 'utf-8'));
+const logoRegistry = JSON.parse(readFileSync(logoRegistryPath, 'utf-8'));
+const normalize = (name) => name.normalize('NFKC').toLocaleLowerCase('en-US').replace(/[\s._/()（）-]+/g, '');
+const logoLookup = new Map();
+for (const platform of logoRegistry) {
+  for (const name of [platform.id, platform.name, ...platform.aliases]) logoLookup.set(normalize(name), platform.file);
+}
+const providers = ledger.providers ?? [...new Set((ledger.prices ?? []).map((item) => item.provider))];
+const providerLogos = Object.fromEntries(providers.flatMap((provider) => {
+  const file = logoLookup.get(normalize(provider));
+  return file ? [[provider, file]] : [];
+}));
+const renderedData = { ...ledger, provider_logos: providerLogos };
 
-const safeJson = JSON.stringify(ledger)
+const safeJson = JSON.stringify(renderedData)
   .replace(/<\//g, '<\\/')
   .replace(/\u2028/g, '\\u2028')
   .replace(/\u2029/g, '\\u2029');

@@ -6,7 +6,9 @@ const root = new URL('../../', import.meta.url);
 const read = (path) => JSON.parse(readFileSync(new URL(path, root)));
 const config = read('pipeline/config/maas_official_sources.json');
 const registry = read('site/src/data/platform-logos.json');
+const pricing = read('site/src/data/pricing/ledger.json');
 for (const platform of [...config.platforms, ...config.industry_sources]) assert.ok(logoFor(platform.name), platform.name);
+for (const provider of pricing.providers) assert.ok(logoFor(provider), `pricing: missing logo for ${provider}`);
 for (const platform of registry) {
   for (const alias of [platform.id, platform.name, ...platform.aliases]) assert.equal(logoFor(alias), platform.file);
   const file = new URL(`site/public${platform.file}`, root);
