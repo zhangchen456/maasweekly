@@ -25,6 +25,15 @@ const orCitation = openrouter?.as_of
   ? `Source: OpenRouter (openrouter.ai/rankings), as of ${openrouter.as_of} · CC BY 4.0`
   : 'Source: OpenRouter (openrouter.ai/rankings) · CC BY 4.0';
 
+// as_of → 北京时间抓取时刻（如 "09-05 06:40"），用于自动榜 snapNote
+const fmtFetch = (asOf?: string) => {
+  if (!asOf) return '';
+  const d = new Date(asOf);
+  if (isNaN(+d)) return '';
+  const p = (n: number) => String(n).padStart(2, '0');
+  return `${p(d.getMonth() + 1)}.${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())} 抓取`;
+};
+
 // ===== 板块 B：能力榜（首期手工维护）=====
 const lmarena = readJson('src/data/leaderboards/lmarena.json');
 const aa = readJson('src/data/leaderboards/aa.json');
@@ -81,6 +90,8 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
         id="board-usage"
         title="模型调用量 Top10"
         snap={openrouter.snapshot_date}
+        snapLabel="数据截至"
+        snapNote={`每日更新 · ${fmtFetch(openrouter.as_of)}`}
         manual={openrouter.manual ?? true}
         cycle={openrouter.manual ? openrouter.update_cycle : undefined}
         note={openrouter.note}
@@ -120,6 +131,8 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
         id="board-share"
         title="厂商份额"
         snap={marketShare.snapshot_date}
+        snapLabel="数据截至"
+        snapNote={`每日更新 · ${fmtFetch(marketShare.as_of)}`}
         manual={marketShare.manual ?? true}
         cycle={marketShare.manual ? marketShare.update_cycle : undefined}
         note={marketShare.note}
@@ -155,6 +168,8 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
         id="board-cost"
         title="编程 Agent 会话成本"
         snap={sessionCost.snapshot_date}
+        snapLabel="数据截至"
+        snapNote="每日抓取 · 上游源周更"
         manual={sessionCost.manual ?? true}
         cycle={sessionCost.manual ? sessionCost.update_cycle : undefined}
         note={sessionCost.note}
@@ -169,6 +184,8 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
         id="board-apps"
         title="Top Apps · 应用榜"
         snap={topApps.snapshot_date}
+        snapLabel="数据截至"
+        snapNote={`每日更新 · ${fmtFetch(topApps.as_of)}`}
         manual={topApps.manual ?? true}
         cycle={topApps.manual ? topApps.update_cycle : undefined}
         note={topApps.note}
@@ -200,6 +217,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
         id="board-arena"
         title="LMArena Elo 榜"
         snap={lmarena.snapshot_date}
+        snapLabel="整理于"
         manual={lmarena.manual}
         cycle={lmarena.update_cycle}
         note={lmarena.note}
@@ -214,6 +232,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
         id="board-aa"
         title="AA 智能指数"
         snap={aa.snapshot_date}
+        snapLabel="整理于"
         manual={aa.manual}
         cycle={aa.update_cycle}
         note={aa.note}
@@ -228,6 +247,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
         id="board-clue"
         title="SuperCLUE 智能指数（中文）"
         snap={superclue.snapshot_date}
+        snapLabel="整理于"
         manual={superclue.manual}
         cycle={superclue.update_cycle}
         note={superclue.note}
@@ -242,6 +262,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
         id="board-swe"
         title="SWE-bench Verified"
         snap={swebench.snapshot_date}
+        snapLabel="整理于"
         manual={swebench.manual}
         cycle={swebench.update_cycle}
         note={swebench.note}
@@ -256,6 +277,7 @@ const fmtPp = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}pp`);
         id="board-terminal"
         title="Terminal-Bench 2.1"
         snap={terminalBench.snapshot_date}
+        snapLabel="整理于"
         manual={terminalBench.manual}
         cycle={terminalBench.update_cycle}
         note={terminalBench.note}

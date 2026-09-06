@@ -1,5 +1,9 @@
 ---
 // 榜单区块壳：统一头部（标题/快照/徽标）+ 脚注（口径 note + 溯源链接）+ slot 数据体。
+// snapLabel/snapNote 区分三类日期语义：
+//   自动抓取榜：snap = 数据窗口终点日，snapNote = 抓取时间（如"每日 06:40 抓取"）
+//   源周更榜：  snap = 上游窗口终点日，snapNote 明示上游刷新节奏
+//   手工维护榜：snap = 人工核对录入日，标签用"整理于"
 interface Props {
   id: string;
   title: string;
@@ -9,16 +13,17 @@ interface Props {
   note: string;
   sourceUrl: string;
   citation?: string;
+  snapLabel?: string;
+  snapNote?: string;
 }
-const { id, title, snap, manual, cycle, note, sourceUrl, citation } = Astro.props;
+const { id, title, snap, manual, cycle, note, sourceUrl, citation, snapLabel, snapNote } = Astro.props;
 const CYCLE_LABEL: Record<string, string> = { daily: '日更', weekly: '周更', monthly: '月更' };
 ---
-
 <section class="board" id={id} aria-label={title}>
   <header class="board-head">
     <h3>{title}</h3>
     <span class="board-meta">
-      <span class="snap">快照 {snap}</span>
+      <span class="snap" title={snapNote || ''}>{snapLabel ?? '快照'} {snap}{snapNote && <em class="snap-note"> · {snapNote}</em>}</span>
       {manual && <span class="badge badge-manual">手动维护</span>}
       {cycle && <span class="badge badge-cycle">{CYCLE_LABEL[cycle] ?? cycle}</span>}
     </span>
