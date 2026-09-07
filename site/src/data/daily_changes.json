@@ -1,6 +1,451 @@
 {
-  "updated_at": "2026-09-07T05:38:43",
+  "updated_at": "2026-09-07T23:18:52",
   "days": [
+    {
+      "date": "2026-09-08",
+      "stats": {
+        "total": 68,
+        "success": 62,
+        "failed": 6,
+        "changed": 13,
+        "unchanged": 49
+      },
+      "changed": [
+        {
+          "platform": "智谱AI",
+          "source_type": "model_list",
+          "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "| CharGLM-4 | 拟人对话模型 | 8K | 4K",
+            "| Emohaa | 心理情感支持模型 | 8K | 4K"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 2,
+          "llm_summary": "模型列表移除了 CharGLM-4 和 Emohaa 两个对话模型，可能意味着产品线调整或模型退役，但未提供替代信息。"
+        },
+        {
+          "platform": "MiniMax",
+          "source_type": "pricing",
+          "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 1,
+          "added_lines": [
+            "| 异步长文本语音合成 T2A Async | speech-2.6-turbo / speech-02-turbo | 2.00",
+            "| 计费项 | 接口 | 接口说明 | 单价",
+            "| 计费项 | 接口说明 | 单价",
+            "| 语音识别 | Speech-to-Text | 音频转文本，支持流式返回、说话人分离与字幕（srt/vtt）导出。 | 2.50",
+            "元/音色 | 计费说明",
+            "计费单位为字符数，以 10,000 个字符（输入）为单位。1 个汉字算 2 个字符；英文字母、希腊字母、标点符号、特殊符号、空格、回车等各算 1 个字符。"
+          ],
+          "removed_lines": [
+            "MiniMax 语音大模型能够根据上下文，智能预测文本的情绪、语调等信息，并生成超自然、高保真、个性化的语音。在社交、播客、有声书、新闻资讯、教育、数字人等多种场景中展现出强大的实力。"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "speech-2.8-hd",
+              "before": "T2A Async | speech-2.8-hd | 支持基于文本到语音的异步生成，单次文本生成传输最大支持 100 万字符，生成的完整音频结果支持异步的方式进行检索。 | 3.5",
+              "after": "T2A Async | speech-2.8-hd | 支持文本到语音的异步生成，单次最大支持 100 万字符，生成结果支持异步检索。 | 3.50"
+            },
+            {
+              "key": "speech-2.8-turbo",
+              "before": "T2A Async | speech-2.8-turbo | 支持基于文本到语音的异步生成，单次文本生成传输最大支持 100 万字符，生成的完整音频结果支持异步的方式进行检索。 | 2",
+              "after": "T2A Async | speech-2.8-turbo | 同上，速度更快、成本更低。 | 2.00"
+            },
+            {
+              "key": "speech-2.8-hd",
+              "before": "T2A | speech-2.8-hd | 支持音量、语调、语速调整和混音功能，支持比特率、采样率相关参数调整特性，支持音频时长、音频大小等返回参数，适用于需要短文本快速得到结果的场景，比如闲聊、对话等场景 | 3.5",
+              "after": "T2A | speech-2.8-hd | 支持音量、语调、语速调整和混音，支持比特率、采样率相关参数调整，支持音频时长、音频大小等返回参数。适用于短文本快速合成，如闲聊、对话等场景。 | 3.50"
+            },
+            {
+              "key": "speech-2.8-turbo",
+              "before": "T2A | speech-2.8-turbo | 支持音量、语调、语速调整和混音功能，支持比特率、采样率相关参数调整特性，支持音频时长、音频大小等返回参数，适用于需要短文本快速得到结果的场景，比如闲聊、对话等场景 | 2",
+              "after": "T2A | speech-2.8-turbo | 同上，速度更快、成本更低。 | 2.00"
+            },
+            {
+              "key": "voice cloning",
+              "before": "Voice Cloning | 所有模型 | 基于大语言模型的音色克隆更加精准快速，无需数小时时长的超高质量原音频、无需传统 TTS 的超长工期，可以在极短时间内完成音色复刻，并通过大语言模型加持，使复刻后的音色与原音色进行高质量还原，从而满足客户需求。 | 9.9",
+              "after": "Voice Cloning | 基于大语言模型的音色克隆，无需超长时长的高质量原音频，即可在极短时间内完成音色复刻，并保持与原音色的高保真还原。 | 9.90 | 复刻音色时不立即收费，首次使用该音色进行合成时才计入。试听字符按所选试听模型的单价计费。"
+            },
+            {
+              "key": "voice design",
+              "before": "Voice Design | 所有模型 | 支持基于用户输入的声音描述 prompt，来生成音色（voice_id）；并支持使用该生成的音色（voice_id）在同步语音合成、异步长文本语音合成接口中进行语音合成。 | 9.9",
+              "after": "Voice Design | 基于用户输入的声音描述 prompt 生成音色（voice_id），可用于同步/异步语音合成接口。 | 9.90 | 生成音色时不立即收费，首次使用该音色进行合成时才计入。接口内的试听语音合成按 2.00 元/万字符计费。"
+            },
+            {
+              "key": "speech-2.6-hd",
+              "before": "| 同步语音合成 T2A | speech-2.6-hd / speech-02-hd | 3.5",
+              "after": "| 同步语音合成 T2A | speech-2.6-hd / speech-02-hd | 3.50"
+            },
+            {
+              "key": "speech-2.6-turbo",
+              "before": "| 同步语音合成 T2A | speech-2.6-turbo / speech-02-turbo | 2",
+              "after": "| 同步语音合成 T2A | speech-2.6-turbo / speech-02-turbo | 2.00"
+            },
+            {
+              "key": "speech-2.6-hd",
+              "before": "| 异步长文本语音合成 T2A Async | speech-2.6-hd / speech-02-hd | 3.5",
+              "after": "| 异步长文本语音合成 T2A Async | speech-2.6-hd / speech-02-hd | 3.50"
+            }
+          ],
+          "signal_preview": "| 异步长文本语音合成 T2A Async | speech-2.6-turbo / speech-02-turbo | 2.00",
+          "raw_added_count": 15,
+          "raw_removed_count": 16,
+          "llm_summary": "定价文档进行了大规模更新：新增语音识别计费项，调整了多个 TTS 模型的描述和价格格式（数值未变），并补充了 Voice Cloning 和 Voice Design 的计费细节，整体上使定价说明更清晰、更结构化。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Our new contrail avoidance trial in Asia-Pacific"
+          ],
+          "removed_lines": [
+            "Operation Blue Skies: Reducing aviation climate impact with AI"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Our new contrail avoidance trial in Asia-Pacific",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "llm_summary": "博客文章从“Operation Blue Skies”更换为“Our new contrail avoidance trial in Asia-Pacific”，主题从航空气候影响转向亚太地区的航线优化试验，可能反映公司关注点的变化。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "model_list",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 9,
+          "added_lines": [
+            "Chat Completions (Legacy)",
+            "Generated Media",
+            "Image Understanding",
+            "Imagine Image Quality Retirement (Nov 2, 2026)",
+            "Model Retirement (May 15, 2026)",
+            "REST Reference"
+          ],
+          "removed_lines": [
+            "Completions (Legacy)",
+            "Enterprise Deployments",
+            "Files API Integration",
+            "Getting Started",
+            "Grok & Console",
+            "Imagine Image Quality Retirement on Nov 2",
+            "Keyboard Shortcuts",
+            "Model Retirement on May 15",
+            "Modes and Commands"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Chat Completions (Legacy)",
+          "raw_added_count": 6,
+          "raw_removed_count": 9,
+          "llm_summary": "文档结构发生重大调整：新增了 Chat Completions (Legacy)、Generated Media、Image Understanding 等章节，同时删除了 Completions (Legacy)、Enterprise Deployments 等旧条目，并明确了模型退役日期，可能对应 API 版本更新或文档重组。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "pricing",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 9,
+          "added_lines": [
+            "Chat Completions (Legacy)",
+            "Generated Media",
+            "Image Understanding",
+            "Imagine Image Quality Retirement (Nov 2, 2026)",
+            "Model Retirement (May 15, 2026)",
+            "REST Reference"
+          ],
+          "removed_lines": [
+            "Completions (Legacy)",
+            "Enterprise Deployments",
+            "Files API Integration",
+            "Getting Started",
+            "Grok & Console",
+            "Imagine Image Quality Retirement on Nov 2",
+            "Keyboard Shortcuts",
+            "Model Retirement on May 15",
+            "Modes and Commands"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Chat Completions (Legacy)",
+          "raw_added_count": 6,
+          "raw_removed_count": 9,
+          "llm_summary": "与 model_list 同步，定价页面也进行了相同的增删操作，新增了 Legacy 和 Media 相关计费项，并明确了退役日期，表明定价体系正在为旧模型退役和新功能计费做准备。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://x.ai/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "cloudflare ray id",
+              "before": "Cloudflare Ray ID: a3735e5dbca0d7d3",
+              "after": "Cloudflare Ray ID: a3796f20fadce607"
+            }
+          ],
+          "signal_preview": "Cloudflare Ray ID: a3796f20fadce607",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "llm_summary": "仅更新了 Cloudflare Ray ID，属于基础设施层面的变动，无实质内容变化。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://x.ai/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "cloudflare ray id",
+              "before": "Cloudflare Ray ID: a3735e5deef40d7b",
+              "after": "Cloudflare Ray ID: a3796f214934416e"
+            }
+          ],
+          "signal_preview": "Cloudflare Ray ID: a3796f214934416e",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "llm_summary": "仅更新了 Cloudflare Ray ID，属于基础设施层面的变动，无实质内容变化。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 17,
+          "removed_count": 0,
+          "added_lines": [
+            "Announcing the Artificial Analysis Intelligence Index v4.3",
+            "AnthropicOpenAIMetaZ AISpaceXAIKimiGoogleAlibabaDeepSeekMiniMaxThinking MachinesMistral",
+            "AnthropicOpenAIMetaZ AISpaceXAIKimiGoogleDeepSeekOther Models",
+            "Artificial Analysis Intelligence Index v4.3",
+            "Artificial Analysis Intelligence Index v4.3 includes: AA-Briefcase, GDPval-AA v2, AutomationBench-AA, Terminal-Bench v4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them.",
+            "Artificial Analysis Intelligence Index v4.3 incorporates 10 evaluations: AA-Briefcase, GDPval-AA v2, AutomationBench-AA, Terminal-Bench v4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1",
+            "Gemini 3.8 Flash (high)See more",
+            "GoogleThinking MachinesZ AIMiniMaxOpenAIAnthropicMetaNVIDIADeepSeekAlibabaSpaceXAIMistralKimi",
+            "Intelligence Index v4.3",
+            "Intelligence Index v4.3 replaces 𝜏³-Banking with AutomationBench-AA, and upgrades Terminal-Bench to v4.0",
+            "KimiAlibabaDeepSeekMiniMaxThinking MachinesNVIDIAMetaMistralOpenAI",
+            "Methodology updated · 7 Sept",
+            "MiniCPM5-2B",
+            "New article published · 7 Sept",
+            "New language model evaluation · 7 Sept",
+            "OpenBMB releases MiniCPM5-2B",
+            "Terminal-Bench v4.0"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Announcing the Artificial Analysis Intelligence Index v4.3",
+          "raw_added_count": 27,
+          "raw_removed_count": 27,
+          "llm_summary": "新增了 Intelligence Index v4.3 的公告，包含新的评测基准（AutomationBench-AA 替换 𝜏³-Banking，Terminal-Bench 升级至 v4.0），并列出多家模型提供商，表明指数更新涉及更广泛的模型评估。"
+        },
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "1.798608元/秒"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1
+        },
+        {
+          "platform": "讯飞星辰MaaS",
+          "source_type": "changelog",
+          "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 5,
+          "raw_removed_count": 5
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 34,
+          "raw_removed_count": 34
+        }
+      ],
+      "first_fetch": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "first_fetch",
+          "content_length": 1742
+        }
+      ],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "model_list",
+          "url": "https://cloud.tencent.com/document/product/1729/104753",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=29182)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "pricing",
+          "url": "https://cloud.tencent.com/document/product/1729/97731",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=29182)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "changelog",
+          "url": "https://cloud.tencent.com/document/product/1729/132069",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=29182)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "blog",
+          "url": "https://cloud.tencent.com/developer/column/",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=29182)"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://openai.com/news/",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=9951)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "MiniMax",
+          "logo_summary": "语音模型定价文档全面更新，新增语音识别计费",
+          "items": [
+            {
+              "text": "新增语音识别 Speech-to-Text 计费项，单价 2.50 元/万字符，支持流式返回、说话人分离与字幕导出",
+              "type": "pricing"
+            },
+            {
+              "text": "T2A Async speech-2.8-turbo 定价 2.00 元/万字符，描述更新为“同上，速度更快、成本更低”",
+              "type": "pricing"
+            },
+            {
+              "text": "Voice Cloning 与 Voice Design 新增计费说明：生成音色不立即收费，首次合成时计费",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "API 文档与定价页面结构重组，模型退役时间明确",
+          "items": [
+            {
+              "text": "新增 Chat Completions (Legacy)、Generated Media、Image Understanding 等文档章节，删除 Completions (Legacy) 等旧条目",
+              "type": "other"
+            },
+            {
+              "text": "明确 Imagine Image Quality 退役日期为 2026-11-02，Model Retirement 日期为 2026-05-15",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "智谱AI",
+          "logo_summary": "下架两款对话模型，聚焦核心产品线",
+          "items": [
+            {
+              "text": "从模型列表移除 CharGLM-4 拟人对话模型与 Emohaa 心理情感支持模型",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "博客主题更新，关注亚太地区航线优化",
+          "items": [
+            {
+              "text": "新增博客文章“Our new contrail avoidance trial in Asia-Pacific”，删除旧文“Operation Blue Skies”",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "发布 Intelligence Index v4.3，更新评测基准",
+          "items": [
+            {
+              "text": "Intelligence Index v4.3 发布，用 AutomationBench-AA 替换 𝜏³-Banking，并升级 Terminal-Bench 至 v4.0",
+              "type": "release"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-09-07",
       "stats": {
