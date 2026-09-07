@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-07T06:43:04.063621 -->
+<!-- fetched: 2026-09-07T13:38:39.271867 -->
 
 Skip to content
 The state of sovereign AI adoption: What enterprise leaders need to know.Read now

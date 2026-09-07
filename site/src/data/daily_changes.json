@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-06T22:43:13",
+  "updated_at": "2026-09-07T05:38:43",
   "days": [
     {
       "date": "2026-09-07",
@@ -11,6 +11,27 @@
         "unchanged": 55
       },
       "changed": [
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://x.ai/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "cloudflare ray id",
+              "before": "Cloudflare Ray ID: a368bb98ab331e11",
+              "after": "Cloudflare Ray ID: a3735e5dbca0d7d3"
+            }
+          ],
+          "signal_preview": "Cloudflare Ray ID: a3735e5dbca0d7d3",
+          "raw_added_count": 2,
+          "raw_removed_count": 2
+        },
         {
           "platform": "xAI",
           "source_type": "blog",
@@ -25,10 +46,10 @@
             {
               "key": "cloudflare ray id",
               "before": "Cloudflare Ray ID: a368bb98fdc8f7d1",
-              "after": "Cloudflare Ray ID: a370fd9c6a4dad24"
+              "after": "Cloudflare Ray ID: a3735e5deef40d7b"
             }
           ],
-          "signal_preview": "Cloudflare Ray ID: a370fd9c6a4dad24",
+          "signal_preview": "Cloudflare Ray ID: a3735e5deef40d7b",
           "raw_added_count": 2,
           "raw_removed_count": 2,
           "llm_summary": "仅检测到 Cloudflare Ray ID 变化，属于基础设施层面的请求标识更新，无实质内容变动，不构成 MaaS 行业观察要点。"
@@ -51,27 +72,6 @@
           "raw_added_count": 12,
           "raw_removed_count": 12,
           "llm_summary": "新增了 Claude Fable 5.1 (Max) 和 Hy4 preview 两个条目，对应两款新模型进入竞技场评测列表，反映模型供给端有新面孔出现，但暂无具体性能或定价数据披露。"
-        },
-        {
-          "platform": "xAI",
-          "source_type": "changelog",
-          "url": "https://x.ai/news",
-          "status": "changed",
-          "added_count": 0,
-          "removed_count": 0,
-          "added_lines": [],
-          "removed_lines": [],
-          "kind": "jitter",
-          "pairs": [
-            {
-              "key": "cloudflare ray id",
-              "before": "Cloudflare Ray ID: a368bb98ab331e11",
-              "after": "Cloudflare Ray ID: a370fd9c1e4eb838"
-            }
-          ],
-          "signal_preview": "",
-          "raw_added_count": 2,
-          "raw_removed_count": 2
         },
         {
           "platform": "HuggingFace",

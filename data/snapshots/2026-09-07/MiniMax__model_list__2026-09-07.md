@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-07T06:42:43.587579 -->
+<!-- fetched: 2026-09-07T13:38:19.206559 -->
 
 概览 - MiniMax 开放平台文档中心
 Documentation Index

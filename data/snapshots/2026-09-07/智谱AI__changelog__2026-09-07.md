@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-07T06:42:30.599517 -->
+<!-- fetched: 2026-09-07T13:38:04.391420 -->
 
 模型与产品发布记录 - 智谱AI开放文档
 Documentation Index

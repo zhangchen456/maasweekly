@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-07T06:42:58.597411 -->
+<!-- fetched: 2026-09-07T13:38:34.836308 -->
 
 Official Google AI news and updates | Google Blog
 Back

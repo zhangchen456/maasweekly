@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-07T06:42:38.980007 -->
+<!-- fetched: 2026-09-07T13:38:14.082198 -->
 
 Muon 优化器的首次大规模训练实践 - Kimi API 开放平台
 Documentation Index

@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-07T06:43:07.991288 -->
+<!-- fetched: 2026-09-07T13:38:42.562424 -->
 
 AI Model & API Providers Analysis | Artificial Analysis
 Artificial Analysis
@@ -206,7 +206,7 @@ AA-Briefcase is a frontier agentic evaluation for long-horizon knowledge work, t
 AA-Briefcase EloAA-Briefcase Rubric Score (%)Analytical Quality & Presentation EloAA-Briefcase Elo vs. Cost per Task
 AA-Briefcase Elo
 AA-Briefcase is an agentic knowledge work benchmark developed by Artificial Analysis. AA-Briefcase Elo is a combined metric that aggregates rubric pass rate, analytical quality Elo and presentation Elo · Higher is better
-22 of 140 models
+22 of 146 models
 Add model from specific provider
 AA-Briefcase Elo
 AA-Briefcase Elo is a combined metric that aggregates analytical quality Elo, presentation Elo, and rubric pass rate, with rubric performance converted into Elo via synthetic head-to-head matches. Elo and 95% confidence interval bounds are clamped at 0.

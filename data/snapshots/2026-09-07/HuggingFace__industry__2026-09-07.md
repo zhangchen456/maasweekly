@@ -1,11 +1,11 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-07T06:43:07.752880 -->
+<!-- fetched: 2026-09-07T13:38:42.373844 -->
 
 [
   {
     "_id": "621ffdc136468d709f180294",
     "id": "sentence-transformers/all-MiniLM-L6-v2",
-    "likes": 5566,
+    "likes": 5569,
     "private": false,
     "downloads": 253029336,
     "tags": [
@@ -268,7 +268,7 @@
   {
     "_id": "65b53851e602b6c2c96e78da",
     "id": "BAAI/bge-m3",
-    "likes": 3473,
+    "likes": 3474,
     "private": false,
     "downloads": 37962240,
     "tags": [
@@ -426,7 +426,7 @@
   {
     "_id": "680da718233834890aa01f51",
     "id": "Qwen/Qwen3-0.6B",
-    "likes": 1581,
+    "likes": 1582,
     "private": false,
     "downloads": 21510837,
     "tags": [
@@ -598,7 +598,7 @@
   {
     "_id": "6a6bd1dc7034404148ec9107",
     "id": "Comfy-Org/MiniMax-H3",
-    "likes": 1711,
+    "likes": 1714,
     "private": false,
     "downloads": 19570597,
     "tags": [
@@ -738,7 +738,7 @@
   {
     "_id": "621ffdc036468d709f17434d",
     "id": "openai-community/gpt2",
-    "likes": 3706,
+    "likes": 3707,
     "private": false,
     "downloads": 14612342,
     "tags": [
