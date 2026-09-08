@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-08T07:18:32.518117 -->
+<!-- fetched: 2026-09-08T14:15:35.963681 -->
 
 Changelog | OpenAI API
 For the complete documentation index, see llms.txt. Markdown versions of documentation pages are available by appending

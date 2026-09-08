@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-08T07:18:24.489033 -->
+<!-- fetched: 2026-09-08T14:15:29.083366 -->
 
 按量计费 - MiniMax 开放平台文档中心
 Documentation Index

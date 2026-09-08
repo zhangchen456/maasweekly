@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-08T07:18:10.679734 -->
+<!-- fetched: 2026-09-08T14:14:51.546565 -->
 
 模型参数参考 - Kimi API 开放平台
 Documentation Index

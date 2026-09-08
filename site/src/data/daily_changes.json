@@ -1,16 +1,50 @@
 {
-  "updated_at": "2026-09-08T11:46:25",
+  "updated_at": "2026-09-08T06:17:33",
   "days": [
     {
       "date": "2026-09-08",
       "stats": {
         "total": 68,
-        "success": 62,
-        "failed": 6,
-        "changed": 11,
-        "unchanged": 49
+        "success": 66,
+        "failed": 2,
+        "changed": 22,
+        "unchanged": 44
       },
       "changed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "迁移到方舟官方 SDK"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "迁移到方舟官方 SDK",
+          "raw_added_count": 1,
+          "raw_removed_count": 0
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "方舟官方 SDK 升级公告"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "方舟官方 SDK 升级公告",
+          "raw_added_count": 1,
+          "raw_removed_count": 0
+        },
         {
           "platform": "智谱AI",
           "source_type": "model_list",
@@ -122,6 +156,67 @@
           "llm_summary": "博客文章从“Operation Blue Skies”更换为“Our new contrail avoidance trial in Asia-Pacific”，主题从航空气候影响转向亚太地区的航线优化试验，可能反映公司关注点的变化。"
         },
         {
+          "platform": "Mistral AI",
+          "source_type": "pricing",
+          "url": "https://mistral.ai/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Mistral raises €3B to make sovereign, open-weight AI the technology frontier"
+          ],
+          "removed_lines": [
+            "In-region inference, open models, and new European infrastructure for sovereign AI."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Mistral raises €3B to make sovereign, open-weight AI the technology frontier",
+          "raw_added_count": 1,
+          "raw_removed_count": 1
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "changelog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "83 articles",
+            "Mistral raises €3B to make sovereign, open-weight AI the technology frontier",
+            "Mistral today announced that it has raised €3 billion in a Series D funding round at a post-money valuation of more than €21 billion."
+          ],
+          "removed_lines": [
+            "82 articles"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Mistral raises €3B to make sovereign, open-weight AI the technology frontier",
+          "raw_added_count": 3,
+          "raw_removed_count": 1
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "blog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "83 articles",
+            "Mistral raises €3B to make sovereign, open-weight AI the technology frontier",
+            "Mistral today announced that it has raised €3 billion in a Series D funding round at a post-money valuation of more than €21 billion."
+          ],
+          "removed_lines": [
+            "82 articles"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Mistral raises €3B to make sovereign, open-weight AI the technology frontier",
+          "raw_added_count": 3,
+          "raw_removed_count": 1
+        },
+        {
           "platform": "xAI",
           "source_type": "model_list",
           "url": "https://docs.x.ai/docs/models",
@@ -186,6 +281,96 @@
           "raw_added_count": 6,
           "raw_removed_count": 9,
           "llm_summary": "与 model_list 同步，定价页面也进行了相同的增删操作，新增了 Legacy 和 Media 相关计费项，并明确了退役日期，表明定价体系正在为旧模型退役和新功能计费做准备。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 19,
+          "removed_count": 9,
+          "added_lines": [
+            "A month ago, we launched the public",
+            "API Public Beta",
+            "Adjustable VAD threshold for Speech to Text",
+            "Advanced API Usage",
+            "Agent tools adapt to Grok 4.1 Fast models and tool prices dropped",
+            "Async Requests",
+            "August 2025",
+            "Auto quality. The quality parameter on grok-imagine-image-2.0 now accepts auto, and the default when quality is omitted has moved from medium to auto. Auto currently uses low for image generation and medium for image editing. Images are billed at the quality they are served at. Pass low or medium explicitly to pin a specific quality. See Image Generation.",
+            "Batch API JSONL file upload",
+            "Batch API is available for all customers. It enables efficient batch processing of multiple requests, providing a better experience for users who need to submit large volumes of requests at once.",
+            "Batch API is released",
+            "Batch API supports Image and Video generation",
+            "Cached prompt is now available",
+            "Chat Completions (Legacy)",
+            "Chat with Files",
+            "Check out the announcement for more information.",
+            "Check service statuses across all SpaceXAI products at",
+            "Code Execution",
+            "Collection Metadata"
+          ],
+          "removed_lines": [
+            "Attention Required! | Cloudflare",
+            "Click to reveal",
+            "Cloudflare Ray ID: a3735e5dbca0d7d3",
+            "Performance & security by Cloudflare",
+            "Please enable cookies.",
+            "Sorry, you have been blocked",
+            "This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.",
+            "What can I do to resolve this?",
+            "Why have I been blocked?"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "A month ago, we launched the public",
+          "raw_added_count": 204,
+          "raw_removed_count": 12
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 19,
+          "removed_count": 9,
+          "added_lines": [
+            "A month ago, we launched the public",
+            "API Public Beta",
+            "Adjustable VAD threshold for Speech to Text",
+            "Advanced API Usage",
+            "Agent tools adapt to Grok 4.1 Fast models and tool prices dropped",
+            "Async Requests",
+            "August 2025",
+            "Auto quality. The quality parameter on grok-imagine-image-2.0 now accepts auto, and the default when quality is omitted has moved from medium to auto. Auto currently uses low for image generation and medium for image editing. Images are billed at the quality they are served at. Pass low or medium explicitly to pin a specific quality. See Image Generation.",
+            "Batch API JSONL file upload",
+            "Batch API is available for all customers. It enables efficient batch processing of multiple requests, providing a better experience for users who need to submit large volumes of requests at once.",
+            "Batch API is released",
+            "Batch API supports Image and Video generation",
+            "Cached prompt is now available",
+            "Chat Completions (Legacy)",
+            "Chat with Files",
+            "Check out the announcement for more information.",
+            "Check service statuses across all SpaceXAI products at",
+            "Code Execution",
+            "Collection Metadata"
+          ],
+          "removed_lines": [
+            "Attention Required! | Cloudflare",
+            "Click to reveal",
+            "Cloudflare Ray ID: a3735e5deef40d7b",
+            "Performance & security by Cloudflare",
+            "Please enable cookies.",
+            "Sorry, you have been blocked",
+            "This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.",
+            "What can I do to resolve this?",
+            "Why have I been blocked?"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "A month ago, we launched the public",
+          "raw_added_count": 204,
+          "raw_removed_count": 12
         },
         {
           "platform": "Artificial Analysis",
@@ -286,55 +471,55 @@
       ],
       "first_fetch": [
         {
-          "platform": "火山方舟",
-          "source_type": "model_list",
-          "url": "https://www.volcengine.com/docs/82379/1330310",
-          "status": "first_fetch",
-          "content_length": 1742
-        }
-      ],
-      "failed": [
-        {
-          "platform": "火山方舟",
-          "source_type": "pricing",
-          "url": "https://www.volcengine.com/docs/82379/1544106",
-          "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=11071)"
-        },
-        {
           "platform": "腾讯混元/TokenHub",
           "source_type": "model_list",
           "url": "https://cloud.tencent.com/document/product/1729/104753",
-          "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=29182)"
+          "status": "first_fetch",
+          "content_length": 3150
         },
         {
           "platform": "腾讯混元/TokenHub",
           "source_type": "pricing",
           "url": "https://cloud.tencent.com/document/product/1729/97731",
-          "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=29182)"
+          "status": "first_fetch",
+          "content_length": 2284
         },
         {
           "platform": "腾讯混元/TokenHub",
           "source_type": "changelog",
-          "url": "https://cloud.tencent.com/document/product/1729/132069",
-          "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=29182)"
+          "url": "https://cloud.tencent.com/document/product/1729/97765",
+          "status": "first_fetch",
+          "content_length": 13287
         },
         {
           "platform": "腾讯混元/TokenHub",
           "source_type": "blog",
-          "url": "https://cloud.tencent.com/developer/column/",
-          "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=29182)"
+          "url": "https://cloud.tencent.com/document/product/1729/132069",
+          "status": "first_fetch",
+          "content_length": 481
         },
         {
           "platform": "OpenAI",
           "source_type": "blog",
-          "url": "https://openai.com/news/",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "first_fetch",
+          "content_length": 50448
+        }
+      ],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
           "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=9951)"
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "MiniMax",
+          "source_type": "model_list",
+          "url": "https://platform.minimaxi.com/docs/guides/models-intro",
+          "status": "fetch_failed",
+          "error": "curl 返回空 (stderr: )"
         }
       ],
       "highlights": [

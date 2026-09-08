@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-08T07:18:43.362882 -->
+<!-- fetched: 2026-09-08T14:15:49.566601 -->
 
 {
   "code": 0,
@@ -8,9 +8,9 @@
     "rows": [
       {
         "content": "【新增模型】 Spark-X2.5上线模型集市",
-        "externalLink": "",
+        "externalLink": "https://maas.xfyun.cn/modelSquare",
         "id": 1000035,
-        "internalLink": "",
+        "internalLink": "https://in.iflyaicloud.com/maas-finetune/modelSquare",
         "module": "模型集市",
         "publishTime": "2026-09-07 00:00:00",
         "sortOrder": 2,

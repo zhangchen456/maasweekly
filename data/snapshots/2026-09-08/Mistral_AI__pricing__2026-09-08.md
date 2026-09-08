@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-08T07:18:39.121718 -->
+<!-- fetched: 2026-09-08T14:15:44.364038 -->
 
 Pricing | Mistral
 Contact sales
@@ -48,9 +48,9 @@ Docs
 API Reference
 Cookbooks
 Latest posts
+Mistral raises €3B to make sovereign, open-weight AI the technology frontier
 Mistral x HUMAIN
 Agentic Search. More accurate and efficient results from your AI systems.
-In-region inference, open models, and new European infrastructure for sovereign AI.
 Categories
 Product
 Research
@@ -105,9 +105,9 @@ Docs
 API Reference
 Cookbooks
 Latest posts
+Mistral raises €3B to make sovereign, open-weight AI the technology frontier
 Mistral x HUMAIN
 Agentic Search. More accurate and efficient results from your AI systems.
-In-region inference, open models, and new European infrastructure for sovereign AI.
 Categories
 Product
 Research

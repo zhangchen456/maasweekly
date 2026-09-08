@@ -1,33 +1,44 @@
 {
   "date": "2026-09-08",
-  "fetched_at": "2026-09-08T07:18:44.949151",
+  "fetched_at": "2026-09-08T14:15:52.369780",
   "stats": {
     "total": 68,
-    "success": 62,
-    "failed": 6,
-    "changed": 11,
-    "unchanged": 49
+    "success": 66,
+    "failed": 2,
+    "changed": 22,
+    "unchanged": 44
   },
   "changes": [
     {
       "platform": "火山方舟",
       "source_type": "model_list",
       "url": "https://www.volcengine.com/docs/82379/1330310",
-      "status": "first_fetch",
-      "content_length": 1742
-    },
-    {
-      "platform": "火山方舟",
-      "source_type": "pricing",
-      "url": "https://www.volcengine.com/docs/82379/1544106",
       "status": "fetch_failed",
       "error": "提取后内容过短 (raw_len=11071)"
     },
     {
       "platform": "火山方舟",
+      "source_type": "pricing",
+      "url": "https://www.volcengine.com/docs/82379/1544106",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "迁移到方舟官方 SDK"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "火山方舟",
       "source_type": "changelog",
       "url": "https://www.volcengine.com/docs/82379/1159177",
-      "status": "unchanged"
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "方舟官方 SDK 升级公告"
+      ],
+      "removed_lines": []
     },
     {
       "platform": "火山方舟",
@@ -93,29 +104,29 @@
       "platform": "腾讯混元/TokenHub",
       "source_type": "model_list",
       "url": "https://cloud.tencent.com/document/product/1729/104753",
-      "status": "fetch_failed",
-      "error": "提取后内容过短 (raw_len=29182)"
+      "status": "first_fetch",
+      "content_length": 3150
     },
     {
       "platform": "腾讯混元/TokenHub",
       "source_type": "pricing",
       "url": "https://cloud.tencent.com/document/product/1729/97731",
-      "status": "fetch_failed",
-      "error": "提取后内容过短 (raw_len=29182)"
+      "status": "first_fetch",
+      "content_length": 2284
     },
     {
       "platform": "腾讯混元/TokenHub",
       "source_type": "changelog",
-      "url": "https://cloud.tencent.com/document/product/1729/132069",
-      "status": "fetch_failed",
-      "error": "提取后内容过短 (raw_len=29182)"
+      "url": "https://cloud.tencent.com/document/product/1729/97765",
+      "status": "first_fetch",
+      "content_length": 13287
     },
     {
       "platform": "腾讯混元/TokenHub",
       "source_type": "blog",
-      "url": "https://cloud.tencent.com/developer/column/",
-      "status": "fetch_failed",
-      "error": "提取后内容过短 (raw_len=29182)"
+      "url": "https://cloud.tencent.com/document/product/1729/132069",
+      "status": "first_fetch",
+      "content_length": 481
     },
     {
       "platform": "硅基流动",
@@ -200,7 +211,8 @@
       "platform": "MiniMax",
       "source_type": "model_list",
       "url": "https://platform.minimaxi.com/docs/guides/models-intro",
-      "status": "unchanged"
+      "status": "fetch_failed",
+      "error": "curl 返回空 (stderr: )"
     },
     {
       "platform": "MiniMax",
@@ -296,9 +308,9 @@
     {
       "platform": "OpenAI",
       "source_type": "blog",
-      "url": "https://openai.com/news/",
-      "status": "fetch_failed",
-      "error": "提取后内容过短 (raw_len=9951)"
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "first_fetch",
+      "content_length": 50448
     },
     {
       "platform": "Anthropic",
@@ -398,19 +410,47 @@
       "platform": "Mistral AI",
       "source_type": "pricing",
       "url": "https://mistral.ai/pricing",
-      "status": "unchanged"
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "Mistral raises €3B to make sovereign, open-weight AI the technology frontier"
+      ],
+      "removed_lines": [
+        "In-region inference, open models, and new European infrastructure for sovereign AI."
+      ]
     },
     {
       "platform": "Mistral AI",
       "source_type": "changelog",
       "url": "https://mistral.ai/news/",
-      "status": "unchanged"
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 1,
+      "added_lines": [
+        "83 articles",
+        "Mistral raises €3B to make sovereign, open-weight AI the technology frontier",
+        "Mistral today announced that it has raised €3 billion in a Series D funding round at a post-money valuation of more than €21 billion."
+      ],
+      "removed_lines": [
+        "82 articles"
+      ]
     },
     {
       "platform": "Mistral AI",
       "source_type": "blog",
       "url": "https://mistral.ai/news/",
-      "status": "unchanged"
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 1,
+      "added_lines": [
+        "83 articles",
+        "Mistral raises €3B to make sovereign, open-weight AI the technology frontier",
+        "Mistral today announced that it has raised €3 billion in a Series D funding round at a post-money valuation of more than €21 billion."
+      ],
+      "removed_lines": [
+        "82 articles"
+      ]
     },
     {
       "platform": "Cohere",
@@ -491,6 +531,110 @@
       ]
     },
     {
+      "platform": "xAI",
+      "source_type": "changelog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "changed",
+      "added_count": 204,
+      "removed_count": 12,
+      "added_lines": [
+        "\"additionalProperties\": false",
+        "\"name\": \"movie_response\",",
+        "\"properties\": {",
+        "\"rating\": 8.6",
+        "\"rating\": { \"type\": \"number\" }",
+        "\"required\": [ \"title\", \"rating\" ],",
+        "\"schema\": {",
+        "\"strict\": true",
+        "\"title\": \"Star Wars\",",
+        "\"title\": { \"type\": \"string\" },",
+        "\"type\": \"object\",",
+        "A month ago, we launched the public",
+        "API Public Beta",
+        "Adjustable VAD threshold for Speech to Text",
+        "Advanced API Usage",
+        "Agent tools adapt to Grok 4.1 Fast models and tool prices dropped",
+        "Async Requests",
+        "August 2025",
+        "Auto quality. The quality parameter on grok-imagine-image-2.0 now accepts auto, and the default when quality is omitted has moved from medium to auto. Auto currently uses low for image generation and medium for image editing. Images are billed at the quality they are served at. Pass low or medium explicitly to pin a specific quality. See Image Generation.",
+        "Batch API JSONL file upload",
+        "Batch API is available for all customers. It enables efficient batch processing of multiple requests, providing a better experience for users who need to submit large volumes of requests at once.",
+        "Batch API is released",
+        "Batch API supports Image and Video generation",
+        "Cached prompt is now available",
+        "Chat Completions (Legacy)",
+        "Chat with Files",
+        "Check out the announcement for more information.",
+        "Check service statuses across all SpaceXAI products at",
+        "Code Execution",
+        "Collection Metadata"
+      ],
+      "removed_lines": [
+        "135.232.232.91",
+        "Attention Required! | Cloudflare",
+        "Click to reveal",
+        "Cloudflare Ray ID: a3735e5dbca0d7d3",
+        "Performance & security by Cloudflare",
+        "Please enable cookies.",
+        "Sorry, you have been blocked",
+        "This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.",
+        "What can I do to resolve this?",
+        "Why have I been blocked?"
+      ]
+    },
+    {
+      "platform": "xAI",
+      "source_type": "blog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "changed",
+      "added_count": 204,
+      "removed_count": 12,
+      "added_lines": [
+        "\"additionalProperties\": false",
+        "\"name\": \"movie_response\",",
+        "\"properties\": {",
+        "\"rating\": 8.6",
+        "\"rating\": { \"type\": \"number\" }",
+        "\"required\": [ \"title\", \"rating\" ],",
+        "\"schema\": {",
+        "\"strict\": true",
+        "\"title\": \"Star Wars\",",
+        "\"title\": { \"type\": \"string\" },",
+        "\"type\": \"object\",",
+        "A month ago, we launched the public",
+        "API Public Beta",
+        "Adjustable VAD threshold for Speech to Text",
+        "Advanced API Usage",
+        "Agent tools adapt to Grok 4.1 Fast models and tool prices dropped",
+        "Async Requests",
+        "August 2025",
+        "Auto quality. The quality parameter on grok-imagine-image-2.0 now accepts auto, and the default when quality is omitted has moved from medium to auto. Auto currently uses low for image generation and medium for image editing. Images are billed at the quality they are served at. Pass low or medium explicitly to pin a specific quality. See Image Generation.",
+        "Batch API JSONL file upload",
+        "Batch API is available for all customers. It enables efficient batch processing of multiple requests, providing a better experience for users who need to submit large volumes of requests at once.",
+        "Batch API is released",
+        "Batch API supports Image and Video generation",
+        "Cached prompt is now available",
+        "Chat Completions (Legacy)",
+        "Chat with Files",
+        "Check out the announcement for more information.",
+        "Check service statuses across all SpaceXAI products at",
+        "Code Execution",
+        "Collection Metadata"
+      ],
+      "removed_lines": [
+        "135.232.232.91",
+        "Attention Required! | Cloudflare",
+        "Click to reveal",
+        "Cloudflare Ray ID: a3735e5deef40d7b",
+        "Performance & security by Cloudflare",
+        "Please enable cookies.",
+        "Sorry, you have been blocked",
+        "This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.",
+        "What can I do to resolve this?",
+        "Why have I been blocked?"
+      ]
+    },
+    {
       "platform": "讯飞星辰MaaS",
       "source_type": "changelog",
       "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
@@ -544,12 +688,12 @@
         "\"likes\": 127,",
         "\"likes\": 1351,",
         "\"likes\": 1368,",
-        "\"likes\": 1586,",
-        "\"likes\": 1727,",
+        "\"likes\": 1587,",
+        "\"likes\": 1728,",
         "\"likes\": 2992,",
-        "\"likes\": 3478,",
-        "\"likes\": 3714,",
-        "\"likes\": 434,"
+        "\"likes\": 3480,",
+        "\"likes\": 3716,",
+        "\"likes\": 435,"
       ],
       "removed_lines": [
         "\"downloads\": 14612342,",
@@ -577,7 +721,7 @@
         "11 of 32 models",
         "15 of 93 models",
         "19 of 26 evaluations",
-        "23 of 158 models",
+        "23 of 159 models",
         "23 of 23 models",
         "23 of 239 models",
         "23 of 519 models",

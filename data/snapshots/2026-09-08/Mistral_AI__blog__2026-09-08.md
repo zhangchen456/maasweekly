@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-08T07:18:39.443622 -->
+<!-- fetched: 2026-09-08T14:15:44.787971 -->
 
 Latest news | Mistral
 Contact sales
@@ -48,9 +48,9 @@ Docs
 API Reference
 Cookbooks
 Latest posts
+Mistral raises €3B to make sovereign, open-weight AI the technology frontier
 Mistral x HUMAIN
 Agentic Search. More accurate and efficient results from your AI systems.
-In-region inference, open models, and new European infrastructure for sovereign AI.
 Categories
 Product
 Research
@@ -105,9 +105,9 @@ Docs
 API Reference
 Cookbooks
 Latest posts
+Mistral raises €3B to make sovereign, open-weight AI the technology frontier
 Mistral x HUMAIN
 Agentic Search. More accurate and efficient results from your AI systems.
-In-region inference, open models, and new European infrastructure for sovereign AI.
 Categories
 Product
 Research
@@ -136,23 +136,26 @@ Blog
 Latest updates from Mistral.
 Latest updates from Mistral.
 Filter by category
-82 articles
+83 articles
 Company
 Solutions
 Engineering
 Research
 Product
 Company
-In-region inference, open models, and new European infrastructure for sovereign AI.
-Mistral is bringing together the inference infrastructure, open models, and long-term commitments Europe needs to control its AI future, and setting a roadmap for the world.
+Mistral raises €3B to make sovereign, open-weight AI the technology frontier
+Mistral today announced that it has raised €3 billion in a Series D funding round at a post-money valuation of more than €21 billion.
 Company
-In-region inference, open models, and new European infrastructure for sovereign AI.
-Mistral is bringing together the inference infrastructure, open models, and long-term commitments Europe needs to control its AI future, and setting a roadmap for the world.
+Mistral raises €3B to make sovereign, open-weight AI the technology frontier
+Mistral today announced that it has raised €3 billion in a Series D funding round at a post-money valuation of more than €21 billion.
 Company
 Mistral x HUMAIN
 Product
 Agentic Search. More accurate and efficient results from your AI systems.
 The retrieval layer that helps AI systems navigate, read, and verify information inside and across even the most complex documents.
+Company
+In-region inference, open models, and new European infrastructure for sovereign AI.
+Mistral is bringing together the inference infrastructure, open models, and long-term commitments Europe needs to control its AI future, and setting a roadmap for the world.
 Solutions
 Introducing Shieldstral.
 Product

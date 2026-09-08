@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-08T07:17:26.077235 -->
+<!-- fetched: 2026-09-08T14:14:07.619454 -->
 
 You need to enable JavaScript to run this app.
 文档中心
@@ -28,6 +28,7 @@ You need to enable JavaScript to run this app.
 模型下线公告 2024
 火山方舟 SDK V1/V2下线公告及迁移指引
 模型插件联网基础版、联网plus版、联网pro版下线公告
+方舟官方 SDK 升级公告
 上线到生产
 模型接入指南（LLM） - 标准流程
 模型接入指南（LLM） - 性能评测

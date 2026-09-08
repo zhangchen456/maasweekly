@@ -1,11 +1,11 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-08T07:18:43.463271 -->
+<!-- fetched: 2026-09-08T14:15:49.718454 -->
 
 [
   {
     "_id": "621ffdc136468d709f180294",
     "id": "sentence-transformers/all-MiniLM-L6-v2",
-    "likes": 5577,
+    "likes": 5578,
     "private": false,
     "downloads": 251367312,
     "tags": [
@@ -268,7 +268,7 @@
   {
     "_id": "65b53851e602b6c2c96e78da",
     "id": "BAAI/bge-m3",
-    "likes": 3478,
+    "likes": 3480,
     "private": false,
     "downloads": 37730552,
     "tags": [
@@ -299,7 +299,7 @@
   {
     "_id": "69037c2ff37fdfe285722818",
     "id": "amazon/chronos-2",
-    "likes": 434,
+    "likes": 435,
     "private": false,
     "downloads": 23947883,
     "tags": [
@@ -426,7 +426,7 @@
   {
     "_id": "680da718233834890aa01f51",
     "id": "Qwen/Qwen3-0.6B",
-    "likes": 1586,
+    "likes": 1587,
     "private": false,
     "downloads": 21327590,
     "tags": [
@@ -598,7 +598,7 @@
   {
     "_id": "6a6bd1dc7034404148ec9107",
     "id": "Comfy-Org/MiniMax-H3",
-    "likes": 1727,
+    "likes": 1728,
     "private": false,
     "downloads": 18901647,
     "tags": [
@@ -738,7 +738,7 @@
   {
     "_id": "621ffdc036468d709f17434d",
     "id": "openai-community/gpt2",
-    "likes": 3714,
+    "likes": 3716,
     "private": false,
     "downloads": 14629637,
     "tags": [
