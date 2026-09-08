@@ -1,6 +1,388 @@
 {
-  "updated_at": "2026-09-08T07:39:56",
+  "updated_at": "2026-09-08T23:15:33",
   "days": [
+    {
+      "date": "2026-09-09",
+      "stats": {
+        "total": 68,
+        "success": 67,
+        "failed": 1,
+        "changed": 11,
+        "unchanged": 56
+      },
+      "changed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "API 兼容性升级公告"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "API 兼容性升级公告",
+          "raw_added_count": 1,
+          "raw_removed_count": 0
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 1,
+          "added_lines": [
+            "Fast, high-quality everyday image generation",
+            "GPT-Image-2.5 Sunburst",
+            "Image prompting",
+            "Our most capable model for image generation and editing",
+            "Prompt cache diagnostics"
+          ],
+          "removed_lines": [
+            "State-of-the-art image generation model"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "gpt-image-",
+              "before": "GPT-Image-2",
+              "after": "GPT-Image-2.5 Flare"
+            }
+          ],
+          "signal_preview": "Fast, high-quality everyday image generation",
+          "raw_added_count": 6,
+          "raw_removed_count": 2
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 1,
+          "added_lines": [
+            "Image prompting",
+            "Prompt cache diagnostics",
+            "| gpt-image-2.5-flare | Image | $8.00 | $2.00 | $30.00",
+            "| gpt-image-2.5-sunburst | Image | $8.00 | $2.00 | $30.00"
+          ],
+          "removed_lines": [
+            "| gpt-image-2 | Image | $8.00 | $2.00 | $30.00"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Prompt cache diagnostics",
+          "raw_added_count": 4,
+          "raw_removed_count": 1
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 0,
+          "added_lines": [
+            "Compare cache reuse against a previous response, identify reasons for cache misses, and follow troubleshooting guidance to improve cache reuse.",
+            "Image prompting",
+            "Prompt Cache Diagnostics is now generally available in the Responses API for GPT-5.6 and later supported models.",
+            "Prompt cache diagnostics",
+            "Released GPT Image 2.5 Sunburst and GPT Image 2.5 Flare for image generation and editing through the Image API and the Responses API image generation tool.",
+            "Use Sunburst for workflows where editing precision matters most, or Flare for fast, high-quality everyday image generation. Both models support the new xhigh and max quality settings and use GPT Image 2 token rates. See the image generation guide and pricing.",
+            "gpt-image-2.5-flare",
+            "gpt-image-2.5-sunburst"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Compare cache reuse against a previous response, identify reasons for cache misses, and follow troubleshooting guidance to improve cache reuse.",
+          "raw_added_count": 8,
+          "raw_removed_count": 0
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 0,
+          "added_lines": [
+            "Compare cache reuse against a previous response, identify reasons for cache misses, and follow troubleshooting guidance to improve cache reuse.",
+            "Image prompting",
+            "Prompt Cache Diagnostics is now generally available in the Responses API for GPT-5.6 and later supported models.",
+            "Prompt cache diagnostics",
+            "Released GPT Image 2.5 Sunburst and GPT Image 2.5 Flare for image generation and editing through the Image API and the Responses API image generation tool.",
+            "Use Sunburst for workflows where editing precision matters most, or Flare for fast, high-quality everyday image generation. Both models support the new xhigh and max quality settings and use GPT Image 2 token rates. See the image generation guide and pricing.",
+            "gpt-image-2.5-flare",
+            "gpt-image-2.5-sunburst"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Compare cache reuse against a previous response, identify reasons for cache misses, and follow troubleshooting guidance to improve cache reuse.",
+          "raw_added_count": 8,
+          "raw_removed_count": 0
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 12,
+          "removed_count": 2,
+          "added_lines": [
+            "$0.10 starting January 1, 2027.",
+            "$0.20 starting January 1, 2027.",
+            "$1.00 (text / image / video / audio) starting January 1, 2027.",
+            "$10.00 starting January 1, 2027.",
+            "$2.00 (text / image / video / audio) starting January 1, 2027.",
+            "$5.00 starting January 1, 2027.",
+            "| $0.05 through December 31, 2026.",
+            "| $0.10 through December 31, 2026.",
+            "| $0.50 (text / image / video / audio) through December 31, 2026.",
+            "| $1.00 (text / image / video / audio) through December 31, 2026.",
+            "| $2.50 through December 31, 2026.",
+            "| $5.00 through December 31, 2026."
+          ],
+          "removed_lines": [
+            "| $1.00 (text / image / video / audio)",
+            "| $2.00 (text / image / video / audio)"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-04 UTC.",
+              "after": "Last updated 2026-09-08 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-04 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-08 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "$0.10 starting January 1, 2027.",
+          "raw_added_count": 14,
+          "raw_removed_count": 4
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "By Junichi Kashino • 4-minute read",
+            "How KDDI built Buffmee, a faster, reliable consumer RAG app"
+          ],
+          "removed_lines": [
+            "By Scott Densmore • 6-minute read",
+            "Expanding Google Antigravity for enterprise customers"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "By Junichi Kashino • 4-minute read",
+          "raw_added_count": 2,
+          "raw_removed_count": 2
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "A technical deep dive into how Cohere’s approach to megakernels delivers 1.58x faster LLM serving on H100 devices.",
+            "AI for DevelopersResearch",
+            "Inside the megakernel serving engine for North Mini Code"
+          ],
+          "removed_lines": [
+            "Why Cultural Awareness is Essential for Global AI"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "A technical deep dive into how Cohere’s approach to megakernels delivers 1.58x faster LLM serving on H100 devices.",
+          "raw_added_count": 5,
+          "raw_removed_count": 2
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 1,
+          "added_lines": [
+            "\"arxiv:2308.12966\",",
+            "\"arxiv:2409.12191\",",
+            "\"arxiv:2502.13923\",",
+            "\"image-text-to-text\","
+          ],
+          "removed_lines": [
+            "\"doi:10.57967/hf/0039\","
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "\"image-text-to-text\",",
+          "raw_added_count": 31,
+          "raw_removed_count": 25
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 3,
+          "added_lines": [
+            "Agentic tool use",
+            "CodingAgenticTool UsePrivate DatasetUser InteractionFinanceMedicalLegalIntelligence IndexLong ContextMultimodalInstruction FollowingFaithfulnessWritingBusinessSee more"
+          ],
+          "removed_lines": [
+            "CodingTool UsePrivate DatasetUser InteractionFinanceMedicalLegalIntelligence IndexLong ContextMultimodalInstruction FollowingFaithfulnessWritingBusinessSee more",
+            "GPQA Diamond",
+            "Scientific reasoning"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "CodingAgenticTool UsePrivate DatasetUser InteractionFinanceMedicalLegalIntelligence IndexLong ContextMultimodalInstruction FollowingFaithfulnessWritingBusinessSee more",
+          "raw_added_count": 2,
+          "raw_removed_count": 3
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 17,
+          "removed_count": 0,
+          "added_lines": [
+            "10Anthropic",
+            "8Bytedanceseedream-5.0-pro1394±4",
+            "GPT 6 Astra (Max)",
+            "claude-fable-5.1-max1764+15/-15",
+            "claude-fable-51628+8/-8",
+            "gpt-6-astra-max1796+19/-19",
+            "gpt-image-2 (medium)1381±4",
+            "gpt-image-2 (medium)1461±3",
+            "gpt-image-2.5-flare1399",
+            "gpt-image-2.5-flare1491",
+            "gpt-image-2.5-sunburst1421",
+            "gpt-image-2.5-sunburst1520",
+            "mai-image-2.61331±7",
+            "mai-image-2.61434±8",
+            "muse-image1277±6",
+            "muse-spark-1.3-max1650+18/-18",
+            "qwen3.8-flash-next1631"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "bytedanceseedream-",
+              "before": "6Bytedanceseedream-5.0-pro1394±4",
+              "after": "10Bytedanceseedream-5.0-pro1257±4"
+            },
+            {
+              "key": "reve-2.11301",
+              "before": "4reve-2.11301±8",
+              "after": "6reve-2.11301±8"
+            },
+            {
+              "key": "reve-2.01270",
+              "before": "6reve-2.01270±6",
+              "after": "8reve-2.01270±6"
+            }
+          ],
+          "signal_preview": "claude-fable-5.1-max: 1764 (+15/-15)",
+          "raw_added_count": 31,
+          "raw_removed_count": 30
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        }
+      ],
+      "price_changes": [
+        {
+          "provider": "google",
+          "model": "gemini-robotics-er-2-preview",
+          "component": "input",
+          "previous": "2.000000",
+          "current": "1.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "provider": "google",
+          "model": "gemini-robotics-er-2-preview",
+          "component": "output",
+          "previous": "10.000000",
+          "current": "5.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "provider": "google",
+          "model": "gemini-robotics-er-2-preview",
+          "component": "cache_read",
+          "previous": "1.000000",
+          "current": "0.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "provider": "google",
+          "model": "gemini-robotics-er-2-streaming-preview",
+          "component": "input",
+          "previous": "2.000000",
+          "current": "1.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "provider": "google",
+          "model": "gemini-robotics-er-2-streaming-preview",
+          "component": "output",
+          "previous": "10.000000",
+          "current": "5.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        }
+      ]
+    },
     {
       "date": "2026-09-08",
       "stats": {
