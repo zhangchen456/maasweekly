@@ -126,11 +126,71 @@ def main() -> int:
             except AssertionError as e:
                 failures.append(str(e))
                 print(f"  ✗ {e}")
+    # glm 2026-09 改版页面（卡片 + FAQ 结构，glm-2 解析）：真实抓取存档的回归
+    try:
+        run_glm_v2_case()
+    except AssertionError as e:
+        failures.append(str(e))
+        print(f"  ✗ {e}")
     if failures:
         print(f"\n{len(failures)} 项失败")
         return 1
-    print("\n八家 × 双格式 fixture 回归全部通过")
+    print("\n八家 × 双格式 fixture 回归全部通过（含 glm 改版页面）")
     return 0
+
+
+def run_glm_v2_case() -> None:
+    """glm-2：2026-09 智谱改版页面（卡片 + FAQ 兜底）的解析回归。
+
+    fixture 为 2026-09-08 真实渲染存档（glm_pricing_new_2026-09-08.html）。
+    断言覆盖两条通道的代表性模型与价格（值手工对照页面原文核对）。
+    """
+    fixture = FIXTURES / "glm_pricing_new_2026-09-08.html"
+    assert fixture.exists(), f"缺少 fixture：{fixture}"
+    content = fixture.read_text(encoding="utf-8")
+    result = GlmPricingExtractor().extract(make_snapshot("glm", content))
+    report = normalize_and_validate(result)
+
+    label = "glm(2026-09 改版页)"
+    assert result.price_facts, f"{label}: 零 fact 产出"
+    assert not report.rejected, f"{label}: 门禁拒绝 {len(report.rejected)} 条"
+    assert not [w for w in result.warnings if "structure_drift" in w.lower()], f"{label}: 结构漂移"
+
+    by_key: dict = {}
+    for f in result.price_facts:
+        by_key.setdefault(f.model_key, {})[(f.component, f.context_band.min_input_tokens if f.context_band else None)] = f.amount
+        assert f.currency == "CNY", f"{label}: currency={f.currency}"
+        assert f.region == "cn", f"{label}: region={f.region}"
+
+    # 卡片通道：GLM-5.3（table 卡）
+    g53 = by_key.get("glm-5.3", {})
+    assert g53.get(("input", None)) == "8.000000", f"{label}: glm-5.3 input={g53.get(('input', None))}"
+    assert g53.get(("output", None)) == "28.000000"
+    assert g53.get(("cache_read", None)) == "2.000000"
+    # 卡片通道：GLM-5.3-Flash 促销价——标准价带删除线被移除，取当前生效的折扣价
+    g53f = by_key.get("glm-5.3-flash", {})
+    assert g53f.get(("input", None)) == "0.400000", f"{label}: glm-5.3-flash input={g53f.get(('input', None))}"
+    assert g53f.get(("output", None)) == "1.400000"
+    assert g53f.get(("cache_read", None)) == "0.115000"
+    # field-group 卡：GLM-OCR（输入价格/输出价格 label）
+    gocr = by_key.get("glm-ocr", {})
+    assert gocr.get(("input", None)) == "0.200000"
+    assert gocr.get(("output", None)) == "0.200000"
+    # FAQ 兜底：GLM-5.1 分段计价（[0,32K) 6 元 / [32K+) 8 元）
+    g51 = by_key.get("glm-5.1", {})
+    assert g51.get(("input", 0)) == "6.000000", f"{label}: glm-5.1 input[0,32K)={g51.get(('input', 0))}"
+    assert g51.get(("input", 32000)) == "8.000000"
+    assert g51.get(("output", 0)) == "24.000000"
+    assert g51.get(("output", 32000)) == "28.000000"
+    # FAQ 兜底：GLM-4.5V 分段
+    g45v = by_key.get("glm-4.5v", {})
+    assert g45v.get(("input", 0)) == "2.000000"
+    assert g45v.get(("input", 32000)) == "4.000000"
+    # 非价格模型排除：TTS（按字符计价）与免费模型（4.6V-Flash）不产出 token facts
+    assert "glm-tts" not in by_key, f"{label}: glm-tts 不应产出 token 价格"
+    assert "glm-4.6v-flash" not in by_key, f"{label}: 免费模型不应产出价格"
+
+    print(f"  ✓ {label}: {len(result.price_facts)} facts, {len(result.models)} models")
 
 
 if __name__ == "__main__":
