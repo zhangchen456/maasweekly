@@ -55,17 +55,36 @@ def fetch_page(url):
     return None, err if err else "内容过短"
 
 
+# 反爬挑战页特征：命中任一即判抓取失败（否则快照被污染，每天 Ray ID 变化产生假 diff）
+CHALLENGE_MARKERS = [
+    "Cloudflare Ray ID",
+    "Attention Required! | Cloudflare",
+    "Sorry, you have been blocked",
+    "Checking your browser before accessing",
+    "Please enable cookies",
+    "challenge-error-text",      # openai.com 自建 JS 挑战页
+]
+
+
+def looks_like_challenge(content):
+    """检测 curl 拿到的是否为反爬挑战页而非真实内容。"""
+    # 只查前 8KB：挑战页特征都在头部（script 内的标记可能偏后），真实文档不会在页首
+    # 集中出现这些字样，避免误伤正文提及 Cloudflare 的长文档
+    head = content[:8000]
+    return any(m in head for m in CHALLENGE_MARKERS)
+
+
 def fetch_via_curl(url):
     """用 curl 抓取页面/API，返回文本内容"""
     import subprocess
     import re
-    
+
     # Google ai.google.dev 不带自定义 UA 效果更好
     if "ai.google.dev" in url:
         headers = []
     else:
         headers = ["-H", "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"]
-    
+
     try:
         cmd = ["curl", "-sL", "--max-time", "30"] + headers + [
              "-H", "Accept: text/html,application/json,*/*",
@@ -77,7 +96,7 @@ def fetch_via_curl(url):
         content = result.stdout.strip()
         if not content or len(content) < 10:
             return None, f"curl 返回空 (stderr: {result.stderr[:200]})"
-        
+
         # JSON API 响应
         if url.endswith("/api/models") or "/api/" in url:
             try:
@@ -86,7 +105,10 @@ def fetch_via_curl(url):
                 return content, None
             except json.JSONDecodeError:
                 pass  # 非 JSON，继续处理为 HTML
-        
+
+        if looks_like_challenge(content):
+            return None, f"反爬挑战页 (raw_len={len(content)})"
+
         # HTML 页面：做简单文本提取
         content = extract_text_from_html(content)
         

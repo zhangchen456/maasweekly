@@ -81,7 +81,7 @@
         "blog": "https://cloud.tencent.com/developer/column/",
         "model_marketplace": "https://console.cloud.tencent.com/tokenhub/"
       },
-      "notes": "产品概述(104753, 含模型列表)/混元生文计费概述(97731, 含输入/输出/缓存价)/产品公告(132069, 另有API更新历史101849)均200。api_docs 取混元大模型API概览(101848)。注意 tokenhub.cloud.tencent.com 域名不可访问，TokenHub 控制台实际地址为 console.cloud.tencent.com/tokenhub/（需登录）。Tencent-Hunyuan 为混元官方开源组织。"
+      "notes": "【2026-09 起全维度抓取失败】腾讯云文档站（cloud.tencent.com/document）上了 EdgeOne WAF：对 curl 等非浏览器请求返回固定 29182 字节 JS 挑战页（混淆脚本 + 动态 cookie，无静态绕过），测过 3 种 UA / 3 种 Accept 组合均被拦，本地与 CI 一致。页面自身提示混元功能将迁移至 TokenHub，但 tokenhub.cloud.tencent.com 不可访问、console 需登录，暂无公开 API 可挖。覆盖需上 headless 浏览器（同讯飞星辰问题），价值待定。历史探测记录：产品概述(104753, 含模型列表)/混元生文计费概述(97731, 含输入/输出/缓存价)/产品公告(132069, 另有API更新历史101849)曾 200 公开。Tencent-Hunyuan 为混元官方开源组织。"
     },
     {
       "name": "硅基流动",
@@ -180,10 +180,10 @@
         "changelog": "https://platform.openai.com/docs/changelog",
         "api_docs": "https://platform.openai.com/docs/api-reference",
         "github": "https://github.com/openai",
-        "blog": "https://openai.com/news/",
+        "blog": "https://platform.openai.com/docs/changelog",
         "model_marketplace": null
       },
-      "notes": "platform.openai.com/docs/models、/docs/pricing（含输入/输出/缓存价）、/docs/changelog 均200公开。openai.com/news/ 对 curl 返回403（反爬）但浏览器可正常访问。platform.openai.com 根域名需登录（控制台）。提供 /v1/models API。"
+      "notes": "platform.openai.com/docs/models、/docs/pricing（含输入/输出/缓存价）、/docs/changelog 均200公开。openai.com/news/ 对 curl 返回 JS 挑战页（challenge-error-text，2026-09 起严格反爬，从未抓取成功过），浏览器可正常访问但自动化拿不到；2026-09-08 起 blog 改指 /docs/changelog（含 GPT 模型发布条目，覆盖产品新闻）。platform.openai.com 根域名需登录（控制台）。提供 /v1/models API。"
     },
     {
       "name": "Anthropic",
@@ -279,13 +279,13 @@
       "sources": {
         "model_list": "https://docs.x.ai/docs/models",
         "pricing": "https://docs.x.ai/docs/models",
-        "changelog": "https://x.ai/news",
+        "changelog": "https://docs.x.ai/docs/release-notes",
         "api_docs": "https://docs.x.ai/api-reference",
         "github": "https://github.com/xai-org",
-        "blog": "https://x.ai/news",
+        "blog": "https://docs.x.ai/docs/release-notes",
         "model_marketplace": null
       },
-      "notes": "docs.x.ai/docs/models 标题为 'Grok Models & Pricing'，一个页面同时覆盖模型列表与定价（含输入/输出/缓存价），200公开。x.ai 主站与 /news 对 curl 返回403（严格反爬），浏览器可访问；自动化抓取建议用 docs.x.ai 或 GitHub。xai-org 为官方开源组织。"
+      "notes": "docs.x.ai/docs/models 标题为 'Grok Models & Pricing'，一个页面同时覆盖模型列表与定价（含输入/输出/缓存价），200公开。x.ai 主站与 /news 对 curl 返回 Cloudflare 挑战页（2026-09 起严格反爬，浏览器可访问但自动化拿不到），曾配置导致快照被 Ray ID 污染、每天产生假 diff，2026-09-08 改为 docs.x.ai/docs/release-notes（curl 可提取 40+ 条带日期的版本更新条目）。changelog 与 blog 同源（release-notes 覆盖产品新闻）。xai-org 为官方开源组织。"
     },
     {
       "name": "讯飞星辰MaaS",
