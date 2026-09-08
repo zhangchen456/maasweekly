@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-08T14:15:49.718454 -->
+<!-- fetched: 2026-09-08T15:27:44.060371 -->
 
 [
   {
@@ -7,7 +7,7 @@
     "id": "sentence-transformers/all-MiniLM-L6-v2",
     "likes": 5578,
     "private": false,
-    "downloads": 251367312,
+    "downloads": 253331994,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -67,7 +67,7 @@
     "id": "cross-encoder/ms-marco-MiniLM-L6-v2",
     "likes": 312,
     "private": false,
-    "downloads": 85896566,
+    "downloads": 86661012,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -98,7 +98,7 @@
     "id": "BAAI/bge-small-en-v1.5",
     "likes": 550,
     "private": false,
-    "downloads": 64713214,
+    "downloads": 64933788,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -133,7 +133,7 @@
     "id": "google/electra-base-discriminator",
     "likes": 158,
     "private": false,
-    "downloads": 57767332,
+    "downloads": 58160168,
     "tags": [
       "transformers",
       "pytorch",
@@ -157,7 +157,7 @@
     "id": "google-bert/bert-base-uncased",
     "likes": 2992,
     "private": false,
-    "downloads": 50747373,
+    "downloads": 50396517,
     "tags": [
       "transformers",
       "pytorch",
@@ -190,7 +190,7 @@
     "id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
     "likes": 1368,
     "private": false,
-    "downloads": 45973397,
+    "downloads": 46316902,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -270,7 +270,7 @@
     "id": "BAAI/bge-m3",
     "likes": 3480,
     "private": false,
-    "downloads": 37730552,
+    "downloads": 37985566,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -329,7 +329,7 @@
     "id": "sentence-transformers/all-mpnet-base-v2",
     "likes": 1351,
     "private": false,
-    "downloads": 23898434,
+    "downloads": 23908257,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -385,7 +385,7 @@
     "id": "google-t5/t5-small",
     "likes": 599,
     "private": false,
-    "downloads": 23361495,
+    "downloads": 23696426,
     "tags": [
       "transformers",
       "pytorch",
@@ -424,38 +424,11 @@
     "modelId": "google-t5/t5-small"
   },
   {
-    "_id": "680da718233834890aa01f51",
-    "id": "Qwen/Qwen3-0.6B",
-    "likes": 1587,
-    "private": false,
-    "downloads": 21327590,
-    "tags": [
-      "transformers",
-      "safetensors",
-      "qwen3",
-      "text-generation",
-      "conversational",
-      "arxiv:2505.09388",
-      "base_model:Qwen/Qwen3-0.6B-Base",
-      "base_model:finetune:Qwen/Qwen3-0.6B-Base",
-      "license:apache-2.0",
-      "text-generation-inference",
-      "endpoints_compatible",
-      "region:us",
-      "deploy:sagemaker",
-      "deploy:azure"
-    ],
-    "pipeline_tag": "text-generation",
-    "library_name": "transformers",
-    "createdAt": "2025-04-27T03:40:08.000Z",
-    "modelId": "Qwen/Qwen3-0.6B"
-  },
-  {
     "_id": "621ffdc036468d709f174364",
     "id": "FacebookAI/xlm-roberta-base",
     "likes": 895,
     "private": false,
-    "downloads": 21146505,
+    "downloads": 21410310,
     "tags": [
       "transformers",
       "pytorch",
@@ -572,11 +545,38 @@
     "modelId": "FacebookAI/xlm-roberta-base"
   },
   {
+    "_id": "680da718233834890aa01f51",
+    "id": "Qwen/Qwen3-0.6B",
+    "likes": 1588,
+    "private": false,
+    "downloads": 21327590,
+    "tags": [
+      "transformers",
+      "safetensors",
+      "qwen3",
+      "text-generation",
+      "conversational",
+      "arxiv:2505.09388",
+      "base_model:Qwen/Qwen3-0.6B-Base",
+      "base_model:finetune:Qwen/Qwen3-0.6B-Base",
+      "license:apache-2.0",
+      "text-generation-inference",
+      "endpoints_compatible",
+      "region:us",
+      "deploy:sagemaker",
+      "deploy:azure"
+    ],
+    "pipeline_tag": "text-generation",
+    "library_name": "transformers",
+    "createdAt": "2025-04-27T03:40:08.000Z",
+    "modelId": "Qwen/Qwen3-0.6B"
+  },
+  {
     "_id": "621ffdc136468d709f17ea62",
     "id": "openai/clip-vit-base-patch32",
     "likes": 1212,
     "private": false,
-    "downloads": 20496047,
+    "downloads": 20702763,
     "tags": [
       "transformers",
       "pytorch",
@@ -618,7 +618,7 @@
     "id": "BAAI/bge-reranker-v2-m3",
     "likes": 1162,
     "private": false,
-    "downloads": 18005080,
+    "downloads": 18159906,
     "tags": [
       "sentence-transformers",
       "safetensors",
@@ -685,7 +685,7 @@
     "id": "timm/mobilenetv3_small_100.lamb_in1k",
     "likes": 103,
     "private": false,
-    "downloads": 16560393,
+    "downloads": 16248411,
     "tags": [
       "timm",
       "pytorch",
@@ -708,7 +708,7 @@
     "id": "nomic-ai/nomic-embed-text-v1.5",
     "likes": 902,
     "private": false,
-    "downloads": 16202355,
+    "downloads": 16210409,
     "tags": [
       "sentence-transformers",
       "onnx",
@@ -740,7 +740,7 @@
     "id": "openai-community/gpt2",
     "likes": 3716,
     "private": false,
-    "downloads": 14629637,
+    "downloads": 14748356,
     "tags": [
       "transformers",
       "pytorch",

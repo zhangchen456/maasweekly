@@ -1,11 +1,11 @@
 {
   "date": "2026-09-08",
-  "fetched_at": "2026-09-08T14:15:52.369780",
+  "fetched_at": "2026-09-08T15:27:45.783179",
   "stats": {
     "total": 68,
-    "success": 66,
-    "failed": 2,
-    "changed": 22,
+    "success": 68,
+    "failed": 0,
+    "changed": 24,
     "unchanged": 44
   },
   "changes": [
@@ -13,8 +13,8 @@
       "platform": "火山方舟",
       "source_type": "model_list",
       "url": "https://www.volcengine.com/docs/82379/1330310",
-      "status": "fetch_failed",
-      "error": "提取后内容过短 (raw_len=11071)"
+      "status": "first_fetch",
+      "content_length": 1742
     },
     {
       "platform": "火山方舟",
@@ -211,8 +211,7 @@
       "platform": "MiniMax",
       "source_type": "model_list",
       "url": "https://platform.minimaxi.com/docs/guides/models-intro",
-      "status": "fetch_failed",
-      "error": "curl 返回空 (stderr: )"
+      "status": "unchanged"
     },
     {
       "platform": "MiniMax",
@@ -380,7 +379,17 @@
       "platform": "Google Vertex AI",
       "source_type": "model_list",
       "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
-      "status": "unchanged"
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 2,
+      "added_lines": [
+        "Last updated 2026-09-03 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-03 UTC.\"],[],[]]"
+      ],
+      "removed_lines": [
+        "Last updated 2026-09-02 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-02 UTC.\"],[],[]]"
+      ]
     },
     {
       "platform": "Google Vertex AI",
@@ -664,31 +673,31 @@
       "added_count": 34,
       "removed_count": 34,
       "added_lines": [
-        "\"downloads\": 14629637,",
-        "\"downloads\": 16202355,",
-        "\"downloads\": 16560393,",
+        "\"downloads\": 14748356,",
+        "\"downloads\": 16210409,",
+        "\"downloads\": 16248411,",
         "\"downloads\": 17103836,",
         "\"downloads\": 17543277,",
-        "\"downloads\": 18005080,",
+        "\"downloads\": 18159906,",
         "\"downloads\": 18901647,",
-        "\"downloads\": 20496047,",
-        "\"downloads\": 21146505,",
+        "\"downloads\": 20702763,",
         "\"downloads\": 21327590,",
-        "\"downloads\": 23361495,",
-        "\"downloads\": 23898434,",
+        "\"downloads\": 21410310,",
+        "\"downloads\": 23696426,",
+        "\"downloads\": 23908257,",
         "\"downloads\": 23947883,",
-        "\"downloads\": 251367312,",
-        "\"downloads\": 37730552,",
-        "\"downloads\": 45973397,",
-        "\"downloads\": 50747373,",
-        "\"downloads\": 57767332,",
-        "\"downloads\": 64713214,",
-        "\"downloads\": 85896566,",
+        "\"downloads\": 253331994,",
+        "\"downloads\": 37985566,",
+        "\"downloads\": 46316902,",
+        "\"downloads\": 50396517,",
+        "\"downloads\": 58160168,",
+        "\"downloads\": 64933788,",
+        "\"downloads\": 86661012,",
         "\"likes\": 1212,",
         "\"likes\": 127,",
         "\"likes\": 1351,",
         "\"likes\": 1368,",
-        "\"likes\": 1587,",
+        "\"likes\": 1588,",
         "\"likes\": 1728,",
         "\"likes\": 2992,",
         "\"likes\": 3480,",

@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-09-08T06:17:33",
+  "updated_at": "2026-09-08T07:29:22",
   "days": [
     {
       "date": "2026-09-08",
       "stats": {
         "total": 68,
-        "success": 66,
-        "failed": 2,
-        "changed": 22,
+        "success": 68,
+        "failed": 0,
+        "changed": 24,
         "unchanged": 44
       },
       "changed": [
@@ -154,6 +154,32 @@
           "raw_added_count": 1,
           "raw_removed_count": 1,
           "llm_summary": "博客文章从“Operation Blue Skies”更换为“Our new contrail avoidance trial in Asia-Pacific”，主题从航空气候影响转向亚太地区的航线优化试验，可能反映公司关注点的变化。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-02 UTC.",
+              "after": "Last updated 2026-09-03 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-02 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-03 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-03 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2
         },
         {
           "platform": "Mistral AI",
@@ -471,6 +497,13 @@
       ],
       "first_fetch": [
         {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "first_fetch",
+          "content_length": 1742
+        },
+        {
           "platform": "腾讯混元/TokenHub",
           "source_type": "model_list",
           "url": "https://cloud.tencent.com/document/product/1729/104753",
@@ -506,22 +539,7 @@
           "content_length": 50448
         }
       ],
-      "failed": [
-        {
-          "platform": "火山方舟",
-          "source_type": "model_list",
-          "url": "https://www.volcengine.com/docs/82379/1330310",
-          "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=11071)"
-        },
-        {
-          "platform": "MiniMax",
-          "source_type": "model_list",
-          "url": "https://platform.minimaxi.com/docs/guides/models-intro",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        }
-      ],
+      "failed": [],
       "highlights": [
         {
           "platform": "MiniMax",
@@ -584,6 +602,272 @@
               "type": "release"
             }
           ]
+        }
+      ],
+      "price_changes": [
+        {
+          "provider": "glm",
+          "model": "glm-ocr",
+          "component": "input",
+          "current": "0.200000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-ocr",
+          "component": "output",
+          "current": "0.200000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-5v-turbo",
+          "component": "input",
+          "current": "5.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-5v-turbo",
+          "component": "input",
+          "current": "7.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-5v-turbo",
+          "component": "output",
+          "current": "22.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-5v-turbo",
+          "component": "output",
+          "current": "26.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-4.6v",
+          "component": "input",
+          "current": "1.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-4.6v",
+          "component": "input",
+          "current": "2.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-4.6v",
+          "component": "output",
+          "current": "3.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-4.6v",
+          "component": "output",
+          "current": "6.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-4.6v-flashx",
+          "component": "input",
+          "current": "0.150000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-4.6v-flashx",
+          "component": "input",
+          "current": "0.300000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-4.6v-flashx",
+          "component": "output",
+          "current": "1.500000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-4.6v-flashx",
+          "component": "output",
+          "current": "3.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-4.5v",
+          "component": "input",
+          "current": "2.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-4.5v",
+          "component": "input",
+          "current": "4.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-4.5v",
+          "component": "output",
+          "current": "6.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-4.5v",
+          "component": "output",
+          "current": "12.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-5.1",
+          "component": "input",
+          "current": "6.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-5.1",
+          "component": "input",
+          "current": "8.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-5.1",
+          "component": "output",
+          "current": "24.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-5.1",
+          "component": "output",
+          "current": "28.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
         }
       ]
     },

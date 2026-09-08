@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-08T14:15:49.566601 -->
+<!-- fetched: 2026-09-08T15:27:43.895321 -->
 
 {
   "code": 0,
@@ -28,9 +28,9 @@
       },
       {
         "content": "【新增模型】 DeepSeek-V4-Pro-0813上线模型集市",
-        "externalLink": "",
+        "externalLink": "https://maas.xfyun.cn/modelSquare",
         "id": 1000031,
-        "internalLink": "",
+        "internalLink": "https://in.iflyaicloud.com/maas-finetune/modelSquare",
         "module": "模型集市",
         "publishTime": "2026-08-24 00:00:00",
         "sortOrder": 4,
@@ -38,9 +38,9 @@
       },
       {
         "content": "【新增模型】 DeepSeek-V4-Flash-0731上线模型集市",
-        "externalLink": "",
+        "externalLink": "https://maas.xfyun.cn/modelSquare",
         "id": 1000029,
-        "internalLink": "",
+        "internalLink": "https://in.iflyaicloud.com/maas-finetune/modelSquare",
         "module": "模型集市",
         "publishTime": "2026-07-30 00:00:00",
         "sortOrder": 5,
