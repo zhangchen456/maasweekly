@@ -59,37 +59,48 @@ jobs:
         if: ${{ !inputs.skip_fetch }}
         run: python3 pipeline/scripts/sync-diff-to-site.py
 
-      # ---- 2.2 LLM 提炼"今日要点"（失败不阻塞，前端回退规则版预览）----
-      - name: LLM digest highlights
-        if: ${{ !inputs.skip_fetch }}
-        run: python3 pipeline/scripts/llm-digest.py
-        env:
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
-        continue-on-error: true
-
-      # ---- 2.3 OpenRouter 榜单数据抓取（CC BY 4.0；失败不阻塞，保留旧快照）----
-      - name: Fetch leaderboards data
-        if: ${{ !inputs.skip_fetch }}
-        run: python3 pipeline/scripts/fetch-leaderboards.py
-        env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-        continue-on-error: true
-
-      # ---- 2.4 八家厂商 API 价格结构化抓取（playwright；失败不阻塞，保留旧 ledger）----
+      # ---- 2.2 八家厂商 API 价格结构化抓取（playwright；失败不阻塞，保留旧 ledger）----
+      # 必须在 llm-digest 之前：fetch-prices 产出当日 price_changes，llm-digest 消费它生成"今日要点"
       - name: Fetch model pricing
         if: ${{ !inputs.skip_fetch }}
         run: |
           pip install --quiet playwright beautifulsoup4
           python3 -m playwright install chromium --with-deps
           python3 pipeline/scripts/fetch-prices.py
+        env:
+          TZ: Asia/Shanghai
         continue-on-error: true
 
-      # ---- 2.45 价格解析器离线回归（防厂商页改版导致的解析器退化）----
+      # ---- 2.25 价格解析器离线回归（防厂商页改版导致的解析器退化）----
       - name: Pricing extractors regression
         if: ${{ !inputs.skip_fetch }}
         run: |
           pip install --quiet beautifulsoup4
           python3 tests/test_pricing_extractors.py
+
+      # ---- 2.3 LLM 提炼"今日要点"（消费 diff + price_changes；失败不阻塞，前端回退规则版预览）----
+      - name: LLM digest highlights
+        if: ${{ !inputs.skip_fetch }}
+        run: python3 pipeline/scripts/llm-digest.py
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          TZ: Asia/Shanghai
+        continue-on-error: true
+
+      # ---- 2.35 重跑 sync：把 llm-digest 产出的 highlights 聚合进 weekly-digest.json ----
+      # （首次 sync 在 highlights 生成之前跑，周归档会缺当日要点；此步幂等补齐）
+      - name: Re-sync with highlights
+        if: ${{ !inputs.skip_fetch }}
+        run: python3 pipeline/scripts/sync-diff-to-site.py
+
+      # ---- 2.4 OpenRouter 榜单数据抓取（CC BY 4.0；失败不阻塞，保留旧快照）----
+      - name: Fetch leaderboards data
+        if: ${{ !inputs.skip_fetch }}
+        run: python3 pipeline/scripts/fetch-leaderboards.py
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          TZ: Asia/Shanghai
+        continue-on-error: true
 
       # ---- 3. 抓取文章配图（可选，失败不阻塞）----
       - name: Fetch article images

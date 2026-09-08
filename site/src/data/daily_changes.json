@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-07T23:18:52",
+  "updated_at": "2026-09-08T11:46:25",
   "days": [
     {
       "date": "2026-09-08",
@@ -7,7 +7,7 @@
         "total": 68,
         "success": 62,
         "failed": 6,
-        "changed": 13,
+        "changed": 11,
         "unchanged": 49
       },
       "changed": [
@@ -186,50 +186,6 @@
           "raw_added_count": 6,
           "raw_removed_count": 9,
           "llm_summary": "与 model_list 同步，定价页面也进行了相同的增删操作，新增了 Legacy 和 Media 相关计费项，并明确了退役日期，表明定价体系正在为旧模型退役和新功能计费做准备。"
-        },
-        {
-          "platform": "xAI",
-          "source_type": "changelog",
-          "url": "https://x.ai/news",
-          "status": "changed",
-          "added_count": 0,
-          "removed_count": 0,
-          "added_lines": [],
-          "removed_lines": [],
-          "kind": "substantive",
-          "pairs": [
-            {
-              "key": "cloudflare ray id",
-              "before": "Cloudflare Ray ID: a3735e5dbca0d7d3",
-              "after": "Cloudflare Ray ID: a3796f20fadce607"
-            }
-          ],
-          "signal_preview": "Cloudflare Ray ID: a3796f20fadce607",
-          "raw_added_count": 2,
-          "raw_removed_count": 2,
-          "llm_summary": "仅更新了 Cloudflare Ray ID，属于基础设施层面的变动，无实质内容变化。"
-        },
-        {
-          "platform": "xAI",
-          "source_type": "blog",
-          "url": "https://x.ai/news",
-          "status": "changed",
-          "added_count": 0,
-          "removed_count": 0,
-          "added_lines": [],
-          "removed_lines": [],
-          "kind": "substantive",
-          "pairs": [
-            {
-              "key": "cloudflare ray id",
-              "before": "Cloudflare Ray ID: a3735e5deef40d7b",
-              "after": "Cloudflare Ray ID: a3796f214934416e"
-            }
-          ],
-          "signal_preview": "Cloudflare Ray ID: a3796f214934416e",
-          "raw_added_count": 2,
-          "raw_removed_count": 2,
-          "llm_summary": "仅更新了 Cloudflare Ray ID，属于基础设施层面的变动，无实质内容变化。"
         },
         {
           "platform": "Artificial Analysis",
@@ -452,53 +408,10 @@
         "total": 68,
         "success": 60,
         "failed": 8,
-        "changed": 5,
+        "changed": 3,
         "unchanged": 55
       },
       "changed": [
-        {
-          "platform": "xAI",
-          "source_type": "changelog",
-          "url": "https://x.ai/news",
-          "status": "changed",
-          "added_count": 0,
-          "removed_count": 0,
-          "added_lines": [],
-          "removed_lines": [],
-          "kind": "substantive",
-          "pairs": [
-            {
-              "key": "cloudflare ray id",
-              "before": "Cloudflare Ray ID: a368bb98ab331e11",
-              "after": "Cloudflare Ray ID: a3735e5dbca0d7d3"
-            }
-          ],
-          "signal_preview": "Cloudflare Ray ID: a3735e5dbca0d7d3",
-          "raw_added_count": 2,
-          "raw_removed_count": 2
-        },
-        {
-          "platform": "xAI",
-          "source_type": "blog",
-          "url": "https://x.ai/news",
-          "status": "changed",
-          "added_count": 0,
-          "removed_count": 0,
-          "added_lines": [],
-          "removed_lines": [],
-          "kind": "substantive",
-          "pairs": [
-            {
-              "key": "cloudflare ray id",
-              "before": "Cloudflare Ray ID: a368bb98fdc8f7d1",
-              "after": "Cloudflare Ray ID: a3735e5deef40d7b"
-            }
-          ],
-          "signal_preview": "Cloudflare Ray ID: a3735e5deef40d7b",
-          "raw_added_count": 2,
-          "raw_removed_count": 2,
-          "llm_summary": "仅检测到 Cloudflare Ray ID 变化，属于基础设施层面的请求标识更新，无实质内容变动，不构成 MaaS 行业观察要点。"
-        },
         {
           "platform": "LMArena",
           "source_type": "industry",
@@ -627,7 +540,7 @@
         "total": 68,
         "success": 62,
         "failed": 6,
-        "changed": 7,
+        "changed": 5,
         "unchanged": 55
       },
       "changed": [
@@ -650,28 +563,6 @@
           "raw_added_count": 1,
           "raw_removed_count": 1,
           "llm_summary": "文件输入定价条目从 File API 更名为 Files API，属于接口命名规范化调整，定价本身未变，反映平台 API 版本更新。"
-        },
-        {
-          "platform": "xAI",
-          "source_type": "blog",
-          "url": "https://x.ai/news",
-          "status": "changed",
-          "added_count": 0,
-          "removed_count": 0,
-          "added_lines": [],
-          "removed_lines": [],
-          "kind": "substantive",
-          "pairs": [
-            {
-              "key": "cloudflare ray id",
-              "before": "Cloudflare Ray ID: a36605d3391ab8b6",
-              "after": "Cloudflare Ray ID: a368bb98fdc8f7d1"
-            }
-          ],
-          "signal_preview": "Cloudflare Ray ID: a368bb98fdc8f7d1",
-          "raw_added_count": 2,
-          "raw_removed_count": 2,
-          "llm_summary": "仅 Cloudflare Ray ID 变化，无实质内容更新，属于页面缓存或请求标识变动，不构成行业动态。"
         },
         {
           "platform": "LMArena",
@@ -730,27 +621,6 @@
           "signal_preview": "",
           "raw_added_count": 1,
           "raw_removed_count": 1
-        },
-        {
-          "platform": "xAI",
-          "source_type": "changelog",
-          "url": "https://x.ai/news",
-          "status": "changed",
-          "added_count": 0,
-          "removed_count": 0,
-          "added_lines": [],
-          "removed_lines": [],
-          "kind": "jitter",
-          "pairs": [
-            {
-              "key": "cloudflare ray id",
-              "before": "Cloudflare Ray ID: a36605d2f999ee17",
-              "after": "Cloudflare Ray ID: a368bb98ab331e11"
-            }
-          ],
-          "signal_preview": "",
-          "raw_added_count": 2,
-          "raw_removed_count": 2
         },
         {
           "platform": "HuggingFace",

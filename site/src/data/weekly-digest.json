@@ -5,15 +5,15 @@
     "end": "2026-09-13",
     "days": {
       "2026-09-08": {
-        "substantive": 8,
+        "substantive": 6,
         "jitter": 4,
         "failed": 6,
-        "releases": 0,
-        "pricings": 0,
-        "sunsets": 0
+        "releases": 1,
+        "pricings": 3,
+        "sunsets": 2
       },
       "2026-09-07": {
-        "substantive": 3,
+        "substantive": 1,
         "jitter": 2,
         "failed": 8,
         "releases": 1,
@@ -22,12 +22,60 @@
       }
     },
     "totals": {
-      "substantive": 11,
-      "releases": 1,
-      "pricings": 0,
-      "sunsets": 0
+      "substantive": 7,
+      "releases": 2,
+      "pricings": 3,
+      "sunsets": 2
     },
     "highlights": [
+      {
+        "platform": "MiniMax",
+        "date": "2026-09-08",
+        "text": "新增语音识别 Speech-to-Text 计费项，单价 2.50 元/万字符，支持流式返回、说话人分离与字幕导出",
+        "type": "pricing"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-09-08",
+        "text": "T2A Async speech-2.8-turbo 定价 2.00 元/万字符，描述更新为“同上，速度更快、成本更低”",
+        "type": "pricing"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-09-08",
+        "text": "Voice Cloning 与 Voice Design 新增计费说明：生成音色不立即收费，首次合成时计费",
+        "type": "pricing"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-09-08",
+        "text": "新增 Chat Completions (Legacy)、Generated Media、Image Understanding 等文档章节，删除 Completions (Legacy) 等旧条目",
+        "type": "other"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-09-08",
+        "text": "明确 Imagine Image Quality 退役日期为 2026-11-02，Model Retirement 日期为 2026-05-15",
+        "type": "sunset"
+      },
+      {
+        "platform": "智谱AI",
+        "date": "2026-09-08",
+        "text": "从模型列表移除 CharGLM-4 拟人对话模型与 Emohaa 心理情感支持模型",
+        "type": "sunset"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-09-08",
+        "text": "新增博客文章“Our new contrail avoidance trial in Asia-Pacific”，删除旧文“Operation Blue Skies”",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-08",
+        "text": "Intelligence Index v4.3 发布，用 AutomationBench-AA 替换 𝜏³-Banking，并升级 Terminal-Bench 至 v4.0",
+        "type": "release"
+      },
       {
         "platform": "LMArena",
         "date": "2026-09-07",
@@ -59,8 +107,8 @@
     "end": "2026-09-06",
     "days": {
       "2026-09-06": {
-        "substantive": 3,
-        "jitter": 4,
+        "substantive": 2,
+        "jitter": 3,
         "failed": 6,
         "releases": 2,
         "pricings": 0,
@@ -92,7 +140,7 @@
       }
     },
     "totals": {
-      "substantive": 38,
+      "substantive": 37,
       "releases": 11,
       "pricings": 7,
       "sunsets": 3
