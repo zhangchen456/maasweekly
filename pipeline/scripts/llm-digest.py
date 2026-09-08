@@ -207,7 +207,11 @@ def main():
         targets = [d for d in days if not d.get("highlights") or force]
     else:
         latest = days[0] if days else None
-        targets = [latest] if latest and (not latest.get("highlights") or force) else []
+        # 最新一天在 CI（GITHUB_ACTIONS）默认重跑：每日 run 中 price_changes 可能在
+        # 早间 highlights 之后写入（如手动重跑 fetch-prices），刷新以纳入价格事件；
+        # 本地行为不变（已有 highlights 跳过，避免误覆盖人工修正）
+        rerun_latest = (not latest.get("highlights")) or force or bool(os.environ.get("GITHUB_ACTIONS"))
+        targets = [latest] if latest and rerun_latest else []
 
     if not targets:
         print("没有需要处理的日期（均已生成 highlights）")
