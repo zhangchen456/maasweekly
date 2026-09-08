@@ -5,12 +5,12 @@
     "end": "2026-09-13",
     "days": {
       "2026-09-08": {
-        "substantive": 14,
+        "substantive": 12,
         "jitter": 4,
-        "failed": 0,
-        "releases": 1,
-        "pricings": 3,
-        "sunsets": 2
+        "failed": 2,
+        "releases": 3,
+        "pricings": 2,
+        "sunsets": 1
       },
       "2026-09-07": {
         "substantive": 1,
@@ -22,59 +22,65 @@
       }
     },
     "totals": {
-      "substantive": 15,
-      "releases": 2,
-      "pricings": 3,
-      "sunsets": 2
+      "substantive": 13,
+      "releases": 4,
+      "pricings": 2,
+      "sunsets": 1
     },
     "highlights": [
       {
-        "platform": "MiniMax",
+        "platform": "Mistral AI",
         "date": "2026-09-08",
-        "text": "新增语音识别 Speech-to-Text 计费项，单价 2.50 元/万字符，支持流式返回、说话人分离与字幕导出",
-        "type": "pricing"
-      },
-      {
-        "platform": "MiniMax",
-        "date": "2026-09-08",
-        "text": "T2A Async speech-2.8-turbo 定价 2.00 元/万字符，描述更新为“同上，速度更快、成本更低”",
-        "type": "pricing"
-      },
-      {
-        "platform": "MiniMax",
-        "date": "2026-09-08",
-        "text": "Voice Cloning 与 Voice Design 新增计费说明：生成音色不立即收费，首次合成时计费",
-        "type": "pricing"
-      },
-      {
-        "platform": "xAI",
-        "date": "2026-09-08",
-        "text": "新增 Chat Completions (Legacy)、Generated Media、Image Understanding 等文档章节，删除 Completions (Legacy) 等旧条目",
+        "text": "Mistral 宣布完成 30 亿欧元 D 轮融资，投后估值超 210 亿欧元，用于推动开源权重 AI 技术发展。",
         "type": "other"
       },
       {
-        "platform": "xAI",
+        "platform": "MiniMax",
         "date": "2026-09-08",
-        "text": "明确 Imagine Image Quality 退役日期为 2026-11-02，Model Retirement 日期为 2026-05-15",
-        "type": "sunset"
+        "text": "MiniMax 语音合成 T2A 系列（speech-2.8-hd/turbo）定价保持 3.50/2.00 元每万字符，但文档描述大幅精简。",
+        "type": "pricing"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-09-08",
+        "text": "新增语音识别 Speech-to-Text 计费项，定价 2.50 元每万字符，支持流式返回、说话人分离与字幕导出。",
+        "type": "release"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-09-08",
+        "text": "Voice Cloning 与 Voice Design 明确计费规则：生成音色不立即收费，首次合成时按 9.90 元/音色计费。",
+        "type": "pricing"
       },
       {
         "platform": "智谱AI",
         "date": "2026-09-08",
-        "text": "从模型列表移除 CharGLM-4 拟人对话模型与 Emohaa 心理情感支持模型",
+        "text": "智谱AI 从模型列表中移除 CharGLM-4 拟人对话模型与 Emohaa 心理情感支持模型。",
         "type": "sunset"
       },
       {
-        "platform": "Google Gemini API",
+        "platform": "xAI",
         "date": "2026-09-08",
-        "text": "新增博客文章“Our new contrail avoidance trial in Asia-Pacific”，删除旧文“Operation Blue Skies”",
+        "text": "xAI API 文档新增 Chat Completions (Legacy)、Generated Media、Image Understanding 等章节，并预告 Imagine Image Quality 将于 2026 年 11 月 2 日退役。",
         "type": "other"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-09-08",
+        "text": "xAI 发布 Batch API，支持 JSONL 文件上传及图像/视频生成，并对所有客户开放。",
+        "type": "release"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-09-08",
+        "text": "xAI 新增 Adjustable VAD threshold for Speech to Text 功能，Agent 工具适配 Grok 4.1 Fast 模型且工具价格下调。",
+        "type": "release"
       },
       {
         "platform": "Artificial Analysis",
         "date": "2026-09-08",
-        "text": "Intelligence Index v4.3 发布，用 AutomationBench-AA 替换 𝜏³-Banking，并升级 Terminal-Bench 至 v4.0",
-        "type": "release"
+        "text": "Artificial Analysis 发布 Intelligence Index v4.3，用 AutomationBench-AA 替换 𝜏³-Banking，并升级 Terminal-Bench 至 v4.0。",
+        "type": "other"
       },
       {
         "platform": "LMArena",

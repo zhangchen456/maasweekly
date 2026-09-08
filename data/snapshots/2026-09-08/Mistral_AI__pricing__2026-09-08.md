@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-08T15:27:38.977949 -->
+<!-- fetched: 2026-09-08T15:37:58.107964 -->
 
 Pricing | Mistral
 Contact sales

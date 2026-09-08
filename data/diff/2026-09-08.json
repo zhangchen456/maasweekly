@@ -1,11 +1,11 @@
 {
   "date": "2026-09-08",
-  "fetched_at": "2026-09-08T15:27:45.783179",
+  "fetched_at": "2026-09-08T15:38:04.770887",
   "stats": {
     "total": 68,
-    "success": 68,
-    "failed": 0,
-    "changed": 24,
+    "success": 66,
+    "failed": 2,
+    "changed": 22,
     "unchanged": 44
   },
   "changes": [
@@ -20,25 +20,15 @@
       "platform": "火山方舟",
       "source_type": "pricing",
       "url": "https://www.volcengine.com/docs/82379/1544106",
-      "status": "changed",
-      "added_count": 1,
-      "removed_count": 0,
-      "added_lines": [
-        "迁移到方舟官方 SDK"
-      ],
-      "removed_lines": []
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11071)"
     },
     {
       "platform": "火山方舟",
       "source_type": "changelog",
       "url": "https://www.volcengine.com/docs/82379/1159177",
-      "status": "changed",
-      "added_count": 1,
-      "removed_count": 0,
-      "added_lines": [
-        "方舟官方 SDK 升级公告"
-      ],
-      "removed_lines": []
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=4606)"
     },
     {
       "platform": "火山方舟",

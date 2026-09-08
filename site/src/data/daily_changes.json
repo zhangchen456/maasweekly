@@ -1,50 +1,16 @@
 {
-  "updated_at": "2026-09-08T07:29:22",
+  "updated_at": "2026-09-08T07:39:56",
   "days": [
     {
       "date": "2026-09-08",
       "stats": {
         "total": 68,
-        "success": 68,
-        "failed": 0,
-        "changed": 24,
+        "success": 66,
+        "failed": 2,
+        "changed": 22,
         "unchanged": 44
       },
       "changed": [
-        {
-          "platform": "火山方舟",
-          "source_type": "pricing",
-          "url": "https://www.volcengine.com/docs/82379/1544106",
-          "status": "changed",
-          "added_count": 1,
-          "removed_count": 0,
-          "added_lines": [
-            "迁移到方舟官方 SDK"
-          ],
-          "removed_lines": [],
-          "kind": "substantive",
-          "pairs": [],
-          "signal_preview": "迁移到方舟官方 SDK",
-          "raw_added_count": 1,
-          "raw_removed_count": 0
-        },
-        {
-          "platform": "火山方舟",
-          "source_type": "changelog",
-          "url": "https://www.volcengine.com/docs/82379/1159177",
-          "status": "changed",
-          "added_count": 1,
-          "removed_count": 0,
-          "added_lines": [
-            "方舟官方 SDK 升级公告"
-          ],
-          "removed_lines": [],
-          "kind": "substantive",
-          "pairs": [],
-          "signal_preview": "方舟官方 SDK 升级公告",
-          "raw_added_count": 1,
-          "raw_removed_count": 0
-        },
         {
           "platform": "智谱AI",
           "source_type": "model_list",
@@ -62,7 +28,7 @@
           "signal_preview": "",
           "raw_added_count": 0,
           "raw_removed_count": 2,
-          "llm_summary": "模型列表移除了 CharGLM-4 和 Emohaa 两个对话模型，可能意味着产品线调整或模型退役，但未提供替代信息。"
+          "llm_summary": "模型列表中删除了 CharGLM-4 和 Emohaa 两个模型条目，表明这两款模型已从 MaaS 服务中下架，可能意味着产品线调整或模型退役。"
         },
         {
           "platform": "MiniMax",
@@ -133,7 +99,7 @@
           "signal_preview": "| 异步长文本语音合成 T2A Async | speech-2.6-turbo / speech-02-turbo | 2.00",
           "raw_added_count": 15,
           "raw_removed_count": 16,
-          "llm_summary": "定价文档进行了大规模更新：新增语音识别计费项，调整了多个 TTS 模型的描述和价格格式（数值未变），并补充了 Voice Cloning 和 Voice Design 的计费细节，整体上使定价说明更清晰、更结构化。"
+          "llm_summary": "语音合成相关定价文档进行了大规模更新，主要是精简了模型描述，同时新增了语音识别（Speech-to-Text）计费项，并明确了 Voice Cloning 和 Voice Design 的计费规则，整体上是对语音产品线定价体系的梳理和补充。"
         },
         {
           "platform": "Google Gemini API",
@@ -153,7 +119,7 @@
           "signal_preview": "Our new contrail avoidance trial in Asia-Pacific",
           "raw_added_count": 1,
           "raw_removed_count": 1,
-          "llm_summary": "博客文章从“Operation Blue Skies”更换为“Our new contrail avoidance trial in Asia-Pacific”，主题从航空气候影响转向亚太地区的航线优化试验，可能反映公司关注点的变化。"
+          "llm_summary": "博客文章标题从'Operation Blue Skies: Reducing aviation climate impact with AI'更换为'Our new contrail avoidance trial in Asia-Pacific'，内容从一般性的气候影响讨论转向了具体的亚太地区新试验公告。"
         },
         {
           "platform": "Google Vertex AI",
@@ -179,7 +145,8 @@
           ],
           "signal_preview": "Last updated 2026-09-03 UTC.",
           "raw_added_count": 2,
-          "raw_removed_count": 2
+          "raw_removed_count": 2,
+          "llm_summary": "仅更新了页面时间戳，从 2026-09-02 变为 2026-09-03，没有实质性的模型列表变化。"
         },
         {
           "platform": "Mistral AI",
@@ -198,7 +165,8 @@
           "pairs": [],
           "signal_preview": "Mistral raises €3B to make sovereign, open-weight AI the technology frontier",
           "raw_added_count": 1,
-          "raw_removed_count": 1
+          "raw_removed_count": 1,
+          "llm_summary": "定价页面新增了公司完成 30 亿欧元融资的公告，同时删除了关于区域内推理、开放模型和欧洲新基础设施的旧描述，表明页面内容从产品介绍转向了公司重大新闻。"
         },
         {
           "platform": "Mistral AI",
@@ -219,7 +187,8 @@
           "pairs": [],
           "signal_preview": "Mistral raises €3B to make sovereign, open-weight AI the technology frontier",
           "raw_added_count": 3,
-          "raw_removed_count": 1
+          "raw_removed_count": 1,
+          "llm_summary": "变更日志新增了关于 30 亿欧元 D 轮融资的公告文章，文章数量从 82 篇增加到 83 篇，这是当日唯一的重要变更。"
         },
         {
           "platform": "Mistral AI",
@@ -240,7 +209,8 @@
           "pairs": [],
           "signal_preview": "Mistral raises €3B to make sovereign, open-weight AI the technology frontier",
           "raw_added_count": 3,
-          "raw_removed_count": 1
+          "raw_removed_count": 1,
+          "llm_summary": "博客新增了关于 30 亿欧元 D 轮融资的公告文章，文章总数从 82 篇增加到 83 篇，内容与 changelog 和 pricing 页面的更新一致。"
         },
         {
           "platform": "xAI",
@@ -273,7 +243,7 @@
           "signal_preview": "Chat Completions (Legacy)",
           "raw_added_count": 6,
           "raw_removed_count": 9,
-          "llm_summary": "文档结构发生重大调整：新增了 Chat Completions (Legacy)、Generated Media、Image Understanding 等章节，同时删除了 Completions (Legacy)、Enterprise Deployments 等旧条目，并明确了模型退役日期，可能对应 API 版本更新或文档重组。"
+          "llm_summary": "模型列表页面结构发生重大变化，新增了 Chat Completions (Legacy)、Generated Media、Image Understanding 等章节，并预告了模型退役日期，同时删除了 Completions (Legacy)、Enterprise Deployments 等旧章节，表明 API 文档正在进行全面重构。"
         },
         {
           "platform": "xAI",
@@ -306,7 +276,7 @@
           "signal_preview": "Chat Completions (Legacy)",
           "raw_added_count": 6,
           "raw_removed_count": 9,
-          "llm_summary": "与 model_list 同步，定价页面也进行了相同的增删操作，新增了 Legacy 和 Media 相关计费项，并明确了退役日期，表明定价体系正在为旧模型退役和新功能计费做准备。"
+          "llm_summary": "定价页面与模型列表页面同步进行了大规模重构，新增和删除的章节完全一致，表明定价信息已整合到新的文档结构中。"
         },
         {
           "platform": "xAI",
@@ -351,7 +321,8 @@
           "pairs": [],
           "signal_preview": "A month ago, we launched the public",
           "raw_added_count": 204,
-          "raw_removed_count": 12
+          "raw_removed_count": 12,
+          "llm_summary": "变更日志从被 Cloudflare 屏蔽的状态恢复，并新增了大量内容，包括 Batch API 发布、Grok 4.1 Fast 模型工具适配、价格下调、语音识别新功能等，信息量巨大，表明平台近期有密集的功能更新。"
         },
         {
           "platform": "xAI",
@@ -396,7 +367,8 @@
           "pairs": [],
           "signal_preview": "A month ago, we launched the public",
           "raw_added_count": 204,
-          "raw_removed_count": 12
+          "raw_removed_count": 12,
+          "llm_summary": "博客内容与 changelog 完全同步，从被 Cloudflare 屏蔽的状态恢复，并新增了 Batch API、Grok 4.1 Fast 模型工具适配、价格下调等大量更新公告。"
         },
         {
           "platform": "Artificial Analysis",
@@ -430,7 +402,7 @@
           "signal_preview": "Announcing the Artificial Analysis Intelligence Index v4.3",
           "raw_added_count": 27,
           "raw_removed_count": 27,
-          "llm_summary": "新增了 Intelligence Index v4.3 的公告，包含新的评测基准（AutomationBench-AA 替换 𝜏³-Banking，Terminal-Bench 升级至 v4.0），并列出多家模型提供商，表明指数更新涉及更广泛的模型评估。"
+          "llm_summary": "发布了新的 Intelligence Index v4.3 基准，更新了评估方法（替换和升级了部分测试集），并更新了模型排名列表，反映了最新的模型能力对比。"
         },
         {
           "platform": "阿里百炼",
@@ -539,67 +511,86 @@
           "content_length": 50448
         }
       ],
-      "failed": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        }
+      ],
       "highlights": [
         {
-          "platform": "MiniMax",
-          "logo_summary": "语音模型定价文档全面更新，新增语音识别计费",
+          "platform": "Mistral AI",
+          "logo_summary": "完成30亿欧元融资，估值超210亿欧元",
           "items": [
             {
-              "text": "新增语音识别 Speech-to-Text 计费项，单价 2.50 元/万字符，支持流式返回、说话人分离与字幕导出",
-              "type": "pricing"
-            },
-            {
-              "text": "T2A Async speech-2.8-turbo 定价 2.00 元/万字符，描述更新为“同上，速度更快、成本更低”",
-              "type": "pricing"
-            },
-            {
-              "text": "Voice Cloning 与 Voice Design 新增计费说明：生成音色不立即收费，首次合成时计费",
-              "type": "pricing"
+              "text": "Mistral 宣布完成 30 亿欧元 D 轮融资，投后估值超 210 亿欧元，用于推动开源权重 AI 技术发展。",
+              "type": "other"
             }
           ]
         },
         {
-          "platform": "xAI",
-          "logo_summary": "API 文档与定价页面结构重组，模型退役时间明确",
+          "platform": "MiniMax",
+          "logo_summary": "语音模型定价文档全面更新",
           "items": [
             {
-              "text": "新增 Chat Completions (Legacy)、Generated Media、Image Understanding 等文档章节，删除 Completions (Legacy) 等旧条目",
-              "type": "other"
+              "text": "MiniMax 语音合成 T2A 系列（speech-2.8-hd/turbo）定价保持 3.50/2.00 元每万字符，但文档描述大幅精简。",
+              "type": "pricing"
             },
             {
-              "text": "明确 Imagine Image Quality 退役日期为 2026-11-02，Model Retirement 日期为 2026-05-15",
-              "type": "sunset"
+              "text": "新增语音识别 Speech-to-Text 计费项，定价 2.50 元每万字符，支持流式返回、说话人分离与字幕导出。",
+              "type": "release"
+            },
+            {
+              "text": "Voice Cloning 与 Voice Design 明确计费规则：生成音色不立即收费，首次合成时按 9.90 元/音色计费。",
+              "type": "pricing"
             }
           ]
         },
         {
           "platform": "智谱AI",
-          "logo_summary": "下架两款对话模型，聚焦核心产品线",
+          "logo_summary": "下架两款对话/情感模型",
           "items": [
             {
-              "text": "从模型列表移除 CharGLM-4 拟人对话模型与 Emohaa 心理情感支持模型",
+              "text": "智谱AI 从模型列表中移除 CharGLM-4 拟人对话模型与 Emohaa 心理情感支持模型。",
               "type": "sunset"
             }
           ]
         },
         {
-          "platform": "Google Gemini API",
-          "logo_summary": "博客主题更新，关注亚太地区航线优化",
+          "platform": "xAI",
+          "logo_summary": "API 文档大规模重构，新增多项功能",
           "items": [
             {
-              "text": "新增博客文章“Our new contrail avoidance trial in Asia-Pacific”，删除旧文“Operation Blue Skies”",
+              "text": "xAI API 文档新增 Chat Completions (Legacy)、Generated Media、Image Understanding 等章节，并预告 Imagine Image Quality 将于 2026 年 11 月 2 日退役。",
               "type": "other"
+            },
+            {
+              "text": "xAI 发布 Batch API，支持 JSONL 文件上传及图像/视频生成，并对所有客户开放。",
+              "type": "release"
+            },
+            {
+              "text": "xAI 新增 Adjustable VAD threshold for Speech to Text 功能，Agent 工具适配 Grok 4.1 Fast 模型且工具价格下调。",
+              "type": "release"
             }
           ]
         },
         {
           "platform": "Artificial Analysis",
-          "logo_summary": "发布 Intelligence Index v4.3，更新评测基准",
+          "logo_summary": "发布 Intelligence Index v4.3 基准",
           "items": [
             {
-              "text": "Intelligence Index v4.3 发布，用 AutomationBench-AA 替换 𝜏³-Banking，并升级 Terminal-Bench 至 v4.0",
-              "type": "release"
+              "text": "Artificial Analysis 发布 Intelligence Index v4.3，用 AutomationBench-AA 替换 𝜏³-Banking，并升级 Terminal-Bench 至 v4.0。",
+              "type": "other"
             }
           ]
         }
