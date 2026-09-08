@@ -47,6 +47,13 @@ jobs:
           cache: 'npm'
           cache-dependency-path: site/package-lock.json
 
+      # ---- 0.5 playwright 环境（腾讯信源解 EdgeOne 挑战 + 后续价格抓取共用）----
+      - name: Setup Playwright
+        if: ${{ !inputs.skip_fetch }}
+        run: |
+          pip install --quiet playwright beautifulsoup4
+          python3 -m playwright install chromium --with-deps
+
       # ---- 1. 抓取信源（可跳过）----
       - name: Fetch sources & generate diff
         if: ${{ !inputs.skip_fetch }}
@@ -64,8 +71,7 @@ jobs:
       - name: Fetch model pricing
         if: ${{ !inputs.skip_fetch }}
         run: |
-          pip install --quiet playwright beautifulsoup4
-          python3 -m playwright install chromium --with-deps
+          pip install --quiet beautifulsoup4
           python3 pipeline/scripts/fetch-prices.py
         env:
           TZ: Asia/Shanghai

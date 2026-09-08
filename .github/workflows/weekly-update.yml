@@ -60,6 +60,12 @@ jobs:
           fi
 
       # ---- 抓取 + 汇总 diff ----
+      - name: Setup Playwright
+        if: steps.mode.outputs.mode != 'import'
+        run: |
+          pip install --quiet playwright beautifulsoup4
+          python3 -m playwright install chromium --with-deps
+
       - name: Fetch sources & generate diff
         if: steps.mode.outputs.mode != 'import'
         run: python3 pipeline/scripts/fetch_sources.py

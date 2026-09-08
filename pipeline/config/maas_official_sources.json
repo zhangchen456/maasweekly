@@ -75,13 +75,13 @@
       "sources": {
         "model_list": "https://cloud.tencent.com/document/product/1729/104753",
         "pricing": "https://cloud.tencent.com/document/product/1729/97731",
-        "changelog": "https://cloud.tencent.com/document/product/1729/132069",
+        "changelog": "https://cloud.tencent.com/document/product/1729/97765",
         "api_docs": "https://cloud.tencent.com/document/product/1729/101848",
         "github": "https://github.com/Tencent-Hunyuan",
-        "blog": "https://cloud.tencent.com/developer/column/",
+        "blog": "https://cloud.tencent.com/document/product/1729/132069",
         "model_marketplace": "https://console.cloud.tencent.com/tokenhub/"
       },
-      "notes": "【2026-09 起全维度抓取失败】腾讯云文档站（cloud.tencent.com/document）上了 EdgeOne WAF：对 curl 等非浏览器请求返回固定 29182 字节 JS 挑战页（混淆脚本 + 动态 cookie，无静态绕过），测过 3 种 UA / 3 种 Accept 组合均被拦，本地与 CI 一致。页面自身提示混元功能将迁移至 TokenHub，但 tokenhub.cloud.tencent.com 不可访问、console 需登录，暂无公开 API 可挖。覆盖需上 headless 浏览器（同讯飞星辰问题），价值待定。历史探测记录：产品概述(104753, 含模型列表)/混元生文计费概述(97731, 含输入/输出/缓存价)/产品公告(132069, 另有API更新历史101849)曾 200 公开。Tencent-Hunyuan 为混元官方开源组织。"
+      "notes": "腾讯云文档站 2026-09 起上 EdgeOne WAF：curl 直拿是 29182 字节 JS 挑战页。fetch_sources.py 内置 playwright 解挑战（拿 EO-Bot-Js-Token cookie，约 6 秒，run 内缓存复用），之后 curl 带 cookie 正常抓取——CI 需先安装 playwright（daily-update.yml 已在 fetch_sources 步骤前置安装）。信源：产品概述(104753, 含模型列表)/混元生文计费概述(97731, 含输入/输出价)/产品动态(97765, 模型上线下线事件带日期，2026-09-08 替换原公告页 132069——原页只有 2 条迁移公告更新频率低)/产品公告(132069, 配 blog 维度)。页面提示混元功能将迁移至 TokenHub（console 需登录，暂无公开 API）。Tencent-Hunyuan 为混元官方开源组织。"
     },
     {
       "name": "硅基流动",

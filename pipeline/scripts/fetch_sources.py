@@ -48,11 +48,88 @@ def fetch_page(url):
     if "huggingface.co/api" in url:
         return fetch_via_curl(url)
 
+    # 腾讯云文档站：EdgeOne WAF JS 挑战，curl 直拿是挑战页。
+    # 用 playwright 解一次挑战拿 EO-Bot-Js-Token cookie，后续 curl 复用（约 1 小时有效）
+    if "cloud.tencent.com" in url:
+        return fetch_tencent(url)
+
     content, err = fetch_via_curl(url)
     if content and len(content.strip()) > 100:
         return content, None
 
     return None, err if err else "内容过短"
+
+
+# ---- 腾讯 EdgeOne WAF ----
+# 挑战页 JS 计算 EO-Bot-Js-Token cookie（domain=.tencent.com, max-age=3600）后 reload。
+# curl 无法执行该 JS；playwright headless 可解（约 6 秒）。token 内存缓存，整个 run 只解一次。
+_TENCENT_TOKEN_CACHE = {"token": None, "fetched_at": 0}
+
+
+def _get_tencent_token():
+    """playwright 解 EdgeOne 挑战拿 cookie token。失败返回 None。"""
+    import time as _time
+
+    # 50 分钟内的 token 直接复用
+    if _TENCENT_TOKEN_CACHE["token"] and _time.time() - _TENCENT_TOKEN_CACHE["fetched_at"] < 3000:
+        return _TENCENT_TOKEN_CACHE["token"]
+
+    try:
+        import asyncio
+        from playwright.async_api import async_playwright
+    except ImportError:
+        return None
+
+    async def solve():
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=True)
+            page = await browser.new_page()
+            try:
+                try:
+                    await page.goto("https://cloud.tencent.com/document/product/1729/104753",
+                                    wait_until="commit", timeout=15000)
+                except Exception:
+                    pass  # commit 后无论加载快慢，轮询 cookie 即可
+                for _ in range(40):  # 最多等 20 秒
+                    cookies = await page.context.cookies()
+                    for c in cookies:
+                        if c["name"] == "EO-Bot-Js-Token":
+                            return c["value"]
+                    await page.wait_for_timeout(500)
+                return None
+            finally:
+                await browser.close()
+
+    try:
+        token = asyncio.run(solve())
+    except Exception:
+        token = None
+    if token:
+        _TENCENT_TOKEN_CACHE["token"] = token
+        _TENCENT_TOKEN_CACHE["fetched_at"] = _time.time()
+    return token
+
+
+def fetch_tencent(url):
+    """腾讯域抓取：curl + EO-Bot-Js-Token cookie。"""
+    content, err = fetch_via_curl(url)  # 先试无 cookie（万一 WAF 放行）
+    if content:
+        return content, None
+
+    token = _get_tencent_token()
+    if not token:
+        return None, f"EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: {err}"
+
+    # 首次使用新 token 偶发空响应（WAF 预热），间隔 2 秒重试一次
+    import time as _time
+    for attempt in range(2):
+        if attempt:
+            _time.sleep(2)
+            token = _get_tencent_token()  # 可能已刷新
+        content, err = fetch_via_curl(url, cookie=f"EO-Bot-Js-Token={token}")
+        if content:
+            return content, None
+    return None, err
 
 
 # 反爬挑战页特征：命中任一即判抓取失败（否则快照被污染，每天 Ray ID 变化产生假 diff）
@@ -74,7 +151,7 @@ def looks_like_challenge(content):
     return any(m in head for m in CHALLENGE_MARKERS)
 
 
-def fetch_via_curl(url):
+def fetch_via_curl(url, cookie=None):
     """用 curl 抓取页面/API，返回文本内容"""
     import subprocess
     import re
@@ -85,8 +162,11 @@ def fetch_via_curl(url):
     else:
         headers = ["-H", "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"]
 
+    if cookie:
+        headers = headers + ["-H", f"Cookie: {cookie}"]
+
     try:
-        cmd = ["curl", "-sL", "--max-time", "30"] + headers + [
+        cmd = ["curl", "-sL", "--compressed", "--max-time", "30"] + headers + [
              "-H", "Accept: text/html,application/json,*/*",
              url]
         result = subprocess.run(
