@@ -4,6 +4,14 @@
     "start": "2026-09-07",
     "end": "2026-09-13",
     "days": {
+      "2026-09-10": {
+        "substantive": 16,
+        "jitter": 1,
+        "failed": 3,
+        "releases": 3,
+        "pricings": 4,
+        "sunsets": 1
+      },
       "2026-09-09": {
         "substantive": 11,
         "jitter": 0,
@@ -30,12 +38,78 @@
       }
     },
     "totals": {
-      "substantive": 24,
-      "releases": 4,
-      "pricings": 2,
-      "sunsets": 1
+      "substantive": 40,
+      "releases": 7,
+      "pricings": 6,
+      "sunsets": 2
     },
     "highlights": [
+      {
+        "platform": "百度千帆",
+        "date": "2026-09-10",
+        "text": "ERNIE 5.1 正式上架，主打智能体、知识、推理与深度搜索能力升级",
+        "type": "release"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-09-10",
+        "text": "DeepSeek-V4-Flash-0731、DeepSeek-V4-Pro-0813 新增上架，同时 DeepSeek-V4-Flash 标记为即将下线",
+        "type": "release"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-09-10",
+        "text": "ERNIE-X1.1、ERNIE-X1.1-Preview、GLM-5、Kimi-K2.6 均标记为即将下线",
+        "type": "sunset"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-10",
+        "text": "Audio Input 定价调整为 $2.00/百万单位，Text Output 调整为 $12.00/百万单位",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-10",
+        "text": "新增 Effective Blended Price（音频分钟）$0.008925/单位，以及 Text Output $21.00/百万单位的新定价档",
+        "type": "pricing"
+      },
+      {
+        "platform": "Kimi",
+        "date": "2026-09-10",
+        "text": "自 9 月 14 日起，Kimi API 账户消耗将按现金、代金券各 50% 比例扣除，合同用户不受影响",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-10",
+        "text": "2026年3月5日后发布且支持数据驻留的模型，区域处理端点将加收 10% 费用",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-10",
+        "text": "Per-message effort 参数（beta）现已在 Google Cloud 上支持 Claude Fable 5.1、Claude Mythos 5.1 和 Claude Opus 5",
+        "type": "release"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-09-10",
+        "text": "新增博客文章《Modernizing complex legacy code with AI agents》及《Lessons from 40,000 lines of Fortran》",
+        "type": "other"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-10",
+        "text": "新增宣传语“AI for Empowerment”，替换原“主权AI采用现状”内容",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-10",
+        "text": "Coding Agent Index 基准更新为 DeepSWE v1.1、Terminal-Bench 4.0 和 SWE-Atlas-QnA，并新增 Z AI 厂商",
+        "type": "other"
+      },
       {
         "platform": "Mistral AI",
         "date": "2026-09-08",

@@ -1,11 +1,11 @@
 {
   "source": "OpenRouter Rankings (vendor aggregate)",
   "source_url": "https://openrouter.ai/rankings",
-  "snapshot_date": "2026-09-07",
-  "as_of": "2026-09-08T23:15:34.131Z",
+  "snapshot_date": "2026-09-08",
+  "as_of": "2026-09-09T23:00:21.384Z",
   "window": {
-    "start": "2026-09-01",
-    "end": "2026-09-07"
+    "start": "2026-09-02",
+    "end": "2026-09-08"
   },
   "manual": false,
   "note": "按模型 permaslug 厂商前缀聚合的 token 份额（7 日滚动窗口）。口径为 top-50 近似：分母含 other 长尾聚合行，未上榜模型计入长尾。",
@@ -14,55 +14,55 @@
       "rank": 1,
       "vendor": "腾讯",
       "vendor_key": "tencent",
-      "tokens_t": 20.72,
-      "share_pct": 17.2,
-      "change_pp": 7.6
+      "tokens_t": 22.47,
+      "share_pct": 18.3,
+      "change_pp": 7.4
     },
     {
       "rank": 2,
       "vendor": "DeepSeek",
       "vendor_key": "deepseek",
-      "tokens_t": 20.64,
-      "share_pct": 17.2,
-      "change_pp": -1.9
+      "tokens_t": 20.62,
+      "share_pct": 16.8,
+      "change_pp": -2.5
     },
     {
       "rank": 3,
       "vendor": "OpenAI",
       "vendor_key": "openai",
-      "tokens_t": 18.25,
-      "share_pct": 15.2,
-      "change_pp": 3.9
+      "tokens_t": 18.53,
+      "share_pct": 15.1,
+      "change_pp": 2.5
     },
     {
       "rank": 4,
       "vendor": "智谱AI",
       "vendor_key": "z-ai",
-      "tokens_t": 17.94,
-      "share_pct": 14.9,
-      "change_pp": 3.5
+      "tokens_t": 18.02,
+      "share_pct": 14.6,
+      "change_pp": 1.2
     },
     {
       "rank": 5,
-      "vendor": "MiniMax",
-      "vendor_key": "minimax",
-      "tokens_t": 7.35,
-      "share_pct": 6.1,
-      "change_pp": 1.7
+      "vendor": "Google Gemini API",
+      "vendor_key": "google",
+      "tokens_t": 6.82,
+      "share_pct": 5.5,
+      "change_pp": -1.2
     },
     {
       "rank": 6,
-      "vendor": "Google Gemini API",
-      "vendor_key": "google",
-      "tokens_t": 6.55,
-      "share_pct": 5.4,
-      "change_pp": -1.6
+      "vendor": "MiniMax",
+      "vendor_key": "minimax",
+      "tokens_t": 6.46,
+      "share_pct": 5.3,
+      "change_pp": 0.1
     },
     {
       "rank": 7,
       "vendor": "Anthropic",
       "vendor_key": "anthropic",
-      "tokens_t": 5.39,
+      "tokens_t": 5.48,
       "share_pct": 4.5,
       "change_pp": 0.5
     },
@@ -70,25 +70,25 @@
       "rank": 8,
       "vendor": "NVIDIA",
       "vendor_key": "nvidia",
-      "tokens_t": 5.02,
-      "share_pct": 4.2,
-      "change_pp": -1.6
+      "tokens_t": 4.96,
+      "share_pct": 4.0,
+      "change_pp": -1.5
     },
     {
       "rank": 9,
       "vendor": "Xiaomi",
       "vendor_key": "xiaomi",
-      "tokens_t": 2.7,
-      "share_pct": 2.3,
-      "change_pp": -5.5
+      "tokens_t": 3.54,
+      "share_pct": 2.9,
+      "change_pp": -4.2
     },
     {
       "rank": 10,
       "vendor": "Kimi",
       "vendor_key": "moonshotai",
-      "tokens_t": 2.0,
-      "share_pct": 1.7,
-      "change_pp": 0.2
+      "tokens_t": 1.95,
+      "share_pct": 1.6,
+      "change_pp": 0.0
     }
   ]
 }
