@@ -85,7 +85,7 @@ def llm_call(api_key: str, base_url: str, model: str, prompt: str) -> str:
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.2,
-        "max_tokens": 4000,
+        "max_tokens": 8000,
     }).encode("utf-8")
     req = urllib.request.Request(url, data=body, headers={
         "Content-Type": "application/json",
