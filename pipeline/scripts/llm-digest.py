@@ -44,12 +44,12 @@ DIFF_DIR = BASE / "data" / "diff"
 DST_FILE = BASE / "site" / "src" / "data" / "daily_changes.json"
 
 DEFAULT_BASE_URL = "https://maas-api.cn-huabei-1.xf-yun.com/v2"
-DEFAULT_MODEL = "xopdeepseekv4flash0731"
+DEFAULT_MODEL = "spark-x2.5"
 
 MAX_LINES_PER_SOURCE = 12   # 每信源最多喂给 LLM 的行数
 MAX_LINE_LEN = 160          # 每行截断长度
 MAX_SOURCES = 25            # 单日最多处理的信源数
-REQUEST_TIMEOUT = 120       # 秒
+REQUEST_TIMEOUT = 300       # 秒（spark-x2.5 长输出较慢）
 
 PROMPT = """你是 MaaS（模型即服务）行业追踪站点的编辑。下面是各平台信源今日的变化数据（已过滤噪声，"新增"行是新出现的内容，"删除"行是被替换的旧内容，"变化"行是同一实体旧值→新值）。
 
@@ -68,6 +68,7 @@ PROMPT = """你是 MaaS（模型即服务）行业追踪站点的编辑。下面
 - 简体中文，模型名/产品名保留英文原名
 - 平台按事件重要性排序
 - 严格输出一个 JSON 对象（不要 markdown 代码块）：
+- JSON 纪律（必须遵守）：所有字符串值写成单行——字符串内不要换行，引号内的英文双引号用『』替代；不要输出尾逗号；输出完整 JSON 后立即停止，不要追加任何文字
 {
   "highlights": [{"platform": "平台名", "logo_summary": "一句话总评", "items": [{"text": "要点", "type": "release|pricing|sunset|other"}]}],
   "source_summaries": {"平台名|source_type": "2-3句解读"}
@@ -84,7 +85,7 @@ def llm_call(api_key: str, base_url: str, model: str, prompt: str) -> str:
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.2,
-        "max_tokens": 2000,
+        "max_tokens": 4000,
     }).encode("utf-8")
     req = urllib.request.Request(url, data=body, headers={
         "Content-Type": "application/json",
@@ -92,7 +93,31 @@ def llm_call(api_key: str, base_url: str, model: str, prompt: str) -> str:
     })
     with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
         data = json.loads(resp.read().decode("utf-8"))
+    finish = (data.get("choices") or [{}])[0].get("finish_reason")
+    if finish == "length":
+        raise ValueError("LLM 输出被 max_tokens 截断（输出不完整）")
     return data["choices"][0]["message"]["content"]
+
+
+def _repair_json(raw: str) -> str:
+    """尽力修复 LLM 输出的坏 JSON（字符串内裸换行/未转义引号/尾逗号）。"""
+    # 尾逗号：},] / ",] / ",} 形式
+    s = re.sub(r",\s*([}\]])", r"\1", raw)
+    # 字符串内的裸换行 → \n（逐字符扫描，仅处理字符串字面量内部）
+    out, in_str, i = [], False, 0
+    while i < len(s):
+        c = s[i]
+        if c == '"' and (i == 0 or s[i-1] != "\\"):
+            in_str = not in_str
+            out.append(c)
+        elif in_str and c == "\n":
+            out.append("\\n")
+        elif in_str and c == "\r":
+            pass
+        else:
+            out.append(c)
+        i += 1
+    return "".join(out)
 
 
 def parse_llm_json(text: str) -> dict:
@@ -108,7 +133,12 @@ def parse_llm_json(text: str) -> dict:
     start, end = t.find("{"), t.rfind("}")
     if start == -1 or end == -1:
         raise ValueError(f"LLM 输出中找不到 JSON 对象: {text[:200]}")
-    obj = json.loads(t[start:end + 1])
+    raw = t[start:end + 1]
+    try:
+        obj = json.loads(raw)
+    except json.JSONDecodeError:
+        # 常见坏法修复：字符串内裸换行 / 未转义引号 / 尾逗号
+        obj = json.loads(_repair_json(raw))
 
     # highlights（平台分组）
     out_hl = []
@@ -172,13 +202,19 @@ def process_day(day: dict, api_key: str, base_url: str, model: str) -> dict | No
         return {"highlights": [], "source_summaries": {}}
     prompt = build_day_prompt(day["date"], changed, price_changes)
     print(f"  调用 LLM（prompt {len(prompt)} 字符）...", flush=True)
-    try:
-        raw = llm_call(api_key, base_url, model, prompt)
-        result = parse_llm_json(raw)
-    except Exception as e:  # noqa: BLE001 —— 任何失败都降级为无 highlights
-        print(f"  ✗ LLM 调用/解析失败，跳过该日期: {e}")
-        return None
-    return result
+    last_err = None
+    for attempt in (1, 2):  # 瞬态失败（超时/截断/坏 JSON）重试一次
+        try:
+            raw = llm_call(api_key, base_url, model, prompt)
+            result = parse_llm_json(raw)
+            return result
+        except Exception as e:  # noqa: BLE001 —— 重试后仍失败才降级
+            last_err = e
+            print(f"  ✗ 第 {attempt} 次失败: {e}")
+            if attempt == 1:
+                print("  … 重试一次")
+    print(f"  ✗ LLM 调用/解析失败，跳过该日期: {last_err}")
+    return None
 
 
 def main():
