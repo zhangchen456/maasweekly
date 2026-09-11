@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-11T11:30:05",
+  "updated_at": "2026-09-11T14:48:06",
   "days": [
     {
       "date": "2026-09-11",
@@ -27,7 +27,7 @@
           "signal_preview": "",
           "raw_added_count": 1,
           "raw_removed_count": 2,
-          "llm_summary": "Web Search 联网内容插件下线，模型列表中移除该插件。"
+          "llm_summary": "删除了 Web Search（联网内容插件）的模型条目，表明该插件已从模型列表中移除。"
         },
         {
           "platform": "火山方舟",
@@ -45,7 +45,7 @@
           "signal_preview": "",
           "raw_added_count": 0,
           "raw_removed_count": 1,
-          "llm_summary": "Web Search 联网内容插件下线，定价页中移除该插件的计费信息。"
+          "llm_summary": "删除了 Web Search（联网内容插件）的定价信息，与模型列表删除一致，确认该插件已下架。"
         },
         {
           "platform": "百度千帆",
@@ -63,7 +63,7 @@
           "signal_preview": "产品简介-百度AI助手与智能搜索生成",
           "raw_added_count": 1,
           "raw_removed_count": 0,
-          "llm_summary": "新增百度AI助手与智能搜索生成的产品简介，表明该产品已进入公开列表。"
+          "llm_summary": "新增了『产品简介-百度AI助手与智能搜索生成』条目，表明千帆平台新增了该产品线。"
         },
         {
           "platform": "百度千帆",
@@ -81,7 +81,7 @@
           "signal_preview": "产品简介-百度AI助手与智能搜索生成",
           "raw_added_count": 1,
           "raw_removed_count": 0,
-          "llm_summary": "新增百度AI助手与智能搜索生成的产品简介，定价页同步更新产品说明。"
+          "llm_summary": "新增了『产品简介-百度AI助手与智能搜索生成』的定价信息，与模型列表新增对应。"
         },
         {
           "platform": "百度千帆",
@@ -99,7 +99,7 @@
           "signal_preview": "产品简介-百度AI助手与智能搜索生成",
           "raw_added_count": 1,
           "raw_removed_count": 0,
-          "llm_summary": "新增百度AI助手与智能搜索生成的产品简介，变更日志记录产品上线。"
+          "llm_summary": "新增了『产品简介-百度AI助手与智能搜索生成』的更新日志，说明该产品已正式发布并纳入变更记录。"
         },
         {
           "platform": "百度千帆",
@@ -117,7 +117,7 @@
           "signal_preview": "产品简介-百度AI助手与智能搜索生成",
           "raw_added_count": 1,
           "raw_removed_count": 0,
-          "llm_summary": "新增百度AI助手与智能搜索生成的产品简介，博客同步宣传。"
+          "llm_summary": "新增了『产品简介-百度AI助手与智能搜索生成』的博客文章，可能包含产品介绍或公告。"
         },
         {
           "platform": "硅基流动",
@@ -147,7 +147,7 @@
           "signal_preview": "Qwen/Qwen3.8-27B",
           "raw_added_count": 4,
           "raw_removed_count": 8,
-          "llm_summary": "Qwen3.5-27B 的定价行被 Qwen3.8-27B 替换，新增 Qwen3.8-27B 定价，表明模型版本升级，旧模型下架。"
+          "llm_summary": "Qwen3.5-27B 变更为 Qwen3.8-27B，新增 Qwen/Qwen3.8-27B 定价，删除旧模型定价，表明模型版本升级。"
         },
         {
           "platform": "硅基流动",
@@ -178,7 +178,7 @@
           "signal_preview": "batch_size 字段下线：请求正文中不再支持 batch_size 字段。若此前依赖该字段在单次请求中生成多张图片，请改为多次调用。",
           "raw_added_count": 9,
           "raw_removed_count": 1,
-          "llm_summary": "新增生图 API 的 batch_size 字段下线、默认水印添加、对话模型忽略 repetition_penalty 等调整，涉及多项接口服务变更。"
+          "llm_summary": "变更日志显示接口调整（忽略 repetition_penalty、生图 API 下线 batch_size 并默认加水印），同时保留模型下线与价格调整公告，反映平台在接口和模型层面的多项变更。"
         },
         {
           "platform": "DeepSeek",
@@ -227,7 +227,7 @@
           "signal_preview": "(1) 模型名请使用 deepseek-flash。旧模型名 deepseek-v4-flash、deepseek-v4-flash-vision-exp 仍可调用，但对应模型已下线，请求将由 DeepSeek-V4.1-Flash 模型提供服务，并按 Flash 价格计费。",
           "raw_added_count": 21,
           "raw_removed_count": 19,
-          "llm_summary": "新增 deepseek-flash 模型名说明及 V4 Pro 下线路由至 V4.1 Flash 的公告，表明主力模型更名及旧模型下线。"
+          "llm_summary": "新增了 deepseek-flash 模型名及 V4.1 Flash 相关说明，删除了旧模型名和旧功能对比，表明模型已升级为 V4.1 Flash，旧模型名仍兼容但已下线。"
         },
         {
           "platform": "DeepSeek",
@@ -276,7 +276,7 @@
           "signal_preview": "(1) 模型名请使用 deepseek-flash。旧模型名 deepseek-v4-flash、deepseek-v4-flash-vision-exp 仍可调用，但对应模型已下线，请求将由 DeepSeek-V4.1-Flash 模型提供服务，并按 Flash 价格计费。",
           "raw_added_count": 21,
           "raw_removed_count": 19,
-          "llm_summary": "新增 deepseek-flash 价格、空闲时段半价及 V4 Pro 下线说明，定价信息同步更新。"
+          "llm_summary": "新增了 deepseek-flash 的定价和功能对比，删除了旧模型 deepseek-v4-flash-vision-exp 的计费说明，对应新模型上架和旧模型下线。"
         },
         {
           "platform": "DeepSeek",
@@ -313,7 +313,7 @@
           "signal_preview": "(1) Use deepseek-flash as the model name. The legacy names deepseek-v4-flash and deepseek-v4-flash-vision-exp are still accepted, but the corresponding models have been retired, their requests are served by the DeepSeek-V4.1-Flash model and billed at the Flash price.",
           "raw_added_count": 7,
           "raw_removed_count": 7,
-          "llm_summary": "新增 deepseek-flash 模型名及英文变更说明，模型列表更新。"
+          "llm_summary": "变更日志从 deepseek-v4-pro 更新为 deepseek-flash，新增了 V4.1 Flash 的调用示例，删除了旧模型版本说明，反映模型迁移。"
         },
         {
           "platform": "DeepSeek",
@@ -350,7 +350,7 @@
           "signal_preview": "(1) Use deepseek-flash as the model name. The legacy names deepseek-v4-flash and deepseek-v4-flash-vision-exp are still accepted, but the corresponding models have been retired, their requests are served by the DeepSeek-V4.1-Flash model and billed at the Flash price.",
           "raw_added_count": 7,
           "raw_removed_count": 7,
-          "llm_summary": "新增 deepseek-flash 模型名及英文变更说明，与 changelog 内容一致。"
+          "llm_summary": "博客内容与 changelog 同步更新，新增 deepseek-flash 示例，删除旧模型 deepseek-v4-pro 示例，确认模型迁移。"
         },
         {
           "platform": "OpenAI",
@@ -407,7 +407,7 @@
           "signal_preview": "Audio in Chat Completions",
           "raw_added_count": 34,
           "raw_removed_count": 9,
-          "llm_summary": "新增 GPT-Live 1 相关的功能分类导航词，表明该模型已进入公开列表。"
+          "llm_summary": "新增了语音相关功能（Audio in Chat Completions、Audio processing、Build with voice 等），删除了旧的连接方法和文档导航，表明文档结构更新，突出语音能力。"
         },
         {
           "platform": "OpenAI",
@@ -465,7 +465,7 @@
           "signal_preview": "Audio in Chat Completions",
           "raw_added_count": 39,
           "raw_removed_count": 11,
-          "llm_summary": "新增 GPT-Live 1 语音会话按秒计费的说明，表明新计费模式上线。"
+          "llm_summary": "新增了语音相关功能条目和 GPT-Live 1 按秒计费说明，删除了旧的连接方法和文档导航，表明 GPT-Live 1 定价已加入。"
         },
         {
           "platform": "OpenAI",
@@ -523,7 +523,7 @@
           "signal_preview": "Audio in Chat Completions",
           "raw_added_count": 41,
           "raw_removed_count": 11,
-          "llm_summary": "新增 GPT-Live 1 正式发布及功能说明，确认该模型已 GA。"
+          "llm_summary": "新增了 GPT-Live 1 GA 公告和语音功能文档，删除了旧的实时提示和转录指南，表明 GPT-Live 1 正式发布并更新了相关文档。"
         },
         {
           "platform": "OpenAI",
@@ -581,7 +581,7 @@
           "signal_preview": "Audio in Chat Completions",
           "raw_added_count": 41,
           "raw_removed_count": 11,
-          "llm_summary": "新增 GPT-Live 1 正式发布公告，与 changelog 内容一致。"
+          "llm_summary": "新增了 GPT-Live 1 GA 公告和语音功能文档，删除了旧的实时提示和转录指南，与 changelog 一致。"
         },
         {
           "platform": "Anthropic",
@@ -600,7 +600,7 @@
           "signal_preview": "Claude Managed Agents permission policies now include auto: the server evaluates each agent or MCP tool call and runs it, denies it, or pauses for your approval. agent.tool_use and agent.mcp_tool_use events report how each call was evaluated in an evaluation field alongside evaluated_permission. See Let the server evaluate each call with auto.",
           "raw_added_count": 3,
           "raw_removed_count": 0,
-          "llm_summary": "新增 Claude Managed Agents 权限策略及 ant CLI 会话连接功能，表明平台在Agent管理上的增强。"
+          "llm_summary": "新增了 Claude Managed Agents 权限策略的 auto 模式和 ant CLI 的 beta:sessions connect 功能，表明 Agent 管理能力增强。"
         },
         {
           "platform": "Anthropic",
@@ -634,7 +634,7 @@
           "signal_preview": "Detecting and countering misuse of AI: September 2026",
           "raw_added_count": 6,
           "raw_removed_count": 6,
-          "llm_summary": "新增安全与对齐相关博文及9月10日公告，表明平台在安全合规上的持续投入。"
+          "llm_summary": "新增了 9 月安全报告和 alignment 改进文章，删除了 7 月文本水印和 Claude Code 制作故事，表明博客焦点转向安全与治理。"
         },
         {
           "platform": "Google Gemini API",
@@ -654,7 +654,7 @@
           "signal_preview": "The Gemini app is now available for Windows",
           "raw_added_count": 1,
           "raw_removed_count": 1,
-          "llm_summary": "新增 Gemini Windows 版发布公告，移除 macOS 听写功能说明，客户端更新。"
+          "llm_summary": "新增了 Gemini 应用 Windows 版本发布，删除了 macOS 智能听写指南，表明平台支持扩展。"
         },
         {
           "platform": "Google Vertex AI",
@@ -681,7 +681,7 @@
           "signal_preview": "Last updated 2026-09-09 UTC.",
           "raw_added_count": 2,
           "raw_removed_count": 2,
-          "llm_summary": "更新日期至2026-09-09，内容未涉及实质功能变更，仅文档更新。"
+          "llm_summary": "更新了最后修改日期至 2026-09-09，内容结构微调，无实质功能变化。"
         },
         {
           "platform": "Mistral AI",
@@ -701,7 +701,7 @@
           "signal_preview": "Cloudera and Mistral Partner to Bring Specialized, Sovereign Intelligence to Enterprise Data",
           "raw_added_count": 1,
           "raw_removed_count": 1,
-          "llm_summary": "新增 Cloudera 合作公告，移除旧的 HUMAIN 合作，表明合作伙伴更新。"
+          "llm_summary": "新增了与 Cloudera 的合作公告，删除了 HUMAIN 相关内容，表明合作重心转移。"
         },
         {
           "platform": "Mistral AI",
@@ -723,7 +723,7 @@
           "signal_preview": "Cloudera and Mistral Partner to Bring Specialized, Sovereign Intelligence to Enterprise Data",
           "raw_added_count": 3,
           "raw_removed_count": 1,
-          "llm_summary": "新增 Cloudera 合作及 Spaces CLI 文章，文章总数增加至86篇。"
+          "llm_summary": "新增了 Cloudera 合作和 Spaces CLI 文章，文章总数从 84 增至 86，表明有新内容发布。"
         },
         {
           "platform": "Mistral AI",
@@ -745,7 +745,7 @@
           "signal_preview": "Cloudera and Mistral Partner to Bring Specialized, Sovereign Intelligence to Enterprise Data",
           "raw_added_count": 3,
           "raw_removed_count": 1,
-          "llm_summary": "新增 Cloudera 合作及 Spaces CLI 博文，与 changelog 内容一致。"
+          "llm_summary": "新增了 Cloudera 合作和 Spaces CLI 文章，文章总数从 84 增至 86，与 changelog 一致。"
         },
         {
           "platform": "Cohere",
@@ -770,7 +770,7 @@
           "signal_preview": "Chat endpoint and support production deployment through Model Vault.",
           "raw_added_count": 8,
           "raw_removed_count": 0,
-          "llm_summary": "新增 North Mini Code 和 North Small Translate 模型信息，表明新系列模型上线。"
+          "llm_summary": "新增了 North Mini Code 和 North Small Translate 两个模型，分别面向 agentic coding 和机器翻译，表明 North 系列扩展。"
         },
         {
           "platform": "Cohere",
@@ -792,7 +792,7 @@
           "signal_preview": "Machine translation model",
           "raw_added_count": 2,
           "raw_removed_count": 2,
-          "llm_summary": "新增机器翻译模型定价说明，North Small Translate 定价页上线。"
+          "llm_summary": "新增了 North Small Translate 的定价，删除了 North Mini Code 的定价，可能表示定价页面调整，但模型列表仍保留两者。"
         },
         {
           "platform": "Cohere",
@@ -1104,122 +1104,122 @@
       "highlights": [
         {
           "platform": "DeepSeek",
-          "logo_summary": "旗舰模型更名+旧模型下线路由至V4.1 Flash",
+          "logo_summary": "V4.1 Flash全面接管，V4 Pro有序下线",
           "items": [
             {
-              "text": "2026-09-11 deepseek-flash 替代旧模型名，deepseek-v4-flash-vision-exp 下线并由 V4.1 Flash 提供服务。",
+              "text": "DeepSeek 发布 DeepSeek-V4.1-Flash，旧模型名 deepseek-v4-flash、deepseek-v4-flash-vision-exp 仍可调用但已下线，请求由 V4.1-Flash 按 Flash 价格计费",
               "type": "release"
             },
             {
-              "text": "V4.1 Flash 全面超越 V4 Pro，2026-09-14 12:00 起 deepseek-v4-pro 请求路由至 V4.1 Flash。",
+              "text": "2026-09-14 12:00 起 deepseek-v4-pro 请求将全部路由到 V4.1-Flash，V4 Pro 有序下线",
               "type": "sunset"
             },
             {
-              "text": "deepseek-flash 输入输出缓存命中与非命中价格分别为 0.15/0.30 USD/百万tokens 和 0.60/1.20 USD/百万tokens。",
+              "text": "DeepSeek 定价更新：deepseek-flash 输入 0.15-0.30 USD/百万tokens，输出 0.60-1.20 USD/百万tokens；deepseek-v4-pro 输入 0.66-1.32 USD/百万tokens，输出 1.98-3.96 USD/百万tokens",
               "type": "pricing"
             }
           ]
         },
         {
           "platform": "OpenAI",
-          "logo_summary": "GPT-Live 1 API正式发布+实时语音按秒计费",
+          "logo_summary": "GPT-Live 1 正式可用，语音功能全面铺开",
           "items": [
             {
-              "text": "2026-09-11 GPT-Live 1 API 正式发布，支持全双工语音对话。",
+              "text": "GPT-Live 1 在 API 中正式可用（GA），支持全双工语音对话，可边推理边对话",
               "type": "release"
             },
             {
-              "text": "GPT-Live 1 语音会话按秒计费。",
-              "type": "pricing"
+              "text": "新增 Audio in Chat Completions、Audio processing、Custom voices、Live transcription 等语音相关功能与文档",
+              "type": "other"
             }
           ]
         },
         {
           "platform": "硅基流动",
-          "logo_summary": "Qwen3.8-27B上架，Qwen3.5-27B下线，定价已更新",
+          "logo_summary": "Qwen3.8-27B 上架，生图API多项调整",
           "items": [
             {
-              "text": "2026-09-11 Qwen/Qwen3.8-27B 上架，Qwen/Qwen3.5-27B 下线。",
+              "text": "Qwen3.5-27B 升级为 Qwen3.8-27B，定价随之更新",
               "type": "release"
             },
             {
-              "text": "Qwen3.8-27B 输入 128k 以下价格 ¥ 4.80。",
-              "type": "pricing"
+              "text": "2026-09-15 起对话模型忽略 repetition_penalty 参数，固定按 1 处理",
+              "type": "other"
+            },
+            {
+              "text": "2026-09-30 生图 API 下线 batch_size 字段，默认添加『AI 生成』水印",
+              "type": "other"
             }
           ]
         },
         {
           "platform": "Cohere",
-          "logo_summary": "North系列模型上线，新增代码与翻译模型",
+          "logo_summary": "North 系列新增代码与翻译模型",
           "items": [
             {
-              "text": "2026-09-11 north-mini-code-1-0 上线，30B 总参数/3B 激活 MoE 模型。",
-              "type": "release"
-            },
-            {
-              "text": "north-small-translate-1-0 上线，218B 总参数/25B 激活 MoE 翻译模型。",
+              "text": "Cohere 新增 North Mini Code（30B 总参/3B 激活 MoE，面向 agentic coding）和 North Small Translate（218B 总参/25B 激活 MoE，面向机器翻译）",
               "type": "release"
             }
           ]
         },
         {
           "platform": "Anthropic",
-          "logo_summary": "Claude Managed Agents更新+ant CLI支持会话接入",
+          "logo_summary": "Claude 安全与治理更新，Managed Agents 增强",
           "items": [
             {
-              "text": "2026-09-11 Claude Managed Agents 权限策略新增 auto 选项。",
+              "text": "Claude Managed Agents 权限策略新增 auto 模式，可自动执行或暂停等待审批",
               "type": "other"
             },
             {
-              "text": "ant CLI 新增 ant beta:sessions connect 命令支持终端接入会话。",
+              "text": "ant CLI 新增 beta:sessions connect，可实时连接并操作 Managed Agents 会话",
+              "type": "other"
+            },
+            {
+              "text": "Anthropic 发布 9 月安全报告，披露检测和反制 AI 滥用的最新进展",
               "type": "other"
             }
           ]
         },
         {
           "platform": "百度千帆",
-          "logo_summary": "新增百度AI助手与智能搜索生成产品简介",
+          "logo_summary": "新增百度AI助手与智能搜索生成产品",
           "items": [
             {
-              "text": "2026-09-11 百度千帆新增“百度AI助手与智能搜索生成”产品简介。",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "火山方舟",
-          "logo_summary": "Web Search联网内容插件下线",
-          "items": [
-            {
-              "text": "2026-09-11 火山方舟 Web Search 联网内容插件下线，model_list 和 pricing 同步移除。",
-              "type": "sunset"
+              "text": "百度千帆新增『产品简介-百度AI助手与智能搜索生成』，覆盖模型列表、定价、更新日志与博客",
+              "type": "release"
             }
           ]
         },
         {
           "platform": "Mistral AI",
-          "logo_summary": "与Cloudera合作+Spaces CLI更新",
+          "logo_summary": "与Cloudera合作，发布Spaces CLI",
           "items": [
             {
-              "text": "2026-09-11 Mistral AI 与 Cloudera 达成合作，提供企业级主权智能。",
+              "text": "Mistral 与 Cloudera 达成合作，为企业数据提供主权 AI 方案",
               "type": "other"
             },
             {
-              "text": "Mistral AI 发布 Spaces CLI 工具，支持人类与Agent使用。",
+              "text": "发布 Spaces：面向人类与 Agent 的 CLI 工具",
               "type": "release"
             }
           ]
         },
         {
           "platform": "Google Gemini API",
-          "logo_summary": "Gemini Windows版发布+macOS听写下线",
+          "logo_summary": "Gemini 应用登陆 Windows",
           "items": [
             {
-              "text": "2026-09-11 Gemini app 正式发布 Windows 版本。",
+              "text": "Gemini 应用现可在 Windows 上使用",
               "type": "release"
-            },
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "下架联网内容插件",
+          "items": [
             {
-              "text": "Gemini for macOS 智能听写功能下线。",
+              "text": "火山方舟移除 Web Search（联网内容插件）",
               "type": "sunset"
             }
           ]

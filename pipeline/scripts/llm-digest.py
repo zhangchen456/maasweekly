@@ -44,12 +44,12 @@ DIFF_DIR = BASE / "data" / "diff"
 DST_FILE = BASE / "site" / "src" / "data" / "daily_changes.json"
 
 DEFAULT_BASE_URL = "https://maas-api.cn-huabei-1.xf-yun.com/v2"
-DEFAULT_MODEL = "spark-x2.5"
+DEFAULT_MODEL = "xopdeepseekv4flash0731"
 
 MAX_LINES_PER_SOURCE = 12   # 每信源最多喂给 LLM 的行数
 MAX_LINE_LEN = 160          # 每行截断长度
 MAX_SOURCES = 25            # 单日最多处理的信源数
-REQUEST_TIMEOUT = 300       # 秒（spark-x2.5 长输出较慢）
+REQUEST_TIMEOUT = 180       # 秒（0731 实测 ~15s，留 12 倍余量）
 
 PROMPT = """你是 MaaS（模型即服务）行业追踪站点的编辑。下面是各平台信源今日的变化数据（已过滤噪声，"新增"行是新出现的内容，"删除"行是被替换的旧内容，"变化"行是同一实体旧值→新值）。
 
