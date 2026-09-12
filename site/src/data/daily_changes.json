@@ -1,6 +1,662 @@
 {
-  "updated_at": "2026-09-12T14:33:08",
+  "updated_at": "2026-09-12T15:02:40",
   "days": [
+    {
+      "date": "2026-09-12",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 16,
+        "unchanged": 49
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "model_list",
+          "url": "https://help.aliyun.com/zh/model-studio/models",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 3,
+          "added_lines": [
+            "| deepseek-v4-pro-0813 | deepseek-v4-flash-0731 | kimi/kimi-k3",
+            "| qwen3.7-text-embedding-flash | qwen3.7-text-embedding | qwen3-vl-embedding",
+            "| qwen3.7-text-rerank | |"
+          ],
+          "removed_lines": [
+            "| deepseek-v4-pro | deepseek-v4-flash-0731 | kimi/kimi-k3",
+            "| text-embedding-v4 | qwen3.7-text-embedding | tongyi-embedding-vision-plus",
+            "| qwen3-rerank | |"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| deepseek-v4-pro-0813 | deepseek-v4-flash-0731 | kimi/kimi-k3",
+          "raw_added_count": 3,
+          "raw_removed_count": 3,
+          "id": "obs_abf5728b06abc8d88f8b4cfe2491d1280cd3203008cdab5d1175d54482342d6e",
+          "permalink": "/item/obs_abf5728b06abc8d88f8b4cfe2491d1280cd3203008cdab5d1175d54482342d6e/",
+          "llm_summary": "模型列表新增 deepseek-v4-pro-0813、deepseek-v4-flash-0731、kimi/kimi-k3 等，同时移除旧版 deepseek-v4-pro 和 kimi/kimi-k3，可能为版本更新；嵌入与重排序模型也整体替换，新增 qwen3.7 系列，移除 text-embedding-v4 和 qwen3-rerank。"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "pricing",
+          "url": "https://siliconflow.cn/pricing",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 7,
+          "added_lines": [
+            "Hy4 preview",
+            "Qwen/Qwen3.5-27B",
+            "tencent/Hy4-preview",
+            "输入 [0, 128k)¥ 0.60",
+            "输入 [0, 128k)¥ 4.80",
+            "输入 [128k, +∞)¥ 1.80",
+            "输入 [128k, +∞)¥ 14.40"
+          ],
+          "removed_lines": [
+            "MiniMax-M2.5",
+            "MiniMax-M2.5 (Pro)",
+            "MiniMaxAI/MiniMax-M2.5",
+            "Pro/MiniMaxAI/MiniMax-M2.5",
+            "Qwen/Qwen3.5-397B-A17B",
+            "nex-agi/Nex-N2-Pro",
+            "输入 [0, 128k)¥ 1.20"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "qwen",
+              "before": "Qwen3.5-397B-A17B",
+              "after": "Qwen3.5-27B"
+            }
+          ],
+          "signal_preview": "Qwen/Qwen3.5-27B",
+          "raw_added_count": 10,
+          "raw_removed_count": 13,
+          "id": "obs_c7756f05558ff14c81d875f7db208245eeca6cb6311b6b0facaf2e8d27c1c74a",
+          "permalink": "/item/obs_c7756f05558ff14c81d875f7db208245eeca6cb6311b6b0facaf2e8d27c1c74a/",
+          "llm_summary": "定价页新增 Hy4 preview 和 Qwen/Qwen3.5-27B 的输入价格，移除 MiniMax-M2.5 和 nex-agi/Nex-N2-Pro，并将 Qwen3.5-397B-A17B 替换为 Qwen3.5-27B，反映模型上下架与价格调整。"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "changelog",
+          "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "图片生成 API 默认添加「AI 生成」显式水印：本次变更适用于通过 API 执行的图片生成请求。API 生成的图片将默认添加「AI 生成」显式水印，隐式水印固定添加。当且仅当开发者需要对生成图片执行下游的进一步处理时，才应显式传入 X-Enable-Watermark: 0 声明不添加显式水印；此时，开发者有法定义务自行对最终输出图片添加相关显式水印。"
+          ],
+          "removed_lines": [
+            "「AI 生成」水印默认添加：平台将为生成图片默认添加「AI 生成」水印。如需生成不带水印的图片，请在请求 Header 中显式传入 X-Enable-Watermark: 0，否则生成的图片将带有水印。"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "图片生成 API 默认添加「AI 生成」显式水印：本次变更适用于通过 API 执行的图片生成请求。API 生成的图片将默认添加「AI 生成」显式水印，隐式水印固定添加。当且仅当开发者需要对生成图片执行下游的进一步处理时，才应显式传入 X-Enable-Watermark: 0 声明不添加显式水印；此时，开发者有法定义务自行对最终输出图片添加相关显式水印。",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_26cd4842afc45436b3744e38f462ff72c0af014a76aafe01e10fced13225db0c",
+          "permalink": "/item/obs_26cd4842afc45436b3744e38f462ff72c0af014a76aafe01e10fced13225db0c/",
+          "llm_summary": "更新图片生成 API 水印策略，明确默认添加显式水印，并说明开发者可通过 X-Enable-Watermark: 0 关闭，同时强调法定义务。"
+        },
+        {
+          "platform": "Kimi",
+          "source_type": "pricing",
+          "url": "https://platform.kimi.com/docs/pricing/chat",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 5,
+          "added_lines": [
+            "Kimi K2.7 Code 模型介绍",
+            "Kimi K3 模型介绍",
+            "各模型的能力介绍与适用场景见对应的模型指南：",
+            "模型推理接口对 Input 和 Output 均实行按量计费。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。",
+            "此处 1M = 1,000,000，表格中的价格代表每消耗 1M tokens 的价格。"
+          ],
+          "removed_lines": [
+            "Chat Completion 接口收费：我们对 Input 和 Output 均实行按量计费。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）接口限时免费，即您只上传并抽取文档，这个API本身不会产生费用。",
+            "Kimi 的 Coding 模型，多模态模型",
+            "旗舰模型，1M token 上下文",
+            "计费方式调整通知自 9 月 14 日 0:00 起，Kimi API 开放平台（platform.kimi.com）账户消耗将按现金、代金券各 50% 的统一比例扣除；当现金或代金券任一余额用尽后，后续账户消耗将全额从另一类余额中扣除。已签署合同的用户以合同约定为准，继续优先消耗代金券，不受此次调整影响。",
+            "请查看各模型的详细定价："
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "kimi k",
+              "before": "Kimi K2.7 Code",
+              "after": "Kimi K2.6 模型介绍"
+            }
+          ],
+          "signal_preview": "Kimi K2.7 Code 模型介绍",
+          "raw_added_count": 6,
+          "raw_removed_count": 6,
+          "id": "obs_87f7a3654c3d490256ca0a8ad6591e0aeec50e9d383eaa2eee55e60df8426673",
+          "permalink": "/item/obs_87f7a3654c3d490256ca0a8ad6591e0aeec50e9d383eaa2eee55e60df8426673/",
+          "llm_summary": "新增 Kimi K2.7 Code 和 Kimi K3 模型介绍，更新计费说明，移除旧的计费方式调整通知（9月14日起现金/代金券各50%扣除），可能政策有变。"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "model_list",
+          "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "(2) 为响应广大用户的需求，我们决定在 2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变；如有变动，我们将另行通知。感谢您的理解与支持！",
+            "(4) 更多并发限制细节，请参考\u0000限速与隔离。"
+          ],
+          "removed_lines": [
+            "(2) 经多方测试，V4.1 Flash 在性能、费用、速度、总用时等各项指标上已全面超越 V4 Pro，因此我们计划有序下线 V4 Pro。北京时间 2026 年 9 月 14 日 12:00 之后，至未来 V4.1 Pro 上线之前，您访问 deepseek-v4-pro 的请求将全部路由到 V4.1 Flash，并按 V4.1 Flash 价格计费。",
+            "(4) 更多并发限制细节，请参考限速与隔离。"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "(2) 为响应广大用户的需求，我们决定在 2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变；如有变动，我们将另行通知。感谢您的理解与支持！",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_466db393675ca2c1560dc77e7716a0d7d086a28d1f168734c875714a98f27657",
+          "permalink": "/item/obs_466db393675ca2c1560dc77e7716a0d7d086a28d1f168734c875714a98f27657/",
+          "llm_summary": "新增公告称 V4 Pro 将在 2026年9月14日之后继续提供服务，计费不变，删除此前计划下线 V4 Pro 并路由到 V4.1 Flash 的说明，表明下线计划取消。"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "pricing",
+          "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "(2) 为响应广大用户的需求，我们决定在 2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变；如有变动，我们将另行通知。感谢您的理解与支持！",
+            "(4) 更多并发限制细节，请参考\u0000限速与隔离。"
+          ],
+          "removed_lines": [
+            "(2) 经多方测试，V4.1 Flash 在性能、费用、速度、总用时等各项指标上已全面超越 V4 Pro，因此我们计划有序下线 V4 Pro。北京时间 2026 年 9 月 14 日 12:00 之后，至未来 V4.1 Pro 上线之前，您访问 deepseek-v4-pro 的请求将全部路由到 V4.1 Flash，并按 V4.1 Flash 价格计费。",
+            "(4) 更多并发限制细节，请参考限速与隔离。"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "(2) 为响应广大用户的需求，我们决定在 2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变；如有变动，我们将另行通知。感谢您的理解与支持！",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_d62344a6de249ef6c1d6491c14aaa9cfe61be46eb473fd0bbe6257824503864a",
+          "permalink": "/item/obs_d62344a6de249ef6c1d6491c14aaa9cfe61be46eb473fd0bbe6257824503864a/",
+          "llm_summary": "与 model_list 一致，新增继续提供 V4 Pro 服务的公告，删除下线计划说明，计费方式保持不变。"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "changelog",
+          "url": "https://api-docs.deepseek.com/zh-cn/news/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "(2) In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!"
+          ],
+          "removed_lines": [
+            "(2) After extensive testing, V4.1 Flash has comprehensively surpassed V4 Pro in performance, cost, speed, and total time, so we plan to retire V4 Pro in an orderly manner. From 12:00 Beijing Time on September 14, 2026, and until V4.1 Pro is released in the future, requests to deepseek-v4-pro will all be routed to V4.1 Flash and billed at the V4.1 Flash price."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "(2) In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_fb349c79b1d4f019a7e03f36388706c69d84a8962bf9ffe6c34162948036ab1d",
+          "permalink": "/item/obs_fb349c79b1d4f019a7e03f36388706c69d84a8962bf9ffe6c34162948036ab1d/",
+          "llm_summary": "英文 changelog 新增继续提供 V4 Pro 服务的说明，删除下线计划，与中文公告同步。"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "blog",
+          "url": "https://api-docs.deepseek.com/zh-cn/news/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "(2) In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!"
+          ],
+          "removed_lines": [
+            "(2) After extensive testing, V4.1 Flash has comprehensively surpassed V4 Pro in performance, cost, speed, and total time, so we plan to retire V4 Pro in an orderly manner. From 12:00 Beijing Time on September 14, 2026, and until V4.1 Pro is released in the future, requests to deepseek-v4-pro will all be routed to V4.1 Flash and billed at the V4.1 Flash price."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "(2) In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_e41dd2097bcf7f0c3b67cd35c2c9efcbde7ca6f0adc68225d0a1bb3ae51341c5",
+          "permalink": "/item/obs_e41dd2097bcf7f0c3b67cd35c2c9efcbde7ca6f0adc68225d0a1bb3ae51341c5/",
+          "llm_summary": "博客内容同样更新为继续提供 V4 Pro 服务，删除下线计划，确认政策反转。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 8,
+          "added_lines": [
+            "Account Management",
+            "Bidding & Budgets",
+            "Campaign Management",
+            "Conversion Tracking",
+            "GPT-RosalindLife sciences reasoning for approved organizationsgpt-rosalind-research",
+            "Models for life sciences research",
+            "Rethinking skills and prompts for GPT-6 Astra"
+          ],
+          "removed_lines": [
+            "API Partner Setup",
+            "Campaign Targeting",
+            "Conversion-Optimized Campaigns",
+            "Custom Audiences",
+            "Delta Feeds API",
+            "Location Targeting",
+            "Meet the winners of OpenAI Build Week",
+            "Platform Targeting"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "GPT-RosalindLife sciences reasoning for approved organizationsgpt-rosalind-research",
+          "raw_added_count": 7,
+          "raw_removed_count": 8,
+          "id": "obs_cb7e9ac5c5a93d432e2063dd199ebd338b5f2269bba9423ea548837a35b492ea",
+          "permalink": "/item/obs_cb7e9ac5c5a93d432e2063dd199ebd338b5f2269bba9423ea548837a35b492ea/",
+          "llm_summary": "新增生命科学模型 gpt-rosalind-research，并新增 Account Management、Bidding & Budgets 等广告管理功能，移除 API Partner Setup 等旧条目。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 8,
+          "added_lines": [
+            "Account Management",
+            "Bidding & Budgets",
+            "Billing for gpt-rosalind-research begins on October 5, 2026. Cache-write pricing does not apply to this model. Access is limited to approved internal research through the trusted-access program. All eligible organizations will continue to get access to the latest GPT-Rosalind models as they’re released.",
+            "Campaign Management",
+            "Conversion Tracking",
+            "Rethinking skills and prompts for GPT-6 Astra",
+            "| Life Sciences | gpt-rosalind-research | $5.00 | $0.50 | $25.00"
+          ],
+          "removed_lines": [
+            "API Partner Setup",
+            "Campaign Targeting",
+            "Conversion-Optimized Campaigns",
+            "Custom Audiences",
+            "Delta Feeds API",
+            "Location Targeting",
+            "Meet the winners of OpenAI Build Week",
+            "Platform Targeting"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Billing for gpt-rosalind-research begins on October 5, 2026. Cache-write pricing does not apply to this model. Access is limited to approved internal research through the trusted-access program. All eligible organizations will continue to get access to the latest GPT-Rosalind models as they’re released.",
+          "raw_added_count": 7,
+          "raw_removed_count": 8,
+          "id": "obs_a5f8f31c1391ea74f196ede6a0fb430a0baf96482e3122f86eda790cef764825",
+          "permalink": "/item/obs_a5f8f31c1391ea74f196ede6a0fb430a0baf96482e3122f86eda790cef764825/",
+          "llm_summary": "新增 gpt-rosalind-research 定价 $5/$0.50/$25 每百万 tokens，并说明计费开始日期为 2026年10月5日，缓存写入不适用。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 8,
+          "added_lines": [
+            "Account Management",
+            "Bidding & Budgets",
+            "Campaign Management",
+            "Conversion Tracking",
+            "GPT-Rosalind (gpt-rosalind-research) is now generally available through the trusted-access program for approved internal life sciences research.",
+            "Rethinking skills and prompts for GPT-6 Astra",
+            "Standard pricing is $5 per 1M input tokens, $0.50 per 1M cached input tokens, and $25 per 1M output tokens. Billing begins on October 5, 2026. See pricing for details.",
+            "gpt-rosalind-research"
+          ],
+          "removed_lines": [
+            "API Partner Setup",
+            "Campaign Targeting",
+            "Conversion-Optimized Campaigns",
+            "Custom Audiences",
+            "Delta Feeds API",
+            "Location Targeting",
+            "Meet the winners of OpenAI Build Week",
+            "Platform Targeting"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "GPT-Rosalind (gpt-rosalind-research) is now generally available through the trusted-access program for approved internal life sciences research.",
+          "raw_added_count": 8,
+          "raw_removed_count": 8,
+          "id": "obs_98b4c35f73c674327185cdcf6bec2f4ecab63abff2655ebb21c5d3dfb2d5b9a7",
+          "permalink": "/item/obs_98b4c35f73c674327185cdcf6bec2f4ecab63abff2655ebb21c5d3dfb2d5b9a7/",
+          "llm_summary": "宣布 gpt-rosalind-research 正式可用，面向获批的内部生命科学研究，定价与计费日期已明确。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 8,
+          "added_lines": [
+            "Account Management",
+            "Bidding & Budgets",
+            "Campaign Management",
+            "Conversion Tracking",
+            "GPT-Rosalind (gpt-rosalind-research) is now generally available through the trusted-access program for approved internal life sciences research.",
+            "Rethinking skills and prompts for GPT-6 Astra",
+            "Standard pricing is $5 per 1M input tokens, $0.50 per 1M cached input tokens, and $25 per 1M output tokens. Billing begins on October 5, 2026. See pricing for details.",
+            "gpt-rosalind-research"
+          ],
+          "removed_lines": [
+            "API Partner Setup",
+            "Campaign Targeting",
+            "Conversion-Optimized Campaigns",
+            "Custom Audiences",
+            "Delta Feeds API",
+            "Location Targeting",
+            "Meet the winners of OpenAI Build Week",
+            "Platform Targeting"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "GPT-Rosalind (gpt-rosalind-research) is now generally available through the trusted-access program for approved internal life sciences research.",
+          "raw_added_count": 8,
+          "raw_removed_count": 8,
+          "id": "obs_4d13fc6ec021a9e47816bc206923533d8cedad217f9610f8849696889488df26",
+          "permalink": "/item/obs_4d13fc6ec021a9e47816bc206923533d8cedad217f9610f8849696889488df26/",
+          "llm_summary": "博客同步发布 gpt-rosalind-research 可用公告及定价细节，并新增 GPT-6 Astra 技能与提示词指南。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 8,
+          "added_lines": [
+            "For enterprise deployments, powered by Gemini Enterprise Agent Platform.",
+            "Warning: Gemini 2.5 Flash Image (gemini-2.5-flash-image) is deprecated and will be shut down on October 2, 2026; migrate to Gemini 3.1 Flash Image or Gemini 3.1 Flash Lite Image to avoid service disruption."
+          ],
+          "removed_lines": [
+            "For large-scale deployments with custom needs for security, support, and compliance, powered by Gemini Enterprise Agent Platform.",
+            "Gemini Embedding",
+            "Gemini Robotics ER 1.6 Preview",
+            "Gemini Robotics ER, short for Gemini Robotics-Embodied Reasoning, is a thinking",
+            "Our first Gemini Embeddings model for text-only use cases.",
+            "gemini-embedding-001",
+            "gemini-robotics-er-1.6-preview",
+            "$2.00 (audio)"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-08 UTC.",
+              "after": "Last updated 2026-09-11 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-08 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-11 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "For enterprise deployments, powered by Gemini Enterprise Agent Platform.",
+          "raw_added_count": 4,
+          "raw_removed_count": 13,
+          "id": "obs_d7df805c906e81690d5ee3dee5390e08081ec2bb1ca263f90bfbef61adbe9b40",
+          "permalink": "/item/obs_d7df805c906e81690d5ee3dee5390e08081ec2bb1ca263f90bfbef61adbe9b40/",
+          "llm_summary": "定价页更新日期至 2026-09-11，新增 Gemini 2.5 Flash Image 弃用警告，移除 Gemini Embedding 和 Robotics ER 1.6 相关说明，可能为模型下架。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 11,
+          "removed_count": 2,
+          "added_lines": [
+            "Agnes 3.0 Flash",
+            "Anthropic + CognitionOpenAI",
+            "AnthropicOpenAIMetaZ AISpaceXAIKimiGoogleAlibabaDeepSeekMBZUAI Institute of Foundation ModelsMiniMaxThinking MachinesMistral",
+            "Artificial Analysis Coding Agent Index vs. Cost per Task",
+            "Artificial Analysis Coding Agent Index vs. average pay-per-token API cost per task (USD)",
+            "Each point represents a coding-agent variant. Farther left means lower average cost per task, while higher on the chart means higher benchmark performance. The most efficient agents sit toward the upper-left: stronger results at lower cost.",
+            "Estimate (independent evaluation forthcoming)",
+            "How to Read This Chart",
+            "Incorporates 7 evaluations: AA-Omniscience, GDPval-AA v2, AA-Briefcase, Humanity's Last Exam, AutomationBench-AA, AA-LCR v1.1, GDP.pdf · Higher is better",
+            "Muse Spark 1.3 (xhigh)See more",
+            "OpenAI + CognitionMetaZ.aiMoonshot AISpaceXAIAlibaba CloudDeepSeekGoogle"
+          ],
+          "removed_lines": [
+            "AnthropicOpenAIMetaZ AISpaceXAIKimiGoogleAlibabaDeepSeekMiniMaxThinking MachinesMistral",
+            "Gemini 3.8 Flash (low)See more"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AnthropicOpenAIMetaZ AISpaceXAIKimiGoogleAlibabaDeepSeekMBZUAI Institute of Foundation ModelsMiniMaxThinking MachinesMistral",
+          "raw_added_count": 19,
+          "raw_removed_count": 12,
+          "id": "obs_7ab603ec954394e9e8b285a7826126156363ad8d2641a535f64807e2856ee651",
+          "permalink": "/item/obs_7ab603ec954394e9e8b285a7826126156363ad8d2641a535f64807e2856ee651/",
+          "llm_summary": "新增 Agnes 3.0 Flash 模型，并更新 Coding Agent Index 与成本对比图表，同时调整厂商列表，移除 Gemini 3.8 Flash (low)。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 18,
+          "removed_count": 0,
+          "added_lines": [
+            "claude-fable-5.1-max1501±8",
+            "claude-fable-5.1-max1758+14/-14",
+            "claude-fable-51506±5",
+            "claude-fable-51628+7/-7",
+            "claude-opus-4-61497±3",
+            "claude-opus-5-high1493±4",
+            "claude-opus-5-high1660+7/-7",
+            "claude-opus-5-max1687+7/-7",
+            "gemini-3.8-flash-high1493",
+            "gpt-6-astra-max |",
+            "gpt-6-astra-max1800+16/-16",
+            "grok-4.6-high |",
+            "muse-spark-1.11494±5",
+            "muse-spark-1.2 (xHigh)1499±11",
+            "muse-spark-1.3-max1652+12/-12",
+            "qwen3.8-flash-next1635",
+            "qwen3.8-max-09021681",
+            "qwen3.8-max1671"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "claude-fable-5.1-max: 1501±8",
+          "raw_added_count": 29,
+          "raw_removed_count": 27,
+          "id": "obs_9293286b58eeb73d48545708d8500b546c7d53e9894fa07a9050507be2bd3a50",
+          "permalink": "/item/obs_9293286b58eeb73d48545708d8500b546c7d53e9894fa07a9050507be2bd3a50/",
+          "llm_summary": "新增多款模型分数，包括 claude-fable-5.1-max、gpt-6-astra-max、gemini-3.8-flash-high 等，反映最新排行榜变化。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 31,
+          "raw_removed_count": 31,
+          "id": "obs_cd0d966634c70a170313493ee0a20b32faa35bfa9fbc01970654d8fdbaeca2c4",
+          "permalink": "/item/obs_cd0d966634c70a170313493ee0a20b32faa35bfa9fbc01970654d8fdbaeca2c4/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "OpenAI",
+          "logo_summary": "发布生命科学模型GPT-Rosalind，定价明确",
+          "items": [
+            {
+              "text": "OpenAI 发布 gpt-rosalind-research，面向获批的生命科学研究组织，定价 $5/百万输入 tokens、$0.50/百万缓存输入、$25/百万输出，10月5日起计费",
+              "type": "release"
+            },
+            {
+              "text": "OpenAI 上线 GPT-6 Astra 技能与提示词重构指南，并新增 Account Management、Bidding & Budgets 等广告管理功能",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "模型列表大换血，新增多款新模型",
+          "items": [
+            {
+              "text": "阿里百炼新增 deepseek-v4-pro-0813、deepseek-v4-flash-0731、kimi/kimi-k3 等模型，同时移除旧版 deepseek-v4-pro 和 kimi/kimi-k3",
+              "type": "release"
+            },
+            {
+              "text": "阿里百炼新增 qwen3.7-text-embedding-flash、qwen3.7-text-embedding、qwen3-vl-embedding 及 qwen3.7-text-rerank，替换旧版 text-embedding-v4 和 qwen3-rerank",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "定价调整，新增Hy4与Qwen3.5-27B",
+          "items": [
+            {
+              "text": "硅基流动新增 tencent/Hy4-preview 与 Qwen/Qwen3.5-27B，输入价格分别为 ¥0.60/百万tokens（128k内）和 ¥4.80/百万tokens（128k内）",
+              "type": "release"
+            },
+            {
+              "text": "硅基流动移除 MiniMax-M2.5 及 nex-agi/Nex-N2-Pro，并将 Qwen3.5-397B-A17B 替换为 Qwen3.5-27B",
+              "type": "sunset"
+            },
+            {
+              "text": "硅基流动图片生成 API 默认添加「AI 生成」显式水印，开发者可显式传入 X-Enable-Watermark: 0 关闭",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "DeepSeek",
+          "logo_summary": "V4 Pro 继续提供服务，取消下线计划",
+          "items": [
+            {
+              "text": "DeepSeek 宣布 2026年9月14日之后继续提供 V4 Pro API 服务，计费方式不变，撤销此前下线计划",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Kimi",
+          "logo_summary": "新增K3模型介绍，计费说明更新",
+          "items": [
+            {
+              "text": "Kimi 新增 Kimi K3 模型介绍，并更新 Kimi K2.7 Code 模型介绍，明确按量计费规则",
+              "type": "release"
+            },
+            {
+              "text": "Kimi 移除 9月14日起现金/代金券各50%扣除的计费调整通知，可能政策有变",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "Gemini 2.5 Flash Image 弃用，定价页更新",
+          "items": [
+            {
+              "text": "Google Gemini API 警告 Gemini 2.5 Flash Image 将于 2026年10月2日 关闭，建议迁移至 Gemini 3.1 Flash Image",
+              "type": "sunset"
+            },
+            {
+              "text": "Google Gemini API 移除 Gemini Embedding 和 Gemini Robotics ER 1.6 Preview 相关说明，定价页更新至 2026-09-11",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "新增Agnes 3.0 Flash，更新行业指数",
+          "items": [
+            {
+              "text": "Artificial Analysis 新增 Agnes 3.0 Flash 模型，并更新 Coding Agent Index 与成本对比图表",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "榜单新增多款模型分数",
+          "items": [
+            {
+              "text": "LMArena 新增 claude-fable-5.1-max 得分 1501±8，gpt-6-astra-max 得分 1800 (+16/-16)，以及 gemini-3.8-flash-high 等",
+              "type": "other"
+            }
+          ]
+        }
+      ],
+      "price_changes": [
+        {
+          "provider": "google",
+          "model": "gemini-2.5-computer-use-preview",
+          "component": "input",
+          "previous": "1.250000",
+          "current": "1.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "provider": "google",
+          "model": "gemini-2.5-computer-use-preview",
+          "component": "output",
+          "previous": "10.000000",
+          "current": "5.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        }
+      ]
+    },
     {
       "date": "2026-09-11",
       "stats": {

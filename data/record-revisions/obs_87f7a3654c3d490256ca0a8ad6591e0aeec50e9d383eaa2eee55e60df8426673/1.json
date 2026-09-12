@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_87f7a3654c3d490256ca0a8ad6591e0aeec50e9d383eaa2eee55e60df8426673",
+  "sourceId": "kimi-pricing",
+  "date": "2026-09-12",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Kimi",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.kimi.com/docs/pricing/chat",
+  "title": "Kimi · 定价来源更新",
+  "summary": "新增 Kimi K2.7 Code 和 Kimi K3 模型介绍，更新计费说明，移除旧的计费方式调整通知（9月14日起现金/代金券各50%扣除），可能政策有变。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "kimi k",
+        "before": "Kimi K2.7 Code",
+        "after": "Kimi K2.6 模型介绍"
+      }
+    ],
+    "added_lines": [
+      "Kimi K2.7 Code 模型介绍",
+      "Kimi K3 模型介绍",
+      "各模型的能力介绍与适用场景见对应的模型指南：",
+      "模型推理接口对 Input 和 Output 均实行按量计费。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。",
+      "此处 1M = 1,000,000，表格中的价格代表每消耗 1M tokens 的价格。"
+    ],
+    "removed_lines": [
+      "Chat Completion 接口收费：我们对 Input 和 Output 均实行按量计费。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）接口限时免费，即您只上传并抽取文档，这个API本身不会产生费用。",
+      "Kimi 的 Coding 模型，多模态模型",
+      "旗舰模型，1M token 上下文",
+      "计费方式调整通知自 9 月 14 日 0:00 起，Kimi API 开放平台（platform.kimi.com）账户消耗将按现金、代金券各 50% 的统一比例扣除；当现金或代金券任一余额用尽后，后续账户消耗将全额从另一类余额中扣除。已签署合同的用户以合同约定为准，继续优先消耗代金券，不受此次调整影响。",
+      "请查看各模型的详细定价："
+    ],
+    "added_count": 5,
+    "removed_count": 5,
+    "raw_added_count": 6,
+    "raw_removed_count": 6
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-12.json"
+  },
+  "permalink": "/item/obs_87f7a3654c3d490256ca0a8ad6591e0aeec50e9d383eaa2eee55e60df8426673/"
+}

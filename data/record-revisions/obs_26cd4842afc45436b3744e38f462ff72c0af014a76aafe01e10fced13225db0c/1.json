@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_26cd4842afc45436b3744e38f462ff72c0af014a76aafe01e10fced13225db0c",
+  "sourceId": "siliconflow-changelog",
+  "date": "2026-09-12",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "硅基流动",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.siliconflow.cn/docs/release-notes/overview",
+  "title": "硅基流动 · 更新日志来源更新",
+  "summary": "更新图片生成 API 水印策略，明确默认添加显式水印，并说明开发者可通过 X-Enable-Watermark: 0 关闭，同时强调法定义务。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "图片生成 API 默认添加「AI 生成」显式水印：本次变更适用于通过 API 执行的图片生成请求。API 生成的图片将默认添加「AI 生成」显式水印，隐式水印固定添加。当且仅当开发者需要对生成图片执行下游的进一步处理时，才应显式传入 X-Enable-Watermark: 0 声明不添加显式水印；此时，开发者有法定义务自行对最终输出图片添加相关显式水印。"
+    ],
+    "removed_lines": [
+      "「AI 生成」水印默认添加：平台将为生成图片默认添加「AI 生成」水印。如需生成不带水印的图片，请在请求 Header 中显式传入 X-Enable-Watermark: 0，否则生成的图片将带有水印。"
+    ],
+    "added_count": 1,
+    "removed_count": 1,
+    "raw_added_count": 1,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-12.json"
+  },
+  "permalink": "/item/obs_26cd4842afc45436b3744e38f462ff72c0af014a76aafe01e10fced13225db0c/"
+}

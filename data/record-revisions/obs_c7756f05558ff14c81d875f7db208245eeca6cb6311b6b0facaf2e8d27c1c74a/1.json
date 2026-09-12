@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_c7756f05558ff14c81d875f7db208245eeca6cb6311b6b0facaf2e8d27c1c74a",
+  "sourceId": "siliconflow-pricing",
+  "date": "2026-09-12",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "硅基流动",
+  "sourceType": "pricing",
+  "sourceUrl": "https://siliconflow.cn/pricing",
+  "title": "硅基流动 · 定价来源更新",
+  "summary": "定价页新增 Hy4 preview 和 Qwen/Qwen3.5-27B 的输入价格，移除 MiniMax-M2.5 和 nex-agi/Nex-N2-Pro，并将 Qwen3.5-397B-A17B 替换为 Qwen3.5-27B，反映模型上下架与价格调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "qwen",
+        "before": "Qwen3.5-397B-A17B",
+        "after": "Qwen3.5-27B"
+      }
+    ],
+    "added_lines": [
+      "Hy4 preview",
+      "Qwen/Qwen3.5-27B",
+      "tencent/Hy4-preview",
+      "输入 [0, 128k)¥ 0.60",
+      "输入 [0, 128k)¥ 4.80",
+      "输入 [128k, +∞)¥ 1.80",
+      "输入 [128k, +∞)¥ 14.40"
+    ],
+    "removed_lines": [
+      "MiniMax-M2.5",
+      "MiniMax-M2.5 (Pro)",
+      "MiniMaxAI/MiniMax-M2.5",
+      "Pro/MiniMaxAI/MiniMax-M2.5",
+      "Qwen/Qwen3.5-397B-A17B",
+      "nex-agi/Nex-N2-Pro",
+      "输入 [0, 128k)¥ 1.20"
+    ],
+    "added_count": 7,
+    "removed_count": 7,
+    "raw_added_count": 10,
+    "raw_removed_count": 13
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-12.json"
+  },
+  "permalink": "/item/obs_c7756f05558ff14c81d875f7db208245eeca6cb6311b6b0facaf2e8d27c1c74a/"
+}

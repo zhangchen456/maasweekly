@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_abf5728b06abc8d88f8b4cfe2491d1280cd3203008cdab5d1175d54482342d6e",
+  "sourceId": "alibaba-modellist",
+  "date": "2026-09-12",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "阿里百炼",
+  "sourceType": "model_list",
+  "sourceUrl": "https://help.aliyun.com/zh/model-studio/models",
+  "title": "阿里百炼 · 模型列表来源更新",
+  "summary": "模型列表新增 deepseek-v4-pro-0813、deepseek-v4-flash-0731、kimi/kimi-k3 等，同时移除旧版 deepseek-v4-pro 和 kimi/kimi-k3，可能为版本更新；嵌入与重排序模型也整体替换，新增 qwen3.7 系列，移除 text-embedding-v4 和 qwen3-rerank。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "| deepseek-v4-pro-0813 | deepseek-v4-flash-0731 | kimi/kimi-k3",
+      "| qwen3.7-text-embedding-flash | qwen3.7-text-embedding | qwen3-vl-embedding",
+      "| qwen3.7-text-rerank | |"
+    ],
+    "removed_lines": [
+      "| deepseek-v4-pro | deepseek-v4-flash-0731 | kimi/kimi-k3",
+      "| text-embedding-v4 | qwen3.7-text-embedding | tongyi-embedding-vision-plus",
+      "| qwen3-rerank | |"
+    ],
+    "added_count": 3,
+    "removed_count": 3,
+    "raw_added_count": 3,
+    "raw_removed_count": 3
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-12.json"
+  },
+  "permalink": "/item/obs_abf5728b06abc8d88f8b4cfe2491d1280cd3203008cdab5d1175d54482342d6e/"
+}

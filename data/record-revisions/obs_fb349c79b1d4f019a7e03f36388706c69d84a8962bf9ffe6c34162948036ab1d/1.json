@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_fb349c79b1d4f019a7e03f36388706c69d84a8962bf9ffe6c34162948036ab1d",
+  "sourceId": "deepseek-changelog",
+  "date": "2026-09-12",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "DeepSeek",
+  "sourceType": "changelog",
+  "sourceUrl": "https://api-docs.deepseek.com/zh-cn/news/",
+  "title": "DeepSeek · 更新日志来源更新",
+  "summary": "英文 changelog 新增继续提供 V4 Pro 服务的说明，删除下线计划，与中文公告同步。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "(2) In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!"
+    ],
+    "removed_lines": [
+      "(2) After extensive testing, V4.1 Flash has comprehensively surpassed V4 Pro in performance, cost, speed, and total time, so we plan to retire V4 Pro in an orderly manner. From 12:00 Beijing Time on September 14, 2026, and until V4.1 Pro is released in the future, requests to deepseek-v4-pro will all be routed to V4.1 Flash and billed at the V4.1 Flash price."
+    ],
+    "added_count": 1,
+    "removed_count": 1,
+    "raw_added_count": 1,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-12.json"
+  },
+  "permalink": "/item/obs_fb349c79b1d4f019a7e03f36388706c69d84a8962bf9ffe6c34162948036ab1d/"
+}

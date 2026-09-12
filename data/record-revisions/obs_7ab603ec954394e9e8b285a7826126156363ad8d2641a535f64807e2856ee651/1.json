@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_7ab603ec954394e9e8b285a7826126156363ad8d2641a535f64807e2856ee651",
+  "sourceId": "aa-industry",
+  "date": "2026-09-12",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "新增 Agnes 3.0 Flash 模型，并更新 Coding Agent Index 与成本对比图表，同时调整厂商列表，移除 Gemini 3.8 Flash (low)。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Agnes 3.0 Flash",
+      "Anthropic + CognitionOpenAI",
+      "AnthropicOpenAIMetaZ AISpaceXAIKimiGoogleAlibabaDeepSeekMBZUAI Institute of Foundation ModelsMiniMaxThinking MachinesMistral",
+      "Artificial Analysis Coding Agent Index vs. Cost per Task",
+      "Artificial Analysis Coding Agent Index vs. average pay-per-token API cost per task (USD)",
+      "Each point represents a coding-agent variant. Farther left means lower average cost per task, while higher on the chart means higher benchmark performance. The most efficient agents sit toward the upper-left: stronger results at lower cost.",
+      "Estimate (independent evaluation forthcoming)",
+      "How to Read This Chart",
+      "Incorporates 7 evaluations: AA-Omniscience, GDPval-AA v2, AA-Briefcase, Humanity's Last Exam, AutomationBench-AA, AA-LCR v1.1, GDP.pdf · Higher is better",
+      "Muse Spark 1.3 (xhigh)See more",
+      "OpenAI + CognitionMetaZ.aiMoonshot AISpaceXAIAlibaba CloudDeepSeekGoogle"
+    ],
+    "removed_lines": [
+      "AnthropicOpenAIMetaZ AISpaceXAIKimiGoogleAlibabaDeepSeekMiniMaxThinking MachinesMistral",
+      "Gemini 3.8 Flash (low)See more"
+    ],
+    "added_count": 11,
+    "removed_count": 2,
+    "raw_added_count": 19,
+    "raw_removed_count": 12
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-12.json"
+  },
+  "permalink": "/item/obs_7ab603ec954394e9e8b285a7826126156363ad8d2641a535f64807e2856ee651/"
+}

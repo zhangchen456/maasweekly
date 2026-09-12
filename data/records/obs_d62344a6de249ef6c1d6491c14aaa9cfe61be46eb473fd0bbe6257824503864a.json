@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_d62344a6de249ef6c1d6491c14aaa9cfe61be46eb473fd0bbe6257824503864a",
+  "sourceId": "deepseek-pricing",
+  "date": "2026-09-12",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "DeepSeek",
+  "sourceType": "pricing",
+  "sourceUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+  "title": "DeepSeek · 定价来源更新",
+  "summary": "与 model_list 一致，新增继续提供 V4 Pro 服务的公告，删除下线计划说明，计费方式保持不变。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "(2) 为响应广大用户的需求，我们决定在 2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变；如有变动，我们将另行通知。感谢您的理解与支持！",
+      "(4) 更多并发限制细节，请参考\u0000限速与隔离。"
+    ],
+    "removed_lines": [
+      "(2) 经多方测试，V4.1 Flash 在性能、费用、速度、总用时等各项指标上已全面超越 V4 Pro，因此我们计划有序下线 V4 Pro。北京时间 2026 年 9 月 14 日 12:00 之后，至未来 V4.1 Pro 上线之前，您访问 deepseek-v4-pro 的请求将全部路由到 V4.1 Flash，并按 V4.1 Flash 价格计费。",
+      "(4) 更多并发限制细节，请参考限速与隔离。"
+    ],
+    "added_count": 2,
+    "removed_count": 2,
+    "raw_added_count": 2,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-12.json"
+  },
+  "permalink": "/item/obs_d62344a6de249ef6c1d6491c14aaa9cfe61be46eb473fd0bbe6257824503864a/"
+}

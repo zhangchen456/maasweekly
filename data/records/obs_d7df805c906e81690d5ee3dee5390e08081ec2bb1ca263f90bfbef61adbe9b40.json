@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_d7df805c906e81690d5ee3dee5390e08081ec2bb1ca263f90bfbef61adbe9b40",
+  "sourceId": "google-gemini-pricing",
+  "date": "2026-09-12",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "pricing",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+  "title": "Google Gemini API · 定价来源更新",
+  "summary": "定价页更新日期至 2026-09-11，新增 Gemini 2.5 Flash Image 弃用警告，移除 Gemini Embedding 和 Robotics ER 1.6 相关说明，可能为模型下架。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-09-08 UTC.",
+        "after": "Last updated 2026-09-11 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-08 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-11 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "For enterprise deployments, powered by Gemini Enterprise Agent Platform.",
+      "Warning: Gemini 2.5 Flash Image (gemini-2.5-flash-image) is deprecated and will be shut down on October 2, 2026; migrate to Gemini 3.1 Flash Image or Gemini 3.1 Flash Lite Image to avoid service disruption."
+    ],
+    "removed_lines": [
+      "For large-scale deployments with custom needs for security, support, and compliance, powered by Gemini Enterprise Agent Platform.",
+      "Gemini Embedding",
+      "Gemini Robotics ER 1.6 Preview",
+      "Gemini Robotics ER, short for Gemini Robotics-Embodied Reasoning, is a thinking",
+      "Our first Gemini Embeddings model for text-only use cases.",
+      "gemini-embedding-001",
+      "gemini-robotics-er-1.6-preview",
+      "$2.00 (audio)"
+    ],
+    "added_count": 2,
+    "removed_count": 8,
+    "raw_added_count": 4,
+    "raw_removed_count": 13
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-12.json"
+  },
+  "permalink": "/item/obs_d7df805c906e81690d5ee3dee5390e08081ec2bb1ca263f90bfbef61adbe9b40/"
+}

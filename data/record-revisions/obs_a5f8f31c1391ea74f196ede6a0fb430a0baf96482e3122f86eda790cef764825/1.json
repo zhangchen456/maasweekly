@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_a5f8f31c1391ea74f196ede6a0fb430a0baf96482e3122f86eda790cef764825",
+  "sourceId": "openai-pricing",
+  "date": "2026-09-12",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.openai.com/docs/pricing",
+  "title": "OpenAI · 定价来源更新",
+  "summary": "新增 gpt-rosalind-research 定价 $5/$0.50/$25 每百万 tokens，并说明计费开始日期为 2026年10月5日，缓存写入不适用。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Account Management",
+      "Bidding & Budgets",
+      "Billing for gpt-rosalind-research begins on October 5, 2026. Cache-write pricing does not apply to this model. Access is limited to approved internal research through the trusted-access program. All eligible organizations will continue to get access to the latest GPT-Rosalind models as they’re released.",
+      "Campaign Management",
+      "Conversion Tracking",
+      "Rethinking skills and prompts for GPT-6 Astra",
+      "| Life Sciences | gpt-rosalind-research | $5.00 | $0.50 | $25.00"
+    ],
+    "removed_lines": [
+      "API Partner Setup",
+      "Campaign Targeting",
+      "Conversion-Optimized Campaigns",
+      "Custom Audiences",
+      "Delta Feeds API",
+      "Location Targeting",
+      "Meet the winners of OpenAI Build Week",
+      "Platform Targeting"
+    ],
+    "added_count": 7,
+    "removed_count": 8,
+    "raw_added_count": 7,
+    "raw_removed_count": 8
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-12.json"
+  },
+  "permalink": "/item/obs_a5f8f31c1391ea74f196ede6a0fb430a0baf96482e3122f86eda790cef764825/"
+}
