@@ -1,0 +1,279 @@
+---
+// 来源变化条目详情页：/item/obs_.../
+// 数据源：data/records/*.json（持久归档，全部历史，不受 KEEP_DAYS 限制）
+// 修订历史：data/record-revisions/<id>/<rev>.json
+import Layout from '../../layouts/Layout.astro';
+import { logoFor } from '../../lib/platforms';
+import fs from 'node:fs';
+import path from 'node:path';
+
+export async function getStaticPaths() {
+  // R1：归档缺失/损坏为硬错误——不允许空 catch 静默生成 0 详情页
+  const recordsDir = path.join(process.cwd(), '..', 'data', 'records');
+  if (!fs.existsSync(recordsDir)) {
+    throw new Error(`[item] 归档目录缺失: ${recordsDir}——请先运行 sync（构建门禁应已拦截）`);
+  }
+  const paths: any[] = [];
+  for (const f of fs.readdirSync(recordsDir)) {
+    if (!f.startsWith('obs_') || !f.endsWith('.json')) continue;
+    let record: any;
+    try {
+      record = JSON.parse(fs.readFileSync(path.join(recordsDir, f), 'utf-8'));
+    } catch (e) {
+      throw new Error(`[item] 归档损坏（构建中止，不生成半套页面）: ${f}: ${e}`);
+    }
+    if (record.id !== f.replace('.json', '')) {
+      throw new Error(`[item] 归档 id 与文件名不一致: ${f}`);
+    }
+    paths.push({ params: { id: record.id }, props: { record } });
+  }
+  if (paths.length === 0) {
+    throw new Error('[item] data/records 为空但构建被要求执行——请检查 sync 是否运行');
+  }
+  return paths;
+}
+
+const { record } = Astro.props;
+const rid: string = record.id;
+
+// 修订历史（旧→新；R1：损坏/缺失为硬错误）
+const revDir = path.join(process.cwd(), '..', 'data', 'record-revisions', rid);
+let revisions: any[] = [];
+try {
+  revisions = fs.readdirSync(revDir)
+    .filter((f: string) => f.endsWith('.json'))
+    .map((f: string) => JSON.parse(
+      fs.readFileSync(path.join(revDir, f), 'utf-8')))
+    .sort((a: any, b: any) => a.revision - b.revision);
+} catch (e) {
+  throw new Error(`[item] 修订目录读取失败（构建中止）: ${rid}: ${e}`);
+}
+
+// 完整永久链接（Astro.site + permalink）
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const fullUrl = `${site}${record.permalink}`;
+
+// 所属周归档（ISO 周）
+const weekOf = (dateStr: string) => {
+  const d = new Date(dateStr + 'T00:00:00Z');
+  const day = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - day);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+};
+const weekId = weekOf(record.date);
+
+const kindLabel = record.kind === 'substantive'
+  ? { text: '实质变化', cls: 'k-sub' } : { text: '常规页面波动', cls: 'k-jit' };
+const statusLabel = record.status === 'withdrawn'
+  ? { text: '已撤回', cls: 's-wd' } : { text: '收录中', cls: 's-ok' };
+
+// 类型中文
+const TYPE_LABEL: Record<string, string> = {
+  model_list: '模型列表', pricing: '定价页', changelog: '更新日志',
+  blog: '官方博客', api_docs: 'API 文档', github: 'GitHub', industry: '行业数据',
+};
+const typeLabel = TYPE_LABEL[record.sourceType] ?? record.sourceType;
+
+const completenessNote = record.diffCompleteness === 'truncated'
+  ? '以下为已保存的变化摘录（原始抓取行数超上限，非完整差异）'
+  : '以下为已保存的变化摘录';
+---
+
+<Layout title={`${record.title} — MaaS Daily`} description={`${record.platform} ${record.date} 来源变化摘录`}>
+  <header class="hero">
+    <div class="hero-main">
+      <a href={`/daily/${weekId}/`} class="back-link">← {weekId} 周归档</a>
+      <div class="eyebrow">SOURCE RECORD · {rid.slice(0, 16)}…</div>
+      <h1>{record.platform} <span class="type-sep">·</span> {typeLabel}来源更新</h1>
+      <div class="record-meta">
+        <span class={`badge ${kindLabel.cls}`}>{kindLabel.text}</span>
+        <span class={`badge ${statusLabel.cls}`}>{statusLabel.text}</span>
+        <span class="meta-date">观察日期 {record.date}（日期精度）</span>
+        {record.revision > 1 && <span class="meta-date">修订 r{record.revision}</span>}
+      </div>
+      {record.status === 'withdrawn' && (
+        <p class="withdrawn-note">此条目已撤回：{record.revisionReason}。历史内容保留供追溯，链接长期有效。</p>
+      )}
+      {record.kind === 'jitter' && (
+        <p class="jitter-note">此项为常规页面波动（jitter），未达到实质变化标准，保留供完整追溯。</p>
+      )}
+    </div>
+    <aside class="hero-aside">
+      <img src={logoFor(record.platform)} alt={record.platform} class="hero-logo" loading="lazy" />
+    </aside>
+  </header>
+
+  <section class="record-body">
+    <div class="card summary-card">
+      <h2>摘要</h2>
+      {record.summary ? (
+        <p class="summary-text">{record.summary}</p>
+      ) : (
+        <p class="summary-text muted">暂无摘要。本条目为来源变化的原始摘录。</p>
+      )}
+      {record.summaryOrigin && (
+        <span class="origin-tag">{record.summaryOrigin === 'llm' ? 'LLM 生成' : '规则生成'}</span>
+      )}
+      {record.summaryOrigin === 'llm' && (
+        <p class="muted origin-note">LLM 摘要为机器生成，重要信息请回原文核对。</p>
+      )}
+    </div>
+
+    <div class="card permalink-card">
+      <h2>永久链接</h2>
+      <div class="permalink-row">
+        <code class="permalink-text" id="permalink-text">{fullUrl}</code>
+        <button type="button" class="copy-btn" id="copy-btn"
+          data-url={fullUrl}>复制链接</button>
+      </div>
+      <span class="copy-feedback" id="copy-feedback" aria-live="polite"></span>
+    </div>
+
+    {record.sourceUrl && (
+      <div class="card">
+        <h2>来源页面</h2>
+        <a href={record.sourceUrl} target="_blank" rel="noopener" class="src-link-lg">
+          {record.sourceUrl} ↗
+        </a>
+        <p class="muted">此链接指向来源官方页面（非本站内容）。</p>
+      </div>
+    )}
+
+    <div class="card">
+      <h2>变化摘录</h2>
+      <p class="muted completeness-note">{completenessNote}</p>
+      <p class="muted">证据级别：来源差异（source_diff）——这是抓取到的来源页面变化，其中定价页文本变化不代表已验证的调价。</p>
+
+      {record.diff?.pairs?.length > 0 && (
+        <div class="diff-sec">
+          <div class="diff-label">变更 {record.diff.pairs.length} 处（旧 → 新）</div>
+          <ul class="line-list">
+            {record.diff.pairs.map((p: any) => (
+              <li class="line paired">
+                <span class="pair-old">{p.before}</span>
+                <span class="pair-arrow">→</span>
+                <span class="pair-new">{p.after}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {record.diff?.added_lines?.length > 0 && (
+        <div class="diff-sec">
+          <div class="diff-label">新增 {record.diff.added_lines.length} 行</div>
+          <ul class="line-list">
+            {record.diff.added_lines.map((l: string) => <li class="line added">{l}</li>)}
+          </ul>
+        </div>
+      )}
+      {record.diff?.removed_lines?.length > 0 && (
+        <div class="diff-sec">
+          <div class="diff-label">删除 {record.diff.removed_lines.length} 行</div>
+          <ul class="line-list">
+            {record.diff.removed_lines.map((l: string) => <li class="line removed">{l}</li>)}
+          </ul>
+        </div>
+      )}
+      {!(record.diff?.pairs?.length || record.diff?.added_lines?.length || record.diff?.removed_lines?.length) && (
+        <p class="muted">无已保存的变化行（仅有计数信息）。</p>
+      )}
+    </div>
+
+    {revisions.length > 1 && (
+      <div class="card">
+        <h2>修订历史（{revisions.length} 版）</h2>
+        <ul class="rev-list">
+          {revisions.map((r: any) => (
+            <li class="rev-item">
+              <span class="rev-no">r{r.revision}</span>
+              <span class="rev-meta">
+                {r.revisedAt ?? '初始收录'}
+                {r.revisionReason ? ` · ${r.revisionReason}` : ''}
+              </span>
+              {r.status === 'withdrawn' && <span class="badge s-wd">已撤回</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </section>
+
+  <style>
+    .record-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+    .badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 12px; border: 1px solid; }
+    .k-sub { color: var(--ok, #1a7f37); border-color: currentColor; }
+    .k-jit { color: var(--muted-c, #6a737d); border-color: currentColor; }
+    .s-ok { color: var(--ok, #1a7f37); border-color: currentColor; }
+    .s-wd { color: var(--warn, #b35900); border-color: currentColor; }
+    .meta-date { color: var(--muted-c, #6a737d); font-size: 13px; }
+    .type-sep { color: var(--muted-c, #6a737d); }
+    .withdrawn-note, .jitter-note {
+      margin-top: 12px; padding: 10px 14px; border-radius: 8px;
+      font-size: 13px; background: rgba(179, 89, 0, .08); color: var(--warn, #b35900);
+    }
+    .jitter-note { background: rgba(106, 115, 125, .08); color: var(--muted-c, #6a737d); }
+    .record-body { max-width: 860px; margin: 0 auto; padding: 20px; display: grid; gap: 16px; }
+    .card { background: var(--bg-card, #fff); border: 1px solid var(--line, #e3e6ea);
+            border-radius: 10px; padding: 20px; }
+    .card h2 { margin: 0 0 12px; font-size: 15px; }
+    .summary-text { margin: 0; line-height: 1.7; }
+    .muted { color: var(--muted-c, #6a737d); font-size: 13px; }
+    .origin-tag { display: inline-block; margin-top: 8px; font-size: 12px;
+                  color: var(--muted-c, #6a737d); border: 1px solid var(--line, #e3e6ea);
+                  border-radius: 10px; padding: 1px 8px; }
+    .origin-note { margin: 6px 0 0; }
+    .permalink-row { display: flex; gap: 10px; align-items: stretch; }
+    .permalink-text { flex: 1; padding: 9px 12px; border-radius: 8px;
+      background: var(--bg-2, #f6f7f9); font-size: 13px; word-break: break-all;
+      border: 1px solid var(--line, #e3e6ea); display: flex; align-items: center; }
+    .copy-btn { padding: 0 18px; border-radius: 8px; border: none; cursor: pointer;
+      background: var(--accent, #0b6bcb); color: #fff; font-size: 13px; white-space: nowrap; }
+    .copy-btn:hover { opacity: .9; }
+    .copy-feedback { display: block; margin-top: 6px; font-size: 12px; min-height: 16px; }
+    .copy-feedback.ok { color: var(--ok, #1a7f37); }
+    .copy-feedback.err { color: var(--err, #cf222e); }
+    .src-link-lg { color: var(--accent, #0b6bcb); word-break: break-all; }
+    .completeness-note { margin: 4px 0 12px; }
+    .diff-sec { margin-top: 14px; }
+    .diff-label { font-size: 12px; color: var(--muted-c, #6a737d); margin-bottom: 6px; }
+    .line-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .line { padding: 7px 10px; border-radius: 6px; font-size: 13px;
+            white-space: pre-wrap; word-break: break-all; line-height: 1.5;
+            font-family: ui-monospace, 'SF Mono', Menlo, monospace; }
+    .line.added { background: rgba(26, 127, 55, .07); }
+    .line.removed { background: rgba(207, 34, 46, .07); }
+    .line.paired { display: flex; gap: 8px; flex-wrap: wrap; align-items: baseline;
+                   background: var(--bg-2, #f6f7f9); }
+    .pair-old { text-decoration: line-through; opacity: .75; min-width: 0; }
+    .pair-arrow { color: var(--muted-c, #6a737d); }
+    .pair-new { color: var(--ok, #1a7f37); min-width: 0; }
+    .rev-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .rev-item { display: flex; gap: 10px; align-items: baseline; font-size: 13px; }
+    .rev-no { font-family: ui-monospace, monospace; color: var(--muted-c, #6a737d); min-width: 32px; }
+    .rev-meta { flex: 1; }
+  </style>
+
+  <script>
+    const btn = document.getElementById('copy-btn');
+    const feedback = document.getElementById('copy-feedback');
+    btn?.addEventListener('click', async () => {
+      const url = btn.getAttribute('data-url') || '';
+      try {
+        await navigator.clipboard.writeText(url);
+        feedback!.textContent = '已复制到剪贴板';
+        feedback!.className = 'copy-feedback ok';
+      } catch {
+        // 回退：选中文本供手动复制
+        const range = document.createRange();
+        range.selectNodeContents(document.getElementById('permalink-text')!);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(range);
+        feedback!.textContent = '自动复制失败，已选中链接，请按 ⌘C 手动复制';
+        feedback!.className = 'copy-feedback err';
+      }
+    });
+  </script>
+</Layout>

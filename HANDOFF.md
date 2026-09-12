@@ -76,6 +76,8 @@ maasweekly/
 ├── data/
 │   ├── snapshots/日期/               # 每日原始快照（diff 对比基线，勿删）
 │   ├── diff/日期.md|json             # 每日变化报告（人读 + 机读）
+│   ├── records/                      # 来源变化条目持久归档（obs_*.json，稳定 ID）
+│   └── record-revisions/             # 条目修订历史（不可覆盖）
 │   ├── weekly/                       # 周报源文件（新周报写好放这里）
 │   └── daily/ weekly-archive-early/  # 历史存档（只读）
 └── .github/workflows/                # 三个工作流
@@ -85,7 +87,8 @@ maasweekly/
 
 | 脚本 | 位置 | 用途 | 调试参数 |
 |------|------|------|---------|
-| fetch_sources.py | pipeline/scripts | 抓全部信源产出 diff | `--platform 火山方舟` 单平台；`--max-sources 5` 限量 |
+| fetch_sources.py | pipeline/scripts | 抓全部信源产出 diff |
+| archive-source-changes.py | pipeline/scripts | 来源变化条目离线归档/校验（--check 只校验） | `--platform 火山方舟` 单平台；`--max-sources 5` 限量 |
 | sync-diff-to-site.py | pipeline/scripts | 聚合 diff 到站点 | 无 |
 | llm-digest.py | pipeline/scripts | LLM 提炼今日要点（含价格变化事件输入） | 日期参数重做单日；`--force` 覆盖；`--all` 回填 |
 | fetch-leaderboards.py | pipeline/scripts | 抓 OpenRouter 榜单 | 失败保留旧快照 |

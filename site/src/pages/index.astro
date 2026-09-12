@@ -196,6 +196,7 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
                       {(c.added_count ?? 0) + (c.removed_count ?? 0) > 0 && (
                         <span class="delta">+{c.added_count ?? 0} / −{c.removed_count ?? 0}</span>
                       )}
+                      {c.permalink && <a class="src-link detail-link" href={c.permalink} onclick="event.stopPropagation()">详情</a>}
                       <a class="src-link" href={c.url} target="_blank" rel="noopener" onclick="event.stopPropagation()">来源 ↗</a><span class="expand-indicator" aria-hidden="true">＋</span>
                     </div>
                     {c.llm_summary ? (

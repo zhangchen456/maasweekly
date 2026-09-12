@@ -1,0 +1,690 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "source_id": "anthropic-blog",
+      "display_name": "Anthropic",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://www.anthropic.com/news"
+      ],
+      "primary_url": "https://www.anthropic.com/news"
+    },
+    {
+      "source_id": "anthropic-changelog",
+      "display_name": "Anthropic",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://docs.anthropic.com/en/release-notes/api"
+      ],
+      "primary_url": "https://docs.anthropic.com/en/release-notes/api"
+    },
+    {
+      "source_id": "anthropic-modellist",
+      "display_name": "Anthropic",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://docs.anthropic.com/en/docs/about-claude/models/overview"
+      ],
+      "primary_url": "https://docs.anthropic.com/en/docs/about-claude/models/overview"
+    },
+    {
+      "source_id": "anthropic-pricing",
+      "display_name": "Anthropic",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "primary_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "source_id": "aa-industry",
+      "display_name": "Artificial Analysis",
+      "source_type": "industry",
+      "type_label": "行业数据",
+      "url_aliases": [
+        "https://artificialanalysis.ai/"
+      ],
+      "primary_url": "https://artificialanalysis.ai/"
+    },
+    {
+      "source_id": "cohere-blog",
+      "display_name": "Cohere",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://txt.cohere.com/"
+      ],
+      "primary_url": "https://txt.cohere.com/"
+    },
+    {
+      "source_id": "cohere-changelog",
+      "display_name": "Cohere",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://docs.cohere.com/changelog"
+      ],
+      "primary_url": "https://docs.cohere.com/changelog"
+    },
+    {
+      "source_id": "cohere-modellist",
+      "display_name": "Cohere",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "primary_url": "https://docs.cohere.com/docs/models"
+    },
+    {
+      "source_id": "cohere-pricing",
+      "display_name": "Cohere",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://cohere.com/pricing"
+      ],
+      "primary_url": "https://cohere.com/pricing"
+    },
+    {
+      "source_id": "deepseek-blog",
+      "display_name": "DeepSeek",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://api-docs.deepseek.com/zh-cn/news/"
+      ],
+      "primary_url": "https://api-docs.deepseek.com/zh-cn/news/"
+    },
+    {
+      "source_id": "deepseek-changelog",
+      "display_name": "DeepSeek",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://api-docs.deepseek.com/zh-cn/news/"
+      ],
+      "primary_url": "https://api-docs.deepseek.com/zh-cn/news/"
+    },
+    {
+      "source_id": "deepseek-modellist",
+      "display_name": "DeepSeek",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
+      ],
+      "primary_url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
+    },
+    {
+      "source_id": "deepseek-pricing",
+      "display_name": "DeepSeek",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
+      ],
+      "primary_url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
+    },
+    {
+      "source_id": "google-gemini-blog",
+      "display_name": "Google Gemini API",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://blog.google/technology/ai/"
+      ],
+      "primary_url": "https://blog.google/technology/ai/"
+    },
+    {
+      "source_id": "google-gemini-changelog",
+      "display_name": "Google Gemini API",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://ai.google.dev/gemini-api/docs/changelog"
+      ],
+      "primary_url": "https://ai.google.dev/gemini-api/docs/changelog"
+    },
+    {
+      "source_id": "google-gemini-modellist",
+      "display_name": "Google Gemini API",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://ai.google.dev/gemini-api/docs/models"
+      ],
+      "primary_url": "https://ai.google.dev/gemini-api/docs/models"
+    },
+    {
+      "source_id": "google-gemini-pricing",
+      "display_name": "Google Gemini API",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "primary_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "source_id": "google-vertex-blog",
+      "display_name": "Google Vertex AI",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://cloud.google.com/blog/products/ai-machine-learning"
+      ],
+      "primary_url": "https://cloud.google.com/blog/products/ai-machine-learning"
+    },
+    {
+      "source_id": "google-vertex-changelog",
+      "display_name": "Google Vertex AI",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes"
+      ],
+      "primary_url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes"
+    },
+    {
+      "source_id": "google-vertex-modellist",
+      "display_name": "Google Vertex AI",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models"
+      ],
+      "primary_url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models"
+    },
+    {
+      "source_id": "google-vertex-pricing",
+      "display_name": "Google Vertex AI",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://cloud.google.com/vertex-ai/generative-ai/pricing"
+      ],
+      "primary_url": "https://cloud.google.com/vertex-ai/generative-ai/pricing"
+    },
+    {
+      "source_id": "huggingface-industry",
+      "display_name": "HuggingFace",
+      "source_type": "industry",
+      "type_label": "行业数据",
+      "url_aliases": [
+        "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20"
+      ],
+      "primary_url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20"
+    },
+    {
+      "source_id": "kimi-blog",
+      "display_name": "Kimi",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://www.moonshot.cn/news"
+      ],
+      "primary_url": "https://www.moonshot.cn/news"
+    },
+    {
+      "source_id": "kimi-changelog",
+      "display_name": "Kimi",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://platform.kimi.com/docs/changelog"
+      ],
+      "primary_url": "https://platform.kimi.com/docs/changelog"
+    },
+    {
+      "source_id": "kimi-modellist",
+      "display_name": "Kimi",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://platform.kimi.com/docs/api/models-overview"
+      ],
+      "primary_url": "https://platform.kimi.com/docs/api/models-overview"
+    },
+    {
+      "source_id": "kimi-pricing",
+      "display_name": "Kimi",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://platform.kimi.com/docs/pricing/chat"
+      ],
+      "primary_url": "https://platform.kimi.com/docs/pricing/chat"
+    },
+    {
+      "source_id": "lmarena-industry",
+      "display_name": "LMArena",
+      "source_type": "industry",
+      "type_label": "行业数据",
+      "url_aliases": [
+        "https://lmarena.ai/leaderboard"
+      ],
+      "primary_url": "https://lmarena.ai/leaderboard"
+    },
+    {
+      "source_id": "minimax-blog",
+      "display_name": "MiniMax",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://www.minimaxi.com/news"
+      ],
+      "primary_url": "https://www.minimaxi.com/news"
+    },
+    {
+      "source_id": "minimax-changelog",
+      "display_name": "MiniMax",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://www.minimaxi.com/news"
+      ],
+      "primary_url": "https://www.minimaxi.com/news"
+    },
+    {
+      "source_id": "minimax-modellist",
+      "display_name": "MiniMax",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://platform.minimaxi.com/docs/guides/models-intro"
+      ],
+      "primary_url": "https://platform.minimaxi.com/docs/guides/models-intro"
+    },
+    {
+      "source_id": "minimax-pricing",
+      "display_name": "MiniMax",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://platform.minimaxi.com/docs/guides/pricing-paygo"
+      ],
+      "primary_url": "https://platform.minimaxi.com/docs/guides/pricing-paygo"
+    },
+    {
+      "source_id": "mistral-blog",
+      "display_name": "Mistral AI",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://mistral.ai/news/"
+      ],
+      "primary_url": "https://mistral.ai/news/"
+    },
+    {
+      "source_id": "mistral-changelog",
+      "display_name": "Mistral AI",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://mistral.ai/news/"
+      ],
+      "primary_url": "https://mistral.ai/news/"
+    },
+    {
+      "source_id": "mistral-modellist",
+      "display_name": "Mistral AI",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "primary_url": "https://docs.mistral.ai/getting-started/models/models_overview/"
+    },
+    {
+      "source_id": "mistral-pricing",
+      "display_name": "Mistral AI",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://mistral.ai/pricing"
+      ],
+      "primary_url": "https://mistral.ai/pricing"
+    },
+    {
+      "source_id": "openai-blog",
+      "display_name": "OpenAI",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://openai.com/news/",
+        "https://platform.openai.com/docs/changelog"
+      ],
+      "primary_url": "https://openai.com/news/"
+    },
+    {
+      "source_id": "openai-changelog",
+      "display_name": "OpenAI",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://platform.openai.com/docs/changelog"
+      ],
+      "primary_url": "https://platform.openai.com/docs/changelog"
+    },
+    {
+      "source_id": "openai-modellist",
+      "display_name": "OpenAI",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://platform.openai.com/docs/models"
+      ],
+      "primary_url": "https://platform.openai.com/docs/models"
+    },
+    {
+      "source_id": "openai-pricing",
+      "display_name": "OpenAI",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://platform.openai.com/docs/pricing"
+      ],
+      "primary_url": "https://platform.openai.com/docs/pricing"
+    },
+    {
+      "source_id": "xai-blog",
+      "display_name": "xAI",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://x.ai/news",
+        "https://docs.x.ai/docs/release-notes"
+      ],
+      "primary_url": "https://x.ai/news"
+    },
+    {
+      "source_id": "xai-changelog",
+      "display_name": "xAI",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://x.ai/news",
+        "https://docs.x.ai/docs/release-notes"
+      ],
+      "primary_url": "https://x.ai/news"
+    },
+    {
+      "source_id": "xai-modellist",
+      "display_name": "xAI",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://docs.x.ai/docs/models"
+      ],
+      "primary_url": "https://docs.x.ai/docs/models"
+    },
+    {
+      "source_id": "xai-pricing",
+      "display_name": "xAI",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://docs.x.ai/docs/models"
+      ],
+      "primary_url": "https://docs.x.ai/docs/models"
+    },
+    {
+      "source_id": "zhipu-blog",
+      "display_name": "智谱AI",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://www.bigmodel.cn/news"
+      ],
+      "primary_url": "https://www.bigmodel.cn/news"
+    },
+    {
+      "source_id": "zhipu-changelog",
+      "display_name": "智谱AI",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://docs.bigmodel.cn/cn/update/new-releases"
+      ],
+      "primary_url": "https://docs.bigmodel.cn/cn/update/new-releases"
+    },
+    {
+      "source_id": "zhipu-modellist",
+      "display_name": "智谱AI",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://docs.bigmodel.cn/cn/guide/start/model-overview"
+      ],
+      "primary_url": "https://docs.bigmodel.cn/cn/guide/start/model-overview"
+    },
+    {
+      "source_id": "zhipu-pricing",
+      "display_name": "智谱AI",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://bigmodel.cn/pricing"
+      ],
+      "primary_url": "https://bigmodel.cn/pricing"
+    },
+    {
+      "source_id": "volcengine-blog",
+      "display_name": "火山方舟",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://www.volcengine.com/blog"
+      ],
+      "primary_url": "https://www.volcengine.com/blog"
+    },
+    {
+      "source_id": "volcengine-changelog",
+      "display_name": "火山方舟",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://www.volcengine.com/docs/82379/1159177"
+      ],
+      "primary_url": "https://www.volcengine.com/docs/82379/1159177"
+    },
+    {
+      "source_id": "volcengine-modellist",
+      "display_name": "火山方舟",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://www.volcengine.com/docs/82379/1330310"
+      ],
+      "primary_url": "https://www.volcengine.com/docs/82379/1330310"
+    },
+    {
+      "source_id": "volcengine-pricing",
+      "display_name": "火山方舟",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://www.volcengine.com/docs/82379/1544106"
+      ],
+      "primary_url": "https://www.volcengine.com/docs/82379/1544106"
+    },
+    {
+      "source_id": "baidu-blog",
+      "display_name": "百度千帆",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp"
+      ],
+      "primary_url": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp"
+    },
+    {
+      "source_id": "baidu-changelog",
+      "display_name": "百度千帆",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://cloud.baidu.com/doc/qianfan/s/Mmh8l4qwj"
+      ],
+      "primary_url": "https://cloud.baidu.com/doc/qianfan/s/Mmh8l4qwj"
+    },
+    {
+      "source_id": "baidu-modellist",
+      "display_name": "百度千帆",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "primary_url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+    },
+    {
+      "source_id": "baidu-pricing",
+      "display_name": "百度千帆",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya"
+      ],
+      "primary_url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya"
+    },
+    {
+      "source_id": "siliconflow-blog",
+      "display_name": "硅基流动",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://siliconflow.cn/blog"
+      ],
+      "primary_url": "https://siliconflow.cn/blog"
+    },
+    {
+      "source_id": "siliconflow-changelog",
+      "display_name": "硅基流动",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://docs.siliconflow.cn/docs/release-notes/overview"
+      ],
+      "primary_url": "https://docs.siliconflow.cn/docs/release-notes/overview"
+    },
+    {
+      "source_id": "siliconflow-modellist",
+      "display_name": "硅基流动",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://cloud.siliconflow.cn/models"
+      ],
+      "primary_url": "https://cloud.siliconflow.cn/models"
+    },
+    {
+      "source_id": "siliconflow-pricing",
+      "display_name": "硅基流动",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://siliconflow.cn/pricing"
+      ],
+      "primary_url": "https://siliconflow.cn/pricing"
+    },
+    {
+      "source_id": "tencent-blog",
+      "display_name": "腾讯混元/TokenHub",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://cloud.tencent.com/developer/column/",
+        "https://cloud.tencent.com/document/product/1729/132069"
+      ],
+      "primary_url": "https://cloud.tencent.com/developer/column/"
+    },
+    {
+      "source_id": "tencent-changelog",
+      "display_name": "腾讯混元/TokenHub",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://cloud.tencent.com/document/product/1729/132069",
+        "https://cloud.tencent.com/document/product/1729/97765"
+      ],
+      "primary_url": "https://cloud.tencent.com/document/product/1729/132069"
+    },
+    {
+      "source_id": "tencent-modellist",
+      "display_name": "腾讯混元/TokenHub",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://cloud.tencent.com/document/product/1729/104753"
+      ],
+      "primary_url": "https://cloud.tencent.com/document/product/1729/104753"
+    },
+    {
+      "source_id": "tencent-pricing",
+      "display_name": "腾讯混元/TokenHub",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://cloud.tencent.com/document/product/1729/97731"
+      ],
+      "primary_url": "https://cloud.tencent.com/document/product/1729/97731"
+    },
+    {
+      "source_id": "xfyun-changelog",
+      "display_name": "讯飞星辰MaaS",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1"
+      ],
+      "primary_url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1"
+    },
+    {
+      "source_id": "alibaba-blog",
+      "display_name": "阿里百炼",
+      "source_type": "blog",
+      "type_label": "博客",
+      "url_aliases": [
+        "https://qwenlm.github.io/blog/"
+      ],
+      "primary_url": "https://qwenlm.github.io/blog/"
+    },
+    {
+      "source_id": "alibaba-changelog",
+      "display_name": "阿里百炼",
+      "source_type": "changelog",
+      "type_label": "更新日志",
+      "url_aliases": [
+        "https://help.aliyun.com/zh/model-studio/release-notes"
+      ],
+      "primary_url": "https://help.aliyun.com/zh/model-studio/release-notes"
+    },
+    {
+      "source_id": "alibaba-modellist",
+      "display_name": "阿里百炼",
+      "source_type": "model_list",
+      "type_label": "模型列表",
+      "url_aliases": [
+        "https://help.aliyun.com/zh/model-studio/models"
+      ],
+      "primary_url": "https://help.aliyun.com/zh/model-studio/models"
+    },
+    {
+      "source_id": "alibaba-pricing",
+      "display_name": "阿里百炼",
+      "source_type": "pricing",
+      "type_label": "定价",
+      "url_aliases": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "primary_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    }
+  ]
+}
