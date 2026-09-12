@@ -13,13 +13,23 @@ name: 线上更新（构建部署）
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - 'data/**'              # Actions 定时提交的快照/diff 数据，不触发
-      - 'site/src/data/**'     # 同上：同步脚本产出的站点数据源
-      - 'README.md'
-      - '**.md'
+    paths:
+      # 站点代码 + 手工维护的注册表（platform-logos.json）→ 触发部署。
+      # 注意：GitHub Actions 的 paths 匹配按顺序生效，最后一条命中为准，
+      # 因此自动产出的数据文件必须逐条列在否定规则之后。
+      - 'site/**'
+      - 'pipeline/**'
+      - '.github/workflows/deploy.yml'
+      - '!data/**'                        # Actions 定时提交的快照/diff 数据，不触发
+      - '!site/src/data/daily_changes.json'
+      - '!site/src/data/weekly-digest.json'
+      - '!site/src/data/record-index.json'
+      - '!site/src/data/live_feeds.json'
+      - '!site/src/data/article_images.json'
+      - '!site/src/data/leaderboards/**'
+      - '!site/src/data/pricing/**'
+      - '!**/*.md'
   workflow_dispatch:
-
 permissions:
   contents: read
 
