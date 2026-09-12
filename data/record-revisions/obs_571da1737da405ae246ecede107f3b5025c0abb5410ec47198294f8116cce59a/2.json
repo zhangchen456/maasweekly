@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_571da1737da405ae246ecede107f3b5025c0abb5410ec47198294f8116cce59a",
+  "sourceId": "openai-modellist",
+  "date": "2026-09-09",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "model_list",
+  "sourceUrl": "https://platform.openai.com/docs/models",
+  "title": "OpenAI · 模型列表来源更新",
+  "summary": "模型列表中GPT-Image-2被GPT-Image-2.5 Flare和Sunburst取代，并新增Image prompting、缓存诊断等能力描述，对应新一代图像模型上架。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:01:22+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "gpt-image-",
+        "before": "GPT-Image-2",
+        "after": "GPT-Image-2.5 Flare"
+      }
+    ],
+    "added_lines": [
+      "Fast, high-quality everyday image generation",
+      "GPT-Image-2.5 Sunburst",
+      "Image prompting",
+      "Our most capable model for image generation and editing",
+      "Prompt cache diagnostics"
+    ],
+    "removed_lines": [
+      "State-of-the-art image generation model"
+    ],
+    "added_count": 5,
+    "removed_count": 1,
+    "raw_added_count": 6,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-09.json"
+  },
+  "permalink": "/item/obs_571da1737da405ae246ecede107f3b5025c0abb5410ec47198294f8116cce59a/"
+}

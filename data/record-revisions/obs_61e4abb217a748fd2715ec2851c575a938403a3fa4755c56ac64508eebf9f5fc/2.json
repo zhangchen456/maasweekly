@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_61e4abb217a748fd2715ec2851c575a938403a3fa4755c56ac64508eebf9f5fc",
+  "sourceId": "aa-industry",
+  "date": "2026-09-09",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "新增GPT-6 Astra、Claude-Fable-5系列等模型的Elo评分与智能体工具调用维度标签，删除GPQA Diamond与科学推理标签，反映评测体系扩展。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:01:22+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Agentic tool use",
+      "CodingAgenticTool UsePrivate DatasetUser InteractionFinanceMedicalLegalIntelligence IndexLong ContextMultimodalInstruction FollowingFaithfulnessWritingBusinessSee more"
+    ],
+    "removed_lines": [
+      "CodingTool UsePrivate DatasetUser InteractionFinanceMedicalLegalIntelligence IndexLong ContextMultimodalInstruction FollowingFaithfulnessWritingBusinessSee more",
+      "GPQA Diamond",
+      "Scientific reasoning"
+    ],
+    "added_count": 2,
+    "removed_count": 3,
+    "raw_added_count": 2,
+    "raw_removed_count": 3
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-09.json"
+  },
+  "permalink": "/item/obs_61e4abb217a748fd2715ec2851c575a938403a3fa4755c56ac64508eebf9f5fc/"
+}

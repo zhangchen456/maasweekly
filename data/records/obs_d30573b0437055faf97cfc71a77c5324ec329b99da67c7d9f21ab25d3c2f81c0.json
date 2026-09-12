@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_d30573b0437055faf97cfc71a77c5324ec329b99da67c7d9f21ab25d3c2f81c0",
+  "sourceId": "openai-pricing",
+  "date": "2026-09-05",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 3,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.openai.com/docs/pricing",
+  "title": "OpenAI · 定价来源更新",
+  "summary": "pricing 页面与 model_list 同步更新，新增两个 Astra 应用案例条目并删除三个旧条目，但未涉及具体价格数字变化，推测是页面结构调整而非定价变动。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:58:19+00:00",
+  "revisionReason": "内容修订",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Architectural visualization with Astra",
+      "Building games with Astra"
+    ],
+    "removed_lines": [
+      "Codex as a platform: build on the open agent harness",
+      "GPT‑6 Astra is rolling out today for enterprises in our Trusted Access Program⁠, with access through API and our Plus, Pro, Business and Enterprise plans coming in the coming days.",
+      "Scaling cyber defenders with Daybreak"
+    ],
+    "added_count": 2,
+    "removed_count": 3,
+    "raw_added_count": 2,
+    "raw_removed_count": 3
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-05.json"
+  },
+  "permalink": "/item/obs_d30573b0437055faf97cfc71a77c5324ec329b99da67c7d9f21ab25d3c2f81c0/"
+}

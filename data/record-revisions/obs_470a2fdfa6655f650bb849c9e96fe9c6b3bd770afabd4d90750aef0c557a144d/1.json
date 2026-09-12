@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_470a2fdfa6655f650bb849c9e96fe9c6b3bd770afabd4d90750aef0c557a144d",
+  "sourceId": "aa-industry",
+  "date": "2026-09-11",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "Artificial Analysis Coding Agent Index v1.5 incorporates 3 benchmarks: DeepSWE v1.1, Terminal-Bench 4.0, and SWE-Atlas-QnA · Higher is better",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "gemini",
+        "before": "Gemini 3.8 Flash (high)See more",
+        "after": "Gemini 3.8 Flash (low)See more"
+      }
+    ],
+    "added_lines": [
+      "Artificial Analysis Coding Agent Index v1.5 incorporates 3 benchmarks: DeepSWE v1.1, Terminal-Bench 4.0, and SWE-Atlas-QnA · Higher is better",
+      "DeepSeek V4.1 Flash (Reasoning, Max Effort)",
+      "Ling-3.0-flash-VL",
+      "New article published · 9 Sept",
+      "New language model evaluation · 10 Sept"
+    ],
+    "removed_lines": [
+      "Composite average pass@1 across DeepSWE v1.1, Terminal-Bench 4.0, and SWE-Atlas-QnA · Higher is better",
+      "Gemini 3.8 Flash (low)"
+    ],
+    "added_count": 5,
+    "removed_count": 2,
+    "raw_added_count": 13,
+    "raw_removed_count": 12
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-11.json"
+  },
+  "permalink": "/item/obs_470a2fdfa6655f650bb849c9e96fe9c6b3bd770afabd4d90750aef0c557a144d/"
+}

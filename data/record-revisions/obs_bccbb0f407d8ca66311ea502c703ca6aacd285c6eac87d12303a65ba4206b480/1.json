@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_bccbb0f407d8ca66311ea502c703ca6aacd285c6eac87d12303a65ba4206b480",
+  "sourceId": "google-gemini-pricing",
+  "date": "2026-09-09",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "pricing",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+  "title": "Google Gemini API · 定价来源更新",
+  "summary": "$0.10 starting January 1, 2027.",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-09-04 UTC.",
+        "after": "Last updated 2026-09-08 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-04 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-08 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "$0.10 starting January 1, 2027.",
+      "$0.20 starting January 1, 2027.",
+      "$1.00 (text / image / video / audio) starting January 1, 2027.",
+      "$10.00 starting January 1, 2027.",
+      "$2.00 (text / image / video / audio) starting January 1, 2027.",
+      "$5.00 starting January 1, 2027.",
+      "| $0.05 through December 31, 2026.",
+      "| $0.10 through December 31, 2026.",
+      "| $0.50 (text / image / video / audio) through December 31, 2026.",
+      "| $1.00 (text / image / video / audio) through December 31, 2026.",
+      "| $2.50 through December 31, 2026.",
+      "| $5.00 through December 31, 2026."
+    ],
+    "removed_lines": [
+      "| $1.00 (text / image / video / audio)",
+      "| $2.00 (text / image / video / audio)"
+    ],
+    "added_count": 12,
+    "removed_count": 2,
+    "raw_added_count": 14,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-09.json"
+  },
+  "permalink": "/item/obs_bccbb0f407d8ca66311ea502c703ca6aacd285c6eac87d12303a65ba4206b480/"
+}

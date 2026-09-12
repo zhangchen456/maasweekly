@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_740c05f0f4d5b524cceafae08b17e8beac1e19cb2a625ba1f3db6cb18b3726cd",
+  "sourceId": "cohere-modellist",
+  "date": "2026-09-11",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 3,
+  "status": "active",
+  "platform": "Cohere",
+  "sourceType": "model_list",
+  "sourceUrl": "https://docs.cohere.com/docs/models",
+  "title": "Cohere · 模型列表来源更新",
+  "summary": "新增了 North Mini Code 和 North Small Translate 两个模型，分别面向 agentic coding 和机器翻译，表明 North 系列扩展。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:58:18+00:00",
+  "revisionReason": "内容修订",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Chat endpoint and support production deployment through Model Vault.",
+      "North Mini Code for agentic coding. Both are available through the",
+      "North Small Translate for machine translation and",
+      "North is Cohere’s family of purpose-built generative models. North models are available on the Cohere API for",
+      "The North family includes purpose-built models such as",
+      "evaluation and through Model Vault for production deployment.",
+      "| north-mini-code-1-0 | Live | North Mini Code is a 30B total / 3B active parameter MoE model trained for agentic coding. | Text | 256k | 64k | Chat",
+      "| north-small-translate-1-0 | Live | North Small Translate is a 218B total / 25B active parameter MoE model purpose-built for machine translation across more than 50 languages. | Text | 16k | 16k | Chat"
+    ],
+    "removed_lines": [],
+    "added_count": 8,
+    "removed_count": 0,
+    "raw_added_count": 8,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-11.json"
+  },
+  "permalink": "/item/obs_740c05f0f4d5b524cceafae08b17e8beac1e19cb2a625ba1f3db6cb18b3726cd/"
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_1307009f13571c4e1b5a620ee9f20135e6a28855ddd5015627f74e4b7096ce89",
+  "sourceId": "cohere-pricing",
+  "date": "2026-09-11",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Cohere",
+  "sourceType": "pricing",
+  "sourceUrl": "https://cohere.com/pricing",
+  "title": "Cohere · 定价来源更新",
+  "summary": "新增了 North Small Translate 的定价，删除了 North Mini Code 的定价，可能表示定价页面调整，但模型列表仍保留两者。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:01:22+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Machine translation model",
+      "North Small Translate"
+    ],
+    "removed_lines": [
+      "Agentic coding model",
+      "North Mini Code"
+    ],
+    "added_count": 2,
+    "removed_count": 2,
+    "raw_added_count": 2,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-11.json"
+  },
+  "permalink": "/item/obs_1307009f13571c4e1b5a620ee9f20135e6a28855ddd5015627f74e4b7096ce89/"
+}

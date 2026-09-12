@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_e21a2eea2bf55ca7bcafd2f82e3f8125f29173782ab567973e3b9fab22c824e8",
+  "sourceId": "lmarena-industry",
+  "date": "2026-09-04",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "LMArena",
+  "sourceType": "industry",
+  "sourceUrl": "https://lmarena.ai/leaderboard",
+  "title": "LMArena · 行业数据来源更新",
+  "summary": "新增多个模型 Elo 分数，包括 claude-fable-5.1-max 和 gemini-3.8-flash-high，同时移除旧分数，反映榜单更新。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:01:22+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "seedance-2.0-720p1477",
+        "before": "4Bytedancedreamina-seedance-2.0-720p1477±8",
+        "after": "5Bytedancedreamina-seedance-2.0-720p1477±8"
+      },
+      {
+        "key": "claude-opus-5-high1661",
+        "before": "claude-opus-5-high1661+8/-8",
+        "after": "claude-opus-5-high1661+7/-7"
+      }
+    ],
+    "added_lines": [
+      "4Bytedancedreamina-seedance-2.5-720p1478±10",
+      "claude-fable-5.1-max |",
+      "claude-fable-5.1-max1504±11",
+      "claude-fable-5.1-max1765+23/-23",
+      "claude-fable-51507±5",
+      "claude-opus-5-high1493±5",
+      "flux-3-video-202608111449±6",
+      "gemini-3.8-flash-high |",
+      "gemini-3.8-flash-high1494",
+      "gemini-omni-flash1462±6",
+      "grok-imagine-video-1.5-720p1456±5",
+      "hy4-preview1626",
+      "minimax-h31497±6",
+      "muse-spark-1.11492±5",
+      "qwen3.8-max-09021688",
+      "wan2.7-i2v1428±5",
+      "wan3.01481±16"
+    ],
+    "removed_lines": [
+      "3Bytedancedreamina-seedance-2.5-720p1483±12",
+      "claude-fable-51508±5",
+      "claude-opus-5-high1492±5",
+      "flux-3-video-202608111447±6",
+      "gemini-3.7-flash-high1491",
+      "gemini-omni-flash1463±6",
+      "gpt-5.6-sol-xhigh (codex-harness)1616+7/-7"
+    ],
+    "added_count": 17,
+    "removed_count": 7,
+    "raw_added_count": 20,
+    "raw_removed_count": 19
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-04.json"
+  },
+  "permalink": "/item/obs_e21a2eea2bf55ca7bcafd2f82e3f8125f29173782ab567973e3b9fab22c824e8/"
+}

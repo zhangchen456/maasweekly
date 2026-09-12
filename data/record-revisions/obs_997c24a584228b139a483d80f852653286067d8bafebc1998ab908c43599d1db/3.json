@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_997c24a584228b139a483d80f852653286067d8bafebc1998ab908c43599d1db",
+  "sourceId": "deepseek-changelog",
+  "date": "2026-09-11",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 3,
+  "status": "active",
+  "platform": "DeepSeek",
+  "sourceType": "changelog",
+  "sourceUrl": "https://api-docs.deepseek.com/zh-cn/news/",
+  "title": "DeepSeek · 更新日志来源更新",
+  "summary": "变更日志从 deepseek-v4-pro 更新为 deepseek-flash，新增了 V4.1 Flash 的调用示例，删除了旧模型版本说明，反映模型迁移。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:58:18+00:00",
+  "revisionReason": "内容修订",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "deepseek-v4-pro",
+        "before": "deepseek-v4-pro",
+        "after": "(2) After extensive testing, V4.1 Flash has comprehensively surpassed V4 Pro in performance, cost, speed, and total time, so we plan to retire V4 Pro in an orderly manner. From 12:00 Beijing Time on September 14, 2026, and until V4.1 Pro is released in the future, requests to deepseek-v4-pro will all be routed to V4.1 Flash and billed at the V4.1 Flash price."
+      },
+      {
+        "key": "deepseek-v4-pro",
+        "before": "model: \"deepseek-v4-pro\",",
+        "after": "deepseek-v4-pro(2)"
+      }
+    ],
+    "added_lines": [
+      "(1) Use deepseek-flash as the model name. The legacy names deepseek-v4-flash and deepseek-v4-flash-vision-exp are still accepted, but the corresponding models have been retired, their requests are served by the DeepSeek-V4.1-Flash model and billed at the Flash price.",
+      "model: \"deepseek-flash\",",
+      "model=\"deepseek-flash\",",
+      "| model | deepseek-flash(1)"
+    ],
+    "removed_lines": [
+      "(1) The deepseek-v4-flash model has been updated to DeepSeek-V4-Flash-0731, and the deepseek-v4-pro model has been updated to DeepSeek-V4-Pro-0813. The calling method remains unchanged — simply use deepseek-v4-flash or deepseek-v4-pro to access the latest version. The newly released deepseek-v4-flash-vision-exp is an experimental model that additionally accepts image input; set the model name to deepseek-v4-flash-vision-exp to use it, and see Vision for details.",
+      "| model(1) | deepseek-v4-flash",
+      "deepseek-v4-flash-vision-exp",
+      "model=\"deepseek-v4-pro\","
+    ],
+    "added_count": 4,
+    "removed_count": 4,
+    "raw_added_count": 7,
+    "raw_removed_count": 7
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-11.json"
+  },
+  "permalink": "/item/obs_997c24a584228b139a483d80f852653286067d8bafebc1998ab908c43599d1db/"
+}

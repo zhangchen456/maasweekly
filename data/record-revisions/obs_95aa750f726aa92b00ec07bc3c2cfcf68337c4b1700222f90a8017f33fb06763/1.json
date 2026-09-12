@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_95aa750f726aa92b00ec07bc3c2cfcf68337c4b1700222f90a8017f33fb06763",
+  "sourceId": "siliconflow-pricing",
+  "date": "2026-09-11",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "硅基流动",
+  "sourceType": "pricing",
+  "sourceUrl": "https://siliconflow.cn/pricing",
+  "title": "硅基流动 · 定价来源更新",
+  "summary": "Qwen/Qwen3.8-27B",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "qwen",
+        "before": "Qwen3.5-27B",
+        "after": "Qwen3.8-27B"
+      }
+    ],
+    "added_lines": [
+      "Qwen/Qwen3.8-27B"
+    ],
+    "removed_lines": [
+      "Qwen/Qwen3.5-27B",
+      "输入 [0, 128k)¥ 0.60",
+      "输入 [0, 128k)¥ 4.80",
+      "输入 [128k, +∞)¥ 1.80",
+      "输入 [128k, +∞)¥ 14.40"
+    ],
+    "added_count": 1,
+    "removed_count": 5,
+    "raw_added_count": 4,
+    "raw_removed_count": 8
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-11.json"
+  },
+  "permalink": "/item/obs_95aa750f726aa92b00ec07bc3c2cfcf68337c4b1700222f90a8017f33fb06763/"
+}

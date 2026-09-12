@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_cdf822dc7efc9722ed0720f13dddcfbea47b0b5b336f483f395808633c5d3817",
+  "sourceId": "siliconflow-pricing",
+  "date": "2026-09-04",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 3,
+  "status": "active",
+  "platform": "硅基流动",
+  "sourceType": "pricing",
+  "sourceUrl": "https://siliconflow.cn/pricing",
+  "title": "硅基流动 · 定价来源更新",
+  "summary": "新增 GLM-5.3 模型，同时删除 GLM-Z1-9B 相关条目，可能表示模型替换。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:58:19+00:00",
+  "revisionReason": "内容修订",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "zai-org/GLM-5.3"
+    ],
+    "removed_lines": [
+      "GLM-Z1-9B-0414",
+      "THUDM/GLM-Z1-9B-0414"
+    ],
+    "added_count": 1,
+    "removed_count": 2,
+    "raw_added_count": 3,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-04.json"
+  },
+  "permalink": "/item/obs_cdf822dc7efc9722ed0720f13dddcfbea47b0b5b336f483f395808633c5d3817/"
+}

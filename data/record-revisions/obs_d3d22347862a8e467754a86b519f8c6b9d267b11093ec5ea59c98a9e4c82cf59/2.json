@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_d3d22347862a8e467754a86b519f8c6b9d267b11093ec5ea59c98a9e4c82cf59",
+  "sourceId": "siliconflow-changelog",
+  "date": "2026-09-11",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "硅基流动",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.siliconflow.cn/docs/release-notes/overview",
+  "title": "硅基流动 · 更新日志来源更新",
+  "summary": "变更日志显示接口调整（忽略 repetition_penalty、生图 API 下线 batch_size 并默认加水印），同时保留模型下线与价格调整公告，反映平台在接口和模型层面的多项变更。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:01:22+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "user/info",
+        "before": "【模型服务调整】Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线【模型价格调整】DeepSeek-V4-Flash 模型分时段定价调整【接口服务调整】/user/info 接口将停止服务【模型价格调整】DeepSeek-V4-Pro 缓存命中输入 tokens 价格调整【模型价格调整】Nex-N2-Pro、DeepSeek-V4-Pro、DeepSeek-V3.2、Qwen3.6 模型价格调整【模型服务调整】GLM-4.7、Kimi-K2.5 等模型将下线【模型服务调整】Kimi-K2、GLM-4.6 等多款模型停止服务【账户安全】未完成实名认证账户将限制使用平台功能【模型服务调整】KAT-Dev、PaddleOCR-VL 等多款模型停止服务【模型服务调整】Qwen3-Coder、ERNIE-4.5 等多款模型停止服务【模型服务调整】MiniMax-M2.1、Qwen2 等多款模型停止服务【价格调整】Qwen3.5-397B-A17B 模型定价调整【模型服务调整】MiniMax-M2、Kimi-Dev-72B 等多款模型停止服务【模型服务调整】GLM-4.5、Qwen3-235B 等模型停止服务【服务调整】平台赠送余额展示形式调整【模型升级】DeepSeek-V3.2-Exp 升级至 V3.2【模型服务调整】Ling-1T、Ring-1T 等模型停止服务【服务调整】DeepSeek-R1/V3 等模型速率限制调整【服务调整】关闭使用等级购买入口【模型服务调整】DeepSeek-V3.1 模型停止服务【模型更新】Kimi-K2-Instruct 升级至 0905 版本【模型服务调整】HunyuanVideo-HD 等视频模型停止服务【模型服务调整】DeepSeek-R1-0120 等模型停止服务【平台维护】6 月 10 日平台维护通知【模型更新】DeepSeek-R1 升级至 0528 版本【模型服务调整】Qwen2-1.5B 等多款模型停止服务【模型服务调整】HunyuanVideo（非 HD）模型停止服务【模型更新】DeepSeek-V3 已升级至 0324 版本【模型更新】DeepSeek-V3 将升级至 0324 版本【服务调整】api.siliconflow.com 端点将停用【服务调整】DeepSeek-R1/V3 取消 RPH 和 RPD 限制【模型服务调整】Marco-o1、FLUX.1 等多款模型停止服务【服务调整】DeepSeek-R1/V3 新增 RPH/RPD 速率限制【模型服务调整】Yi-1.5、SD-3-medium 等多款模型停止服务【价格调整】DeepSeek-V3 价格恢复原价【功能更新】推理模型 reasoning_content 字段分离【新模型上线】DeepSeek-R1 和 DeepSeek-V3 上线【服务调整】图片及视频 URL 有效期调整为 1 小时【价格调整】LTX-Video 模型开始计费【模型服务调整】DeepSeek-V2-Chat 等模型停止服务【模型服务调整】Qwen2.5-Math、Hunyuan-A52B 等模型停止服务【模型服务调整】多款模型停止服务及相关服务更新【价格调整】Vendor-A/Qwen2-72B 模型开始计费",
+        "after": "【接口服务调整】对话模型将忽略 repetition_penalty 参数【接口服务调整】生图 API 下线 batch_size 字段、水印默认添加【模型服务调整】Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线【模型价格调整】DeepSeek-V4-Flash 模型分时段定价调整【接口服务调整】/user/info 接口将停止服务【模型价格调整】DeepSeek-V4-Pro 缓存命中输入 tokens 价格调整【模型价格调整】Nex-N2-Pro、DeepSeek-V4-Pro、DeepSeek-V3.2、Qwen3.6 模型价格调整【模型服务调整】GLM-4.7、Kimi-K2.5 等模型将下线【模型服务调整】Kimi-K2、GLM-4.6 等多款模型停止服务【账户安全】未完成实名认证账户将限制使用平台功能【模型服务调整】KAT-Dev、PaddleOCR-VL 等多款模型停止服务【模型服务调整】Qwen3-Coder、ERNIE-4.5 等多款模型停止服务【模型服务调整】MiniMax-M2.1、Qwen2 等多款模型停止服务【价格调整】Qwen3.5-397B-A17B 模型定价调整【模型服务调整】MiniMax-M2、Kimi-Dev-72B 等多款模型停止服务【模型服务调整】GLM-4.5、Qwen3-235B 等模型停止服务【服务调整】平台赠送余额展示形式调整【模型升级】DeepSeek-V3.2-Exp 升级至 V3.2【模型服务调整】Ling-1T、Ring-1T 等模型停止服务【服务调整】DeepSeek-R1/V3 等模型速率限制调整【服务调整】关闭使用等级购买入口【模型服务调整】DeepSeek-V3.1 模型停止服务【模型更新】Kimi-K2-Instruct 升级至 0905 版本【模型服务调整】HunyuanVideo-HD 等视频模型停止服务【模型服务调整】DeepSeek-R1-0120 等模型停止服务【平台维护】6 月 10 日平台维护通知【模型更新】DeepSeek-R1 升级至 0528 版本【模型服务调整】Qwen2-1.5B 等多款模型停止服务【模型服务调整】HunyuanVideo（非 HD）模型停止服务【模型更新】DeepSeek-V3 已升级至 0324 版本【模型更新】DeepSeek-V3 将升级至 0324 版本【服务调整】api.siliconflow.com 端点将停用【服务调整】DeepSeek-R1/V3 取消 RPH 和 RPD 限制【模型服务调整】Marco-o1、FLUX.1 等多款模型停止服务【服务调整】DeepSeek-R1/V3 新增 RPH/RPD 速率限制【模型服务调整】Yi-1.5、SD-3-medium 等多款模型停止服务【价格调整】DeepSeek-V3 价格恢复原价【功能更新】推理模型 reasoning_content 字段分离【新模型上线】DeepSeek-R1 和 DeepSeek-V3 上线【服务调整】图片及视频 URL 有效期调整为 1 小时【价格调整】LTX-Video 模型开始计费【模型服务调整】DeepSeek-V2-Chat 等模型停止服务【模型服务调整】Qwen2.5-Math、Hunyuan-A52B 等模型停止服务【模型服务调整】多款模型停止服务及相关服务更新【价格调整】Vendor-A/Qwen2-72B 模型开始计费"
+      }
+    ],
+    "added_lines": [
+      "batch_size 字段下线：请求正文中不再支持 batch_size 字段。若此前依赖该字段在单次请求中生成多张图片，请改为多次调用。",
+      "「AI 生成」水印默认添加：平台将为生成图片默认添加「AI 生成」水印。如需生成不带水印的图片，请在请求 Header 中显式传入 X-Enable-Watermark: 0，否则生成的图片将带有水印。",
+      "【接口服务调整】对话模型将忽略 repetition_penalty 参数",
+      "【接口服务调整】生图 API 下线 batch_size 字段、水印默认添加",
+      "为持续优化平台服务，/v1/images/generations 生图 API 将于 2026-09-30 进行以下调整：",
+      "自 2026-09-15 起，对话模型（/v1/chat/completions、/v1/messages）请求中传入的 repetition_penalty 参数将被忽略，服务端将固定按 1 处理（即不启用重复惩罚）。",
+      "若您正在使用生图 API，请及时确认上述变更对业务的影响。",
+      "该调整不影响其他采样参数（如 temperature、top_p、top_k）。若您的业务此前依赖 repetition_penalty 调整生成效果，请及时评估影响。"
+    ],
+    "removed_lines": [],
+    "added_count": 8,
+    "removed_count": 0,
+    "raw_added_count": 9,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-11.json"
+  },
+  "permalink": "/item/obs_d3d22347862a8e467754a86b519f8c6b9d267b11093ec5ea59c98a9e4c82cf59/"
+}

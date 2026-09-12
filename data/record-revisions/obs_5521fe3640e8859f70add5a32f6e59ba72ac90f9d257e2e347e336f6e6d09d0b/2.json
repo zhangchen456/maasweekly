@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_5521fe3640e8859f70add5a32f6e59ba72ac90f9d257e2e347e336f6e6d09d0b",
+  "sourceId": "kimi-pricing",
+  "date": "2026-09-10",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Kimi",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.kimi.com/docs/pricing/chat",
+  "title": "Kimi · 定价来源更新",
+  "summary": "新增一条计费方式调整通知，宣布自9月14日起账户消耗将按现金与代金券各50%比例扣除，并明确了余额用尽后的扣款规则，属于平台级计费策略变更。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:01:22+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "计费方式调整通知自 9 月 14 日 0:00 起，Kimi API 开放平台（platform.kimi.com）账户消耗将按现金、代金券各 50% 的统一比例扣除；当现金或代金券任一余额用尽后，后续账户消耗将全额从另一类余额中扣除。已签署合同的用户以合同约定为准，继续优先消耗代金券，不受此次调整影响。"
+    ],
+    "removed_lines": [],
+    "added_count": 1,
+    "removed_count": 0,
+    "raw_added_count": 1,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-10.json"
+  },
+  "permalink": "/item/obs_5521fe3640e8859f70add5a32f6e59ba72ac90f9d257e2e347e336f6e6d09d0b/"
+}

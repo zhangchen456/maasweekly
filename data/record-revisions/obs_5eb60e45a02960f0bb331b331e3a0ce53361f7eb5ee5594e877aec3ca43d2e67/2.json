@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_5eb60e45a02960f0bb331b331e3a0ce53361f7eb5ee5594e877aec3ca43d2e67",
+  "sourceId": "lmarena-industry",
+  "date": "2026-09-05",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "LMArena",
+  "sourceType": "industry",
+  "sourceUrl": "https://lmarena.ai/leaderboard",
+  "title": "LMArena · 行业数据来源更新",
+  "summary": "榜单新增 claude-fable-5.1-max（1763分）、grok-4.6-high（1625分）、gemini-omni-1.1-flash（1515分）等多款新模型，同时更新了部分既有模型的 Elo 分数，整体榜单格局发生明显变化。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:01:22+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "seedance-2.0-720p1479",
+        "before": "4Bytedancedreamina-seedance-2.0-720p1479±9",
+        "after": "6Bytedancedreamina-seedance-2.0-720p1479±8"
+      },
+      {
+        "key": "bytedanceseedream-",
+        "before": "6Bytedanceseedream-5.0-pro1395±4",
+        "after": "6Bytedanceseedream-5.0-pro1394±4"
+      },
+      {
+        "key": "bytedanceseedream-",
+        "before": "8Bytedanceseedream-5.0-pro1258±5",
+        "after": "8Bytedanceseedream-5.0-pro1258±4"
+      },
+      {
+        "key": "gemini-3.1-flash-image",
+        "before": "gemini-3.1-flash-image (nano-banana-2) [web-search]1263±5",
+        "after": "gemini-3.1-flash-image (nano-banana-2) [web-search]1261±5"
+      }
+    ],
+    "added_lines": [
+      "4reve-2.11301±8",
+      "5Bytedancedreamina-seedance-2.5-720p1482±12",
+      "claude-fable-5.1-max1763+16/-16",
+      "claude-fable-51629+8/-8",
+      "claude-opus-5-high1662+7/-7",
+      "flux-3-video1494",
+      "gemini-3.1-flash-image (nano-banana-2) [web-search]1388±4",
+      "gemini-omni-1.1-flash1515±15",
+      "gemini-omni-flash1511±10",
+      "gpt-image-2 (medium)1461±4",
+      "grok-4.6-high1625+11/-11",
+      "grok-imagine-image-2.0 (low)1315",
+      "happyhorse-1.01427±13",
+      "hy4-preview1623",
+      "mai-image-2.51400±4",
+      "mai-image-2.61332±7",
+      "mai-image-2.61439±10",
+      "minimax-h31462±10",
+      "muse-image1279±6",
+      "muse-image1403±5",
+      "muse-video1456±15",
+      "qwen-image-3.0-pro1254±7",
+      "qwen3.8-flash-next1625",
+      "qwen3.8-max-09021689",
+      "qwen3.8-max1670",
+      "sora-2-pro1367±7"
+    ],
+    "removed_lines": [
+      "4reve-2.11302±8",
+      "5Bytedancedreamina-seedance-2.5-720p1476±14",
+      "claude-fable-5.1-max1765+23/-23",
+      "claude-fable-51628+8/-8",
+      "claude-opus-5-high1661+7/-7",
+      "flux-3-video1495"
+    ],
+    "added_count": 26,
+    "removed_count": 6,
+    "raw_added_count": 31,
+    "raw_removed_count": 31
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-05.json"
+  },
+  "permalink": "/item/obs_5eb60e45a02960f0bb331b331e3a0ce53361f7eb5ee5594e877aec3ca43d2e67/"
+}

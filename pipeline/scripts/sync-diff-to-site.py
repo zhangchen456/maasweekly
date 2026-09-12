@@ -41,6 +41,17 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent.parent.parent  # repo root
 sys.path.insert(0, str(BASE / "pipeline" / "scripts"))
 from diff_clean import filter_and_pair, humanize_line  # noqa: E402
+from record_archive import (  # noqa: E402
+    ArchiveError,
+    build_index as archive_build_index,
+    build_record as archive_build_record,
+    load_registry as archive_load_registry,
+    make_record_id,
+    make_permalink,
+    merge_record,
+    load_and_validate_diff, plan_records, apply_plan, set_prefilter,
+    resolve_source_id,
+)
 
 DIFF_DIR = BASE / "data" / "diff"
 DST_FILE = BASE / "site" / "src" / "data" / "daily_changes.json"
@@ -112,12 +123,29 @@ def main():
         except ValueError:
             continue
 
+    # ---- Task 01：归档合并（扫描全部历史 diff，不限窗口） ----
+    RECORDS_ROOT = BASE / "data" / "records"
+    REVISIONS_ROOT = BASE / "data" / "record-revisions"
+    try:
+        registry = archive_load_registry(BASE / "pipeline" / "config" / "source_registry.json")
+    except Exception as e:  # noqa: BLE001 —— registry 问题是硬错误
+        print(f"✗ {e}", file=sys.stderr)
+        sys.exit(1)
+
+    # 全部日期先读取、映射并生成计划；此阶段不写任何归档或站点文件。
+    loaded, ops = [], []
+    set_prefilter(filter_and_pair)
+    try:
+        for f in valid:
+            data, date = load_and_validate_diff(f, registry)
+            loaded.append((f, data))
+            ops.extend(plan_records(data, date, f, registry))
+    except ArchiveError as e:
+        print(f"✗ {e}；输入预检失败，未写入任何内容", file=sys.stderr)
+        sys.exit(1)
+
     days = []
-    for f in valid[:KEEP_DAYS]:
-        try:
-            data = json.loads(f.read_text(encoding="utf-8"))
-        except (json.JSONDecodeError, UnicodeDecodeError):
-            continue
+    for f, data in loaded:
         changes = data.get("changes", [])
         # 降噪 + 配对 + 分类（substantive/jitter）；高亮预览行做语义化转写
         changed = []
@@ -132,6 +160,18 @@ def main():
         changed.sort(key=lambda e: 0 if e["kind"] == "substantive" else 1)
         failed = [c for c in changes if c.get("status") == "fetch_failed"]
         first = [c for c in changes if c.get("status") == "first_fetch"]
+
+        # 注入稳定 ID 与 permalink 到近期 changed 条目
+        for c in changed:
+            try:
+                sid = resolve_source_id(registry, c.get("platform", ""),
+                                        c.get("source_type", ""), c.get("url"))
+            except Exception:  # noqa: BLE001 —— 防御性兜底（预检已保证不发生）
+                continue
+            rid = make_record_id(sid, data.get("date", f.stem))
+            c["id"] = rid
+            c["permalink"] = make_permalink(rid)
+
         days.append({
             "date": data.get("date", f.stem),
             "stats": data.get("stats", {}),
@@ -139,6 +179,9 @@ def main():
             "first_fetch": first,
             "failed": failed,
         })
+
+    # Task 01：归档后近期列表截回 KEEP_DAYS 窗口（归档本身保留全部日期）
+    days = days[:KEEP_DAYS]
 
     # 保留已有 highlights 和 llm_summary（llm-digest.py 产出，按日期幂等）
     try:
@@ -163,6 +206,17 @@ def main():
                 key = f"{c.get('platform')}|{c.get('source_type')}"
                 if key in prev_sum:
                     c["llm_summary"] = prev_sum[key]
+                    # 将 LLM 摘要纳入同一批次，避免预检后另行修改归档。
+                    for op in ops:
+                        if op["op"] == "merge" and op["record"]["id"] == c.get("id"):
+                            op["record"]["summary"] = c["llm_summary"]
+                            op["record"]["summaryOrigin"] = "llm"
+
+    try:
+        apply_plan(ops, RECORDS_ROOT, REVISIONS_ROOT)
+    except ArchiveError as e:
+        print(f"✗ 同步中止: {e}", file=sys.stderr)
+        sys.exit(1)
 
     out = {
         "updated_at": datetime.now().isoformat(timespec="seconds"),
@@ -183,6 +237,22 @@ def main():
         if w["week"] in prev_story:
             w["story"] = prev_story[w["week"]]
     WEEKLY_FILE.write_text(json.dumps(weekly, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # Task 01：record-index.json（可重建索引；持久源为 data/records 与 revisions）
+    from pathlib import Path as _P
+    RECORDS_ROOT.mkdir(parents=True, exist_ok=True)
+    index = archive_build_index(RECORDS_ROOT)
+    INDEX_FILE = BASE / "site" / "src" / "data" / "record-index.json"
+    INDEX_FILE.write_text(json.dumps(index, ensure_ascii=False, indent=2),
+                          encoding="utf-8")
+    # 构建前校验：索引引用必须与归档一致
+    from record_archive import validate_archive
+    errors = validate_archive(RECORDS_ROOT, REVISIONS_ROOT)
+    if errors:
+        print(f"✗ 归档校验失败（{len(errors)} 项，不构建）：", file=sys.stderr)
+        for e in errors[:10]:
+            print(f"  - {e}", file=sys.stderr)
+        sys.exit(1)
 
     total_changed = sum(len(d["changed"]) for d in days)
     total_sub = sum(1 for d in days for c in d["changed"] if c["kind"] == "substantive")

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_e039da6bd93d2579fa909e07745f87bcb8b4a1fd712662d48015673da680a60a",
+  "sourceId": "openai-pricing",
+  "date": "2026-09-04",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.openai.com/docs/pricing",
+  "title": "OpenAI · 定价来源更新",
+  "summary": "Fast mode is unavailable for GPT-6 Astra with EU data residency. Use Standard processing for those requests. See Fast mode compatibility.",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "using gpt-",
+        "before": "Using GPT-5.6",
+        "after": "Using GPT-6 Astra"
+      }
+    ],
+    "added_lines": [
+      "Async tool calling",
+      "Fast mode is unavailable for GPT-6 Astra with EU data residency. Use Standard processing for those requests. See Fast mode compatibility.",
+      "GPT‑6 Astra is rolling out today for enterprises in our Trusted Access Program⁠, with access through API and our Plus, Pro, Business and Enterprise plans coming in the coming days.",
+      "Mid-turn steering",
+      "Misalignment monitoring",
+      "Safety classifiers",
+      "Under-18 guidance",
+      "| gpt-6-astra | $10.00 | $1.00 | $12.50 | $50.00 | $20.00 | $2.00 | $25.00 | $75.00",
+      "| gpt-6-astra | $20.00 | $2.00 | $25.00 | $100.00 | $40.00 | $4.00 | $50.00 | $150.00",
+      "| gpt-6-astra | $5.00 | $0.50 | $6.25 | $25.00 | $10.00 | $1.00 | $12.50 | $37.50"
+    ],
+    "removed_lines": [
+      "Under 18 API Guidance"
+    ],
+    "added_count": 10,
+    "removed_count": 1,
+    "raw_added_count": 11,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-04.json"
+  },
+  "permalink": "/item/obs_e039da6bd93d2579fa909e07745f87bcb8b4a1fd712662d48015673da680a60a/"
+}

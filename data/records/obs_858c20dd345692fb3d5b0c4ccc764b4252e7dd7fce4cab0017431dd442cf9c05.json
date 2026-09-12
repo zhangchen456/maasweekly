@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_858c20dd345692fb3d5b0c4ccc764b4252e7dd7fce4cab0017431dd442cf9c05",
+  "sourceId": "google-gemini-modellist",
+  "date": "2026-09-05",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 3,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "model_list",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+  "title": "Google Gemini API · 模型列表来源更新",
+  "summary": "模型列表将 Lyria 3.5 从预览版（lyria-3.5-clip-preview、lyria-3.5-pro-preview）整合为单一正式版 Lyria 3.5，删除 Clip 和 Pro 两个子型号，表明音乐生成模型从预览阶段进入正式发布阶段。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:58:19+00:00",
+  "revisionReason": "内容修订",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-09-03 UTC.",
+        "after": "Last updated 2026-09-04 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-03 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-04 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "| Lyria 3.5"
+    ],
+    "removed_lines": [
+      "lyria-3.5-clip-preview",
+      "lyria-3.5-pro-preview",
+      "| Lyria 3.5 Clip",
+      "| Lyria 3.5 Pro",
+      "| Previous generation music generation model for 30-second clips."
+    ],
+    "added_count": 1,
+    "removed_count": 5,
+    "raw_added_count": 3,
+    "raw_removed_count": 7
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-05.json"
+  },
+  "permalink": "/item/obs_858c20dd345692fb3d5b0c4ccc764b4252e7dd7fce4cab0017431dd442cf9c05/"
+}

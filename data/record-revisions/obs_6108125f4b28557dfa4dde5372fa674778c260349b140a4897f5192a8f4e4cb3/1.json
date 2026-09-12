@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_6108125f4b28557dfa4dde5372fa674778c260349b140a4897f5192a8f4e4cb3",
+  "sourceId": "cohere-changelog",
+  "date": "2026-09-11",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Cohere",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.cohere.com/changelog",
+  "title": "Cohere · 更新日志来源更新",
+  "summary": "Announcing Cohere's North Small Translate",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "context length",
+        "before": "Context Length: 256K tokens",
+        "after": "Context length: 16K"
+      }
+    ],
+    "added_lines": [
+      "Announcing Cohere's North Small Translate",
+      "Creative Commons Attribution-NonCommercial 4.0",
+      "Efficient MoE architecture: 218 billion total parameters with 25 billion active parameters.",
+      "FP8 weights",
+      "Flexible deployment: Available through the free-tier Chat V2 API, as FP8 open weights for non-commercial",
+      "For production use, enterprises can purchase a commercial license and deploy North Small Translate through",
+      "For supported languages, use cases, and an API example, see the",
+      "Key features",
+      "Model Vault.",
+      "Model name: north-small-translate-1-0",
+      "North Small Translate is available on the free tier through the Chat V2 API. The",
+      "North Small Translate is designed to give researchers, developers, and enterprises flexible ways to evaluate and",
+      "North Small Translate, an open-weights mixture-of-experts model purpose-built",
+      "Open-weights format: FP8",
+      "Private deployment: Suggested deployment hardware is two H100 GPUs or one B200 GPU.",
+      "Purpose-built translation: Optimized for machine translation across more than 50 languages and locale",
+      "We’re pleased to announce the release of",
+      "are available on Hugging Face",
+      "deploy machine translation while retaining control over their data and infrastructure.",
+      "for machine translation across more than 50 languages.",
+      "for non-commercial use under the CC BY-NC 4.0 license.",
+      "model documentation.",
+      "use, and through Model Vault with a commercial license."
+    ],
+    "removed_lines": [
+      "API Endpoint: Chat API",
+      "Agentic Applications: Demonstrates proactive problem-solving, autonomously using tools and resources to complete highly complex tasks.",
+      "Announcing Cohere's Command A Reasoning Model",
+      "Customization Options",
+      "Integrating Command A Reasoning is straightforward using the Chat API. Here’s a non-streaming example:",
+      "Maximum Output: 32K tokens",
+      "Model Name: command-a-reasoning-08-2025",
+      "Multilingual: With 23 languages supported, the model solves reasoning and agentic problems in the language your business operates in."
+    ],
+    "added_count": 23,
+    "removed_count": 8,
+    "raw_added_count": 25,
+    "raw_removed_count": 28
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-11.json"
+  },
+  "permalink": "/item/obs_6108125f4b28557dfa4dde5372fa674778c260349b140a4897f5192a8f4e4cb3/"
+}

@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_d514d6af540c0f5ddc6c64e0441bc9e0b6a65173cfd98b4762124ffa954091ee",
+  "sourceId": "google-vertex-pricing",
+  "date": "2026-09-05",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 3,
+  "status": "active",
+  "platform": "Google Vertex AI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+  "title": "Google Vertex AI · 定价来源更新",
+  "summary": "定价表新增 Global 档价格（$120.00 和 $216.00），移除 Total price /1M 汇总行，并新增 Show discount options 选项，表明定价结构从单一汇总价改为分区域定价，并增加了折扣展示功能。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:58:19+00:00",
+  "revisionReason": "内容修订",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "alphaevolve agent price /",
+        "before": "AlphaEvolve agent price /1M (USD) |",
+        "after": "AlphaEvolve agent price /1M (USD)"
+      },
+      {
+        "key": "price per",
+        "before": "Price per 1M input tokens | $2.00 | $4.00 |",
+        "after": "Price per 1M input tokens | $2.00 | $4.00"
+      },
+      {
+        "key": "price per",
+        "before": "Price per 1M output and thinking tokens | $12.00 | $24.00 |",
+        "after": "Price per 1M output and thinking tokens | $12.00 | $24.00"
+      },
+      {
+        "key": "price per",
+        "before": "Price per 1M output and thinking tokens | $9.00 | $18.00 |",
+        "after": "Price per 1M output and thinking tokens | $9.00 | $18.00"
+      }
+    ],
+    "added_lines": [
+      "Global | $120.00 | $120.00 |",
+      "Global | $216.00 | $216.00 |",
+      "Show discount options"
+    ],
+    "removed_lines": [
+      "Total price /1M (USD)"
+    ],
+    "added_count": 3,
+    "removed_count": 1,
+    "raw_added_count": 8,
+    "raw_removed_count": 6
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-05.json"
+  },
+  "permalink": "/item/obs_d514d6af540c0f5ddc6c64e0441bc9e0b6a65173cfd98b4762124ffa954091ee/"
+}

@@ -23,6 +23,8 @@ maasweekly/
 ├── data/                    # 抓取产物与历史数据（git 跟踪）
 │   ├── snapshots/YYYY-MM-DD/    # 每日原始快照
 │   ├── diff/YYYY-MM-DD.md|json  # 每日变化报告（人读 + 机读）
+│   ├── records/obs_*.json       # 来源变化条目持久归档（稳定 ID，/item/ 详情页数据源）
+│   └── record-revisions/        # 条目历史版本（每修订一版，不可覆盖）
 │   ├── weekly/                  # 周报源文件
 │   ├── daily/                   # 早期每日追踪报告（7 月前）
 │   └── weekly-archive-early/    # 更早期手写周报存档
@@ -60,7 +62,11 @@ npm run build    # 构建到 dist/
 # 手动跑一次抓取（调试）
 python3 pipeline/scripts/fetch_sources.py --platform 火山方舟   # 单平台
 python3 pipeline/scripts/fetch_sources.py --max-sources 5      # 限量
-python3 pipeline/scripts/sync-diff-to-site.py                  # 同步到站点
+python3 pipeline/scripts/sync-diff-to-site.py                  # 同步到站点（含来源条目归档）
+
+# 来源变化条目归档（独立入口，可在临时目录测试）
+python3 pipeline/scripts/archive-source-changes.py             # 回填全部合法日期（幂等）
+python3 pipeline/scripts/archive-source-changes.py --check     # 只校验不写入
 ```
 
 ## 首次部署到 GitHub Pages
@@ -72,6 +78,7 @@ python3 pipeline/scripts/sync-diff-to-site.py                  # 同步到站点
 
 ## 数据说明
 
-- 信源配置：`pipeline/config/maas_official_sources.json`（国内 9 + 海外 7 平台，6 维度信源 + 行业数据源）
+- 信源配置：`pipeline/config/maas_official_sources.json`
+- 来源注册表：`pipeline/config/source_registry.json`（稳定 source_id ↔ 平台/类型/URL 别名）。**新增信源步骤**：先在 maas_official_sources.json 加信源 → 抓取产生 diff 后，如果 `archive-source-changes.py` 报"来源未映射"，在 source_registry.json 的 sources 数组补一条 `{source_id, display_name, source_type, url_aliases, primary_url}`——source_id 一旦分配不可更改，URL 变化只追加 url_aliases（国内 9 + 海外 7 平台，6 维度信源 + 行业数据源）
 - diff 算法：按行集合对比，过滤 10 字符以下短行，噪声较多的页面（JS 渲染的 SPA）可能误报，后续可换 HTML 结构化 diff
 - 历史周报：53 期（2025-10 ~ 2026-09），完整存于 `data/weekly/` 与 `data/weekly-archive-early/`

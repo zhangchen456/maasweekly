@@ -11,7 +11,46 @@ export async function getStaticPaths() {
   const weeklyPath = path.join(process.cwd(), 'src/data/weekly-digest.json');
   let weeks: any[] = [];
   try { weeks = JSON.parse(fs.readFileSync(weeklyPath, 'utf-8')); } catch {}
-  return weeks.map((w) => ({
+  // Task 01：周路由取 weekly-digest 与 record-index 周标识的并集——
+  // 索引独有的旧周（已滚出 KEEP_DAYS 窗口）仍生成周归档页，条目不失入口
+  const idxPath = path.join(process.cwd(), 'src/data/record-index.json');
+  const weekOf = (dateStr: string) => {
+    const d = new Date(dateStr + 'T00:00:00Z');
+    const day = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - day);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    const weekNo = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+    return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+  };
+  const byWeek: Record<string, any> = Object.fromEntries(
+    weeks.map((w) => [w.week, w]));
+  try {
+    const idx = JSON.parse(fs.readFileSync(idxPath, 'utf-8'));
+    for (const item of idx) {
+      const wk = weekOf(item.date);
+      if (!byWeek[wk]) {
+        // 索引独有周：最小骨架（days 由条目聚合），无 LLM 串讲不伪造
+        // R5：ISO 周一算法——1 月 4 日总在第一周，周一 = 该周四减 3 天
+        const [y, n] = wk.split('-W');
+        const jan4 = new Date(Date.UTC(+y, 0, 4));
+        const week1Monday = new Date(jan4);
+        week1Monday.setUTCDate(jan4.getUTCDate() - ((jan4.getUTCDay() + 6) % 7));
+        const monday = new Date(week1Monday);
+        monday.setUTCDate(week1Monday.getUTCDate() + (+n - 1) * 7);
+        const sunday = new Date(monday); sunday.setUTCDate(monday.getUTCDate() + 6);
+        byWeek[wk] = {
+          week: wk,
+          start: monday.toISOString().slice(0, 10),
+          end: sunday.toISOString().slice(0, 10),
+          days: {}, highlights: [],
+          indexOnly: true,
+          // R5：从索引统计真实条目数（不伪造 0 也不伪造统计分类）
+          recordCount: idx.filter((r: any) => weekOf(r.date) === wk).length,
+        };
+      }
+    }
+  } catch {}
+  return Object.values(byWeek).map((w: any) => ({
     params: { week: w.week },
     props: { week: w },
   }));
@@ -38,6 +77,27 @@ const HL_TYPE: Record<string, { label: string; cls: string }> = {
 
 const fmtDate = (d: string) => { const [, m, dd] = d.split('-'); return `${+m}.${+dd}`; };
 const weekday = (d: string) => '周' + '日一二三四五六'[new Date(d).getDay()];
+
+// Task 01：该周的来源变化记录（从持久索引取，不依赖 KEEP_DAYS 窗口）
+const weekOfItem = (dateStr: string) => {
+  const d = new Date(dateStr + 'T00:00:00Z');
+  const day = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - day);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+};
+let weekRecords: any[] = [];
+try {
+  const idxPath = path.join(process.cwd(), 'src/data/record-index.json');
+  const allIdx = JSON.parse(fs.readFileSync(idxPath, 'utf-8'));
+  weekRecords = allIdx.filter((r: any) => weekOfItem(r.date) === week.week);
+} catch {}
+const recordsByDate: Record<string, any[]> = {};
+for (const r of weekRecords) {
+  (recordsByDate[r.date] ??= []).push(r);
+}
+const recordDates = Object.keys(recordsByDate).sort().reverse();
 ---
 <Layout title={`${week.week} 周归档 — MaaS Daily`} description={`${week.start} ~ ${week.end} MaaS 平台每日动态归档：${week.totals?.substantive ?? 0} 个实质变化`}>
   <header class="hero">
@@ -48,10 +108,19 @@ const weekday = (d: string) => '周' + '日一二三四五六'[new Date(d).getDa
     </div>
     <aside class="hero-aside">
       <div class="pulse">
-        <div class="pulse-item"><strong>{week.totals?.substantive ?? 0}</strong><span>平台变化</span></div>
-        <div class="pulse-item"><strong>{week.totals?.releases ?? 0}</strong><span>发布</span></div>
-        <div class="pulse-item"><strong>{week.totals?.pricings ?? 0}</strong><span>调价</span></div>
-        <div class="pulse-item"><strong>{week.totals?.sunsets ?? 0}</strong><span>下线</span></div>
+        {week.indexOnly ? (
+          <>
+            <div class="pulse-item"><strong>{week.recordCount ?? 0}</strong><span>来源变化条目</span></div>
+            <div class="pulse-item"><strong>—</strong><span>已滚出近期窗口，分类统计不可用</span></div>
+          </>
+        ) : (
+          <>
+            <div class="pulse-item"><strong>{week.totals?.substantive ?? 0}</strong><span>平台变化</span></div>
+            <div class="pulse-item"><strong>{week.totals?.releases ?? 0}</strong><span>发布</span></div>
+            <div class="pulse-item"><strong>{week.totals?.pricings ?? 0}</strong><span>调价</span></div>
+            <div class="pulse-item"><strong>{week.totals?.sunsets ?? 0}</strong><span>下线</span></div>
+          </>
+        )}
       </div>
     </aside>
   </header>
@@ -141,7 +210,46 @@ const weekday = (d: string) => '周' + '日一二三四五六'[new Date(d).getDa
   </section>
 
   <p class="footnote">本周动态自动归档 · 每日要点与周度串讲</p>
-</Layout>
+
+  {/* Task 01：来源变化记录（按日期，链接到条目详情） */}
+  <section class="week-records">
+    <h2 class="wr-title">来源变化记录（{weekRecords.length} 条）</h2>
+    <p class="wr-note">每日来源变化的独立条目，含修订历史与永久链接{week.indexOnly ? '。本周已滚出近期窗口，仅保留来源记录索引' : ''}。</p>
+    {recordDates.map((date) => (
+      <div class="wr-day">
+        <div class="wr-date">{fmtDate(date)} {weekday(date)}</div>
+        <ul class="wr-list">
+          {recordsByDate[date].map((r: any) => (
+            <li class="wr-item">
+              <a href={r.permalink} class="wr-link">
+                {r.platform} · {r.title.split('·').pop()?.trim()}
+              </a>
+              {r.kind === 'jitter' && <span class="wr-tag">波动</span>}
+              {r.status === 'withdrawn' && <span class="wr-tag wr-wd">已撤回</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+    {recordDates.length === 0 && <p class="wr-note">本周无归档条目。</p>}
+  </section>
+
+  <style>
+    .week-records { max-width: 860px; margin: 24px auto; padding: 0 20px; }
+    .wr-title { font-size: 15px; margin: 0 0 6px; }
+    .wr-note { color: var(--muted-c, #6a737d); font-size: 13px; margin: 0 0 14px; }
+    .wr-day { margin-bottom: 14px; }
+    .wr-date { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    .wr-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .wr-item { font-size: 13px; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+    .wr-link { color: inherit; }
+    .wr-link:hover { color: var(--accent, #0b6bcb); }
+    .wr-tag { font-size: 11px; border: 1px solid var(--line, #e3e6ea); border-radius: 8px;
+              padding: 0 6px; color: var(--muted-c, #6a737d); }
+    .wr-wd { color: var(--warn, #b35900); border-color: currentColor; }
+  </style>
+
+  </Layout>
 
 <style>
   .hero { padding: 36px 0 26px; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, .6fr); gap: 50px; align-items: end; }

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_a4e8c5b0e28c9a89ee52f1f35b3193a27d21c4c4a18be4f7cf6cc3a8600aaf14",
+  "sourceId": "anthropic-changelog",
+  "date": "2026-09-05",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 3,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.anthropic.com/en/release-notes/api",
+  "title": "Anthropic · 更新日志来源更新",
+  "summary": "新增 ant CLI v1.30.0 版本说明，引入 ant apply 命令，这是 Anthropic 开发工具链的一次功能扩展，支持从仓库文件声明式管理 agents 和 environments 等资源。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:58:19+00:00",
+  "revisionReason": "内容修订",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Version 1.30.0 of the ant CLI adds ant apply, which creates and updates agents, environments, skills, memory stores, and deployments from files in your repository. Describe each resource in a file, run ant apply, and approve the plan it prints. Commit the claude-lock.json lockfile it writes so that later runs, on your machine or in CI, update the same resources instead of creating new ones. See Manage resources as code with ant apply."
+    ],
+    "removed_lines": [],
+    "added_count": 1,
+    "removed_count": 0,
+    "raw_added_count": 2,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-05.json"
+  },
+  "permalink": "/item/obs_a4e8c5b0e28c9a89ee52f1f35b3193a27d21c4c4a18be4f7cf6cc3a8600aaf14/"
+}

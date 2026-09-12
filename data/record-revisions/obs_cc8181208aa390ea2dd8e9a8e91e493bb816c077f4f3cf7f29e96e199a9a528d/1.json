@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_cc8181208aa390ea2dd8e9a8e91e493bb816c077f4f3cf7f29e96e199a9a528d",
+  "sourceId": "openai-pricing",
+  "date": "2026-09-10",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.openai.com/docs/pricing",
+  "title": "OpenAI · 定价来源更新",
+  "summary": "Regional processing (data residency) endpoints are charged a 10% uplift for models released on or after March 5, 2026, that are eligible for data residency. See our Your data guide for supported regions and processing details. OpenAI models in Amazon Bedrock are billed through AWS. Bedrock pricing in commercial regions matches OpenAI direct pricing for equivalent services.",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "regional processing (data residency) endpoints are charged a",
+        "before": "Regional processing (data residency) endpoints are charged a 10% uplift for models released on or after March 5, 2026, that are eligible for data residency. See our Your data guide for supported regions and processing details. OpenAI models in Amazon Bedrock are billed through AWS and may differ from direct OpenAI pricing.",
+        "after": "Regional processing (data residency) endpoints are charged a 10% uplift for models released on or after March 5, 2026, that are eligible for data residency. See our Your data guide for supported regions and processing details. OpenAI models in Amazon Bedrock are billed through AWS. Bedrock pricing in commercial regions matches OpenAI direct pricing for equivalent services."
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [],
+    "added_count": 0,
+    "removed_count": 0,
+    "raw_added_count": 1,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-10.json"
+  },
+  "permalink": "/item/obs_cc8181208aa390ea2dd8e9a8e91e493bb816c077f4f3cf7f29e96e199a9a528d/"
+}

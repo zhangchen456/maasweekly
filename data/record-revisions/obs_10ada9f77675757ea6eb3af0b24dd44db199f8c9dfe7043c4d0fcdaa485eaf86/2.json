@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_10ada9f77675757ea6eb3af0b24dd44db199f8c9dfe7043c4d0fcdaa485eaf86",
+  "sourceId": "openai-changelog",
+  "date": "2026-09-04",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "changelog",
+  "sourceUrl": "https://platform.openai.com/docs/changelog",
+  "title": "OpenAI · 更新日志来源更新",
+  "summary": "新增 GPT-6 Astra 相关功能说明，如异步工具调用、中途转向等，并删除旧指南，反映新模型特性。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:01:22+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "using gpt-",
+        "before": "Using GPT-5.6",
+        "after": "Using GPT-6 Astra"
+      }
+    ],
+    "added_lines": [
+      "Added new controls for long-running work with GPT-6 Astra in the Responses API:",
+      "Async tool calling",
+      "Async tool calling: Let the model continue working while your application runs function or custom tools, then return results as they become available.",
+      "Change reasoning effort mid-conversation: Increase effort for difficult work or reduce it for routine follow-ups while preserving the cached prompt prefix.",
+      "Connections to api.openai.com can now use IPv6.",
+      "GPT-6 Astra does not support custom temperature or top_p values or log probabilities (logprobs).",
+      "GPT-6 Astra does not support the none reasoning effort level.",
+      "Key changes to consider when migrating:",
+      "Mid-turn steering",
+      "Mid-turn steering: Send additional instructions while a response is in progress over WebSockets, so the model can incorporate corrections or changing requirements.",
+      "Misalignment monitoring",
+      "Misalignment monitoring asynchronously checks for potential issues during agent work in supported Responses API requests. Checks can trigger safety alerts or stop a conversation for review.",
+      "Released GPT-6 Astra, our most capable model, built for the hardest end-to-end work.",
+      "Safety classifiers",
+      "September, 2026",
+      "Start with Using GPT-6 Astra for capabilities, prompting, and migration guidance. Explore computer use for browser and desktop workflows, and see pricing for available inference tiers.",
+      "Tool calling requires the Responses API. If you use tools with Chat Completions, follow the Responses migration guide.",
+      "Traffic that increases too quickly can return a 429 error with the slow_down code. Temporary model overload returns a 503 error with the server_is_overloaded code. Both responses may include Retry-After. When the header is present, wait at least as long as it specifies before retrying. If it's missing, use exponential backoff. See the error codes guide and rate limits guide.",
+      "Under-18 guidance",
+      "Updated API errors so applications can distinguish traffic that increases too quickly from temporary model overload.",
+      "Use GPT-6 Astra for reasoning, coding, computer use, research, and document creation. It combines these capabilities to carry complex tasks from an initial request to a finished result, using the context and tools you provide.",
+      "gpt-6-astra"
+    ],
+    "removed_lines": [
+      "Under 18 API Guidance"
+    ],
+    "added_count": 22,
+    "removed_count": 1,
+    "raw_added_count": 23,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-04.json"
+  },
+  "permalink": "/item/obs_10ada9f77675757ea6eb3af0b24dd44db199f8c9dfe7043c4d0fcdaa485eaf86/"
+}

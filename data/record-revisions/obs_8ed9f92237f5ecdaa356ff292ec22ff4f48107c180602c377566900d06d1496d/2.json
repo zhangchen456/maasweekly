@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_8ed9f92237f5ecdaa356ff292ec22ff4f48107c180602c377566900d06d1496d",
+  "sourceId": "aa-industry",
+  "date": "2026-09-10",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "Coding Agent Index 的基准测试集更新为 DeepSWE v1.1、Terminal-Bench 4.0 和 SWE-Atlas-QnA，同时厂商列表新增 Z AI，榜单覆盖范围扩大。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:01:22+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "composite average pass@",
+        "before": "Composite average pass@1 across DeepSWE, Terminal-Bench v2.1, and SWE-Atlas-QnA · Higher is better",
+        "after": "Composite average pass@1 across DeepSWE v1.1, Terminal-Bench 4.0, and SWE-Atlas-QnA · Higher is better"
+      }
+    ],
+    "added_lines": [
+      "Coding Agent IndexUpdated",
+      "Z AIKimiAlibabaDeepSeekMiniMaxThinking MachinesNVIDIAMetaMistralOpenAI"
+    ],
+    "removed_lines": [
+      "Coding Agent Index",
+      "KimiAlibabaDeepSeekMiniMaxThinking MachinesNVIDIAMetaMistralOpenAI"
+    ],
+    "added_count": 2,
+    "removed_count": 2,
+    "raw_added_count": 6,
+    "raw_removed_count": 6
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-10.json"
+  },
+  "permalink": "/item/obs_8ed9f92237f5ecdaa356ff292ec22ff4f48107c180602c377566900d06d1496d/"
+}

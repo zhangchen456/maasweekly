@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_f31dc4ea1ae8df21f586a98c9ad39dd7d8aea30a18fcd904d6f82671c72b6fff",
+  "sourceId": "openai-pricing",
+  "date": "2026-09-09",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 3,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.openai.com/docs/pricing",
+  "title": "OpenAI · 定价来源更新",
+  "summary": "新增gpt-image-2.5-flare与gpt-image-2.5-sunburst定价行（$8/$2/$30），同时移除旧的gpt-image-2定价，表明新模型已完成定价体系切换。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:58:19+00:00",
+  "revisionReason": "内容修订",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Image prompting",
+      "Prompt cache diagnostics",
+      "| gpt-image-2.5-flare | Image | $8.00 | $2.00 | $30.00",
+      "| gpt-image-2.5-sunburst | Image | $8.00 | $2.00 | $30.00"
+    ],
+    "removed_lines": [
+      "| gpt-image-2 | Image | $8.00 | $2.00 | $30.00"
+    ],
+    "added_count": 4,
+    "removed_count": 1,
+    "raw_added_count": 4,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-09.json"
+  },
+  "permalink": "/item/obs_f31dc4ea1ae8df21f586a98c9ad39dd7d8aea30a18fcd904d6f82671c72b6fff/"
+}

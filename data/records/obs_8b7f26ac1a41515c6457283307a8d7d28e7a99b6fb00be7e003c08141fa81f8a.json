@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_8b7f26ac1a41515c6457283307a8d7d28e7a99b6fb00be7e003c08141fa81f8a",
+  "sourceId": "google-vertex-pricing",
+  "date": "2026-09-10",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 3,
+  "status": "active",
+  "platform": "Google Vertex AI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+  "title": "Google Vertex AI · 定价来源更新",
+  "summary": "定价结构发生调整：音频输入和文本输出价格更新，新增了混合计价（Effective Blended Price）和新的文本输出价格档位，同时删除了旧的输入/输出类型价格说明，可能对应新定价模型或套餐的引入。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:58:19+00:00",
+  "revisionReason": "内容修订",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "audio input",
+        "before": "Audio Input",
+        "after": "Audio Input | $2.00 / 1,000,000 count"
+      },
+      {
+        "key": "audio-minute",
+        "before": "~$0.005/audio-minute*",
+        "after": "Effective Blended Price (audio-minute*) | $0.0051 / 1 count"
+      },
+      {
+        "key": "text output",
+        "before": "Text Output",
+        "after": "Text Output | $12.00 / 1,000,000 count"
+      }
+    ],
+    "added_lines": [
+      "Effective Blended Price (audio-minute*) | $0.008925 / 1 count",
+      "Text Output | $21.00 / 1,000,000 count"
+    ],
+    "removed_lines": [
+      "Effective Blended Price",
+      "Input Type & Price |",
+      "Output Type & Price |",
+      "$12.00 / 1M tokens |",
+      "$2.00 / 1M tokens |",
+      "$21.00 / 1M tokens |",
+      "$3.50 / 1M tokens |"
+    ],
+    "added_count": 2,
+    "removed_count": 7,
+    "raw_added_count": 5,
+    "raw_removed_count": 11
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/Users/zhangchen/Work/maasweekly/data/diff/2026-09-10.json"
+  },
+  "permalink": "/item/obs_8b7f26ac1a41515c6457283307a8d7d28e7a99b6fb00be7e003c08141fa81f8a/"
+}

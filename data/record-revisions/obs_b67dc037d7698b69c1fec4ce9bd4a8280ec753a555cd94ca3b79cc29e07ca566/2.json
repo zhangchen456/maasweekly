@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_b67dc037d7698b69c1fec4ce9bd4a8280ec753a555cd94ca3b79cc29e07ca566",
+  "sourceId": "anthropic-blog",
+  "date": "2026-09-11",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "blog",
+  "sourceUrl": "https://www.anthropic.com/news",
+  "title": "Anthropic · 博客来源更新",
+  "summary": "新增了 9 月安全报告和 alignment 改进文章，删除了 7 月文本水印和 Claude Code 制作故事，表明博客焦点转向安全与治理。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:01:22+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "announcementsaug",
+        "before": "AnnouncementsAug 14, 2026",
+        "after": "AnnouncementsAug 31, 2026"
+      }
+    ],
+    "added_lines": [
+      "AnnouncementsSep 10, 2026",
+      "Detecting and countering misuse of AI: September 2026",
+      "Improving our alignment and security efforts",
+      "On July 30, we reported three incidents in which Claude models gained unauthorized access to real computer systems. We are conducting an in-depth analysis of both incidents, and planning to work with METR for an independent review. In the meantime, we’re sharing some of the changes we’ve made over the past month.",
+      "Over the past eight months, our Threat Intelligence team identified and disrupted operations in which threat actors tried to use Claude for malicious activity. In this report, we share case studies from those operations and describe how malicious use of Claude has evolved since our previous threat reports in 2025."
+    ],
+    "removed_lines": [
+      "FeaturesJul 6, 2026",
+      "How Claude’s text watermark works",
+      "In this article, we share answers to some of the questions we’ve received about how our chosen watermarking method works, whether it affects Claude’s outputs, and why we’re making this change.",
+      "The Making of Claude Code",
+      "The inside story of how Claude Code went from an internal CLI to Anthropic's coding agent, told by researchers, engineers and early users who built it."
+    ],
+    "added_count": 5,
+    "removed_count": 5,
+    "raw_added_count": 6,
+    "raw_removed_count": 6
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-11.json"
+  },
+  "permalink": "/item/obs_b67dc037d7698b69c1fec4ce9bd4a8280ec753a555cd94ca3b79cc29e07ca566/"
+}

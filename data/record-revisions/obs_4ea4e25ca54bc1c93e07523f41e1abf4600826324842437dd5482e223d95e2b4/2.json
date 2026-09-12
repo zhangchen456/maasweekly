@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_4ea4e25ca54bc1c93e07523f41e1abf4600826324842437dd5482e223d95e2b4",
+  "sourceId": "huggingface-industry",
+  "date": "2026-09-04",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "HuggingFace",
+  "sourceType": "industry",
+  "sourceUrl": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+  "title": "HuggingFace · 行业数据来源更新",
+  "summary": "新增 Stable Diffusion v1.5 相关记录，移除 Qwen3-8B 相关，可能表示数据集更新。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:01:22+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "\"base_model:finetune:runwayml/stable-diffusion-v1-5\",",
+      "\"base_model:runwayml/stable-diffusion-v1-5\",",
+      "\"license:creativeml-openrail-m\","
+    ],
+    "removed_lines": [
+      "\"arxiv:2309.00071\",",
+      "\"base_model:Qwen/Qwen3-8B-Base\",",
+      "\"base_model:finetune:Qwen/Qwen3-8B-Base\","
+    ],
+    "added_count": 3,
+    "removed_count": 3,
+    "raw_added_count": 47,
+    "raw_removed_count": 47
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-04.json"
+  },
+  "permalink": "/item/obs_4ea4e25ca54bc1c93e07523f41e1abf4600826324842437dd5482e223d95e2b4/"
+}

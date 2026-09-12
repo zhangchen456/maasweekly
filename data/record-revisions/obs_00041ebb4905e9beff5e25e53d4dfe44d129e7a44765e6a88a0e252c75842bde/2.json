@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_00041ebb4905e9beff5e25e53d4dfe44d129e7a44765e6a88a0e252c75842bde",
+  "sourceId": "cohere-pricing",
+  "date": "2026-09-04",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Cohere",
+  "sourceType": "pricing",
+  "sourceUrl": "https://cohere.com/pricing",
+  "title": "Cohere · 定价来源更新",
+  "summary": "新增检索优化模型和语义表示模型，删除搜索和发现模型，可能表示产品线调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-11T09:01:22+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "$4,300Pricing | Secure and Scalable Enterprise AI | Cohere",
+      "Retrieval optimization model",
+      "Semantic representation model"
+    ],
+    "removed_lines": [
+      "Pricing | Secure and Scalable Enterprise AI | Cohere",
+      "Search and discovery model",
+      "Semantic search ranking"
+    ],
+    "added_count": 3,
+    "removed_count": 3,
+    "raw_added_count": 3,
+    "raw_removed_count": 3
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-04.json"
+  },
+  "permalink": "/item/obs_00041ebb4905e9beff5e25e53d4dfe44d129e7a44765e6a88a0e252c75842bde/"
+}

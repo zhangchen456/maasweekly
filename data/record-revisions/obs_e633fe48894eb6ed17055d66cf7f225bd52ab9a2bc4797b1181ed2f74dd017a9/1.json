@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_e633fe48894eb6ed17055d66cf7f225bd52ab9a2bc4797b1181ed2f74dd017a9",
+  "sourceId": "google-vertex-pricing",
+  "date": "2026-09-04",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Google Vertex AI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+  "title": "Google Vertex AI · 定价来源更新",
+  "summary": "$2.00 / 1M tokens |",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "effective august",
+        "before": "Effective August 13, 2026 through December 31, 2026, Google Cloud is injecting a monthly billing credit equal to 50% of net eligible Provisioned Throughput spending on Gemini 3.6 Flash and Gemini 3.7 Flash models.",
+        "after": "Effective August 13, 2026 through December 31, 2026, Google Cloud is injecting a monthly billing credit equal to 50% of net eligible Provisioned Throughput spending on Gemini 3.8 Flash, Gemini 3.7 Flash, and Gemini 3.6 Flash models."
+      },
+      {
+        "key": "gemini",
+        "before": "Gemini 3.7 Flash, Gemini 3.6 Flash, and CodeMender using these models are offered with introductory pricing of $0.75 / $3.75 per 1M tokens input / output through December 31, 2026. Starting January 1, 2027, standard pricing of $1.5 / $7.5 per 1M tokens input / output will apply.",
+        "after": "Gemini 3.5 Live Translate"
+      },
+      {
+        "key": "global",
+        "before": "Global | $3.00 | $3.00 |",
+        "after": "Global | $0.375 | $0.375 | $0.0375 | $0.0375"
+      },
+      {
+        "key": "global",
+        "before": "Global | - |",
+        "after": "Global | $1.35 | $1.35 | $0.135 | $0.135"
+      },
+      {
+        "key": "image output***",
+        "before": "Image output*** | - |",
+        "after": "Image output*** | $30.00 |"
+      },
+      {
+        "key": "input (text",
+        "before": "Input (text, image)*** | - |",
+        "after": "Input (text, image)*** | $0.30 |"
+      },
+      {
+        "key": "pro-rated",
+        "before": "Issued credits apply to usage across On-Demand Gemini 3.6 Flash and 3.7 Flash SKUs, as well as Provisioned Throughput SKUs across all models. Credits are issued on the 7th day of each month following the billing period, and expire 30 days after issuance, under standard Google Cloud Credit Terms of Service. Spend for the initial month is pro-rated strictly for active usage between August 13 and August 31, 2026.",
+        "after": "Issued credits apply to usage across On-Demand Gemini 3.8 Flash, Gemini 3.7 Flash and Gemini 3.6 Flash SKUs, as well as Provisioned Throughput SKUs across all models. Credits are issued on the 7th day of each month following the billing period, and expire 30 days after issuance, under standard Google Cloud Credit Terms of Service. Spend for the initial month is pro-rated strictly for active usage between August 13 and August 31, 2026."
+      }
+    ],
+    "added_lines": [
+      "$2.00 / 1M tokens |",
+      "* Billing is based on total input and output audio token consumption, calculated at a rate of 25 tokens per second of audio.",
+      "50% Promotional Credits on Gemini 3.8 Flash, Gemini 3.7 Flash and Gemini 3.6 Flash Provisioned Throughput Usage",
+      "Audio Input | $3.50 / 1,000,000 count",
+      "Audio Output | $21.00 / 1,000,000 count",
+      "Claude Fable 5.1 |",
+      "Gemini 3.5 Live Translate |",
+      "Gemini 3.8 Flash",
+      "Gemini 3.8 Flash*",
+      "Gemini 3.8 Flash, Gemini 3.7 Flash, Gemini 3.6 Flash, and CodeMender using these models are offered with introductory pricing of $0.75 / $3.75 per 1M tokens input / output through December 31, 2026. Starting January 1, 2027, standard pricing of $1.5 / $7.5 per 1M tokens input / output will apply.",
+      "Global | $1.875 | $1.875 |",
+      "Global | $6.75 | $6.75 |",
+      "Low-latency, real-time speech to speech translation model that supports 70+ languages. |",
+      "Non-global | $0.4125 | $0.4125 | $0.04125 | $0.04125",
+      "Non-global | $0.825 | $0.825 | $0.0825 | $0.0825",
+      "Non-global | $1.485 | $1.485 | $0.1485 | $0.1485",
+      "Non-global | $1.65 | $1.65 | $0.165 | $0.165",
+      "Non-global | $14.85 | $14.85 |",
+      "Non-global | $2.0625 | $2.0625 |",
+      "Non-global | $2.97 | $2.97 | $0.297 | $0.297",
+      "Non-global | $4.125 | $4.125 |",
+      "Non-global | $7.425 | $7.425 |"
+    ],
+    "removed_lines": [
+      "$0.000001 / 1 hour |",
+      "$2.50 / 1M tokens |",
+      "50% Promotional Credits on Gemini 3.6 Flash & Gemini 3.7 Flash Provisioned Throughput Usage"
+    ],
+    "added_count": 22,
+    "removed_count": 3,
+    "raw_added_count": 34,
+    "raw_removed_count": 10
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "data/diff/2026-09-04.json"
+  },
+  "permalink": "/item/obs_e633fe48894eb6ed17055d66cf7f225bd52ab9a2bc4797b1181ed2f74dd017a9/"
+}

@@ -8,9 +8,9 @@
         "substantive": 28,
         "jitter": 3,
         "failed": 0,
-        "releases": 0,
-        "pricings": 0,
-        "sunsets": 0
+        "releases": 7,
+        "pricings": 1,
+        "sunsets": 2
       },
       "2026-09-10": {
         "substantive": 16,
@@ -24,8 +24,8 @@
         "substantive": 11,
         "jitter": 0,
         "failed": 1,
-        "releases": 0,
-        "pricings": 0,
+        "releases": 1,
+        "pricings": 3,
         "sunsets": 0
       },
       "2026-09-08": {
@@ -47,11 +47,113 @@
     },
     "totals": {
       "substantive": 68,
-      "releases": 7,
-      "pricings": 6,
-      "sunsets": 2
+      "releases": 15,
+      "pricings": 10,
+      "sunsets": 4
     },
     "highlights": [
+      {
+        "platform": "DeepSeek",
+        "date": "2026-09-11",
+        "text": "DeepSeek 发布 DeepSeek-V4.1-Flash，旧模型名 deepseek-v4-flash、deepseek-v4-flash-vision-exp 仍可调用但已下线，请求由 V4.1-Flash 按 Flash 价格计费",
+        "type": "release"
+      },
+      {
+        "platform": "DeepSeek",
+        "date": "2026-09-11",
+        "text": "2026-09-14 12:00 起 deepseek-v4-pro 请求将全部路由到 V4.1-Flash，V4 Pro 有序下线",
+        "type": "sunset"
+      },
+      {
+        "platform": "DeepSeek",
+        "date": "2026-09-11",
+        "text": "DeepSeek 定价更新：deepseek-flash 输入 0.15-0.30 USD/百万tokens，输出 0.60-1.20 USD/百万tokens；deepseek-v4-pro 输入 0.66-1.32 USD/百万tokens，输出 1.98-3.96 USD/百万tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-11",
+        "text": "GPT-Live 1 在 API 中正式可用（GA），支持全双工语音对话，可边推理边对话",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-11",
+        "text": "新增 Audio in Chat Completions、Audio processing、Custom voices、Live transcription 等语音相关功能与文档",
+        "type": "other"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-09-11",
+        "text": "Qwen3.5-27B 升级为 Qwen3.8-27B，定价随之更新",
+        "type": "release"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-09-11",
+        "text": "2026-09-15 起对话模型忽略 repetition_penalty 参数，固定按 1 处理",
+        "type": "other"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-09-11",
+        "text": "2026-09-30 生图 API 下线 batch_size 字段，默认添加『AI 生成』水印",
+        "type": "other"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-11",
+        "text": "Cohere 新增 North Mini Code（30B 总参/3B 激活 MoE，面向 agentic coding）和 North Small Translate（218B 总参/25B 激活 MoE，面向机器翻译）",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-11",
+        "text": "Claude Managed Agents 权限策略新增 auto 模式，可自动执行或暂停等待审批",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-11",
+        "text": "ant CLI 新增 beta:sessions connect，可实时连接并操作 Managed Agents 会话",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-11",
+        "text": "Anthropic 发布 9 月安全报告，披露检测和反制 AI 滥用的最新进展",
+        "type": "other"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-09-11",
+        "text": "百度千帆新增『产品简介-百度AI助手与智能搜索生成』，覆盖模型列表、定价、更新日志与博客",
+        "type": "release"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-09-11",
+        "text": "Mistral 与 Cloudera 达成合作，为企业数据提供主权 AI 方案",
+        "type": "other"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-09-11",
+        "text": "发布 Spaces：面向人类与 Agent 的 CLI 工具",
+        "type": "release"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-09-11",
+        "text": "Gemini 应用现可在 Windows 上使用",
+        "type": "release"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-09-11",
+        "text": "火山方舟移除 Web Search（联网内容插件）",
+        "type": "sunset"
+      },
       {
         "platform": "百度千帆",
         "date": "2026-09-10",
@@ -116,6 +218,60 @@
         "platform": "Artificial Analysis",
         "date": "2026-09-10",
         "text": "Coding Agent Index 基准更新为 DeepSWE v1.1、Terminal-Bench 4.0 和 SWE-Atlas-QnA，并新增 Z AI 厂商",
+        "type": "other"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-09",
+        "text": "GPT-Image-2.5 Sunburst与Flare上线，前者主打精准编辑，后者面向日常高质量生成",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-09",
+        "text": "GPT-Image-2.5系列输入$8/百万tokens、输出$2/百万tokens，缓存命中$30/百万tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-09",
+        "text": "Prompt Cache Diagnostics向GPT-5.6及后续模型全面开放，支持缓存命中率对比与故障排查",
+        "type": "other"
+      },
+      {
+        "platform": "Google",
+        "date": "2026-09-09",
+        "text": "gemini-robotics-er-2-preview系列输入/输出/缓存读取价格均下调50%",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google",
+        "date": "2026-09-09",
+        "text": "Gemini API多模态输出定价2027年1月起由$2.00上调至$5.00/百万tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-09",
+        "text": "推出Megakernel服务引擎，在H100上实现1.58倍LLM推理加速",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-09",
+        "text": "GPT-6-Astra-Max以1796分进入智能体工具调用榜单，Claude-Fable-5-Max获1764分",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-09",
+        "text": "Bytedance Seedream-5.0-pro视觉Elo从1394降至1257，gpt-image-2.5-sunburst以1520分登顶",
+        "type": "other"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-09-09",
+        "text": "发布API兼容性升级公告，为开发者提供迁移指引",
         "type": "other"
       },
       {

@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "node scripts/build-price-fragment.mjs && node scripts/render-price-ledger.mjs && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prebuild": "python3 ../pipeline/scripts/validate-archive.py"
   },
   "dependencies": {
     "astro": "^7.2.10",
