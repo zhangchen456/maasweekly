@@ -4,6 +4,14 @@
     "start": "2026-09-07",
     "end": "2026-09-13",
     "days": {
+      "2026-09-13": {
+        "substantive": 2,
+        "jitter": 2,
+        "failed": 2,
+        "releases": 2,
+        "pricings": 0,
+        "sunsets": 1
+      },
       "2026-09-12": {
         "substantive": 15,
         "jitter": 1,
@@ -54,12 +62,36 @@
       }
     },
     "totals": {
-      "substantive": 83,
-      "releases": 21,
+      "substantive": 85,
+      "releases": 23,
       "pricings": 10,
-      "sunsets": 6
+      "sunsets": 7
     },
     "highlights": [
+      {
+        "platform": "Cohere",
+        "date": "2026-09-13",
+        "text": "新增模型 cohere-transcribe-03-2026，并配套提供音频文件读取与客户端初始化的示例代码",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-13",
+        "text": "更新了 rerank-v4.0-pro 的调用示例，但参数未实质变化",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-13",
+        "text": "新增 Gemini 3.8 Flash (low) 条目，并扩展了供应商列表（新增 Anthropic、Cognition、OpenAI 等）",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-13",
+        "text": "移除 GPT-6 Astra (Non-reasoning) 条目，并删除独立评估的预估说明",
+        "type": "sunset"
+      },
       {
         "platform": "OpenAI",
         "date": "2026-09-12",

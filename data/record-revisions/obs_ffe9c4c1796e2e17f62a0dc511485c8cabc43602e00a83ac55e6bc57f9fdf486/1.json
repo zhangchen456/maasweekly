@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_ffe9c4c1796e2e17f62a0dc511485c8cabc43602e00a83ac55e6bc57f9fdf486",
+  "sourceId": "cohere-changelog",
+  "date": "2026-09-13",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Cohere",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.cohere.com/changelog",
+  "title": "Cohere · 更新日志来源更新",
+  "summary": "\"Capital punishment has existed in the United States since before the United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states. The federal government (including the United States military) also uses capital punishment.\",",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "rerank-v4.0-pro",
+        "before": "| 15 | model=\"rerank-v4.0-pro\", query=query, documents=docs, top_n=5",
+        "after": "model=\"rerank-v4.0-pro\", query=query, documents=docs, top_n=5"
+      }
+    ],
+    "added_lines": [
+      "\"Capital punishment has existed in the United States since before the United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states. The federal government (including the United States military) also uses capital punishment.\",",
+      "\"Carson City is the capital city of the American state of Nevada. At the 2010 United States Census, Carson City had a population of 55,274.\",",
+      "\"Charlotte Amalie is the capital and largest city of the United States Virgin Islands. It has about 20,000 people. The city is on the island of Saint Thomas.\",",
+      "\"The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean that are a political division controlled by the United States. Its capital is Saipan.\",",
+      "\"Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district. The President of the USA and many major national government offices are in the territory. This makes it the political center of the United States of America.\",",
+      "co = ClientV2(api_key=\"<YOUR API KEY>\")",
+      "co = cohere.ClientV2()",
+      "file=open(\"./sample.wav\", \"rb\"),",
+      "from cohere import ClientV2",
+      "import cohere",
+      "language=\"en\",",
+      "model=\"cohere-transcribe-03-2026\",",
+      "model=\"command-a-translate-08-2025\",",
+      "print(response)",
+      "query = \"What is the capital of the United States?\"",
+      "response = co.audio.transcriptions.create(",
+      "response = co.chat(",
+      "results = co.rerank("
+    ],
+    "removed_lines": [
+      "| 1 | from cohere import ClientV2",
+      "| 1 | import cohere",
+      "| 10 | \"Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district. The President of the USA and many major national government offices are in the territory. This makes it the political center of the United States of America.\",",
+      "| 10 | \"content\": \"Translate this text to Spanish: Hello, how are you?\",",
+      "| 11 | \"Capital punishment has existed in the United States since before the United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states. The federal government (including the United States military) also uses capital punishment.\",",
+      "| 11 | print(response)",
+      "| 14 | results = co.rerank(",
+      "| 3 | co = ClientV2(api_key=\"<YOUR API KEY>\")",
+      "| 3 | co = cohere.ClientV2()"
+    ],
+    "added_count": 18,
+    "removed_count": 9,
+    "raw_added_count": 21,
+    "raw_removed_count": 23
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-13.json"
+  },
+  "permalink": "/item/obs_ffe9c4c1796e2e17f62a0dc511485c8cabc43602e00a83ac55e6bc57f9fdf486/"
+}

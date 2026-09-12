@@ -1,6 +1,184 @@
 {
-  "updated_at": "2026-09-12T15:02:40",
+  "updated_at": "2026-09-12T22:53:46",
   "days": [
+    {
+      "date": "2026-09-13",
+      "stats": {
+        "total": 68,
+        "success": 66,
+        "failed": 2,
+        "changed": 4,
+        "unchanged": 62
+      },
+      "changed": [
+        {
+          "platform": "Cohere",
+          "source_type": "changelog",
+          "url": "https://docs.cohere.com/changelog",
+          "status": "changed",
+          "added_count": 18,
+          "removed_count": 9,
+          "added_lines": [
+            "\"Capital punishment has existed in the United States since before the United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states. The federal government (including the United States military) also uses capital punishment.\",",
+            "\"Carson City is the capital city of the American state of Nevada. At the 2010 United States Census, Carson City had a population of 55,274.\",",
+            "\"Charlotte Amalie is the capital and largest city of the United States Virgin Islands. It has about 20,000 people. The city is on the island of Saint Thomas.\",",
+            "\"The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean that are a political division controlled by the United States. Its capital is Saipan.\",",
+            "\"Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district. The President of the USA and many major national government offices are in the territory. This makes it the political center of the United States of America.\",",
+            "co = ClientV2(api_key=\"<YOUR API KEY>\")",
+            "co = cohere.ClientV2()",
+            "file=open(\"./sample.wav\", \"rb\"),",
+            "from cohere import ClientV2",
+            "import cohere",
+            "language=\"en\",",
+            "model=\"cohere-transcribe-03-2026\",",
+            "model=\"command-a-translate-08-2025\",",
+            "print(response)",
+            "query = \"What is the capital of the United States?\"",
+            "response = co.audio.transcriptions.create(",
+            "response = co.chat(",
+            "results = co.rerank("
+          ],
+          "removed_lines": [
+            "| 1 | from cohere import ClientV2",
+            "| 1 | import cohere",
+            "| 10 | \"Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district. The President of the USA and many major national government offices are in the territory. This makes it the political center of the United States of America.\",",
+            "| 10 | \"content\": \"Translate this text to Spanish: Hello, how are you?\",",
+            "| 11 | \"Capital punishment has existed in the United States since before the United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states. The federal government (including the United States military) also uses capital punishment.\",",
+            "| 11 | print(response)",
+            "| 14 | results = co.rerank(",
+            "| 3 | co = ClientV2(api_key=\"<YOUR API KEY>\")",
+            "| 3 | co = cohere.ClientV2()"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "rerank-v4.0-pro",
+              "before": "| 15 | model=\"rerank-v4.0-pro\", query=query, documents=docs, top_n=5",
+              "after": "model=\"rerank-v4.0-pro\", query=query, documents=docs, top_n=5"
+            }
+          ],
+          "signal_preview": "\"Capital punishment has existed in the United States since before the United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states. The federal government (including the United States military) also uses capital punishment.\",",
+          "raw_added_count": 21,
+          "raw_removed_count": 23,
+          "id": "obs_ffe9c4c1796e2e17f62a0dc511485c8cabc43602e00a83ac55e6bc57f9fdf486",
+          "permalink": "/item/obs_ffe9c4c1796e2e17f62a0dc511485c8cabc43602e00a83ac55e6bc57f9fdf486/",
+          "llm_summary": "新增了 cohere-transcribe-03-2026 模型的调用示例，包括导入 ClientV2、打开音频文件等代码片段，同时删除了旧的翻译示例和部分文档内容，表明该语音转写模型已正式上架并更新了文档。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 4,
+          "added_lines": [
+            "AnthropicAnthropic + CognitionOpenAIOpenAI + CognitionMetaZ.aiMoonshot AISpaceXAIAlibaba CloudDeepSeekGoogle",
+            "Gemini 3.8 Flash (low)See more"
+          ],
+          "removed_lines": [
+            "Anthropic + CognitionOpenAI",
+            "Estimate (independent evaluation forthcoming)",
+            "GPT-6 Astra (Non-reasoning)",
+            "OpenAI + CognitionMetaZ.aiMoonshot AISpaceXAIAlibaba CloudDeepSeekGoogle"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "muse spark",
+              "before": "Muse Spark 1.3 (xhigh)See more",
+              "after": "Muse Spark 1.3 (xhigh)"
+            }
+          ],
+          "signal_preview": "AnthropicAnthropic + CognitionOpenAIOpenAI + CognitionMetaZ.aiMoonshot AISpaceXAIAlibaba CloudDeepSeekGoogle",
+          "raw_added_count": 7,
+          "raw_removed_count": 9,
+          "id": "obs_4570783a5dc9cdb5e0088ae94383c32306d4569a434b8780aac3008ff5ad58c2",
+          "permalink": "/item/obs_4570783a5dc9cdb5e0088ae94383c32306d4569a434b8780aac3008ff5ad58c2/",
+          "llm_summary": "榜单新增了 Gemini 3.8 Flash (low) 条目，并扩展了供应商列表，同时移除了 GPT-6 Astra (Non-reasoning) 和独立评估的预估说明，反映模型阵容调整和评估状态更新。"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_2702aea08579341c7834ccdd412cf8d967f31d4949f589d579f06b7710fd8f56",
+          "permalink": "/item/obs_2702aea08579341c7834ccdd412cf8d967f31d4949f589d579f06b7710fd8f56/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 39,
+          "raw_removed_count": 39,
+          "id": "obs_0a4162dd03513bbe34a52e4999524e7840d1c87beebc70177db683f9809fb2a5",
+          "permalink": "/item/obs_0a4162dd03513bbe34a52e4999524e7840d1c87beebc70177db683f9809fb2a5/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Cohere",
+          "logo_summary": "新增语音转写模型 cohere-transcribe-03-2026 及示例代码",
+          "items": [
+            {
+              "text": "新增模型 cohere-transcribe-03-2026，并配套提供音频文件读取与客户端初始化的示例代码",
+              "type": "release"
+            },
+            {
+              "text": "更新了 rerank-v4.0-pro 的调用示例，但参数未实质变化",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "榜单新增 Gemini 3.8 Flash，移除 GPT-6 Astra 非推理版",
+          "items": [
+            {
+              "text": "新增 Gemini 3.8 Flash (low) 条目，并扩展了供应商列表（新增 Anthropic、Cognition、OpenAI 等）",
+              "type": "release"
+            },
+            {
+              "text": "移除 GPT-6 Astra (Non-reasoning) 条目，并删除独立评估的预估说明",
+              "type": "sunset"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-09-12",
       "stats": {
