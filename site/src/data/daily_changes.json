@@ -1,6 +1,374 @@
 {
-  "updated_at": "2026-09-12T22:53:46",
+  "updated_at": "2026-09-13T22:56:30",
   "days": [
+    {
+      "date": "2026-09-14",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 8,
+        "unchanged": 57
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "model_list",
+          "url": "https://help.aliyun.com/zh/model-studio/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-v4-pro-0813",
+              "before": "| deepseek-v4-pro-0813 | deepseek-v4-flash-0731 | kimi/kimi-k3",
+              "after": "| deepseek-v4-pro-0813 | deepseek-v4.1-flash | kimi/kimi-k3"
+            }
+          ],
+          "signal_preview": "| deepseek-v4-pro-0813 | deepseek-v4.1-flash | kimi/kimi-k3",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_1fca1930fd88bf61bcfee08cd4f5da40e3abcbbb97adce8b581ce799490ef466",
+          "permalink": "/item/obs_1fca1930fd88bf61bcfee08cd4f5da40e3abcbbb97adce8b581ce799490ef466/",
+          "llm_summary": "模型列表将 deepseek-v4-flash-0731 替换为 deepseek-v4.1-flash，同时保留 deepseek-v4-pro-0813 和 kimi/kimi-k3，表明 DeepSeek 系列模型版本迭代。"
+        },
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "deepseek-v4.1-flash",
+            "闲时 1.094元 |"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "deepseek-v4.1-flash",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_9ae5cb11c6da1d3abf80228a5de66bb1b48bd9e93735b7a9406e68cf3e763918",
+          "permalink": "/item/obs_9ae5cb11c6da1d3abf80228a5de66bb1b48bd9e93735b7a9406e68cf3e763918/",
+          "llm_summary": "新增 deepseek-v4.1-flash 的定价行，并给出闲时价格 1.094元，对应新模型上架后的价格配置。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "AI Needs Evidenced Standards, Not A Cartel",
+            "Who Gets to Define the Rules for AI?"
+          ],
+          "removed_lines": [
+            "Automating fork maintenance with AI agents"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AI Needs Evidenced Standards, Not A Cartel",
+          "raw_added_count": 4,
+          "raw_removed_count": 2,
+          "id": "obs_ce96381112caaa972cdb4cf64f52f088775d711a8ced03f17a3c7d46770192c6",
+          "permalink": "/item/obs_ce96381112caaa972cdb4cf64f52f088775d711a8ced03f17a3c7d46770192c6/",
+          "llm_summary": "新增两篇关于 AI 标准制定与规则话语权的博客，同时删除一篇关于自动化 fork 维护的技术博客，内容重心从工程实践转向行业治理。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "model_list",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "agentstarting at $",
+              "before": "AgentStarting at $0.05 / min",
+              "after": "AgentStarting at $0.08 / min"
+            }
+          ],
+          "signal_preview": "AgentStarting at $0.08 / min",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_6a2ae483cb71eeda5b244cdf7909d8bd222ec70ec92521bfb75c134e314bc8c7",
+          "permalink": "/item/obs_6a2ae483cb71eeda5b244cdf7909d8bd222ec70ec92521bfb75c134e314bc8c7/",
+          "llm_summary": "Agent 模型的起始价格从 $0.05/min 调整为 $0.08/min，价格上调 60%，反映成本或定价策略变化。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "pricing",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "agentstarting at $",
+              "before": "AgentStarting at $0.05 / min",
+              "after": "AgentStarting at $0.08 / min"
+            }
+          ],
+          "signal_preview": "AgentStarting at $0.08 / min",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_b56c112f02969fc58577dc7c93bbe4f6ab63ce11c91d1be8dcba928fe16b0648",
+          "permalink": "/item/obs_b56c112f02969fc58577dc7c93bbe4f6ab63ce11c91d1be8dcba928fe16b0648/",
+          "llm_summary": "定价表中 Agent 起始价格同步从 $0.05/min 调整为 $0.08/min，与模型列表变化一致。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 3,
+          "added_lines": [
+            "\"automatic-speech-recognition\",",
+            "\"dataset:common_voice\",",
+            "\"doi:10.57967/hf/3568\","
+          ],
+          "removed_lines": [
+            "\"arxiv:2205.13147\",",
+            "\"arxiv:2402.01613\",",
+            "\"custom_code\","
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "\"automatic-speech-recognition\",",
+          "raw_added_count": 49,
+          "raw_removed_count": 49,
+          "id": "obs_8930d98dcc1945e061f4649c9e5fdc5f0a083d8b6a85bccaf385bf5c3ce25ab9",
+          "permalink": "/item/obs_8930d98dcc1945e061f4649c9e5fdc5f0a083d8b6a85bccaf385bf5c3ce25ab9/",
+          "llm_summary": "新增自动语音识别数据集 common_voice 及 DOI 引用，同时移除两篇 arxiv 引用和 custom_code 标记，表明数据集卡片元数据更新，可能涉及新数据集发布或旧引用清理。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 4,
+          "added_lines": [
+            "K2 Horizon 0.9B",
+            "K2 Horizon 3.7B",
+            "K2 Horizon 7B",
+            "K2 Horizon MoVA 36B A4B",
+            "New language model evaluation · 13 Sept"
+          ],
+          "removed_lines": [
+            "Gemini 3.8 Flash (low)See more",
+            "Google has released Gemini 3.8 Flash, its fourth Flash model in under four months",
+            "Muse Spark 1.3 (xhigh)",
+            "Muse Spark 1.3: Meta reaches the frontier"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "muse spark",
+              "before": "Muse Spark 1.3 (max)",
+              "after": "Muse Spark 1.3: Meta reaches the frontierSee more"
+            }
+          ],
+          "signal_preview": "New language model evaluation · 13 Sept",
+          "raw_added_count": 11,
+          "raw_removed_count": 11,
+          "id": "obs_9128efb425f313f67e368bdd8d5699edc4bc9a4a5d8c1ad5caadbfd01b1b688b",
+          "permalink": "/item/obs_9128efb425f313f67e368bdd8d5699edc4bc9a4a5d8c1ad5caadbfd01b1b688b/",
+          "llm_summary": "新增 K2 Horizon 系列四个尺寸模型（0.9B/3.7B/7B/MoVA 36B A4B）的评测条目，同时移除 Gemini 3.8 Flash 相关条目，并将 Muse Spark 1.3 的状态更新为 Meta reaches the frontier，反映评测列表的模型更替与前沿动态。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 26,
+          "removed_count": 9,
+          "added_lines": [
+            "claude-fable-5.1-max1498±8",
+            "claude-fable-5.1-max1513±15",
+            "claude-fable-5.1-max1710+21/-21",
+            "claude-fable-51310±8",
+            "claude-fable-51496±8",
+            "claude-opus-4-6-high1507±6",
+            "claude-opus-4-61507±6",
+            "claude-opus-4-7-high1495±7",
+            "claude-opus-4-71300±7",
+            "claude-opus-4-71495±6",
+            "claude-opus-5-high1289±8",
+            "claude-opus-5-high1516±7",
+            "claude-opus-5-max1665+13/-13",
+            "glm-5.3-flash1588+15/-15",
+            "gpt-5.5-high1484±6",
+            "gpt-5.51486±6",
+            "gpt-5.6-sol-xhigh (codex-harness)1604+13/-13",
+            "gpt-5.6-sol-xhigh1483±9",
+            "gpt-6-astra-max1733+21/-21",
+            "grok-4.6-high1596+18/-18",
+            "muse-spark-1.2 (xHigh)1500±11",
+            "muse-spark-1.3-max1294±15",
+            "muse-spark-1.3-max1493±9",
+            "muse-spark-1.3-max1645+18/-18",
+            "qwen3.8-max-09021639",
+            "qwen3.8-max1302±8"
+          ],
+          "removed_lines": [
+            "claude-fable-5.1-max1501±8",
+            "claude-fable-51313±8",
+            "claude-fable-51504±9",
+            "claude-opus-4-6-high1506±7",
+            "claude-opus-4-61510±6",
+            "claude-opus-4-7-high1497±7",
+            "claude-opus-4-7-high1576+10/-10",
+            "claude-opus-4-71299±7",
+            "claude-opus-4-71498±7"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude-fable-51623",
+              "before": "claude-fable-51623+12/-12",
+              "after": "claude-fable-51623+11/-11"
+            }
+          ],
+          "signal_preview": "claude-fable-5.1-max: 1498±8",
+          "raw_added_count": 27,
+          "raw_removed_count": 27,
+          "id": "obs_e88aa78a4b3ce802cabb5b0101fe1d2b9d7b0a2f324ca6d679a275ac6a16bb5e",
+          "permalink": "/item/obs_e88aa78a4b3ce802cabb5b0101fe1d2b9d7b0a2f324ca6d679a275ac6a16bb5e/",
+          "llm_summary": "Claude 系列多个模型的 Elo 分数条目发生增删，新增 claude-fable-5.1-max 和 claude-opus-4-7 系列的多条分数，同时删除旧分数条目，表明这些模型的评测结果被更新或重新采样。"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "DeepSeek V4.1 Flash 上架，闲时定价公布",
+          "items": [
+            {
+              "text": "DeepSeek V4.1 Flash 新增至模型列表，并公布闲时定价 1.094元",
+              "type": "release"
+            },
+            {
+              "text": "模型列表移除 deepseek-v4-flash-0731，替换为 deepseek-v4.1-flash",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "Agent 服务价格上调 60%",
+          "items": [
+            {
+              "text": "xAI Agent 起始价格从 $0.05/min 上调至 $0.08/min",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "K2 Horizon 系列多尺寸模型上线，Meta 前沿模型更新",
+          "items": [
+            {
+              "text": "K2 Horizon 0.9B/3.7B/7B/MoVA 36B A4B 新增至评测列表",
+              "type": "release"
+            },
+            {
+              "text": "Muse Spark 1.3 评测状态更新为 Meta reaches the frontier",
+              "type": "other"
+            },
+            {
+              "text": "移除 Gemini 3.8 Flash 相关评测条目",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "Claude 系列多模型 Elo 分数更新，新增 5.1-max 等条目",
+          "items": [
+            {
+              "text": "claude-fable-5.1-max 新增多个 Elo 分数条目（1498/1513/1710）",
+              "type": "release"
+            },
+            {
+              "text": "claude-opus-4-7 系列新增多个评测分数条目",
+              "type": "release"
+            },
+            {
+              "text": "claude-fable-5 及 opus-4-6 等旧分数条目被替换",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "博客转向 AI 标准与治理议题",
+          "items": [
+            {
+              "text": "新增博客『AI Needs Evidenced Standards, Not A Cartel』",
+              "type": "other"
+            },
+            {
+              "text": "新增博客『Who Gets to Define the Rules for AI?』",
+              "type": "other"
+            },
+            {
+              "text": "移除旧博客『Automating fork maintenance with AI agents』",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "HuggingFace",
+          "logo_summary": "数据集卡片元数据更新，移除旧引用",
+          "items": [
+            {
+              "text": "新增自动语音识别数据集 common_voice 及 DOI 引用",
+              "type": "other"
+            },
+            {
+              "text": "移除 arxiv 引用及 custom_code 标记",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-09-13",
       "stats": {

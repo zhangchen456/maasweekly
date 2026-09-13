@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_b56c112f02969fc58577dc7c93bbe4f6ab63ce11c91d1be8dcba928fe16b0648",
+  "sourceId": "xai-pricing",
+  "date": "2026-09-14",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "xAI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://docs.x.ai/docs/models",
+  "title": "xAI · 定价来源更新",
+  "summary": "定价表中 Agent 起始价格同步从 $0.05/min 调整为 $0.08/min，与模型列表变化一致。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-13T22:56:30+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "agentstarting at $",
+        "before": "AgentStarting at $0.05 / min",
+        "after": "AgentStarting at $0.08 / min"
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [],
+    "added_count": 0,
+    "removed_count": 0,
+    "raw_added_count": 1,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-14.json"
+  },
+  "permalink": "/item/obs_b56c112f02969fc58577dc7c93bbe4f6ab63ce11c91d1be8dcba928fe16b0648/"
+}
