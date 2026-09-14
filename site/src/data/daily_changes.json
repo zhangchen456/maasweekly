@@ -1,6 +1,260 @@
 {
-  "updated_at": "2026-09-14T05:43:01",
+  "updated_at": "2026-09-14T23:44:40",
   "days": [
+    {
+      "date": "2026-09-15",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 7,
+        "unchanged": 58
+      },
+      "changed": [
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "GPT-RosalindLife sciences reasoning for approved organizations"
+          ],
+          "removed_lines": [
+            "GPT-RosalindLife sciences reasoning for approved organizationsgpt-rosalind-research"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "GPT-RosalindLife sciences reasoning for approved organizations",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_0c6c7135a1c714fe6f4d01c569fa7d1ddc5bc841f7f126951ee4e8d96d2a7246",
+          "permalink": "/item/obs_0c6c7135a1c714fe6f4d01c569fa7d1ddc5bc841f7f126951ee4e8d96d2a7246/",
+          "llm_summary": "新增 GPT-Rosalind 生命科学推理模型条目，同时删除了旧的重复描述行（gpt-rosalind-research），对应新模型正式上架并清理了冗余信息。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "DevFest 2026: Come Build with Us"
+          ],
+          "removed_lines": [
+            "How developers build AI for good with Gemma 4"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "DevFest 2026: Come Build with Us",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_314e8458c8a8897a725166700f07ccddd3ca47979038369214f1ca93188fb58c",
+          "permalink": "/item/obs_314e8458c8a8897a725166700f07ccddd3ca47979038369214f1ca93188fb58c/",
+          "llm_summary": "新增 DevFest 2026 活动公告，删除 Gemma 4 公益应用开发文章，反映博客内容从技术案例转向开发者社区活动宣传。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "pricing",
+          "url": "https://cohere.com/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Who Gets to Define the Rules for AI?"
+          ],
+          "removed_lines": [
+            "Introducing North Automations: Intelligent workflow orchestration"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Who Gets to Define the Rules for AI?",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_7fd71bb11b1f36033a7bc38dd5928be87d9d1295ba017f2c02e73d1b2a0fd32f",
+          "permalink": "/item/obs_7fd71bb11b1f36033a7bc38dd5928be87d9d1295ba017f2c02e73d1b2a0fd32f/",
+          "llm_summary": "新增 AI 治理讨论文章『Who Gets to Define the Rules for AI?』，删除 North Automations 产品介绍，表明博客焦点从产品功能转向行业政策议题。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "model_list",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Agent$0.08 / min"
+          ],
+          "removed_lines": [
+            "AgentStarting at $0.08 / min"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Agent$0.08 / min",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_8e9592f3506fb3963ce71b4ddaddfd83e8adf8ca821fb5503407fad1a694ca62",
+          "permalink": "/item/obs_8e9592f3506fb3963ce71b4ddaddfd83e8adf8ca821fb5503407fad1a694ca62/",
+          "llm_summary": "Agent 模型条目从『Starting at $0.08 / min』简化为『$0.08 / min』，仅调整描述格式，价格数值未变。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "pricing",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Agent$0.08 / min"
+          ],
+          "removed_lines": [
+            "AgentStarting at $0.08 / min"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Agent$0.08 / min",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_2fd02f3f9880edb37a00d64b0ae2702f4fe0a89ee2236eaf8b335a26761a3b8c",
+          "permalink": "/item/obs_2fd02f3f9880edb37a00d64b0ae2702f4fe0a89ee2236eaf8b335a26761a3b8c/",
+          "llm_summary": "与 model_list 一致，Agent 定价描述简化，删除『Starting at』前缀，实际价格不变。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 9,
+          "removed_count": 2,
+          "added_lines": [
+            "4Bytedancedreamina-seedance-2.5-720p1475±8",
+            "5Bytedancedreamina-seedance-2.0-720p1474±7",
+            "8hidream-o1-video1452",
+            "GPT 5.5 (xHigh)",
+            "flux-3-video-202608111450±5",
+            "gemini-omni-flash1464±6",
+            "grok-imagine-video-1.5-720p1456±4",
+            "minimax-h31494±5",
+            "wan3.01479±11"
+          ],
+          "removed_lines": [
+            "4Bytedancedreamina-seedance-2.5-720p1478±10",
+            "5Bytedancedreamina-seedance-2.0-720p1477±8"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bytedancedreamina-seedance-2.5-720p: 1475±8",
+          "raw_added_count": 19,
+          "raw_removed_count": 19,
+          "id": "obs_1f807e5b177696168655bf837c81609376410484749348ff16e8bda1fb32d4f5",
+          "permalink": "/item/obs_1f807e5b177696168655bf837c81609376410484749348ff16e8bda1fb32d4f5/",
+          "llm_summary": "新增 8 个视频生成模型（含 minimax-h3、wan3.0、gemini-omni-flash 等）的 Elo 分数，同时更新了 Bytedance 两个模型的分数（±10 以内微调），反映榜单模型池扩充和排名微调。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 39,
+          "raw_removed_count": 39,
+          "id": "obs_4f4b2bb1338ccf19bab7d743e9167198b5daf3534c6876150e9cc2fd520fac3c",
+          "permalink": "/item/obs_4f4b2bb1338ccf19bab7d743e9167198b5daf3534c6876150e9cc2fd520fac3c/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "LMArena",
+          "logo_summary": "视频生成模型榜单大换血，多款新模型入榜",
+          "items": [
+            {
+              "text": "minimax-h3 以 1494±5 分领跑新增榜单，wan3.0 以 1479±11 紧随其后",
+              "type": "release"
+            },
+            {
+              "text": "Bytedance dreamina-seedance-2.5-720p 分数从 1478±10 微调至 1475±8，seedance-2.0-720p 从 1477±8 调至 1474±7",
+              "type": "other"
+            },
+            {
+              "text": "hidream-o1-video、flux-3-video-20260811、gemini-omni-flash、grok-imagine-video-1.5-720p 等新模型首次进入榜单",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "新增 Rosalind 生命科学推理模型",
+          "items": [
+            {
+              "text": "GPT-Rosalind 生命科学推理模型上线，面向获批组织提供",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "Agent 定价描述简化，价格不变",
+          "items": [
+            {
+              "text": "Agent 模型定价条目从『Starting at $0.08 / min』简化为『$0.08 / min』",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "博客焦点转向 DevFest 2026 活动",
+          "items": [
+            {
+              "text": "发布 DevFest 2026 开发者活动公告，替换原有 Gemma 4 公益应用文章",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "博客主题从产品转向 AI 治理讨论",
+          "items": [
+            {
+              "text": "发布『Who Gets to Define the Rules for AI?』，替换 North Automations 工作流编排介绍",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-09-14",
       "stats": {
