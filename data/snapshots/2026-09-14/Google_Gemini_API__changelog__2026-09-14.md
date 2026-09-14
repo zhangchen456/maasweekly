@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-14T06:54:59.151143 -->
+<!-- fetched: 2026-09-14T13:42:52.707241 -->
 
 Release notes  |  Gemini API  |  Google AI for Developers
 Skip to main content

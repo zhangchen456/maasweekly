@@ -1,11 +1,11 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-14T06:55:09.624995 -->
+<!-- fetched: 2026-09-14T13:42:59.990789 -->
 
 [
   {
     "_id": "621ffdc136468d709f180294",
     "id": "sentence-transformers/all-MiniLM-L6-v2",
-    "likes": 5927,
+    "likes": 5951,
     "private": false,
     "downloads": 252928721,
     "tags": [
@@ -65,7 +65,7 @@
   {
     "_id": "621ffdc136468d709f17a20e",
     "id": "cross-encoder/ms-marco-MiniLM-L6-v2",
-    "likes": 326,
+    "likes": 335,
     "private": false,
     "downloads": 87549600,
     "tags": [
@@ -96,7 +96,7 @@
   {
     "_id": "64fff537d522560505ad6567",
     "id": "BAAI/bge-small-en-v1.5",
-    "likes": 564,
+    "likes": 576,
     "private": false,
     "downloads": 64028390,
     "tags": [
@@ -131,7 +131,7 @@
   {
     "_id": "621ffdc136468d709f17b61d",
     "id": "google/electra-base-discriminator",
-    "likes": 162,
+    "likes": 176,
     "private": false,
     "downloads": 59196856,
     "tags": [
@@ -155,7 +155,7 @@
   {
     "_id": "621ffdc036468d709f174338",
     "id": "google-bert/bert-base-uncased",
-    "likes": 3300,
+    "likes": 3324,
     "private": false,
     "downloads": 46513338,
     "tags": [
@@ -188,7 +188,7 @@
   {
     "_id": "621ffdc136468d709f1802ec",
     "id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-    "likes": 1376,
+    "likes": 1388,
     "private": false,
     "downloads": 45734237,
     "tags": [
@@ -268,7 +268,7 @@
   {
     "_id": "65b53851e602b6c2c96e78da",
     "id": "BAAI/bge-m3",
-    "likes": 3505,
+    "likes": 3542,
     "private": false,
     "downloads": 37590799,
     "tags": [
@@ -299,7 +299,7 @@
   {
     "_id": "621ffdc036468d709f174358",
     "id": "google-t5/t5-small",
-    "likes": 610,
+    "likes": 622,
     "private": false,
     "downloads": 24558821,
     "tags": [
@@ -342,7 +342,7 @@
   {
     "_id": "621ffdc136468d709f180297",
     "id": "sentence-transformers/all-mpnet-base-v2",
-    "likes": 1355,
+    "likes": 1368,
     "private": false,
     "downloads": 23712269,
     "tags": [
@@ -398,7 +398,7 @@
   {
     "_id": "69037c2ff37fdfe285722818",
     "id": "amazon/chronos-2",
-    "likes": 454,
+    "likes": 469,
     "private": false,
     "downloads": 22787542,
     "tags": [
@@ -426,7 +426,7 @@
   {
     "_id": "621ffdc036468d709f174364",
     "id": "FacebookAI/xlm-roberta-base",
-    "likes": 905,
+    "likes": 914,
     "private": false,
     "downloads": 21876282,
     "tags": [
@@ -547,7 +547,7 @@
   {
     "_id": "621ffdc136468d709f17ea62",
     "id": "openai/clip-vit-base-patch32",
-    "likes": 1499,
+    "likes": 1521,
     "private": false,
     "downloads": 21331361,
     "tags": [
@@ -571,7 +571,7 @@
   {
     "_id": "680da718233834890aa01f51",
     "id": "Qwen/Qwen3-0.6B",
-    "likes": 1608,
+    "likes": 1621,
     "private": false,
     "downloads": 20036436,
     "tags": [
@@ -598,7 +598,7 @@
   {
     "_id": "6a6bd1dc7034404148ec9107",
     "id": "Comfy-Org/MiniMax-H3",
-    "likes": 1810,
+    "likes": 1828,
     "private": false,
     "downloads": 19157566,
     "tags": [
@@ -616,7 +616,7 @@
   {
     "_id": "65f44de295b7d70871c368eb",
     "id": "BAAI/bge-reranker-v2-m3",
-    "likes": 1176,
+    "likes": 1186,
     "private": false,
     "downloads": 18093771,
     "tags": [
@@ -642,7 +642,7 @@
   {
     "_id": "639c045c34967bcf4564bdc5",
     "id": "timm/mobilenetv3_small_100.lamb_in1k",
-    "likes": 110,
+    "likes": 121,
     "private": false,
     "downloads": 17257920,
     "tags": [
@@ -665,7 +665,7 @@
   {
     "_id": "68ea05fb43df37d95ad2491d",
     "id": "Qwen/Qwen3-VL-8B-Instruct",
-    "likes": 1100,
+    "likes": 1113,
     "private": false,
     "downloads": 16859084,
     "tags": [
@@ -693,7 +693,7 @@
   {
     "_id": "67449267a8b7b9f766e74310",
     "id": "trl-internal-testing/tiny-Qwen2ForCausalLM-2.5",
-    "likes": 32,
+    "likes": 37,
     "private": false,
     "downloads": 16212302,
     "tags": [
@@ -715,7 +715,7 @@
   {
     "_id": "66d0dccb3866d4d3087d3a9f",
     "id": "Comfy-Org/stable-diffusion-v1-5-archive",
-    "likes": 137,
+    "likes": 150,
     "private": false,
     "downloads": 16132967,
     "tags": [
@@ -734,7 +734,7 @@
   {
     "_id": "621ffdc136468d709f17cdba",
     "id": "jonatasgrosman/wav2vec2-large-xlsr-53-japanese",
-    "likes": 71,
+    "likes": 81,
     "private": false,
     "downloads": 15880154,
     "tags": [
