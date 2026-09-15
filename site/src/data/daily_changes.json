@@ -1,6 +1,705 @@
 {
-  "updated_at": "2026-09-14T23:44:40",
+  "updated_at": "2026-09-15T23:27:38",
   "days": [
+    {
+      "date": "2026-09-16",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 20,
+        "unchanged": 45
+      },
+      "changed": [
+        {
+          "platform": "百度千帆",
+          "source_type": "model_list",
+          "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "| DeepSeek-V4.1-flash",
+            "| deepseek-flash"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| deepseek-flash",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_b6ea594d229a23cad5d051ddf306fcf3cac1f1bacf749860770123af9dbe08b7",
+          "permalink": "/item/obs_b6ea594d229a23cad5d051ddf306fcf3cac1f1bacf749860770123af9dbe08b7/",
+          "llm_summary": "新增 DeepSeek-V4.1-flash 和 deepseek-flash 两个模型条目，表明千帆平台扩展了 DeepSeek 系列模型供应。"
+        },
+        {
+          "platform": "百度千帆",
+          "source_type": "pricing",
+          "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "| GLM-5.2（空闲时段为限时活动，9月21日20点恢复原价）"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| GLM-5.2（空闲时段为限时活动，9月21日20点恢复原价）",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_4158a89e39c959fbb23efac1c358b76cd74811c9059582f1f6b87d34e1a00f9e",
+          "permalink": "/item/obs_4158a89e39c959fbb23efac1c358b76cd74811c9059582f1f6b87d34e1a00f9e/",
+          "llm_summary": "新增 GLM-5.2 空闲时段限时活动定价，注明 9月21日20点恢复原价，属于临时价格调整。"
+        },
+        {
+          "platform": "Kimi",
+          "source_type": "model_list",
+          "url": "https://platform.kimi.com/docs/api/models-overview",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "Search...⌘K"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "不同模型系列对 chat completions api 参数有不同的默认值和约束",
+              "before": "不同模型系列对 Chat Completions API 参数有不同的默认值和约束。完整的模型列表请参阅模型列表。",
+              "after": "不同模型系列对 Chat Completions API 参数有不同的默认值和约束。"
+            }
+          ],
+          "signal_preview": "不同模型系列对 Chat Completions API 参数有不同的默认值和约束。",
+          "raw_added_count": 1,
+          "raw_removed_count": 2,
+          "id": "obs_97610da24403bfef86fe16242d874e98a872c5490db426b9b38e5c37b31f70fd",
+          "permalink": "/item/obs_97610da24403bfef86fe16242d874e98a872c5490db426b9b38e5c37b31f70fd/",
+          "llm_summary": "删除了模型列表页面的搜索框占位符和部分说明文字，页面描述简化，无实质模型变化。"
+        },
+        {
+          "platform": "Kimi",
+          "source_type": "changelog",
+          "url": "https://platform.kimi.com/docs/changelog",
+          "status": "changed",
+          "added_count": 30,
+          "removed_count": 10,
+          "added_lines": [
+            "API Key 个数限制优化",
+            "API 入门指南文档更新",
+            "Cache 存储费用降低",
+            "Cache 续期不再收取创建的费用",
+            "Context Caching 产品正式开启公测",
+            "Context Caching 公测放开到 Tier3-Tier5 用户",
+            "Context Caching 功能已放开给全量用户",
+            "Context Caching 如何为 Kimi API 助手节省最高 90% 的调用成本 Blog 发布",
+            "Context Caching 管理翻页优化",
+            "File 文件资源管理前端功能支持",
+            "Files API 更新：新生成的文件 ID 统一添加 file_ 前缀；提升文档解析效果，优化表格、公式等复杂内容的解析；不再对图片进行 OCR 文本提取，图片理解请使用 purpose=image 上传图片（详见使用视觉模型）；上传的文件与已有文件同名时，服务端自动为新文件重命名",
+            "Kimi API 助手实践 Context Caching 第一篇 Blog 发布",
+            "Kimi API 助手实践 Context Caching 第三篇 Blog 发布",
+            "Kimi API 助手实践 Context Caching 第二篇 Blog 发布",
+            "Kimi API 调试工具 MoonPalace 发布",
+            "Kimi 企业级 API 发布",
+            "MoonPalace 使用指南文档发布",
+            "Tool Calling 功能上线",
+            "kimi-k2 系列模型（含 kimi-k2-0905-preview、kimi-k2-0711-preview、kimi-k2-turbo-preview、kimi-k2-thinking、kimi-k2-thinking-turbo）已于今日下线，不再维护和支持，请使用最新模型 Kimi K3",
+            "kimi-k2.5 与 moonshot-v1 全系列模型（含 -vision-preview、moonshot-v1-auto）已于今日 16:00 在国内外全平台下线，调用将返回 404 错误（模型不存在），请迁移至 Kimi K3",
+            "kimi-latest 模型上线",
+            "moonshot-v1-auto 上线",
+            "moonshot-v1-vision-preview 模型上线",
+            "个人认证用户支持变更为企业认证用户",
+            "企业认证企业名称字数检查放开",
+            "企业认证增加银行打款受理时间显示",
+            "优化资源列表按上传时间由近及远排序",
+            "优化资源管理列表复制样式为鼠标悬浮点击",
+            "修复修改删除 APIKey 的问题",
+            "修复创建项目时名称框光标移动失败问题"
+          ],
+          "removed_lines": [
+            "# train qwen-like dense model with adamw",
+            "# train qwen-like dense model with muon",
+            "@misc{liu2025muonscalablellmtraining,",
+            "Moonlight 采用与DeepSeek-V3相同的架构，这一架构受到许多主流推理引擎的支持，如VLLM和SGLang。因此，我们的模型也可以轻松地使用这些工具进行部署。",
+            "Muon 优化器的首次大规模训练实践",
+            "Muon 优化器的首次大规模训练实践 - Kimi API 开放平台",
+            "Muon 的有效扩展性分析：通过深入分析，我们发现权重衰减在Muon的可扩展性中起着关键作用。此外，我们提出通过参数级别的更新尺度调整，来保持矩阵参数和非矩阵参数之间更新均方根（RMS）的一致性。这些调整显著提高了训练稳定性。",
+            "Muon续集：为什么我们选择尝试Muon？（By 苏剑林） https://kexue.fm/archives/10739",
+            "Search...⌘K",
+            "archivePrefix={arXiv},"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "API Key 个数限制优化",
+          "raw_added_count": 56,
+          "raw_removed_count": 62,
+          "id": "obs_584d2d0e11207d9178106093bdd645ba35d9472abe33ff447a0bbad40f511a2d",
+          "permalink": "/item/obs_584d2d0e11207d9178106093bdd645ba35d9472abe33ff447a0bbad40f511a2d/",
+          "llm_summary": "新增多项更新：Context Caching 公测全量放开、存储费用降低、Files API 改进、API Key 限制优化等；删除内容为 Moonlight 模型训练相关的技术文档，可能已移至其他页面。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "The Messages API can now compact a conversation on demand on the Claude API, in beta with the compact-2026-09-04 beta header. Send the top-level compaction parameter, and the API returns a signed compaction block that summarizes the messages you sent. On later requests, send that block first, in place of those messages. You choose when to compact, the request can run in the background, and you can keep recent turns word for word after the summary. On models with preserved thinking, the thinking in those kept turns can stay valid."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "The Messages API can now compact a conversation on demand on the Claude API, in beta with the compact-2026-09-04 beta header. Send the top-level compaction parameter, and the API returns a signed compaction block that summarizes the messages you sent. On later requests, send that block first, in place of those messages. You choose when to compact, the request can run in the background, and you can keep recent turns word for word after the summary. On models with preserved thinking, the thinking in those kept turns can stay valid.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_0cfe2284f81351fd00ea3c22db40f92f6b46ce210d412115a4423bcff64c3fb3",
+          "permalink": "/item/obs_0cfe2284f81351fd00ea3c22db40f92f6b46ce210d412115a4423bcff64c3fb3/",
+          "llm_summary": "新增 Messages API 对话压缩功能（beta），允许按需压缩对话，需使用特定 beta header。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "model_list",
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "status": "changed",
+          "added_count": 11,
+          "removed_count": 1,
+          "added_lines": [
+            "Gemini 3.8 Live",
+            "Gemini 3.8 Live Extended Thinking",
+            "High-reasoning Live API model for voice interactions, recommended when higher background reasoning is required.",
+            "Legacy Live API preview model. We recommend updating to Gemini 3.8 Live.",
+            "gemini-3.8-live",
+            "gemini-3.8-live-extended-thinking",
+            "| Gemini 3.8 Live",
+            "| Gemini 3.8 Live Extended Thinking",
+            "| Legacy audio-to-audio preview model. We recommend updating to Gemini 3.8 Live.",
+            "| Our high-reasoning audio-to-audio model, recommended when higher background reasoning is required during live interactions.",
+            "| The default option for most low-latency voice agent experiences and real-time dialogue without reasoning delays."
+          ],
+          "removed_lines": [
+            "| Our high-quality, low-latency audio-to-audio (A2A) model designed for real-time dialogue and voice-first AI applications."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "low-latency",
+              "before": "High-quality, low-latency Live API model for real-time dialogue and voice-first AI applications.",
+              "after": "Default Live API model for most low-latency voice agent experiences without reasoning delays."
+            },
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-04 UTC.",
+              "after": "Last updated 2026-09-15 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-04 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Gemini 3.8 Live Extended Thinking",
+          "raw_added_count": 14,
+          "raw_removed_count": 4,
+          "id": "obs_6a0b2dcaadbef6c8e826795c81ffb30ee198469bcb9032577235b9ce34cc65c0",
+          "permalink": "/item/obs_6a0b2dcaadbef6c8e826795c81ffb30ee198469bcb9032577235b9ce34cc65c0/",
+          "llm_summary": "新增 Gemini 3.8 Live 和 Gemini 3.8 Live Extended Thinking 两个模型，并标记旧模型为 Legacy 推荐升级，同时更新了模型描述和更新时间。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "gemini-3.8-live, gemini-3.8-live-extended-thinking, and gemini-3.1-flash-live-preview",
+            "live dialogue, including background reasoning support with Extended Thinking."
+          ],
+          "removed_lines": [
+            "acoustic nuance detection, numeric precision, and multimodal awareness.",
+            "gemini-3.1-flash-live-preview"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "gemini",
+              "before": "Gemini 3.1 Flash Live Preview",
+              "after": "Gemini 3.8 Live, Gemini 3.8 Live Extended Thinking, and Gemini 3.1 Flash Live Preview"
+            },
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-11 UTC.",
+              "after": "Last updated 2026-09-15 UTC."
+            },
+            {
+              "key": "low-latency",
+              "before": "Our low-latency, audio-to-audio model optimized for real-time dialogue with",
+              "after": "Our low-latency, audio-to-audio models optimized for real-time voice agents and"
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-11 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "gemini-3.8-live, gemini-3.8-live-extended-thinking, and gemini-3.1-flash-live-preview",
+          "raw_added_count": 6,
+          "raw_removed_count": 6,
+          "id": "obs_f20ceca7c537f19cc9e0538f4a10aa4dba4d0a846c93946d6c3f2daa4831b64b",
+          "permalink": "/item/obs_f20ceca7c537f19cc9e0538f4a10aa4dba4d0a846c93946d6c3f2daa4831b64b/",
+          "llm_summary": "定价页将 Gemini 3.8 Live 系列与 Gemini 3.1 Flash Live Preview 合并定价，输入 0.75 USD/百万tokens，输出 4.5 USD/百万tokens，并更新了模型描述。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "changelog",
+          "url": "https://ai.google.dev/gemini-api/docs/changelog",
+          "status": "changed",
+          "added_count": 15,
+          "removed_count": 1,
+          "added_lines": [
+            "(GA): Released two new audio-to-audio models for real-time voice",
+            "(gemini-3.8-live-extended-thinking): High-reasoning",
+            "Capabilities guide, and the",
+            "Gemini 3.8 Live (gemini-3.8-live): The default option",
+            "Gemini 3.8 Live Extended Thinking",
+            "Gemini 3.8 Live and Gemini 3.8 Live Extended Thinking generally available",
+            "Google's music generation model:",
+            "Thinking guide.",
+            "To get started, see the Live API guide, the",
+            "applications using the Live API:",
+            "asynchronous function calling, and full session client content updates.",
+            "audio-to-audio model supporting background reasoning during live audio",
+            "for most low-latency voice agent experiences and real-time dialogue",
+            "interactions, recommended when higher background reasoning is required.",
+            "without reasoning delays. Features interleaved reasoning, default"
+          ],
+          "removed_lines": [
+            "generation model:"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-04 UTC.",
+              "after": "Last updated 2026-09-15 UTC."
+            },
+            {
+              "key": "lyria",
+              "before": "Lyria 3.5 in public preview: Released the next generation of Google's music",
+              "after": "Lyria 3.5 generally available (GA): Released the next generation of"
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-04 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "(GA): Released two new audio-to-audio models for real-time voice",
+          "raw_added_count": 19,
+          "raw_removed_count": 4,
+          "id": "obs_354d7aa50473a2d7e27b0b83854d22d225d330bd328dc30eaef9aeb0e40ef4fa",
+          "permalink": "/item/obs_354d7aa50473a2d7e27b0b83854d22d225d330bd328dc30eaef9aeb0e40ef4fa/",
+          "llm_summary": "宣布 Gemini 3.8 Live 和 Gemini 3.8 Live Extended Thinking 正式 GA，同时 Lyria 3.5 音乐生成模型从预览升级为 GA，并新增相关文档链接。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 3,
+          "added_lines": [
+            "4 ways to tackle household chores with Gemini",
+            "Ask a Scientist: How can researchers use AI to spot a wildfire?",
+            "Build real-time voice applications with Gemini 3.8 Live and 3.5 Transcribe"
+          ],
+          "removed_lines": [
+            "Gemini Omni 1.1 Flash lets you build with more control",
+            "Turn your voice into action with new productivity features in Gemini Live",
+            "5 amazing visuals show how the male fruit fly’s brain map is advancing neuroscience"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "4 ways to tackle household chores with Gemini",
+          "raw_added_count": 3,
+          "raw_removed_count": 3,
+          "id": "obs_526fe76c06b1a8a2edf33c7ce105023fd0145dd441e44541851eecc8427d8de8",
+          "permalink": "/item/obs_526fe76c06b1a8a2edf33c7ce105023fd0145dd441e44541851eecc8427d8de8/",
+          "llm_summary": "新增关于 Gemini 3.8 Live 和 3.5 Transcribe 构建实时语音应用的文章，以及家务、科研等应用案例；删除旧版 Gemini Omni 1.1 Flash 相关文章。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 3,
+          "added_lines": [
+            "Capability Indices v1.1",
+            "Capability IndicesUpdated",
+            "Intelligence Index v4.3 replaces 𝜏³-Banking with AutomationBench-AA, and upgrades Terminal-Bench to 4.0",
+            "K2 Horizon 375B A23BSee more",
+            "New language model evaluation · 15 Sept",
+            "Qwen3.8 Max (0902)",
+            "Six professional-domain indices, updated with stronger domain tuning and specialized evaluations",
+            "Terminal-Bench 4.0"
+          ],
+          "removed_lines": [
+            "Artificial Analysis Search Index",
+            "Capability Indices",
+            "Compare search API providers on quality, cost, and speed using the same agent"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "artificial analysis intelligence index v",
+              "before": "Artificial Analysis Intelligence Index v4.3 includes: AA-Briefcase, GDPval-AA v2, AutomationBench-AA, Terminal-Bench v4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them.",
+              "after": "Artificial Analysis Intelligence Index v4.3 includes: AA-Briefcase, GDPval-AA v2, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them."
+            },
+            {
+              "key": "artificial analysis intelligence index v",
+              "before": "Artificial Analysis Intelligence Index v4.3 incorporates 10 evaluations: AA-Briefcase, GDPval-AA v2, AutomationBench-AA, Terminal-Bench v4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1",
+              "after": "Artificial Analysis Intelligence Index v4.3 incorporates 10 evaluations: AA-Briefcase, GDPval-AA v2, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1"
+            }
+          ],
+          "signal_preview": "Intelligence Index v4.3 replaces 𝜏³-Banking with AutomationBench-AA, and upgrades Terminal-Bench to 4.0",
+          "raw_added_count": 15,
+          "raw_removed_count": 15,
+          "id": "obs_478c1e640a2e1c27db9955010d46051199461da4c766d0cb21613c9a146b6b7d",
+          "permalink": "/item/obs_478c1e640a2e1c27db9955010d46051199461da4c766d0cb21613c9a146b6b7d/",
+          "llm_summary": "更新 Intelligence Index v4.3，替换评估基准（Terminal-Bench 升级至 4.0），新增 Capability Indices v1.1 和 Qwen3.8 Max 评测，删除搜索 API 对比内容。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "8hidream-o1-video-1.01452"
+          ],
+          "removed_lines": [
+            "8hidream-o1-video1452"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "hidream-o1-video-1.0: 1452",
+          "raw_added_count": 11,
+          "raw_removed_count": 11,
+          "id": "obs_b5e85d060056fe11381725e075381ca8d7e42384c1e6ba0bebdc2253275c10dd",
+          "permalink": "/item/obs_b5e85d060056fe11381725e075381ca8d7e42384c1e6ba0bebdc2253275c10dd/",
+          "llm_summary": "hidream-o1-video 模型更新为 hidream-o1-video-1.0，Elo 分数保持 1452，属于版本迭代。"
+        },
+        {
+          "platform": "Kimi",
+          "source_type": "pricing",
+          "url": "https://platform.kimi.com/docs/pricing/chat",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "Search...⌘K"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 1,
+          "id": "obs_ce3f8942f9aa778bb8c7b8fe0ffe58234107ed655c2d87e4315b79fd9d48a51d",
+          "permalink": "/item/obs_ce3f8942f9aa778bb8c7b8fe0ffe58234107ed655c2d87e4315b79fd9d48a51d/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "pricing",
+          "url": "https://mistral.ai/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "TotalEnergies"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_a1e7016c821366c56e99189eef51b718712c8fdb634ae2b611fd9b8db5c8b071",
+          "permalink": "/item/obs_a1e7016c821366c56e99189eef51b718712c8fdb634ae2b611fd9b8db5c8b071/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "changelog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "TotalEnergies"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_086c210db808c90a47fc241d503beff4253d67e09380a5f6b1fe3164bf803281",
+          "permalink": "/item/obs_086c210db808c90a47fc241d503beff4253d67e09380a5f6b1fe3164bf803281/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "blog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "TotalEnergies"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_1725022557971eaf5d949a2687e4fd677540f6ee35831677ab1570a7f2667af0",
+          "permalink": "/item/obs_1725022557971eaf5d949a2687e4fd677540f6ee35831677ab1570a7f2667af0/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "model_list",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Regional Endpoints"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_81c0d5867001d91727f9f7845cadeb11f5789615b8218bc312c984c8e828f0b1",
+          "permalink": "/item/obs_81c0d5867001d91727f9f7845cadeb11f5789615b8218bc312c984c8e828f0b1/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "pricing",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Regional Endpoints"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_b8b3a03e01d6a9c008cce4c6c2c47d887441b92ad0378434ad5dee0247bb1275",
+          "permalink": "/item/obs_b8b3a03e01d6a9c008cce4c6c2c47d887441b92ad0378434ad5dee0247bb1275/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Regional Endpoints"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_2d350d032932c9b530924c722e8a6eb9acc833305ede71eb262e34dd79943627",
+          "permalink": "/item/obs_2d350d032932c9b530924c722e8a6eb9acc833305ede71eb262e34dd79943627/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Regional Endpoints"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_621a97dd13cdc537e4f32b1cf5ba82ff6630642781dd601c380461d2b7cb073a",
+          "permalink": "/item/obs_621a97dd13cdc537e4f32b1cf5ba82ff6630642781dd601c380461d2b7cb073a/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 36,
+          "raw_removed_count": 36,
+          "id": "obs_781e0995f56f5db373980a96f3b4c3598009bb97551384ba12c1844ac2ef6bc8",
+          "permalink": "/item/obs_781e0995f56f5db373980a96f3b4c3598009bb97551384ba12c1844ac2ef6bc8/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "Gemini 3.8 Live 系列正式 GA，定价更新",
+          "items": [
+            {
+              "text": "Gemini 3.8 Live 和 Gemini 3.8 Live Extended Thinking 正式 GA，成为 Live API 默认模型，并新增 Legacy 预览模型推荐升级",
+              "type": "release"
+            },
+            {
+              "text": "Gemini 3.8 Live 系列输入定价 0.75 USD/百万tokens，输出定价 4.5 USD/百万tokens，与 Gemini 3.1 Flash Live Preview 合并定价",
+              "type": "pricing"
+            },
+            {
+              "text": "Lyria 3.5 音乐生成模型从公开预览升级为正式 GA",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Kimi",
+          "logo_summary": "Context Caching 全量放开，Files API 多项更新",
+          "items": [
+            {
+              "text": "Context Caching 产品正式公测并全量放开至所有用户，存储费用降低且续期不再收费，最高可节省 90% 调用成本",
+              "type": "release"
+            },
+            {
+              "text": "Files API 更新：文件 ID 统一添加 file_ 前缀，优化文档解析，不再对图片进行 OCR 文本提取，同名文件自动重命名",
+              "type": "other"
+            },
+            {
+              "text": "API Key 个数限制优化，API 入门指南文档更新",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "百度千帆",
+          "logo_summary": "新增 DeepSeek-V4.1-flash 模型，GLM-5.2 限时优惠",
+          "items": [
+            {
+              "text": "新增 DeepSeek-V4.1-flash 和 deepseek-flash 两个模型",
+              "type": "release"
+            },
+            {
+              "text": "GLM-5.2 空闲时段限时活动，9月21日20点恢复原价",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Messages API 新增对话压缩功能（beta）",
+          "items": [
+            {
+              "text": "Messages API 支持按需压缩对话，需使用 compact-2026-09-04 beta header",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "更新 Intelligence Index v4.3，新增 Qwen3.8 Max 评测",
+          "items": [
+            {
+              "text": "Intelligence Index v4.3 替换评估基准，升级 Terminal-Bench 至 4.0，并新增 Capability Indices v1.1",
+              "type": "other"
+            },
+            {
+              "text": "新增 Qwen3.8 Max (0902) 语言模型评测",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "hidream-o1-video 模型更新版本",
+          "items": [
+            {
+              "text": "hidream-o1-video-1.0 以 1452 Elo 分数上线，替代旧版 hidream-o1-video",
+              "type": "release"
+            }
+          ]
+        }
+      ],
+      "price_changes": [
+        {
+          "provider": "google",
+          "model": "gemini-3.8-live,-gemini-3.8-live-extended-thinking,-and-gemini-3.1-flash-live-preview",
+          "component": "input",
+          "current": "0.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "provider": "google",
+          "model": "gemini-3.8-live,-gemini-3.8-live-extended-thinking,-and-gemini-3.1-flash-live-preview",
+          "component": "output",
+          "current": "4.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        }
+      ]
+    },
     {
       "date": "2026-09-15",
       "stats": {

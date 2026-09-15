@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_f20ceca7c537f19cc9e0538f4a10aa4dba4d0a846c93946d6c3f2daa4831b64b",
+  "sourceId": "google-gemini-pricing",
+  "date": "2026-09-16",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "pricing",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+  "title": "Google Gemini API · 定价来源更新",
+  "summary": "gemini-3.8-live, gemini-3.8-live-extended-thinking, and gemini-3.1-flash-live-preview",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "gemini",
+        "before": "Gemini 3.1 Flash Live Preview",
+        "after": "Gemini 3.8 Live, Gemini 3.8 Live Extended Thinking, and Gemini 3.1 Flash Live Preview"
+      },
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-09-11 UTC.",
+        "after": "Last updated 2026-09-15 UTC."
+      },
+      {
+        "key": "low-latency",
+        "before": "Our low-latency, audio-to-audio model optimized for real-time dialogue with",
+        "after": "Our low-latency, audio-to-audio models optimized for real-time voice agents and"
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-11 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "gemini-3.8-live, gemini-3.8-live-extended-thinking, and gemini-3.1-flash-live-preview",
+      "live dialogue, including background reasoning support with Extended Thinking."
+    ],
+    "removed_lines": [
+      "acoustic nuance detection, numeric precision, and multimodal awareness.",
+      "gemini-3.1-flash-live-preview"
+    ],
+    "added_count": 2,
+    "removed_count": 2,
+    "raw_added_count": 6,
+    "raw_removed_count": 6
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-16.json"
+  },
+  "permalink": "/item/obs_f20ceca7c537f19cc9e0538f4a10aa4dba4d0a846c93946d6c3f2daa4831b64b/"
+}

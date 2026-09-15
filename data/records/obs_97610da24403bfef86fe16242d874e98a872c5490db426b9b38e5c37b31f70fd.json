@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_97610da24403bfef86fe16242d874e98a872c5490db426b9b38e5c37b31f70fd",
+  "sourceId": "kimi-modellist",
+  "date": "2026-09-16",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Kimi",
+  "sourceType": "model_list",
+  "sourceUrl": "https://platform.kimi.com/docs/api/models-overview",
+  "title": "Kimi · 模型列表来源更新",
+  "summary": "删除了模型列表页面的搜索框占位符和部分说明文字，页面描述简化，无实质模型变化。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-15T23:27:38+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "不同模型系列对 chat completions api 参数有不同的默认值和约束",
+        "before": "不同模型系列对 Chat Completions API 参数有不同的默认值和约束。完整的模型列表请参阅模型列表。",
+        "after": "不同模型系列对 Chat Completions API 参数有不同的默认值和约束。"
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [
+      "Search...⌘K"
+    ],
+    "added_count": 0,
+    "removed_count": 1,
+    "raw_added_count": 1,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-16.json"
+  },
+  "permalink": "/item/obs_97610da24403bfef86fe16242d874e98a872c5490db426b9b38e5c37b31f70fd/"
+}
