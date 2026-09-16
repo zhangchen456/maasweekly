@@ -4,6 +4,14 @@
     "start": "2026-09-14",
     "end": "2026-09-20",
     "days": {
+      "2026-09-17": {
+        "substantive": 17,
+        "jitter": 3,
+        "failed": 3,
+        "releases": 4,
+        "pricings": 3,
+        "sunsets": 0
+      },
       "2026-09-16": {
         "substantive": 13,
         "jitter": 9,
@@ -30,12 +38,84 @@
       }
     },
     "totals": {
-      "substantive": 27,
-      "releases": 15,
-      "pricings": 4,
+      "substantive": 44,
+      "releases": 19,
+      "pricings": 7,
       "sunsets": 3
     },
     "highlights": [
+      {
+        "platform": "MiniMax",
+        "date": "2026-09-17",
+        "text": "MiniMax-H3-Max 新增视频按分辨率计费：480P 0.37 元/秒，768P 0.97 元/秒，音频免费",
+        "type": "pricing"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-09-17",
+        "text": "MiniMax-H3-Max 图片输入 2 张以内免费，超出部分 0.50 元/张",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-17",
+        "text": "Gemini 3.8 Flash Cyber 上线，专为网络安全优化",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-17",
+        "text": "Gemini 3.8 Flash Cyber 定价为 $0.000001（输入/输出），与现有 Flash 系列一致",
+        "type": "pricing"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-17",
+        "text": "North Small Translate 开放权重新增 W4A16、FP8、BF16 格式，并调整部署硬件建议",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-17",
+        "text": "Cohere 与 Aleph Alpha 签署协议，成为首个跨大西洋主权 AI 解决方案",
+        "type": "other"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-09-17",
+        "text": "Mistral 与 Mozilla 合作，将开放、私密、多语言 AI 引入 Firefox Smart Window",
+        "type": "other"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-17",
+        "text": "OpenAI 新增组织/项目级 API 密钥创建治理控制，可限制仅服务账号密钥",
+        "type": "other"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-17",
+        "text": "OpenAI 推出 Usage Insights 功能",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-17",
+        "text": "ant CLI v1.32.0 新增 ant beta:sessions connect，可实时连接 Claude Managed Agents 会话",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-17",
+        "text": "Ant Group 发布金融领域模型 Ling-3.0-flash-Fin",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-17",
+        "text": "新增医疗长上下文推理评测文章（9月16日）",
+        "type": "other"
+      },
       {
         "platform": "Google Gemini API",
         "date": "2026-09-16",

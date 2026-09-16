@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_ad23337979ff6244f934aa4658412ebe8ad1c4861677a2b1aa0a918b23d8957c",
+  "sourceId": "aa-industry",
+  "date": "2026-09-17",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "Artificial Analysis 新增金融模型 Ling-3.0-flash-Fin 和医疗长上下文推理评测，移除 APEX-Agents-AA，并更新 GPT-6 Astra 的配置标签（从 max 改为 xhigh），表明评测范围调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-16T23:36:00+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "gpt-",
+        "before": "GPT-6 Astra (max)",
+        "after": "GPT-6 Astra (xhigh)See more"
+      }
+    ],
+    "added_lines": [
+      "Ant Group releases finance-focused Ling-3.0-flash-Fin",
+      "Ling-3.0-flash-Fin",
+      "Medical long context reasoning",
+      "New article published · 16 Sept",
+      "New language model evaluation · 16 Sept"
+    ],
+    "removed_lines": [
+      "APEX-Agents-AA",
+      "GPT-6 Astra (xhigh)"
+    ],
+    "added_count": 5,
+    "removed_count": 2,
+    "raw_added_count": 13,
+    "raw_removed_count": 13
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-17.json"
+  },
+  "permalink": "/item/obs_ad23337979ff6244f934aa4658412ebe8ad1c4861677a2b1aa0a918b23d8957c/"
+}
