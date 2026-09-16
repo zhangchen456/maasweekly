@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_b6766e332bb02d167458524a085fb68fa7b2c7170f19d27919087657db838d0a",
+  "date": "2026-09-16",
+  "recordType": "price_change",
+  "fact_key": "d958268f6fc2210d140a83612cf3dc662779ce9f95d7016ddc80716dae714b76",
+  "provider": "openai",
+  "model": "gpt-5.6-terra",
+  "component": "cache_write",
+  "currency": "USD",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "global",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": null,
+  "timeCondition": null,
+  "beforeVersionId": "pfv_591059700e753fd077f46d21e1b30eb5078b641749c5ca23d24a3706f42dff3a",
+  "afterVersionId": "pfv_a1c1caa027c968baa396dc2a1ed2834837859122e325282798816a5003ee4e43",
+  "beforeEvidenceId": "ev_4670cfbbeeedc1709d0a66d20c4406f8e3c4268b35c33111f2879c1957494875",
+  "afterEvidenceId": "ev_f399d8d659cfdd7e9c4c2b59288bacb4c613e392003d66929e4137f4ab9f90d8",
+  "beforeObservedAt": "2026-09-11T23:01:21+00:00",
+  "afterObservedAt": "2026-09-16T04:41:43+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "10",
+    "current": "2.5",
+    "direction": "down",
+    "percent": "-75.00"
+  },
+  "revision": 2,
+  "status": "active",
+  "revisedAt": "2026-09-16T04:42:00+00:00",
+  "revisionReason": "事件内容更新",
+  "permalink": "/item/price_b6766e332bb02d167458524a085fb68fa7b2c7170f19d27919087657db838d0a/",
+  "provenance": {}
+}

@@ -96,44 +96,56 @@ class PlaywrightSourceProvider:
 
 
 class KimiPlaywrightProvider(PlaywrightSourceProvider):
-    """Kimi（Moonshot）多子页聚合抓取（源项目 M6）。
+    """Kimi 价格页抓取。
 
-    Kimi 文档站（Mintlify 框架）把每个模型的价格分到独立子页
-    （/docs/pricing/chat-k3、chat-k27-code...），主页只含导航不含价格。
+    2026-09 迁移：官网从 platform.moonshot.cn 迁到 platform.kimi.com，
+    文档结构改版——旧版按模型拆子页（/docs/pricing/chat-k3、chat-k27-code…），
+    主页只含导航；新版全部模型集中在 chat 单页（渲染后的 doc-table +
+    JS bundle 里各存一份 rows:[[），batch/hosted-agents/websearch 为
+    独立功能页（按 billing_mode 区分，不在 realtime chat 采集范围）。
 
-    1. 渲染主页，提取 /docs/pricing/chat-* 子页链接
-    2. 逐个渲染子页，收集含 ``rows:[[`` 的脚本片段
-    3. 拼接成一个 HTML snapshot，交给 KimiPricingExtractor 解析
+    保留多子页聚合骨架：子页匹配跟随站内实际存在的 /docs/pricing/* 链接，
+    结构再变（模型拆分页回归）时自动收集，extractor 只认 chat 模型行。
     """
 
-    _SUBPAGE_PATTERN = r'href="(/docs/pricing/chat[^"]*)"'
+    _SUBPAGE_PATTERN = r'href="(/docs/pricing/[^"]*)"'
 
     async def fetch(self, source: SourceSpec) -> ContentSnapshot:
         # 1. 渲染主页，提取子页链接
         index_html = await self._render_url(source.url, source.source_key)
         subpaths = list(dict.fromkeys(re.findall(self._SUBPAGE_PATTERN, index_html)))
-        # 排除非模型页（chat 本身、.md 源码、batch/tools/limits）
+        # 排除：chat 本身、.md 源码、非模型功能页（batch/tools/limits/
+        # hosted-agents/websearch——按 billing_mode 计费，与 realtime chat
+        # 事实分离；全角（Batch）模型名会生成错误 model_key）
         subpaths = [
             s for s in subpaths
             if s != "/docs/pricing/chat" and not s.endswith(".md")
             and "batch" not in s and "tools" not in s and "limits" not in s
+            and "hosted-agents" not in s and "websearch" not in s
         ]
         print(f"  kimi 子页 {len(subpaths)} 个: {subpaths}")
 
-        # 2. 逐个渲染子页，收集含 rows 的片段
-        fragments: list[str] = []
+        # 2. 新结构：主页已含全部模型数据——主页本身就是第一个片段；
+        #    子页（若有）逐个渲染，收集含 rows 的片段
+        fragments: list[str] = [index_html]
         for sp in subpaths:
             sub_url = urljoin(source.url + "/", sp)
             try:
                 sub_html = await self._render_url(sub_url, source.source_key)
-                for m in re.finditer(r"<script[^>]*>.*?rows:\[\[.*?</script>", sub_html, re.S):
-                    fragments.append(m.group(0))
+                fragments.append(sub_html)
             except Exception as e:  # noqa: BLE001
                 print(f"  kimi 子页 {sub_url} 渲染失败: {e}")
 
-        # 3. 拼接成一个 HTML snapshot
+        # 3. 拼接成一个 HTML snapshot（整页拼接，extractor 从中提取
+        #    rows:[[ 块；非模型行由 extractor 的 kimi/moonshot 过滤排除）
         combined = "<html><body>" + "\n".join(fragments) + "</body></html>"
-        return self._assemble(source, combined, time.time())
+        snap = self._assemble(source, combined, time.time())
+        # 空内容防护：站点再迁移时 rows 完全消失 → 抓取失败（沿用旧数据），
+        # 而不是产出空快照污染归档
+        if "rows:[[" not in combined:
+            raise RuntimeError(
+                "kimi 页面无 rows:[[ 数据，疑似站点结构再迁移，需人工检查")
+        return snap
 
 
 def provider_for(source_key: str) -> PlaywrightSourceProvider:

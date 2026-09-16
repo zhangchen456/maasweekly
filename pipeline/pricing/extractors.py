@@ -357,10 +357,35 @@ def _parse_html_tables(html: str) -> list[HtmlTable]:
         result.append(HtmlTable(
             rows=rows,
             header_rows=header_rows,
-            html_fragment=str(table),
+            html_fragment=_with_heading_context(table, str(table)),
             table_index=idx,
         ))
     return result
+
+
+def _with_heading_context(table, fragment: str) -> str:
+    """表前置标题并入证据摘录（验收 P1-3：证据需含模型上下文）。
+
+    Google 等页的模型名在表外 h2/h3/h4 标题里，表内只有金额与列名——
+    摘录不含模型时无法独立核价。把表前最近一个标题文本包在摘录最前，
+    标题与表之间最多 2 个块级元素（超过视为无关标题）。
+    """
+    try:
+        heading = table.find_previous(["h1", "h2", "h3", "h4"])
+        if heading is None:
+            return fragment
+        # 距离检查：文档行距（不同层级容器的标题与表不是 sibling，
+        # 用 sourceline 差近似距离，差 < 30 行视为该表的章节标题）
+        t_line = getattr(table, "sourceline", None)
+        h_line = getattr(heading, "sourceline", None)
+        if t_line and h_line and t_line - h_line > 30:
+            return fragment
+        text = heading.get_text(" ", strip=True)
+        if not text or len(text) > 120:
+            return fragment
+        return f"<p>{text}</p>{fragment}"
+    except Exception:  # noqa: BLE001
+        return fragment
 
 
 class OpenAIPricingExtractor:
@@ -1820,19 +1845,28 @@ class AnthropicPricingExtractor:
             if "base input" not in flat or "output" not in flat:
                 continue
             model_col = None
-            cols: list[tuple[int, str]] = []
+            cols: list[tuple[int, str, TimeCondition | None]] = []
             for ci, h in enumerate(header):
                 hl = h.lower()
                 if "model" in hl and model_col is None:
                     model_col = ci
                 if "base input" in hl:
-                    cols.append((ci, "input"))
+                    cols.append((ci, "input", None))
                 elif "cache hits" in hl or "cache read" in hl or ("cache" in hl and "refresh" in hl):
-                    cols.append((ci, "cache_read"))
-                elif "cache write" in hl:
-                    cols.append((ci, "cache_write"))
+                    cols.append((ci, "cache_read", None))
+                elif "cache write" in hl or "cache writes" in hl:
+                    # 5m/1h 时效是计费条件（Task 02 §4.1：同一身份禁止静默覆盖）。
+                    # 不区分时两列同 fact_key，dict 覆盖会丢失 1h 价或误报涨跌。
+                    tc = None
+                    if "5m" in hl:
+                        tc = TimeCondition(period="cache_write_5m", tz="UTC",
+                                           schedule="5m")
+                    elif "1h" in hl:
+                        tc = TimeCondition(period="cache_write_1h", tz="UTC",
+                                           schedule="1h")
+                    cols.append((ci, "cache_write", tc))
                 elif "output" in hl:
-                    cols.append((ci, "output"))
+                    cols.append((ci, "output", None))
             if model_col is None:
                 continue
             ev, ev_idx = _evidence_for_html(snapshot, ev_idx, table, self.version)
@@ -1845,7 +1879,7 @@ class AnthropicPricingExtractor:
                     continue
                 model_key = model_name.lower().replace(" ", "-")
                 has_fact = False
-                for ci, comp in cols:
+                for ci, comp, tc in cols:
                     if ci >= len(row):
                         continue
                     p = _parse_price_html(row[ci])
@@ -1854,6 +1888,7 @@ class AnthropicPricingExtractor:
                     facts.append(_make_fact(
                         snapshot, ev.evidence_id, "anthropic", model_name,
                         comp, "realtime", p, region=_region_for("anthropic"),
+                        time_condition=tc,
                     ))
                     has_fact = True
                 if has_fact:
@@ -2014,7 +2049,8 @@ class GooglePricingExtractor:
             if paid_col is None:
                 continue
             ev_idx += 1
-            html_frag = str(table)
+            # 模型名在表外 h2/h3 标题里——并入摘录才能独立核价（P1-3）
+            html_frag = _with_heading_context(table, str(table))
             ev = Evidence(
                 evidence_id=_evidence_id(snapshot.snapshot_id, ev_idx),
                 snapshot_id=snapshot.snapshot_id,

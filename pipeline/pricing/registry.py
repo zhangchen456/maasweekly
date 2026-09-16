@@ -71,12 +71,12 @@ _REGISTRY: list[SourceRegistryEntry] = [
     SourceRegistryEntry(
         source_key="kimi:pricing",
         provider_id="kimi",
-        url="https://platform.moonshot.cn/docs/pricing/chat",
+        url="https://platform.kimi.com/docs/pricing/chat",  # 2026-09 迁移：moonshot.cn → kimi.com
         page_language="zh",
         region="cn",
         required=True,
-        adapter_version="kimi-1",
-        fetcher_version="playwright-1",  # M6：Mintlify 框架，价格在 JS bundle，多子页聚合
+        adapter_version="kimi-2",
+        fetcher_version="playwright-1",  # 新站价格已在单页（chat），rows:[[ 提取沿用
     ),
     SourceRegistryEntry(
         source_key="glm:pricing",
