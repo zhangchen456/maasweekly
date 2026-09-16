@@ -68,7 +68,9 @@ jobs:
 
       # ---- 2.2 八家厂商 API 价格结构化抓取（playwright；失败不阻塞，保留旧 ledger）----
       # 必须在 llm-digest 之前：fetch-prices 产出当日 price_changes，llm-digest 消费它生成"今日要点"
+      # 退出码：0=全成功/部分成功（沿用降级） 2=全部来源失败（环境失效，末尾健康检查步骤会置红 run）
       - name: Fetch model pricing
+        id: fetch_prices
         if: ${{ !inputs.skip_fetch }}
         run: |
           pip install --quiet beautifulsoup4
@@ -146,3 +148,18 @@ jobs:
             git commit -m "data: 每日信源抓取 $(date +'%Y-%m-%d')"
             git push
           fi
+
+      # ---- 7. 运行健康检查（最后一步：数据已提交部署，此时才把坏消息置红）----
+      # fetch-prices 的 continue-on-error 会吞掉失败让 run 保持绿色；
+      # 全部来源抓取失败（退出码 2）意味着运行环境完全失效（如 Playwright 未装、
+      # 断网），不能与「部分失败沿用」同等静默。放在最后：既不阻塞当日的
+      # 构建/部署/数据提交，又能让失败在 run 列表里可见（红色 + 邮件通知）。
+      - name: Run health check
+        if: ${{ !inputs.skip_fetch && steps.fetch_prices.outcome == 'failure' }}
+        run: |
+          echo "✗ 价格抓取全部来源失败（退出码 2）——运行环境疑似完全失效"
+          echo "（Playwright 未安装 / 网络不可达 / registry 全部失效），请检查："
+          echo "  1. runner 的 playwright/chromium 安装日志（Setup Playwright 步骤）"
+          echo "  2. fetch_prices 输出中的 RUN-STATUS 行与各来源失败原因"
+          echo "  3. 上游网站是否全部不可达（本机网络出口）"
+          exit 1
