@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-16T07:25:50.409835 -->
+<!-- fetched: 2026-09-16T14:25:37.969527 -->
 
 MiniMax 新闻资讯 - 人工智能行业动态 | MiniMax
 模型

@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-16T07:26:18.622276 -->
+<!-- fetched: 2026-09-16T14:25:54.790415 -->
 
 Arena Leaderboard | Compare & Benchmark the Best Frontier AI Models
 New Chat
@@ -13,34 +13,34 @@ Edit View
 Agent
 1Anthropic
 Claude Fable 5.1 (Max)
-13.65%±1.71%
+13.71%±1.72%
 2
 GPT 6 Astra (Max)
-11.67%±2.12%
+11.54%±2.10%
 3Anthropic
 Claude Opus 5 (High)
-10.19%±1.41%
+10.25%±1.41%
 4Anthropic
 Claude Opus 5 (Max)
-10.11%±1.55%
+10.16%±1.55%
 5Anthropic
 Claude Fable 5 (High)
-8.54%±1.24%
+8.81%±1.25%
 6Anthropic
 Claude Opus 4.8 (High)
-8.02%±1.27%
+8.19%±1.27%
 7
 GPT 5.6 Sol (xHigh)
-6.96%±1.28%
+7.10%±1.28%
 8
 Kimi K3 (Max)
-6.14%±0.63%
+6.22%±0.62%
 9Anthropic
 Claude Sonnet 5 (High)
-5.73%±1.61%
+5.97%±1.62%
 10
 GPT 5.5 (xHigh)
-4.95%±0.92%
+5.03%±0.92%
 View all
 Text🏆Overall
 1Anthropic

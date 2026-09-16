@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-16T07:25:54.837622 -->
+<!-- fetched: 2026-09-16T14:25:41.739456 -->
 
 Pricing | OpenAI API
 For the complete documentation index, see llms.txt. Markdown versions of documentation pages are available by appending

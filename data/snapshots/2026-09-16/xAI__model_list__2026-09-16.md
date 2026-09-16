@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-16T07:26:13.899200 -->
+<!-- fetched: 2026-09-16T14:25:50.558687 -->
 
 Grok Models & Pricing | SpaceXAI Docs
 Get Started
@@ -181,11 +181,11 @@ Meet grok-4.6
 Grok 4.6
 Newgrok-4.6
 Our flagship model for code and everything else: agentic tool calling, minimal hallucinations, configurable reasoning.
-View modelTry in playground
 Context500k tokens
 Input$2.00 / 1M tokens
 Output$6.00 / 1M tokens
 ReasoningConfigurable
+View modelTry in playground
 Voice API
 Real-time conversations, speech-to-text, and text-to-speech.
 Agent$0.08 / min

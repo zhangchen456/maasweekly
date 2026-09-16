@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-16T07:26:12.426935 -->
+<!-- fetched: 2026-09-16T14:25:49.233407 -->
 
 Release Notes | Cohere
 For AI agents: a documentation index is available at the root level at /llms.txt. Append /llms.txt to any URL for a page-level index, or .md for the markdown version of any page.

@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-16T07:24:57.813482 -->
+<!-- fetched: 2026-09-16T14:24:40.094455 -->
 
 模型列表 - 百度千帆·大模型服务及Agent开发平台
 百度智能云
@@ -1274,7 +1274,7 @@ API&SDK相关
 模型列表
 ...
 模型列表
-更新时间：2026-09-14
+更新时间：2026-09-16
 推荐模型
 |
 | 旗舰模型
@@ -1402,12 +1402,12 @@ DeepSeek系列
 | 默认流控
 | DeepSeek-V4
 | DeepSeek-V4.1-flash
-| deepseek-flash
+| deepseek-v4.1-flash
 | 1M
 | 1M
 | [1,393216]
 | RPM = 60
-TPM = 250000
+TPM = 1000000
 | DeepSeek-V4
 | DeepSeek-V4-Pro-0813
 | deepseek-v4-pro-0813

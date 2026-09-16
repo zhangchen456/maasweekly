@@ -1,11 +1,11 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-16T07:26:15.924254 -->
+<!-- fetched: 2026-09-16T14:25:52.199822 -->
 
 [
   {
     "_id": "621ffdc136468d709f180294",
     "id": "sentence-transformers/all-MiniLM-L6-v2",
-    "likes": 5993,
+    "likes": 6007,
     "private": false,
     "downloads": 254208155,
     "tags": [
@@ -155,7 +155,7 @@
   {
     "_id": "621ffdc036468d709f174338",
     "id": "google-bert/bert-base-uncased",
-    "likes": 3344,
+    "likes": 3351,
     "private": false,
     "downloads": 46672496,
     "tags": [
@@ -188,7 +188,7 @@
   {
     "_id": "621ffdc136468d709f1802ec",
     "id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-    "likes": 1402,
+    "likes": 1403,
     "private": false,
     "downloads": 45507894,
     "tags": [
@@ -268,7 +268,7 @@
   {
     "_id": "65b53851e602b6c2c96e78da",
     "id": "BAAI/bge-m3",
-    "likes": 3561,
+    "likes": 3562,
     "private": false,
     "downloads": 37775082,
     "tags": [
@@ -299,7 +299,7 @@
   {
     "_id": "621ffdc036468d709f174358",
     "id": "google-t5/t5-small",
-    "likes": 630,
+    "likes": 631,
     "private": false,
     "downloads": 24676117,
     "tags": [
@@ -398,7 +398,7 @@
   {
     "_id": "69037c2ff37fdfe285722818",
     "id": "amazon/chronos-2",
-    "likes": 476,
+    "likes": 477,
     "private": false,
     "downloads": 22654650,
     "tags": [
@@ -547,7 +547,7 @@
   {
     "_id": "621ffdc136468d709f17ea62",
     "id": "openai/clip-vit-base-patch32",
-    "likes": 1532,
+    "likes": 1544,
     "private": false,
     "downloads": 21504830,
     "tags": [
@@ -571,7 +571,7 @@
   {
     "_id": "680da718233834890aa01f51",
     "id": "Qwen/Qwen3-0.6B",
-    "likes": 1631,
+    "likes": 1634,
     "private": false,
     "downloads": 21045857,
     "tags": [
@@ -598,7 +598,7 @@
   {
     "_id": "6a6bd1dc7034404148ec9107",
     "id": "Comfy-Org/MiniMax-H3",
-    "likes": 1853,
+    "likes": 1859,
     "private": false,
     "downloads": 19627030,
     "tags": [
@@ -722,7 +722,7 @@
   {
     "_id": "67449267a8b7b9f766e74310",
     "id": "trl-internal-testing/tiny-Qwen2ForCausalLM-2.5",
-    "likes": 44,
+    "likes": 45,
     "private": false,
     "downloads": 16259976,
     "tags": [
