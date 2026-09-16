@@ -140,3 +140,11 @@ Kimi 失败原因为官网结构和域名已经迁移：仓库其他配置已使
 ### 剩余
 
 仅 T16：需在具备 `LLM_API_KEY` 的环境执行完整 workflow（抓取 → 事件 → 详情页 → 离线回放 → 构建 → 部署前门禁）。
+
+## 2026-09-16 第三次复验（T16 执行）
+
+T16 已在本地完整执行（用户提供 LLM_API_KEY，按 daily-update.yml 顺序：fetch_sources → sync → fetch-prices → llm-digest → re-sync → 归档校验 → 构建门禁 → 全测试 → 全站构建），全部退出码 0，产物：09-16 diff（68 信源）、39 条 price_changes + LLM highlights（1 组 3 条）、归档 3001 事件 / 5612 证据、全站 8786 页 / 10.18 秒。详情见 [task-02-result.md §5.3](./task-02-result.md)。部署与回仓提交为 CI 专属步骤，本地验证到 dist 产物。
+
+T16 过程中修复一个真实缺陷：llm-digest 的 `latest = days[0]` 在 days 非日期序时处理错日期（改为按日期取最大）。
+
+**复验结论：Task 02 验收项全部关闭。** 剩余事项为运维性质（工作区变更待提交）。
