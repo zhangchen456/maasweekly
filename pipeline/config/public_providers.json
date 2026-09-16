@@ -1,0 +1,176 @@
+{
+  "version": 1,
+  "comment": "公开 API 的 provider/sourceId 映射（Task 03 D1）。providerId 是公开查询命名空间（changes 与 prices 共用）；sourceToProvider 覆盖 source_registry.json 全部 68 源（门禁校验）；pricingSourceKeyToSourceId 处理 Task 02 pricing registry 与平台源命名的错位（qwen:pricing 的页面是阿里百炼平台的源，等）。行业源 providerId=null（任务书允许）。",
+  "providers": [
+    {
+      "providerId": "openai",
+      "displayName": "OpenAI",
+      "region": "overseas"
+    },
+    {
+      "providerId": "anthropic",
+      "displayName": "Anthropic",
+      "region": "overseas"
+    },
+    {
+      "providerId": "google",
+      "displayName": "Google",
+      "region": "overseas"
+    },
+    {
+      "providerId": "deepseek",
+      "displayName": "DeepSeek",
+      "region": "china"
+    },
+    {
+      "providerId": "kimi",
+      "displayName": "Kimi",
+      "region": "china"
+    },
+    {
+      "providerId": "zhipu",
+      "displayName": "智谱AI",
+      "region": "china"
+    },
+    {
+      "providerId": "alibaba",
+      "displayName": "阿里百炼",
+      "region": "china"
+    },
+    {
+      "providerId": "volcengine",
+      "displayName": "火山方舟",
+      "region": "china"
+    },
+    {
+      "providerId": "baidu",
+      "displayName": "百度千帆",
+      "region": "china"
+    },
+    {
+      "providerId": "tencent",
+      "displayName": "腾讯混元",
+      "region": "china"
+    },
+    {
+      "providerId": "minimax",
+      "displayName": "MiniMax",
+      "region": "china"
+    },
+    {
+      "providerId": "mistral",
+      "displayName": "Mistral AI",
+      "region": "overseas"
+    },
+    {
+      "providerId": "cohere",
+      "displayName": "Cohere",
+      "region": "overseas"
+    },
+    {
+      "providerId": "siliconflow",
+      "displayName": "硅基流动",
+      "region": "china"
+    },
+    {
+      "providerId": "xfyun",
+      "displayName": "讯飞星辰MaaS",
+      "region": "china"
+    },
+    {
+      "providerId": "xai",
+      "displayName": "xAI",
+      "region": "overseas"
+    }
+  ],
+  "pricingProviderIdToProvider": {
+    "openai": "openai",
+    "anthropic": "anthropic",
+    "google": "google",
+    "deepseek": "deepseek",
+    "kimi": "kimi",
+    "glm": "zhipu",
+    "qwen": "alibaba",
+    "doubao": "volcengine"
+  },
+  "sourceToProvider": {
+    "openai-blog": "openai",
+    "openai-changelog": "openai",
+    "openai-modellist": "openai",
+    "openai-pricing": "openai",
+    "anthropic-blog": "anthropic",
+    "anthropic-changelog": "anthropic",
+    "anthropic-modellist": "anthropic",
+    "anthropic-pricing": "anthropic",
+    "google-gemini-blog": "google",
+    "google-gemini-changelog": "google",
+    "google-gemini-modellist": "google",
+    "google-gemini-pricing": "google",
+    "google-vertex-blog": "google",
+    "google-vertex-changelog": "google",
+    "google-vertex-modellist": "google",
+    "google-vertex-pricing": "google",
+    "deepseek-blog": "deepseek",
+    "deepseek-changelog": "deepseek",
+    "deepseek-modellist": "deepseek",
+    "deepseek-pricing": "deepseek",
+    "kimi-blog": "kimi",
+    "kimi-changelog": "kimi",
+    "kimi-modellist": "kimi",
+    "kimi-pricing": "kimi",
+    "zhipu-blog": "zhipu",
+    "zhipu-changelog": "zhipu",
+    "zhipu-modellist": "zhipu",
+    "zhipu-pricing": "zhipu",
+    "alibaba-blog": "alibaba",
+    "alibaba-changelog": "alibaba",
+    "alibaba-modellist": "alibaba",
+    "alibaba-pricing": "alibaba",
+    "volcengine-blog": "volcengine",
+    "volcengine-changelog": "volcengine",
+    "volcengine-modellist": "volcengine",
+    "volcengine-pricing": "volcengine",
+    "baidu-blog": "baidu",
+    "baidu-changelog": "baidu",
+    "baidu-modellist": "baidu",
+    "baidu-pricing": "baidu",
+    "tencent-blog": "tencent",
+    "tencent-changelog": "tencent",
+    "tencent-modellist": "tencent",
+    "tencent-pricing": "tencent",
+    "minimax-blog": "minimax",
+    "minimax-changelog": "minimax",
+    "minimax-modellist": "minimax",
+    "minimax-pricing": "minimax",
+    "mistral-blog": "mistral",
+    "mistral-changelog": "mistral",
+    "mistral-modellist": "mistral",
+    "mistral-pricing": "mistral",
+    "cohere-blog": "cohere",
+    "cohere-changelog": "cohere",
+    "cohere-modellist": "cohere",
+    "cohere-pricing": "cohere",
+    "siliconflow-blog": "siliconflow",
+    "siliconflow-changelog": "siliconflow",
+    "siliconflow-modellist": "siliconflow",
+    "siliconflow-pricing": "siliconflow",
+    "xfyun-changelog": "xfyun",
+    "xai-blog": "xai",
+    "xai-changelog": "xai",
+    "xai-modellist": "xai",
+    "xai-pricing": "xai",
+    "aa-industry": null,
+    "huggingface-industry": null,
+    "lmarena-industry": null
+  },
+  "pricingSourceKeyToSourceId": {
+    "openai:pricing": "openai-pricing",
+    "anthropic:pricing": "anthropic-pricing",
+    "google:pricing": "google-gemini-pricing",
+    "deepseek:pricing": "deepseek-pricing",
+    "kimi:pricing": "kimi-pricing",
+    "glm:pricing": "zhipu-pricing",
+    "qwen:pricing": "alibaba-pricing",
+    "doubao:pricing": "volcengine-pricing"
+  }
+}

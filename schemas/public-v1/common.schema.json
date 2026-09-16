@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily.maas.click/schemas/public-v1/common.schema.json",
+  "title": "公共结构（Task 03 public-v1）",
+  "$defs": {
+    "isoUtc": {
+      "type": "string",
+      "description": "带 Z 的 ISO 8601 UTC 时间；只有日期精度时用 calendarDate 并置 timePrecision=date，不补造午夜时间"
+    },
+    "calendarDate": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "上海日历日 YYYY-MM-DD"
+    },
+    "quality": {
+      "type": "object",
+      "required": ["state"],
+      "properties": {
+        "state": {"enum": ["fresh", "stale", "unknown"]},
+        "reason": {"type": ["string", "null"]},
+        "lastSuccessAt": {"type": ["string", "null"], "description": "来源最近成功时间（Task 01 数据流精度为日，见合同）"}
+      },
+      "additionalProperties": false
+    },
+    "changeType": {
+      "enum": ["source_updated", "model_released", "model_deprecated", "price_changed", "amount_changed", "terms_changed", "newly_observed"]
+    },
+    "summaryOrigin": {"enum": ["rule", "llm", "manual", null]},
+    "evidenceLevel": {"enum": ["source_diff", "fact_versions"]}
+    }
+}

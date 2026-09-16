@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily.maas.click/schemas/public-v1/status.schema.json",
+  "title": "数据流状态（三类数据流的 lastAttempt/lastSuccess/state）",
+  "type": "object",
+  "required": ["providers", "sourceStreams", "priceStreams", "weekly", "counts"],
+  "properties": {
+    "providers": {
+      "type": "array",
+      "description": "provider 枚举（公开查询命名空间）",
+      "items": {
+        "type": "object",
+        "required": ["providerId", "displayName", "region"],
+        "properties": {
+          "providerId": {"type": "string"},
+          "displayName": {"type": "string"},
+          "region": {"enum": ["china", "overseas"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "sourceStreams": {
+      "type": "array",
+      "description": "Task 01 来源记录流（68 源）。时间精度=日（daily_changes 滚动窗口），窗口外 unknown——不能用构建时间冒充",
+      "items": {
+        "type": "object",
+        "required": ["sourceId", "providerId", "state"],
+        "properties": {
+          "sourceId": {"type": "string"},
+          "providerId": {"type": ["string", "null"]},
+          "state": {"enum": ["ok", "failing", "unknown"]},
+          "lastAttemptDate": {"type": ["string", "null"]},
+          "lastSuccessDate": {"type": ["string", "null"]},
+          "reason": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "priceStreams": {
+      "type": "array",
+      "description": "Task 02 价格抓取流（8 源，current.json sources）",
+      "items": {
+        "type": "object",
+        "required": ["sourceKey", "sourceId", "providerId", "state", "coverage"],
+        "properties": {
+          "sourceKey": {"type": "string"},
+          "sourceId": {"type": "string"},
+          "providerId": {"type": "string"},
+          "state": {"enum": ["ok", "failing", "unknown"]},
+          "coverage": {"enum": ["full", "partial", "not_run", "failed"]},
+          "lastAttemptAt": {"type": ["string", "null"]},
+          "lastSuccessAt": {"type": ["string", "null"]},
+          "reason": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "weekly": {
+      "type": "object",
+      "required": ["count", "latestId"],
+      "properties": {
+        "count": {"type": "integer", "minimum": 0},
+        "latestId": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "counts": {
+      "type": "object",
+      "description": "实体计数（不是核验覆盖率）",
+      "properties": {
+        "changes": {"type": "integer"},
+        "withdrawnChanges": {"type": "integer"},
+        "prices": {"type": "integer"},
+        "evidence": {"type": "integer"},
+        "weekly": {"type": "integer"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

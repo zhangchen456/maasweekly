@@ -25,12 +25,29 @@ maasweekly/
 │   ├── diff/YYYY-MM-DD.md|json  # 每日变化报告（人读 + 机读）
 │   ├── records/obs_*.json       # 来源变化条目持久归档（稳定 ID，/item/ 详情页数据源）
 │   └── record-revisions/        # 条目历史版本（每修订一版，不可覆盖）
+│   ├── price-{facts,evidence,records,runs}/  # 价格事实/证据/事件归档（Task 02，内容寻址）
+│   ├── public/v1/               # 公开数据 release（Task 03，export-public-data.py 产出）
 │   ├── weekly/                  # 周报源文件
 │   ├── daily/                   # 早期每日追踪报告（7 月前）
 │   └── weekly-archive-early/    # 更早期手写周报存档
+├── services/agent-api/       # REST API v1（Task 03，Node 22 + TS 零依赖；本地 127.0.0.1:8787，待部署）
 └── .github/workflows/       # 自动化
     ├── daily-update.yml     # 每天凌晨 05:00 抓取 + 构建 + 部署
     └── weekly-update.yml    # 每周一 09:00 抓取汇总 + 周报导入 + 部署
+```
+
+### 公开 API（Task 03，本地可用）
+
+`pipeline/scripts/export-public-data.py` 把 Task 01/02 归档与正式周报投影为
+版本化公开数据（`data/public/v1/`），`services/agent-api`（Node 22 + TS）
+提供匿名只读 REST API：`/api/v1/changes | prices | items/{id} |
+evidence/{id} | weekly | weekly/{id} | status`，支持筛选、cursor 固定版本
+翻页、ETag/304、Problem JSON。合同：`docs/contracts/public-api-v1.md`；
+OpenAPI：`site/public/openapi-v1.json`。本地跑：
+
+```bash
+python3 pipeline/scripts/export-public-data.py
+cd services/agent-api && npm ci && npm run build && npm start   # 127.0.0.1:8787
 ```
 
 ## 自动更新机制

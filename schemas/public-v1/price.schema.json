@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily.maas.click/schemas/public-v1/price.schema.json",
+  "title": "公开价格事实（current.json 指向的已接受事实版本）",
+  "type": "object",
+  "required": ["id", "factKey", "providerId", "sourceId", "modelKey", "component",
+               "amount", "currency", "unitQuantity", "unitName", "region",
+               "billingMode", "serviceTier", "observedAt", "evidenceId",
+               "evidenceStatus", "quality", "links"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^pfv_[0-9a-f]{64}$", "description": "version_id"},
+    "factKey": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "providerId": {"type": "string"},
+    "sourceId": {"type": "string"},
+    "modelKey": {"type": "string"},
+    "component": {"enum": ["input", "output", "cache_read", "cache_write"]},
+    "amount": {"type": "string", "description": "Decimal 规范化字符串（禁止浮点）"},
+    "currency": {"enum": ["USD", "CNY"]},
+    "unitQuantity": {"type": "integer", "minimum": 1},
+    "unitName": {"type": "string"},
+    "region": {"type": "string"},
+    "billingMode": {"type": "string"},
+    "serviceTier": {"type": "string"},
+    "contextBand": {
+      "type": ["object", "null"],
+      "properties": {"min": {"type": "integer"}, "max": {"type": ["integer", "null"]}},
+      "additionalProperties": false
+    },
+    "timeCondition": {
+      "type": ["object", "null"],
+      "properties": {
+        "period": {"type": "string"},
+        "tz": {"type": "string"},
+        "schedule": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "effectiveAt": {"type": ["string", "null"]},
+    "observedAt": {"type": "string", "description": "ISO UTC"},
+    "evidenceId": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$|^ev_[0-9a-f]{64}$"},
+    "evidenceStatus": {"enum": ["complete", "partial", "unavailable"], "description": "非 complete 原样披露，不因存在改为 verified"},
+    "quality": {"$ref": "common.schema.json#/$defs/quality"},
+    "links": {
+      "type": "object",
+      "properties": {
+        "itemPermalink": {"type": ["string", "null"], "description": "该 factKey 最新价格事件的详情页链接，无事件则为 null"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

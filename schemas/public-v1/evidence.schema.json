@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily.maas.click/schemas/public-v1/evidence.schema.json",
+  "title": "公开证据实体（Task 02 不可变证据的投影）",
+  "type": "object",
+  "required": ["id", "sourceId", "providerId", "sourceUrl", "locatorType", "locator",
+               "extractorVersion", "excerptText", "excerptHash", "contentHash",
+               "completeness", "reasons", "relatedFactIds"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^ev_[0-9a-f]{64}$"},
+    "sourceId": {"type": "string"},
+    "providerId": {"type": ["string", "null"]},
+    "sourceUrl": {"type": ["string", "null"]},
+    "subpageUrl": {"type": ["string", "null"]},
+    "observedAtRange": {
+      "type": ["array", "null"],
+      "description": "引用该证据的事实观察时间区间 [min, max]（ISO UTC）；无引用为 null",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"type": "string"}
+    },
+    "locatorType": {"enum": ["dom_selector", "table_row", "json_pointer", "markdown_block"]},
+    "locator": {"type": "string"},
+    "extractorVersion": {"type": "string"},
+    "excerptText": {"type": "string", "description": "恶意 HTML 以普通字符串原样返回；API 不生成可执行片段"},
+    "excerptHash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "contentHash": {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "快照内容哈希（不暴露快照文件本身）"},
+    "completeness": {"enum": ["complete", "partial", "unavailable"]},
+    "reasons": {"type": "array", "items": {"type": "string"}},
+    "relatedFactIds": {"type": "array", "items": {"type": "string"}, "description": "闭合集合：仅保留在公开数据（prices/current 或公开 change 的版本引用）中可达的事实版本"}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily.maas.click/schemas/public-v1/manifest.schema.json",
+  "title": "公开数据 release 指针",
+  "type": "object",
+  "required": ["schemaVersion", "datasetVersion", "generatedAt", "dataThrough", "coverage", "files", "retainedVersions"],
+  "properties": {
+    "schemaVersion": {"const": "1.0"},
+    "datasetVersion": {"type": "string", "pattern": "^ds_[0-9a-f]{64}$"},
+    "generatedAt": {"type": "string", "description": "墙钟时间——唯一允许的时间性字段，不参与 datasetVersion"},
+    "dataThrough": {"type": "string", "description": "数据覆盖上限（数据推导，非墙钟）"},
+    "coverage": {
+      "type": "object",
+      "description": "各集合覆盖：日期范围、计数",
+      "additionalProperties": true
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["path", "sha256", "bytes"],
+        "properties": {
+          "path": {"type": "string", "pattern": "^releases/ds_[0-9a-f]{64}/[a-z]+\\.json$", "description": "仅允许 data/public/v1/ 内相对路径，拒绝 ../绝对路径/符号链接"},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "bytes": {"type": "integer", "minimum": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "retainedVersions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["datasetVersion", "generatedAt"],
+        "properties": {
+          "datasetVersion": {"type": "string", "pattern": "^ds_[0-9a-f]{64}$"},
+          "generatedAt": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
