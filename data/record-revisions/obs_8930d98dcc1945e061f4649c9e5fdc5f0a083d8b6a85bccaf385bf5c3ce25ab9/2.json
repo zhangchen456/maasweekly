@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_8930d98dcc1945e061f4649c9e5fdc5f0a083d8b6a85bccaf385bf5c3ce25ab9",
+  "sourceId": "huggingface-industry",
+  "date": "2026-09-14",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "HuggingFace",
+  "sourceType": "industry",
+  "sourceUrl": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+  "title": "HuggingFace · 行业数据来源更新",
+  "summary": "新增自动语音识别数据集 common_voice 及 DOI 引用，同时移除两篇 arxiv 引用和 custom_code 标记，表明数据集卡片元数据更新，可能涉及新数据集发布或旧引用清理。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-13T22:56:30+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "\"automatic-speech-recognition\",",
+      "\"dataset:common_voice\",",
+      "\"doi:10.57967/hf/3568\","
+    ],
+    "removed_lines": [
+      "\"arxiv:2205.13147\",",
+      "\"arxiv:2402.01613\",",
+      "\"custom_code\","
+    ],
+    "added_count": 3,
+    "removed_count": 3,
+    "raw_added_count": 49,
+    "raw_removed_count": 49
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-14.json"
+  },
+  "permalink": "/item/obs_8930d98dcc1945e061f4649c9e5fdc5f0a083d8b6a85bccaf385bf5c3ce25ab9/"
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_6a0b2dcaadbef6c8e826795c81ffb30ee198469bcb9032577235b9ce34cc65c0",
+  "sourceId": "google-gemini-modellist",
+  "date": "2026-09-16",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "model_list",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+  "title": "Google Gemini API · 模型列表来源更新",
+  "summary": "Gemini 3.8 Live Extended Thinking",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "low-latency",
+        "before": "High-quality, low-latency Live API model for real-time dialogue and voice-first AI applications.",
+        "after": "Default Live API model for most low-latency voice agent experiences without reasoning delays."
+      },
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-09-04 UTC.",
+        "after": "Last updated 2026-09-15 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-04 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "Gemini 3.8 Live",
+      "Gemini 3.8 Live Extended Thinking",
+      "High-reasoning Live API model for voice interactions, recommended when higher background reasoning is required.",
+      "Legacy Live API preview model. We recommend updating to Gemini 3.8 Live.",
+      "gemini-3.8-live",
+      "gemini-3.8-live-extended-thinking",
+      "| Gemini 3.8 Live",
+      "| Gemini 3.8 Live Extended Thinking",
+      "| Legacy audio-to-audio preview model. We recommend updating to Gemini 3.8 Live.",
+      "| Our high-reasoning audio-to-audio model, recommended when higher background reasoning is required during live interactions.",
+      "| The default option for most low-latency voice agent experiences and real-time dialogue without reasoning delays."
+    ],
+    "removed_lines": [
+      "| Our high-quality, low-latency audio-to-audio (A2A) model designed for real-time dialogue and voice-first AI applications."
+    ],
+    "added_count": 11,
+    "removed_count": 1,
+    "raw_added_count": 14,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-16.json"
+  },
+  "permalink": "/item/obs_6a0b2dcaadbef6c8e826795c81ffb30ee198469bcb9032577235b9ce34cc65c0/"
+}

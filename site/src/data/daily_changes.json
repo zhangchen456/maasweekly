@@ -1,291 +1,569 @@
 {
-  "updated_at": "2026-09-16T13:20:45",
+  "updated_at": "2026-09-15T23:27:38",
   "days": [
     {
       "date": "2026-09-16",
       "stats": {
         "total": 68,
-        "success": 39,
-        "failed": 29,
-        "changed": 39,
-        "unchanged": 0
+        "success": 65,
+        "failed": 3,
+        "changed": 20,
+        "unchanged": 45
       },
-      "changed": [],
-      "first_fetch": [
-        {
-          "platform": "火山方舟",
-          "source_type": "blog",
-          "url": "https://www.volcengine.com/blog",
-          "status": "first_fetch",
-          "content_length": 174
-        },
-        {
-          "platform": "阿里百炼",
-          "source_type": "model_list",
-          "url": "https://help.aliyun.com/zh/model-studio/models",
-          "status": "first_fetch",
-          "content_length": 1435
-        },
-        {
-          "platform": "阿里百炼",
-          "source_type": "pricing",
-          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
-          "status": "first_fetch",
-          "content_length": 111698
-        },
-        {
-          "platform": "阿里百炼",
-          "source_type": "changelog",
-          "url": "https://help.aliyun.com/zh/model-studio/release-notes",
-          "status": "first_fetch",
-          "content_length": 186
-        },
-        {
-          "platform": "阿里百炼",
-          "source_type": "blog",
-          "url": "https://qwenlm.github.io/blog/",
-          "status": "first_fetch",
-          "content_length": 3505
-        },
+      "changed": [
         {
           "platform": "百度千帆",
           "source_type": "model_list",
           "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
-          "status": "first_fetch",
-          "content_length": 20513
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "| DeepSeek-V4.1-flash",
+            "| deepseek-flash"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| deepseek-flash",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_b6ea594d229a23cad5d051ddf306fcf3cac1f1bacf749860770123af9dbe08b7",
+          "permalink": "/item/obs_b6ea594d229a23cad5d051ddf306fcf3cac1f1bacf749860770123af9dbe08b7/",
+          "llm_summary": "新增 DeepSeek-V4.1-flash 和 deepseek-flash 两个模型条目，表明千帆平台扩展了 DeepSeek 系列模型供应。"
         },
         {
           "platform": "百度千帆",
           "source_type": "pricing",
           "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-          "status": "first_fetch",
-          "content_length": 23420
-        },
-        {
-          "platform": "百度千帆",
-          "source_type": "changelog",
-          "url": "https://cloud.baidu.com/doc/qianfan/s/Mmh8l4qwj",
-          "status": "first_fetch",
-          "content_length": 21008
-        },
-        {
-          "platform": "百度千帆",
-          "source_type": "blog",
-          "url": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp",
-          "status": "first_fetch",
-          "content_length": 65772
-        },
-        {
-          "platform": "硅基流动",
-          "source_type": "model_list",
-          "url": "https://cloud.siliconflow.cn/models",
-          "status": "first_fetch",
-          "content_length": 176
-        },
-        {
-          "platform": "硅基流动",
-          "source_type": "pricing",
-          "url": "https://siliconflow.cn/pricing",
-          "status": "first_fetch",
-          "content_length": 3876
-        },
-        {
-          "platform": "硅基流动",
-          "source_type": "changelog",
-          "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
-          "status": "first_fetch",
-          "content_length": 15256
-        },
-        {
-          "platform": "硅基流动",
-          "source_type": "blog",
-          "url": "https://siliconflow.cn/blog",
-          "status": "first_fetch",
-          "content_length": 2035
-        },
-        {
-          "platform": "智谱AI",
-          "source_type": "model_list",
-          "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
-          "status": "first_fetch",
-          "content_length": 3363
-        },
-        {
-          "platform": "智谱AI",
-          "source_type": "pricing",
-          "url": "https://bigmodel.cn/pricing",
-          "status": "first_fetch",
-          "content_length": 125
-        },
-        {
-          "platform": "智谱AI",
-          "source_type": "changelog",
-          "url": "https://docs.bigmodel.cn/cn/update/new-releases",
-          "status": "first_fetch",
-          "content_length": 5816
-        },
-        {
-          "platform": "智谱AI",
-          "source_type": "blog",
-          "url": "https://www.bigmodel.cn/news",
-          "status": "first_fetch",
-          "content_length": 125
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "| GLM-5.2（空闲时段为限时活动，9月21日20点恢复原价）"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| GLM-5.2（空闲时段为限时活动，9月21日20点恢复原价）",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_4158a89e39c959fbb23efac1c358b76cd74811c9059582f1f6b87d34e1a00f9e",
+          "permalink": "/item/obs_4158a89e39c959fbb23efac1c358b76cd74811c9059582f1f6b87d34e1a00f9e/",
+          "llm_summary": "新增 GLM-5.2 空闲时段限时活动定价，注明 9月21日20点恢复原价，属于临时价格调整。"
         },
         {
           "platform": "Kimi",
           "source_type": "model_list",
           "url": "https://platform.kimi.com/docs/api/models-overview",
-          "status": "first_fetch",
-          "content_length": 3537
-        },
-        {
-          "platform": "Kimi",
-          "source_type": "pricing",
-          "url": "https://platform.kimi.com/docs/pricing/chat",
-          "status": "first_fetch",
-          "content_length": 904
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "Search...⌘K"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "不同模型系列对 chat completions api 参数有不同的默认值和约束",
+              "before": "不同模型系列对 Chat Completions API 参数有不同的默认值和约束。完整的模型列表请参阅模型列表。",
+              "after": "不同模型系列对 Chat Completions API 参数有不同的默认值和约束。"
+            }
+          ],
+          "signal_preview": "不同模型系列对 Chat Completions API 参数有不同的默认值和约束。",
+          "raw_added_count": 1,
+          "raw_removed_count": 2,
+          "id": "obs_97610da24403bfef86fe16242d874e98a872c5490db426b9b38e5c37b31f70fd",
+          "permalink": "/item/obs_97610da24403bfef86fe16242d874e98a872c5490db426b9b38e5c37b31f70fd/",
+          "llm_summary": "删除了模型列表页面的搜索框占位符和部分说明文字，页面描述简化，无实质模型变化。"
         },
         {
           "platform": "Kimi",
           "source_type": "changelog",
           "url": "https://platform.kimi.com/docs/changelog",
-          "status": "first_fetch",
-          "content_length": 2317
-        },
-        {
-          "platform": "Kimi",
-          "source_type": "blog",
-          "url": "https://www.moonshot.cn/news",
-          "status": "first_fetch",
-          "content_length": 577
-        },
-        {
-          "platform": "MiniMax",
-          "source_type": "model_list",
-          "url": "https://platform.minimaxi.com/docs/guides/models-intro",
-          "status": "first_fetch",
-          "content_length": 2057
-        },
-        {
-          "platform": "MiniMax",
-          "source_type": "pricing",
-          "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
-          "status": "first_fetch",
-          "content_length": 5189
-        },
-        {
-          "platform": "MiniMax",
-          "source_type": "changelog",
-          "url": "https://www.minimaxi.com/news",
-          "status": "first_fetch",
-          "content_length": 443
-        },
-        {
-          "platform": "MiniMax",
-          "source_type": "blog",
-          "url": "https://www.minimaxi.com/news",
-          "status": "first_fetch",
-          "content_length": 443
-        },
-        {
-          "platform": "DeepSeek",
-          "source_type": "model_list",
-          "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
-          "status": "first_fetch",
-          "content_length": 1313
-        },
-        {
-          "platform": "DeepSeek",
-          "source_type": "pricing",
-          "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
-          "status": "first_fetch",
-          "content_length": 1313
-        },
-        {
-          "platform": "DeepSeek",
-          "source_type": "changelog",
-          "url": "https://api-docs.deepseek.com/zh-cn/news/",
-          "status": "first_fetch",
-          "content_length": 3256
-        },
-        {
-          "platform": "DeepSeek",
-          "source_type": "blog",
-          "url": "https://api-docs.deepseek.com/zh-cn/news/",
-          "status": "first_fetch",
-          "content_length": 3256
-        },
-        {
-          "platform": "Anthropic",
-          "source_type": "model_list",
-          "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
-          "status": "first_fetch",
-          "content_length": 672
-        },
-        {
-          "platform": "Anthropic",
-          "source_type": "pricing",
-          "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
-          "status": "first_fetch",
-          "content_length": 672
+          "status": "changed",
+          "added_count": 30,
+          "removed_count": 10,
+          "added_lines": [
+            "API Key 个数限制优化",
+            "API 入门指南文档更新",
+            "Cache 存储费用降低",
+            "Cache 续期不再收取创建的费用",
+            "Context Caching 产品正式开启公测",
+            "Context Caching 公测放开到 Tier3-Tier5 用户",
+            "Context Caching 功能已放开给全量用户",
+            "Context Caching 如何为 Kimi API 助手节省最高 90% 的调用成本 Blog 发布",
+            "Context Caching 管理翻页优化",
+            "File 文件资源管理前端功能支持",
+            "Files API 更新：新生成的文件 ID 统一添加 file_ 前缀；提升文档解析效果，优化表格、公式等复杂内容的解析；不再对图片进行 OCR 文本提取，图片理解请使用 purpose=image 上传图片（详见使用视觉模型）；上传的文件与已有文件同名时，服务端自动为新文件重命名",
+            "Kimi API 助手实践 Context Caching 第一篇 Blog 发布",
+            "Kimi API 助手实践 Context Caching 第三篇 Blog 发布",
+            "Kimi API 助手实践 Context Caching 第二篇 Blog 发布",
+            "Kimi API 调试工具 MoonPalace 发布",
+            "Kimi 企业级 API 发布",
+            "MoonPalace 使用指南文档发布",
+            "Tool Calling 功能上线",
+            "kimi-k2 系列模型（含 kimi-k2-0905-preview、kimi-k2-0711-preview、kimi-k2-turbo-preview、kimi-k2-thinking、kimi-k2-thinking-turbo）已于今日下线，不再维护和支持，请使用最新模型 Kimi K3",
+            "kimi-k2.5 与 moonshot-v1 全系列模型（含 -vision-preview、moonshot-v1-auto）已于今日 16:00 在国内外全平台下线，调用将返回 404 错误（模型不存在），请迁移至 Kimi K3",
+            "kimi-latest 模型上线",
+            "moonshot-v1-auto 上线",
+            "moonshot-v1-vision-preview 模型上线",
+            "个人认证用户支持变更为企业认证用户",
+            "企业认证企业名称字数检查放开",
+            "企业认证增加银行打款受理时间显示",
+            "优化资源列表按上传时间由近及远排序",
+            "优化资源管理列表复制样式为鼠标悬浮点击",
+            "修复修改删除 APIKey 的问题",
+            "修复创建项目时名称框光标移动失败问题"
+          ],
+          "removed_lines": [
+            "# train qwen-like dense model with adamw",
+            "# train qwen-like dense model with muon",
+            "@misc{liu2025muonscalablellmtraining,",
+            "Moonlight 采用与DeepSeek-V3相同的架构，这一架构受到许多主流推理引擎的支持，如VLLM和SGLang。因此，我们的模型也可以轻松地使用这些工具进行部署。",
+            "Muon 优化器的首次大规模训练实践",
+            "Muon 优化器的首次大规模训练实践 - Kimi API 开放平台",
+            "Muon 的有效扩展性分析：通过深入分析，我们发现权重衰减在Muon的可扩展性中起着关键作用。此外，我们提出通过参数级别的更新尺度调整，来保持矩阵参数和非矩阵参数之间更新均方根（RMS）的一致性。这些调整显著提高了训练稳定性。",
+            "Muon续集：为什么我们选择尝试Muon？（By 苏剑林） https://kexue.fm/archives/10739",
+            "Search...⌘K",
+            "archivePrefix={arXiv},"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "API Key 个数限制优化",
+          "raw_added_count": 56,
+          "raw_removed_count": 62,
+          "id": "obs_584d2d0e11207d9178106093bdd645ba35d9472abe33ff447a0bbad40f511a2d",
+          "permalink": "/item/obs_584d2d0e11207d9178106093bdd645ba35d9472abe33ff447a0bbad40f511a2d/",
+          "llm_summary": "新增多项更新：Context Caching 公测全量放开、存储费用降低、Files API 改进、API Key 限制优化等；删除内容为 Moonlight 模型训练相关的技术文档，可能已移至其他页面。"
         },
         {
           "platform": "Anthropic",
           "source_type": "changelog",
           "url": "https://docs.anthropic.com/en/release-notes/api",
-          "status": "first_fetch",
-          "content_length": 672
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "The Messages API can now compact a conversation on demand on the Claude API, in beta with the compact-2026-09-04 beta header. Send the top-level compaction parameter, and the API returns a signed compaction block that summarizes the messages you sent. On later requests, send that block first, in place of those messages. You choose when to compact, the request can run in the background, and you can keep recent turns word for word after the summary. On models with preserved thinking, the thinking in those kept turns can stay valid."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "The Messages API can now compact a conversation on demand on the Claude API, in beta with the compact-2026-09-04 beta header. Send the top-level compaction parameter, and the API returns a signed compaction block that summarizes the messages you sent. On later requests, send that block first, in place of those messages. You choose when to compact, the request can run in the background, and you can keep recent turns word for word after the summary. On models with preserved thinking, the thinking in those kept turns can stay valid.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_0cfe2284f81351fd00ea3c22db40f92f6b46ce210d412115a4423bcff64c3fb3",
+          "permalink": "/item/obs_0cfe2284f81351fd00ea3c22db40f92f6b46ce210d412115a4423bcff64c3fb3/",
+          "llm_summary": "新增 Messages API 对话压缩功能（beta），允许按需压缩对话，需使用特定 beta header。"
         },
         {
-          "platform": "Anthropic",
-          "source_type": "blog",
-          "url": "https://www.anthropic.com/news",
-          "status": "first_fetch",
-          "content_length": 2467
+          "platform": "Google Gemini API",
+          "source_type": "model_list",
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "status": "changed",
+          "added_count": 11,
+          "removed_count": 1,
+          "added_lines": [
+            "Gemini 3.8 Live",
+            "Gemini 3.8 Live Extended Thinking",
+            "High-reasoning Live API model for voice interactions, recommended when higher background reasoning is required.",
+            "Legacy Live API preview model. We recommend updating to Gemini 3.8 Live.",
+            "gemini-3.8-live",
+            "gemini-3.8-live-extended-thinking",
+            "| Gemini 3.8 Live",
+            "| Gemini 3.8 Live Extended Thinking",
+            "| Legacy audio-to-audio preview model. We recommend updating to Gemini 3.8 Live.",
+            "| Our high-reasoning audio-to-audio model, recommended when higher background reasoning is required during live interactions.",
+            "| The default option for most low-latency voice agent experiences and real-time dialogue without reasoning delays."
+          ],
+          "removed_lines": [
+            "| Our high-quality, low-latency audio-to-audio (A2A) model designed for real-time dialogue and voice-first AI applications."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "low-latency",
+              "before": "High-quality, low-latency Live API model for real-time dialogue and voice-first AI applications.",
+              "after": "Default Live API model for most low-latency voice agent experiences without reasoning delays."
+            },
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-04 UTC.",
+              "after": "Last updated 2026-09-15 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-04 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Gemini 3.8 Live Extended Thinking",
+          "raw_added_count": 14,
+          "raw_removed_count": 4,
+          "id": "obs_6a0b2dcaadbef6c8e826795c81ffb30ee198469bcb9032577235b9ce34cc65c0",
+          "permalink": "/item/obs_6a0b2dcaadbef6c8e826795c81ffb30ee198469bcb9032577235b9ce34cc65c0/",
+          "llm_summary": "新增 Gemini 3.8 Live 和 Gemini 3.8 Live Extended Thinking 两个模型，并标记旧模型为 Legacy 推荐升级，同时更新了模型描述和更新时间。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "gemini-3.8-live, gemini-3.8-live-extended-thinking, and gemini-3.1-flash-live-preview",
+            "live dialogue, including background reasoning support with Extended Thinking."
+          ],
+          "removed_lines": [
+            "acoustic nuance detection, numeric precision, and multimodal awareness.",
+            "gemini-3.1-flash-live-preview"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "gemini",
+              "before": "Gemini 3.1 Flash Live Preview",
+              "after": "Gemini 3.8 Live, Gemini 3.8 Live Extended Thinking, and Gemini 3.1 Flash Live Preview"
+            },
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-11 UTC.",
+              "after": "Last updated 2026-09-15 UTC."
+            },
+            {
+              "key": "low-latency",
+              "before": "Our low-latency, audio-to-audio model optimized for real-time dialogue with",
+              "after": "Our low-latency, audio-to-audio models optimized for real-time voice agents and"
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-11 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "gemini-3.8-live, gemini-3.8-live-extended-thinking, and gemini-3.1-flash-live-preview",
+          "raw_added_count": 6,
+          "raw_removed_count": 6,
+          "id": "obs_f20ceca7c537f19cc9e0538f4a10aa4dba4d0a846c93946d6c3f2daa4831b64b",
+          "permalink": "/item/obs_f20ceca7c537f19cc9e0538f4a10aa4dba4d0a846c93946d6c3f2daa4831b64b/",
+          "llm_summary": "定价页将 Gemini 3.8 Live 系列与 Gemini 3.1 Flash Live Preview 合并定价，输入 0.75 USD/百万tokens，输出 4.5 USD/百万tokens，并更新了模型描述。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "changelog",
+          "url": "https://ai.google.dev/gemini-api/docs/changelog",
+          "status": "changed",
+          "added_count": 15,
+          "removed_count": 1,
+          "added_lines": [
+            "(GA): Released two new audio-to-audio models for real-time voice",
+            "(gemini-3.8-live-extended-thinking): High-reasoning",
+            "Capabilities guide, and the",
+            "Gemini 3.8 Live (gemini-3.8-live): The default option",
+            "Gemini 3.8 Live Extended Thinking",
+            "Gemini 3.8 Live and Gemini 3.8 Live Extended Thinking generally available",
+            "Google's music generation model:",
+            "Thinking guide.",
+            "To get started, see the Live API guide, the",
+            "applications using the Live API:",
+            "asynchronous function calling, and full session client content updates.",
+            "audio-to-audio model supporting background reasoning during live audio",
+            "for most low-latency voice agent experiences and real-time dialogue",
+            "interactions, recommended when higher background reasoning is required.",
+            "without reasoning delays. Features interleaved reasoning, default"
+          ],
+          "removed_lines": [
+            "generation model:"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-04 UTC.",
+              "after": "Last updated 2026-09-15 UTC."
+            },
+            {
+              "key": "lyria",
+              "before": "Lyria 3.5 in public preview: Released the next generation of Google's music",
+              "after": "Lyria 3.5 generally available (GA): Released the next generation of"
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-04 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "(GA): Released two new audio-to-audio models for real-time voice",
+          "raw_added_count": 19,
+          "raw_removed_count": 4,
+          "id": "obs_354d7aa50473a2d7e27b0b83854d22d225d330bd328dc30eaef9aeb0e40ef4fa",
+          "permalink": "/item/obs_354d7aa50473a2d7e27b0b83854d22d225d330bd328dc30eaef9aeb0e40ef4fa/",
+          "llm_summary": "宣布 Gemini 3.8 Live 和 Gemini 3.8 Live Extended Thinking 正式 GA，同时 Lyria 3.5 音乐生成模型从预览升级为 GA，并新增相关文档链接。"
         },
         {
           "platform": "Google Gemini API",
           "source_type": "blog",
           "url": "https://blog.google/technology/ai/",
-          "status": "first_fetch",
-          "content_length": 3539
-        },
-        {
-          "platform": "Cohere",
-          "source_type": "model_list",
-          "url": "https://docs.cohere.com/docs/models",
-          "status": "first_fetch",
-          "content_length": 19797
-        },
-        {
-          "platform": "Cohere",
-          "source_type": "pricing",
-          "url": "https://cohere.com/pricing",
-          "status": "first_fetch",
-          "content_length": 8860
-        },
-        {
-          "platform": "Cohere",
-          "source_type": "changelog",
-          "url": "https://docs.cohere.com/changelog",
-          "status": "first_fetch",
-          "content_length": 36123
-        },
-        {
-          "platform": "讯飞星辰MaaS",
-          "source_type": "changelog",
-          "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
-          "status": "first_fetch",
-          "content_length": 3435
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 3,
+          "added_lines": [
+            "4 ways to tackle household chores with Gemini",
+            "Ask a Scientist: How can researchers use AI to spot a wildfire?",
+            "Build real-time voice applications with Gemini 3.8 Live and 3.5 Transcribe"
+          ],
+          "removed_lines": [
+            "Gemini Omni 1.1 Flash lets you build with more control",
+            "Turn your voice into action with new productivity features in Gemini Live",
+            "5 amazing visuals show how the male fruit fly’s brain map is advancing neuroscience"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "4 ways to tackle household chores with Gemini",
+          "raw_added_count": 3,
+          "raw_removed_count": 3,
+          "id": "obs_526fe76c06b1a8a2edf33c7ce105023fd0145dd441e44541851eecc8427d8de8",
+          "permalink": "/item/obs_526fe76c06b1a8a2edf33c7ce105023fd0145dd441e44541851eecc8427d8de8/",
+          "llm_summary": "新增关于 Gemini 3.8 Live 和 3.5 Transcribe 构建实时语音应用的文章，以及家务、科研等应用案例；删除旧版 Gemini Omni 1.1 Flash 相关文章。"
         },
         {
           "platform": "Artificial Analysis",
           "source_type": "industry",
           "url": "https://artificialanalysis.ai/",
-          "status": "first_fetch",
-          "content_length": 20970
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 3,
+          "added_lines": [
+            "Capability Indices v1.1",
+            "Capability IndicesUpdated",
+            "Intelligence Index v4.3 replaces 𝜏³-Banking with AutomationBench-AA, and upgrades Terminal-Bench to 4.0",
+            "K2 Horizon 375B A23BSee more",
+            "New language model evaluation · 15 Sept",
+            "Qwen3.8 Max (0902)",
+            "Six professional-domain indices, updated with stronger domain tuning and specialized evaluations",
+            "Terminal-Bench 4.0"
+          ],
+          "removed_lines": [
+            "Artificial Analysis Search Index",
+            "Capability Indices",
+            "Compare search API providers on quality, cost, and speed using the same agent"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "artificial analysis intelligence index v",
+              "before": "Artificial Analysis Intelligence Index v4.3 includes: AA-Briefcase, GDPval-AA v2, AutomationBench-AA, Terminal-Bench v4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them.",
+              "after": "Artificial Analysis Intelligence Index v4.3 includes: AA-Briefcase, GDPval-AA v2, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them."
+            },
+            {
+              "key": "artificial analysis intelligence index v",
+              "before": "Artificial Analysis Intelligence Index v4.3 incorporates 10 evaluations: AA-Briefcase, GDPval-AA v2, AutomationBench-AA, Terminal-Bench v4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1",
+              "after": "Artificial Analysis Intelligence Index v4.3 incorporates 10 evaluations: AA-Briefcase, GDPval-AA v2, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1"
+            }
+          ],
+          "signal_preview": "Intelligence Index v4.3 replaces 𝜏³-Banking with AutomationBench-AA, and upgrades Terminal-Bench to 4.0",
+          "raw_added_count": 15,
+          "raw_removed_count": 15,
+          "id": "obs_478c1e640a2e1c27db9955010d46051199461da4c766d0cb21613c9a146b6b7d",
+          "permalink": "/item/obs_478c1e640a2e1c27db9955010d46051199461da4c766d0cb21613c9a146b6b7d/",
+          "llm_summary": "更新 Intelligence Index v4.3，替换评估基准（Terminal-Bench 升级至 4.0），新增 Capability Indices v1.1 和 Qwen3.8 Max 评测，删除搜索 API 对比内容。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "8hidream-o1-video-1.01452"
+          ],
+          "removed_lines": [
+            "8hidream-o1-video1452"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "hidream-o1-video-1.0: 1452",
+          "raw_added_count": 11,
+          "raw_removed_count": 11,
+          "id": "obs_b5e85d060056fe11381725e075381ca8d7e42384c1e6ba0bebdc2253275c10dd",
+          "permalink": "/item/obs_b5e85d060056fe11381725e075381ca8d7e42384c1e6ba0bebdc2253275c10dd/",
+          "llm_summary": "hidream-o1-video 模型更新为 hidream-o1-video-1.0，Elo 分数保持 1452，属于版本迭代。"
+        },
+        {
+          "platform": "Kimi",
+          "source_type": "pricing",
+          "url": "https://platform.kimi.com/docs/pricing/chat",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "Search...⌘K"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 1,
+          "id": "obs_ce3f8942f9aa778bb8c7b8fe0ffe58234107ed655c2d87e4315b79fd9d48a51d",
+          "permalink": "/item/obs_ce3f8942f9aa778bb8c7b8fe0ffe58234107ed655c2d87e4315b79fd9d48a51d/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "pricing",
+          "url": "https://mistral.ai/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "TotalEnergies"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_a1e7016c821366c56e99189eef51b718712c8fdb634ae2b611fd9b8db5c8b071",
+          "permalink": "/item/obs_a1e7016c821366c56e99189eef51b718712c8fdb634ae2b611fd9b8db5c8b071/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "changelog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "TotalEnergies"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_086c210db808c90a47fc241d503beff4253d67e09380a5f6b1fe3164bf803281",
+          "permalink": "/item/obs_086c210db808c90a47fc241d503beff4253d67e09380a5f6b1fe3164bf803281/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "blog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "TotalEnergies"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_1725022557971eaf5d949a2687e4fd677540f6ee35831677ab1570a7f2667af0",
+          "permalink": "/item/obs_1725022557971eaf5d949a2687e4fd677540f6ee35831677ab1570a7f2667af0/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "model_list",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Regional Endpoints"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_81c0d5867001d91727f9f7845cadeb11f5789615b8218bc312c984c8e828f0b1",
+          "permalink": "/item/obs_81c0d5867001d91727f9f7845cadeb11f5789615b8218bc312c984c8e828f0b1/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "pricing",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Regional Endpoints"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_b8b3a03e01d6a9c008cce4c6c2c47d887441b92ad0378434ad5dee0247bb1275",
+          "permalink": "/item/obs_b8b3a03e01d6a9c008cce4c6c2c47d887441b92ad0378434ad5dee0247bb1275/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Regional Endpoints"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_2d350d032932c9b530924c722e8a6eb9acc833305ede71eb262e34dd79943627",
+          "permalink": "/item/obs_2d350d032932c9b530924c722e8a6eb9acc833305ede71eb262e34dd79943627/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Regional Endpoints"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_621a97dd13cdc537e4f32b1cf5ba82ff6630642781dd601c380461d2b7cb073a",
+          "permalink": "/item/obs_621a97dd13cdc537e4f32b1cf5ba82ff6630642781dd601c380461d2b7cb073a/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 36,
+          "raw_removed_count": 36,
+          "id": "obs_781e0995f56f5db373980a96f3b4c3598009bb97551384ba12c1844ac2ef6bc8",
+          "permalink": "/item/obs_781e0995f56f5db373980a96f3b4c3598009bb97551384ba12c1844ac2ef6bc8/"
         }
       ],
+      "first_fetch": [],
       "failed": [
         {
           "platform": "火山方舟",
@@ -307,795 +585,918 @@
           "url": "https://www.volcengine.com/docs/82379/1159177",
           "status": "fetch_failed",
           "error": "提取后内容过短 (raw_len=11071)"
-        },
-        {
-          "platform": "腾讯混元/TokenHub",
-          "source_type": "model_list",
-          "url": "https://cloud.tencent.com/document/product/1729/104753",
-          "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=29182)"
-        },
-        {
-          "platform": "腾讯混元/TokenHub",
-          "source_type": "pricing",
-          "url": "https://cloud.tencent.com/document/product/1729/97731",
-          "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=29182)"
-        },
-        {
-          "platform": "腾讯混元/TokenHub",
-          "source_type": "changelog",
-          "url": "https://cloud.tencent.com/document/product/1729/97765",
-          "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=29182)"
-        },
-        {
-          "platform": "腾讯混元/TokenHub",
-          "source_type": "blog",
-          "url": "https://cloud.tencent.com/document/product/1729/132069",
-          "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=29182)"
-        },
-        {
-          "platform": "OpenAI",
-          "source_type": "model_list",
-          "url": "https://platform.openai.com/docs/models",
-          "status": "fetch_failed",
-          "error": "反爬挑战页 (raw_len=5484)"
-        },
-        {
-          "platform": "OpenAI",
-          "source_type": "pricing",
-          "url": "https://platform.openai.com/docs/pricing",
-          "status": "fetch_failed",
-          "error": "反爬挑战页 (raw_len=5485)"
-        },
-        {
-          "platform": "OpenAI",
-          "source_type": "changelog",
-          "url": "https://platform.openai.com/docs/changelog",
-          "status": "fetch_failed",
-          "error": "反爬挑战页 (raw_len=5484)"
-        },
-        {
-          "platform": "OpenAI",
-          "source_type": "blog",
-          "url": "https://platform.openai.com/docs/changelog",
-          "status": "fetch_failed",
-          "error": "反爬挑战页 (raw_len=5484)"
-        },
-        {
-          "platform": "Google Gemini API",
-          "source_type": "model_list",
-          "url": "https://ai.google.dev/gemini-api/docs/models",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "Google Gemini API",
-          "source_type": "pricing",
-          "url": "https://ai.google.dev/gemini-api/docs/pricing",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "Google Gemini API",
-          "source_type": "changelog",
-          "url": "https://ai.google.dev/gemini-api/docs/changelog",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "Google Vertex AI",
-          "source_type": "model_list",
-          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "Google Vertex AI",
-          "source_type": "pricing",
-          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "Google Vertex AI",
-          "source_type": "changelog",
-          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "Google Vertex AI",
-          "source_type": "blog",
-          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "Mistral AI",
-          "source_type": "model_list",
-          "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "Mistral AI",
-          "source_type": "pricing",
-          "url": "https://mistral.ai/pricing",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "Mistral AI",
-          "source_type": "changelog",
-          "url": "https://mistral.ai/news/",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "Mistral AI",
-          "source_type": "blog",
-          "url": "https://mistral.ai/news/",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "Cohere",
-          "source_type": "blog",
-          "url": "https://txt.cohere.com/",
-          "status": "fetch_failed",
-          "error": "反爬挑战页 (raw_len=5485)"
-        },
-        {
-          "platform": "xAI",
-          "source_type": "model_list",
-          "url": "https://docs.x.ai/docs/models",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "xAI",
-          "source_type": "pricing",
-          "url": "https://docs.x.ai/docs/models",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "xAI",
-          "source_type": "changelog",
-          "url": "https://docs.x.ai/docs/release-notes",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "xAI",
-          "source_type": "blog",
-          "url": "https://docs.x.ai/docs/release-notes",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "HuggingFace",
-          "source_type": "industry",
-          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
-        },
-        {
-          "platform": "LMArena",
-          "source_type": "industry",
-          "url": "https://lmarena.ai/leaderboard",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
         }
       ],
       "highlights": [
         {
-          "platform": "Anthropic",
-          "logo_summary": "多款模型cache_write定价统一调整，覆盖新旧旗舰",
+          "platform": "Google Gemini API",
+          "logo_summary": "Gemini 3.8 Live 系列正式 GA，定价更新",
           "items": [
             {
-              "text": "claude-fable-5.1、claude-mythos-5.1、claude-fable-5、claude-mythos-5 的 cache_write 定价统一调整为 12.5 和 20 USD/百万tokens",
+              "text": "Gemini 3.8 Live 和 Gemini 3.8 Live Extended Thinking 正式 GA，成为 Live API 默认模型，并新增 Legacy 预览模型推荐升级",
+              "type": "release"
+            },
+            {
+              "text": "Gemini 3.8 Live 系列输入定价 0.75 USD/百万tokens，输出定价 4.5 USD/百万tokens，与 Gemini 3.1 Flash Live Preview 合并定价",
               "type": "pricing"
             },
             {
-              "text": "claude-opus-5、claude-opus-4.8、claude-opus-4.7、claude-opus-4.6、claude-opus-4.5 的 cache_write 定价统一调整为 6.25 和 10 USD/百万tokens",
-              "type": "pricing"
+              "text": "Lyria 3.5 音乐生成模型从公开预览升级为正式 GA",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Kimi",
+          "logo_summary": "Context Caching 全量放开，Files API 多项更新",
+          "items": [
+            {
+              "text": "Context Caching 产品正式公测并全量放开至所有用户，存储费用降低且续期不再收费，最高可节省 90% 调用成本",
+              "type": "release"
             },
             {
-              "text": "claude-opus-4.1 的 cache_write 定价调整为 18.75 和 30 USD/百万tokens",
+              "text": "Files API 更新：文件 ID 统一添加 file_ 前缀，优化文档解析，不再对图片进行 OCR 文本提取，同名文件自动重命名",
+              "type": "other"
+            },
+            {
+              "text": "API Key 个数限制优化，API 入门指南文档更新",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "百度千帆",
+          "logo_summary": "新增 DeepSeek-V4.1-flash 模型，GLM-5.2 限时优惠",
+          "items": [
+            {
+              "text": "新增 DeepSeek-V4.1-flash 和 deepseek-flash 两个模型",
+              "type": "release"
+            },
+            {
+              "text": "GLM-5.2 空闲时段限时活动，9月21日20点恢复原价",
               "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Messages API 新增对话压缩功能（beta）",
+          "items": [
+            {
+              "text": "Messages API 支持按需压缩对话，需使用 compact-2026-09-04 beta header",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "更新 Intelligence Index v4.3，新增 Qwen3.8 Max 评测",
+          "items": [
+            {
+              "text": "Intelligence Index v4.3 替换评估基准，升级 Terminal-Bench 至 4.0，并新增 Capability Indices v1.1",
+              "type": "other"
+            },
+            {
+              "text": "新增 Qwen3.8 Max (0902) 语言模型评测",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "hidream-o1-video 模型更新版本",
+          "items": [
+            {
+              "text": "hidream-o1-video-1.0 以 1452 Elo 分数上线，替代旧版 hidream-o1-video",
+              "type": "release"
             }
           ]
         }
       ],
       "price_changes": [
         {
-          "id": "price_358d3ea6a3d3efe5eeb824e2a47d01c559942cd7015165ad73d7700f660f81ce",
-          "provider": "anthropic",
-          "model": "claude-fable-5.1",
-          "component": "cache_write",
-          "current": "12.500000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_9ecd1d72dc25d06fbbdf23992cfbd86533cbd75b794df8a19a5be59df2ede254",
-          "provider": "anthropic",
-          "model": "claude-fable-5.1",
-          "component": "cache_write",
-          "current": "20.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_5901559e8777eb33f504e07986b9cc48121310dddb7b0f20414d776bb01d38a6",
-          "provider": "anthropic",
-          "model": "claude-mythos-5.1",
-          "component": "cache_write",
-          "current": "12.500000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_f9f23d2ecd2748889d38cdaab73e42beffe2c33f299dc39e3c77fa2a50919593",
-          "provider": "anthropic",
-          "model": "claude-mythos-5.1",
-          "component": "cache_write",
-          "current": "20.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_2007870dd91de20f6e8bbbb4f356f1d339625c7e6dc6796c60c50722411c783a",
-          "provider": "anthropic",
-          "model": "claude-fable-5",
-          "component": "cache_write",
-          "current": "12.500000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_bb68e7a18f619bc7e7650d9b05b349c4951eb09d748daec0d19665955a54d587",
-          "provider": "anthropic",
-          "model": "claude-fable-5",
-          "component": "cache_write",
-          "current": "20.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_036feb56668f15533e985c8a5f240af4a9fd78f2b82fbc95394d513df7600c0e",
-          "provider": "anthropic",
-          "model": "claude-mythos-5",
-          "component": "cache_write",
-          "current": "12.500000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_1915efa99a3c173ad1e291348bd33859e42ef84cff2932abab69660636246ee4",
-          "provider": "anthropic",
-          "model": "claude-mythos-5",
-          "component": "cache_write",
-          "current": "20.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_c91addc92743880fcbd9db36d69c43e637b00025b8a0683057597e7f2251185d",
-          "provider": "anthropic",
-          "model": "claude-opus-5",
-          "component": "cache_write",
-          "current": "6.250000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_0a1905722d118a12c1de4da99770118459696b3c3183f78e9ad2c059a15870b2",
-          "provider": "anthropic",
-          "model": "claude-opus-5",
-          "component": "cache_write",
-          "current": "10.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_f59a362f72db21bc3c2a6067d1d09599f324694f73f119b3a7cb58f70723fef6",
-          "provider": "anthropic",
-          "model": "claude-opus-4.8",
-          "component": "cache_write",
-          "current": "6.250000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_7c64453aad374fd0cd3e0d6d115b9caf959d3486bca2f713ba2a8e71c9575d90",
-          "provider": "anthropic",
-          "model": "claude-opus-4.8",
-          "component": "cache_write",
-          "current": "10.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_890ce485abe550da742db313c33bf8c1ca322215cbab33d6a219573138afdd98",
-          "provider": "anthropic",
-          "model": "claude-opus-4.7",
-          "component": "cache_write",
-          "current": "6.250000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_d3be7ce59238ca28116b38ae64f7bd136240d6bf0fafbb552e30e1c418b0bad6",
-          "provider": "anthropic",
-          "model": "claude-opus-4.7",
-          "component": "cache_write",
-          "current": "10.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_28eb33f5c83f6bad859c0eb67a669f08799dfa0fa324b6b7d3b7cc8fb83f97a1",
-          "provider": "anthropic",
-          "model": "claude-opus-4.6",
-          "component": "cache_write",
-          "current": "6.250000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_4b64b3a5d8c549e04f4603128c92d3fc8e5712958a6ddbab067de3b943fdbbaa",
-          "provider": "anthropic",
-          "model": "claude-opus-4.6",
-          "component": "cache_write",
-          "current": "10.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_c77363f82ae7b6eb5d21b2f5e68d720f48129b5980aad5392db2634b268da121",
-          "provider": "anthropic",
-          "model": "claude-opus-4.5",
-          "component": "cache_write",
-          "current": "6.250000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_45d2a8ff2fed8b5b5ae1dfdba8bc64d8294a99319e72561264fc409284412e65",
-          "provider": "anthropic",
-          "model": "claude-opus-4.5",
-          "component": "cache_write",
-          "current": "10.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_0a68890fcab4fc8ea6f4837d43376b59878f5700e7e7978abe4b47df24df1abb",
-          "provider": "anthropic",
-          "model": "claude-opus-4.1",
-          "component": "cache_write",
-          "current": "18.750000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_e30490f879c2b5d9febaca733518608c202fd8eccc0e9adc81c8345eaeca643f",
-          "provider": "anthropic",
-          "model": "claude-opus-4.1",
-          "component": "cache_write",
-          "current": "30.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_e9445051c075c93cf50750bd2fd56b5b6f9e85c295ef4808d373b393489edd90",
-          "provider": "anthropic",
-          "model": "claude-opus-4",
-          "component": "cache_write",
-          "current": "18.750000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_43f4a6d190c2442c7f4db1063f5a2e12eabb58d815a6c703adb64eadf42772e9",
-          "provider": "anthropic",
-          "model": "claude-opus-4",
-          "component": "cache_write",
-          "current": "30.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_0e547147e1e77c934c6c87a59672378a8d0bdc3ecfe4eeef086a48c24a36a8d6",
-          "provider": "anthropic",
-          "model": "claude-sonnet-5",
-          "component": "cache_write",
-          "current": "2.500000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_e0b5db16aefebc71f05f39b75e754bf38592da2b68b42f304707edbeb3a5d625",
-          "provider": "anthropic",
-          "model": "claude-sonnet-5",
-          "component": "cache_write",
-          "current": "4.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_8b0aca8c59024786c92ea2edd439cd96d3f9c3e8cdcb6598c37f33e0cceb8a0d",
-          "provider": "anthropic",
-          "model": "claude-sonnet-4.6",
-          "component": "cache_write",
-          "current": "3.750000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_b41e570fbff44e242473f0dfb549eecc55ac304d1c1e56907e28cc21adda6f53",
-          "provider": "anthropic",
-          "model": "claude-sonnet-4.6",
-          "component": "cache_write",
-          "current": "6.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_658f0ff4fcd54569706c591b3295018f94daee35c5cf8ad6b4acbb1da8a5f7fd",
-          "provider": "anthropic",
-          "model": "claude-sonnet-4.5",
-          "component": "cache_write",
-          "current": "3.750000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_b6b9a2024484a5af2c895ca17242d9b5915ab6d9ca4fe25237e8b8bbc8684ccd",
-          "provider": "anthropic",
-          "model": "claude-sonnet-4.5",
-          "component": "cache_write",
-          "current": "6.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_afa3a3590d6d2ccc7cde727d1ce314fb1a76a3dc4cde1086bca280771d785fd8",
-          "provider": "anthropic",
-          "model": "claude-sonnet-4",
-          "component": "cache_write",
-          "current": "3.750000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_d2fb6cd444a5750b7d6302096d94c7a99da78866f71ba61de13869944c3a1f88",
-          "provider": "anthropic",
-          "model": "claude-sonnet-4",
-          "component": "cache_write",
-          "current": "6.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_789d941dd3e841bfd80c1fdff305d6694b484c6f1743521ff4d4c2ec1ec45dc6",
-          "provider": "anthropic",
-          "model": "claude-haiku-4.5",
-          "component": "cache_write",
-          "current": "1.250000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_4d4dfb6fd7dbbb1e0d79676c8e834489178e7248d3f730756a160df50f2472b3",
-          "provider": "anthropic",
-          "model": "claude-haiku-4.5",
-          "component": "cache_write",
-          "current": "2.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_b2df01c916cff8684f38d6e06d09333a6c7cca26f944570bf12190683bc14c30",
-          "provider": "anthropic",
-          "model": "claude-haiku-3.5",
-          "component": "cache_write",
-          "current": "1.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_5399ed7efc52d0f5f65b75aa520c8ae6b7cde56a56c3f2303fd3f1336b7d3e57",
-          "provider": "anthropic",
-          "model": "claude-haiku-3.5",
-          "component": "cache_write",
-          "current": "1.600000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
-        },
-        {
-          "id": "price_a4e2562e15ac0251901bb62b4f4ce5e2d8d633ee9030521e1c938b09ce14116e",
-          "provider": "doubao",
-          "model": "doubao-seed-2.1-pro",
-          "component": "input",
-          "current": "3.000000",
-          "currency": "CNY",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
-        },
-        {
-          "id": "price_3820b4d9554297c8313452255083a5d36ef95f6b2cfdb75c39bd9a52622381ab",
-          "provider": "doubao",
-          "model": "doubao-seed-2.1-pro",
-          "component": "cache_read",
-          "current": "1.200000",
-          "currency": "CNY",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
-        },
-        {
-          "id": "price_09ed33ba13ab810b64dc1c31604e9537ca04c8d73697df0ce66fb910ba2c8e79",
-          "provider": "doubao",
-          "model": "doubao-seed-2.1-pro",
-          "component": "output",
-          "current": "15.000000",
-          "currency": "CNY",
-          "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
-        },
-        {
-          "id": "price_e02ee201bf39f00bf89421153e025d0b405780613669201410dce8308e60d48a",
           "provider": "google",
           "model": "gemini-3.8-live,-gemini-3.8-live-extended-thinking,-and-gemini-3.1-flash-live-preview",
           "component": "input",
           "current": "0.750000",
           "currency": "USD",
           "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
           "changed_fields": [
             "amount"
           ],
           "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
         },
         {
-          "id": "price_346bde500ddd5e6f5409f86b0b0bf4ac18b5dacfee756550899638adfbb3a68f",
           "provider": "google",
           "model": "gemini-3.8-live,-gemini-3.8-live-extended-thinking,-and-gemini-3.1-flash-live-preview",
           "component": "output",
           "current": "4.500000",
           "currency": "USD",
           "unit": "per_1m_tokens",
-          "unit_quantity": 1000000,
-          "unit_name": "token",
           "changed_fields": [
             "amount"
           ],
           "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 7,
+        "unchanged": 58
+      },
+      "changed": [
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "GPT-RosalindLife sciences reasoning for approved organizations"
+          ],
+          "removed_lines": [
+            "GPT-RosalindLife sciences reasoning for approved organizationsgpt-rosalind-research"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "GPT-RosalindLife sciences reasoning for approved organizations",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_0c6c7135a1c714fe6f4d01c569fa7d1ddc5bc841f7f126951ee4e8d96d2a7246",
+          "permalink": "/item/obs_0c6c7135a1c714fe6f4d01c569fa7d1ddc5bc841f7f126951ee4e8d96d2a7246/",
+          "llm_summary": "新增 GPT-Rosalind 生命科学推理模型条目，同时删除了旧的重复描述行（gpt-rosalind-research），对应新模型正式上架并清理了冗余信息。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "DevFest 2026: Come Build with Us"
+          ],
+          "removed_lines": [
+            "How developers build AI for good with Gemma 4"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "DevFest 2026: Come Build with Us",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_314e8458c8a8897a725166700f07ccddd3ca47979038369214f1ca93188fb58c",
+          "permalink": "/item/obs_314e8458c8a8897a725166700f07ccddd3ca47979038369214f1ca93188fb58c/",
+          "llm_summary": "新增 DevFest 2026 活动公告，删除 Gemma 4 公益应用开发文章，反映博客内容从技术案例转向开发者社区活动宣传。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "pricing",
+          "url": "https://cohere.com/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Who Gets to Define the Rules for AI?"
+          ],
+          "removed_lines": [
+            "Introducing North Automations: Intelligent workflow orchestration"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Who Gets to Define the Rules for AI?",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_7fd71bb11b1f36033a7bc38dd5928be87d9d1295ba017f2c02e73d1b2a0fd32f",
+          "permalink": "/item/obs_7fd71bb11b1f36033a7bc38dd5928be87d9d1295ba017f2c02e73d1b2a0fd32f/",
+          "llm_summary": "新增 AI 治理讨论文章『Who Gets to Define the Rules for AI?』，删除 North Automations 产品介绍，表明博客焦点从产品功能转向行业政策议题。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "model_list",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Agent$0.08 / min"
+          ],
+          "removed_lines": [
+            "AgentStarting at $0.08 / min"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Agent$0.08 / min",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_8e9592f3506fb3963ce71b4ddaddfd83e8adf8ca821fb5503407fad1a694ca62",
+          "permalink": "/item/obs_8e9592f3506fb3963ce71b4ddaddfd83e8adf8ca821fb5503407fad1a694ca62/",
+          "llm_summary": "Agent 模型条目从『Starting at $0.08 / min』简化为『$0.08 / min』，仅调整描述格式，价格数值未变。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "pricing",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Agent$0.08 / min"
+          ],
+          "removed_lines": [
+            "AgentStarting at $0.08 / min"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Agent$0.08 / min",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_2fd02f3f9880edb37a00d64b0ae2702f4fe0a89ee2236eaf8b335a26761a3b8c",
+          "permalink": "/item/obs_2fd02f3f9880edb37a00d64b0ae2702f4fe0a89ee2236eaf8b335a26761a3b8c/",
+          "llm_summary": "与 model_list 一致，Agent 定价描述简化，删除『Starting at』前缀，实际价格不变。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 9,
+          "removed_count": 2,
+          "added_lines": [
+            "4Bytedancedreamina-seedance-2.5-720p1475±8",
+            "5Bytedancedreamina-seedance-2.0-720p1474±7",
+            "8hidream-o1-video1452",
+            "GPT 5.5 (xHigh)",
+            "flux-3-video-202608111450±5",
+            "gemini-omni-flash1464±6",
+            "grok-imagine-video-1.5-720p1456±4",
+            "minimax-h31494±5",
+            "wan3.01479±11"
+          ],
+          "removed_lines": [
+            "4Bytedancedreamina-seedance-2.5-720p1478±10",
+            "5Bytedancedreamina-seedance-2.0-720p1477±8"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bytedancedreamina-seedance-2.5-720p: 1475±8",
+          "raw_added_count": 19,
+          "raw_removed_count": 19,
+          "id": "obs_1f807e5b177696168655bf837c81609376410484749348ff16e8bda1fb32d4f5",
+          "permalink": "/item/obs_1f807e5b177696168655bf837c81609376410484749348ff16e8bda1fb32d4f5/",
+          "llm_summary": "新增 8 个视频生成模型（含 minimax-h3、wan3.0、gemini-omni-flash 等）的 Elo 分数，同时更新了 Bytedance 两个模型的分数（±10 以内微调），反映榜单模型池扩充和排名微调。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 39,
+          "raw_removed_count": 39,
+          "id": "obs_4f4b2bb1338ccf19bab7d743e9167198b5daf3534c6876150e9cc2fd520fac3c",
+          "permalink": "/item/obs_4f4b2bb1338ccf19bab7d743e9167198b5daf3534c6876150e9cc2fd520fac3c/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "LMArena",
+          "logo_summary": "视频生成模型榜单大换血，多款新模型入榜",
+          "items": [
+            {
+              "text": "minimax-h3 以 1494±5 分领跑新增榜单，wan3.0 以 1479±11 紧随其后",
+              "type": "release"
+            },
+            {
+              "text": "Bytedance dreamina-seedance-2.5-720p 分数从 1478±10 微调至 1475±8，seedance-2.0-720p 从 1477±8 调至 1474±7",
+              "type": "other"
+            },
+            {
+              "text": "hidream-o1-video、flux-3-video-20260811、gemini-omni-flash、grok-imagine-video-1.5-720p 等新模型首次进入榜单",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "新增 Rosalind 生命科学推理模型",
+          "items": [
+            {
+              "text": "GPT-Rosalind 生命科学推理模型上线，面向获批组织提供",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "Agent 定价描述简化，价格不变",
+          "items": [
+            {
+              "text": "Agent 模型定价条目从『Starting at $0.08 / min』简化为『$0.08 / min』",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "博客焦点转向 DevFest 2026 活动",
+          "items": [
+            {
+              "text": "发布 DevFest 2026 开发者活动公告，替换原有 Gemma 4 公益应用文章",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "博客主题从产品转向 AI 治理讨论",
+          "items": [
+            {
+              "text": "发布『Who Gets to Define the Rules for AI?』，替换 North Automations 工作流编排介绍",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-14",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 8,
+        "unchanged": 57
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "model_list",
+          "url": "https://help.aliyun.com/zh/model-studio/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-v4-pro-0813",
+              "before": "| deepseek-v4-pro-0813 | deepseek-v4-flash-0731 | kimi/kimi-k3",
+              "after": "| deepseek-v4-pro-0813 | deepseek-v4.1-flash | kimi/kimi-k3"
+            }
+          ],
+          "signal_preview": "| deepseek-v4-pro-0813 | deepseek-v4.1-flash | kimi/kimi-k3",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_1fca1930fd88bf61bcfee08cd4f5da40e3abcbbb97adce8b581ce799490ef466",
+          "permalink": "/item/obs_1fca1930fd88bf61bcfee08cd4f5da40e3abcbbb97adce8b581ce799490ef466/",
+          "llm_summary": "模型列表将 deepseek-v4-flash-0731 替换为 deepseek-v4.1-flash，同时保留 deepseek-v4-pro-0813 和 kimi/kimi-k3，表明 DeepSeek 系列模型版本迭代。"
+        },
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "deepseek-v4.1-flash",
+            "闲时 1.094元 |"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "deepseek-v4.1-flash",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_9ae5cb11c6da1d3abf80228a5de66bb1b48bd9e93735b7a9406e68cf3e763918",
+          "permalink": "/item/obs_9ae5cb11c6da1d3abf80228a5de66bb1b48bd9e93735b7a9406e68cf3e763918/",
+          "llm_summary": "新增 deepseek-v4.1-flash 的定价行，并给出闲时价格 1.094元，对应新模型上架后的价格配置。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "AI Needs Evidenced Standards, Not A Cartel",
+            "Who Gets to Define the Rules for AI?"
+          ],
+          "removed_lines": [
+            "Automating fork maintenance with AI agents"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AI Needs Evidenced Standards, Not A Cartel",
+          "raw_added_count": 4,
+          "raw_removed_count": 2,
+          "id": "obs_ce96381112caaa972cdb4cf64f52f088775d711a8ced03f17a3c7d46770192c6",
+          "permalink": "/item/obs_ce96381112caaa972cdb4cf64f52f088775d711a8ced03f17a3c7d46770192c6/",
+          "llm_summary": "新增两篇关于 AI 标准制定与规则话语权的博客，同时删除一篇关于自动化 fork 维护的技术博客，内容重心从工程实践转向行业治理。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "model_list",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "agentstarting at $",
+              "before": "AgentStarting at $0.05 / min",
+              "after": "AgentStarting at $0.08 / min"
+            }
+          ],
+          "signal_preview": "AgentStarting at $0.08 / min",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_6a2ae483cb71eeda5b244cdf7909d8bd222ec70ec92521bfb75c134e314bc8c7",
+          "permalink": "/item/obs_6a2ae483cb71eeda5b244cdf7909d8bd222ec70ec92521bfb75c134e314bc8c7/",
+          "llm_summary": "Agent 模型的起始价格从 $0.05/min 调整为 $0.08/min，价格上调 60%，反映成本或定价策略变化。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "pricing",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "agentstarting at $",
+              "before": "AgentStarting at $0.05 / min",
+              "after": "AgentStarting at $0.08 / min"
+            }
+          ],
+          "signal_preview": "AgentStarting at $0.08 / min",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_b56c112f02969fc58577dc7c93bbe4f6ab63ce11c91d1be8dcba928fe16b0648",
+          "permalink": "/item/obs_b56c112f02969fc58577dc7c93bbe4f6ab63ce11c91d1be8dcba928fe16b0648/",
+          "llm_summary": "定价表中 Agent 起始价格同步从 $0.05/min 调整为 $0.08/min，与模型列表变化一致。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 3,
+          "added_lines": [
+            "\"automatic-speech-recognition\",",
+            "\"dataset:common_voice\",",
+            "\"doi:10.57967/hf/3568\","
+          ],
+          "removed_lines": [
+            "\"arxiv:2205.13147\",",
+            "\"arxiv:2402.01613\",",
+            "\"custom_code\","
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "\"automatic-speech-recognition\",",
+          "raw_added_count": 49,
+          "raw_removed_count": 49,
+          "id": "obs_8930d98dcc1945e061f4649c9e5fdc5f0a083d8b6a85bccaf385bf5c3ce25ab9",
+          "permalink": "/item/obs_8930d98dcc1945e061f4649c9e5fdc5f0a083d8b6a85bccaf385bf5c3ce25ab9/",
+          "llm_summary": "新增自动语音识别数据集 common_voice 及 DOI 引用，同时移除两篇 arxiv 引用和 custom_code 标记，表明数据集卡片元数据更新，可能涉及新数据集发布或旧引用清理。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 4,
+          "added_lines": [
+            "K2 Horizon 0.9B",
+            "K2 Horizon 3.7B",
+            "K2 Horizon 7B",
+            "K2 Horizon MoVA 36B A4B",
+            "New language model evaluation · 13 Sept"
+          ],
+          "removed_lines": [
+            "Gemini 3.8 Flash (low)See more",
+            "Google has released Gemini 3.8 Flash, its fourth Flash model in under four months",
+            "Muse Spark 1.3 (xhigh)",
+            "Muse Spark 1.3: Meta reaches the frontier"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "muse spark",
+              "before": "Muse Spark 1.3 (max)",
+              "after": "Muse Spark 1.3: Meta reaches the frontierSee more"
+            }
+          ],
+          "signal_preview": "New language model evaluation · 13 Sept",
+          "raw_added_count": 11,
+          "raw_removed_count": 11,
+          "id": "obs_9128efb425f313f67e368bdd8d5699edc4bc9a4a5d8c1ad5caadbfd01b1b688b",
+          "permalink": "/item/obs_9128efb425f313f67e368bdd8d5699edc4bc9a4a5d8c1ad5caadbfd01b1b688b/",
+          "llm_summary": "新增 K2 Horizon 系列四个尺寸模型（0.9B/3.7B/7B/MoVA 36B A4B）的评测条目，同时移除 Gemini 3.8 Flash 相关条目，并将 Muse Spark 1.3 的状态更新为 Meta reaches the frontier，反映评测列表的模型更替与前沿动态。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 27,
+          "removed_count": 8,
+          "added_lines": [
+            "claude-fable-5.1-max1498±8",
+            "claude-fable-5.1-max1513±15",
+            "claude-fable-5.1-max1710+21/-21",
+            "claude-fable-51310±8",
+            "claude-fable-51496±8",
+            "claude-opus-4-6-high1507±6",
+            "claude-opus-4-61507±6",
+            "claude-opus-4-7-high1495±7",
+            "claude-opus-4-71300±7",
+            "claude-opus-4-71495±6",
+            "claude-opus-5-high1289±8",
+            "claude-opus-5-high1516±7",
+            "claude-opus-5-max1665+13/-13",
+            "glm-5.3-flash1588+15/-15",
+            "gpt-5.5-high1484±6",
+            "gpt-5.51486±6",
+            "gpt-5.6-sol-xhigh (codex-harness)1604+13/-13",
+            "gpt-5.6-sol-xhigh1483±9",
+            "gpt-6-astra-max1733+21/-21",
+            "grok-4.6-high1596+18/-18",
+            "muse-spark-1.2 (xHigh)1500±11",
+            "muse-spark-1.3-max |",
+            "muse-spark-1.3-max1294±15",
+            "muse-spark-1.3-max1493±9",
+            "muse-spark-1.3-max1645+18/-18",
+            "qwen3.8-max-09021639",
+            "qwen3.8-max1302±8"
+          ],
+          "removed_lines": [
+            "claude-fable-5.1-max1501±8",
+            "claude-fable-51313±8",
+            "claude-fable-51504±9",
+            "claude-opus-4-6-high1506±7",
+            "claude-opus-4-61510±6",
+            "claude-opus-4-7-high1497±7",
+            "claude-opus-4-7-high1576+10/-10",
+            "claude-opus-4-71299±7"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude-fable-51623",
+              "before": "claude-fable-51623+12/-12",
+              "after": "claude-fable-51623+11/-11"
+            }
+          ],
+          "signal_preview": "claude-fable-5.1-max: 1498±8",
+          "raw_added_count": 29,
+          "raw_removed_count": 28,
+          "id": "obs_e88aa78a4b3ce802cabb5b0101fe1d2b9d7b0a2f324ca6d679a275ac6a16bb5e",
+          "permalink": "/item/obs_e88aa78a4b3ce802cabb5b0101fe1d2b9d7b0a2f324ca6d679a275ac6a16bb5e/",
+          "llm_summary": "Claude 系列多个模型的 Elo 分数条目发生增删，新增 claude-fable-5.1-max 和 claude-opus-4-7 系列的多条分数，同时删除旧分数条目，表明这些模型的评测结果被更新或重新采样。"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "DeepSeek V4.1 Flash 上架，闲时定价公布",
+          "items": [
+            {
+              "text": "DeepSeek V4.1 Flash 新增至模型列表，并公布闲时定价 1.094元",
+              "type": "release"
+            },
+            {
+              "text": "模型列表移除 deepseek-v4-flash-0731，替换为 deepseek-v4.1-flash",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "Agent 服务价格上调 60%",
+          "items": [
+            {
+              "text": "xAI Agent 起始价格从 $0.05/min 上调至 $0.08/min",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "K2 Horizon 系列多尺寸模型上线，Meta 前沿模型更新",
+          "items": [
+            {
+              "text": "K2 Horizon 0.9B/3.7B/7B/MoVA 36B A4B 新增至评测列表",
+              "type": "release"
+            },
+            {
+              "text": "Muse Spark 1.3 评测状态更新为 Meta reaches the frontier",
+              "type": "other"
+            },
+            {
+              "text": "移除 Gemini 3.8 Flash 相关评测条目",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "Claude 系列多模型 Elo 分数更新，新增 5.1-max 等条目",
+          "items": [
+            {
+              "text": "claude-fable-5.1-max 新增多个 Elo 分数条目（1498/1513/1710）",
+              "type": "release"
+            },
+            {
+              "text": "claude-opus-4-7 系列新增多个评测分数条目",
+              "type": "release"
+            },
+            {
+              "text": "claude-fable-5 及 opus-4-6 等旧分数条目被替换",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "博客转向 AI 标准与治理议题",
+          "items": [
+            {
+              "text": "新增博客『AI Needs Evidenced Standards, Not A Cartel』",
+              "type": "other"
+            },
+            {
+              "text": "新增博客『Who Gets to Define the Rules for AI?』",
+              "type": "other"
+            },
+            {
+              "text": "移除旧博客『Automating fork maintenance with AI agents』",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "HuggingFace",
+          "logo_summary": "数据集卡片元数据更新，移除旧引用",
+          "items": [
+            {
+              "text": "新增自动语音识别数据集 common_voice 及 DOI 引用",
+              "type": "other"
+            },
+            {
+              "text": "移除 arxiv 引用及 custom_code 标记",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-13",
+      "stats": {
+        "total": 68,
+        "success": 66,
+        "failed": 2,
+        "changed": 4,
+        "unchanged": 62
+      },
+      "changed": [
+        {
+          "platform": "Cohere",
+          "source_type": "changelog",
+          "url": "https://docs.cohere.com/changelog",
+          "status": "changed",
+          "added_count": 18,
+          "removed_count": 9,
+          "added_lines": [
+            "\"Capital punishment has existed in the United States since before the United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states. The federal government (including the United States military) also uses capital punishment.\",",
+            "\"Carson City is the capital city of the American state of Nevada. At the 2010 United States Census, Carson City had a population of 55,274.\",",
+            "\"Charlotte Amalie is the capital and largest city of the United States Virgin Islands. It has about 20,000 people. The city is on the island of Saint Thomas.\",",
+            "\"The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean that are a political division controlled by the United States. Its capital is Saipan.\",",
+            "\"Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district. The President of the USA and many major national government offices are in the territory. This makes it the political center of the United States of America.\",",
+            "co = ClientV2(api_key=\"<YOUR API KEY>\")",
+            "co = cohere.ClientV2()",
+            "file=open(\"./sample.wav\", \"rb\"),",
+            "from cohere import ClientV2",
+            "import cohere",
+            "language=\"en\",",
+            "model=\"cohere-transcribe-03-2026\",",
+            "model=\"command-a-translate-08-2025\",",
+            "print(response)",
+            "query = \"What is the capital of the United States?\"",
+            "response = co.audio.transcriptions.create(",
+            "response = co.chat(",
+            "results = co.rerank("
+          ],
+          "removed_lines": [
+            "| 1 | from cohere import ClientV2",
+            "| 1 | import cohere",
+            "| 10 | \"Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district. The President of the USA and many major national government offices are in the territory. This makes it the political center of the United States of America.\",",
+            "| 10 | \"content\": \"Translate this text to Spanish: Hello, how are you?\",",
+            "| 11 | \"Capital punishment has existed in the United States since before the United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states. The federal government (including the United States military) also uses capital punishment.\",",
+            "| 11 | print(response)",
+            "| 14 | results = co.rerank(",
+            "| 3 | co = ClientV2(api_key=\"<YOUR API KEY>\")",
+            "| 3 | co = cohere.ClientV2()"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "rerank-v4.0-pro",
+              "before": "| 15 | model=\"rerank-v4.0-pro\", query=query, documents=docs, top_n=5",
+              "after": "model=\"rerank-v4.0-pro\", query=query, documents=docs, top_n=5"
+            }
+          ],
+          "signal_preview": "\"Capital punishment has existed in the United States since before the United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states. The federal government (including the United States military) also uses capital punishment.\",",
+          "raw_added_count": 21,
+          "raw_removed_count": 23,
+          "id": "obs_ffe9c4c1796e2e17f62a0dc511485c8cabc43602e00a83ac55e6bc57f9fdf486",
+          "permalink": "/item/obs_ffe9c4c1796e2e17f62a0dc511485c8cabc43602e00a83ac55e6bc57f9fdf486/",
+          "llm_summary": "新增了 cohere-transcribe-03-2026 模型的调用示例，包括导入 ClientV2、打开音频文件等代码片段，同时删除了旧的翻译示例和部分文档内容，表明该语音转写模型已正式上架并更新了文档。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 4,
+          "added_lines": [
+            "AnthropicAnthropic + CognitionOpenAIOpenAI + CognitionMetaZ.aiMoonshot AISpaceXAIAlibaba CloudDeepSeekGoogle",
+            "Gemini 3.8 Flash (low)See more"
+          ],
+          "removed_lines": [
+            "Anthropic + CognitionOpenAI",
+            "Estimate (independent evaluation forthcoming)",
+            "GPT-6 Astra (Non-reasoning)",
+            "OpenAI + CognitionMetaZ.aiMoonshot AISpaceXAIAlibaba CloudDeepSeekGoogle"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "muse spark",
+              "before": "Muse Spark 1.3 (xhigh)See more",
+              "after": "Muse Spark 1.3 (xhigh)"
+            }
+          ],
+          "signal_preview": "AnthropicAnthropic + CognitionOpenAIOpenAI + CognitionMetaZ.aiMoonshot AISpaceXAIAlibaba CloudDeepSeekGoogle",
+          "raw_added_count": 7,
+          "raw_removed_count": 9,
+          "id": "obs_4570783a5dc9cdb5e0088ae94383c32306d4569a434b8780aac3008ff5ad58c2",
+          "permalink": "/item/obs_4570783a5dc9cdb5e0088ae94383c32306d4569a434b8780aac3008ff5ad58c2/",
+          "llm_summary": "榜单新增了 Gemini 3.8 Flash (low) 条目，并扩展了供应商列表，同时移除了 GPT-6 Astra (Non-reasoning) 和独立评估的预估说明，反映模型阵容调整和评估状态更新。"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_2702aea08579341c7834ccdd412cf8d967f31d4949f589d579f06b7710fd8f56",
+          "permalink": "/item/obs_2702aea08579341c7834ccdd412cf8d967f31d4949f589d579f06b7710fd8f56/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 39,
+          "raw_removed_count": 39,
+          "id": "obs_0a4162dd03513bbe34a52e4999524e7840d1c87beebc70177db683f9809fb2a5",
+          "permalink": "/item/obs_0a4162dd03513bbe34a52e4999524e7840d1c87beebc70177db683f9809fb2a5/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Cohere",
+          "logo_summary": "新增语音转写模型 cohere-transcribe-03-2026 及示例代码",
+          "items": [
+            {
+              "text": "新增模型 cohere-transcribe-03-2026，并配套提供音频文件读取与客户端初始化的示例代码",
+              "type": "release"
+            },
+            {
+              "text": "更新了 rerank-v4.0-pro 的调用示例，但参数未实质变化",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "榜单新增 Gemini 3.8 Flash，移除 GPT-6 Astra 非推理版",
+          "items": [
+            {
+              "text": "新增 Gemini 3.8 Flash (low) 条目，并扩展了供应商列表（新增 Anthropic、Cognition、OpenAI 等）",
+              "type": "release"
+            },
+            {
+              "text": "移除 GPT-6 Astra (Non-reasoning) 条目，并删除独立评估的预估说明",
+              "type": "sunset"
+            }
+          ]
         }
       ]
     },

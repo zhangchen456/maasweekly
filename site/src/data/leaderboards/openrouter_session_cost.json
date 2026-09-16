@@ -1,8 +1,8 @@
 {
   "source": "OpenRouter Session Cost",
   "source_url": "https://openrouter.ai/rankings",
-  "snapshot_date": "2026-09-06",
-  "as_of": "2026-09-07T19:30:59.185Z",
+  "snapshot_date": "2026-09-13",
+  "as_of": "2026-09-14T08:47:08.959Z",
   "window_days": 30,
   "manual": false,
   "note": "编程 Agent 每次会话成本中位数（USD，付费流量），按 harness × 模型 × 轮次聚合，源数据每周刷新。主口径为 10-49 轮的典型工作会话，每组 harness 展示该档成本最低的 3 个模型组合。",
@@ -12,22 +12,22 @@
       "app_slug": "hermes-agent",
       "cells": [
         {
-          "model": "Ling 3.0 Flash 20260723",
-          "permaslug": "inclusionai/ling-3.0-flash-20260723",
-          "turn_range": "10-49-turns",
-          "median_cost_usd": 0.00995376
-        },
-        {
-          "model": "GPT OSS 20b",
-          "permaslug": "openai/gpt-oss-20b",
-          "turn_range": "10-49-turns",
-          "median_cost_usd": 0.01363825
-        },
-        {
           "model": "Llama 3.3 70b Instruct",
           "permaslug": "meta-llama/llama-3.3-70b-instruct",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.015586
+          "median_cost_usd": 0.009039188
+        },
+        {
+          "model": "Ling 3.0 Flash 20260723",
+          "permaslug": "inclusionai/ling-3.0-flash-20260723",
+          "turn_range": "10-49-turns",
+          "median_cost_usd": 0.010539721
+        },
+        {
+          "model": "MiMo V2.5 20260422",
+          "permaslug": "xiaomi/mimo-v2.5-20260422",
+          "turn_range": "10-49-turns",
+          "median_cost_usd": 0.018602531
         }
       ]
     },
@@ -36,22 +36,22 @@
       "app_slug": "codex",
       "cells": [
         {
+          "model": "Muse Spark 1.3 Contributor 20260902",
+          "permaslug": "meta/muse-spark-1.3-contributor-20260902",
+          "turn_range": "10-49-turns",
+          "median_cost_usd": 0.01273125
+        },
+        {
           "model": "DeepSeek V4 Flash 20260731",
           "permaslug": "deepseek/deepseek-v4-flash-20260731",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.017064437
+          "median_cost_usd": 0.016491374
         },
         {
           "model": "GLM 5.3 Flash 20260826",
           "permaslug": "z-ai/glm-5.3-flash-20260826",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.019684333
-        },
-        {
-          "model": "GPT 5.6 Luna 20260709",
-          "permaslug": "openai/gpt-5.6-luna-20260709",
-          "turn_range": "10-49-turns",
-          "median_cost_usd": 0.035841662
+          "median_cost_usd": 0.01961004
         }
       ]
     },
@@ -63,19 +63,19 @@
           "model": "MiMo V2.5 20260422",
           "permaslug": "xiaomi/mimo-v2.5-20260422",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.0244715
+          "median_cost_usd": 0.026838278
         },
         {
           "model": "Muse Spark 1.3 Contributor 20260902",
           "permaslug": "meta/muse-spark-1.3-contributor-20260902",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.029551499
+          "median_cost_usd": 0.031927124
         },
         {
-          "model": "GPT 5.6 Luna 20260709",
-          "permaslug": "openai/gpt-5.6-luna-20260709",
+          "model": "DeepSeek V4 Flash 20260731",
+          "permaslug": "deepseek/deepseek-v4-flash-20260731",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.037412524
+          "median_cost_usd": 0.03531377
         }
       ]
     }

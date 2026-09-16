@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_9ae5cb11c6da1d3abf80228a5de66bb1b48bd9e93735b7a9406e68cf3e763918",
+  "sourceId": "alibaba-pricing",
+  "date": "2026-09-14",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "阿里百炼",
+  "sourceType": "pricing",
+  "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+  "title": "阿里百炼 · 定价来源更新",
+  "summary": "新增 deepseek-v4.1-flash 的定价行，并给出闲时价格 1.094元，对应新模型上架后的价格配置。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-13T22:56:30+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "deepseek-v4.1-flash",
+      "闲时 1.094元 |"
+    ],
+    "removed_lines": [],
+    "added_count": 2,
+    "removed_count": 0,
+    "raw_added_count": 2,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-14.json"
+  },
+  "permalink": "/item/obs_9ae5cb11c6da1d3abf80228a5de66bb1b48bd9e93735b7a9406e68cf3e763918/"
+}

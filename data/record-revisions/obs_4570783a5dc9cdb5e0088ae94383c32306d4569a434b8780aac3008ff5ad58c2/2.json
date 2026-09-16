@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_4570783a5dc9cdb5e0088ae94383c32306d4569a434b8780aac3008ff5ad58c2",
+  "sourceId": "aa-industry",
+  "date": "2026-09-13",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "榜单新增了 Gemini 3.8 Flash (low) 条目，并扩展了供应商列表，同时移除了 GPT-6 Astra (Non-reasoning) 和独立评估的预估说明，反映模型阵容调整和评估状态更新。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-12T22:53:46+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "muse spark",
+        "before": "Muse Spark 1.3 (xhigh)See more",
+        "after": "Muse Spark 1.3 (xhigh)"
+      }
+    ],
+    "added_lines": [
+      "AnthropicAnthropic + CognitionOpenAIOpenAI + CognitionMetaZ.aiMoonshot AISpaceXAIAlibaba CloudDeepSeekGoogle",
+      "Gemini 3.8 Flash (low)See more"
+    ],
+    "removed_lines": [
+      "Anthropic + CognitionOpenAI",
+      "Estimate (independent evaluation forthcoming)",
+      "GPT-6 Astra (Non-reasoning)",
+      "OpenAI + CognitionMetaZ.aiMoonshot AISpaceXAIAlibaba CloudDeepSeekGoogle"
+    ],
+    "added_count": 2,
+    "removed_count": 4,
+    "raw_added_count": 7,
+    "raw_removed_count": 9
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-13.json"
+  },
+  "permalink": "/item/obs_4570783a5dc9cdb5e0088ae94383c32306d4569a434b8780aac3008ff5ad58c2/"
+}

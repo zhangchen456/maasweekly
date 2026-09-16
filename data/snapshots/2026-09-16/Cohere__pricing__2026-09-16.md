@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-16T13:12:26.658182 -->
+<!-- fetched: 2026-09-16T07:26:12.165673 -->
 
 Skip to content
 AI for Empowerment: Your freedom. Your focus. See how AI gives you more time for what truly moves you.Explore now
@@ -208,11 +208,6 @@ How is a “search” defined for Rerank pricing?
 A single search unit is defined as one query with up to 100 documents to be ranked.
 If any document exceeds 500 tokens (including the length of the search query), it is automatically split into multiple chunks. Each chunk is treated as an individual document and counts toward the total number of documents ranked for that search.
 This ensures consistent performance and accurate pricing when working with longer documents.
-Ready to put AI to work?
-Request a demo and see how Cohere's secure and private AI platform can unlock productivity for your business.
-See how Cohere's AI models can accommodate your specific enterprise use cases
-Determine the best deployment options for your enterprise
-Learn how Cohere can swiftly move AI into production
 Why enterprises and innovators choose Cohere
 “With Cohere's latest highly secure enterprise LLMs, we aim to provide businesses with powerful and adaptable AI solutions that address specific needs and accelerate the adoption of generative AI globally.”
 — Vivek Mahajan, Corporate Vice President, CTO and CPO
@@ -220,4 +215,9 @@ Read more
 “With Cohere's latest highly secure enterprise LLMs, we aim to provide businesses with powerful and adaptable AI solutions that address specific needs and accelerate the adoption of generative AI globally.”
 — Vivek Mahajan, Corporate Vice President, CTO and CPO
 Read more
+Ready to put AI to work?
+Request a demo and see how Cohere's secure and private AI platform can unlock productivity for your business.
+See how Cohere's AI models can accommodate your specific enterprise use cases
+Determine the best deployment options for your enterprise
+Learn how Cohere can swiftly move AI into production
 Pricing | Secure and Scalable Enterprise AI | Cohere
