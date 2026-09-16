@@ -71,15 +71,23 @@ maasweekly/
 │   │   ├── sync-diff-to-site.py     # diff JSON → daily_changes.json
 │   │   ├── llm-digest.py            # LLM 提炼"今日要点"（需 LLM_API_KEY）
 │   │   ├── fetch-leaderboards.py    # OpenRouter 榜单抓取（需 OPENROUTER_API_KEY）
+│   │   ├── fetch-prices.py          # 八家价格抓取 + Task 02 归档（playwright）
+│   │   ├── export-public-data.py    # Task 03：归档 → 公开数据 release（--check/--dry-run）
 │   │   └── extract-live-events.py   # [已下线] 旧 LIVE 滚动条提炼脚本，保留备查
-│   └── config/maas_official_sources.json  # 信源总配置（改信源在这里）
+│   ├── pricing/                     # 价格归档库（archive/extractors/providers/registry）
+│   ├── public_export/               # Task 03 公开投影（canonical/loaders/projector/validator）
+│   ├── config/maas_official_sources.json  # 信源总配置（改信源在这里）
+│   └── config/public_providers.json # Task 03：sourceId→provider 公开映射
 ├── data/
 │   ├── snapshots/日期/               # 每日原始快照（diff 对比基线，勿删）
 │   ├── diff/日期.md|json             # 每日变化报告（人读 + 机读）
 │   ├── records/                      # 来源变化条目持久归档（obs_*.json，稳定 ID）
-│   └── record-revisions/             # 条目修订历史（不可覆盖）
+│   ├── record-revisions/             # 条目修订历史（不可覆盖）
+│   ├── price-{facts,evidence,records,runs,snapshots}/  # Task 02 价格归档（内容寻址，勿改）
+│   ├── public/v1/                    # Task 03 公开数据 release（export-public-data.py 产出）
 │   ├── weekly/                       # 周报源文件（新周报写好放这里）
 │   └── daily/ weekly-archive-early/  # 历史存档（只读）
+├── services/agent-api/               # Task 03：REST API v1（Node 22 + TS 零依赖，本地）
 └── .github/workflows/                # 三个工作流
 ```
 
@@ -93,6 +101,8 @@ maasweekly/
 | llm-digest.py | pipeline/scripts | LLM 提炼今日要点（含价格变化事件输入） | 日期参数重做单日；`--force` 覆盖；`--all` 回填 |
 | fetch-leaderboards.py | pipeline/scripts | 抓 OpenRouter 榜单 | 失败保留旧快照 |
 | fetch-prices.py | pipeline/scripts | 八家厂商 API 价格结构化抓取（playwright） | `--dry-run`；`--only openai,deepseek` 单家 |
+| export-public-data.py | pipeline/scripts | Task 03：归档 → 公开数据 release | `--check` 只校验；`--dry-run`；`--output-dir` 隔离 |
+| agent-api | services/agent-api | REST API v1 本地服务（`npm start`，127.0.0.1:8787） | 合同 docs/contracts/public-api-v1.md；待 Task 06 部署 |
 | test_pricing_extractors.py | tests/ | 价格解析器离线回归（fixture，不需网络） | 无 |
 | import-weekly.py | site/scripts | data/weekly → content/weekly | 无 |
 | extract-structured.py | site/scripts | 周报 → 结构化 JSON | 无 |

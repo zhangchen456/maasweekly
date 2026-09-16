@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily.maas.click/schemas/public-v1/record.schema.json",
+  "title": "公开条目实体（/items/{id} 详情，change 的超集）",
+  "allOf": [
+    {"$ref": "change.schema.json"},
+    {
+      "type": "object",
+      "properties": {
+        "revisionHistory": {
+          "type": "array",
+          "description": "修订链（升序），来自归档修订目录",
+          "items": {
+            "type": "object",
+            "required": ["revision", "revisedAt"],
+            "properties": {
+              "revision": {"type": "integer", "minimum": 1},
+              "revisedAt": {"type": ["string", "null"]},
+              "reason": {"type": ["string", "null"]}
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["revisionHistory"]
+    }
+  ]
+}

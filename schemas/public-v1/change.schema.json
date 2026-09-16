@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily.maas.click/schemas/public-v1/change.schema.json",
+  "title": "公开变化实体（source_observation 与 price_change 的统一投影）",
+  "type": "object",
+  "required": ["id", "revision", "status", "recordType", "providerId", "sourceId",
+               "observationDate", "timePrecision", "updatedAt", "title", "changeType",
+               "evidenceLevel", "quality", "links", "evidenceIds"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^(obs|price)_[0-9a-f]{64}$"},
+    "revision": {"type": "integer", "minimum": 1},
+    "status": {"enum": ["active", "withdrawn"]},
+    "recordType": {"enum": ["source_observation", "price_change"]},
+    "providerId": {"type": ["string", "null"], "description": "行业来源为 null"},
+    "sourceId": {"type": "string"},
+    "sourceType": {"type": "string"},
+    "observedAt": {"type": ["string", "null"], "description": "ISO UTC；date 精度的历史数据为 null"},
+    "observationDate": {"$ref": "common.schema.json#/$defs/calendarDate"},
+    "timePrecision": {"enum": ["date", "datetime"]},
+    "publishedAt": {"type": ["string", "null"], "description": "官方发布时间，无来源则为 null，不用 updatedAt 替代"},
+    "updatedAt": {"type": ["string", "null"], "description": "最近修订时间（revisedAt）"},
+    "title": {"type": "string"},
+    "summary": {"type": ["string", "null"], "description": "恶意文本以普通字符串原样返回，展示安全属客户端责任"},
+    "summaryOrigin": {"enum": ["rule", "llm", "manual", null]},
+    "changeType": {"$ref": "common.schema.json#/$defs/changeType"},
+    "evidenceLevel": {"$ref": "common.schema.json#/$defs/evidenceLevel"},
+    "quality": {"$ref": "common.schema.json#/$defs/quality"},
+    "diff": {
+      "type": "object",
+      "description": "仅 source_observation：来源页差异摘录",
+      "properties": {
+        "addedLines": {"type": "array", "items": {"type": "string"}},
+        "removedLines": {"type": "array", "items": {"type": "string"}},
+        "addedCount": {"type": "integer", "minimum": 0},
+        "removedCount": {"type": "integer", "minimum": 0},
+        "completeness": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "price": {
+      "type": "object",
+      "description": "仅 price_change：价格事件业务字段",
+      "properties": {
+        "factKey": {"type": "string"},
+        "model": {"type": "string"},
+        "component": {"type": "string"},
+        "currency": {"type": "string"},
+        "unitQuantity": {"type": "integer", "minimum": 1},
+        "unitName": {"type": "string"},
+        "region": {"type": "string"},
+        "billingMode": {"type": "string"},
+        "serviceTier": {"type": "string"},
+        "contextBand": {"type": ["object", "null"]},
+        "timeCondition": {"type": ["object", "null"]},
+        "beforeAmount": {"type": ["string", "null"], "description": "Decimal 字符串，禁止浮点"},
+        "afterAmount": {"type": ["string", "null"], "description": "Decimal 字符串"},
+        "beforeVersionId": {"type": ["string", "null"]},
+        "afterVersionId": {"type": ["string", "null"]},
+        "changedFields": {"type": "array", "items": {"type": "string"}},
+        "comparison": {"type": ["object", "null"], "description": "原样保留（previous/current/direction/percent），不新增跨币种/跨条件推断"}
+      },
+      "additionalProperties": false
+    },
+    "links": {
+      "type": "object",
+      "required": ["permalink"],
+      "properties": {
+        "permalink": {"type": "string", "pattern": "^/item/[^/]+/$"},
+        "sourceUrl": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "evidenceIds": {"type": "array", "items": {"type": "string", "pattern": "^ev_[0-9a-f]{64}$"}, "description": "source_observation 为空数组（证据即来源 diff 本身）"}
+  },
+  "additionalProperties": false
+}

@@ -20,6 +20,23 @@ const check = (name, cond, detail = '') => {
   }
 };
 
+console.log('[0] 测试残留检测');
+// 防泄漏门禁：test-esc/test-wd fixture 曾因 cleanup 中断泄漏进真实归档
+// （2026-09-16 被 git add data/ 提交，人工清除）。开始前先断言归档干净，
+// 残留存在时直接失败——不允许在污染状态下继续跑构建。
+const leakDir = path.resolve(siteRoot, '..', 'data', 'records');
+const recordsReal = fs.readdirSync(leakDir).filter((f) => f.startsWith('obs_'));
+const leaked = recordsReal.filter((f) => {
+  const c = fs.readFileSync(path.join(leakDir, f), 'utf-8');
+  return c.includes('"test-esc"') || c.includes('"test-wd"');
+});
+check('真实归档无测试 fixture 残留', leaked.length === 0,
+  `残留: ${leaked.join(', ')}（请删除并重建 site/src/data/record-index.json）`);
+if (leaked.length > 0) {
+  console.error('检测到测试残留，中止（防止污染继续扩散）');
+  process.exit(1);
+}
+
 console.log('[1] record-index 与归档一致');
 const idxPath = path.join(siteRoot, 'src/data/record-index.json');
 const index = JSON.parse(fs.readFileSync(idxPath, 'utf-8'));
@@ -77,7 +94,7 @@ const existed = fs.existsSync(escRecordFile);
 fs.writeFileSync(escRecordFile, JSON.stringify(escRecord, null, 2));
 fs.mkdirSync(escRevDir, { recursive: true });
 fs.writeFileSync(path.join(escRevDir, '1.json'), JSON.stringify(escRecord, null, 2));
-// 临时索引
+// 临时索引（finally 保证恢复；[0] 残留检测兜底 cleanup 被外部中断的情况）
 const idxPath2 = path.join(siteRoot, 'src/data/record-index.json');
 const idxBak = fs.readFileSync(idxPath2, 'utf-8');
 const idxWithEsc = JSON.parse(idxBak);
@@ -87,7 +104,7 @@ idxWithEsc.push({ id: escId, date: '2026-01-01', platform: '测试平台',
 fs.writeFileSync(idxPath2, JSON.stringify(idxWithEsc, null, 2));
 let escBuilt = false, escEscaped = false, escNotExecuted = false;
 try {
-  execSync('npm run build', { cwd: siteRoot, stdio: 'pipe' });
+  execSync('npm run build', { cwd: siteRoot, stdio: 'pipe', maxBuffer: 64 * 1024 * 1024 });
   const escHtml = fs.readFileSync(path.join(dist, 'item', escId, 'index.html'), 'utf-8');
   escBuilt = true;
   // 恶意文本必须以转义形式出现（&lt;script&gt;），且原文 <script>alert( 存在于文本中
@@ -158,7 +175,7 @@ console.log('[5] withdrawn 页面保留内容（T05 页面侧，真实 fixture �
       title: wdRecord.title, permalink: wdRecord.permalink, revision: 2 });
     fs.writeFileSync(idxPath, JSON.stringify(idxWd, null, 2));
     try {
-      execSync('npm run build', { cwd: siteRoot, stdio: 'pipe' });
+      execSync('npm run build', { cwd: siteRoot, stdio: 'pipe', maxBuffer: 64 * 1024 * 1024 });
       const wdHtml = fs.readFileSync(path.join(dist, 'item', wdId, 'index.html'), 'utf-8');
       check('withdrawn 详情页可访问', wdHtml.includes('已撤回'));
       check('withdrawn 页保留内容（变化摘录仍在）', wdHtml.includes('变化摘录'));

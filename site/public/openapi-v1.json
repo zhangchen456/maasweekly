@@ -1,0 +1,219 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "MaaS Daily Public API",
+    "version": "1.0",
+    "description": "MaaS 平台变化与价格的匿名只读查询 API。所有响应共享 schemaVersion/datasetVersion/dataThrough/query/coverage 元数据；翻页 cursor 固定 datasetVersion。数据不代表实时，覆盖范围见 coverage。"
+  },
+  "servers": [{ "url": "https://daily.maas.click" }],
+  "paths": {
+    "/api/v1/changes": {
+      "get": {
+        "summary": "平台变化列表",
+        "description": "最近变化（来源观察 + 价格事件统一投影）。默认最近 7 个上海日历日（锚定 release dataThrough，非墙钟），日期倒序 + id 升序。withdrawn 默认隐藏。",
+        "parameters": [
+          { "name": "provider", "in": "query", "schema": { "type": "string" }, "description": "providerId（见 /status providers），未知值 400" },
+          { "name": "type", "in": "query", "schema": { "type": "string", "enum": ["source_observation", "source", "price_change", "price"] }, "description": "记录类型别名" },
+          { "name": "q", "in": "query", "schema": { "type": "string", "minLength": 2, "maxLength": 100 }, "description": "标题/摘要文本包含（trim + casefold）" },
+          { "name": "from", "in": "query", "schema": { "type": "string", "format": "date" }, "description": "窗口起点（含），与 to 成对，窗口 [from,to)" },
+          { "name": "to", "in": "query", "schema": { "type": "string", "format": "date" }, "description": "窗口终点（不含），最大 90 天" },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 100, "default": 20 } },
+          { "name": "cursor", "in": "query", "schema": { "type": "string" }, "description": "分页令牌（必须单独传递）" },
+          { "name": "includeWithdrawn", "in": "query", "schema": { "type": "string", "enum": ["true", "false"] }, "description": "true 时返回已撤回条目" }
+        ],
+        "responses": {
+          "200": { "$ref": "#/components/responses/ChangesPage" },
+          "304": { "description": "Not Modified（If-None-Match）" },
+          "400": { "$ref": "#/components/responses/Problem" },
+          "409": { "$ref": "#/components/responses/Problem" },
+          "413": { "$ref": "#/components/responses/Problem" },
+          "429": { "$ref": "#/components/responses/Problem" },
+          "503": { "$ref": "#/components/responses/Problem" }
+        }
+      }
+    },
+    "/api/v1/items/{id}": {
+      "get": {
+        "summary": "条目详情（来源观察或价格事件）",
+        "description": "withdrawn 条目仍返回 200 与撤回状态。含修订链。",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "pattern": "^(obs|price)_[0-9a-f]{64}$" } }
+        ],
+        "responses": {
+          "200": { "description": "条目详情", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ItemEnvelope" } } } },
+          "304": { "description": "Not Modified" },
+          "404": { "$ref": "#/components/responses/Problem" },
+          "429": { "$ref": "#/components/responses/Problem" },
+          "503": { "$ref": "#/components/responses/Problem" }
+        }
+      }
+    },
+    "/api/v1/prices": {
+      "get": {
+        "summary": "价格事实列表",
+        "description": "current 指向的已接受事实版本。原币种、原单位、完整条件（region/billingMode/serviceTier/contextBand/timeCondition）不合并不换算，不自动选最低价。金额为 Decimal 字符串。",
+        "parameters": [
+          { "name": "provider", "in": "query", "schema": { "type": "string" } },
+          { "name": "model", "in": "query", "schema": { "type": "string" }, "description": "modelKey 精确匹配（大小写不敏感），无别名推断" },
+          { "name": "component", "in": "query", "schema": { "type": "string", "enum": ["input", "output", "cache_read", "cache_write"] } },
+          { "name": "region", "in": "query", "schema": { "type": "string" } },
+          { "name": "billingMode", "in": "query", "schema": { "type": "string" } },
+          { "name": "q", "in": "query", "schema": { "type": "string", "minLength": 2, "maxLength": 100 }, "description": "modelKey 文本包含" },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 100, "default": 20 } },
+          { "name": "cursor", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "价格页", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PricesEnvelope" } } } },
+          "304": { "description": "Not Modified" },
+          "400": { "$ref": "#/components/responses/Problem" },
+          "409": { "$ref": "#/components/responses/Problem" },
+          "413": { "$ref": "#/components/responses/Problem" },
+          "429": { "$ref": "#/components/responses/Problem" },
+          "503": { "$ref": "#/components/responses/Problem" }
+        }
+      }
+    },
+    "/api/v1/evidence/{id}": {
+      "get": {
+        "summary": "证据详情",
+        "description": "必要摘录、定位、完整性与相关事实。excerptText 恶意 HTML 以普通字符串返回，展示安全属客户端责任。",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "pattern": "^ev_[0-9a-f]{64}$" } }
+        ],
+        "responses": {
+          "200": { "description": "证据详情", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EvidenceEnvelope" } } } },
+          "304": { "description": "Not Modified" },
+          "404": { "$ref": "#/components/responses/Problem" },
+          "429": { "$ref": "#/components/responses/Problem" },
+          "503": { "$ref": "#/components/responses/Problem" }
+        }
+      }
+    },
+    "/api/v1/weekly": {
+      "get": {
+        "summary": "正式周报索引",
+        "description": "仅正式发布的周报（滚动摘要不在此端点）。最新在前。",
+        "parameters": [
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 100, "default": 20 } },
+          { "name": "cursor", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "周报页", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/WeeklyEnvelope" } } } },
+          "304": { "description": "Not Modified" },
+          "400": { "$ref": "#/components/responses/Problem" },
+          "409": { "$ref": "#/components/responses/Problem" },
+          "413": { "$ref": "#/components/responses/Problem" },
+          "429": { "$ref": "#/components/responses/Problem" },
+          "503": { "$ref": "#/components/responses/Problem" }
+        }
+      }
+    },
+    "/api/v1/weekly/{id}": {
+      "get": {
+        "summary": "正式周报内容",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" } }
+        ],
+        "responses": {
+          "200": { "description": "周报结构化内容", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/WeeklyItemEnvelope" } } } },
+          "304": { "description": "Not Modified" },
+          "404": { "$ref": "#/components/responses/Problem" },
+          "429": { "$ref": "#/components/responses/Problem" },
+          "503": { "$ref": "#/components/responses/Problem" }
+        }
+      }
+    },
+    "/api/v1/status": {
+      "get": {
+        "summary": "当前版本与数据流状态",
+        "description": "三类数据流（来源记录/价格抓取/周报）的 lastAttempt/lastSuccess/state。Task 01 来源流时间精度为日。无有效数据版本时 datasetVersion 为 null 且数据端点 503。",
+        "responses": {
+          "200": { "description": "状态", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/StatusEnvelope" } } } },
+          "304": { "description": "Not Modified" },
+          "429": { "$ref": "#/components/responses/Problem" },
+          "503": { "$ref": "#/components/responses/Problem" }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "Problem": {
+        "description": "错误（application/problem+json）",
+        "content": {
+          "application/problem+json": {
+            "schema": { "$ref": "#/components/schemas/Problem" }
+          }
+        }
+      },
+      "ChangesPage": {
+        "description": "变化页",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ChangesEnvelope" } } }
+      }
+    },
+    "schemas": {
+      "Meta": {
+        "type": "object",
+        "properties": {
+          "schemaVersion": { "const": "1.0" },
+          "datasetVersion": { "type": ["string", "null"], "pattern": "^ds_[0-9a-f]{64}$" },
+          "dataThrough": { "type": ["string", "null"] },
+          "query": { "type": "object" },
+          "coverage": { "type": "object" }
+        }
+      },
+      "Page": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": {} },
+          "page": {
+            "type": "object",
+            "properties": {
+              "limit": { "type": "integer" },
+              "nextCursor": { "type": ["string", "null"] }
+            }
+          }
+        }
+      },
+      "ChangesEnvelope": { "allOf": [
+        { "$ref": "#/components/schemas/Meta" }, { "$ref": "#/components/schemas/Page" }
+      ] },
+      "PricesEnvelope": { "allOf": [
+        { "$ref": "#/components/schemas/Meta" }, { "$ref": "#/components/schemas/Page" }
+      ] },
+      "WeeklyEnvelope": { "allOf": [
+        { "$ref": "#/components/schemas/Meta" }, { "$ref": "#/components/schemas/Page" }
+      ] },
+      "ItemEnvelope": {
+        "type": "object",
+        "properties": {
+          "schemaVersion": { "const": "1.0" },
+          "datasetVersion": { "type": "string" },
+          "item": { "type": "object" }
+        }
+      },
+      "EvidenceEnvelope": { "$ref": "#/components/schemas/ItemEnvelope" },
+      "WeeklyItemEnvelope": { "$ref": "#/components/schemas/ItemEnvelope" },
+      "StatusEnvelope": {
+        "type": "object",
+        "properties": {
+          "schemaVersion": { "const": "1.0" },
+          "datasetVersion": { "type": ["string", "null"] },
+          "status": { "type": "object" }
+        }
+      },
+      "Problem": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string" },
+          "title": { "type": "string" },
+          "status": { "type": "integer" },
+          "detail": { "type": "string" },
+          "code": { "type": "string" },
+          "requestId": { "type": "string" },
+          "recovery": { "type": "string" }
+        }
+      }
+    }
+  }
+}
