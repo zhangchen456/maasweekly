@@ -11,10 +11,16 @@
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
     "test": "npm run build && node --test --test-force-exit \"dist/tests/http.test.js\" \"dist/tests/versioning.test.js\" \"dist/tests/openapi.test.js\" \"dist/tests/p1-fixes.test.js\"",
-    "test:real": "npm run build && node --test dist/tests/real.test.js"
+    "test:real": "npm run build && node --test dist/tests/real.test.js",
+    "test:mcp": "npm run build && node --test --test-force-exit dist/tests/mcp.test.js",
+    "test:mcp:real": "npm run build && node --test --test-force-exit dist/tests/mcp-real.test.js"
   },
   "devDependencies": {
-    "typescript": "^5.7.0",
-    "@types/node": "^22.10.0"
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^4.6.5"
   }
 }

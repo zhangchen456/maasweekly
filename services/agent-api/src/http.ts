@@ -6,16 +6,16 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createHash, randomUUID } from 'node:crypto';
 import type { Dataset, DatasetHolder } from './dataset.js';
 import {
-  DEFAULT_LIMIT, canonicalJson, decodeCursor, encodeCursor, getItem,
-  getEvidence, getWeekly, listChanges, listPrices, listWeekly, normalizeQuery,
-  type CursorPayload, type Endpoint, type NormalizedQuery, type Problem,
+  getItem, getEvidence, getWeekly, normalizeQuery, runListQuery,
+  type Endpoint, Problem,
 } from './query.js';
 
 export interface ServerConfig {
   rateLimit: { capacity: number; refillPerMinute: number };
 }
 
-const BASE_URL = 'https://daily.maas.click';
+import { PUBLIC_BASE_URL } from './public-consts.js';
+const BASE_URL = PUBLIC_BASE_URL;
 const SCHEMA_VERSION = '1.0';
 const MAX_URL = 8 * 1024;
 
@@ -50,7 +50,7 @@ export const ROUTES: RouteMeta[] = [
 // 限流（进程内令牌桶，匿名共享；Task 06 再决定 nginx 层）
 // ---------------------------------------------------------------------------
 
-class TokenBucket {
+export class TokenBucket {
   #tokens: number;
   #last = Date.now();
   constructor(private capacity: number, private refillPerMin: number) {
@@ -318,63 +318,11 @@ function handleList(
   req: IncomingMessage, res: ServerResponse, requestId: string,
   ds: Dataset, endpoint: Endpoint, url: URL, holder: DatasetHolder,
 ): void {
-  const { normalized, problems } = normalizeQuery(endpoint, url.searchParams, ds);
-  if (problems.length > 0) {
-    problem(res, requestId, problems[0]!);
-    return;
-  }
-  const nq = normalized!;
-  // cursor：固定版本 + 从 cursor 恢复原始查询（cursor 是唯一参数，
-  // 服务端不要求客户端重传查询条件）。
-  // 验收 P1-2：MAC 签名防伪造 + 恢复的 qp 重新送全量规范化校验
-  //（limit/窗口/枚举/类型与第一页完全同规——签名层与校验层双保险）。
-  let cursor: CursorPayload | undefined;
-  let activeDs = ds;
-  let query = nq;
-  const cursorRaw = url.searchParams.get('cursor');
-  if (cursorRaw !== null) {
-    const dec = decodeCursor(cursorRaw, endpoint, SCHEMA_VERSION);
-    if (dec.problem) { problem(res, requestId, dec.problem); return; }
-    const payload = dec.payload!;
-    const versioned = holder.getOrLoad(payload.ds);
-    if (!versioned) {
-      problem(res, requestId, {
-        type: '', title: 'Dataset version expired', status: 409,
-        detail: `cursor 指向的版本已清理: ${payload.ds}`,
-        code: 'dataset_version_expired',
-        recovery: '去掉 cursor 从第一页重新查询（数据已更新）。',
-      });
-      return;
-    }
-    // 恢复查询重新全量校验（qp 来自 cursor，可能是旧版本签发的参数形态；
-    // 对当前 dataset 的枚举（provider 等）同样重新验证）
-    const qpEntries = Object.entries(payload.qp)
-      .filter(([, v]) => v !== undefined)
-      .map(([k, v]) => [k, String(typeof v === 'boolean' ? v : v)] as [string, string]);
-    const recheck = normalizeQuery(
-      endpoint, new URLSearchParams(qpEntries), versioned);
-    if (recheck.problems.length > 0) {
-      problem(res, requestId, recheck.problems[0]!);
-      return;
-    }
-    // 规范化结果与 cursor 声明的一致（防降级攻击：qp 里塞两个 provider 等）
-    if (canonicalJson(recheck.normalized!.params) !== canonicalJson(payload.qp)) {
-      problem(res, requestId, {
-        type: 'https://daily.maas.click/problems/invalid-cursor',
-        title: 'Invalid cursor', status: 400,
-        detail: 'cursor 查询参数无法通过规范化',
-        code: 'invalid_cursor',
-        recovery: '从第一页重新查询。',
-      });
-      return;
-    }
-    activeDs = versioned;
-    query = { endpoint, params: payload.qp, qh: payload.qh };
-    cursor = payload;
-  }
-  const page = endpoint === 'changes' ? listChanges(activeDs, query, cursor)
-    : endpoint === 'prices' ? listPrices(activeDs, query, cursor)
-    : listWeekly(activeDs, query, cursor);
+  // 统一列表查询入口（Task 04 D2：与 MCP 共用 runListQuery——
+  // normalizeQuery → cursor 解码/版本固定/恢复重验 → list 全流程单点）
+  const { result, problem: p } = runListQuery(holder, endpoint, url.searchParams);
+  if (p) { problem(res, requestId, p); return; }
+  const { ds: activeDs, nq: query, page } = result!;
   sendJson(req, res, requestId, 200, {
     ...envelope(activeDs, query.params, activeDs.coverage),
     items: page.items,
