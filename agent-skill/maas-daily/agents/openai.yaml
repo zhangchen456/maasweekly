@@ -1,0 +1,21 @@
+# 展示与调用提示元数据（不含密钥、用户路径或环境专属地址）
+name: maas-daily
+display_name: MaaS Daily
+description: MaaS/大模型平台变化与价格查询（daily.maas.click）
+version: 1.0.0
+capabilities:
+  - platform-changes
+  - model-pricing
+  - item-detail
+  - evidence-verification
+  - weekly-report
+preferred:
+  mcp: https://daily.maas.click/api/mcp
+  rest: https://daily.maas.click/api/v1
+documentation:
+  api: https://daily.maas.click/openapi-v1.json
+  contract: https://daily.maas.click/maas-skill/references/api.md
+notes: >
+  匿名只读，无需 API Key。数据为观察快照（带 datasetVersion 与
+  dataThrough），不代表实时。价格查询返回多候选时由调用方按适用
+  条件自行判断，服务不提供"最低价"结论。

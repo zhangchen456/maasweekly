@@ -8,7 +8,7 @@
  */
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 import type {
-  ChangeEntity, Dataset, EvidenceEntity, ItemEntity,
+  ChangeEntity, Dataset, DatasetHolder, EvidenceEntity, ItemEntity,
   PriceEntity, WeeklyEntity,
 } from './dataset.js';
 
@@ -37,6 +37,11 @@ export interface Page<T> {
 
 export const DEFAULT_LIMIT = 20;
 export const MAX_LIMIT = 100;
+
+/** limit 策略：REST 与 MCP 共用 normalizeQuery，默认/上限不同（任务书 §4.2） */
+export interface LimitPolicy { defaultLimit: number; maxLimit: number }
+export const REST_LIMITS: LimitPolicy = { defaultLimit: DEFAULT_LIMIT, maxLimit: MAX_LIMIT };
+export const MCP_LIMITS: LimitPolicy = { defaultLimit: 10, maxLimit: 30 };
 export const MAX_WINDOW_DAYS = 90;
 export const MAX_CURSOR_BYTES = 4096;
 
@@ -90,6 +95,7 @@ export function normalizeQuery(
   endpoint: Endpoint,
   raw: URLSearchParams,
   ds: Dataset,
+  limits: LimitPolicy = REST_LIMITS,
 ): { normalized?: NormalizedQuery; problems: Problem[] } {
   const problems: Problem[] = [];
   const bad = (code: string, detail: string, recovery: string): Problem => ({
@@ -121,16 +127,16 @@ export function normalizeQuery(
 
   const params: Record<string, unknown> = {};
 
-  // limit
+  // limit（策略由调用方传入：REST 20/100，MCP 10/30——任务书 §4.2）
   const limitRaw = raw.get('limit');
-  let limit = DEFAULT_LIMIT;
+  let limit = limits.defaultLimit;
   if (limitRaw !== null) {
     if (!/^\d+$/.test(limitRaw)) {
-      problems.push(bad('invalid_limit', 'limit 必须是正整数', `1 到 ${MAX_LIMIT} 的整数`));
+      problems.push(bad('invalid_limit', 'limit 必须是正整数', `1 到 ${limits.maxLimit} 的整数`));
     } else {
       limit = parseInt(limitRaw, 10);
-      if (limit < 1 || limit > MAX_LIMIT) {
-        problems.push(bad('invalid_limit', `limit 超出范围: ${limit}`, `1 到 ${MAX_LIMIT} 的整数`));
+      if (limit < 1 || limit > limits.maxLimit) {
+        problems.push(bad('invalid_limit', `limit 超出范围: ${limit}`, `1 到 ${limits.maxLimit} 的整数`));
       }
     }
   }
@@ -456,4 +462,84 @@ export function getEvidence(ds: Dataset, id: string): EvidenceEntity | null {
 
 export function getWeekly(ds: Dataset, id: string): WeeklyEntity | null {
   return ds.weekly.find((w) => w.id === id) ?? null;
+}
+
+// ---------------------------------------------------------------------------
+// runListQuery：列表查询统一入口（REST 与 MCP 共用，Task 04 D2）
+// ---------------------------------------------------------------------------
+
+export interface ListResult {
+  /** 实际执行的 dataset（第一页=current；翻页=cursor 固定版本） */
+  ds: Dataset;
+  /** 实际执行的规范化查询（翻页时来自 cursor 恢复） */
+  nq: NormalizedQuery;
+  page: Page<ChangeEntity> | Page<PriceEntity> | Page<WeeklyEntity>;
+}
+
+/** 列表查询全流程：normalizeQuery → cursor 解码/版本固定/恢复重验 → list。
+ *
+ * 语义与原 http.ts handleList 逐行对应（Task 03 复验 P1-2 的双层防御
+ * 全部保留）；REST 与 MCP 调用同一实现，保证实体/顺序/coverage/版本
+ * 完全一致。problem 由调用方映射到各自传输层（REST: Problem JSON；
+ * MCP: isError 工具错误）。
+ */
+export function runListQuery(
+  holder: DatasetHolder, endpoint: Endpoint, raw: URLSearchParams,
+  limits: LimitPolicy = REST_LIMITS,
+): { result?: ListResult; problem?: Problem } {
+  const current = holder.current;
+  if (!current) {
+    return { problem: {
+      type: 'https://daily.maas.click/problems/no-data',
+      title: 'Service unavailable', status: 503,
+      detail: '当前无有效数据版本', code: 'no_data_available',
+      recovery: '稍后重试；数据发布后自动恢复。',
+    } };
+  }
+  const { normalized, problems } = normalizeQuery(endpoint, raw, current, limits);
+  if (problems.length > 0) return { problem: problems[0]! };
+  const nq = normalized!;
+
+  let cursor: CursorPayload | undefined;
+  let activeDs = current;
+  let query = nq;
+  const cursorRaw = raw.get('cursor');
+  if (cursorRaw !== null) {
+    const dec = decodeCursor(cursorRaw, endpoint, '1.0');
+    if (dec.problem) return { problem: dec.problem };
+    const payload = dec.payload!;
+    const versioned = holder.getOrLoad(payload.ds);
+    if (!versioned) {
+      return { problem: {
+        type: 'https://daily.maas.click/problems/dataset-version-expired',
+        title: 'Dataset version expired', status: 409,
+        detail: `cursor 指向的版本已清理: ${payload.ds}`,
+        code: 'dataset_version_expired',
+        recovery: '去掉 cursor 从第一页重新查询（数据已更新）。',
+      } };
+    }
+    // 恢复查询重新全量校验（qp 来自 cursor；对 versioned 的枚举同样重验）
+    const qpEntries = Object.entries(payload.qp)
+      .filter(([, v]) => v !== undefined)
+      .map(([k, v]) => [k, String(v)] as [string, string]);
+    const recheck = normalizeQuery(
+      endpoint, new URLSearchParams(qpEntries), versioned, limits);
+    if (recheck.problems.length > 0) return { problem: recheck.problems[0]! };
+    if (canonicalJson(recheck.normalized!.params) !== canonicalJson(payload.qp)) {
+      return { problem: {
+        type: 'https://daily.maas.click/problems/invalid-cursor',
+        title: 'Invalid cursor', status: 400,
+        detail: 'cursor 查询参数无法通过规范化',
+        code: 'invalid_cursor',
+        recovery: '从第一页重新查询。',
+      } };
+    }
+    activeDs = versioned;
+    query = { endpoint, params: payload.qp, qh: payload.qh };
+    cursor = payload;
+  }
+  const page = endpoint === 'changes' ? listChanges(activeDs, query, cursor)
+    : endpoint === 'prices' ? listPrices(activeDs, query, cursor)
+    : listWeekly(activeDs, query, cursor);
+  return { result: { ds: activeDs, nq: query, page } };
 }

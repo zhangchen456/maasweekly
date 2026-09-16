@@ -30,7 +30,8 @@ maasweekly/
 │   ├── weekly/                  # 周报源文件
 │   ├── daily/                   # 早期每日追踪报告（7 月前）
 │   └── weekly-archive-early/    # 更早期手写周报存档
-├── services/agent-api/       # REST API v1（Task 03，Node 22 + TS 零依赖；本地 127.0.0.1:8787，待部署）
+├── services/agent-api/       # REST API v1 + MCP /api/mcp（Task 03/04，Node 22 + TS；本地 127.0.0.1:8787，待部署）
+├── agent-skill/maas-daily/   # Agent Skill 源（Task 04：SKILL.md 路由 + references）
 └── .github/workflows/       # 自动化
     ├── daily-update.yml     # 每天凌晨 05:00 抓取 + 构建 + 部署
     └── weekly-update.yml    # 每周一 09:00 抓取汇总 + 周报导入 + 部署
@@ -43,7 +44,15 @@ maasweekly/
 提供匿名只读 REST API：`/api/v1/changes | prices | items/{id} |
 evidence/{id} | weekly | weekly/{id} | status`，支持筛选、cursor 固定版本
 翻页、ETag/304、Problem JSON。合同：`docs/contracts/public-api-v1.md`；
-OpenAPI：`site/public/openapi-v1.json`。本地跑：
+OpenAPI：`site/public/openapi-v1.json`。
+
+### MCP 与 Agent Skill（Task 04，本地可用）
+
+同一服务提供 MCP 端点 `POST /api/mcp`（官方 SDK 1.30，stateless，五个
+`maas_get_*` 只读工具，与 REST 同数据同版本）。Agent Skill 包发布在
+`/maas-skill/`（manifest + install.sh；源在 `agent-skill/maas-daily/`，
+构建 `python3 site/scripts/build-skill-package.py`）。合同：
+`docs/contracts/mcp-v1.md`。本地跑：
 
 ```bash
 python3 pipeline/scripts/export-public-data.py

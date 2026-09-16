@@ -10,6 +10,7 @@ import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DatasetHolder } from './dataset.js';
+import { createMcpHandler, DEFAULT_MCP_CONFIG } from './mcp.js';
 import { createHandler, type ServerConfig } from './http.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -28,6 +29,17 @@ const config: ServerConfig = {
   },
 };
 
+// MCP 独立配置（任务书 §4.1：独立限流，不消耗 REST 匿名桶）
+const mcpConfig = {
+  originAllowlist: (process.env.MCP_ALLOWED_ORIGINS
+    ?? DEFAULT_MCP_CONFIG.originAllowlist.join(',')).split(',').map((s) => s.trim()).filter(Boolean),
+  maxBodyBytes: parseInt(process.env.MCP_MAX_BODY_BYTES ?? String(DEFAULT_MCP_CONFIG.maxBodyBytes), 10),
+  rateLimit: {
+    capacity: parseInt(process.env.MCP_RATE_CAPACITY ?? '30', 10),
+    refillPerMinute: parseInt(process.env.MCP_RATE_REFILL_PER_MIN ?? '30', 10),
+  },
+};
+
 // cursor MAC 密钥（验收 P1-2）：默认进程内随机（重启后旧 cursor 全失效，
 // 可接受——cursor 是短期分页令牌）；多实例部署设 CURSOR_SECRET 共享。
 import { setCursorSecret } from './query.js';
@@ -40,9 +52,20 @@ if (holder.reload()) {
   console.warn(`[agent-api] 无有效数据版本（${holder.lastReloadError}），数据路由将 503`);
 }
 
-const server = http.createServer(createHandler(holder, config));
+// dispatcher：/api/mcp → MCP；其余 → REST（http.ts 行为不变）
+const restHandler = createHandler(holder, config);
+const mcpHandler = createMcpHandler(holder, mcpConfig);
+const server = http.createServer((req, res) => {
+  const pathname = (req.url ?? '').split('?')[0];
+  if (pathname === '/api/mcp') {
+    void mcpHandler(req, res);
+    return;
+  }
+  void restHandler(req, res);
+});
 server.listen(PORT, HOST, () => {
   console.log(`[agent-api] http://${HOST}:${PORT}/api/v1/ （数据根: ${DATA_ROOT}）`);
+console.log(`[agent-api] MCP: POST http://${HOST}:${PORT}/api/mcp（Origin 白名单: ${mcpConfig.originAllowlist.join(', ') || '（无）'}）`);
 });
 
 let timer: NodeJS.Timeout | undefined;

@@ -87,7 +87,8 @@ maasweekly/
 │   ├── public/v1/                    # Task 03 公开数据 release（export-public-data.py 产出）
 │   ├── weekly/                       # 周报源文件（新周报写好放这里）
 │   └── daily/ weekly-archive-early/  # 历史存档（只读）
-├── services/agent-api/               # Task 03：REST API v1（Node 22 + TS 零依赖，本地）
+├── services/agent-api/               # Task 03/04：REST v1 + MCP /api/mcp（Node 22 + TS，本地）
+├── agent-skill/maas-daily/           # Task 04：Agent Skill 源（发布包 site/public/maas-skill/）
 └── .github/workflows/                # 三个工作流
 ```
 
@@ -102,7 +103,8 @@ maasweekly/
 | fetch-leaderboards.py | pipeline/scripts | 抓 OpenRouter 榜单 | 失败保留旧快照 |
 | fetch-prices.py | pipeline/scripts | 八家厂商 API 价格结构化抓取（playwright） | `--dry-run`；`--only openai,deepseek` 单家 |
 | export-public-data.py | pipeline/scripts | Task 03：归档 → 公开数据 release | `--check` 只校验；`--dry-run`；`--output-dir` 隔离 |
-| agent-api | services/agent-api | REST API v1 本地服务（`npm start`，127.0.0.1:8787） | 合同 docs/contracts/public-api-v1.md；待 Task 06 部署 |
+| build-skill-package.py | site/scripts | Task 04：Skill 源 → site/public/maas-skill 发布包 | `--check` 校验 + 源漂移门禁；已入 site build 链 |
+| agent-api | services/agent-api | REST v1 + MCP `/api/mcp`（`npm start`，127.0.0.1:8787） | 合同 docs/contracts/{public-api-v1,mcp-v1}.md；`npm run test:mcp`；待 Task 06 部署 |
 | test_pricing_extractors.py | tests/ | 价格解析器离线回归（fixture，不需网络） | 无 |
 | import-weekly.py | site/scripts | data/weekly → content/weekly | 无 |
 | extract-structured.py | site/scripts | 周报 → 结构化 JSON | 无 |
