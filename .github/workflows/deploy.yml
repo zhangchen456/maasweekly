@@ -2,7 +2,7 @@ name: 线上更新（构建部署）
 
 # 轻量部署工作流：只构建 + rsync 到 aliyun-099，不抓取数据。
 # 触发方式：
-#   1. push 到 main（代码改动即时上线；Actions 自动提交的数据文件不触发，避免循环）
+#   1. push 到 main（job 内自查改动范围：代码改动才部署，纯数据提交跳过）
 #   2. 手动触发（无服务器权限的协作者通过这里部署）
 #
 # 有 aliyun-099 访问权限的人也可以本地直连部署（效果等价）：
@@ -11,24 +11,12 @@ name: 线上更新（构建部署）
 #   （或 root 身份：rsync -az --delete site/dist/ aliyun-099:/var/www/maasweekly/）
 
 on:
+  # 不用 paths 过滤：GitHub 的 paths 匹配在大 push（>3000 文件）下只检查
+  # diff 前 3000 个文件，归档数据提交动辄数千文件，代码改动排在后面时
+  # workflow 会静默不触发（官方文档明确此限制）。改为 push 一律触发，
+  # job 内用 git diff 自查改动范围，纯数据提交自动跳过。
   push:
     branches: [main]
-    paths:
-      # 站点代码 + 手工维护的注册表（platform-logos.json）→ 触发部署。
-      # 注意：GitHub Actions 的 paths 匹配按顺序生效，最后一条命中为准，
-      # 因此自动产出的数据文件必须逐条列在否定规则之后。
-      - 'site/**'
-      - 'pipeline/**'
-      - '.github/workflows/deploy.yml'
-      - '!data/**'                        # Actions 定时提交的快照/diff 数据，不触发
-      - '!site/src/data/daily_changes.json'
-      - '!site/src/data/weekly-digest.json'
-      - '!site/src/data/record-index.json'
-      - '!site/src/data/live_feeds.json'
-      - '!site/src/data/article_images.json'
-      - '!site/src/data/leaderboards/**'
-      - '!site/src/data/pricing/**'
-      - '!**/*.md'
   workflow_dispatch:
 permissions:
   contents: read
@@ -48,8 +36,42 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # 取全量历史：改动自查需要 diff push 的 before..after 范围
+          fetch-depth: 0
+
+      - name: Detect deployable changes
+        id: changes
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "手动触发，直接部署"
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          BEFORE="${{ github.event.before }}"
+          AFTER="${{ github.sha }}"
+          # before 不可得（新建分支/仓库初始 push）→ fail-open 部署
+          if ! git cat-file -e "$BEFORE" 2>/dev/null; then
+            echo "before SHA 不存在（force push/初始 push），fail-open 部署"
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # 部署白名单：站点代码 / 管线 / 工作流。数据文件（data/、site/src/data/
+          # 产出物、markdown）不触发部署——Actions 定时提交不产生循环部署。
+          # quotepath=off：中文路径默认输出带引号的八进制转义，会绕过前缀匹配
+          git -c core.quotepath=off diff --name-only "$BEFORE" "$AFTER" > /tmp/changed.txt || true
+          CHANGED=$(grep -vE '^data/|^site/src/data/|\.md$' /tmp/changed.txt || true)
+          if [ -z "$CHANGED" ]; then
+            echo "纯数据/markdown 提交，跳过部署"
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "代码改动，触发部署："
+            echo "$CHANGED" | head -20
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Setup Node
+        if: steps.changes.outputs.deploy == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -57,12 +79,14 @@ jobs:
           cache-dependency-path: site/package-lock.json
 
       - name: Build site
+        if: steps.changes.outputs.deploy == 'true'
         working-directory: site
         run: |
           npm ci
           npm run build
 
       - name: Setup SSH key
+        if: steps.changes.outputs.deploy == 'true'
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
@@ -70,4 +94,5 @@ jobs:
           ssh-keyscan -H ${{ env.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy via rsync
+        if: steps.changes.outputs.deploy == 'true'
         run: rsync -az --delete site/dist/ ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}
