@@ -133,7 +133,30 @@
 
 ## 6. 未完成项（如实声明）
 
-- **T16 完整 workflow**：llm-digest 环节需要 `LLM_API_KEY` 的环境，本机未配置，尚未执行。这是 Task 02 唯一剩余验收项。
+（无。T16 已于 2026-09-16 本地完整执行，见 §5.3；部署与回仓提交步骤属 CI 专属，本地等价验证到构建产物为止。）
+
+## 5.3 T16 完整 workflow 本地执行（2026-09-16 13:21）
+
+按 daily-update.yml 步骤顺序本地等价执行（部署/SSH/回仓提交为 CI 专属，本地验证到 dist 产物）：
+
+| 步骤 | 命令 | 退出码 | 产物 |
+| --- | --- | --- | --- |
+| 信源抓取 | `python3 pipeline/scripts/fetch_sources.py` | 0 | 09-16 diff（68 信源：39 成功 / 29 失败，全 first_fetch——09-13~15 无抓取记录超出 3 天回溯窗，如实表现） |
+| 同步 diff | `python3 pipeline/scripts/sync-diff-to-site.py` | 0 | 11 天 / 139 changed / 3 周 |
+| 价格抓取 | `python3 pipeline/scripts/fetch-prices.py` | 0 | RUN-STATUS ok 8/8；39 price_changes；ledger 2691 条 |
+| LLM 要点 | `LLM_API_KEY=… python3 pipeline/scripts/llm-digest.py` | 0 | 09-16 highlights 1 组（Anthropic cache_write 3 条要点） |
+| 重同步 | `sync-diff-to-site.py`（二次） | 0 | highlights 保留并聚合进 weekly-digest（W38 09-16 pricings=3） |
+| 归档校验 | `archive-price-evidence.py --check` | 0 | 通过 |
+| 构建门禁 | `validate-price-archive.py` | 0 | 3001 事件 / 5612 证据 |
+| 全测试 | 三套测试 | 0 | 56 项 + 八家 fixture + 18 项 record |
+| 全站构建 | `npm run build` | 0 | **8786 页 / 10.18 秒** |
+
+dist 抽查：首页含今日 Anthropic 要点 ✓、W38 周页 09-16 pricings 渲染 ✓、价格台账入口 ✓。
+
+T16 过程中修复两个真实缺陷：
+
+1. **llm-digest latest 选取错误**：`latest = days[0]`，但 days 不保证按日期排序（实测 days[0] 是 09-02）——无参调用会把无内容的旧条目当最新日处理，真正有 price_changes 的当日被跳过。改为 `max(days, key=lambda d: d["date"])`。
+2. **（确认既有行为）** sync 重建 days 后，不在 `data/diff/` 中的日期条目会消失（含其 price_changes/highlights）。CI 顺序（fetch_sources 先跑）下不触发；本地跳过信源抓取直接跑 sync 会清掉当日价格数据——本次按正确顺序重跑恢复。
 - **T16 完整 workflow 回放未做**：需要 LLM_API_KEY 的 llm-digest 环节未在本地重放；sync 的 price_changes 保留逻辑未改动（既有实现按日期幂等保留）。
 - **deploy.yml paths 已含 data/** 与 site/src/data/**（推送自动触发链路不变）。
 - 34 条台账价格无 evidence_link（glm 旧版页面 + anthropic 旧 key 历史）——不伪造，回退显示官方 URL。

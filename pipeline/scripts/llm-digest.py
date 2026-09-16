@@ -242,7 +242,9 @@ def main():
     elif all_days:
         targets = [d for d in days if not d.get("highlights") or force]
     else:
-        latest = days[0] if days else None
+        # latest = 日期最大的那天（days 不保证按日期排序——实测 days[0]
+        # 可能是旧日期，会把无内容的旧条目当最新日误处理）
+        latest = max(days, key=lambda d: d["date"]) if days else None
         # 最新一天在 CI（GITHUB_ACTIONS）默认重跑：每日 run 中 price_changes 可能在
         # 早间 highlights 之后写入（如手动重跑 fetch-prices），刷新以纳入价格事件；
         # 本地行为不变（已有 highlights 跳过，避免误覆盖人工修正）
