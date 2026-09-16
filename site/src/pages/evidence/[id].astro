@@ -1,0 +1,266 @@
+---
+// 价格证据详情页：/evidence/ev_.../
+// 数据源：data/price-evidence/<ev_id>.json（持久归档，不可变）
+import Layout from '../../layouts/Layout.astro';
+import { logoFor } from '../../lib/platforms';
+import fs from 'node:fs';
+import path from 'node:path';
+
+export async function getStaticPaths() {
+  const evidenceDir = path.join(process.cwd(), '..', 'data', 'price-evidence');
+  if (!fs.existsSync(evidenceDir)) {
+    return []; // 尚无证据归档（首跑前），不生成页面
+  }
+  // 一次性建立 evidence_id → 引用事实列表 的索引（A4：原来每个证据页
+  // 在 frontmatter 里全库扫描 versions/ 目录，7352 页 × 1.6 万文件是
+  // 构建耗时主源——O(pages × versions) → O(pages + versions)）
+  const versionsDir = path.join(process.cwd(), '..', 'data', 'price-facts', 'versions');
+  const factsByEvidence = new Map<string, any[]>();
+  if (fs.existsSync(versionsDir)) {
+    for (const f of fs.readdirSync(versionsDir)) {
+      if (!f.startsWith('pfv_')) continue;
+      let v: any;
+      try {
+        v = JSON.parse(fs.readFileSync(path.join(versionsDir, f), 'utf-8'));
+      } catch (e) {
+        throw new Error(`[evidence] 版本目录读取失败（构建中止）: ${f}: ${e}`);
+      }
+      if (v.evidence_id) {
+        const list = factsByEvidence.get(v.evidence_id) ?? [];
+        list.push(v);
+        factsByEvidence.set(v.evidence_id, list);
+      }
+    }
+  }
+  const paths: any[] = [];
+  for (const f of fs.readdirSync(evidenceDir)) {
+    if (!f.startsWith('ev_') || !f.endsWith('.json')) continue;
+    let record: any;
+    try {
+      record = JSON.parse(fs.readFileSync(path.join(evidenceDir, f), 'utf-8'));
+    } catch (e) {
+      throw new Error(`[evidence] 证据文件损坏（构建中止）: ${f}: ${e}`);
+    }
+    if (record.id !== f.replace('.json', '')) {
+      throw new Error(`[evidence] 证据 id 与文件名不一致: ${f}`);
+    }
+    paths.push({
+      params: { id: record.id },
+      props: { record, factsByEvidence },
+    });
+  }
+  return paths;
+}
+
+const { record, factsByEvidence } = Astro.props;
+const evid: string = record.id;
+
+const PROVIDER_LABEL: Record<string, string> = {
+  openai: 'OpenAI', anthropic: 'Anthropic', google: 'Google', deepseek: 'DeepSeek',
+  kimi: 'Kimi', glm: '智谱', doubao: '豆包', qwen: '通义千问',
+};
+const providerLabel = PROVIDER_LABEL[record.source_key?.split(':')[0]] ?? record.source_key;
+
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const fullUrl = `${site}/evidence/${evid}/`;
+
+const completenessLabel: Record<string, { text: string; cls: string }> = {
+  complete: { text: '完整证据', cls: 'c-ok' },
+  partial: { text: '部分证据', cls: 'c-part' },
+  unavailable: { text: '证据不可用', cls: 'c-bad' },
+};
+const cl = completenessLabel[record.completeness] ?? completenessLabel.partial;
+
+const REASON_LABEL: Record<string, string> = {
+  excerpt_empty: '摘录为空',
+  excerpt_lacks_amount: '摘录缺少金额',
+  excerpt_lacks_unit: '摘录缺少计费单位',
+  snapshot_missing: '原始快照不可用',
+};
+
+// 引用该证据的事实（getStaticPaths 阶段已建索引，构建期一次完成）
+let relatedFacts: any[] = (factsByEvidence as Map<string, any[]>).get(evid) ?? [];
+relatedFacts = relatedFacts.slice().sort((a: any, b: any) =>
+  (b.observed_at || 0) - (a.observed_at || 0));
+
+const COMPONENT_LABEL: Record<string, string> = {
+  input: '输入', output: '输出', cache_read: '缓存读取', cache_write: '缓存写入',
+};
+
+const condText = (v: any) => {
+  const parts: string[] = [];
+  if (v.region && v.region !== 'global') parts.push(`区域 ${v.region}`);
+  if (v.billing_mode && v.billing_mode !== 'realtime') parts.push(v.billing_mode);
+  if (v.context_band) parts.push(`输入 ${v.context_band.min ?? '?'}–${v.context_band.max ?? '+'} tokens`);
+  if (v.time_condition) parts.push(`时段条件 ${v.time_condition.schedule || v.time_condition.period}`);
+  return parts.join(' · ') || '标准条件';
+};
+
+const fmtObserved = (iso: string | null) => {
+  if (!iso) return null;
+  const d = new Date(iso);
+  return Number.isNaN(+d) ? null
+    : d.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Shanghai' });
+};
+// 观察时间取自关联事实（证据是内容身份，自身无观察时间）
+const observedRange = relatedFacts.length > 0
+  ? (() => {
+      const dates = relatedFacts
+        .map((v: any) => fmtObserved(v.observedAt ?? null))
+        .filter(Boolean) as string[];
+      if (!dates.length) return null;
+      const uniq = [...new Set(dates)].sort();
+      return uniq.length === 1 ? uniq[0] : `${uniq[0]} – ${uniq[uniq.length - 1]}`;
+    })()
+  : null;
+---
+
+<Layout title={`${providerLabel} 价格证据 — MaaS Daily`} description={`${providerLabel} 定价页摘录证据${observedRange ? `（观察于 ${observedRange}）` : ''}`}>
+  <header class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">PRICE EVIDENCE · {evid.slice(0, 16)}…</div>
+      <h1>{providerLabel} <span class="type-sep">·</span> 定价页摘录</h1>
+      <div class="record-meta">
+        <span class={`badge ${cl.cls}`}>{cl.text}</span>
+        {observedRange
+          ? <span class="meta-date">关联事实观察于 {observedRange}</span>
+          : <span class="meta-date">证据内容身份（与观察时间无关）</span>}
+      </div>
+      {record.completeness !== 'complete' && (
+        <p class="partial-note">
+          {record.reasons?.length
+            ? `证据不完整：${record.reasons.map((r: string) => REASON_LABEL[r] ?? r).join('、')}。`
+            : '证据不完整。'}
+          引用此证据的价格记录已相应降级，请回官方页面核对。
+        </p>
+      )}
+    </div>
+    <aside class="hero-aside">
+      <img src={logoFor(providerLabel)} alt={providerLabel} class="hero-logo" loading="lazy" />
+    </aside>
+  </header>
+
+  <section class="record-body">
+    <div class="card">
+      <h2>来源</h2>
+      {record.sourceUrl ? (
+        <a href={record.sourceUrl} target="_blank" rel="noopener" class="src-link-lg">
+          {record.sourceUrl} ↗
+        </a>
+      ) : (
+        <p class="muted">来源 URL 不可用。</p>
+      )}
+      <p class="muted">来源快照不可用时此摘录仍是当时保存的证据；源页面后续变化不影响本页内容。</p>
+      <dl class="meta-list">
+        <dt>快照内容哈希</dt><dd class="mono">{record.contentHash?.slice(0, 24)}…</dd>
+        <dt>定位方式</dt><dd>{record.locatorType === 'dom_selector' ? '页面元素（表格）' : record.locatorType}</dd>
+        {record.locator && <><dt>定位</dt><dd class="mono">{record.locator}</dd></>}
+        <dt>提取器版本</dt><dd class="mono">{record.extractorVersion || '未知'}</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h2>摘录</h2>
+      <p class="muted">以下为当时官方页面的安全文本化摘录，本站不执行来源 HTML。观察时间见下方关联事实。</p>
+      <pre class="excerpt">{record.excerptText || '（无摘录内容）'}</pre>
+    </div>
+
+    {relatedFacts.length > 0 && (
+      <div class="card">
+        <h2>引用此证据的价格事实（{relatedFacts.length} 条）</h2>
+        <p class="muted">同一证据可支撑多条不同计费条件的事实；每条事实的金额与条件如下。</p>
+        <ul class="fact-list">
+          {relatedFacts.slice(0, 30).map((v: any) => (
+            <li class="fact-item">
+              <span class="fact-model">{v.model_key}</span>
+              <span class="fact-comp">{COMPONENT_LABEL[v.component] ?? v.component}</span>
+              <span class="fact-amount number">{v.amount} {v.currency} / {v.unit_quantity} {v.unit_name}</span>
+              <span class="fact-cond">{condText(v)}</span>
+              <span class="fact-date">{fmtObserved(v.observedAt ?? null) ? `观察 ${fmtObserved(v.observedAt)}` : ''}</span>
+            </li>
+          ))}
+        </ul>
+        {relatedFacts.length > 30 && <p class="muted">…共 {relatedFacts.length} 条，仅列前 30。</p>}
+      </div>
+    )}
+
+    <div class="card permalink-card">
+      <h2>永久链接</h2>
+      <div class="permalink-row">
+        <code class="permalink-text" id="permalink-text">{fullUrl}</code>
+        <button type="button" class="copy-btn" id="copy-btn" data-url={fullUrl}>复制链接</button>
+      </div>
+      <span class="copy-feedback" id="copy-feedback" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <style>
+    .record-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+    .badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 12px; border: 1px solid; }
+    .c-ok { color: var(--ok, #1a7f37); border-color: currentColor; }
+    .c-part { color: var(--warn, #b35900); border-color: currentColor; }
+    .c-bad { color: var(--err, #cf222e); border-color: currentColor; }
+    .meta-date { color: var(--muted-c, #6a737d); font-size: 13px; }
+    .type-sep { color: var(--muted-c, #6a737d); }
+    .partial-note { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 13px;
+      background: rgba(179, 89, 0, .08); color: var(--warn, #b35900); }
+    .record-body { max-width: 860px; margin: 0 auto; padding: 20px; display: grid; gap: 16px; }
+    .card { background: var(--bg-card, #fff); border: 1px solid var(--line, #e3e6ea);
+            border-radius: 10px; padding: 20px; }
+    .card h2 { margin: 0 0 12px; font-size: 15px; }
+    .muted { color: var(--muted-c, #6a737d); font-size: 13px; }
+    .src-link-lg { color: var(--accent, #0b6bcb); word-break: break-all; }
+    .meta-list { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 12px 0 0; font-size: 13px; }
+    .meta-list dt { color: var(--muted-c, #6a737d); }
+    .meta-list dd { margin: 0; }
+    .mono { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; }
+    .excerpt { background: var(--bg-2, #f6f7f9); border: 1px solid var(--line, #e3e6ea);
+      border-radius: 8px; padding: 14px; font-size: 12.5px; line-height: 1.7;
+      white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;
+      max-height: 420px; overflow-y: auto; font-family: ui-monospace, 'SF Mono', Menlo, monospace; }
+    .fact-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .fact-item { display: flex; gap: 10px; flex-wrap: wrap; align-items: baseline;
+      font-size: 13px; padding: 8px 10px; border-radius: 6px; background: var(--bg-2, #f6f7f9); }
+    .fact-model { font-weight: 550; }
+    .fact-comp { color: var(--muted-c, #6a737d); }
+    .fact-amount { font-variant-numeric: tabular-nums; }
+    .fact-cond { color: var(--muted-c, #6a737d); font-size: 12px; }
+    .fact-date { color: var(--muted-c, #6a737d); font-size: 12px; margin-left: auto; }
+    .permalink-row { display: flex; gap: 10px; align-items: stretch; }
+    .permalink-text { flex: 1; padding: 9px 12px; border-radius: 8px;
+      background: var(--bg-2, #f6f7f9); font-size: 13px; word-break: break-all;
+      border: 1px solid var(--line, #e3e6ea); display: flex; align-items: center; }
+    .copy-btn { padding: 0 18px; border-radius: 8px; border: none; cursor: pointer;
+      background: var(--accent, #0b6bcb); color: #fff; font-size: 13px; white-space: nowrap; }
+    .copy-btn:hover { opacity: .9; }
+    .copy-feedback { display: block; margin-top: 6px; font-size: 12px; min-height: 16px; }
+    .copy-feedback.ok { color: var(--ok, #1a7f37); }
+    .copy-feedback.err { color: var(--err, #cf222e); }
+    @media (max-width: 640px) {
+      .fact-date { margin-left: 0; }
+      .permalink-row { flex-direction: column; }
+      .copy-btn { padding: 10px 18px; }
+    }
+  </style>
+
+  <script>
+    const btn = document.getElementById('copy-btn');
+    const feedback = document.getElementById('copy-feedback');
+    btn?.addEventListener('click', async () => {
+      const url = btn.getAttribute('data-url') || '';
+      try {
+        await navigator.clipboard.writeText(url);
+        feedback!.textContent = '已复制到剪贴板';
+        feedback!.className = 'copy-feedback ok';
+      } catch {
+        const range = document.createRange();
+        range.selectNodeContents(document.getElementById('permalink-text')!);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(range);
+        feedback!.textContent = '自动复制失败，已选中链接，请按 ⌘C 手动复制';
+        feedback!.className = 'copy-feedback err';
+      }
+    });
+  </script>
+</Layout>

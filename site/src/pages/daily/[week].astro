@@ -24,10 +24,18 @@ export async function getStaticPaths() {
   };
   const byWeek: Record<string, any> = Object.fromEntries(
     weeks.map((w) => [w.week, w]));
+  // Task 02：价格事件索引也进周路由并集——只有价格事件的周仍可访问
+  const priceIdxPath = path.join(process.cwd(), 'src/data/price-record-index.json');
+  let priceWeeks = new Set<string>();
+  try {
+    const priceIdx = JSON.parse(fs.readFileSync(priceIdxPath, 'utf-8'));
+    for (const item of priceIdx) priceWeeks.add(weekOf(item.date));
+  } catch {}
   try {
     const idx = JSON.parse(fs.readFileSync(idxPath, 'utf-8'));
     for (const item of idx) {
       const wk = weekOf(item.date);
+      priceWeeks.add(wk);  // 来源记录周也保留
       if (!byWeek[wk]) {
         // 索引独有周：最小骨架（days 由条目聚合），无 LLM 串讲不伪造
         // R5：ISO 周一算法——1 月 4 日总在第一周，周一 = 该周四减 3 天
@@ -50,6 +58,26 @@ export async function getStaticPaths() {
       }
     }
   } catch {}
+  // Task 02：只有价格事件的周（无来源记录）生成最小骨架
+  for (const wk of priceWeeks) {
+    if (!byWeek[wk]) {
+      const [y, n] = wk.split('-W');
+      const jan4 = new Date(Date.UTC(+y, 0, 4));
+      const week1Monday = new Date(jan4);
+      week1Monday.setUTCDate(jan4.getUTCDate() - ((jan4.getUTCDay() + 6) % 7));
+      const monday = new Date(week1Monday);
+      monday.setUTCDate(week1Monday.getUTCDate() + (+n - 1) * 7);
+      const sunday = new Date(monday); sunday.setUTCDate(monday.getUTCDate() + 6);
+      byWeek[wk] = {
+        week: wk,
+        start: monday.toISOString().slice(0, 10),
+        end: sunday.toISOString().slice(0, 10),
+        days: {}, highlights: [],
+        indexOnly: true,
+        recordCount: 0,
+      };
+    }
+  }
   return Object.values(byWeek).map((w: any) => ({
     params: { week: w.week },
     props: { week: w },
@@ -199,6 +227,7 @@ const recordDates = Object.keys(recordsByDate).sort().reverse();
                       {pc.previous ? <><s>{pc.previous}</s> → </> : null}
                       <strong>{pc.current}</strong> {pc.currency}/百万tokens
                     </span>
+                    {pc.id && <a class="pcx-detail" href={`/item/${pc.id}/`}>详情 ↗</a>}
                   </li>
                 ))}
               </ul>
@@ -302,6 +331,7 @@ const recordDates = Object.keys(recordsByDate).sort().reverse();
   .pcx-fold summary span { transition: transform .2s; }
   .pcx-list { list-style: none; margin: 0; padding: 0 0 6px; }
   .pcx-item { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 7px 18px; font-size: 12.5px; border-top: 1px solid var(--line); }
+  .pcx-detail { margin-left: auto; color: var(--accent, #0b6bcb); font-size: 12px; white-space: nowrap; }
   .pcx-vendor { min-width: 64px; color: var(--paper-soft); font-weight: 600; }
   .pcx-comp { font: 500 10.5px/1 "SF Mono", monospace; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; }
   .pcx-vals { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--paper-soft); }

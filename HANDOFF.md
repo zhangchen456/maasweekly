@@ -103,6 +103,7 @@ maasweekly/
 **价格台账模块**（2026-09 迁移自追浪 app-core-service-001，代码在 `pipeline/pricing/`）：
 
 - 数据流：`fetch-prices.py`（playwright 渲染八家官方定价页，Kimi 多子页聚合）→ 每家 extractor 解析（`pipeline/pricing/extractors.py`，BeautifulSoup 表格展开）→ normalize 门禁（Decimal/证据链/稳定身份）→ `site/src/data/pricing/ledger.json`（模板消费）+ `ledger_history/<date>.json`（diff 基线）
+- Task 02（2026-09-15）：价格证据持久化——`pipeline/pricing/archive.py` 封装稳定 ID（psnap_/ev_/pfv_/price_）与不可变写入；`data/price-{facts,evidence,snapshots,runs,records,record-revisions}/` 为归档目录；价格事件详情页 `/item/price_…/`、证据页 `/evidence/ev_…/`；离线回放 `archive-price-evidence.py --check`；构建门禁 `validate-price-archive.py`（prebuild 链式）；单测 `tests/test_price_archive.py`。台账「报价与来源」弹窗链接证据页。anthropic 5m/1h 缓存写入按 time_condition 区分（旧数据同 key 双条不再出现）
 - 价格变化：与上轮 factdiff → `daily_changes.json` 当日 `price_changes` → llm-digest 喂给今日要点 + 首页 01 区块下「PRICE LEDGER」事件列表
 - 渲染：`/prices/`（追浪模板，搜索/多模型对比/汇率/用量估算，自包含直出）；`/pricing/` 保留 GPU/芯片板块 + 台账入口卡
 - 单家失败降级：记 `meta.failed_sources` 沿用上轮该家 facts（stale），页面显示「部分来源待更新」

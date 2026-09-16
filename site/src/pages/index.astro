@@ -160,6 +160,7 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
                   {pc.previous ? <><s>{pc.previous}</s> → </> : null}
                   <strong>{pc.current}</strong> {pc.currency}/百万tokens
                 </span>
+                {pc.id && <a class="pcx-detail" href={`/item/${pc.id}/`}>详情 ↗</a>}
               </li>
             ))}
           </ul>
@@ -411,6 +412,7 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
   .pcx-head a { color: var(--acid); text-decoration: none; }
   .pcx-kicker { font: 700 10px/1 "SF Mono", monospace; letter-spacing: .12em; color: var(--acid); }
   .pcx-list { list-style: none; margin: 0; padding: 6px 0; }
+  .pcx-detail { margin-left: auto; color: var(--accent, #0b6bcb); font-size: 12px; white-space: nowrap; }
   .pcx-item { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 8px 20px; font-size: 13px; border-bottom: 1px solid var(--line); }
   .pcx-item:last-child { border-bottom: 0; }
   .pcx-vendor { min-width: 64px; color: var(--paper-soft); font-weight: 600; }

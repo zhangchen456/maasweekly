@@ -53,6 +53,7 @@ def fact_to_dict(f) -> dict[str, Any]:
                             "tz": f.time_condition.tz,
                             "schedule": f.time_condition.schedule}
                            if f.time_condition else None),
+        "effective_at": f.effective_at,   # 只来自官方来源；None 不用观察日期补齐
         "observed_at": f.observed_at,
         "evidence_id": f.evidence_id,
         "field_state": f.field_state,
@@ -70,6 +71,7 @@ def build_view_dataset(
     artifact_version: str,
     fx_snapshot: dict | None = None,
     default_currency: str = "CNY",
+    evidence_links: dict[str, str] | None = None,  # 内存 ev id → 持久 ev_id（Task 02 台账入口）
 ) -> dict[str, Any]:
     """构建 ledger.json（模板注入用 dataset）。
 
@@ -143,6 +145,10 @@ def build_view_dataset(
             "field_state": f.get("field_state", "confirmed"),
             "stale_reason": f.get("stale_reason"),
             "source_url": source_urls.get(f.get("evidence_id", ""), ""),
+            # Task 02：持久证据页链接（/evidence/<ev_id>/），无持久证据时为 None
+            "evidence_link": (f"/evidence/{evidence_links[f['evidence_id']]}/"
+                              if evidence_links and f.get("evidence_id")
+                              and f["evidence_id"] in evidence_links else None),
         })
 
     return {
