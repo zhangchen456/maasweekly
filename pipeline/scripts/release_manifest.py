@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -59,7 +60,15 @@ def build_manifest(root: Path, *, rid: str, git_commit: str, git_ts: int,
     seen = set()
     for p in sorted(root.rglob("*")):
         if p.is_symlink():
-            raise ManifestError(f"release 含符号链接: {p.relative_to(root)}")
+            # npm .bin 符号链接是合法运行时结构——记录目标（必须是包内
+            # 相对路径，禁止逃逸），不参与 hash（链接内容由目标文件保证）
+            rel = p.relative_to(root).as_posix()
+            if rel.startswith("agent-api/node_modules/.bin/"):
+                target = os.readlink(p)
+                if target.startswith("/") or ".." in target.split(os.sep)[:2]:
+                    raise ManifestError(f"npm bin 链接逃逸: {rel} -> {target}")
+                continue
+            raise ManifestError(f"release 含符号链接: {rel}")
         if not p.is_file():
             continue
         rel = p.relative_to(root).as_posix()
