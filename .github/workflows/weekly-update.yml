@@ -91,7 +91,20 @@ jobs:
           python3 site/scripts/import-weekly.py
           python3 site/scripts/extract-structured.py
 
-      # ---- 构建部署 ----
+      # ---- 提交数据（§5.2：先入库）----
+      - name: Commit new data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ site/src/content/ site/src/data/
+          if git diff --cached --quiet; then
+            echo "无数据变化，跳过提交"
+          else
+            git commit -m "data: 周报更新 $(date +'%Y-%m-%d')"
+            git push
+          fi
+
+      # ---- 构建部署（数据已提交，dist 与数据源同版）----
       - name: Build site
         if: steps.mode.outputs.mode != 'aggregate'
         working-directory: site
@@ -105,21 +118,9 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ env.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+          cp ops/known_hosts.production ~/.ssh/known_hosts  # 受控 host key
+          chmod 600 ~/.ssh/known_hosts
 
       - name: Deploy via rsync
         if: steps.mode.outputs.mode != 'aggregate'
-        run: rsync -az --delete site/dist/ ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}
-
-      # ---- 提交数据 ----
-      - name: Commit new data
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ site/src/content/ site/src/data/
-          if git diff --cached --quiet; then
-            echo "无数据变化，跳过提交"
-          else
-            git commit -m "data: 周报更新 $(date +'%Y-%m-%d')"
-            git push
-          fi
+        run: rsync -az --delete -e "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts -o StrictHostKeyChecking=yes" site/dist/ ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}
