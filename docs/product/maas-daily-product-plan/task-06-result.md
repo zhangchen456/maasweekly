@@ -1,8 +1,39 @@
 # Task 06 结果报告：生产发布、运行保障与 P0 首发验收
 
-日期：2026-09-17。状态：**M1/M2 通过；M3/M4 复验修复完成（5 项阻断全关）；M5–M7 未开始**。未 push（授权点 A 未到）。本任务未修改生产服务器、nginx、systemd 或线上流量。
+日期：2026-09-17。状态：**M1/M2 通过；M3/M4 两轮复验修复完成（第一轮 5 项 + 第二轮 4 项全关，含真实 Ubuntu flock 证据）；M5–M7 未开始**。未 push（授权点 A 未到）。本任务未修改生产服务器、nginx、systemd 或线上流量。
 
-## 1. 复验修复（2026-09-17，五项阻断）
+## 0. 第二轮复验修复（2026-09-17，四项阻断）
+
+### P0 nginx -t 实际没检查候选配置 — ✅ 关闭
+
+- **原缺陷**：nginx_test 接收候选 include 路径做参数校验，但生产分支 `nginx -t` 校验的是磁盘上当前生效的旧配置——候选 include 从未参与校验。
+- **修复**：候选 include 先就位到生效路径（`write_candidate_include "$EFFECTIVE_INC"`），再无参调用 nginx_test——无论测试 hook 还是生产 `nginx -t`，校验的都是即将生效的配置。
+- **验收**：17 项激活测试含 nginx 失败注入（FAIL_nginx_test / FAIL_nginx_reload）均验证旧可用 + 同 RID 重试成功。
+
+### P1 rollback 失败会搬走历史 release — ✅ 关闭
+
+- **原缺陷**：rollback 切换失败也走 `recover_failed_activation`，把目标 release 从 releases 搬回 incoming——破坏 previous 指向与历史版本链。
+- **修复**：`recover_failed_activation` 增加 `keep_release` 参数；rollback 失败时传 `keep_release`，只恢复服务/指针/include 状态，release 保留原位。
+- **验收**：test_rollback_incompatible_ds_rejected（rc=4 目标保留）、test_rollback_with_reason 回归通过。
+
+### P1 并发测试不能证明 flock 生效 — ✅ 关闭（真实 Ubuntu 证据）
+
+- **原缺陷**：TestT04Concurrent 在 macOS skip，CI 未覆盖——flock 串行从未被真实证明。
+- **修复与证据**：在 Ubuntu 服务器（47.237.135.97，/usr/bin/flock）真实验证——临时 release root 注入，新旧两个 release（旧 ts 与新 ts）并发 activate，断言 final current = 新 release，旧提交不能倒灌：
+  ```
+  final current: rl_aaaaaaaaaa_bbbbbbbbbbbb
+  expected    : rl_aaaaaaaaaa_bbbbbbbbbbbb
+  OK flock 并发串行验证通过（Ubuntu /usr/bin/flock）
+  ```
+- **过程中修出真实 bug**：`exec 9>release.lock` 的锁 fd 被 activate-hook 起的后台服务继承——激活完成后锁仍被 90 秒的桩服务持有，下一次激活等锁直到服务退出（Ubuntu 实测超时复现）。修复：hook/systemctl 调用统一 `9>&-` 关闭锁 fd 继承。生产 systemd 调用同样受益（避免长驻服务隐性持锁）。
+
+### 首发边界：旧 include 不存在的快照恢复 — ✅ 关闭
+
+- **原缺陷**：第一次激活时旧 include 可能不存在；候选 include 已写入生效路径后若 reload 失败，恢复逻辑只处理"旧 include 存在"分支——残留的候选 include 指向已退回 incoming 的失效 root。
+- **修复**：三态快照——`_inc_snapshot` 在事务前记录 `.rollback.inc`（旧内容存在）或 `.no-inc` 标记（原本不存在）；`_inc_restore` 精确恢复到事务前状态（含"删除候选残留恢复到不存在"）。
+- **验收**：17 项激活测试首激活路径（旧 include 不存在）+ 失败注入全绿。
+
+## 1. 第一轮复验修复（2026-09-17，五项阻断）
 
 ### P0-a builder 生产包含 dist — ✅ 关闭
 
@@ -50,7 +81,7 @@
 | 6 | 静态 root 与 API upstream 同 release | ✅（include 内容断言 + 切换后入口冒烟） |
 | 7 | 五种失败注入保持旧可用 | ✅（全部旧 current+include 不变） |
 | 8 | 同 RID 可重新上传激活 | ✅（每种失败后重试 rc=0） |
-| 9 | 并发发布 flock 串行 | 🔶 本地 macOS skip（无 flock，mkdir 锁降级），CI ubuntu 覆盖（TestT04Concurrent） |
+| 9 | 并发发布 flock 串行 | ✅ 真实 Ubuntu 服务器验证通过（/usr/bin/flock，final current = 新 release，旧提交不倒灌；另修出锁 fd 继承 bug——见 §0 第三项） |
 | 10 | 旧 commit 拒 + rollback 留原因 | ✅（test_stale_commit_rejected / test_rollback_with_reason） |
 | 11 | 工作区干净/临时清理 | ✅（无 maas-release-pkg/t06-act 残留、无残留进程、git clean） |
 
@@ -75,6 +106,6 @@ a07b8c43  feat: Task 05（含复验修复）
 
 ## 5. 已知限制
 
-1. flock 并发用例在 macOS 本地 skip（CI ubuntu 跑）；本地以 mkdir 原子锁降级验证单线程路径
+1. flock 并发用例在 macOS 本地 skip——已由真实 Ubuntu 服务器验证补齐（§0 第三项）；本地以 mkdir 原子锁降级验证单线程路径
 2. records.test.mjs 无法完全临时目录化（Astro 构建绑定仓库路径）——残留检测兜底
 3. 切换后入口冒烟（entry_smoke）在 MAAS_SMOKE_URL 未设时跳过（生产由 deploy-release.sh 设公网 URL）

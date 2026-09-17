@@ -118,10 +118,10 @@ with os.fdopen(fd, 'w') as f:
 os.replace(tmp, '$SLOTS_JSON')"
 }
 
-# ---- nginx 控制（复验 P0b：生产真实命令，测试 hook 模拟）----
-nginx_test() {    # <conf-include>：语法校验（含候选 include 检查）
+# ---- nginx 控制（复验 P0：候选 include 真正参与 nginx -t）----
+nginx_test() {  # 无参：校验当前生效配置（候选已就位到生效路径）
   if [ -n "$NGINX_TEST" ]; then
-    "$NGINX_TEST" test "$1"
+    "$NGINX_TEST" test "$EFFECTIVE_INC"
   else
     nginx -t
   fi
@@ -132,6 +132,30 @@ nginx_reload() {
   else
     nginx -s reload
   fi
+}
+
+# include 快照（首发边界：旧 include 可能不存在——用 .no-inc 标记"原本不
+# 存在"的快照态；.rollback.inc 存在=旧内容）。恢复时精确回到事务前状态。
+_inc_snapshot() {  # 事务开始前调用：记录旧 include 状态
+  rm -f "$ROOT/shared/nginx/.rollback.inc" "$ROOT/shared/nginx/.no-inc"
+  if [ -f "$EFFECTIVE_INC" ]; then
+    cp "$EFFECTIVE_INC" "$ROOT/shared/nginx/.rollback.inc"
+  else
+    : > "$ROOT/shared/nginx/.no-inc"
+  fi
+}
+_inc_restore() {  # 恢复事务前的 include 状态（含"原本不存在"）
+  if [ -f "$ROOT/shared/nginx/.rollback.inc" ]; then
+    cp "$ROOT/shared/nginx/.rollback.inc" "$EFFECTIVE_INC"
+    nginx_reload || true
+    rm -f "$ROOT/shared/nginx/.rollback.inc"
+  elif [ -f "$ROOT/shared/nginx/.no-inc" ]; then
+    # 事务前生效 include 不存在——恢复到不存在（候选残留必须删除，
+    # 否则留下指向已退回 incoming 的失效 root）
+    rm -f "$EFFECTIVE_INC"
+    rm -f "$ROOT/shared/nginx/.no-inc"
+  fi
+  rm -f "$ROOT/shared/nginx/.candidate.inc"
 }
 
 EFFECTIVE_INC="$ROOT/shared/nginx/agent-upstream.inc"
@@ -160,18 +184,20 @@ MAAS_RELEASE_DIR=$ROOT/releases/$2
 PUBLIC_DATA_ROOT=$ROOT/releases/$2/data/public/v1
 EOF
   if [ -x "$ROOT/shared/activate-hook" ]; then
-    "$ROOT/shared/activate-hook" start "$1" "$2" "$3"
+    # 9>&-：不让子进程继承锁 fd——后台服务会长期持有 flock 导致
+    # 下一次激活等锁直到服务退出（Ubuntu 实测踩坑）
+    "$ROOT/shared/activate-hook" start "$1" "$2" "$3" 9>&-
   else
-    systemctl start "maas-agent@$1" 2>/dev/null \
+    systemctl start "maas-agent@$1" 2>/dev/null 9>&- \
       || echo "[warn] systemd 不可用（测试模式），跳过服务启动" >&2
   fi
 }
 
 stop_slot() {  # <slot>：停槽位服务 + 清 env
   if [ -x "$ROOT/shared/activate-hook" ]; then
-    "$ROOT/shared/activate-hook" stop "$1" || true
+    "$ROOT/shared/activate-hook" stop "$1" 9>&- || true
   else
-    systemctl stop "maas-agent@$1" 2>/dev/null || true
+    systemctl stop "maas-agent@$1" 2>/dev/null 9>&- || true
   fi
   rm -f "$ROOT/shared/slots/$1.env"
 }
@@ -216,29 +242,25 @@ switch_service_tx() {  # <rid>：成功 0；候选失败 5；nginx 失败 7
   start_candidate "$cand_slot" "$rid" "$cand_port" || return 5
   candidate_smoke "$cand_port" || return 5
 
-  # 2. 候选 include（临时文件：site root + upstream 同 release）
-  cand_inc="$ROOT/shared/nginx/.candidate.inc"
-  write_candidate_include "$cand_inc" "$rid" "$cand_port"
+  # 2. 事务前快照旧 include 状态（含"不存在"态——首发边界）
+  _inc_snapshot
 
-  # 3. nginx -t
-  if ! nginx_test "$cand_inc"; then
-    rm -f "$cand_inc"
+  # 3. 候选 include 就位到生效路径 → nginx -t 校验的就是即将生效的配置
+  write_candidate_include "$EFFECTIVE_INC" "$rid" "$cand_port"
+  if ! nginx_test; then
+    _inc_restore
     return 7
   fi
 
-  # 4. 备份旧 include → 原子替换 → reload
-  if [ -f "$EFFECTIVE_INC" ]; then
-    cp "$EFFECTIVE_INC" "$ROOT/shared/nginx/.rollback.inc"
-  fi
-  mv "$cand_inc" "$EFFECTIVE_INC"
+  # 4. reload
   if ! nginx_reload; then
-    _restore_inc
+    _inc_restore
     return 7
   fi
 
   # 5. 切换指针
   if ! swap_pointer "$rid"; then
-    _restore_inc
+    _inc_restore
     return 7
   fi
 
@@ -247,11 +269,11 @@ switch_service_tx() {  # <rid>：成功 0；候选失败 5；nginx 失败 7
     if [ -n "$cur_rid" ]; then
       _atomic_symlink "releases/$cur_rid" "$ROOT/current"
     fi
-    _restore_inc
+    _inc_restore
     return 7
   fi
-  # 事务全部成功——清理备份
-  rm -f "$ROOT/shared/nginx/.rollback.inc"
+  # 事务全部成功——清理快照
+  rm -f "$ROOT/shared/nginx/.rollback.inc" "$ROOT/shared/nginx/.no-inc"
 
   # 7. 记录槽位映射 + 停旧槽（reload 已优雅排空旧 worker）
   slots_write "$rid" "$cand_slot"
@@ -261,18 +283,9 @@ switch_service_tx() {  # <rid>：成功 0；候选失败 5；nginx 失败 7
   return 0
 }
 
-_restore_inc() {  # 恢复旧 include + reload（存在 rollback 备份时）
-  if [ -f "$ROOT/shared/nginx/.rollback.inc" ]; then
-    cp "$ROOT/shared/nginx/.rollback.inc" "$EFFECTIVE_INC"
-    nginx_reload || true
-    rm -f "$ROOT/shared/nginx/.rollback.inc"
-  fi
-  rm -f "$ROOT/shared/nginx/.candidate.inc"
-}
-
 # ---- 失败恢复（复验 P1b：所有失败阶段统一恢复，同 RID 可重试）----
-recover_failed_activation() {  # <rid> <rc>
-  local rid="$1" rc="$2" slot slot_rid
+recover_failed_activation() {  # <rid> <rc> [keep_release]
+  local rid="$1" rc="$2" keep="${3:-}" slot slot_rid
   # 停止属于本次候选的槽（旧槽服务旧 release 不动）
   for slot in blue green; do
     slot_rid="$(rid_of_slot "$slot")"
@@ -280,8 +293,8 @@ recover_failed_activation() {  # <rid> <rc>
       stop_slot "$slot" || true
     fi
   done
-  # 恢复旧 include
-  _restore_inc
+  # 恢复旧 include（含首发时不存在态）
+  _inc_restore
   # 恢复旧 current（若已被换）
   local cur prev
   cur="$(current_release)"
@@ -301,8 +314,10 @@ try:
     json.dump(d, open('$SLOTS_JSON', 'w'), ensure_ascii=False, indent=2)
 except Exception:
     pass" 2>/dev/null || true
-  # 未激活 release 退回 incoming（同 RID 可重试）
-  if [ -d "$ROOT/releases/$rid" ]; then
+  # activate 失败：候选退回 incoming（同 RID 可重试）；rollback 失败
+  # （keep_release）：目标 release 是历史版本链的一部分，保留原位——
+  # 搬走会破坏 previous 指向
+  if [ "$keep" != "keep_release" ] && [ -d "$ROOT/releases/$rid" ]; then
     rm -rf "$ROOT/incoming/$rid"
     mv "$ROOT/releases/$rid" "$ROOT/incoming/$rid" || true
   fi
@@ -421,7 +436,9 @@ import sys; sys.exit(0 if cur_ds in retained + [m['datasetVersion']] else 1)" \
     switch_rc=0
     switch_service_tx "$rid" || switch_rc=$?
     if [ "$switch_rc" -ne 0 ]; then
-      recover_failed_activation "$rid" "$switch_rc"
+      # rollback 目标是已有 release——不退回 incoming（保留 previous 链），
+      # 只恢复服务/指针/include 状态
+      recover_failed_activation "$rid" "$switch_rc" keep_release
       die "回滚切换失败（已恢复；退出 ${switch_rc}）" "$switch_rc"
     fi
     log "rollback $rid reason=\"${reason}\""
