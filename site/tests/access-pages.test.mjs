@@ -167,14 +167,32 @@ console.log('[7] T12：页面内链 dist 实存');
   }
 }
 
-console.log('[8] T15（自动部分）：CSS 与焦点');
+console.log('[8] T15/T22（自动部分）：CSS 与焦点');
 {
   const html = read('agent/index.html');
-  check('代码块 overflow-x 处理', html.includes('overflow-x'));
-  check('焦点样式 focus-visible', html.includes('focus-visible'));
-  check('四卡 grid 自适应（minmax）', html.includes('minmax'));
+  // Astro 5 把 scoped style 抽离为外链 CSS——从 <link rel="stylesheet"> 读
+  const cssLinks = [...html.matchAll(/href="(\/_astro\/[^"]+\.css)"/g)].map((m) => m[1]);
+  const css = cssLinks.map((h) => {
+    const p = path.join(dist, h);
+    return fs.existsSync(p) ? fs.readFileSync(p, 'utf-8') : '';
+  }).join('\n');
+  check('抽离 CSS 存在', css.length > 0, `外链: ${cssLinks.join(',')}`);
+  check('代码块 overflow-x 处理', css.includes('overflow-x'));
+  check('焦点样式 focus-visible', css.includes('focus-visible'));
+  // M6 改为纵向段落 + 首屏状态汇总 + 锚点导航；不再用 grid minmax（T21/T22）
+  check('首屏四状态汇总', html.includes('status-row') && html.includes('status-pill'));
+  check('入口导航（四锚点）', html.includes('nav-pills') && html.includes('aria-label="接入方式导航"'));
+  check('方式选择段存在', html.includes('选哪种方式'));
+  for (const anchor of ['method-skill', 'method-mcp', 'method-rss', 'method-rest']) {
+    check(`锚点 #${anchor}`, html.includes(`id="${anchor}"`) && html.includes(`href="#${anchor}"`));
+  }
+  check('锚点偏移（防固定导航遮挡）', css.includes('scroll-margin-top'));
   check('复制按钮为原生 button', html.includes('data-copy-btn'));
-  // 手动部分（320/375/桌面/键盘）记录在 task-05-result.md
+  check('五个 MCP 工具名', ['maas_get_changes', 'maas_get_prices', 'maas_get_item', 'maas_get_evidence', 'maas_get_weekly']
+    .every((t) => html.includes(t)));
+  check('六类 REST 端点', ['/status', '/changes', '/prices', '/item', '/evidence', '/weekly']
+    .every((p) => html.includes(`/api/v1${p}`)));
+  // 手动部分（320/375/768/桌面/键盘）记录在 task-06-result.md
 }
 
 console.log(failed === 0 ? '\n全部通过 ✓' : `\n${failed} 项失败 ✗`);

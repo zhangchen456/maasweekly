@@ -15,25 +15,62 @@ if (violations.length > 0) {
 const release = loadVerifiedRelease(undefined, { select: ['changes'] });
 const P = PUBLIC_ACCESS;
 const base = P.canonicalBaseUrl;
-const sk = P.surfaces.skill;
-const mcp = P.surfaces.mcp;
-const rest = P.surfaces.rest;
-const rss = P.surfaces.rss;
 
-const statusLabel = (s: typeof rss) =>
+const statusLabel = (s: typeof P.surfaces.rss) =>
   s.status === 'available' ? '已上线' : s.status === 'pending' ? '待部署' : '不可用';
 
-// 成功示例：确定性选取（最新日期中 summary 非空的 source_observation，id 升序第一条）
+// §11.1.1 首屏四状态汇总（合同版本 + 真实状态；locallyVerified 自说明）
+const summary = [
+  { name: 'Skill', s: P.surfaces.skill, anchor: 'method-skill' },
+  { name: 'MCP', s: P.surfaces.mcp, anchor: 'method-mcp' },
+  { name: 'RSS', s: P.surfaces.rss, anchor: 'method-rss' },
+  { name: 'REST API', s: P.surfaces.rest, anchor: 'method-rest' },
+] as const;
+
+// §11.1.3 方式选择（一句话标准）
+const chooser = [
+  { label: '希望自然语言自动路由', target: 'Skill', anchor: 'method-skill' },
+  { label: '客户端支持远程 MCP', target: 'MCP', anchor: 'method-mcp' },
+  { label: '阅读器订阅', target: 'RSS', anchor: 'method-rss' },
+  { label: '代码集成', target: 'REST API', anchor: 'method-rest' },
+] as const;
+
+// 成功示例（确定性选取：最新日期中 summary 非空的 source_observation，id 升序第一条）
 const sample = (release.changes ?? [])
   .filter((c) => c.recordType === 'source_observation' && c.summary)
   .sort((a, b) => b.observationDate.localeCompare(a.observationDate)
     || a.id.localeCompare(b.id))[0];
 const sampleSummary = sample?.summary?.slice(0, 160) ?? '';
 
+// 五个 MCP 工具（§11.3；rest 各端点同域名同数据版本）
+const mcpTools = [
+  { name: 'maas_get_changes', use: '最近变化（来源观察 + 价格事件）' },
+  { name: 'maas_get_prices', use: '当前价格事实（条件化）' },
+  { name: 'maas_get_item', use: '按 ID 取单条条目（平台/模型/记录）' },
+  { name: 'maas_get_evidence', use: '引证与证据链' },
+  { name: 'maas_get_weekly', use: '正式周报（日期型 ID）' },
+] as const;
+
+// 六类 REST 端点（§11.5；路径来自 config.paths.apiBase）
+const restEndpoints = [
+  { path: '/status', use: 'release 元数据与 datasetVersion' },
+  { path: '/changes', use: '最近变化流' },
+  { path: '/prices', use: '价格事实查询' },
+  { path: '/item', use: '单条目详情' },
+  { path: '/evidence', use: '引证链查询' },
+  { path: '/weekly', use: '正式周报列表与详情' },
+] as const;
+
+// §11.2 Skill 三段操作
+const sk = P.surfaces.skill;
+const mcp = P.surfaces.mcp;
+const rest = P.surfaces.rest;
+const rss = P.surfaces.rss;
 const verified = P.verifiedClients;
 const pending = P.pendingClients;
 ---
 <Layout title="Agent 接入 — MaaS Daily" description="Skill、MCP、RSS、REST 四种 Agent 接入方式与真实状态">
+  <!-- §11.1.1 首屏结论：能力 + 四入口真实状态 + 合同版本 -->
   <section class="hero">
     <div class="shell">
       <div class="eyebrow">AGENT ACCESS</div>
@@ -43,67 +80,184 @@ const pending = P.pendingClients;
         不代表供应商实时官网；无结果只表示当前覆盖内未记录到匹配项。
         <a href="/method/">数据方法说明 →</a>
       </p>
+      <ul class="status-row">
+        {summary.map(({ name, s, anchor }) => (
+          <li>
+            <a href={`#${anchor}`} class="status-pill">
+              <span class="pill-name">{name}</span>
+              <span class={`badge ${s.status}`}>{statusLabel(s)}</span>
+              <span class="pill-ver">{s.contractVersion}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
+  <!-- §11.1.2 入口导航（四个锚点；复制/打开操作后仍可定位） -->
+  <nav class="shell nav-pills" aria-label="接入方式导航">
+    {summary.map(({ name, anchor }) => (
+      <a href={`#${anchor}`} class="nav-pill">{name}</a>
+    ))}
+  </nav>
+
+  <!-- §11.1.3 方式选择说明（一句话标准） -->
   <section class="shell">
-    <h2>四种接入方式</h2>
-    <div class="cards">
-      <article class="card">
-        <header>
-          <h3>Skill</h3>
-          <span class={`badge ${sk.status}`}>{statusLabel(sk)}</span>
-        </header>
-        <p class="card-desc">希望 Agent 自动选择查询方法的用户。安装一次，Agent 按技能规则路由五类查询。</p>
-        <p class="card-note">{sk.reason}</p>
+    <h2>选哪种方式</h2>
+    <ul class="chooser-list">
+      {chooser.map(({ label, target, anchor }) => (
+        <li><span class="chooser-label">{label}</span> → <a href={`#${anchor}`}><b>{target}</b></a></li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- §11.1.4 四段接入流程（每段：适用对象/真实状态/最短配置/验证/成功样子/边界/排障） -->
+
+  <!-- Skill -->
+  <section class="shell method" id="method-skill">
+    <header class="method-header">
+      <h2><a href="#method-skill" aria-label="Skill 段锚点">§</a> Skill</h2>
+      <span class={`badge ${sk.status}`}>{statusLabel(sk)}</span>
+    </header>
+    <p class="method-audience"><b>适用：</b>希望 Agent 按技能规则自动路由查询的用户（自然语言提问 → 自动选择 changes/prices/item/evidence/weekly 五类）。<b>状态：</b>{sk.reason}</p>
+
+    <h3>最短配置（三段操作 §11.2）</h3>
+    <ol class="steps">
+      <li><b>安装</b>（--dir 占位符必须由你选择实际目录，不猜测、不用 sudo）：
         <CopyBlock code={`curl -fsSL ${base}/maas-skill/install.sh | bash -s -- --dir <你的技能目录>`} label="安装命令" />
-        <p class="card-hint">`&lt;你的技能目录&gt;` 必须由你选择实际目录（如 Claude Code 的 skills 目录）——安装器不猜测、不使用 sudo。</p>
-      </article>
+      </li>
+      <li><b>开新会话</b>：多数客户端在新会话才扫描 Skill——关闭并重启客户端或新建对话。</li>
+      <li><b>验证一句话</b>：在新会话中发问（见下「验证问题」）。</li>
+    </ol>
 
-      <article class="card">
-        <header>
-          <h3>MCP</h3>
-          <span class={`badge ${mcp.status}`}>{statusLabel(mcp)}</span>
-        </header>
-        <p class="card-desc">支持 Streamable HTTP MCP 的客户端。五个只读工具（maas_get_*），与 REST 同数据同版本。</p>
-        <p class="card-note">{mcp.reason}</p>
-        <CopyBlock code={`{\n  "mcpServers": {\n    "maas-daily": {\n      "type": "http",\n      "url": "${base}/api/mcp"\n    }\n  }\n}`} label="MCP 配置" />
-        {verified.map((c) => (
-          <p class="verified-client">✓ 已验证：{c.name} {c.version}（{c.verifiedAt}，{c.transport}）</p>
-        ))}
-        {pending.map((c) => (
-          <p class="pending-client">⏳ 待验证：{c.name} —— {c.unblockCondition}</p>
-        ))}
-      </article>
+    <h3>真实验证过的客户端</h3>
+    {verified.map((c) => c.surface === 'skill' && (
+      <p class="verified-client">✓ 已验证：{c.name} {c.version}（{c.verifiedAt}）</p>
+    ))}
+    {pending.map((c) => (
+      <p class="pending-client">⏳ 待验证：{c.name} —— {c.unblockCondition}</p>
+    ))}
+    <p class="muted">Codex 在 T18 通过前保持待验证，不展示代表已就绪的标志（§11.2 红线）。</p>
 
-      <article class="card">
-        <header>
-          <h3>RSS</h3>
-          <span class={`badge ${rss.status}`}>{statusLabel(rss)}</span>
-        </header>
-        <p class="card-desc">阅读器与低频自动化。两个 feed：最近变化（≤100 条）与正式周报（≤30 期）。</p>
-        <p class="card-note">{rss.reason}</p>
-        <CopyBlock code={`${base}/feed.xml`} label="变化 feed" />
-        <CopyBlock code={`${base}/feed/weekly.xml`} label="周报 feed" />
-        <p class="card-hint">建议 30 分钟或更慢轮询。修订保持条目身份（GUID）；已撤回记录退出默认 feed——<b>详情页是修订与撤回的权威状态</b>。</p>
-      </article>
+    <h3>更新、卸载、发现失败排查</h3>
+    <CopyBlock code={`curl -fsSL ${base}/maas-skill/install.sh | bash -s -- --dir <你的技能目录> --update`} label="更新" />
+    <CopyBlock code={`curl -fsSL ${base}/maas-skill/install.sh | bash -s -- --dir <你的技能目录> --uninstall`} label="卸载" />
+    <ul class="trouble-list">
+      <li>Skill 没出现：先确认 `SKILL.md` 在你指定的 --dir 顶层；不要修改安装器自动生成的副本目录</li>
+      <li>已安装但 Agent 不调用：开新会话（多数客户端不热更新技能列表）</li>
+      <li>重复副本冲突：检查同一个技能目录下是否有 `maas-daily` 与 `maas-daily.bak`/时间戳目录并存，移除多余副本</li>
+      <li>不允许要求你提供 token 或本地文件（匿名公开）</li>
+    </ul>
 
-      <article class="card">
-        <header>
-          <h3>REST API</h3>
-          <span class={`badge ${rest.status}`}>{statusLabel(rest)}</span>
-        </header>
-        <p class="card-desc">开发者和脚本。匿名只读，支持筛选、cursor 固定版本翻页、ETag/304、Problem JSON。</p>
-        <p class="card-note">{rest.reason}</p>
-        <CopyBlock code={`curl ${base}/api/v1/status`} label="最小示例" />
-        <p class="card-hint">OpenAPI：<a href="/openapi-v1.json">openapi-v1.json</a> · 合同：<a href="/method/">分页与错误说明</a></p>
-      </article>
-    </div>
+    <h3>能力边界</h3>
+    <ul class="common-boundary">
+      <li>技能在本地按规则路由到 MCP/REST；数据、覆盖范围、dataThrough 与站内一致</li>
+      <li>匿名只读；无结果不等于外部世界没有变化（见「共同数据边界」）</li>
+      <li>成功标准是返回真实 datasetVersion、dataThrough、coverage 和站内永久链接，不是「下载成功」</li>
+    </ul>
+
+    <h3>排障</h3>
+    <p class="muted">查询公网失败属预期：Skill 的查询路径依赖 REST/MCP 生产路由，随 Task 06 上线（当前 pending 如实呈现，不让 Agent 用模型记忆补答）。</p>
   </section>
 
-  <section class="shell">
+  <!-- MCP -->
+  <section class="shell method" id="method-mcp">
+    <header class="method-header">
+      <h2><a href="#method-mcp" aria-label="MCP 段锚点">§</a> MCP</h2>
+      <span class={`badge ${mcp.status}`}>{statusLabel(mcp)}</span>
+    </header>
+    <p class="method-audience"><b>适用：</b>客户端支持远程 Streamable HTTP MCP。<b>状态：</b>{mcp.reason}</p>
+
+    <h3>最短配置（§11.3）</h3>
+    <CopyBlock code={`{\n  "mcpServers": {\n    "maas-daily": {\n      "type": "http",\n      "url": "${base}/api/mcp"\n    }\n  }\n}`} label="MCP 配置" />
+    <p class="muted">唯一生产 URL：<code>{base}/api/mcp</code>；Streamable HTTP；匿名只读、无 token。</p>
+
+    <h3>五个工具</h3>
+    <ul class="tools-list">
+      {mcpTools.map((t) => (
+        <li><code>{t.name}</code> —— {t.use}</li>
+      ))}
+    </ul>
+
+    <h3>已验证 / 待验证客户端（状态来自唯一配置 §11.3）</h3>
+    {verified.map((c) => (
+      <p class="verified-client">✓ 已验证：{c.name} {c.version}（{c.verifiedAt}，{c.transport}）</p>
+    ))}
+    {pending.map((c) => (
+      <p class="pending-client">⏳ 待验证：{c.name} —— {c.unblockCondition}</p>
+    ))}
+
+    <h3>一次真实工具调用（成功样子）</h3>
+    <CopyBlock code={`skill maas-daily / mcp maas-daily：请调用 maas_get_changes 取最近 7 天 OpenAI 的变化，最多 10 条`} label="验证调用示例" />
+    <p class="muted">成功标准：返回真实 datasetVersion、dataThrough、coverage、站内永久链接；多候选价格时返回条件与证据；空结果应如实报告，不用模型知识补答。</p>
+
+    <h3>能力边界与排障（§11.3）</h3>
+    <ul class="common-boundary">
+      <li>多候选价格：返回所有匹配条件，由你按证据选择，不替你做语义合并</li>
+      <li>单一调用最大返回 200 条；除此之外用 cursor 翻页（cursor 原样回传 URL，合法 cursor 跨 release 窗口内仍有效）</li>
+      <li>429 时 Retry-After 后再试；不建议并发重试</li>
+      <li>刷新工具列表/开新会话；确认客户端支持远程 HTTP transport；Origin 校验失败返回 403</li>
+      <li>服务不可用返回 503 Problem JSON，不返回 200 空数据</li>
+    </ul>
+  </section>
+
+  <!-- RSS -->
+  <section class="shell method" id="method-rss">
+    <header class="method-header">
+      <h2><a href="#method-rss" aria-label="RSS 段锚点">§</a> RSS</h2>
+      <span class={`badge ${rss.status}`}>{statusLabel(rss)}</span>
+    </header>
+    <p class="method-audience"><b>适用：</b>阅读器与低频自动化订阅。<b>状态：</b>{rss.reason}</p>
+
+    <h3>两个 feed（§11.4）</h3>
+    <CopyBlock code={`${base}/feed.xml`} label="变化 feed（最近变化，≤100 条）" />
+    <CopyBlock code={`${base}/feed/weekly.xml`} label="周报 feed（≤30 期正式周报）" />
+
+    <h3>行为合同（§11.4）</h3>
+    <ul class="common-boundary">
+      <li>RSS 2.0；建议 <b>30 分钟或更慢</b>轮询</li>
+      <li>ETag/304 条件请求；GUID 稳定，修订保持条目身份</li>
+      <li>已撤回记录退出默认 feed；撤回无法可靠召回——<b>详情页是修订与撤回的权威状态</b></li>
+      <li>不提供第三方全文，订阅不等于获得商业再分发许可</li>
+    </ul>
+
+    <h3>真实阅读器（未完成前保持 pending）</h3>
+    <p class="muted">尚未完成真实阅读器验收（§12 第 5 项）。授权前通过的标准：两个 feed 公网订阅、重复刷新无重复 GUID、缓存头/ETag/304 符合合同。</p>
+  </section>
+
+  <!-- REST API -->
+  <section class="shell method" id="method-rest">
+    <header class="method-header">
+      <h2><a href="#method-rest" aria-label="REST API 段锚点">§</a> REST API</h2>
+      <span class={`badge ${rest.status}`}>{statusLabel(rest)}</span>
+    </header>
+    <p class="method-audience"><b>适用：</b>开发者和脚本。匿名只读；支持筛选、cursor 固定版本翻页、ETag/304、Problem JSON。<b>状态：</b>{rest.reason}</p>
+
+    <h3>六类入口（§11.5；不复制字段表，OpenAPI 是权威）</h3>
+    <ul class="tools-list">
+      {restEndpoints.map((e) => (
+        <li><code>{P.paths.apiBase}{e.path}</code> —— {e.use}</li>
+      ))}
+    </ul>
+    <p class="muted">OpenAPI：<a href="/openapi-v1.json">openapi-v1.json</a> · 合同：<a href="/method/">分页与错误说明</a></p>
+
+    <h3>两个可直接执行的 curl（§11.5）</h3>
+    <CopyBlock code={`curl ${base}/api/v1/status`} label="status（最小）" />
+    <CopyBlock code={`curl "${base}/api/v1/changes?platform=openai&limit=10"`} label="真实变化查询（OpenAI 最近 10 条）" />
+
+    <h3>能力边界（§11.5）</h3>
+    <ul class="common-boundary">
+      <li>匿名 GET；CORS 开放（相对应域名）</li>
+      <li>ETag/304 与缓存控制；限流 429 + Retry-After</li>
+      <li>cursor 原样回传（合法 cursor 在保留窗口内继续有效）；过期请重查</li>
+      <li>Problem JSON（RFC 9457）：不实现的字段（增量同步 / Webhook / SSE）不做承诺</li>
+    </ul>
+  </section>
+
+  <!-- §11.1.4 验证动作（共用）：成功是真实查询返回，不是配置保存 -->
+  <section class="shell" id="verify">
     <h2>验证问题</h2>
-    <p>安装成功的标准是<b>完成一次真实查询</b>（拿到数据版本、数据截至时间、覆盖范围与永久链接），不是文件下载或配置保存。在新会话中问：</p>
+    <p>配置/安装成功的标准是<b>完成一次真实查询</b>（拿到 datasetVersion、dataThrough、coverage 与站内永久链接），不是文件下载或配置保存。在新会话中问：</p>
     <ol class="verify-list">
       <li>「用 maas-daily 查最近几天 OpenAI 有什么变化」——回答应引用数据版本与覆盖日期</li>
       <li>「查 gpt-6-astra 的输入价格，给出条件与证据 ID」——应含币种、单位、适用条件、观察时间</li>
@@ -112,8 +266,9 @@ const pending = P.pendingClients;
     <p class="muted">配置 MCP 或安装 Skill 后可能需要<b>开启新会话</b>才能发现工具。</p>
   </section>
 
-  <section class="shell">
-    <h2>成功示例（当前数据）</h2>
+  <!-- §11.1.5 共同数据边界（观察快照/dataThrough/coverage/无结果语义/证据核验/修订撤回/频率） -->
+  <section class="shell" id="boundary">
+    <h2>共同数据边界</h2>
     <div class="example">
       <p class="example-meta">
         数据版本 {release.datasetVersion.slice(0, 12)}… · 数据截至 {release.dataThrough} ·
@@ -128,26 +283,28 @@ const pending = P.pendingClients;
         </blockquote>
       )}
     </div>
-  </section>
-
-  <section class="shell">
-    <h2>数据范围与更新节奏</h2>
-    <ul class="coverage-list">
-      <li>变化：{release.coverage.changes.from} 至 {release.coverage.changes.to}，共 {release.coverage.changes.count} 条（来源观察 + 价格事件）</li>
-      <li>价格：{release.coverage.prices.facts} 条当前已接受事实</li>
-      <li>证据：{release.coverage.evidence.count} 条</li>
-      <li>正式周报：{release.coverage.weekly.count} 期（最新 {release.coverage.weekly.latestId}）</li>
+    <ul class="boundary-list">
+      <li><b>观察快照</b>：数据是已观察到的快照（观察时间 vs 发布时间不同），不代表供应商实时官网</li>
+      <li><b>dataThrough</b>：每个回答都应引用当前数据的 dataThrough；dataThrough 之前的变化不在本数据集</li>
+      <li><b>coverage</b>：变化 {release.coverage.changes.count} 条 / 价格事实 {release.coverage.prices.facts} 条 / 证据 {release.coverage.evidence.count} 条 / 周报 {release.coverage.weekly.count} 期（最新 {release.coverage.weekly.latestId}）</li>
+      <li><b>无结果语义</b>：表示当前覆盖内未记录到匹配项，不等于外部世界没有变化</li>
+      <li><b>证据核验</b>：每条结论对应站内永久链接；LLM 摘要需以证据页为准</li>
+      <li><b>修订/撤回</b>：修订保持条目身份；撤回退出默认 feed 与查询——详情页是最新状态权威来源</li>
+      <li><b>频率</b>：REST/MCP 429 + Retry-After 退避；RSS 建议 ≥30 分钟轮询</li>
+      <li>详细语义：<a href="/method/">方法说明</a></li>
     </ul>
-    <p class="muted">每日更新（约北京时间凌晨）；观察时间与发布时间的区别见 <a href="/method/">方法说明</a>。</p>
   </section>
 
-  <section class="shell">
-    <h2>故障恢复</h2>
-    <ul class="recovery-list">
-      <li><b>待部署端点</b>：Skill 查询依赖的 REST、MCP 生产路由随 Task 06 上线——上线前安装的 Skill 查询公网地址会失败，属预期（如实报告，不用模型记忆补答）。</li>
-      <li><b>RSS 缓存限制</b>：已缓存的撤回内容无法可靠召回；详情页与 API 是最新状态权威来源。</li>
-      <li><b>无结果</b>：表示当前覆盖内未记录到匹配项，不等于外部世界没有变化。</li>
-      <li><b>接口变更</b>：见 <a href="/changelog/">变更记录</a>。</li>
+  <!-- §11.1.6 反馈与合同入口（OpenAPI/合同/Skill 源码/changelog/反馈渠道；无则不编造） -->
+  <section class="shell" id="contracts">
+    <h2>反馈与合同入口</h2>
+    <ul class="contracts-list">
+      <li>OpenAPI：<a href="/openapi-v1.json">openapi-v1.json</a>（REST 合同；rest-v1）</li>
+      <li>Skill 包：<a href="/maas-skill/manifest.json">manifest.json</a> · <a href="/maas-skill/install.sh">install.sh</a>（skill-v1 / 包版本 1.0.0）</li>
+      <li>MCP 合同：<code>{base}/api/mcp</code> Streamable HTTP（mcp-v1；官方客户端协议）</li>
+      <li>RSS 合同：两个 feed 的行为见上方 RSS 段（rss-v1）</li>
+      <li>变更记录：<a href="/changelog/">changelog</a>（破坏性变更预告；v1 内只向后兼容）</li>
+      <li>反馈渠道：<b>待提供</b>（尚无公开反馈地址；不编造邮箱）</li>
     </ul>
   </section>
 
@@ -158,30 +315,62 @@ const pending = P.pendingClients;
     .lead { max-width: 720px; margin: 0; }
     .shell { max-width: 1180px; margin: 0 auto; padding: 20px; }
     section.shell h2 { margin: 32px 0 12px; font-size: 22px; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
-    .card { background: var(--bg-card, #fff); border: 1px solid var(--line, #e3e6ea); border-radius: 10px; padding: 18px; }
-    .card header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-    .card h3 { margin: 0; font-size: 17px; }
+
+    /* §11.1.1 首屏状态汇总 */
+    .status-row { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 16px 0 0; }
+    .status-pill { display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+      border: 1px solid var(--line, #e3e6ea); border-radius: 20px; padding: 5px 12px;
+      background: var(--bg-card, #fff); color: inherit; }
+    .status-pill:focus-visible { outline: 2px solid var(--accent, #0b6bcb); outline-offset: 2px; }
+    .pill-name { font-weight: 600; font-size: 13px; }
+    .pill-ver { font-size: 11.5px; color: var(--muted-c, #6a737d); }
+
+    /* §11.1.2 入口导航（无 JS 也可用；锚点不被固定导航遮挡） */
+    .nav-pills { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 14px; padding-bottom: 4px;
+      position: sticky; top: 0; background: var(--bg, #fff); z-index: 5; }
+    .nav-pill { border: 1px solid var(--line, #e3e6ea); border-radius: 16px; padding: 3px 12px;
+      font-size: 13px; text-decoration: none; color: inherit; }
+    .nav-pill:focus-visible { outline: 2px solid var(--accent, #0b6bcb); outline-offset: 2px; }
+    .nav-pill:hover { border-color: var(--accent, #0b6bcb); }
+
+    /* 锚点偏移：避免被 sticky 导航遮挡 */
+    .method { scroll-margin-top: 68px; }
+    .method-header { display: flex; align-items: center; gap: 12px; }
+    .method-header h2 { margin: 24px 0 8px; }
+    .method-header h2 a { text-decoration: none; color: var(--muted-c, #6a737d); font-weight: 400; }
+    .method-audience { font-size: 14px; }
+    .method h3 { font-size: 15.5px; margin: 18px 0 8px; }
+
+    /* §11.1.3 方式选择 */
+    .chooser-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 14px; }
+    .chooser-list li { font-size: 14px; }
+    .chooser-label { color: var(--muted-c, #6a737d); }
+
+    .steps { padding-left: 20px; line-height: 1.9; }
+    .tools-list { padding-left: 20px; line-height: 1.9; }
+    .trouble-list { padding-left: 20px; line-height: 1.8; }
+    .boundary-list { padding-left: 20px; line-height: 1.9; }
+    .common-boundary { padding-left: 20px; line-height: 1.8; }
+    .verify-list { padding-left: 20px; line-height: 1.8; }
+    .contracts-list { padding-left: 20px; line-height: 1.9; }
+
     .badge { padding: 2px 10px; border-radius: 10px; font-size: 12px; border: 1px solid; white-space: nowrap; }
     .badge.available { color: var(--ok, #1a7f37); border-color: currentColor; }
     .badge.pending { color: var(--warn, #b35900); border-color: currentColor; }
     .badge.unavailable { color: var(--err, #cf222e); border-color: currentColor; }
-    .card-desc { font-size: 13.5px; margin: 10px 0 6px; }
-    .card-note { font-size: 12.5px; color: var(--warn, #b35900); background: rgba(179, 89, 0, .06); padding: 8px 10px; border-radius: 6px; margin: 6px 0; }
-    .card-hint { font-size: 12.5px; color: var(--muted-c, #6a737d); margin: 8px 0 0; }
-    .card code { font-size: 12px; }
+
     .verified-client { font-size: 12.5px; color: var(--ok, #1a7f37); margin: 6px 0 0; }
     .pending-client { font-size: 12.5px; color: var(--warn, #b35900); margin: 6px 0 0; }
-    .verify-list { padding-left: 20px; line-height: 1.8; }
     .muted { color: var(--muted-c, #6a737d); font-size: 13px; }
     .example { border: 1px solid var(--line, #e3e6ea); border-radius: 10px; padding: 16px; background: var(--bg-card, #fff); }
     .example-meta { font-size: 12.5px; color: var(--muted-c, #6a737d); margin: 0 0 10px; }
     .example-body { margin: 0; border-left: 3px solid var(--accent, #0b6bcb); padding-left: 14px; }
     .example-link { font-size: 12.5px; }
-    .coverage-list { line-height: 1.9; padding-left: 20px; }
-    .recovery-list { line-height: 1.8; padding-left: 20px; }
-    @media (max-width: 400px) {
-      .card header { flex-direction: column; align-items: flex-start; }
+    .method code, .contracts-list code { font-size: 12.5px; }
+
+    @media (max-width: 480px) {
+      .status-row { gap: 8px; }
+      .method-header { flex-wrap: wrap; }
     }
   </style>
 </Layout>
