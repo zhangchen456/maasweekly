@@ -4,6 +4,14 @@
     "start": "2026-09-14",
     "end": "2026-09-20",
     "days": {
+      "2026-09-18": {
+        "substantive": 13,
+        "jitter": 3,
+        "failed": 0,
+        "releases": 4,
+        "pricings": 2,
+        "sunsets": 1
+      },
       "2026-09-17": {
         "substantive": 17,
         "jitter": 3,
@@ -38,12 +46,96 @@
       }
     },
     "totals": {
-      "substantive": 44,
-      "releases": 19,
-      "pricings": 7,
-      "sunsets": 3
+      "substantive": 57,
+      "releases": 23,
+      "pricings": 9,
+      "sunsets": 4
     },
     "highlights": [
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-18",
+        "text": "qwen3.8-omni-flash 上线，支持多模态理解与生成，定价输入0.8元/百万Token、输出2.7元/百万Token（中国内地及全球）",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-18",
+        "text": "qwen3.8-max、qwen3.7-plus 新增至模型列表，同时 qwen3.5-omni-plus 被移除",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-18",
+        "text": "qwen3.7-max 输入定价18.736元/百万Token、输出56.207元/百万Token，qwen3.7-plus 输入2.998元、输出11.991元（新定价）",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-18",
+        "text": "Responses API 的 input_file 支持扩展至更多文档、演示文稿、表格、代码和文本文件类型",
+        "type": "other"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-18",
+        "text": "新增 MCP servers 支持",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-18",
+        "text": "Compliance API 本地会话端点新增返回 Claude 在 Chrome 会话中的转录（beta）",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-18",
+        "text": "Anthropic 博客提出新指标以衡量前沿AI实验室内部发展速度",
+        "type": "other"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-09-18",
+        "text": "Imagen 4 状态从 Deprecated 变为 Shut down，正式关闭",
+        "type": "sunset"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-09-18",
+        "text": "Antigravity Agent 发布 antigravity-preview-09-2026，取代并弃用 antigravity-preview-05-2026（2026-10-05 关闭）",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-18",
+        "text": "新增 Command A Translate 和 North Small Translate 技术报告",
+        "type": "other"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-18",
+        "text": "定价页更新，移除 $4,300 相关价格信息",
+        "type": "pricing"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-18",
+        "text": "发布 Artificial Analysis Capability Indices v1.1",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-18",
+        "text": "模型列表更新，新增 Z AI、Kimi、DeepSeek 等，移除部分旧条目",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-18",
+        "text": "claude-fable-5-high 新增至榜单，Elo 分数 1623 (+11/-11) 等",
+        "type": "release"
+      },
       {
         "platform": "MiniMax",
         "date": "2026-09-17",

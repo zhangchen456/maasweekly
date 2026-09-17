@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_6965eb2bc7e2a85c5fae0fc8e6e5e885e2d815a6b7fa320a52fd513f7bd81317",
+  "sourceId": "google-gemini-changelog",
+  "date": "2026-09-18",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "changelog",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+  "title": "Google Gemini API · 更新日志来源更新",
+  "summary": "changelog 新增 Antigravity Agent 新预览版发布及弃用旧版的信息，并更新了工具使用说明。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-17T23:25:29+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-09-15 UTC.",
+        "after": "Last updated 2026-09-17 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-17 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "Antigravity Agent 09-2026: Released antigravity-preview-09-2026,",
+      "If you run on a remote sandbox (environment: \"remote\") and read only",
+      "If you run tools locally (local_environment) or parse function_call",
+      "See the Antigravity Agent guide.",
+      "antigravity-preview-05-2026 shuts down on October 5, 2026, tracked on the",
+      "deprecations page.",
+      "else changes.",
+      "output_text or model_output steps, update the agent string and nothing",
+      "snake_case, and file edits use line-range replacements instead of full",
+      "steps, the built-in tools changed. Parameters use PascalCase instead of",
+      "which replaces and deprecates antigravity-preview-05-2026.",
+      "| Capability",
+      "| Directory listing",
+      "| File and code search",
+      "| File creation",
+      "| File editing",
+      "| File reading",
+      "| None, agents used shell commands",
+      "| Shell execution",
+      "| Unchanged",
+      "| Web search",
+      "| code_execution(command, timeout_seconds)",
+      "| find_by_name(SearchDirectory, Pattern, MaxDepth) and grep_search(SearchPath, Query, IsRegex)",
+      "| google_search(queries)",
+      "| list_dir(DirectoryPath)",
+      "| list_files(path)",
+      "| read_file(path, offset, limit), byte offsets"
+    ],
+    "removed_lines": [],
+    "added_count": 27,
+    "removed_count": 0,
+    "raw_added_count": 35,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-18.json"
+  },
+  "permalink": "/item/obs_6965eb2bc7e2a85c5fae0fc8e6e5e885e2d815a6b7fa320a52fd513f7bd81317/"
+}

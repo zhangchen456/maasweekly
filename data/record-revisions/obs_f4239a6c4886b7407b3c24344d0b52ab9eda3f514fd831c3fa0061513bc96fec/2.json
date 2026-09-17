@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_f4239a6c4886b7407b3c24344d0b52ab9eda3f514fd831c3fa0061513bc96fec",
+  "sourceId": "alibaba-pricing",
+  "date": "2026-09-18",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "阿里百炼",
+  "sourceType": "pricing",
+  "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+  "title": "阿里百炼 · 定价来源更新",
+  "summary": "新增 qwen3.8-omni-flash 的定价（中国内地、全球、国际三档），同时新增 qwen3-asr-flash、qwen3.6-flash、qwen3.8-livetranslate-flash-realtime 的定价行，并删除多个美国地域的模型定价（如 deepseek-v4-flash-us、glm-5.2-us 等），可能反映地域服务调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-17T23:25:29+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "qwen3-asr-flash |",
+      "qwen3.6-flash |",
+      "qwen3.8-livetranslate-flash-realtime |",
+      "| qwen3.8-omni-flash | 中国内地 | 0.8元 | 0.1元 | 2.7元 |",
+      "| qwen3.8-omni-flash | 全球 | 0.8元 | 0.1元 | 2.7元",
+      "| qwen3.8-omni-flash | 国际 | 1.094元 | 0.117元 | 3.427元 |",
+      "| 模型 ID（Model ID） | 服务部署范围 | 输入单价（每百万Token） | 缓存命中输入单价（每百万Token） | 输出单价（每百万Token）",
+      "说明Qwen3.5-Omni、Qwen3-Omni 和 Qwen-Omni-Turbo 系列仅在华北2（北京）地域下有免费额度，其他地域均无免费额度。"
+    ],
+    "removed_lines": [
+      "deepseek-v4-flash-0731-us",
+      "deepseek-v4-flash-us",
+      "deepseek-v4-pro-us",
+      "glm-5.2-us |",
+      "qwen-flash-2025-07-28-us |",
+      "qwen-flash-us",
+      "qwen-mt-lite-us |",
+      "qwen-plus-2025-12-01-us |",
+      "qwen-plus-us",
+      "qwen3-asr-flash-2025-09-08-us |"
+    ],
+    "added_count": 8,
+    "removed_count": 10,
+    "raw_added_count": 8,
+    "raw_removed_count": 19
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-18.json"
+  },
+  "permalink": "/item/obs_f4239a6c4886b7407b3c24344d0b52ab9eda3f514fd831c3fa0061513bc96fec/"
+}

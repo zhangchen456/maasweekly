@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_24d690c913f586458762d6202be18918f891274d42ed84241bac83b27e534276",
+  "sourceId": "lmarena-industry",
+  "date": "2026-09-18",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "LMArena",
+  "sourceType": "industry",
+  "sourceUrl": "https://lmarena.ai/leaderboard",
+  "title": "LMArena · 行业数据来源更新",
+  "summary": "新增 claude-fable-5-high 模型及其 Elo 分数，移除 claude-fable-5 旧条目，表明模型更新。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-17T23:25:29+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "claude-fable-5-high |",
+      "claude-fable-5-high1230±8",
+      "claude-fable-5-high1310±8",
+      "claude-fable-5-high1496±8",
+      "claude-fable-5-high1506±5",
+      "claude-fable-5-high1623+11/-11",
+      "claude-fable-5-high1628+7/-7"
+    ],
+    "removed_lines": [
+      "claude-fable-5 |",
+      "claude-fable-51230±8",
+      "claude-fable-51310±8",
+      "claude-fable-51496±8",
+      "claude-fable-51506±5",
+      "claude-fable-51623+11/-11",
+      "claude-fable-51628+7/-7"
+    ],
+    "added_count": 7,
+    "removed_count": 7,
+    "raw_added_count": 7,
+    "raw_removed_count": 7
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-18.json"
+  },
+  "permalink": "/item/obs_24d690c913f586458762d6202be18918f891274d42ed84241bac83b27e534276/"
+}
