@@ -9,6 +9,8 @@
 - [Task 02：结构化价格变化与证据回查](./task-02-price-evidence.md)：价格事实与证据持久化、价格事件、证据页面及失败恢复的执行任务。
 - [Task 03：统一公开数据投影与 REST API v1](./task-03-public-api.md)：把稳定记录、价格事实、证据与正式周报生成同版本公开数据，并提供可分页、可缓存、可恢复的匿名只读查询接口。
 - [Task 04：MCP 与可安装 Agent Skill](./task-04-mcp-skill.md)：复用 Task 03 查询能力提供五个只读 MCP 工具、可校验安装的 Skill 包，并完成两类真实 Agent 客户端验证。
+- [Task 05：Agent 接入页、RSS 与方法说明](./task-05-access-rss-method.md)：提供 Skill、MCP、RSS、REST API 四种公开接入入口，生成两个稳定 feed，并公开方法、兼容状态与变更边界。
+- [Task 06：生产发布、运行保障与 P0 首发验收](./task-06-production-release.md)：把静态站、公开数据、REST、MCP、Skill 与 RSS 作为同一 release 安全部署，统一 CI 与本地发布，完成真实客户端、缓存、性能和回滚验收。
 
 本版将已有演进研究整理为独立产品方案。正文不讨论建议来源，不要求读者了解仓库、API 协议或研究过程。目标用户及增长指标尚未经过用户访谈验证，文中按假设或目标标注。
 

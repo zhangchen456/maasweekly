@@ -1,20 +1,71 @@
 {
   "source": "LMArena (Chatbot Arena) Leaderboard",
   "source_url": "https://lmarena.ai/leaderboard",
-  "snapshot_date": "2026-09-05",
+  "snapshot_date": "2026-09-16",
   "manual": true,
   "update_cycle": "weekly",
   "note": "全球用户对匿名模型两两盲测投票，按 Elo 机制计算排名，反映真实使用偏好。数据取 Text 总榜。",
   "top": [
-    { "rank": 1, "model": "Claude Fable 5", "vendor": "Anthropic", "elo": 1507 },
-    { "rank": 2, "model": "Claude Opus 4.6 (high)", "vendor": "Anthropic", "elo": 1505 },
-    { "rank": 3, "model": "Claude Fable 5.1 (max)", "vendor": "Anthropic", "elo": 1504 },
-    { "rank": 4, "model": "Claude Opus 4.7 (high)", "vendor": "Anthropic", "elo": 1502 },
-    { "rank": 5, "model": "Muse Spark 1.2 (xHigh)", "vendor": "Meta", "elo": 1499, "note": "开源第一梯队" },
-    { "rank": 6, "model": "Claude Opus 4.6", "vendor": "Anthropic", "elo": 1498 },
-    { "rank": 7, "model": "Claude Opus 4.7", "vendor": "Anthropic", "elo": 1494 },
-    { "rank": 8, "model": "Gemini 3.8 Flash (high)", "vendor": "Google Gemini API", "elo": 1494 },
-    { "rank": 9, "model": "Claude Opus 5 (high)", "vendor": "Anthropic", "elo": 1493 },
-    { "rank": 10, "model": "Muse Spark 1.1", "vendor": "Meta", "elo": 1492 }
+    {
+      "rank": 1,
+      "model": "claude-fable-5",
+      "vendor": "Anthropic",
+      "elo": 1506
+    },
+    {
+      "rank": 2,
+      "model": "claude-opus-4-6-high",
+      "vendor": "Anthropic",
+      "elo": 1505
+    },
+    {
+      "rank": 3,
+      "model": "claude-opus-4-7-high",
+      "vendor": "Anthropic",
+      "elo": 1502
+    },
+    {
+      "rank": 4,
+      "model": "muse-spark-1.2 (xHigh)",
+      "vendor": "Meta",
+      "elo": 1500,
+      "note": "开源第一梯队"
+    },
+    {
+      "rank": 5,
+      "model": "claude-fable-5.1-max",
+      "vendor": "Anthropic",
+      "elo": 1498
+    },
+    {
+      "rank": 6,
+      "model": "claude-opus-4-6",
+      "vendor": "Anthropic",
+      "elo": 1497
+    },
+    {
+      "rank": 7,
+      "model": "claude-opus-4-7",
+      "vendor": "Anthropic",
+      "elo": 1494
+    },
+    {
+      "rank": 8,
+      "model": "muse-spark-1.3-max",
+      "vendor": "Meta",
+      "elo": 1493
+    },
+    {
+      "rank": 9,
+      "model": "gemini-3.8-flash-high",
+      "vendor": "Google",
+      "elo": 1493
+    },
+    {
+      "rank": 10,
+      "model": "claude-opus-5-high",
+      "vendor": "Anthropic",
+      "elo": 1493
+    }
   ]
 }

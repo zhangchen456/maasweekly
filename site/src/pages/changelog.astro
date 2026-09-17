@@ -1,0 +1,86 @@
+---
+// /changelog/：公开接口变更记录（Task 05 §8）。
+import Layout from '../layouts/Layout.astro';
+import { CHANGELOG } from '../data/changelog';
+import { PUBLIC_ACCESS, validatePublicAccessConfig } from '../config/public-access';
+
+const violations = validatePublicAccessConfig(PUBLIC_ACCESS);
+if (violations.length > 0) {
+  throw new Error(`[changelog] 公开配置校验失败（构建中止）: ${violations.join('；')}`);
+}
+const AREA_LABEL: Record<string, string> = {
+  rest: 'REST API', mcp: 'MCP', skill: 'Skill', rss: 'RSS', web: '网页',
+};
+const STATUS_LABEL: Record<string, string> = {
+  available: '已上线', pending: '待部署', planned: '规划中',
+};
+---
+<Layout title="接口变更记录 — MaaS Daily" description="公开接口（REST/MCP/Skill/RSS/网页）的真实状态与 v1 兼容策略">
+  <section class="hero">
+    <div class="shell">
+      <div class="eyebrow">CHANGELOG</div>
+      <h1>公开接口变更记录</h1>
+      <p class="lead">只记录真实发生的接口变更。当前无任何 Deprecation/Sunset 计划——
+        出现时将附确定的停止日期与迁移路径。</p>
+    </div>
+  </section>
+
+  <div class="shell">
+    <div class="compat">
+      <h2>v1 兼容策略</h2>
+      <ul>
+        <li>v1 内允许<b>新增</b>可选字段、端点说明和兼容能力；</li>
+        <li>删除字段、改变字段含义、改变稳定 ID 或改变默认排序属于<b>破坏性变更</b>——将新开 v2；</li>
+        <li>稳定 ID（obs_/price_/ev_/pfv_ 前缀）一经发布不复用。</li>
+      </ul>
+    </div>
+
+    {CHANGELOG.map((entry) => (
+      <article class="entry">
+        <header>
+          <h2>{entry.title}</h2>
+          <span class="date">{entry.date ?? '随首次生产部署确定'}</span>
+        </header>
+        <table class="areas">
+          <thead><tr><th>接口</th><th>状态</th><th>说明</th></tr></thead>
+          <tbody>
+            {entry.areas.map((a) => (
+              <tr>
+                <td>{AREA_LABEL[a.area]}</td>
+                <td><span class={`badge ${a.status}`}>{STATUS_LABEL[a.status]}</span></td>
+                <td>{a.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {entry.breaking === false && <p class="muted">本条目不包含破坏性变更。</p>}
+      </article>
+    ))}
+  </div>
+
+  <style>
+    .hero { background: var(--bg-2, #f6f7f9); border-bottom: 1px solid var(--line, #e3e6ea); padding: 36px 0; }
+    .eyebrow { font-size: 12px; letter-spacing: .2em; color: var(--muted-c, #6a737d); }
+    .hero h1 { margin: 8px 0 12px; }
+    .lead { max-width: 720px; margin: 0; }
+    .shell { max-width: 860px; margin: 0 auto; padding: 20px; }
+    .compat { background: var(--bg-card, #fff); border: 1px solid var(--line, #e3e6ea); border-radius: 10px; padding: 16px 20px; margin: 24px 0; }
+    .compat h2 { margin: 0 0 10px; font-size: 17px; }
+    .compat ul { margin: 0; padding-left: 20px; line-height: 1.8; }
+    .entry { margin: 28px 0; }
+    .entry header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    .entry h2 { margin: 0; font-size: 19px; }
+    .date { color: var(--muted-c, #6a737d); font-size: 13px; }
+    .areas { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13.5px; }
+    .areas th, .areas td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line, #e3e6ea); vertical-align: top; }
+    .areas th { color: var(--muted-c, #6a737d); font-weight: 500; }
+    .badge { padding: 1px 8px; border-radius: 8px; font-size: 12px; border: 1px solid; white-space: nowrap; }
+    .badge.available { color: var(--ok, #1a7f37); border-color: currentColor; }
+    .badge.pending { color: var(--warn, #b35900); border-color: currentColor; }
+    .badge.planned { color: var(--muted-c, #6a737d); border-color: currentColor; }
+    .muted { color: var(--muted-c, #6a737d); font-size: 12.5px; }
+    @media (max-width: 640px) {
+      .areas th:nth-child(2), .areas td:nth-child(2) { display: none; }
+    }
+  </style>
+</Layout>

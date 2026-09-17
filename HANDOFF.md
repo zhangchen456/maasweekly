@@ -89,6 +89,8 @@ maasweekly/
 │   └── daily/ weekly-archive-early/  # 历史存档（只读）
 ├── services/agent-api/               # Task 03/04：REST v1 + MCP /api/mcp（Node 22 + TS，本地）
 ├── agent-skill/maas-daily/           # Task 04：Agent Skill 源（发布包 site/public/maas-skill/）
+│   （Task 05 新增：/agent//method//changelog/ 三页 + feed.xml + feed/weekly.xml + llms.txt；
+│     唯一配置 site/src/config/public-access.ts；lib/{release,feed-xml,feed-build}.ts）
 └── .github/workflows/                # 三个工作流
 ```
 
@@ -104,6 +106,7 @@ maasweekly/
 | fetch-prices.py | pipeline/scripts | 八家厂商 API 价格结构化抓取（playwright） | `--dry-run`；`--only openai,deepseek` 单家 |
 | export-public-data.py | pipeline/scripts | Task 03：归档 → 公开数据 release | `--check` 只校验；`--dry-run`；`--output-dir` 隔离 |
 | build-skill-package.py | site/scripts | Task 04：Skill 源 → site/public/maas-skill 发布包 | `--check` 校验 + 源漂移门禁；已入 site build 链 |
+| access-pages/rss 测试 | site/tests | Task 05：接入页/feed 门禁与合同测试 | `node --experimental-strip-types tests/xxx.test.mjs`（需先 build） |
 | agent-api | services/agent-api | REST v1 + MCP `/api/mcp`（`npm start`，127.0.0.1:8787） | 合同 docs/contracts/{public-api-v1,mcp-v1}.md；`npm run test:mcp`；待 Task 06 部署 |
 | test_pricing_extractors.py | tests/ | 价格解析器离线回归（fixture，不需网络） | 无 |
 | import-weekly.py | site/scripts | data/weekly → content/weekly | 无 |

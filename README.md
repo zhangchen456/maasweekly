@@ -46,6 +46,14 @@ evidence/{id} | weekly | weekly/{id} | status`，支持筛选、cursor 固定版
 翻页、ETag/304、Problem JSON。合同：`docs/contracts/public-api-v1.md`；
 OpenAPI：`site/public/openapi-v1.json`。
 
+### Agent 接入 / RSS / 方法说明（Task 05，本地完成待部署）
+
+- `/agent/`：Skill/MCP/RSS/REST 四种接入方式、可复制配置、验证问题与真实状态
+- `/feed.xml`（最近 100 条变化）与 `/feed/weekly.xml`（最近 30 期周报）RSS 2.0
+- `/method/`：数据方法说明；`/changelog/`：接口变更记录；`/llms.txt`：机器入口
+- 唯一配置来源 `site/src/config/public-access.ts`（域名/端点/状态/客户端验证）
+- 合同：`docs/contracts/rss-v1.md`
+
 ### MCP 与 Agent Skill（Task 04，本地可用）
 
 同一服务提供 MCP 端点 `POST /api/mcp`（官方 SDK 1.30，stateless，五个
