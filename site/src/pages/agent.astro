@@ -1,0 +1,187 @@
+---
+// /agent/：Agent 接入页（Task 05 §5）。七段结构：能问什么 → 四方式 →
+// 配置安装 → 验证问题 → 成功示例 → 数据范围 → 故障恢复。
+// 示例回答从当前公开 release 确定性选取（不写死模型价格）。
+import Layout from '../layouts/Layout.astro';
+import CopyBlock from '../components/CopyBlock.astro';
+import { PUBLIC_ACCESS, validatePublicAccessConfig } from '../config/public-access';
+import { loadVerifiedRelease } from '../lib/release';
+
+const violations = validatePublicAccessConfig(PUBLIC_ACCESS);
+if (violations.length > 0) {
+  throw new Error(`[agent] 公开配置校验失败（构建中止）: ${violations.join('；')}`);
+}
+
+const release = loadVerifiedRelease(undefined, { select: ['changes'] });
+const P = PUBLIC_ACCESS;
+const base = P.canonicalBaseUrl;
+const sk = P.surfaces.skill;
+const mcp = P.surfaces.mcp;
+const rest = P.surfaces.rest;
+const rss = P.surfaces.rss;
+
+const statusLabel = (s: typeof rss) =>
+  s.status === 'available' ? '已上线' : s.status === 'pending' ? '待部署' : '不可用';
+
+// 成功示例：确定性选取（最新日期中 summary 非空的 source_observation，id 升序第一条）
+const sample = (release.changes ?? [])
+  .filter((c) => c.recordType === 'source_observation' && c.summary)
+  .sort((a, b) => b.observationDate.localeCompare(a.observationDate)
+    || a.id.localeCompare(b.id))[0];
+const sampleSummary = sample?.summary?.slice(0, 160) ?? '';
+
+const verified = P.verifiedClients;
+const pending = P.pendingClients;
+---
+<Layout title="Agent 接入 — MaaS Daily" description="Skill、MCP、RSS、REST 四种 Agent 接入方式与真实状态">
+  <section class="hero">
+    <div class="shell">
+      <div class="eyebrow">AGENT ACCESS</div>
+      <h1>让 Agent 查询 MaaS 平台变化与价格</h1>
+      <p class="lead">
+        无需账户或本站 API Key。数据是<b>观察快照</b>（数据截至 {release.dataThrough}），
+        不代表供应商实时官网；无结果只表示当前覆盖内未记录到匹配项。
+        <a href="/method/">数据方法说明 →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="shell">
+    <h2>四种接入方式</h2>
+    <div class="cards">
+      <article class="card">
+        <header>
+          <h3>Skill</h3>
+          <span class={`badge ${sk.status}`}>{statusLabel(sk)}</span>
+        </header>
+        <p class="card-desc">希望 Agent 自动选择查询方法的用户。安装一次，Agent 按技能规则路由五类查询。</p>
+        <p class="card-note">{sk.reason}</p>
+        <CopyBlock code={`curl -fsSL ${base}/maas-skill/install.sh | bash -s -- --dir <你的技能目录>`} label="安装命令" />
+        <p class="card-hint">`&lt;你的技能目录&gt;` 必须由你选择实际目录（如 Claude Code 的 skills 目录）——安装器不猜测、不使用 sudo。</p>
+      </article>
+
+      <article class="card">
+        <header>
+          <h3>MCP</h3>
+          <span class={`badge ${mcp.status}`}>{statusLabel(mcp)}</span>
+        </header>
+        <p class="card-desc">支持 Streamable HTTP MCP 的客户端。五个只读工具（maas_get_*），与 REST 同数据同版本。</p>
+        <p class="card-note">{mcp.reason}</p>
+        <CopyBlock code={`{\n  "mcpServers": {\n    "maas-daily": {\n      "type": "http",\n      "url": "${base}/api/mcp"\n    }\n  }\n}`} label="MCP 配置" />
+        {verified.map((c) => (
+          <p class="verified-client">✓ 已验证：{c.name} {c.version}（{c.verifiedAt}，{c.transport}）</p>
+        ))}
+        {pending.map((c) => (
+          <p class="pending-client">⏳ 待验证：{c.name} —— {c.unblockCondition}</p>
+        ))}
+      </article>
+
+      <article class="card">
+        <header>
+          <h3>RSS</h3>
+          <span class={`badge ${rss.status}`}>{statusLabel(rss)}</span>
+        </header>
+        <p class="card-desc">阅读器与低频自动化。两个 feed：最近变化（≤100 条）与正式周报（≤30 期）。</p>
+        <p class="card-note">{rss.reason}</p>
+        <CopyBlock code={`${base}/feed.xml`} label="变化 feed" />
+        <CopyBlock code={`${base}/feed/weekly.xml`} label="周报 feed" />
+        <p class="card-hint">建议 30 分钟或更慢轮询。修订保持条目身份（GUID）；已撤回记录退出默认 feed——<b>详情页是修订与撤回的权威状态</b>。</p>
+      </article>
+
+      <article class="card">
+        <header>
+          <h3>REST API</h3>
+          <span class={`badge ${rest.status}`}>{statusLabel(rest)}</span>
+        </header>
+        <p class="card-desc">开发者和脚本。匿名只读，支持筛选、cursor 固定版本翻页、ETag/304、Problem JSON。</p>
+        <p class="card-note">{rest.reason}</p>
+        <CopyBlock code={`curl ${base}/api/v1/status`} label="最小示例" />
+        <p class="card-hint">OpenAPI：<a href="/openapi-v1.json">openapi-v1.json</a> · 合同：<a href="/method/">分页与错误说明</a></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="shell">
+    <h2>验证问题</h2>
+    <p>安装成功的标准是<b>完成一次真实查询</b>（拿到数据版本、数据截至时间、覆盖范围与永久链接），不是文件下载或配置保存。在新会话中问：</p>
+    <ol class="verify-list">
+      <li>「用 maas-daily 查最近几天 OpenAI 有什么变化」——回答应引用数据版本与覆盖日期</li>
+      <li>「查 gpt-6-astra 的输入价格，给出条件与证据 ID」——应含币种、单位、适用条件、观察时间</li>
+      <li>「最新一期周报讲了什么」——应为正式周报（日期型 ID），不是滚动摘要</li>
+    </ol>
+    <p class="muted">配置 MCP 或安装 Skill 后可能需要<b>开启新会话</b>才能发现工具。</p>
+  </section>
+
+  <section class="shell">
+    <h2>成功示例（当前数据）</h2>
+    <div class="example">
+      <p class="example-meta">
+        数据版本 {release.datasetVersion.slice(0, 12)}… · 数据截至 {release.dataThrough} ·
+        变化覆盖 {release.coverage.changes.from} 至 {release.coverage.changes.to}（{release.coverage.changes.count} 条）
+      </p>
+      {sample && (
+        <blockquote class="example-body">
+          <p><b>{sample.title}</b>（{sample.observationDate} 观察记录）</p>
+          <p>{sampleSummary}{sample.summary && sample.summary.length > 160 ? '…' : ''}</p>
+          {sample.summaryOrigin === 'llm' && <p class="muted">（摘要由 LLM 生成，可能不准确，请以证据核验。）</p>}
+          <p class="example-link">详情：<a href={sample.links.permalink}>{base}{sample.links.permalink}</a></p>
+        </blockquote>
+      )}
+    </div>
+  </section>
+
+  <section class="shell">
+    <h2>数据范围与更新节奏</h2>
+    <ul class="coverage-list">
+      <li>变化：{release.coverage.changes.from} 至 {release.coverage.changes.to}，共 {release.coverage.changes.count} 条（来源观察 + 价格事件）</li>
+      <li>价格：{release.coverage.prices.facts} 条当前已接受事实</li>
+      <li>证据：{release.coverage.evidence.count} 条</li>
+      <li>正式周报：{release.coverage.weekly.count} 期（最新 {release.coverage.weekly.latestId}）</li>
+    </ul>
+    <p class="muted">每日更新（约北京时间凌晨）；观察时间与发布时间的区别见 <a href="/method/">方法说明</a>。</p>
+  </section>
+
+  <section class="shell">
+    <h2>故障恢复</h2>
+    <ul class="recovery-list">
+      <li><b>待部署端点</b>：Skill 查询依赖的 REST、MCP 生产路由随 Task 06 上线——上线前安装的 Skill 查询公网地址会失败，属预期（如实报告，不用模型记忆补答）。</li>
+      <li><b>RSS 缓存限制</b>：已缓存的撤回内容无法可靠召回；详情页与 API 是最新状态权威来源。</li>
+      <li><b>无结果</b>：表示当前覆盖内未记录到匹配项，不等于外部世界没有变化。</li>
+      <li><b>接口变更</b>：见 <a href="/changelog/">变更记录</a>。</li>
+    </ul>
+  </section>
+
+  <style>
+    .hero { background: var(--bg-2, #f6f7f9); border-bottom: 1px solid var(--line, #e3e6ea); padding: 36px 0; }
+    .eyebrow { font-size: 12px; letter-spacing: .2em; color: var(--muted-c, #6a737d); }
+    .hero h1 { margin: 8px 0 12px; }
+    .lead { max-width: 720px; margin: 0; }
+    .shell { max-width: 1180px; margin: 0 auto; padding: 20px; }
+    section.shell h2 { margin: 32px 0 12px; font-size: 22px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+    .card { background: var(--bg-card, #fff); border: 1px solid var(--line, #e3e6ea); border-radius: 10px; padding: 18px; }
+    .card header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .card h3 { margin: 0; font-size: 17px; }
+    .badge { padding: 2px 10px; border-radius: 10px; font-size: 12px; border: 1px solid; white-space: nowrap; }
+    .badge.available { color: var(--ok, #1a7f37); border-color: currentColor; }
+    .badge.pending { color: var(--warn, #b35900); border-color: currentColor; }
+    .badge.unavailable { color: var(--err, #cf222e); border-color: currentColor; }
+    .card-desc { font-size: 13.5px; margin: 10px 0 6px; }
+    .card-note { font-size: 12.5px; color: var(--warn, #b35900); background: rgba(179, 89, 0, .06); padding: 8px 10px; border-radius: 6px; margin: 6px 0; }
+    .card-hint { font-size: 12.5px; color: var(--muted-c, #6a737d); margin: 8px 0 0; }
+    .card code { font-size: 12px; }
+    .verified-client { font-size: 12.5px; color: var(--ok, #1a7f37); margin: 6px 0 0; }
+    .pending-client { font-size: 12.5px; color: var(--warn, #b35900); margin: 6px 0 0; }
+    .verify-list { padding-left: 20px; line-height: 1.8; }
+    .muted { color: var(--muted-c, #6a737d); font-size: 13px; }
+    .example { border: 1px solid var(--line, #e3e6ea); border-radius: 10px; padding: 16px; background: var(--bg-card, #fff); }
+    .example-meta { font-size: 12.5px; color: var(--muted-c, #6a737d); margin: 0 0 10px; }
+    .example-body { margin: 0; border-left: 3px solid var(--accent, #0b6bcb); padding-left: 14px; }
+    .example-link { font-size: 12.5px; }
+    .coverage-list { line-height: 1.9; padding-left: 20px; }
+    .recovery-list { line-height: 1.8; padding-left: 20px; }
+    @media (max-width: 400px) {
+      .card header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</Layout>

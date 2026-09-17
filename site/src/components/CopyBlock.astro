@@ -1,0 +1,79 @@
+---
+/**
+ * CopyBlock：可访问复制控件（Task 05 M3）。
+ * 提取自 evidence/[id].astro 的 copy-btn 模式，改为 data 属性选择器
+ * （多实例安全——修掉 item/[id].astro 固定 DOM id 的冲突）。
+ * 无 JS 回退：<pre> 文本始终可选择；aria-live 反馈初始为空（无 JS 时
+ * 不显示虚假"已复制"）。Clipboard API 失败 → Range 选中提示手动复制。
+ */
+interface Props {
+  code: string;
+  label?: string;
+  ariaLabel?: string;
+}
+const { code, label = '内容', ariaLabel } = Astro.props;
+---
+<div class="copyblock" data-copyblock>
+  <pre class="copyblock-code" data-copy-source aria-label={ariaLabel ?? `${label}（可全选复制）`}>{code}</pre>
+  <div class="copyblock-row">
+    <button type="button" class="copyblock-btn" data-copy-btn>复制{label}</button>
+    <span class="copyblock-feedback" data-copy-feedback aria-live="polite"></span>
+  </div>
+</div>
+
+<style>
+  .copyblock { margin: 10px 0; }
+  .copyblock-code {
+    background: var(--bg-2, #f6f7f9);
+    border: 1px solid var(--line, #e3e6ea);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12.5px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    overflow-x: auto;
+    max-width: 100%;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    margin: 0;
+  }
+  .copyblock-row { display: flex; gap: 10px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+  .copyblock-btn {
+    padding: 4px 14px; border-radius: 6px; border: none; cursor: pointer;
+    background: var(--accent, #0b6bcb); color: #fff; font-size: 13px;
+  }
+  .copyblock-btn:hover { opacity: .9; }
+  .copyblock-btn:focus-visible { outline: 2px solid var(--accent, #0b6bcb); outline-offset: 2px; }
+  .copyblock-feedback { font-size: 12px; min-height: 16px; }
+  .copyblock-feedback.ok { color: var(--ok, #1a7f37); }
+  .copyblock-feedback.err { color: var(--err, #cf222e); }
+</style>
+
+<script>
+  document.querySelectorAll('[data-copyblock]').forEach((block) => {
+    const btn = block.querySelector('[data-copy-btn]');
+    const source = block.querySelector('[data-copy-source]');
+    const feedback = block.querySelector('[data-copy-feedback]');
+    btn?.addEventListener('click', async () => {
+      const text = source?.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+        if (feedback) {
+          feedback.textContent = '已复制';
+          feedback.className = 'copyblock-feedback ok';
+        }
+      } catch {
+        const range = document.createRange();
+        range.selectNodeContents(source!);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(range);
+        if (feedback) {
+          feedback.textContent = '自动复制失败，已选中文本，请按 Ctrl/⌘+C 复制';
+          feedback.className = 'copyblock-feedback err';
+        }
+      }
+    });
+  });
+</script>

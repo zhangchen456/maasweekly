@@ -40,6 +40,7 @@ const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、
           <a href="/pricing" aria-current={(activePath.startsWith('/pricing')) ? 'page' : undefined}>价格</a>
           <a href="/sources" aria-current={(activePath.startsWith('/sources')) ? 'page' : undefined}>信源</a>
           <a href="/weekly" aria-current={(activePath.startsWith('/weekly') || activePath.startsWith('/daily')) ? 'page' : undefined}>归档</a>
+          <a href="/agent" aria-current={(activePath.startsWith('/agent')) ? 'page' : undefined}>接入</a>
         </nav>
         <button class="theme-toggle" aria-label="切换主题" title="切换深/浅色">
           <span class="theme-icon-light">☀</span>
@@ -55,7 +56,9 @@ const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、
     <footer>
       <div class="shell footer-inner">
         <div><div class="footer-title">MaaS Daily Intelligence</div><div>模型 × 平台 × 价格 × 生态</div></div>
-        <div class="footer-meta"><a href="/about">关于</a></div>
+        <div class="footer-meta">
+          <a href="/about">关于</a> · <a href="/agent">接入</a> · <a href="/method">方法</a> · <a href="/changelog">变更</a> · <a href="/feed.xml">RSS</a>
+        </div>
       </div>
     </footer>
 
@@ -222,6 +225,9 @@ const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、
       .footer-title { color: var(--paper); font: 700 17px/1 "Songti SC", serif; }
       .footer-meta { text-align: right; font: 10px/1.8 "SF Mono", monospace; letter-spacing: .06em; }
       .footer-meta a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+      @media (max-width: 480px) {
+        .nav { gap: 14px; flex-wrap: wrap; }
+      }
 
       /* prose markdown */
       .prose h1 { font-size: 1.6em; margin: 1.2em 0 .5em; font-family: "Songti SC", serif; }

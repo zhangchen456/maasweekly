@@ -1,0 +1,76 @@
+---
+// /method/：数据方法说明（Task 05 §7）。八节框架；动态数字全部从当前
+// 公开 release 渲染，不写死。
+import Layout from '../layouts/Layout.astro';
+import { PUBLIC_ACCESS, validatePublicAccessConfig } from '../config/public-access';
+import { loadVerifiedRelease } from '../lib/release';
+
+const violations = validatePublicAccessConfig(PUBLIC_ACCESS);
+if (violations.length > 0) {
+  throw new Error(`[method] 公开配置校验失败（构建中止）: ${violations.join('；')}`);
+}
+const release = loadVerifiedRelease();
+const cov = release.coverage;
+---
+<Layout title="数据方法说明 — MaaS Daily" description="观察方法、证据状态、价格条件、健康信号与修订撤回语义">
+  <section class="hero">
+    <div class="shell">
+      <div class="eyebrow">METHOD</div>
+      <h1>我们如何观察 MaaS 平台</h1>
+      <p class="lead">截至 {release.dataThrough}，本数据集覆盖 {cov.changes.from} 至 {cov.changes.to}
+        共 {cov.changes.count} 条变化记录、{cov.prices.facts} 条价格事实、{cov.evidence.count} 条证据、
+        {cov.weekly.count} 期正式周报。以下是这些数字的产生方法与边界。</p>
+    </div>
+  </section>
+
+  <div class="shell prose">
+    <h2>1. 观察，不是转述</h2>
+    <p>每日定时抓取各平台官方页面（模型列表/定价/更新日志/博客），与上一次快照逐行对比。这是<b>页面文本的观察</b>：受截断、页面抖动与重算影响，存在噪声边界。<b>来源页变化不等于供应商正式发布、下线或调价</b>——那需要官方公告佐证。</p>
+
+    <h2>2. 五种时间，各是各的</h2>
+    <ul>
+      <li><b>首次观察时间</b>（observedAt）：我们的抓取程序看到该内容的时间；</li>
+      <li><b>来源发布时间</b>（publishedAt）：供应商官方声明的时间（无来源则为空，不用观察时间顶替）；</li>
+      <li><b>价格事实观察范围</b>：该价格成立的观察区间（版本链）；</li>
+      <li><b>数据截至</b>（dataThrough）：本数据集的覆盖上限——当前为 {release.dataThrough}；</li>
+      <li><b>站点构建时间</b>：网页发布时刻，与数据时间无关。</li>
+    </ul>
+    <p>首页与价格页显示各自的数据时间，不用构建时间冒充。</p>
+
+    <h2>3. 证据的完整性分层</h2>
+    <p>每条价格事实附证据（当时保存的页面摘录 + 定位方式 + 摘录哈希）。完整性分三档：<b>complete</b>（模型/金额/单位可在摘录内复核）、<b>partial</b>（形态完整但某要素不在摘录内——如实披露，不因存在就算已验证）、<b>unavailable</b>（历史数据无证据可回溯）。摘要、定位、官方来源各自能证明的内容不同——逐层看，不跳层。</p>
+
+    <h2>4. LLM 摘要可能出错</h2>
+    <p>部分变化摘录由 LLM 生成（标记 summaryOrigin=llm），可能出错。核验路径：<b>稳定 ID → 结构化事实 → 证据摘录 → 官方页面</b>，逐层可查。RSS 与 API 中的 LLM 摘要均带披露标记。</p>
+
+    <h2>5. 价格的条件完整性</h2>
+    <p>每条价格保留原币种（USD/CNY）、单位（如 /1M token）、计费组件（输入/输出/缓存读/缓存写）、区域、档位、计费模式与附加条件（长上下文阶梯、峰谷时段）。<b>不做跨单位、跨条件的自动「最低价」结论</b>——多候选逐项列出，由你按适用条件判断。</p>
+
+    <h2>6. 衍生数据的边界</h2>
+    <p>榜单（如 OpenRouter 调用量）来自第三方，汇率与部分能力榜为人工维护——各自标注更新时间；未知值显示未知，不补数字。</p>
+
+    <h2>7. 三种健康信号</h2>
+    <ul>
+      <li><b>抓取成功</b>：页面下载与解析完成；</li>
+      <li><b>价格解析通过</b>：门禁校验（金额/证据链/身份）通过；</li>
+      <li><b>最后有效事实时间</b>：该来源最近一次产出被接受的事实。</li>
+    </ul>
+    <p>三者不同。失败沿用旧数据时状态标 <b>stale</b>（附最后成功时间），不显示为新数据；partial/unknown/unavailable 各按字面理解。</p>
+
+    <h2>8. 修订、撤回与缓存</h2>
+    <p>记录可修订（修订链保留历史）与撤回（详情页仍可访问并标注）。RSS 是静态投影：修订保持条目身份，但已缓存的撤回内容无法可靠召回——<b>详情页与 API 是最新状态的权威来源</b>。接口变更见 <a href="/changelog/">变更记录</a>。</p>
+
+    <h2>反馈</h2>
+    <p>反馈渠道待产品确认（GitHub Issues 筹备中）——确认后在此更新。</p>
+  </div>
+
+  <style>
+    .hero { background: var(--bg-2, #f6f7f9); border-bottom: 1px solid var(--line, #e3e6ea); padding: 36px 0; }
+    .eyebrow { font-size: 12px; letter-spacing: .2em; color: var(--muted-c, #6a737d); }
+    .hero h1 { margin: 8px 0 12px; }
+    .lead { max-width: 760px; margin: 0; }
+    .shell { max-width: 860px; margin: 0 auto; padding: 20px; }
+    .prose h2 { margin-top: 36px; font-size: 19px; }
+    .prose ul { padding-left: 20px; line-height: 1.8; }
+  </style>
+</Layout>
