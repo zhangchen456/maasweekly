@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_759c3213bfd4b5e9a18fbb1edeeb11ecf867799a58888760a55312489e9cbcd5",
+  "sourceId": "minimax-pricing",
+  "date": "2026-09-17",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "MiniMax",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+  "title": "MiniMax · 定价来源更新",
+  "summary": "MiniMax-H3-Max | 视频 | 按输入视频时长及生成视频分辨率计费：480P 0.37 元/秒，768P 0.97 元/秒",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "minimax-h",
+        "before": "MiniMax-H3-Max 目前仅支持 T2V、I2V，仅输出视频计费，输入素材（图片）暂不计费。",
+        "after": "MiniMax-H3-Max | 图片 | 2 张以内免费，超出部分 0.50 元/张"
+      }
+    ],
+    "added_lines": [
+      "MiniMax-H3-Max | 视频 | 按输入视频时长及生成视频分辨率计费：480P 0.37 元/秒，768P 0.97 元/秒",
+      "MiniMax-H3-Max | 音频 | 免费"
+    ],
+    "removed_lines": [],
+    "added_count": 2,
+    "removed_count": 0,
+    "raw_added_count": 3,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-17.json"
+  },
+  "permalink": "/item/obs_759c3213bfd4b5e9a18fbb1edeeb11ecf867799a58888760a55312489e9cbcd5/"
+}

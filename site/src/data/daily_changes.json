@@ -1,6 +1,666 @@
 {
-  "updated_at": "2026-09-16T06:27:35",
+  "updated_at": "2026-09-16T23:36:00",
   "days": [
+    {
+      "date": "2026-09-17",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 20,
+        "unchanged": 45
+      },
+      "changed": [
+        {
+          "platform": "MiniMax",
+          "source_type": "pricing",
+          "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "MiniMax-H3-Max | 视频 | 按输入视频时长及生成视频分辨率计费：480P 0.37 元/秒，768P 0.97 元/秒",
+            "MiniMax-H3-Max | 音频 | 免费"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "minimax-h",
+              "before": "MiniMax-H3-Max 目前仅支持 T2V、I2V，仅输出视频计费，输入素材（图片）暂不计费。",
+              "after": "MiniMax-H3-Max | 图片 | 2 张以内免费，超出部分 0.50 元/张"
+            }
+          ],
+          "signal_preview": "MiniMax-H3-Max | 视频 | 按输入视频时长及生成视频分辨率计费：480P 0.37 元/秒，768P 0.97 元/秒",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_759c3213bfd4b5e9a18fbb1edeeb11ecf867799a58888760a55312489e9cbcd5",
+          "permalink": "/item/obs_759c3213bfd4b5e9a18fbb1edeeb11ecf867799a58888760a55312489e9cbcd5/",
+          "llm_summary": "MiniMax-H3-Max 定价页面更新：新增视频按分辨率计费（480P 0.37 元/秒，768P 0.97 元/秒）和音频免费，同时将图片计费从“仅输出视频计费”改为“2 张以内免费，超出 0.50 元/张”，明确了多模态输入的计费规则。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Added API key creation governance controls at the organization and project levels. Administrators can allow only service-account keys, allow only user-owned project keys, or disable all new API key creation. Organization restrictions take precedence over project settings, and existing API keys are unaffected. See production best practices for details.",
+            "Usage Insights"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Added API key creation governance controls at the organization and project levels. Administrators can allow only service-account keys, allow only user-owned project keys, or disable all new API key creation. Organization restrictions take precedence over project settings, and existing API keys are unaffected. See production best practices for details.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_37b261f34fa67090b074b120f9aeacdd63d317563028e2ef432dd16cbfa91142",
+          "permalink": "/item/obs_37b261f34fa67090b074b120f9aeacdd63d317563028e2ef432dd16cbfa91142/",
+          "llm_summary": "OpenAI 更新日志新增两条：API 密钥创建治理控制（组织/项目级）和 Usage Insights，表明平台在安全治理和用量可视化方面加强。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Added API key creation governance controls at the organization and project levels. Administrators can allow only service-account keys, allow only user-owned project keys, or disable all new API key creation. Organization restrictions take precedence over project settings, and existing API keys are unaffected. See production best practices for details.",
+            "Usage Insights"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Added API key creation governance controls at the organization and project levels. Administrators can allow only service-account keys, allow only user-owned project keys, or disable all new API key creation. Organization restrictions take precedence over project settings, and existing API keys are unaffected. See production best practices for details.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_b1c2026f4fc743a4fcb4e3df2bef7211c9b85d9f7f1659a4b2b7f4d56c686044",
+          "permalink": "/item/obs_b1c2026f4fc743a4fcb4e3df2bef7211c9b85d9f7f1659a4b2b7f4d56c686044/",
+          "llm_summary": "OpenAI 博客同步了 changelog 中的两条内容，确认 API 密钥治理和 Usage Insights 为正式公告。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Version 1.32.0 of the ant CLI adds ant beta:sessions connect, which attaches your terminal to a Claude Managed Agents session. You can follow the session live, send messages, and allow or deny tool calls that are waiting for approval. Pass --web to serve the Claude Console's session viewer locally and open the session there instead. See Connect to a Managed Agents session from your terminal."
+          ],
+          "removed_lines": [
+            "The ant CLI adds ant beta:sessions connect, which attaches your terminal to a Claude Managed Agents session. You can follow the session live, send messages, and allow or deny tool calls that are waiting for approval. Pass --web to serve the Claude Console's session viewer locally and open the session there instead. See Connect to a Managed Agents session from your terminal."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Version 1.32.0 of the ant CLI adds ant beta:sessions connect, which attaches your terminal to a Claude Managed Agents session. You can follow the session live, send messages, and allow or deny tool calls that are waiting for approval. Pass --web to serve the Claude Console's session viewer locally and open the session there instead. See Connect to a Managed Agents session from your terminal.",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_4ea4a575d34bcbf99b4f2f5cf1abcfa99ec739443a675510cb2c1c48f16a91c0",
+          "permalink": "/item/obs_4ea4a575d34bcbf99b4f2f5cf1abcfa99ec739443a675510cb2c1c48f16a91c0/",
+          "llm_summary": "Anthropic 更新 ant CLI 版本说明，将 beta:sessions connect 功能从“新增”改为正式版本描述，功能本身未变，但版本号明确为 1.32.0。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-15 UTC.",
+              "after": "Last updated 2026-09-16 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-16 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-16 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_fe6a3761e183b8ff9f3c01c0f942a71ebd158ac9aecbe44dc355d5c7c6629f66",
+          "permalink": "/item/obs_fe6a3761e183b8ff9f3c01c0f942a71ebd158ac9aecbe44dc355d5c7c6629f66/",
+          "llm_summary": "Gemini API 定价页面仅更新了“最后更新日期”和页面反馈代码，无实质定价变化。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Gemini 3.8 Flash Cyber (Gemini Cyber)",
+            "Our model optimized for cyber security."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-15 UTC.",
+              "after": "Last updated 2026-09-16 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-16 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Gemini 3.8 Flash Cyber (Gemini Cyber)",
+          "raw_added_count": 4,
+          "raw_removed_count": 2,
+          "id": "obs_9828a0291e85dbdc188cbeb6ab3dd0f2b55529d942590749a321113a4a15526e",
+          "permalink": "/item/obs_9828a0291e85dbdc188cbeb6ab3dd0f2b55529d942590749a321113a4a15526e/",
+          "llm_summary": "Vertex AI 模型列表新增 Gemini 3.8 Flash Cyber，并标注为网络安全优化模型，表明 Google 在垂直领域模型上扩展。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "Gemini 3.8 Flash Cyber, Gemini 3.8 Flash, Gemini 3.7 Flash, Gemini 3.6 Flash, Gemini 3.5 Flash, Gemini 3 Flash | $0.000001 | $0.000001",
+            "Gemini 3.8 Flash |",
+            "Other Google models"
+          ],
+          "removed_lines": [
+            "Other Gemini models"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "gemini",
+              "before": "Gemini 3.6 Flash, Gemini 3.5 Flash, Gemini 3 Flash | $0.000001 | $0.000001",
+              "after": "Gemini 3.8 Flash Cyber |"
+            }
+          ],
+          "signal_preview": "Gemini 3.8 Flash Cyber, Gemini 3.8 Flash, Gemini 3.7 Flash, Gemini 3.6 Flash, Gemini 3.5 Flash, Gemini 3 Flash | $0.000001 | $0.000001",
+          "raw_added_count": 4,
+          "raw_removed_count": 2,
+          "id": "obs_818d49e1d4dc01fbddc5bf1821e7c07a3c99cd31155c89575a8761adef498192",
+          "permalink": "/item/obs_818d49e1d4dc01fbddc5bf1821e7c07a3c99cd31155c89575a8761adef498192/",
+          "llm_summary": "Vertex AI 定价页面新增 Gemini 3.8 Flash Cyber 的定价行（$0.000001），并将“Other Gemini models”改为“Other Google models”，可能涵盖更广的模型范围。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 7,
+          "added_lines": [
+            "By Samuel Moss • 5-minute read",
+            "By Sandra Joyce • 10-minute read",
+            "By Scott Densmore • 6-minute read",
+            "Cloud CISO Perspectives: How Google monitors AI threats and advances AI defenses",
+            "Expanding Google Antigravity for enterprise customers",
+            "Gemini Enterprise is now the end-to-end system for the agentic era, built to help you delegate business outcomes to agents rather than micromanage tasks. It unifies the best AI models, an intuitive UI, and a secure development framework, providing agents the native system access needed to successfully deploy at global scale.",
+            "How Orange built FinOps accountability, and why agents are next",
+            "Telecommunications"
+          ],
+          "removed_lines": [
+            "By Thomas Kurian • 11-minute read",
+            "By Thomas Kurian • 8-minute read",
+            "By Thomas Kurian • 9-minute read",
+            "Everything Google Cloud customers need to know coming out of Google I/O",
+            "Today at Google I/O, we’re doubling down on our mission to support the Agentic Enterprise by delivering new AI innovations and putting them directly in the hands of enterprises via Gemini Enterprise, Agent Platform, and Google Workspace.",
+            "Now introducing Gemini Enterprise for Financial Services",
+            "Now introducing Gemini Enterprise for Legal"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "By Samuel Moss • 5-minute read",
+          "raw_added_count": 8,
+          "raw_removed_count": 7,
+          "id": "obs_00d1f0ab1cf6f9d6f556cb4c284d2f4df157a0062c23c9eb5ef51031ea7987f0",
+          "permalink": "/item/obs_00d1f0ab1cf6f9d6f556cb4c284d2f4df157a0062c23c9eb5ef51031ea7987f0/",
+          "llm_summary": "Vertex AI 博客新增多篇文章，包括 Gemini Enterprise 全面介绍、Google Antigravity 企业扩展、Cloud CISO 安全视角等，同时移除了 Google I/O 相关旧文，内容重心从大会转向企业落地。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "pricing",
+          "url": "https://mistral.ai/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Mistral and Mozilla are bringing open, private and multilingual AI to your web browser"
+          ],
+          "removed_lines": [
+            "Mistral raises €3B to make sovereign, open-weight AI the technology frontier"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Mistral and Mozilla are bringing open, private and multilingual AI to your web browser",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_d0fb708900394112e17072234832c2fd3fa7248df5e1e177806ef9fefb055a4f",
+          "permalink": "/item/obs_d0fb708900394112e17072234832c2fd3fa7248df5e1e177806ef9fefb055a4f/",
+          "llm_summary": "Mistral 定价页面新增与 Mozilla 合作公告，移除融资新闻，表明当前重点转向产品合作。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "changelog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "87 articles",
+            "Mistral and Mozilla are bringing open, private and multilingual AI to your web browser",
+            "Mozilla and Mistral AI are partnering to bring open, private and multilingual AI to Firefox Smart Window."
+          ],
+          "removed_lines": [
+            "86 articles"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Mistral and Mozilla are bringing open, private and multilingual AI to your web browser",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_7c5c61e362e0ec3e706a9541d1a15dfab52d392b8f5fe61269b0f76620f310c9",
+          "permalink": "/item/obs_7c5c61e362e0ec3e706a9541d1a15dfab52d392b8f5fe61269b0f76620f310c9/",
+          "llm_summary": "Mistral 更新日志新增与 Mozilla 合作条目，文章数从 86 增至 87，内容为 Firefox 集成。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "blog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "87 articles",
+            "Mistral and Mozilla are bringing open, private and multilingual AI to your web browser",
+            "Mozilla and Mistral AI are partnering to bring open, private and multilingual AI to Firefox Smart Window."
+          ],
+          "removed_lines": [
+            "86 articles"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Mistral and Mozilla are bringing open, private and multilingual AI to your web browser",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_b4fdabeb78e04f510a4f78f7d11e0e610976f5a66719d720b8f688e95c01e771",
+          "permalink": "/item/obs_b4fdabeb78e04f510a4f78f7d11e0e610976f5a66719d720b8f688e95c01e771/",
+          "llm_summary": "Mistral 博客同步新增与 Mozilla 合作文章，确认合作细节。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "model_list",
+          "url": "https://docs.cohere.com/docs/models",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "Chat endpoint. North Mini Code also supports production deployment through",
+            "Model Vault.",
+            "evaluation. North Mini Code also supports production deployment through"
+          ],
+          "removed_lines": [
+            "Chat endpoint and support production deployment through Model Vault.",
+            "evaluation and through Model Vault for production deployment."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Chat endpoint. North Mini Code also supports production deployment through",
+          "raw_added_count": 3,
+          "raw_removed_count": 2,
+          "id": "obs_f2ecdfc9496f7053bea57bbd0f570163fdd6c2722cf91a0deaf8ad64b54d84b3",
+          "permalink": "/item/obs_f2ecdfc9496f7053bea57bbd0f570163fdd6c2722cf91a0deaf8ad64b54d84b3/",
+          "llm_summary": "Cohere 模型列表更新 North Mini Code 的描述，明确支持通过 Model Vault 生产部署，并调整了评估相关表述。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "pricing",
+          "url": "https://cohere.com/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "$4,300Pricing | Secure and Scalable Enterprise AI | Cohere",
+            "Cohere and Aleph Alpha sign agreement to become the first transatlantic sovereign AI solution"
+          ],
+          "removed_lines": [
+            "Cohere and the University of Waterloo launch partnership to strengthen Canada’s AI talent pipeline",
+            "Pricing | Secure and Scalable Enterprise AI | Cohere"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "$4,300Pricing | Secure and Scalable Enterprise AI | Cohere",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_85ba9b6e28012f47b5c66bf2ba171a15113aaea184c84c86a61c9292e8a49b3a",
+          "permalink": "/item/obs_85ba9b6e28012f47b5c66bf2ba171a15113aaea184c84c86a61c9292e8a49b3a/",
+          "llm_summary": "Cohere 定价页面新增与 Aleph Alpha 的主权 AI 合作公告，移除与 Waterloo 大学的合作新闻，显示战略转向欧洲市场。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "changelog",
+          "url": "https://docs.cohere.com/changelog",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 6,
+          "added_lines": [
+            "BF16: Eight H100s or four B200s",
+            "FP8: Four H100s or two B200s",
+            "Open-weights formats: W4A16, FP8, and BF16",
+            "W4A16: Two H100s or one B200",
+            "available in W4A16, FP8, and BF16 on Hugging Face",
+            "for non-commercial use."
+          ],
+          "removed_lines": [
+            "For production use, enterprises can purchase a commercial license and deploy North Small Translate through",
+            "Model Vault.",
+            "Open-weights format: FP8",
+            "are available on Hugging Face",
+            "FP8 weights",
+            "use, and through Model Vault with a commercial license."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "free-tier",
+              "before": "Flexible deployment: Available through the free-tier Chat V2 API, as FP8 open weights for non-commercial",
+              "after": "Flexible deployment: Available through the free-tier Chat V2 API and as open weights in W4A16, FP8, and BF16"
+            },
+            {
+              "key": "north small translate is available on the free tier through the chat v",
+              "before": "North Small Translate is available on the free tier through the Chat V2 API. The",
+              "after": "North Small Translate is available on the free tier through the Chat V2 API. Open weights are"
+            },
+            {
+              "key": "private deployment",
+              "before": "Private deployment: Suggested deployment hardware is two H100 GPUs or one B200 GPU.",
+              "after": "Private deployment: Suggested deployment hardware by quantization format:"
+            }
+          ],
+          "signal_preview": "Open-weights formats: W4A16, FP8, and BF16",
+          "raw_added_count": 9,
+          "raw_removed_count": 9,
+          "id": "obs_732890b1820a5d34f537e97734c4b2d99388bd525d67397746362d8084897973",
+          "permalink": "/item/obs_732890b1820a5d34f537e97734c4b2d99388bd525d67397746362d8084897973/",
+          "llm_summary": "Cohere 更新 North Small Translate 的开放权重格式（新增 W4A16、FP8、BF16），并调整部署硬件建议（按量化格式区分），同时移除商业许可和 Model Vault 的旧描述，表明模型开放程度提升。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 6,
+          "added_lines": [
+            "Bringing together enterprise data, context, and secure AI to support agentic AI at scale",
+            "Cohere and Aleph Alpha sign agreement to become the first transatlantic sovereign AI solution",
+            "Cohere and OpenText partner to bring trusted agentic AI to governments and regulated industries",
+            "Company NewsSovereign AI",
+            "PartnerCompany News",
+            "The company, operating globally as Cohere, will remain deeply rooted in both countries with headquarters, R&D centers, and leadership roles in Canada and Germany"
+          ],
+          "removed_lines": [
+            "A technical deep dive into how Cohere’s approach to megakernels delivers 1.58x faster LLM serving on H100 devices.",
+            "Hardware-aware dynamic speculative decoding",
+            "Meet Cohere Transcribe Arabic",
+            "Product LaunchAI for Developers",
+            "TechnologyAI for Developers",
+            "Where AI Agents Are (and Aren’t) Being Built"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bringing together enterprise data, context, and secure AI to support agentic AI at scale",
+          "raw_added_count": 7,
+          "raw_removed_count": 8,
+          "id": "obs_ccd20c2593feaaf8c34eadba48df59247b42499a2492a17f1e708733c25eb9fd",
+          "permalink": "/item/obs_ccd20c2593feaaf8c34eadba48df59247b42499a2492a17f1e708733c25eb9fd/",
+          "llm_summary": "Cohere 博客新增多篇合作与产品文章（Aleph Alpha、OpenText），移除技术深度文章，内容重心从技术细节转向商业合作。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 2,
+          "added_lines": [
+            "\"doi:10.57967/hf/0039\","
+          ],
+          "removed_lines": [
+            "\"base_model:finetune:runwayml/stable-diffusion-v1-5\",",
+            "\"base_model:runwayml/stable-diffusion-v1-5\","
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "\"doi:10.57967/hf/0039\",",
+          "raw_added_count": 43,
+          "raw_removed_count": 46,
+          "id": "obs_ed8faa8c2a0b5f92d2555bf3cdd9e2ffd7fa5b03b788a51b37d73db82cc5e0bb",
+          "permalink": "/item/obs_ed8faa8c2a0b5f92d2555bf3cdd9e2ffd7fa5b03b788a51b37d73db82cc5e0bb/",
+          "llm_summary": "HuggingFace 行业数据新增一个 DOI 引用，移除两个 Stable Diffusion 基础模型引用，可能反映模型库更新。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 2,
+          "added_lines": [
+            "Ant Group releases finance-focused Ling-3.0-flash-Fin",
+            "Ling-3.0-flash-Fin",
+            "Medical long context reasoning",
+            "New article published · 16 Sept",
+            "New language model evaluation · 16 Sept"
+          ],
+          "removed_lines": [
+            "APEX-Agents-AA",
+            "GPT-6 Astra (xhigh)"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "gpt-",
+              "before": "GPT-6 Astra (max)",
+              "after": "GPT-6 Astra (xhigh)See more"
+            }
+          ],
+          "signal_preview": "Ant Group releases finance-focused Ling-3.0-flash-Fin",
+          "raw_added_count": 13,
+          "raw_removed_count": 13,
+          "id": "obs_ad23337979ff6244f934aa4658412ebe8ad1c4861677a2b1aa0a918b23d8957c",
+          "permalink": "/item/obs_ad23337979ff6244f934aa4658412ebe8ad1c4861677a2b1aa0a918b23d8957c/",
+          "llm_summary": "Artificial Analysis 新增金融模型 Ling-3.0-flash-Fin 和医疗长上下文推理评测，移除 APEX-Agents-AA，并更新 GPT-6 Astra 的配置标签（从 max 改为 xhigh），表明评测范围调整。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Usage Insights"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_69e24a1df44ba07b36022357cd4aa35deed95dc8bdc75d2b5cf4c506c8249daa",
+          "permalink": "/item/obs_69e24a1df44ba07b36022357cd4aa35deed95dc8bdc75d2b5cf4c506c8249daa/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Usage Insights"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_82a5c28aabee48388334f007c51b54de78951e1777dfa7e80667d6293059e85e",
+          "permalink": "/item/obs_82a5c28aabee48388334f007c51b54de78951e1777dfa7e80667d6293059e85e/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "model_list",
+          "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "Z.ai GLM 5.3",
+            "Z.ai GLM 5.3Open"
+          ],
+          "removed_lines": [
+            "Z.ai GLM 5.2"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_a2c505a30ea85ee6069b9a2e098172cda059cca543d923e61e3acc2dd149a267",
+          "permalink": "/item/obs_a2c505a30ea85ee6069b9a2e098172cda059cca543d923e61e3acc2dd149a267/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "MiniMax",
+          "logo_summary": "H3-Max 视频定价细化，图片计费规则更新",
+          "items": [
+            {
+              "text": "MiniMax-H3-Max 新增视频按分辨率计费：480P 0.37 元/秒，768P 0.97 元/秒，音频免费",
+              "type": "pricing"
+            },
+            {
+              "text": "MiniMax-H3-Max 图片输入 2 张以内免费，超出部分 0.50 元/张",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "新增 Gemini 3.8 Flash Cyber 模型及定价",
+          "items": [
+            {
+              "text": "Gemini 3.8 Flash Cyber 上线，专为网络安全优化",
+              "type": "release"
+            },
+            {
+              "text": "Gemini 3.8 Flash Cyber 定价为 $0.000001（输入/输出），与现有 Flash 系列一致",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "North 系列开放权重格式扩展，主权 AI 合作公告",
+          "items": [
+            {
+              "text": "North Small Translate 开放权重新增 W4A16、FP8、BF16 格式，并调整部署硬件建议",
+              "type": "release"
+            },
+            {
+              "text": "Cohere 与 Aleph Alpha 签署协议，成为首个跨大西洋主权 AI 解决方案",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Mistral AI",
+          "logo_summary": "与 Mozilla 合作，AI 进入 Firefox 浏览器",
+          "items": [
+            {
+              "text": "Mistral 与 Mozilla 合作，将开放、私密、多语言 AI 引入 Firefox Smart Window",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "新增 API 密钥治理控制与用量洞察功能",
+          "items": [
+            {
+              "text": "OpenAI 新增组织/项目级 API 密钥创建治理控制，可限制仅服务账号密钥",
+              "type": "other"
+            },
+            {
+              "text": "OpenAI 推出 Usage Insights 功能",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "ant CLI 更新，支持连接 Claude 托管代理会话",
+          "items": [
+            {
+              "text": "ant CLI v1.32.0 新增 ant beta:sessions connect，可实时连接 Claude Managed Agents 会话",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "新增金融模型评测与长上下文医疗推理文章",
+          "items": [
+            {
+              "text": "Ant Group 发布金融领域模型 Ling-3.0-flash-Fin",
+              "type": "release"
+            },
+            {
+              "text": "新增医疗长上下文推理评测文章（9月16日）",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-09-16",
       "stats": {

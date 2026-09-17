@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_732890b1820a5d34f537e97734c4b2d99388bd525d67397746362d8084897973",
+  "sourceId": "cohere-changelog",
+  "date": "2026-09-17",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Cohere",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.cohere.com/changelog",
+  "title": "Cohere · 更新日志来源更新",
+  "summary": "Open-weights formats: W4A16, FP8, and BF16",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "free-tier",
+        "before": "Flexible deployment: Available through the free-tier Chat V2 API, as FP8 open weights for non-commercial",
+        "after": "Flexible deployment: Available through the free-tier Chat V2 API and as open weights in W4A16, FP8, and BF16"
+      },
+      {
+        "key": "north small translate is available on the free tier through the chat v",
+        "before": "North Small Translate is available on the free tier through the Chat V2 API. The",
+        "after": "North Small Translate is available on the free tier through the Chat V2 API. Open weights are"
+      },
+      {
+        "key": "private deployment",
+        "before": "Private deployment: Suggested deployment hardware is two H100 GPUs or one B200 GPU.",
+        "after": "Private deployment: Suggested deployment hardware by quantization format:"
+      }
+    ],
+    "added_lines": [
+      "BF16: Eight H100s or four B200s",
+      "FP8: Four H100s or two B200s",
+      "Open-weights formats: W4A16, FP8, and BF16",
+      "W4A16: Two H100s or one B200",
+      "available in W4A16, FP8, and BF16 on Hugging Face",
+      "for non-commercial use."
+    ],
+    "removed_lines": [
+      "For production use, enterprises can purchase a commercial license and deploy North Small Translate through",
+      "Model Vault.",
+      "Open-weights format: FP8",
+      "are available on Hugging Face",
+      "FP8 weights",
+      "use, and through Model Vault with a commercial license."
+    ],
+    "added_count": 6,
+    "removed_count": 6,
+    "raw_added_count": 9,
+    "raw_removed_count": 9
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-17.json"
+  },
+  "permalink": "/item/obs_732890b1820a5d34f537e97734c4b2d99388bd525d67397746362d8084897973/"
+}
