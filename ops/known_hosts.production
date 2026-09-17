@@ -1,0 +1,14 @@
+# 生产服务器受控 host key（aliyun-099，daily.maas.click，47.237.135.97）
+#
+# 由管理员经安全通道核验后提交——不得用 ssh-keyscan 运行时抓取结果替换。
+# 轮换流程：管理员拿到新 key 后，先比对指纹（ssh-keygen -lf），再更新本文件并提交。
+#
+# 指纹（sha256）：
+#   ED25519: SHA256:9WAC1Y8+yk0XUh/a6nVJ3I+KdawxqV8abzV6qFgIM00
+#   ECDSA:   SHA256:p2PKsYIFwYMTDe/9iK8JOjp/cF49L1f2OSzlKFbZPNA
+#   RSA:     SHA256:H745zgZ0QsF/QDfXxg7LzTCDmyXAa5J0zF1bUaheAD0
+#
+# 由 ops/deploy-release.sh 的 setup_host_key() 以 -o UserKnownHostsFile 强约束使用。
+47.237.135.97 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDYo58s9vKGMuH8i97IZBglvy2MXUqqI15gsfEvNrdOd
+47.237.135.97 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCx/e3uxJaELqNmpdNkW6VBcsiC29ZD1CMVK0CeLRkGN1vOL33NDD7Dn+NpDjtJXp9CZM5esXjZFiJndEU+BPgyXCWvDO12D2nLlysZkka0pd3ZONfAS2XtyBSMHVkKMtLreOqArNyxJhMBxqluXHUI0aokl48FxCP5c5ui/1IcunuNzX8+dqY2RHmLjkCErpXIl/D86CYSQfuLEUP9JAatxrPPT324ShMbL83dbXABrfpVmRgOvJeYGOEitF9IC15sO5C+xf3H1l0p98QcpK+VpVWENCbyi2e4O/YbSZk6T6aVTDmasnKOVSx7iZEN3g6vpM/1DpOqMV8S90p/I6+AJ3gKl20jGlMhjRpnrLAYtzRKFfeD7qpVkeQZon7uP7r7DohiNtEy6iLclxygrFwKbsPi/6bOV+e6hwioD2GXlbc8EhEbxGc8qlQwjh8YGZK/nK7KiSRHkeOU0hXctUa5nu0lXgCvZLZvuqmdu5kXIJITqMEdqlfmReVO9cxx94E=
+47.237.135.97 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPKo28inJUT18IM0GcB0qW6YkH7BDa5kHjyfQ+ua9CJXrxW9j8tOhv6qP1qB2b05UpkH2P/KJB+ja1vl96Cum8s=

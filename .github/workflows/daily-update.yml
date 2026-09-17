@@ -116,25 +116,7 @@ jobs:
         run: python3 site/scripts/fetch-images.py
         continue-on-error: true
 
-      # ---- 4. 构建站点 ----
-      - name: Build site
-        working-directory: site
-        run: |
-          npm ci
-          npm run build
-
-      # ---- 5. 部署到 aliyun-099 ----
-      - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ env.DEPLOY_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Deploy via rsync
-        run: rsync -az --delete site/dist/ ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}
-
-      # ---- 6. 把新抓取的数据提交回仓库（快照+diff+站点数据源）----
+      # ---- 5. 先提交数据（§5.2：数据先入库，构建/发布从精确 SHA 进行）----
       - name: Commit new data
         if: ${{ !inputs.skip_fetch }}
         run: |
@@ -148,8 +130,28 @@ jobs:
             git commit -m "data: 每日信源抓取 $(date +'%Y-%m-%d')"
             git push
           fi
+        id: datacommit
 
-      # ---- 7. 运行健康检查（最后一步：数据已提交部署，此时才把坏消息置红）----
+      # ---- 6. 构建站点（数据已在上一步提交入 HEAD，dist 与数据源同版）----
+      - name: Build site
+        working-directory: site
+        run: |
+          npm ci
+          npm run build
+
+      # ---- 7. 部署到 aliyun-099（legacy 模式；release 模式的切换在 M8）----
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          cp ops/known_hosts.production ~/.ssh/known_hosts  # 受控 host key（T14 相关）
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Deploy via rsync
+        run: rsync -az --delete -e "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts -o StrictHostKeyChecking=yes" site/dist/ ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}
+
+      # ---- 8. 运行健康检查（最后一步：数据已提交部署，此时才把坏消息置红）----
       # fetch-prices 的 continue-on-error 会吞掉失败让 run 保持绿色；
       # 全部来源抓取失败（退出码 2）意味着运行环境完全失效（如 Playwright 未装、
       # 断网），不能与「部分失败沿用」同等静默。放在最后：既不阻塞当日的

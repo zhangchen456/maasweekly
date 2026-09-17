@@ -56,17 +56,22 @@ jobs:
             echo "deploy=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          # 部署白名单：站点代码 / 管线 / 工作流。数据文件（data/、site/src/data/
-          # 产出物、markdown）不触发部署——Actions 定时提交不产生循环部署。
-          # quotepath=off：中文路径默认输出带引号的八进制转义，会绕过前缀匹配
+          # T14 触发范围反转：默认部署。仅以下可忽略路径跳过——
+          #   data/**、site/src/data/**、research、docs/blog、README、HANDOFF、
+          #   所有 .md。除此之外的改动均触发，包括：
+          #   site/**、pipeline、ops、.github、services、contracts、package*.json。
+          # quotepath=off：中文路径默认输出带引号的八进制，会绕过前缀匹配。
           git -c core.quotepath=off diff --name-only "$BEFORE" "$AFTER" > /tmp/changed.txt || true
-          CHANGED=$(grep -vE '^data/|^site/src/data/|\.md$' /tmp/changed.txt || true)
-          if [ -z "$CHANGED" ]; then
-            echo "纯数据/markdown 提交，跳过部署"
+          # 可忽略的正则（忽略即跳过；不在此处的全部触发）
+          IGNORE_RE='^(data/|site/src/data/|research/|docs/blog/|README\.md$|HANDOFF\.md$|.*\.md$)'
+          DEPLOYABLE=$(grep -vE "$IGNORE_RE" /tmp/changed.txt || true)
+          if [ -z "$DEPLOYABLE" ]; then
+            echo "改动全部落在可忽略范围（数据/研究/纯 markdown），跳过部署："
+            head -10 /tmp/changed.txt
             echo "deploy=false" >> "$GITHUB_OUTPUT"
           else
-            echo "代码改动，触发部署："
-            echo "$CHANGED" | head -20
+            echo "触发部署的改动："
+            echo "$DEPLOYABLE" | head -20
             echo "deploy=true" >> "$GITHUB_OUTPUT"
           fi
 
@@ -91,8 +96,10 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ env.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+          # 受控 host key（管理员核验后提交）——不用 ssh-keyscan 运行时抓取
+          cp ops/known_hosts.production ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
 
       - name: Deploy via rsync
         if: steps.changes.outputs.deploy == 'true'
-        run: rsync -az --delete site/dist/ ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}
+        run: rsync -az --delete -e "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts -o StrictHostKeyChecking=yes" site/dist/ ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}
