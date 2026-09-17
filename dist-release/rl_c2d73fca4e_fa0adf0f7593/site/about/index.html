@@ -1,0 +1,28 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v7.2.10"><meta name="description" content="全球 MaaS 平台周度追踪 — 模型发布、定价变更、API 更新一网打尽"><title>关于 — MaaS Daily</title><script>
+      (function () {
+        let saved; try { saved = localStorage.getItem('maas-theme'); } catch {}
+        if (saved === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script><link rel="stylesheet" href="/_astro/Layout._QlsaNNh.css"></head><body><a class="skip-link" href="#main-content">跳到内容</a><header class="topbar"><div class="shell topbar-inner"><a href="/" class="brand"><span class="brand-mark"></span> MAAS / DAILY</a><nav class="nav" aria-label="页面导航"><a href="/">今日</a><a href="/leaderboards">榜单</a><a href="/pricing">价格</a><a href="/sources">信源</a><a href="/weekly">归档</a><a href="/agent">接入</a></nav><button class="theme-toggle" aria-label="切换主题" title="切换深/浅色"><span class="theme-icon-light">☀</span><span class="theme-icon-dark">☾</span></button></div></header><main id="main-content"><div class="shell"><h1>关于</h1><div class="prose"><p><strong>MaaS Daily</strong> 是一个追踪全球主流 MaaS（Model as a Service）平台动态的每日报告站点。</p><h2>覆盖范围</h2><ul><li><strong>国内平台（9）</strong>：火山方舟、阿里百炼、百度千帆、腾讯混元、硅基流动、智谱AI、Kimi、MiniMax、DeepSeek</li><li><strong>海外平台（6）</strong>：OpenAI、Anthropic、Google Gemini API、Google Vertex AI、Mistral、Cohere、xAI</li><li><strong>行业源（3）</strong>：HuggingFace、Artificial Analysis、LMArena</li></ul><h2>追踪维度</h2><p>每个平台覆盖以下 6 个维度：</p><ul><li>模型列表（P0）</li><li>API 定价（P0）</li><li>更新日志 / 发布公告（P0）</li><li>API 参考文档（P1）</li><li>官方 GitHub 仓库（P1）</li><li>官方博客 / 新闻（P1）</li></ul><h2>更新频率</h2><p>每周二、周五各一期追踪报告，覆盖上一周期的模型发布、定价变更、API 更新与开源动态。</p></div></div></main><footer><div class="shell footer-inner"><div><div class="footer-title">MaaS Daily Intelligence</div><div>模型 × 平台 × 价格 × 生态</div></div><div class="footer-meta"><a href="/about">关于</a> · <a href="/agent">接入</a> · <a href="/method">方法</a> · <a href="/changelog">变更</a> · <a href="/feed.xml">RSS</a></div></div></footer><script>
+      document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('maas-theme', next); } catch {}
+      });
+      document.documentElement.classList.add('motion-ready');
+      // reveal 动画
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+    </script></body></html>
