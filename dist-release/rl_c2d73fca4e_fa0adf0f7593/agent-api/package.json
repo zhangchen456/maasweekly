@@ -1,0 +1,26 @@
+{
+  "name": "@maasweekly/agent-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MaaS Daily 匿名只读 REST API v1（Task 03；查询逻辑与 MCP 共用的 query 模块）",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "test": "npm run build && node --test --test-force-exit \"dist/tests/http.test.js\" \"dist/tests/versioning.test.js\" \"dist/tests/openapi.test.js\" \"dist/tests/p1-fixes.test.js\"",
+    "test:real": "npm run build && node --test dist/tests/real.test.js",
+    "test:mcp": "npm run build && node --test --test-force-exit dist/tests/mcp.test.js",
+    "test:mcp:real": "npm run build && node --test --test-force-exit dist/tests/mcp-real.test.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^4.6.5"
+  }
+}
