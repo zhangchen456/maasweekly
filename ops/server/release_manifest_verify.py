@@ -58,7 +58,10 @@ def verify(root: Path) -> list[str]:
     actual = set()
     for p in root.rglob("*"):
         if p.is_symlink():
-            errors.append(f"目录含符号链接: {p.relative_to(root)}")
+            rel = p.relative_to(root).as_posix()
+            if rel.startswith("agent-api/node_modules/.bin/"):
+                continue  # npm bin 链接：合法运行时结构（builder 侧校验目标）
+            errors.append(f"目录含符号链接: {rel}")
             continue
         if not p.is_file():
             continue
