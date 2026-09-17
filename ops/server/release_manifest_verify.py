@@ -41,6 +41,8 @@ def verify(root: Path) -> list[str]:
         errors.append("gitCommitTimestamp 非法")
     if not re.match(r"^[0-9a-f]{40}$", str(m.get("gitCommit") or "")):
         errors.append("gitCommit 格式非法")
+    if m.get("testsSkipped"):
+        errors.append("testsSkipped=true（开发调试产物，禁止激活）")
     # releaseId 与目录名一致
     if root.name != m.get("releaseId"):
         errors.append(f"目录名与 releaseId 不一致: {root.name}")
