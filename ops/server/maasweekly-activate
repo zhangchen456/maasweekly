@@ -1,0 +1,288 @@
+#!/usr/bin/env bash
+# maasweekly-activate：root 管理的 release 校验/锁/切换 helper（Task 06 M4）。
+#
+# 由 maasweekly-deploy-shell 经 sudoers 单行 NOPASSWD 调用；也被
+# tests/test_release_activation.py 以 MAAS_RELEASE_ROOT 注入临时目录测试。
+#
+# 固定动作（无任意命令面，参数先过严格格式校验）：
+#   activate <release-id>                      # 校验→mv→蓝绿切换→指针
+#   rollback <release-id> --reason "<text>"    # 显式回滚（留原因）
+#   status                                     # current/previous/槽位/最近激活
+#   cleanup                                    # retention 清理
+#
+# 退出码：0 成功/幂等 | 2 用法/ID 非法 | 3 身份冲突 | 4 旧提交拒绝 |
+#         5 候选冒烟失败 | 6 磁盘不足/校验失败
+set -euo pipefail
+ROOT="${MAAS_RELEASE_ROOT:-/srv/maasweekly}"
+ACTIVATE_BIN="$(cd "$(dirname "$0")" && pwd)"
+PYTHON3="${PYTHON3:-python3}"
+
+log() { echo "[$(date -u +%FT%TZ)] $*" | tee -a "$ROOT/shared/state/activations.log" >&2; }
+trap release_lock EXIT 2>/dev/null || true
+die() { echo "✗ $1" >&2; exit "${2:-1}"; }
+
+validate_rid() {
+  [[ "$1" =~ ^rl_[0-9a-f]{10}_[0-9a-f]{12}$ ]] \
+    || die "release ID 格式非法（退出 2）" 2
+}
+
+manifest_field() {  # <release-dir> <field>
+  "$PYTHON3" -c "
+import json, sys
+m = json.load(open('$1/metadata/release-manifest.json'))
+print(m.get('$2', ''))"
+}
+
+verify_release() {  # <release-dir>：复用与 builder 相同的校验逻辑
+  "$PYTHON3" "$ACTIVATE_BIN/release_manifest_verify.py" --root "$1" >/dev/null 2>&1 \
+    || die "release 校验失败（构建中止）: $(basename "$1")（退出 6）" 6
+  # 服务器上 release_manifest.py 不一定在——verify 独立副本在同目录
+}
+
+ensure_layout() {
+  mkdir -p "$ROOT"/{incoming,releases,shared/{state,slots,nginx},locks} 2>/dev/null || true
+}
+
+# flock：所有发布通道（CI 与本地）的最终互斥（任务书 §9）。
+# macOS（本地测试）无 flock → 退化为 mkdir 原子锁（生产 Linux 一律 flock）
+acquire_lock() {
+  if command -v flock >/dev/null 2>&1; then
+    exec 9>"$ROOT/locks/release.lock"
+    flock 9
+  else
+    local tries=0
+    while ! mkdir "$ROOT/locks/release.lockdir" 2>/dev/null; do
+      ((tries++ > 100)) && die "锁获取超时" 6
+      sleep 0.05
+    done
+  fi
+}
+release_lock() {
+  rmdir "$ROOT/locks/release.lockdir" 2>/dev/null || true
+}
+
+current_release() { readlink "$ROOT/current" 2>/dev/null | sed 's|^releases/||' || true; }
+
+# ---- 蓝绿槽位（systemd 不可用时退化为直接启动桩——测试模式）----
+slot_of_release() {  # 当前 release 在哪个槽（无记录返回空）
+  if [ -f "$ROOT/shared/state/slots.json" ]; then
+    "$PYTHON3" -c "
+import json
+try:
+    d = json.load(open('$ROOT/shared/state/slots.json'))
+    print(d.get('$1', ''))
+except Exception:
+    print('')" 2>/dev/null || true
+  else
+    true
+  fi
+}
+
+switch_service() {  # <release-dir-name>：蓝绿切换（生产=systemd；测试=桩 hook）
+  local rid="$1"
+  local inactive port
+  local cur_slot
+  cur_slot="$(slot_of_release "$(current_release)")"
+  if [ "$cur_slot" = "blue" ]; then inactive="green"; else inactive="blue"; fi
+  if [ "$inactive" = "blue" ]; then port=8788; else port=8789; fi
+  # 写槽位 env（systemd EnvironmentFile；PUBLIC_DATA_ROOT 显式全路径）
+  cat > "$ROOT/shared/slots/$inactive.env" <<EOF
+PORT=$port
+MAAS_RELEASE_DIR=$ROOT/releases/$rid
+PUBLIC_DATA_ROOT=$ROOT/releases/$rid/data/public/v1
+EOF
+  # 启动候选（生产 systemd；测试环境若有 activate-hook 则调用）
+  if [ -x "$ROOT/shared/activate-hook" ]; then
+    "$ROOT/shared/activate-hook" start "$inactive" "$rid" "$port" \
+      || die "候选服务启动失败（退出 5）" 5
+  else
+    systemctl start "maas-agent@$inactive" 2>/dev/null \
+      || echo "[warn] systemd 不可用（测试模式），跳过服务启动" >&2
+  fi
+  # 候选冒烟（只回环）：status 可答（服务异步启动——重试窗口）
+  smoke_ok=false
+  for i in 1 2 3 4 5 6 7 8 9 10; do
+    if curl -sf --max-time 3 "http://127.0.0.1:$port/api/v1/status" >/dev/null 2>&1; then
+      smoke_ok=true; break
+    fi
+    sleep 0.3
+  done
+  if ! $smoke_ok; then
+    [ -x "$ROOT/shared/activate-hook" ] && "$ROOT/shared/activate-hook" stop "$inactive"
+    systemctl stop "maas-agent@$inactive" 2>/dev/null || true
+    die "候选冒烟失败：status 不可答（退出 5）" 5
+  fi
+  # 重写 nginx upstream include
+  cat > "$ROOT/shared/nginx/agent-upstream.inc" <<EOF
+# 由 maasweekly-activate 维护——勿手改
+upstream agent_api { server 127.0.0.1:$port; }
+EOF
+  # 记录槽位归属
+  "$PYTHON3" -c "
+import json
+p = '$ROOT/shared/state/slots.json'
+try: d = json.load(open(p))
+except Exception: d = {}
+d['$ROOT/releases/$rid'] = '$inactive'
+d['slot_' + '$inactive'] = '$rid'
+json.dump(d, open(p, 'w'), ensure_ascii=False, indent=2)"
+  # 停旧槽（旧 worker 排空）
+  local old_slot="$cur_slot"
+  if [ -n "$old_slot" ] && [ "$old_slot" != "$inactive" ]; then
+    if [ -x "$ROOT/shared/activate-hook" ]; then
+      "$ROOT/shared/activate-hook" stop "$old_slot" || true
+    else
+      systemctl stop "maas-agent@$old_slot" 2>/dev/null || true
+    fi
+  fi
+}
+
+swap_pointer() {  # <new-rid>：原子指针交换（GNU mv -T 优先，BSD 退化为 rm+ln）
+  local prev_target
+  prev_target="$(readlink "$ROOT/current" 2>/dev/null || echo '')"
+  _atomic_symlink "releases/$1" "$ROOT/current"
+  if [ -n "$prev_target" ]; then
+    _atomic_symlink "$prev_target" "$ROOT/previous"
+  fi
+}
+_atomic_symlink() {  # <target> <link-path>
+  ln -sfn "$1" "$2.tmp"
+  if mv -T "$2.tmp" "$2" 2>/dev/null; then return 0; fi
+  # BSD mv 无 -T：rm+ln（非原子但单机语义可接受；生产 Linux 走上面分支）
+  rm -f "$2" && ln -sfn "$1" "$2"
+  rm -f "$2.tmp"
+}
+
+retention_cleanup() {
+  # 保留：current、previous、mtime ≤7 自然日、被任何 release 的
+  # data manifest retainedVersions 引用的 datasetVersion 所在 release
+  "$PYTHON3" - "$ROOT" <<'PYEOF'
+import json, shutil, time
+from pathlib import Path
+root = Path(sys.argv[1]) if False else __import__('sys').argv[1]
+root = Path(root)
+cur = (root / 'current').resolve()
+prev = (root / 'previous').resolve() if (root / 'previous').exists() else None
+now = time.time()
+# 收集需保留的 datasetVersion（所有 release 的 retainedVersions）
+keep_ds = set()
+for m in (root / 'releases').glob('*/data/manifest.json'):
+    try:
+        keep_ds |= {r['datasetVersion'] for r in json.load(open(m)).get('retainedVersions', [])}
+    except Exception:
+        pass
+for d in (root / 'releases').iterdir():
+    if not d.is_dir():
+        continue
+    if d.resolve() in (cur, prev):
+        continue
+    dm = d / 'data' / 'manifest.json'
+    ds = None
+    try:
+        ds = json.load(open(dm))['datasetVersion']
+    except Exception:
+        pass
+    if ds in keep_ds:
+        continue
+    if now - d.stat().st_mtime > 7 * 86400:
+        shutil.rmtree(d)
+        print(f"[cleanup] 过期清理: {d.name}")
+PYEOF
+}
+
+cmd="${1:-}"; shift || true
+ensure_layout
+case "$cmd" in
+  activate)
+    [ $# -eq 1 ] || die "用法: activate <release-id>（退出 2）" 2
+    rid="$1"; validate_rid "$rid"
+    acquire_lock
+    in="$ROOT/incoming/$rid"
+    cur="$(current_release)"
+    # 幂等：已是 current → 复验后 no-op（incoming 可不存在——已 mv 走）
+    if [ "$cur" = "$rid" ] && [ ! -d "$in" ]; then
+      verify_release "$ROOT/releases/$rid"
+      echo "✓ $rid 已是 current（幂等 no-op）"
+      exit 0
+    fi
+    [ -d "$in" ] || die "incoming 不存在: ${rid}（退出 2）" 2
+    # 同 ID 已在 releases：identity 一致 → 幂等切换；不一致 → 冲突拒
+    if [ -d "$ROOT/releases/$rid" ]; then
+      "$PYTHON3" "$ACTIVATE_BIN/release_manifest_verify.py" \
+        --compare-identity "$in" "$ROOT/releases/$rid" >/dev/null 2>&1 \
+        || die "同 ID 不同内容（身份冲突，退出 3）" 3
+    fi
+    # 旧提交拒绝（gitCommitTimestamp 排序键 + SHA 字典序）
+    if [ -n "$cur" ]; then
+      cand_ts="$(manifest_field "$in" gitCommitTimestamp)"
+      cand_git="$(manifest_field "$in" gitCommit)"
+      cur_ts="$(manifest_field "$ROOT/releases/$cur" gitCommitTimestamp)"
+      cur_git="$(manifest_field "$ROOT/releases/$cur" gitCommit)"
+      if [ -z "$cand_ts" ] || [ -z "$cur_ts" ]; then
+        die "manifest 缺排序键（退出 6）" 6
+      fi
+      if (( cand_ts < cur_ts )) || { (( cand_ts == cur_ts )) && [[ "$cand_git" < "$cur_git" ]]; }; then
+        die "旧提交不能覆盖新版本（$rid < ${cur}；回滚请用 rollback，退出 4）" 4
+      fi
+    fi
+    # 完整校验（失败：current 不动，incoming 保留诊断）
+    verify_release "$in"
+    # 磁盘
+    need="$(du -sk "$in" | cut -f1)"
+    avail="$(df -k "$ROOT/releases" | tail -1 | awk '{print $4}')"
+    (( avail > need * 12 / 10 )) || die "磁盘不足（需 ${need}K 可用 ${avail}K，退出 6）" 6
+    # 原子移动 + 切换
+    mv "$in" "$ROOT/releases/$rid"
+    if ! switch_service "$rid"; then
+      mv "$ROOT/releases/$rid" "$ROOT/incoming/$rid" || true
+      die "服务切换失败（已回退 incoming，退出 5）" 5
+    fi
+    swap_pointer "$rid"
+    retention_cleanup
+    log "activate $rid ok (commit=$(manifest_field "$ROOT/releases/$rid" gitCommit | cut -c1-10))"
+    echo "✓ activated $rid"
+    ;;
+  rollback)
+    [ $# -ge 3 ] && [ "$2" = "--reason" ] || die "用法: rollback <release-id> --reason \"<原因>\"（退出 2）" 2
+    rid="$1"; validate_rid "$rid"; reason="$3"
+    acquire_lock
+    [ -d "$ROOT/releases/$rid" ] || die "目标 release 不存在（退出 2）" 2
+    # 兼容性：目标必须覆盖当前 datasetVersion（§10.2 代码回滚约束）
+    cur="$(current_release)"
+    target_ds="$(manifest_field "$ROOT/releases/$rid" datasetVersion)"
+    cur_ds="$(manifest_field "$ROOT/releases/$cur" datasetVersion)"
+    verify_release "$ROOT/releases/$rid"
+    if [ "$target_ds" != "$cur_ds" ]; then
+      keep="$(manifest_field "$ROOT/releases/$rid" \
+        | "$PYTHON3" -c "import json,sys; print('ok')" 2>/dev/null || echo '')"
+      # 目标 data 的 retainedVersions 必须含当前 ds
+      "$PYTHON3" -c "
+import json
+m = json.load(open('$ROOT/releases/$rid/data/manifest.json'))
+ds = json.load(open('$ROOT/releases/$cur/data/manifest.json'))['datasetVersion']
+retained = [r['datasetVersion'] for r in m.get('retainedVersions', [])]
+import sys; sys.exit(0 if ds in retained + [m['datasetVersion']] else 1)" \
+        || die "回滚目标不覆盖当前 datasetVersion（${cur_ds}），拒绝（退出 4）" 4
+    fi
+    switch_service "$rid"
+    swap_pointer "$rid"
+    log "rollback $rid reason=\"$reason\""
+    echo "✓ rolled back to ${rid}（原因已记录）"
+    ;;
+  status)
+    echo "current:  $(current_release)"
+    echo "previous: $(readlink "$ROOT/previous" 2>/dev/null | sed 's|^releases/||' || echo 无)"
+    echo "releases: $(ls "$ROOT/releases" 2>/dev/null | tr '\n' ' ')"
+    echo "incoming: $(ls "$ROOT/incoming" 2>/dev/null | tr '\n' ' ')"
+    echo "--- 最近激活 ---"
+    tail -5 "$ROOT/shared/state/activations.log" 2>/dev/null || echo 无
+    ;;
+  cleanup)
+    acquire_lock
+    retention_cleanup
+    echo "✓ cleanup 完成"
+    ;;
+  *)
+    die "未知动作: ${cmd}（合法：activate|rollback|status|cleanup，退出 2）" 2
+    ;;
+esac

@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# maasweekly-deploy-shell：maasdeploy 的受限登录 shell（Task 06 M4）。
+# 安装到 /usr/local/bin/maasweekly-deploy-shell（替换仅 rsync 的旧版）。
+#
+# 只接受四种固定句法（无任意命令面；参数过严格格式校验后 exec）：
+#   rsync --server ... <path>/incoming/<rid>/...   # 只能写 incoming
+#   activate <rid>                                  # sudo → maasweekly-activate
+#   rollback <rid> --reason "<text>"                # 同上
+#   status                                          # 同上
+set -euo pipefail
+ACTIVATE=/usr/local/sbin/maasweekly-activate
+INCOMING_ROOT=/srv/maasweekly/incoming
+RID_RE='^rl_[0-9a-f]{10}_[0-9a-f]{12}$'
+
+cmd="${SSH_ORIGINAL_COMMAND:-}"
+reject() { echo "restricted shell: $*" >&2; exit 1; }
+
+case "$cmd" in
+  "" )
+    reject "需要命令（activate <rid> | rollback <rid> --reason <text> | status | rsync）"
+    ;;
+  rsync\ --server\ *)
+    # 目标路径必须在 incoming/<合法rid>/ 下
+    # rsync --server 参数里的路径是最后一个以 / 开头的参数
+    target=""
+    for arg in $cmd; do
+      case "$arg" in
+        /*) target="$arg" ;;
+      esac
+    done
+    [ -n "$target" ] || reject "rsync 无目标路径"
+    case "$target" in
+      "$INCOMING_ROOT"/*) : ;;
+      *) reject "rsync 只能写 $INCOMING_ROOT/ 下（收到: $target）" ;;
+    esac
+    # 路径第三段必须是合法 rid（incoming/<rid>/...）
+    rid="$(echo "$target" | cut -d/ -f5)"
+    echo "$rid" | grep -Eq "$RID_RE" || reject "rsync 路径含非法 release ID"
+    exec $cmd
+    ;;
+  activate\ *)
+    rid="${cmd#activate }"
+    echo "$rid" | grep -Eq "$RID_RE" || reject "非法 release ID"
+    exec sudo -n "$ACTIVATE" activate "$rid"
+    ;;
+  rollback\ *)
+    rest="${cmd#rollback }"
+    rid="${rest%% *}"
+    echo "$rid" | grep -Eq "$RID_RE" || reject "非法 release ID"
+    case "$rest" in
+      "$rid --reason "*) : ;;
+      *) reject "用法: rollback <rid> --reason \"<原因>\"" ;;
+    esac
+    reason="${rest#* --reason }"
+    exec sudo -n "$ACTIVATE" rollback "$rid" --reason "$reason"
+    ;;
+  status )
+    exec sudo -n "$ACTIVATE" status
+    ;;
+  * )
+    reject "不允许的命令: $cmd"
+    ;;
+esac
