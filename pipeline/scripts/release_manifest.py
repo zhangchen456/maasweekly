@@ -64,11 +64,11 @@ def build_manifest(root: Path, *, rid: str, git_commit: str, git_ts: int,
             # 相对路径，禁止逃逸），不参与 hash（链接内容由目标文件保证）
             rel = p.relative_to(root).as_posix()
             if rel.startswith("agent-api/node_modules/.bin/"):
-                # npm .bin 链接目标是包内相对路径（../<pkg>/...）——resolve 后
-                # 必须仍在 node_modules 内（绝对路径目标同样按 resolve 判定）
+                # npm .bin 链接目标 resolve 后必须仍在该 release 的
+                # node_modules 内（绝对/相对目标统一按 realpath 判定）
                 target = os.path.realpath(p)
-                if "/node_modules/" not in target or \
-                        not target.startswith(str(root)):
+                nm_root = os.path.realpath(root / "agent-api" / "node_modules")
+                if not target.startswith(nm_root + os.sep):
                     raise ManifestError(f"npm bin 链接逃逸: {rel}")
                 continue
             raise ManifestError(f"release 含符号链接: {rel}")
