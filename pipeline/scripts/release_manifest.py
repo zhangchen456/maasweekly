@@ -51,7 +51,7 @@ def _scope_of(rel: str) -> str:
 
 def build_manifest(root: Path, *, rid: str, git_commit: str, git_ts: int,
                    dataset_version: str, data_through: str,
-                   built_at: str) -> dict:
+                   built_at: str, tests_skipped: bool = False) -> dict:
     """遍历 release 目录生成 manifest。非法路径/symlink → 抛错。"""
     if not RID_RE.match(rid):
         raise ManifestError(f"release ID 格式非法: {rid}")
@@ -87,6 +87,7 @@ def build_manifest(root: Path, *, rid: str, git_commit: str, git_ts: int,
         "datasetVersion": dataset_version,
         "dataThrough": data_through,
         "builtAt": built_at,
+        "testsSkipped": tests_skipped,  # true = 开发调试产物，禁止激活
         "identityScope": "content",
         "tools": _read_tool_versions(),
         "contracts": contracts,
@@ -235,6 +236,8 @@ def main(argv=None) -> int:
     b.add_argument("--dataset-version", required=True)
     b.add_argument("--data-through", required=True)
     b.add_argument("--built-at", required=True)
+    b.add_argument("--skip-tests-marked", action="store_true",
+                   help="标记开发调试 release（testsSkipped=true，激活器拒绝）")
 
     v = sub.add_parser("verify")
     v.add_argument("--root", type=Path, required=True)
@@ -249,7 +252,8 @@ def main(argv=None) -> int:
             m = build_manifest(
                 args.root, rid=args.rid, git_commit=args.git_commit,
                 git_ts=args.git_ts, dataset_version=args.dataset_version,
-                data_through=args.data_through, built_at=args.built_at)
+                data_through=args.data_through, built_at=args.built_at,
+                tests_skipped=args.skip_tests_marked)
             meta = args.root / "metadata"
             meta.mkdir(exist_ok=True)
             (meta / "release-manifest.json").write_text(

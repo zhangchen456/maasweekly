@@ -46,22 +46,14 @@ echo "[1/6] 公开数据投影"
 python3 pipeline/scripts/export-public-data.py
 python3 pipeline/scripts/export-public-data.py --check
 
-# ---- 步骤 2：门禁与测试 ----
+# ---- 步骤 2：统一全量回归（scripts/run-all-tests.sh，复验 P1c）----
+TESTS_FLAG=""
 if ! $SKIP_TESTS; then
-  echo "[2/6] 全量门禁与测试"
-  python3 pipeline/scripts/validate-archive.py
-  python3 pipeline/scripts/validate-price-archive.py --check
-  python3 -m unittest discover -s tests -p 'test_*.py' 2>&1 | tail -1
-  (cd site && npm ci --silent && npm run build >/dev/null 2>&1) \
-    || die "site 构建失败"
-  (cd site && node --experimental-strip-types tests/access-pages.test.mjs >/dev/null) \
-    || die "access-pages 测试失败"
-  (cd site && node --experimental-strip-types tests/rss.test.mjs >/dev/null) \
-    || die "rss 测试失败"
-  (cd services/agent-api && npm ci --silent && npm run build >/dev/null 2>&1 && npm test 2>&1 | grep -q '^# fail 0') \
-    || die "agent-api 构建或测试失败"
+  echo "[2/6] 统一全量回归（Task 01–06）"
+  scripts/run-all-tests.sh || die "全量回归失败（见上方失败项）——生产 release 拒绝"
 else
-  echo "[2/6] 跳过测试（--skip-tests）；site 构建仍执行"
+  echo "[2/6] ⚠ 跳过测试（--skip-tests）——release 将标记为不可激活"
+  TESTS_FLAG="--skip-tests-marked"
   (cd site && npm ci --silent && npm run build >/dev/null 2>&1) || die "site 构建失败"
 fi
 
@@ -71,11 +63,22 @@ echo "[3/6] tracked diff 复查"
   || { git status --short >&2; die "构建产生未解释的 tracked 改动（数据未提交？）"; }
 
 # ---- 步骤 4：agent-api 生产运行包 ----
-echo "[4/6] agent-api 生产包（npm ci --omit=dev）"
-PKG="$(mktemp -d)/agent-api"
+# 完整依赖环境编译 TS（devDeps 含 typescript）→ 保留 dist → 裁剪为生产依赖
+echo "[4/6] agent-api 生产包（完整编译 → omit=dev 裁剪）"
+PKG_TMP="$(mktemp -d "${TMPDIR:-/tmp}/maas-release-pkg.XXXXXX")"
+trap 'rm -rf "$PKG_TMP"' EXIT
+PKG="$PKG_TMP/agent-api"
 cp -R services/agent-api "$PKG"
-rm -rf "$PKG/node_modules" "$PKG/dist"
+rm -rf "$PKG/node_modules"
+# 完整依赖编译（typescript 在 devDeps）
+(cd "$PKG" && npm ci --silent && npm run build --silent)
+[ -f "$PKG/dist/server.js" ] || die "agent-api 编译失败：dist/server.js 不存在"
+# 裁剪为生产运行依赖（重装仅生产依赖；dist 已存在不受影响）
+rm -rf "$PKG/node_modules"
 (cd "$PKG" && npm ci --omit=dev --silent)
+[ -f "$PKG/node_modules/@modelcontextprotocol/sdk/package.json" ] \
+  || die "agent-api 生产依赖缺失：@modelcontextprotocol/sdk"
+[ -f "$PKG/node_modules/zod/package.json" ] || die "agent-api 生产依赖缺失：zod"
 
 # ---- 步骤 5：组装 release 目录 ----
 echo "[5/6] 组装 release"
@@ -98,7 +101,7 @@ BUILT_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 python3 pipeline/scripts/release_manifest.py build --root "$OUT" --rid "$RID" \
   --git-commit "$GIT_SHA" --git-ts "$GIT_TS" \
   --dataset-version "$DS_VER" --data-through "$DATA_THROUGH" \
-  --built-at "$BUILT_AT"
+  --built-at "$BUILT_AT" $TESTS_FLAG
 python3 pipeline/scripts/release_manifest.py verify --root "$OUT"
 
 echo "✓ release $RID → $OUT"
