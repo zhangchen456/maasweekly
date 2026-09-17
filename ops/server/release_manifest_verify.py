@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -60,7 +61,12 @@ def verify(root: Path) -> list[str]:
         if p.is_symlink():
             rel = p.relative_to(root).as_posix()
             if rel.startswith("agent-api/node_modules/.bin/"):
-                continue  # npm bin 链接：合法运行时结构（builder 侧校验目标）
+                # npm bin 链接：resolve 后仍在 node_modules 内则合法
+                # （builder 侧同规则；此处独立复核）
+                target = os.path.realpath(p)
+                nm_root = os.path.realpath(root / "agent-api" / "node_modules")
+                if target.startswith(nm_root + os.sep):
+                    continue
             errors.append(f"目录含符号链接: {rel}")
             continue
         if not p.is_file():
