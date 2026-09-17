@@ -37,8 +37,11 @@ info "deploy-mode: $MODE"
 info "构建 release（commit=$COMMIT${BUILD_EXTRA:+，$BUILD_EXTRA}）"
 scripts/build-release.sh --commit "$COMMIT" --output "$OUTPUT_DIR" $BUILD_EXTRA
 
-# 从构建产物里取出真正的 RID
-RID_DIR="$(find "$OUTPUT_DIR" -mindepth 1 -maxdepth 1 -type d | head -1)"
+# 从构建产物里取出真正的 RID：按 mtime 取最新（dist-release 可能残留旧 release；
+# 不能用 find|head -1——目录序不稳定会拿到旧产物）
+RID_DIR="$(ls -td "$OUTPUT_DIR"/*/ 2>/dev/null | head -1)"
+RID_DIR="${RID_DIR%/}"
+[ -n "$RID_DIR" ] || die "构建未产出 release 目录: $OUTPUT_DIR"
 RID="$(basename "$RID_DIR")"
 validate_rid "$RID"
 info "release: $RID"
