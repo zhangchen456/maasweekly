@@ -189,7 +189,15 @@ def verify_manifest(root: Path | None = None,
         actual = set()
         for p in root.rglob("*"):
             if p.is_symlink():
-                errors.append(f"目录含符号链接: {p.relative_to(root)}")
+                rel = p.relative_to(root).as_posix()
+                if rel.startswith("agent-api/node_modules/.bin/"):
+                    # 与 build_manifest 同规则：resolve 后仍在 node_modules 内
+                    target = os.path.realpath(p)
+                    nm_root = os.path.realpath(
+                        root / "agent-api" / "node_modules")
+                    if target.startswith(nm_root + os.sep):
+                        continue
+                errors.append(f"目录含符号链接: {rel}")
                 continue
             if not p.is_file():
                 continue
