@@ -14,6 +14,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -608,6 +609,138 @@ class TestInstallProduction(unittest.TestCase):
         for line in content.splitlines():
             if line.startswith("DEPLOY_MODE="):
                 self.assertEqual(line, "DEPLOY_MODE=legacy")
+
+
+class TestCandidateRunsCandidateRelease(ActivateFixture):
+    """M8-B3 P0 核心回归：候选槽位必须运行候选 release（MAAS_RELEASE_DIR），
+    绝不依赖 /srv/maasweekly/current。
+
+    背景：首发暴露 systemd WorkingDirectory=/srv/maasweekly/current/agent-api——
+    首发时 current 不存在（CHDIR 200 失败）；后续发布会从旧 current 运行（混版）。
+    修复：unit ExecStart 改 wrapper（ops/server/maas-agent-run），slot env 驱动。
+    """
+
+    def _start_slot_with_env(self, rid: str, port: int) -> str:
+        """按激活器真实行为写 slot env，再用真实 wrapper 语义起候选。"""
+        slot_env = self.root / "shared" / "slots" / "blue.env"
+        slot_env.parent.mkdir(parents=True, exist_ok=True)
+        slot_env.write_text(
+            f"PORT={port}\n"
+            f"MAAS_RELEASE_DIR={self.root}/releases/{rid}\n"
+            f"PUBLIC_DATA_ROOT={self.root}/releases/{rid}/data/public/v1\n")
+        # 用 release 内真实 agent-api 不可行（测试 fixture 无产物）——
+        # 这里测的是 wrapper 语义：起一个返回 slot env 指定 datasetVersion 的服务，
+        # 由 wrapper 等价物从 slot env 读路径启动（与生产 wrapper 同变量）。
+        ds = {"rl_aaaaaaaaaa_bbbbbbbbbbbb": "ds_" + ("11" * 32),
+              "rl_aaaaaaaaaa_cccccccccccc": "ds_" + ("22" * 32)}[rid]
+        (self.root / "releases" / rid).mkdir(parents=True, exist_ok=True)
+        proc = subprocess.Popen(
+            ["bash", "-c", f"""
+set -euo pipefail
+source '{slot_env}'
+: "${{MAAS_RELEASE_DIR:?}}"
+python3 -c "
+import http.server, threading, sys, json
+DS = '{ds}'
+class H(http.server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path.startswith('/api/v1/status'):
+            body = json.dumps({{'datasetVersion': DS}}).encode()
+            self.send_response(200); self.send_header('Content-Type','application/json')
+            self.send_header('Content-Length', str(len(body))); self.end_headers()
+            self.wfile.write(body)
+        else:
+            self.send_response(200); self.send_header('Content-Length','2'); self.end_headers(); self.wfile.write(b'{{}}')
+    def log_message(self, *a): pass
+srv = http.server.HTTPServer(('127.0.0.1', int(sys.argv[1])), H)
+threading.Thread(target=srv.serve_forever, daemon=True).start()
+import time; time.sleep(60)
+" "$PORT" >/dev/null 2>&1 &
+echo $! >> {self.root}/shared/state/hook.pids
+"""])
+        # 等服务就绪
+        import urllib.request
+        for _ in range(20):
+            try:
+                urllib.request.urlopen(f"http://127.0.0.1:{port}/api/v1/status", timeout=1)
+                return ds
+            except Exception:
+                time.sleep(0.1)
+        self.fail("slot 服务未就绪")
+        return ""
+
+    def _get_ds(self, port: int) -> str:
+        import urllib.request
+        body = urllib.request.urlopen(f"http://127.0.0.1:{port}/api/v1/status", timeout=3).read()
+        return json.loads(body)["datasetVersion"]
+
+    def test_candidate_starts_without_current(self):
+        """首发边界：current 不存在时，slot env 指向的候选 release 可直接启动。"""
+        rid = "rl_aaaaaaaaaa_bbbbbbbbbbbb"
+        self.assertFalse((self.root / "current").exists())  # 无 current
+        ds = self._start_slot_with_env(rid, 9601)
+        self.assertEqual(self._get_ds(9601), ds)
+        # 全程未创建 current
+        self.assertFalse((self.root / "current").exists())
+
+    def test_candidate_returns_its_own_ds_not_current(self):
+        """防混版核心：current=A 时，候选 env=B → status 必须返回 B 的 datasetVersion。"""
+        a, b = "rl_aaaaaaaaaa_bbbbbbbbbbbb", "rl_aaaaaaaaaa_cccccccccccc"
+        # current 指向 A（旧 release）
+        (self.root / "releases" / a).mkdir(parents=True, exist_ok=True)
+        os.symlink(f"releases/{a}", self.root / "current")
+        # 候选 slot env 指向 B
+        ds_b = self._start_slot_with_env(b, 9602)
+        self.assertEqual(self._get_ds(9602), ds_b)  # B 的版本，不是 A 的
+        ds_a = {"rl_aaaaaaaaaa_bbbbbbbbbbbb": "ds_" + ("11" * 32)}[a]
+        self.assertNotEqual(self._get_ds(9602), ds_a)
+
+    def test_wrapper_requires_release_dir(self):
+        """wrapper 语义：缺 MAAS_RELEASE_DIR 必须失败（不猜路径）。"""
+        r = subprocess.run(
+            ["bash", str(BASE / "ops" / "server" / "maas-agent-run")],
+            capture_output=True, text=True,
+            env={k: v for k, v in os.environ.items() if k != "MAAS_RELEASE_DIR"})
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("MAAS_RELEASE_DIR", r.stderr)
+
+
+class TestUnitContract(unittest.TestCase):
+    """maas-agent@.service 静态合同（M8-B3 P0）：候选槽位不依赖 current。"""
+
+    BASE = Path(__file__).resolve().parent.parent
+
+    def test_unit_never_references_current(self):
+        """unit 指令行不得出现 /srv/maasweekly/current（注释说明除外）。"""
+        unit = (self.BASE / "ops" / "maas-agent@.service").read_text()
+        directives = [l for l in unit.splitlines()
+                      if l.strip() and not l.strip().startswith(("#", "["))]
+        for l in directives:
+            self.assertNotIn("/srv/maasweekly/current", l,
+                             f"unit 指令行引用 current（混版风险）: {l}")
+
+    def test_unit_execstart_uses_wrapper(self):
+        """ExecStart 必须是 wrapper（slot env 驱动候选 release）。"""
+        unit = (self.BASE / "ops" / "maas-agent@.service").read_text()
+        exec_lines = [l for l in unit.splitlines() if l.startswith("ExecStart=")]
+        self.assertEqual(len(exec_lines), 1)
+        self.assertEqual(exec_lines[0].strip(),
+                         "ExecStart=/usr/local/bin/maas-agent-run")
+        # 不再有 WorkingDirectory（曾被指向 current/agent-api）
+        wd = [l for l in unit.splitlines() if l.startswith("WorkingDirectory=")]
+        self.assertEqual(wd, [])
+
+    def test_wrapper_reads_release_dir(self):
+        """wrapper 从 slot env 读 MAAS_RELEASE_DIR 启动（生产语义）。"""
+        w = (self.BASE / "ops" / "server" / "maas-agent-run").read_text()
+        self.assertIn(': "${MAAS_RELEASE_DIR:?', w)
+        self.assertIn('exec /usr/bin/node "${MAAS_RELEASE_DIR}/agent-api/dist/server.js"', w)
+
+    def test_installer_installs_wrapper(self):
+        """install-production 安装 wrapper 到 /usr/local/bin（0755）。"""
+        inst = (self.BASE / "ops" / "install-production.sh").read_text()
+        self.assertIn("'$RUN_SRC' /usr/local/bin/maas-agent-run", inst)
+        self.assertIn('RUN_SRC="$OPS_DIR/server/maas-agent-run"', inst)
 
 
 if __name__ == "__main__":

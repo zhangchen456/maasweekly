@@ -25,9 +25,11 @@ Group=maasagent
 # 环境来自激活器维护的槽位文件 + root 管理的稳定 secret（0740 root:maasagent）
 EnvironmentFile=/srv/maasweekly/shared/agent.env
 EnvironmentFile=-/srv/maasweekly/shared/slots/%i.env
-# release 内已含编译产物与锁定生产依赖，不临时拉包
-WorkingDirectory=/srv/maasweekly/current/agent-api
-ExecStart=/usr/bin/node dist/server.js
+# 候选槽位必须运行候选 release（M8-B3 P0）：不依赖 /srv/maasweekly/current——
+# 首发时 current 尚不存在；后续发布若走 current 会运行旧 release（混版）。
+# systemd ExecStart 不做 shell 变量展开，经 wrapper（bash）读 MAAS_RELEASE_DIR
+# （slots/<slot>.env 由激活器写入，指向 releases/<rid>）。PUBLIC_DATA_ROOT 同机制。
+ExecStart=/usr/local/bin/maas-agent-run
 # 重启与超时
 Restart=on-failure
 RestartSec=2
