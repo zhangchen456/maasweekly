@@ -40,13 +40,13 @@ validate_rid "$EXPECT_RID"
 status_out="$(remote_status 2>/dev/null)" || die "无法读取服务器 status"
 current="$(echo "$status_out" | grep '^current:' | awk '{print $2}')"
 [ "$current" = "$EXPECT_RID" ] \
-  || die "服务器 current=$current ≠ expect=$EXPECT_RID（激活未完成或已回滚）"
+  || die "服务器 current=${current} ≠ expect=${EXPECT_RID}（激活未完成或已回滚）"
 info "✓ 服务器 current: $current"
 
 expect_ds="$(echo "$status_out" | grep '^datasetVersion:' | awk '{print $2}')"
 expect_through="$(echo "$status_out" | grep '^dataThrough:' | awk '{print $2}')"
 [ -n "$expect_ds" ] || die "服务器 status 未返回 datasetVersion（current release manifest 异常？）"
-info "· 服务器 datasetVersion=$expect_ds / dataThrough=$expect_through"
+info "· 服务器 datasetVersion=${expect_ds} / dataThrough=${expect_through}"
 
 # 本地期望（可选：给了本地 release 目录则比对 manifest 一致性）
 if [ -n "${LOCAL_RELEASE_DIR:-}" ]; then
@@ -55,7 +55,7 @@ import json
 m = json.load(open('$LOCAL_RELEASE_DIR/metadata/release-manifest.json'))
 print(m.get('datasetVersion', ''))")"
   [ "$local_ds" = "$expect_ds" ] \
-    || die "本地 manifest datasetVersion=$local_ds ≠ 服务器=$expect_ds（发布错版本？）"
+    || die "本地 manifest datasetVersion=${local_ds} ≠ 服务器=${expect_ds}（发布错版本？）"
   info "✓ 本地 manifest 与服务器 datasetVersion 一致"
 fi
 
@@ -66,8 +66,8 @@ for ep in "/api/v1/status" "/api/v1/changes?limit=10"; do
   ds="$(echo "$body" | python3 -c \
     "import sys,json; print(json.load(sys.stdin).get('datasetVersion',''))" 2>/dev/null)"
   [ "$ds" = "$expect_ds" ] \
-    || die "$ep datasetVersion=$ds ≠ expect=$expect_ds（新旧混版？）"
-  info "✓ REST $ep datasetVersion=$ds"
+    || die "${ep} datasetVersion=${ds} ≠ expect=${expect_ds}（新旧混版？）"
+  info "✓ REST ${ep} datasetVersion=${ds}"
 done
 
 # 3. MCP：initialize + tools/list（协议层可达即证明同服务；数据版本由 REST 同源保证）
@@ -93,7 +93,7 @@ mcp_call="$(curl -sf --max-time 10 -X POST \
   -d '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"maas_get_changes","arguments":{"limit":5}}}' \
   "$MAAS_PUBLIC_ORIGIN/api/mcp" 2>/dev/null || true)"
 echo "$mcp_call" | grep -q "$expect_ds" \
-  || die "MCP maas_get_changes 响应不含 datasetVersion=$expect_ds（新旧混版？）"
+  || die "MCP maas_get_changes 响应不含 datasetVersion=${expect_ds}（新旧混版？）"
 info "✓ MCP 工具调用 datasetVersion=$expect_ds"
 
 # 4. RSS：两个 feed 可达 + content type + ETag/304 行为
@@ -107,8 +107,8 @@ for feed in "/feed.xml" "/feed/weekly.xml"; do
   code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 \
     -H "If-None-Match: $(echo "$etag" | sed 's/^[Ee][Tt][Aa][Gg]: *//')" \
     "$MAAS_PUBLIC_ORIGIN$feed" 2>/dev/null || echo 000)"
-  [ "$code" = "304" ] || die "$feed 条件请求返回 $code（期望 304）"
-  info "✓ RSS $feed（rss+xml + ETag + 304）"
+  [ "$code" = "304" ] || die "${feed} 条件请求返回 ${code}（期望 304）"
+  info "✓ RSS ${feed}（rss+xml + ETag + 304）"
 done
 
 # 5. Skill：manifest 与 install.sh 可达且为同源 release
@@ -124,4 +124,4 @@ curl -sf --max-time 10 "$MAAS_PUBLIC_ORIGIN/maas-skill/install.sh" >/dev/null 2>
   || die "Skill install.sh 不可达"
 info "✓ Skill manifest + install.sh 可达"
 
-echo "✓ 在线验收通过: current=$EXPECT_RID / datasetVersion=$expect_ds（REST+MCP+RSS+Skill 四入口）"
+echo "✓ 在线验收通过: current=$EXPECT_RID / datasetVersion=${expect_ds}（REST+MCP+RSS+Skill 四入口）"
