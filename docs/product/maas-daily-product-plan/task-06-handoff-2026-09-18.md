@@ -6,7 +6,7 @@
 
 ## 一、当前状态（一句话）
 
-Task 06 **M1–M7 完成；M8 进行中**（B1 Node22 ✓ / B2 systemd+用户+sudoers ✓ / B3 前发现并修复 nginx mixed-scope P0）。最终候选在分支 `task-06-m7-candidate`（PR #1 → main、未 merge）：`APPROVED_COMMIT`=`65fe566e50d9…` / `APPROVED_RID`=`rl_65fe566e50_8b9fb7b09ead`（第五代）。**B3 已试两次：第一次 CHDIR P0（wrapper 修复）；第二次双 P0（MDWE 删 V8 JIT 崩溃 + release 权限收敛闭环）。均事务自动恢复零影响。下一步=B2.3 幂等重跑覆盖 unit → B3 第三次**
+Task 06 **M1–M7 完成；M8 进行中**（B1 Node22 ✓ / B2 systemd+用户+sudoers ✓ / B3 前发现并修复 nginx mixed-scope P0）。最终候选在分支 `task-06-m7-candidate`（PR #1 → main、未 merge）：`APPROVED_COMMIT`=`6bc9b0b7cc5f…` / `APPROVED_RID`=`rl_6bc9b0b7cc_8b9fb7b09ead`（第六代）。**B3 已试三次：CHDIR P0 → 双 P0（MDWE/权限）→ 双消费者 P0（分树）。第三次 activate 成功但静态层 404 → 已 emergency rollback 回 legacy。下一步=B2.4 幂等重跑 → B3 第四次**
 
 ## 二、关键约束（红线，重启后必须先读）
 
@@ -77,7 +77,7 @@ cd /Users/zhangchen/Work/maasweekly
 git branch --show-current        # task-06-m7-candidate
 git log --oneline -5             # 应见 M7 系列 + logo/rendered 修复
 git status                       # 应干净
-python3 -m unittest discover -s tests -p "test_release_activation.py"  # 40 项（1 skip）
+python3 -m unittest discover -s tests -p "test_release_activation.py"  # 43 项（1 skip）
 ./scripts/run-all-tests.sh       # 22/22
 ```
 
