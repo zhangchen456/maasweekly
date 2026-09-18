@@ -149,8 +149,14 @@ aefc7af2d  docs: Task 06 M7 handoff（候选就绪待授权点 A）
 
 ## 4b. M7 授权包（申请生产切换授权）
 
-**候选 commit**：aefc7af2d（分支 task-06-m7-candidate，PR → main）
-**候选 release**：`rl_aefc7af2d4_8b9fb7b09ead`（14575 文件 / 218,946,348 字节；datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
+> **最终候选（P0 修复后重新构建；原 aefc7af2d/rl_aefc7af2d4 已作废）**
+>
+> - `APPROVED_COMMIT` = `<P0 修复 commit 的完整 SHA，构建后填入并冻结>`
+> - `APPROVED_RID` = `<P0 修复后 release build 的 RID，构建后填入并冻结>`
+> - 冻结纪律：本节填入后不再追加任何影响 release 的代码变化；后续文档性提交不改变 APPROVED_COMMIT。
+
+**候选 commit**：aefc7af2d（已作废，见下方 P0 修复）→ 以 APPROVED_COMMIT 为准（分支 task-06-m7-candidate，PR → main）
+**候选 release**：`rl_aefc7af2d4_8b9fb7b09ead`（已作废）→ 以 APPROVED_RID 为准（14575 文件 / 218,946,348 字节量级；datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
 **配置 diff**：`ops/nginx-agent.conf`（candidate）+ `ops/maas-agent@.service` + `ops/install-production.sh --dry-run` 输出（全部为新增候选文件；现有 server 块/静态行为不动）
 **离线 smoke 输出**（2026-09-18 实测）：
 
@@ -187,11 +193,24 @@ ops/rollback-release.sh <previous-rid> --reason "<原因>"
 ops/verify-release.sh --online --expect-release <previous-rid>
 ```
 
-**授权后动作序列**（M8，一次授权内连续执行）：
-1. 服务器执行 `ops/install-production.sh`（先 --dry-run 审查）
-2. 本地翻转 `ops/deploy-mode`：legacy → release（与安装同一受控操作）
-3. `ops/deploy-release.sh`（构建已就绪 → 上传 incoming → 激活 → 公网冒烟）
-4. 失败任意一步：`ops/rollback-release.sh` + 翻回 deploy-mode=legacy（旧 rsync 通道原样可用）
+**授权后动作序列**（M8，一次授权内连续执行；P0 修复后的收敛执行链）：
+1. 服务器执行 `ops/install-production.sh --dry-run` 审查 → 正式执行
+2. 本地 checkout 到 **APPROVED_COMMIT**（detached HEAD，工作区干净）
+3. `MAAS_DEPLOY_MODE=release ops/deploy-release.sh --commit <APPROVED_COMMIT>`（运行时注入通道；构建与激活锁定同一 SHA，RID 应等于 APPROVED_RID）
+4. `ops/verify-release.sh --online --expect-release <APPROVED_RID>`（四入口验收）
+5. 任一步失败：`ops/rollback-release.sh <previous-rid> --reason "…"`；通道回退=下次发布不注入 `MAAS_DEPLOY_MODE`（无任何仓库状态需要"改回"——这是 P0 修复的核心收益）
+
+### P0 修复：部署模式运行时覆盖 + 候选 SHA pin（2026-09-18 授权点 A 前复验）
+
+**发现的阻断**（用户复验提出，两项）：
+1. 原流程"先改 `ops/deploy-mode` 为 release 再发布"会修改 tracked 文件 → 工作区脏 → `build-release.sh` preflight（`git status --porcelain` 必须为空）直接拒绝生产构建；且留下"忘记改回"风险。
+2. 原候选 commit `aefc7af2d` 之后已有文档提交前进——M8 若默认执行 `deploy-release.sh`（构建 HEAD），实际构建的不是已审核的候选，RID 也会变化。"候选已验收"与"实际部署构建什么"未锁死。
+
+**修复**：
+- `deploy_mode()` 优先级改为：`MAAS_DEPLOY_MODE` 环境变量 > `ops/deploy-mode` 文件 > 默认 legacy。仓库 tracked 文件**永久保持 `DEPLOY_MODE=legacy`**（含红线测试 `test_repo_file_permanently_legacy`）。首发显式 `MAAS_DEPLOY_MODE=release ops/deploy-release.sh --commit <approved-sha>`，不污染 worktree、无状态需要恢复。
+- M8 执行链改为：checkout approved SHA（detached HEAD、干净区）→ `MAAS_DEPLOY_MODE=release deploy-release.sh --commit <approved-sha>`——构建与激活都锁定已批准的完整 SHA。
+- 新增 `tests/test_deploy_mode.py`（7 项：默认 legacy / 文件值 / 环境变量覆盖 / 无文件环境变量 / 非法值拒绝×2 / 仓库文件永久 legacy 红线），挂入 run-all-tests。
+- 本修复产生新 commit → 原 `aefc7af2d` 不再是最终生产候选；**最终候选以本节 APPROVED_COMMIT / APPROVED_RID 为准**（见下，重新构建后填入并冻结）。
 
 ## 5. 已知限制
 

@@ -7,7 +7,7 @@ Task 06 产物。本目录是发布协议的客户端与服务器侧脚本 + 生
 
 | 文件 | 作用 | 执行位置 |
 |---|---|---|
-| `deploy-mode` | 部署通道开关：`legacy`（现状 rsync 直写）/ `release`（incoming→校验→蓝绿激活）。**当前=legacy，M8 授权后才翻转** | 双侧读取 |
+| `deploy-mode` | 部署通道**回退配置**（永久 `legacy`）。通道切换不走此文件——每次发布用 `MAAS_DEPLOY_MODE` 环境变量注入（M7 P0：改 tracked 文件会污染 clean worktree，build-release preflight 会拒绝） | 双侧读取 |
 | `lib-release.sh` | 公共库：受控 host key SSH 封装、deploy-mode、RID 校验、`server_meta`（经固定 status 动作取服务器只读 metadata） | 本地 |
 | `deploy-release.sh` | 发布入口：build-release.sh 构建 → 上传 incoming → 激活 → 公网冒烟 | 本地 |
 | `verify-release.sh` | 验收：`--offline` 校验产物 manifest；`--online` 四入口（REST/MCP/RSS/Skill）与服务器 current 同版本 | 本地 |
@@ -77,8 +77,12 @@ ops/verify-release.sh --online --expect-release <rid>
 
 ## 授权边界（红线）
 
-- `DEPLOY_MODE=legacy` 期间：deploy-release.sh 走旧 rsync 直写通道，服务器无新机制。
-- 翻转到 `release` 与执行 `install-production.sh` 是**同一受控操作**，
-  前置条件：M7 授权包（commit/manifest/配置 diff/冒烟输出/回滚命令）获用户批准。
+- 未显式注入 `MAAS_DEPLOY_MODE=release` 时（默认/仓库文件均为 legacy）：
+  deploy-release.sh 走旧 rsync 直写通道，服务器无新机制。
+- release 通道首发（`MAAS_DEPLOY_MODE=release` + `--commit <approved-sha>`）
+  与执行 `install-production.sh` 是**同一受控操作**，前置条件：M7 授权包
+  （APPROVED_COMMIT/APPROVED_RID/manifest/配置 diff/冒烟输出/回滚命令）获用户批准。
+- 仓库 tracked 文件 `ops/deploy-mode` **永久保持 legacy**——不得通过修改它切换通道
+  （会污染 clean worktree，build-release.sh preflight 拒绝生产构建）。
 - 不把 secret 写进 systemd unit、命令行、Actions 参数或日志；
   `CURSOR_SECRET` 只存在于服务器 `shared/agent.env`（root:maasagent 0740）。

@@ -26,11 +26,18 @@ RID_RE='^rl_[0-9a-f]{10}_[0-9a-f]{12}$'
 die() { echo "✗ $*" >&2; exit 1; }
 info() { echo "· $*"; }
 
-# ---- deploy-mode 读取（默认 legacy：行为不变）----
+# ---- deploy-mode 读取（M7 P0 修复：运行时覆盖，不污染 clean worktree）----
+# 优先级：MAAS_DEPLOY_MODE 环境变量 > 仓库 ops/deploy-mode 文件 > 默认 legacy。
+# 仓库文件**永久保持 legacy**（tracked，不得翻转——翻转会造成工作区脏，
+# build-release.sh preflight 的 clean-worktree 检查直接拒绝生产构建，
+# 且留下"忘记改回"的风险）。release 通道首发时显式注入：
+#   MAAS_DEPLOY_MODE=release ops/deploy-release.sh --commit <approved-sha>
 deploy_mode() {
-  local f="$OPS_DIR/deploy-mode" line
-  if [ -f "$f" ]; then
-    line="$(grep -E '^DEPLOY_MODE=' "$f" | tail -1 | cut -d= -f2- | tr -d '[:space:]')"
+  local line
+  if [ -n "${MAAS_DEPLOY_MODE:-}" ]; then
+    line="$MAAS_DEPLOY_MODE"
+  elif [ -f "$OPS_DIR/deploy-mode" ]; then
+    line="$(grep -E '^DEPLOY_MODE=' "$OPS_DIR/deploy-mode" | tail -1 | cut -d= -f2- | tr -d '[:space:]')"
   fi
   case "${line:-legacy}" in
     legacy|release) echo "${line:-legacy}" ;;
