@@ -155,11 +155,11 @@
 
 ## 4b. M7 授权包（申请生产切换授权）
 
-> **最终候选（M8-B3 第二次首发双 P0 修复后第五次构建；前四代已作废）——已冻结**
+> **最终候选（M8-B3 第三次首发双消费者 P0 修复后第六次构建；前五代已作废）——已冻结**
 >
-> - `APPROVED_COMMIT` = `65fe566e50d9956e222cb60ef148e4c527e705d9`
-> - `APPROVED_RID` = `rl_65fe566e50_8b9fb7b09ead`
-> - 重新构建验证（2026-09-18）：run-all-tests **22/22**（激活套件 34→**40** 项）→ build-release 完整执行 → `verify-release.sh --offline` 通过 → release 内 server 启动冒烟（REST status 200 / MCP initialize）
+> - `APPROVED_COMMIT` = `6bc9b0b7cc5f83ee050b174af4e7c075fd5f5978`
+> - `APPROVED_RID` = `rl_6bc9b0b7cc_8b9fb7b09ead`
+> - 重新构建验证（2026-09-18）：run-all-tests **22/22**（激活套件 40→**43** 项）→ build-release 完整执行 → `verify-release.sh --offline` 通过 → release 内 server 启动冒烟（REST status 200 / MCP initialize）
 > - 冻结纪律：本节填入后不再追加任何影响 release 的代码变化。M8 构建产生的 RID 必须等于 APPROVED_RID（不一致即停止并排查）。
 >
 > 作废记录：`6c45634f…`/`rl_6c45634f…`（首发暴露 systemd WorkingDirectory P0 作废）← `2152ab1266…`（nginx mixed-scope P0）← `aefc7af2d`（文档提交前进）
@@ -186,6 +186,24 @@ Main process exited, code=exited, status=200/CHDIR
 - install-production 安装 wrapper 0755；**B2.1 幂等重跑即覆盖旧 unit/wrapper**（无需手工 patch 服务器）
 - 激活测试 27→**34** 项：候选无 current 启动（首发边界）/ **防混版核心**（current=A、slot env=B → status 必须返回 B 的 datasetVersion）/ wrapper 缺 env 拒启 / unit 静态合同（无 current 引用、ExecStart=wrapper、无 WorkingDirectory）/ installer 安装 wrapper
 - 顺手修 bash 3.2 全角标点前裸变量 3 处（deploy-release:93、lib-release:55；全仓扫描清零）
+
+### M8-B3 第三次首发 P0：双消费者权限（2026-09-18 第三次真实 activate 暴露）
+
+**实录**：activate 首次成功（wrapper + 无 MDWE + 单消费者权限收敛全部工作）——REST/MCP 四入口 API 侧全部通过、`/api/v1/status` 公网冒烟通过；但 nginx 直接服务的 RSS/Skill/静态文件 404（`try_files` 遍历失败）。**已按预定义条件执行 emergency rollback 回 legacy 静态站**（deploy exit 0 + online verify 失败；恢复后 200/200/404、current 已删、槽位已停，线上零影响）。
+
+**根因**：权限收敛只考虑了单一消费者（agent-api 进程读 agent-api/ + data/），漏了 **nginx worker（www-data）也要直接读 site/**（feed、Skill、静态页）。`root:maasagent 0750` 下 www-data 无法遍历。
+
+**修复（分树权限模型——release 有两个运行时消费者）**：
+
+| 路径 | 属主:组 | 模式 |
+|---|---|---|
+| `<rid>/` | root:root | **0711**（其他用户 traverse-only，不给 list/read）|
+| `<rid>/site/` | root:www-data | dirs 0750 / files 0640 |
+| `<rid>/agent-api/` | root:maasagent | 0750 / 0640 / 原可执行 0750 |
+| `<rid>/data/` | root:maasagent | 0750 / 0640 |
+| `<rid>/metadata/ 等 | root:root | 激活器自用 |
+
+无 ACL、不改 nginx 全局用户、无 world-readable。测试 40→**43** 项（分树模式位 / 分树组归属静态断言 / 真实产物分树收敛+启动验证 / 失败恢复闭环回归）。
 
 ### M8-B3 第二次首发双 P0（2026-09-18 第二次真实 activate 暴露）
 
@@ -216,7 +234,7 @@ Main process exited, code=exited, status=200/CHDIR
 **B1/B2 保留**：服务器 Node 22（/opt/node-v22.22.3 + /usr/bin/node symlink）、maasagent/maasdeploy、sudoers、systemd unit、agent.env 均已就位且不受本修复影响；新候选只需 **B2.1 幂等重跑 install-production** 补 nginx 接线（生成两个稳定配置 + 三个兼容态 include + 改造 https.conf，全程 nginx -t 失败自动回滚、旧站行为不变）。
 
 **候选 commit**：APPROVED_COMMIT = `65fe566e5…`（第五代冻结；分支 task-06-m7-candidate，PR → main）
-**候选 release**：`rl_65fe566e50_8b9fb7b09ead`（datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
+**候选 release**：`rl_6bc9b0b7cc_8b9fb7b09ead`（datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
 **配置 diff**：`ops/nginx/maasweekly-agent-http.conf`（conf.d）+ `ops/nginx/maasweekly-agent-server.conf`（snippet）+ `ops/maas-agent@.service` + `ops/install-production.sh`（nginx 接线段）+ 三个动态 include 初始兼容态；`maasweekly-https.conf` 仅 root 行替换为 include + 追加 agent snippet include（timestamp backup + nginx -t 失败自动恢复）
 **离线 smoke 输出**（2026-09-18 实测，APPROVED_RID）：
 
