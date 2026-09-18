@@ -6,7 +6,7 @@
 
 ## 一、当前状态（一句话）
 
-Task 06 **M1–M7 全部完成（含授权点 A 前复验 P0 修复：deploy-mode 运行时覆盖 + 候选 SHA pin）**。最终候选在分支 `task-06-m7-candidate`（PR #1 → main、未 merge），`task-06-result.md` §4b 记录 APPROVED_COMMIT / APPROVED_RID，**候选已冻结，等待授权点 A**。四入口仍 pending；生产服务器零改动；仓库 `ops/deploy-mode` 永久 legacy（通道经 `MAAS_DEPLOY_MODE` 运行时注入）。
+Task 06 **M1–M7 完成；M8 进行中**（B1 Node22 ✓ / B2 systemd+用户+sudoers ✓ / B3 前发现并修复 nginx mixed-scope P0）。最终候选在分支 `task-06-m7-candidate`（PR #1 → main、未 merge）：`APPROVED_COMMIT`=`6c45634fe3a2…` / `APPROVED_RID`=`rl_6c45634fe3_8b9fb7b09ead`（第三代，前两代作废记录见 result §4b）。**候选已冻结，下一步=B2.1 幂等重跑 install-production 补 nginx 接线 → B3 首发**。四入口仍 pending；线上流量零变化（100% legacy 静态站）；仓库 `ops/deploy-mode` 永久 legacy（通道经 `MAAS_DEPLOY_MODE` 运行时注入）。
 
 ## 二、关键约束（红线，重启后必须先读）
 
@@ -32,9 +32,15 @@ Task 06 **M1–M7 全部完成（含授权点 A 前复验 P0 修复：deploy-mod
 - 删受限 shell 任意 `python3 -c`（`current_ds_from_server`）→ `maasweekly-activate status` 返回只读 metadata（datasetVersion/dataThrough/gitCommit）；激活测试 17→18 项（新增 `test_status_metadata_readonly`）
 - online verify 覆盖四入口：REST（同版本）+ MCP（initialize/tools/list/真实调用）+ RSS（content-type/ETag/304）+ Skill（manifest/install.sh）
 
-### ops 文件补齐（候选，授权前不执行）
+### ops 文件补齐
 
-`maas-agent@.service`（蓝绿 systemd 模板）、`nginx-agent.conf`（候选 diff）、`maas-agent.env.example`、`install-production.sh`（--dry-run 实测过）、`ops/README.md`
+`maas-agent@.service`（蓝绿 systemd 模板）、`ops/nginx/`（http conf + server snippet 稳定配置，M8-B3 P0 后取代单文件 nginx-agent.conf）、`maas-agent.env.example`、`install-production.sh`（OPS_DIR 自适配 + nginx 接线段）、`ops/README.md`
+
+### M8-B3 前 P0：nginx mixed-scope include（B2 后只读检查发现）
+
+- **缺陷**：activate 把 root（server ctx）与 upstream（http ctx）写进同一个 agent-upstream.inc——真实 nginx 下任何 include 位置都必然 nginx -t 失败。未 activate，线上零影响
+- **修复**：三 include 动态文件（agent-upstream/site-root/agent-routes，作用域严格分离）+ conf.d/snippet 两个稳定配置；事务全有或全无恢复；install-production 生成首发兼容态（site-root=/var/www/maasweekly、routes 空——旧站行为完全不变）
+- 激活套件 18→**27** 项（三 include 边界/失败恢复×3/首发兼容态/routes 合同/install 路径/配置作用域红线）
 
 ### 数据修复（随 M7 分支）
 
@@ -50,7 +56,7 @@ Task 06 **M1–M7 全部完成（含授权点 A 前复验 P0 修复：deploy-mod
 
 ## 四、验证链（M7 完成时）
 
-- 全量回归 22/22（P0 修复后挂入 test_deploy_mode 7 项；scripts/run-all-tests.sh）
+- 全量回归 22/22（含 test_deploy_mode 7 项；激活套件 18→27 项）
 - 激活测试 18 项全绿（1 skip：macOS flock）
 - access-pages 含 M7 合同断言（provider/--dir 形态/无虚构参数/无写死模型名/路径）全绿
 - platform-logos 修复后全绿（Hello Minds/InclusionAI 注册）
@@ -58,8 +64,8 @@ Task 06 **M1–M7 全部完成（含授权点 A 前复验 P0 修复：deploy-mod
 
 ## 五、下一步（顺序固定）
 
-1. **授权点 A**：用户审阅 task-06-result.md §4b M7 授权包（APPROVED_COMMIT/APPROVED_RID/manifest/配置 diff/离线 smoke/线上 smoke 命令/回滚命令）→ 批准生产切换
-2. **M8**：服务器 `install-production.sh`（先 --dry-run）→ 本地 `git checkout <APPROVED_COMMIT>`（detached HEAD 干净区）→ `MAAS_DEPLOY_MODE=release ops/deploy-release.sh --commit <APPROVED_COMMIT>` 首发 → `verify-release.sh --online --expect-release <APPROVED_RID>` 四入口验收；任一步失败 rollback（通道回退=下次不注入环境变量，无仓库状态要恢复）
+1. **B2.1（下一步）**：服务器幂等重跑 `install-production.sh`（先 --dry-run）——补 nginx 接线（conf.d/snippet 稳定配置 + 三 include 首发兼容态 + https.conf root→include 替换，nginx -t 失败自动恢复备份）→ 确认旧首页零变化
+2. **B3 首发**：本地 `git checkout <APPROVED_COMMIT>`（detached HEAD 干净区）→ `MAAS_DEPLOY_MODE=release ops/deploy-release.sh --commit <APPROVED_COMMIT>` → `verify-release.sh --online --expect-release <APPROVED_RID>` 四入口验收；任一步失败 rollback（通道回退=下次不注入环境变量，无仓库状态要恢复）
 3. **M9**：真实客户端（Claude Code + Codex 阻断则保持）+ RSS 真实阅读器
 4. **M10**：四入口状态翻转（public-access.ts pending→available）+ changelog 真实日期 + 最终 release
 5. **M11**：回滚演练与收尾
@@ -71,7 +77,7 @@ cd /Users/zhangchen/Work/maasweekly
 git branch --show-current        # task-06-m7-candidate
 git log --oneline -5             # 应见 M7 系列 + logo/rendered 修复
 git status                       # 应干净
-python3 -m unittest discover -s tests -p 'test_release_activation.py'  # 18 项（1 skip）
+python3 -m unittest discover -s tests -p "test_release_activation.py"  # 27 项（1 skip）
 ./scripts/run-all-tests.sh       # 22/22
 ```
 

@@ -33,7 +33,7 @@
 | 文件 | 内容 |
 |---|---|
 | `ops/maas-agent@.service` | 蓝绿槽位 systemd 模板（blue 8788/green 8789）；非 root 专用用户；NoNewPrivileges/ProtectSystem=strict/私有 tmp/CapabilityBoundingSet 空等硬化；env 由激活器写 slots/<slot>.env |
-| `ops/nginx-agent.conf` | candidate 配置：REST `limit_req` 独立桶 + proxy 透传 ETag/错误不缓存；MCP 独立桶 + no-store + 256k body；feed rss+xml + max-age=1800 + ETag/304；`/_astro/` 一年 immutable。upstream/root 不硬编码——由激活器 include 绑定同一 release |
+| `ops/nginx/maasweekly-agent-http.conf` + `ops/nginx/maasweekly-agent-server.conf` | nginx 稳定配置（M8-B3 P0 后取代原单文件 nginx-agent.conf）：http 级（限流 zone + upstream include → conf.d）与 server 级（routes include → snippets）；动态 REST/MCP/RSS/Skill locations 由激活器维护的 agent-routes.inc 承担，继承动态 root |
 | `ops/maas-agent.env.example` | 仅变量名与安全默认值（HOST=127.0.0.1、限流、MCP body/Origin、CURSOR_SECRET 占位）；真实文件服务器现场生成（root:maasagent 0740） |
 | `ops/install-production.sh` | 一次性幂等安装（M8 授权后执行）：前置检查（node22/nginx/磁盘）→ 双用户（maasagent/maasdeploy）→ 目录树 → 受限 shell/激活器/校验器就位 → sudoers 单行 NOPASSWD → systemd 模板 → agent.env 现场生成 secret → nginx include 位。`--dry-run` 全程可审查（已在本地实测通过） |
 | `ops/README.md` | 发布协议图、status/回滚用法、故障排查表、host key 轮换流程、授权红线 |
@@ -128,7 +128,9 @@
 ## 3. 提交记录（M5–M7，分支 task-06-m7-candidate）
 
 ```
-2152ab126  fix: M7 授权点 A 前复验 P0——deploy-mode 运行时覆盖 + 候选 SHA pin（=APPROVED_COMMIT）
+6c45634fe  fix: M8-B3 前 nginx mixed-scope P0——三 include 结构 + install nginx 接线（=APPROVED_COMMIT）
+<prev>    docs: M7 最终候选冻结（2152ab1266/rl_2152ab1266，已作废）
+<prev>    fix: M7 授权点 A 前复验 P0——deploy-mode 运行时覆盖 + 候选 SHA pin（已作废）
 <prev>    docs: task-06-result M7 授权包定稿（原候选 rl_aefc7af2d4，已作废）
 <prev>    docs: Task 06 M7 handoff（候选就绪待授权点 A）
 <prev>    fix: 补同步 09-17 抓取漏掉的 price-ledger.rendered.html
@@ -151,23 +153,45 @@
 
 ## 4b. M7 授权包（申请生产切换授权）
 
-> **最终候选（P0 修复后重新构建；原 aefc7af2d/rl_aefc7af2d4 已作废）——已冻结**
+> **最终候选（M8-B3 P0 修复后第三次构建；前两代已作废）——已冻结**
 >
-> - `APPROVED_COMMIT` = `2152ab1266e5dc1019f4b6af3283c8786d627837`
-> - `APPROVED_RID` = `rl_2152ab1266_8b9fb7b09ead`
-> - 重新构建验证（2026-09-18）：run-all-tests **22/22**（含 test_deploy_mode 7 项）→ build-release 完整执行 → `verify-release.sh --offline` 通过 → release 内 server 启动冒烟（REST status 200 / MCP initialize serverInfo maas-daily 1.0.0）
-> - 冻结纪律：本节填入后不再追加任何影响 release 的代码变化；后续文档性提交不改变 APPROVED_COMMIT。M8 构建产生的 RID 必须等于 APPROVED_RID（同一 commit + 同一 datasetVersion 的确定性构建；不一致即停止并排查）。
+> - `APPROVED_COMMIT` = `6c45634fe3a2262d393c6491e25323889ca443fa`
+> - `APPROVED_RID` = `rl_6c45634fe3_8b9fb7b09ead`
+> - 重新构建验证（2026-09-18）：run-all-tests **22/22**（激活套件 18→**27** 项）→ build-release 完整执行 → `verify-release.sh --offline` 通过 → release 内 server 启动冒烟（REST status 200 / MCP initialize serverInfo maas-daily 1.0.0）
+> - 冻结纪律：本节填入后不再追加任何影响 release 的代码变化。M8 构建产生的 RID 必须等于 APPROVED_RID（不一致即停止并排查）。
+>
+> 作废记录：`2152ab1266…`/`rl_2152ab1266…`（nginx mixed-scope P0 修复作废）← `aefc7af2d`/`rl_aefc7af2d4`（文档提交前进作废）
 
-**候选 commit**：APPROVED_COMMIT = `2152ab126…`（P0 修复 commit；分支 task-06-m7-candidate，PR → main）
-**候选 release**：`rl_2152ab1266_8b9fb7b09ead`（14575 文件 / 218,946,348 字节；datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
-**配置 diff**：`ops/nginx-agent.conf`（candidate）+ `ops/maas-agent@.service` + `ops/install-production.sh --dry-run` 输出（全部为新增候选文件；现有 server 块/静态行为不动）
+### M8-B3 前 P0：nginx mixed-scope include（2026-09-18 B2 后只读检查发现）
+
+**缺陷**：`maasweekly-activate` 把 `root`（server context）与 `upstream agent_api`（http context）写进同一个 `agent-upstream.inc`——真实生产 nginx 结构下无论 include 进哪个作用域都必然 `nginx -t` 失败。**未 activate，线上零影响**（流量仍 100% legacy 静态站）。
+
+**修复（三 include 动态文件 + 两个稳定配置）**：
+
+| 文件 | 作用域 | 内容 | 由谁 include |
+|---|---|---|---|
+| `/srv/maasweekly/shared/nginx/agent-upstream.inc` | 仅 http | `upstream agent_api`（槽位端口） | `conf.d/maasweekly-agent.conf`（稳定） |
+| `/srv/maasweekly/shared/nginx/site-root.inc` | 仅 server | `root <release>/site` | `maasweekly-https.conf`（root 行精确替换为 include） |
+| `/srv/maasweekly/shared/nginx/agent-routes.inc` | 仅 server | REST/MCP/RSS/Skill locations（继承动态 root） | `snippets/maasweekly-agent.conf`（稳定） |
+
+- activate 事务：三文件快照（含"不存在"态）→ 三份候选**全部**就位 → nginx -t → reload → 指针 → entry smoke；任一步失败三文件**全有或全无**恢复
+- 首发兼容态（install-production 生成，幂等）：site-root=`/var/www/maasweekly`（旧行为完全不变）、upstream 占位 8788（无路由指向）、routes 空（API/feed/Skill 仍走既有 location / 的 404/静态行为）
+- install-production 新增：OPS_DIR 自适配（ops/ 与 ops/server/ 均可执行）；nginx 接线段（conf.d/snippet 安装 + 兼容态三文件 + https.conf timestamp backup→精确替换→防重复 include→nginx -t 失败恢复备份）
+- 旧 `ops/nginx-agent.conf`（server 模板）删除——内容并入三个 include，避免双源漂移
+- 测试：激活套件 18→**27** 项（三 include 边界断言 / 三文件失败恢复×3 / 首发兼容态 / routes 内容合同 / install 路径解析 / http、server 配置作用域红线）
+
+**B1/B2 保留**：服务器 Node 22（/opt/node-v22.22.3 + /usr/bin/node symlink）、maasagent/maasdeploy、sudoers、systemd unit、agent.env 均已就位且不受本修复影响；新候选只需 **B2.1 幂等重跑 install-production** 补 nginx 接线（生成两个稳定配置 + 三个兼容态 include + 改造 https.conf，全程 nginx -t 失败自动回滚、旧站行为不变）。
+
+**候选 commit**：APPROVED_COMMIT = `6c45634f…`（M8-B3 P0 修复 commit；分支 task-06-m7-candidate，PR → main）
+**候选 release**：`rl_6c45634fe3_8b9fb7b09ead`（14575 文件 / 218,946,348 字节；datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
+**配置 diff**：`ops/nginx/maasweekly-agent-http.conf`（conf.d）+ `ops/nginx/maasweekly-agent-server.conf`（snippet）+ `ops/maas-agent@.service` + `ops/install-production.sh`（nginx 接线段）+ 三个动态 include 初始兼容态；`maasweekly-https.conf` 仅 root 行替换为 include + 追加 agent snippet include（timestamp backup + nginx -t 失败自动恢复）
 **离线 smoke 输出**（2026-09-18 实测，APPROVED_RID）：
 
 ```
-$ ./ops/verify-release.sh --offline dist-release/rl_2152ab1266_8b9fb7b09ead
+$ ./ops/verify-release.sh --offline dist-release/rl_6c45634fe3_8b9fb7b09ead
 ✓ release 校验通过
-✓ 离线验收通过: dist-release/rl_2152ab1266_8b9fb7b09ead
-（manifest：files 14575 / bytes 218946348 / testsSkipped false / contracts rest:1.0 skill:1.0.0 / gitCommit 2152ab1266…）
+✓ 离线验收通过: dist-release/rl_6c45634fe3_8b9fb7b09ead
+（manifest：files 14575 / bytes 218946348 / testsSkipped false / contracts rest:1.0 skill:1.0.0 / gitCommit 6c45634f…）
 
 $ PORT=8799 PUBLIC_DATA_ROOT=<release>/data/public/v1 node <release>/agent-api/dist/server.js
 GET /api/v1/status → 200：datasetVersion=ds_8b9fb7b09ead… / dataThrough=2026-09-18 / counts 3806 changes · 1383 prices
@@ -195,12 +219,12 @@ ops/rollback-release.sh <previous-rid> --reason "<原因>"
 ops/verify-release.sh --online --expect-release <previous-rid>
 ```
 
-**授权后动作序列**（M8，一次授权内连续执行；P0 修复后的收敛执行链）：
-1. 服务器执行 `ops/install-production.sh --dry-run` 审查 → 正式执行
+**授权后动作序列**（M8，一次授权内连续执行；两次 P0 修复后的收敛执行链）：
+1. **B2.1 幂等重跑** `ops/install-production.sh`（先 `--dry-run` 审查）——补 nginx 接线：conf.d/snippet 两个稳定配置 + 三个兼容态 include + https.conf root→include 替换（timestamp backup；nginx -t 失败自动恢复备份）；完成后 `nginx -t` + 确认 daily.maas.click 旧首页零变化
 2. 本地 checkout 到 **APPROVED_COMMIT**（detached HEAD，工作区干净）
-3. `MAAS_DEPLOY_MODE=release ops/deploy-release.sh --commit <APPROVED_COMMIT>`（运行时注入通道；构建与激活锁定同一 SHA，RID 应等于 APPROVED_RID）
+3. **B3 首发**：`MAAS_DEPLOY_MODE=release ops/deploy-release.sh --commit <APPROVED_COMMIT>`（运行时注入通道；构建与激活锁定同一 SHA，RID 应等于 APPROVED_RID；激活事务原子切换三 include + 蓝绿槽位）
 4. `ops/verify-release.sh --online --expect-release <APPROVED_RID>`（四入口验收）
-5. 任一步失败：`ops/rollback-release.sh <previous-rid> --reason "…"`；通道回退=下次发布不注入 `MAAS_DEPLOY_MODE`（无任何仓库状态需要"改回"——这是 P0 修复的核心收益）
+5. 任一步失败：`ops/rollback-release.sh <previous-rid> --reason "…"`（rollback 失败时三 include/current 恢复、历史 release 保留原位）；通道回退=下次发布不注入 `MAAS_DEPLOY_MODE`（无任何仓库状态需要"改回"）
 
 ### P0 修复：部署模式运行时覆盖 + 候选 SHA pin（2026-09-18 授权点 A 前复验）
 
