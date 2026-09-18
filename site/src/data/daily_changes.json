@@ -1,6 +1,621 @@
 {
-  "updated_at": "2026-09-17T23:25:29",
+  "updated_at": "2026-09-18T23:04:10",
   "days": [
+    {
+      "date": "2026-09-19",
+      "stats": {
+        "total": 68,
+        "success": 66,
+        "failed": 2,
+        "changed": 20,
+        "unchanged": 46
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "model_list",
+          "url": "https://help.aliyun.com/zh/model-studio/models",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "| happyoyster-1.0-adventure | happyoyster-1.0-directing | happyoyster-1.0-acting邀测",
+            "实时交互的开放式世界模型，覆盖世界探索、实时导演、角色演绎三种模式"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| happyoyster-1.0-adventure | happyoyster-1.0-directing | happyoyster-1.0-acting邀测",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_bca0bf5bf71766077556925424856078c209e8fdf58831b1ad59a28b9c19b9d9",
+          "permalink": "/item/obs_bca0bf5bf71766077556925424856078c209e8fdf58831b1ad59a28b9c19b9d9/",
+          "llm_summary": "新增 happyoyster-1.0 系列三个邀测模型（adventure/directing/acting），描述为实时交互的开放式世界模型，覆盖世界探索、实时导演、角色演绎三种模式，表明阿里在交互式多模态方向的新布局。"
+        },
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 30,
+          "removed_count": 0,
+          "added_lines": [
+            "0.056146398元/次",
+            "0.112292796元/次",
+            "0.224586元/秒",
+            "0.336878元/秒",
+            "0.393025元/秒",
+            "0.625631元/秒",
+            "2.269918662元/次",
+            "HappyOyster-世界探索（Adventure）",
+            "HappyOyster-实时导演（Directing）",
+            "HappyOyster-角色演绎（Acting）",
+            "Qwen-MT-Uni",
+            "happyoyster-1.0-acting",
+            "happyoyster-1.0-adventure |",
+            "happyoyster-1.0-directing |",
+            "qwen-audio-3.1-tts-flash |",
+            "qwen-mt-uni |",
+            "世界体验（480P） |",
+            "世界体验（720P） |",
+            "世界体验：按输出视频时长（秒）计费，费用 = 视频时长 × 单价，不同分辨率（480P/720P）单价有差异。",
+            "世界体验：按输出视频时长（秒）计费，费用 = 视频时长 × 单价，仅支持 480P。",
+            "世界创建（无参考图） |",
+            "世界创建（有参考图） |",
+            "世界创建：按世界创建次数计费，费用 = 世界创建次数 × 单价。",
+            "世界创建：按世界创建次数计费，费用 = 世界创建次数 × 单价。是否使用参考图影响单价：无参考图与有参考图分别计价。",
+            "创建失败不计费，也不占用免费次数；删除音色不会恢复免费次数。",
+            "指令注入：按注入的指令次数计费，费用 = 指令次数 × 单价。",
+            "有效期：自开通百炼或模型发布之日起90天内（以较晚者为准）",
+            "计费规则：按 input_tokens 计费，按输入模态（文本/文档/图片/音频）分档计价，同步与异步价格一致。",
+            "说明以下模型所有地域均无免费额度。",
+            "请求失败不产生任何费用。"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "HappyOyster-世界探索（Adventure）",
+          "raw_added_count": 31,
+          "raw_removed_count": 0,
+          "id": "obs_f944415a37acb5540a88d6d10f9b756d4c7777b7bd763ad7c28d0a679a53d6f3",
+          "permalink": "/item/obs_f944415a37acb5540a88d6d10f9b756d4c7777b7bd763ad7c28d0a679a53d6f3/",
+          "llm_summary": "新增 HappyOyster 三个子模型及 Qwen-MT-Uni 的定价条目，包含按次和按秒计费，价格从 0.056 元/次到 2.27 元/次不等，对应新模型上架，同时 Qwen-MT-Uni 输入定价为 400 元/百万 tokens。"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "pricing",
+          "url": "https://siliconflow.cn/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Xing4.0-29B",
+            "XingChenAGI/Xing4.0-29B"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "XingChenAGI/Xing4.0-29B",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_af3f878fdd6bca4772c2e30b3102ad01fa45706aa79dfac3d1efd176343288a5",
+          "permalink": "/item/obs_af3f878fdd6bca4772c2e30b3102ad01fa45706aa79dfac3d1efd176343288a5/",
+          "llm_summary": "新增 Xing4.0-29B 模型定价条目，对应中国电信语义大模型的上架，但未显示具体价格数值，可能为按需定价或待补充。"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "blog",
+          "url": "https://siliconflow.cn/blog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "中国电信 Xing4.0-29B 语义大模型",
+            "全栈国产化・轻量 Agent 大模型・低算力高收益立即试用"
+          ],
+          "removed_lines": [
+            "中国电信 XingChen 系列语音模型",
+            "工业级语音转写 · 复杂会议与话者分离 · 上下文语义增强 · 中英及 60 种方言混合识别查看详情"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "中国电信 Xing4.0-29B 语义大模型",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_2dcb31ae24cd6768d569b7d07a3103a3fcfb7a23b0f17229405e36c0c38dc7af",
+          "permalink": "/item/obs_2dcb31ae24cd6768d569b7d07a3103a3fcfb7a23b0f17229405e36c0c38dc7af/",
+          "llm_summary": "博客新增中国电信 Xing4.0-29B 语义大模型宣传，强调全栈国产化、轻量 Agent、低算力高收益；同时删除 XingChen 系列语音模型介绍，表明产品线从语音转向语义大模型。"
+        },
+        {
+          "platform": "智谱AI",
+          "source_type": "model_list",
+          "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "| GLM-5.3-FlashX | 更快更流畅的 GLM-5.3-Flash",
+            "推理速度达 200 tokens/s | 1M | 128K"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| GLM-5.3-FlashX | 更快更流畅的 GLM-5.3-Flash",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_6b9f3d62c6ea5cdbec0083bdd9ecbf98d1f88878c98a6eafcfbee4f7698f6610",
+          "permalink": "/item/obs_6b9f3d62c6ea5cdbec0083bdd9ecbf98d1f88878c98a6eafcfbee4f7698f6610/",
+          "llm_summary": "新增 GLM-5.3-FlashX 模型，描述为更快更流畅的 GLM-5.3-Flash，推理速度 200 tokens/s，上下文 1M，输出 128K，是 Flash 系列的升级版本。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 3,
+          "added_lines": [
+            "Building AI to accelerate science and improve lives",
+            "The true measure of AI is who it helps. Here’s how it’s impacting lives today. We're focused on key areas where advanced technology can help make extraordinary progress …"
+          ],
+          "removed_lines": [
+            "Chromebooks",
+            "I/O 2026: Welcome to the agentic Gemini era",
+            "The latest from Google I/O: See how we’re helping you get more done with Gemini."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Building AI to accelerate science and improve lives",
+          "raw_added_count": 2,
+          "raw_removed_count": 3,
+          "id": "obs_ff43d126b77d4cc090a582d3cb48473c9cb50b18ad68a0b6779fc8f575541eca",
+          "permalink": "/item/obs_ff43d126b77d4cc090a582d3cb48473c9cb50b18ad68a0b6779fc8f575541eca/",
+          "llm_summary": "博客新增两篇关于 AI 加速科学和改善生活的文章，删除 Chromebook 和 I/O 2026 相关旧文，内容转向 AI 社会价值叙事。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-16 UTC.",
+              "after": "Last updated 2026-09-18 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-16 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-18 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-18 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_2be721b8aa43ed95c3fbe87f3da2140be99b258689c901aa851578d250783ba1",
+          "permalink": "/item/obs_2be721b8aa43ed95c3fbe87f3da2140be99b258689c901aa851578d250783ba1/",
+          "llm_summary": "仅更新了最后更新日期（从 9-16 到 9-18），以及反馈按钮的 HTML 结构变化，无实质模型列表变动。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "By Andrés Lagar-Cavilla • 4-minute read",
+            "Changing the game: Using agentic AI to secure infrastructure code"
+          ],
+          "removed_lines": [
+            "By Michael Gerstenhaber • 9-minute read",
+            "FinOps for the AI era: New flexible billing and cost controls for agents"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "By Andrés Lagar-Cavilla • 4-minute read",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_5c4dfeafaaebbc5c332c1a44e115b869762ef96342d25e10d43e9136c97b8f89",
+          "permalink": "/item/obs_5c4dfeafaaebbc5c332c1a44e115b869762ef96342d25e10d43e9136c97b8f89/",
+          "llm_summary": "新增文章『Using agentic AI to secure infrastructure code』，删除『FinOps for the AI era』，显示内容焦点从成本控制转向安全应用。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "Grok Voice Transcribe 2.0",
+            "September 17",
+            "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-1.0. See the Speech to Text docs."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: September 2, 2026",
+              "after": "Last updated: September 17, 2026"
+            }
+          ],
+          "signal_preview": "Grok Voice Transcribe 2.0",
+          "raw_added_count": 4,
+          "raw_removed_count": 1,
+          "id": "obs_02ae7428f5e91b437d37e5fbf41db7e93be4e72bd449a1363c955aaf884b7def",
+          "permalink": "/item/obs_02ae7428f5e91b437d37e5fbf41db7e93be4e72bd449a1363c955aaf884b7def/",
+          "llm_summary": "更新日期至 9 月 17 日，新增 Grok Voice Transcribe 2.0 条目，说明新语音转写模型可用，默认仍为 1.0，用户可指定版本。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "Grok Voice Transcribe 2.0",
+            "September 17",
+            "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-1.0. See the Speech to Text docs."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: September 2, 2026",
+              "after": "Last updated: September 17, 2026"
+            }
+          ],
+          "signal_preview": "Grok Voice Transcribe 2.0",
+          "raw_added_count": 4,
+          "raw_removed_count": 1,
+          "id": "obs_e80b6606d344d6d68e8eb55dda36058f1bac845e03103f157e06a440f8c636ce",
+          "permalink": "/item/obs_e80b6606d344d6d68e8eb55dda36058f1bac845e03103f157e06a440f8c636ce/",
+          "llm_summary": "与 changelog 同步更新，新增 Grok Voice Transcribe 2.0 发布说明，内容一致。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "Codex setup",
+            "Workload identity"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 2,
+          "id": "obs_e203d7aa760e0250d05a8c3092f3e05d805b33214a8c2a05ac8fe4befbbf3658",
+          "permalink": "/item/obs_e203d7aa760e0250d05a8c3092f3e05d805b33214a8c2a05ac8fe4befbbf3658/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "Codex setup",
+            "Workload identity"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 2,
+          "id": "obs_ba6a4863bee9ff8b822c8531ce056ec7be65f0521753f0841a9ff3021f219c3a",
+          "permalink": "/item/obs_ba6a4863bee9ff8b822c8531ce056ec7be65f0521753f0841a9ff3021f219c3a/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "Codex setup",
+            "Workload identity"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 2,
+          "id": "obs_1126c5c95ebfd2fd6a0736da04125004ef82b7e28f2c64857b2615b392dd232e",
+          "permalink": "/item/obs_1126c5c95ebfd2fd6a0736da04125004ef82b7e28f2c64857b2615b392dd232e/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "Codex setup",
+            "Workload identity"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 2,
+          "id": "obs_3a3410cd2805b179037820925910c8449758a1fe24df07e4f4773eed677f43de",
+          "permalink": "/item/obs_3a3410cd2805b179037820925910c8449758a1fe24df07e4f4773eed677f43de/"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_816e692f1253da9f74a11ddf123036ff527d77e9fffdaeb82e2cc33238f45658",
+          "permalink": "/item/obs_816e692f1253da9f74a11ddf123036ff527d77e9fffdaeb82e2cc33238f45658/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "pricing",
+          "url": "https://mistral.ai/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Get in touch"
+          ],
+          "removed_lines": [
+            "Contact sales"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_b9b88ad29dbe66b8b5cc9c9559ea741947baa57cc35e08a69c7099909583633f",
+          "permalink": "/item/obs_b9b88ad29dbe66b8b5cc9c9559ea741947baa57cc35e08a69c7099909583633f/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "changelog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Get in touch"
+          ],
+          "removed_lines": [
+            "Contact sales"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_ce3f533e3aebc0b468ee757bc4feefeaaebdadc769945233175192d11a1e29ac",
+          "permalink": "/item/obs_ce3f533e3aebc0b468ee757bc4feefeaaebdadc769945233175192d11a1e29ac/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "blog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Get in touch"
+          ],
+          "removed_lines": [
+            "Contact sales"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_35eb729c20a574a9ed2910733bb3b01b5f2bab4a05e9061024bef48b86a15a6e",
+          "permalink": "/item/obs_35eb729c20a574a9ed2910733bb3b01b5f2bab4a05e9061024bef48b86a15a6e/"
+        },
+        {
+          "platform": "讯飞星辰MaaS",
+          "source_type": "changelog",
+          "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 12,
+          "raw_removed_count": 11,
+          "id": "obs_64b31bb4697d9b67abe8cad5db21e82b33338e892ee6f73e1557225e60af7c84",
+          "permalink": "/item/obs_64b31bb4697d9b67abe8cad5db21e82b33338e892ee6f73e1557225e60af7c84/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 34,
+          "raw_removed_count": 34,
+          "id": "obs_f61af70379ec78857dd860d13d0ff67d5b2d7fa8ce1cc75b8844e121e45e15c0",
+          "permalink": "/item/obs_f61af70379ec78857dd860d13d0ff67d5b2d7fa8ce1cc75b8844e121e45e15c0/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "发布HappyOyster开放式世界模型及Qwen-MT-Uni定价",
+          "items": [
+            {
+              "text": "阿里百炼新增 happyoyster-1.0-adventure/directing/acting 三款邀测模型，覆盖世界探索、实时导演、角色演绎三种模式",
+              "type": "release"
+            },
+            {
+              "text": "新增 Qwen-MT-Uni 定价，输入 400 元/百万 tokens",
+              "type": "pricing"
+            },
+            {
+              "text": "HappyOyster 系列按次/按秒计费，价格区间 0.056 至 2.27 元",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "上架中国电信Xing4.0-29B语义大模型",
+          "items": [
+            {
+              "text": "硅基流动新增 Xing4.0-29B 语义大模型，主打全栈国产化、轻量 Agent、低算力高收益",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "智谱AI",
+          "logo_summary": "推出GLM-5.3-FlashX，推理速度提升至200 tokens/s",
+          "items": [
+            {
+              "text": "智谱AI 新增 GLM-5.3-FlashX，推理速度达 200 tokens/s，上下文 1M，输出 128K",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "博客更新：聚焦Agentic AI安全，移除FinOps文章",
+          "items": [
+            {
+              "text": "Google Vertex AI 博客新增『Using agentic AI to secure infrastructure code』，删除 FinOps 成本控制文章",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "发布Grok Voice Transcribe 2.0语音转写模型",
+          "items": [
+            {
+              "text": "xAI 发布 grok-voice-transcribe-2.0，默认仍为 1.0，用户可指定版本",
+              "type": "release"
+            }
+          ]
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_b485143eaa94bb52c81e6cfb80d5edf11625f96fb9d3a522073a8aa2d702c6be",
+          "provider": "qwen",
+          "model": "qwen-mt-uni",
+          "component": "input",
+          "current": "400.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_cc0bdf954188468c55a856d841903f434f5a0814605ad5dda77ce8cc1bd40da3",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-tts-flash",
+          "component": "input",
+          "current": "1.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_c03c318942a99c8a548637aa364f925365c5101d645dd3c05559f7a5b6a0784e",
+          "provider": "qwen",
+          "model": "qwen3.8-livetranslate-flash-realtime",
+          "component": "input",
+          "current": "4.010000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_5692368322f719f6b688dea07c2f3756b468129685b6d554e7c84cf1c9d5f465",
+          "provider": "qwen",
+          "model": "qwen3.8-livetranslate-flash-realtime",
+          "component": "output",
+          "current": "218.752000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        }
+      ]
+    },
     {
       "date": "2026-09-18",
       "stats": {
