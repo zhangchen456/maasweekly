@@ -74,11 +74,11 @@ remote_rollback() {
   $(ssh_base) "$(deploy_target)" "rollback $1 --reason \"$2\""
 }
 
-# 从服务器读取某 release 的 datasetVersion（经受限 shell 不开放任意命令面，
-# 因此走 ssh 到同一台机器用 sudo -n 直接读文件——前提是 sudoers 单行 NOPASSWD
-# 已允许 activate 脚本所属用户的只读 manifest 读取；M7 安装时配套配置）。
-current_ds_from_server() {
-  local rid="$1" path="/srv/maasweekly/releases/$rid/metadata/release-manifest.json"
-  $(ssh_base) "$(deploy_target)" \
-    "python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))[\"datasetVersion\"])' '$path'"
+# 从服务器读取当前 release 的只读 metadata（M7：经受限 shell 的固定 status
+# 动作返回，不再通过 ssh 开放任意 python3 -c 命令面）。
+server_meta() {  # <field>：datasetVersion|dataThrough|gitCommit|current
+  local out
+  out="$(remote_status 2>/dev/null)" || die "无法读取服务器 status"
+  echo "$out" | grep -E "^${1}:" | head -1 | sed 's/^[^:]*:[[:space:]]*//'
 }
+current_ds_from_server() { server_meta datasetVersion; }

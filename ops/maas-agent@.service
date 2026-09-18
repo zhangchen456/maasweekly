@@ -1,0 +1,55 @@
+# maas-agent@.service：agent-api 蓝绿槽位 systemd 模板（Task 06 M7 候选）
+#
+# 安装位置：/etc/systemd/system/maas-agent@.service
+# 实例：maas-agent@blue（127.0.0.1:8788）/ maas-agent@green（127.0.0.1:8789）
+#
+# 槽位 env（PORT/PUBLIC_DATA_ROOT 等）由 maasweekly-activate 写入
+# /srv/maasweekly/shared/slots/<slot>.env —— unit 只读该文件，不硬编码 release。
+# 激活器在 systemd 调用统一加 9>&-（不继承发布锁 fd，避免长驻服务隐性持锁）。
+#
+# 与旧静态站并存：legacy 通道（/var/www/maasweekly 直写）不受影响；
+# release 通道激活时 nginx include（root + upstream）才指向本服务。
+
+[Unit]
+Description=MaaS Daily agent-api（%i 槽位）
+# network 就绪即可；nginx 不依赖本单元（它按 include 指 upstream，
+# 槽位未起时 nginx 返回 502，由激活器的候选冒烟先行把关）
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# 专用非 root 服务用户（install-production.sh 创建）
+User=maasagent
+Group=maasagent
+# 环境来自激活器维护的槽位文件 + root 管理的稳定 secret（0740 root:maasagent）
+EnvironmentFile=/srv/maasweekly/shared/agent.env
+EnvironmentFile=-/srv/maasweekly/shared/slots/%i.env
+# release 内已含编译产物与锁定生产依赖，不临时拉包
+WorkingDirectory=/srv/maasweekly/current/agent-api
+ExecStart=/usr/bin/node dist/server.js
+# 重启与超时
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=20
+# 资源与硬化：只读系统、无新权限、私有临时、限写、收回能力
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/maasweekly/shared/state
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictNamespaces=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+LimitNOFILE=8192
+# 不监听公网：应用层 HOST=127.0.0.1（agent.env）；此处再拒 IPv6 公网绑定路径
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

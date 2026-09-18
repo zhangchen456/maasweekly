@@ -51,13 +51,13 @@ const mcpTools = [
   { name: 'maas_get_weekly', use: '正式周报（日期型 ID）' },
 ] as const;
 
-// 六类 REST 端点（§11.5；路径来自 config.paths.apiBase）
+// 六类 REST 入口（§11.5；路径来自 ROUTES 与 config.paths.apiBase——/items/{id}、/evidence/{id} 是 ID 路径参数）
 const restEndpoints = [
   { path: '/status', use: 'release 元数据与 datasetVersion' },
   { path: '/changes', use: '最近变化流' },
   { path: '/prices', use: '价格事实查询' },
-  { path: '/item', use: '单条目详情' },
-  { path: '/evidence', use: '引证链查询' },
+  { path: '/items/{id}', use: '单条目详情（ID 路径参数）' },
+  { path: '/evidence/{id}', use: '引证详情（ID 路径参数）' },
   { path: '/weekly', use: '正式周报列表与详情' },
 ] as const;
 
@@ -123,8 +123,8 @@ const pending = P.pendingClients;
 
     <h3>最短配置（三段操作 §11.2）</h3>
     <ol class="steps">
-      <li><b>安装</b>（--dir 占位符必须由你选择实际目录，不猜测、不用 sudo）：
-        <CopyBlock code={`curl -fsSL ${base}/maas-skill/install.sh | bash -s -- --dir <你的技能目录>`} label="安装命令" />
+      <li><b>安装</b>（<code>--dir</code> 就是 maas-daily 的<b>最终 Skill 目录</b>——由你显式指定，如 <code>~/.claude/skills/maas-daily</code>；安装器不猜测、不用 sudo）：
+        <CopyBlock code={`curl -fsSL ${base}/maas-skill/install.sh | bash -s -- --dir ~/.claude/skills/maas-daily`} label="安装命令（示例目录，换成你的客户端技能目录）" />
       </li>
       <li><b>开新会话</b>：多数客户端在新会话才扫描 Skill——关闭并重启客户端或新建对话。</li>
       <li><b>验证一句话</b>：在新会话中发问（见下「验证问题」）。</li>
@@ -139,13 +139,13 @@ const pending = P.pendingClients;
     ))}
     <p class="muted">Codex 在 T18 通过前保持待验证，不展示代表已就绪的标志（§11.2 红线）。</p>
 
-    <h3>更新、卸载、发现失败排查</h3>
-    <CopyBlock code={`curl -fsSL ${base}/maas-skill/install.sh | bash -s -- --dir <你的技能目录> --update`} label="更新" />
-    <CopyBlock code={`curl -fsSL ${base}/maas-skill/install.sh | bash -s -- --dir <你的技能目录> --uninstall`} label="卸载" />
+    <h3>更新与排查</h3>
+    <p>更新 = 在<b>同一 <code>--dir</code> 重跑安装命令</b>（安装器按 manifest 已知文件集做保护性替换，目标内未知文件会被拒绝覆盖以保护用户数据）：</p>
+    <CopyBlock code={`curl -fsSL ${base}/maas-skill/install.sh | bash -s -- --dir ~/.claude/skills/maas-daily`} label="更新（同 --dir 重跑）" />
     <ul class="trouble-list">
-      <li>Skill 没出现：先确认 `SKILL.md` 在你指定的 --dir 顶层；不要修改安装器自动生成的副本目录</li>
+      <li>Skill 没出现：先确认 <code>SKILL.md</code> 在你指定的 --dir 顶层（--dir 就是最终目录，不要多套一层）</li>
       <li>已安装但 Agent 不调用：开新会话（多数客户端不热更新技能列表）</li>
-      <li>重复副本冲突：检查同一个技能目录下是否有 `maas-daily` 与 `maas-daily.bak`/时间戳目录并存，移除多余副本</li>
+      <li>更新被拒绝：目标目录内出现了 manifest 未列的自建文件——按提示移走后重跑</li>
       <li>不允许要求你提供 token 或本地文件（匿名公开）</li>
     </ul>
 
@@ -194,7 +194,7 @@ const pending = P.pendingClients;
     <h3>能力边界与排障（§11.3）</h3>
     <ul class="common-boundary">
       <li>多候选价格：返回所有匹配条件，由你按证据选择，不替你做语义合并</li>
-      <li>单一调用最大返回 200 条；除此之外用 cursor 翻页（cursor 原样回传 URL，合法 cursor 跨 release 窗口内仍有效）</li>
+      <li>单一调用默认返回 10 条、最大 30 条（<code>limit</code> 参数）；更多结果用 <code>cursor</code> 翻页（cursor 原样回传，合法 cursor 跨 release 窗口内仍有效）</li>
       <li>429 时 Retry-After 后再试；不建议并发重试</li>
       <li>刷新工具列表/开新会话；确认客户端支持远程 HTTP transport；Origin 校验失败返回 403</li>
       <li>服务不可用返回 503 Problem JSON，不返回 200 空数据</li>
@@ -243,13 +243,13 @@ const pending = P.pendingClients;
 
     <h3>两个可直接执行的 curl（§11.5）</h3>
     <CopyBlock code={`curl ${base}/api/v1/status`} label="status（最小）" />
-    <CopyBlock code={`curl "${base}/api/v1/changes?platform=openai&limit=10"`} label="真实变化查询（OpenAI 最近 10 条）" />
+    <CopyBlock code={`curl "${base}/api/v1/changes?provider=openai&limit=10"`} label="真实变化查询（provider=openai 最近 10 条）" />
 
     <h3>能力边界（§11.5）</h3>
     <ul class="common-boundary">
       <li>匿名 GET；CORS 开放（相对应域名）</li>
       <li>ETag/304 与缓存控制；限流 429 + Retry-After</li>
-      <li>cursor 原样回传（合法 cursor 在保留窗口内继续有效）；过期请重查</li>
+      <li>列表默认 20 条、最大 100 条（<code>limit</code>）；cursor 原样回传（合法 cursor 在保留窗口内继续有效）；过期请重查</li>
       <li>Problem JSON（RFC 9457）：不实现的字段（增量同步 / Webhook / SSE）不做承诺</li>
     </ul>
   </section>
@@ -260,7 +260,7 @@ const pending = P.pendingClients;
     <p>配置/安装成功的标准是<b>完成一次真实查询</b>（拿到 datasetVersion、dataThrough、coverage 与站内永久链接），不是文件下载或配置保存。在新会话中问：</p>
     <ol class="verify-list">
       <li>「用 maas-daily 查最近几天 OpenAI 有什么变化」——回答应引用数据版本与覆盖日期</li>
-      <li>「查 gpt-6-astra 的输入价格，给出条件与证据 ID」——应含币种、单位、适用条件、观察时间</li>
+      <li>「用 maas-daily 查一个模型当前记录的输入价格，列出全部候选与证据 ID」——回答应如实报告（含币种、单位、适用条件、观察时间；无结果时说明未记录到，不编造）</li>
       <li>「最新一期周报讲了什么」——应为正式周报（日期型 ID），不是滚动摘要</li>
     </ol>
     <p class="muted">配置 MCP 或安装 Skill 后可能需要<b>开启新会话</b>才能发现工具。</p>

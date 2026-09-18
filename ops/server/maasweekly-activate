@@ -7,7 +7,9 @@
 # 固定动作（无任意命令面，参数先过严格格式校验）：
 #   activate <release-id>                      # 校验→mv→蓝绿切换（含 nginx）→指针
 #   rollback <release-id> --reason "<text>"    # 显式回滚（留原因）
-#   status                                     # current/previous/槽位/最近激活
+#   status                                     # current/previous/槽位/最近激活 +
+#                                              #   只读 metadata（datasetVersion/
+#                                              #   dataThrough/gitCommit，M7）
 #   cleanup                                    # retention 清理
 #
 # 蓝绿切换完整事务（复验 P0b）：
@@ -445,11 +447,24 @@ import sys; sys.exit(0 if cur_ds in retained + [m['datasetVersion']] else 1)" \
     echo "✓ rolled back to ${rid}（原因已记录）"
     ;;
   status)
-    echo "current:  $(current_release)"
+    # 只读 metadata（M7）：current release 的 datasetVersion/dataThrough/gitCommit
+    # ——经受限 shell 的固定 status 动作返回，替代客户端任意 python3 -c 读文件
+    cur="$(current_release)"
+    echo "current:  ${cur:-无}"
     echo "previous: $(readlink "$ROOT/previous" 2>/dev/null | sed 's|^releases/||' || echo 无)"
     echo "slots:    $(cat "$SLOTS_JSON" 2>/dev/null || echo 无)"
     echo "releases: $(ls "$ROOT/releases" 2>/dev/null | tr '\n' ' ')"
     echo "incoming: $(ls "$ROOT/incoming" 2>/dev/null | tr '\n' ' ')"
+    if [ -n "$cur" ]; then
+      cur_dir="$ROOT/releases/$cur"
+      echo "datasetVersion: $(manifest_field "$cur_dir" datasetVersion)"
+      echo "dataThrough:    $(manifest_field "$cur_dir" dataThrough)"
+      echo "gitCommit:      $(manifest_field "$cur_dir" gitCommit)"
+    else
+      echo "datasetVersion: 无（无 current release）"
+      echo "dataThrough:    无（无 current release）"
+      echo "gitCommit:      无（无 current release）"
+    fi
     echo "--- 最近激活 ---"
     tail -5 "$ROOT/shared/state/activations.log" 2>/dev/null || echo 无
     ;;

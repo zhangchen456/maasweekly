@@ -30,7 +30,7 @@ run() {  # run <名称> <命令...>
     FAILED+=("$name")
     echo "   ✗ $name（退出码 $?）——日志关键内容："
     tail -25 "$log" | sed 's/^/     /'
-    echo "   （完整日志: $log）"
+    echo "   （完整日志: ${log}）"
   fi
   rm -f "$log"
 }
