@@ -1,6 +1,46 @@
 # Task 06 结果报告：生产发布、运行保障与 P0 首发验收
 
-日期：2026-09-17。状态：**M1/M2 通过；M3/M4 两轮复验修复完成（第一轮 5 项 + 第二轮 4 项全关，含真实 Ubuntu flock 证据）；M5–M7 未开始**。未 push（授权点 A 未到）。本任务未修改生产服务器、nginx、systemd 或线上流量。
+日期：2026-09-17（M1–M4）/ 2026-09-18（M5–M7）。状态：**M1–M5 完成；M6 完成（页面 §11 重构 + M7 合同修正）；M7 生产候选就绪（分支 task-06-m7-candidate，已提交未 merge）——等待授权点 A**。四入口仍为 pending（public-access.ts 未翻转）。本任务未修改生产服务器、nginx、systemd 或线上流量；DEPLOY_MODE=legacy。
+
+## M7 生产候选（2026-09-18，分支 task-06-m7-candidate）
+
+### /agent/ 与真实接口合同修正（全部对照 agent-api 实现核对）
+
+| 项 | 原页面 | 修正后（真实合同） |
+|---|---|---|
+| Skill 更新/卸载 | `--update`/`--uninstall` 参数（install.sh 不存在） | 更新=同一 `--dir` 重跑安装器；删除虚构参数 |
+| --dir 语义 | `<你的技能目录>` 尖括号占位符 | `--dir` 是最终 Skill 目录（示例 `~/.claude/skills/maas-daily`；install.sh 真实行为） |
+| MCP limit | 「最大返回 200 条」 | 默认 10、最大 30（`MCP_LIMITS`，mcp-tools.ts:44） |
+| REST 单页 | 未注明 | 默认 20、最大 100（`REST_LIMITS`） |
+| REST 路径 | `/api/v1/item`、`/api/v1/evidence` | `/api/v1/items/{id}`、`/api/v1/evidence/{id}`（ROUTES，http.ts:34/39） |
+| 查询参数 | `platform=openai` | `provider=openai`（KNOWN_PARAMS，query.ts:82） |
+| 验证样例 | 手写「查 gpt-6-astra 的输入价格」 | 「查一个模型当前记录的输入价格」（不依赖具体模型名，模型会下线而合同不变） |
+
+测试同步：access-pages.test.mjs 新增 5 项断言（provider 参数、--dir 最终目录形态、无虚构参数、无写死模型名、/items/{id} 路径），全绿。
+
+### verify-release.sh 安全修复（任意命令面关闭）
+
+- **原缺陷**：`current_ds_from_server` 经受限 shell 执行任意 `python3 -c`（读服务器 manifest 文件）——受限 shell 的意义被架空。
+- **修复**：`maasweekly-activate status` 扩展只读 metadata 输出（datasetVersion/dataThrough/gitCommit，从 current release manifest 读）；客户端 `server_meta` 只解析固定 `status` 动作的输出。新增测试 `test_status_metadata_readonly`（激活套件 17→18 项）。
+- **online verify 覆盖四入口**（此前只查 REST status/changes）：
+  - REST：status + changes 同 datasetVersion
+  - MCP：initialize（serverInfo）+ tools/list（五工具齐备）+ maas_get_changes 真实调用（响应含当前 datasetVersion）
+  - RSS：两 feed 的 content-type（application/rss+xml）+ ETag + If-None-Match→304
+  - Skill：manifest.json 结构校验 + install.sh 可达
+
+### ops 运维文件补齐（全部候选，授权点 A 前不执行）
+
+| 文件 | 内容 |
+|---|---|
+| `ops/maas-agent@.service` | 蓝绿槽位 systemd 模板（blue 8788/green 8789）；非 root 专用用户；NoNewPrivileges/ProtectSystem=strict/私有 tmp/CapabilityBoundingSet 空等硬化；env 由激活器写 slots/<slot>.env |
+| `ops/nginx-agent.conf` | candidate 配置：REST `limit_req` 独立桶 + proxy 透传 ETag/错误不缓存；MCP 独立桶 + no-store + 256k body；feed rss+xml + max-age=1800 + ETag/304；`/_astro/` 一年 immutable。upstream/root 不硬编码——由激活器 include 绑定同一 release |
+| `ops/maas-agent.env.example` | 仅变量名与安全默认值（HOST=127.0.0.1、限流、MCP body/Origin、CURSOR_SECRET 占位）；真实文件服务器现场生成（root:maasagent 0740） |
+| `ops/install-production.sh` | 一次性幂等安装（M8 授权后执行）：前置检查（node22/nginx/磁盘）→ 双用户（maasagent/maasdeploy）→ 目录树 → 受限 shell/激活器/校验器就位 → sudoers 单行 NOPASSWD → systemd 模板 → agent.env 现场生成 secret → nginx include 位。`--dry-run` 全程可审查（已在本地实测通过） |
+| `ops/README.md` | 发布协议图、status/回滚用法、故障排查表、host key 轮换流程、授权红线 |
+
+### 顺带修复：macOS bash 3.2 全角括号解析 bug
+
+`"...$VAR）"`（$VAR 后紧跟全角字符）在 macOS bash 3.2 + UTF-8 locale 下触发假 `unbound variable`（闭括号 UTF-8 尾字节混入变量名；`${VAR}` 花括号形式免疫；Linux bash 5 不受影响）。全 ops/scripts 排查修复 8 处。
 
 ## 0. 第二轮复验修复（2026-09-17，四项阻断）
 
@@ -85,24 +125,56 @@
 | 10 | 旧 commit 拒 + rollback 留原因 | ✅（test_stale_commit_rejected / test_rollback_with_reason） |
 | 11 | 工作区干净/临时清理 | ✅（无 maas-release-pkg/t06-act 残留、无残留进程、git clean） |
 
-## 3. 提交记录
+## 3. 提交记录（M5–M7，分支 task-06-m7-candidate）
 
 ```
-<latest>  fix: verify_manifest 同步 npm bin 豁免
-<prev>    fix: release 内 data 保持 public/v1 层级
-<prev>    chore: dist-release 构建产物入 ignore
-<prev>    fix: npm bin 链接 realpath 判定
-<prev>    fix: Task 06 M3/M4 复验修复（P0×2 + P1×3）
-<prev>    fix: Task 06 M1-M4 生产发布基座
-a07b8c43  feat: Task 05（含复验修复）
+<latest>  data: 公开投影 2026-09-18（随每日抓取合入）
+<prev>    merge origin/main（每日信源抓取 2026-09-17）
+<prev>    feat: Task 06 M7 候选（/agent/ 合同修正 + verify 四入口 + ops 运维文件）
+<prev>    feat: Task 06 M6 /agent/ 页面完善（T21/T22，§11 四段结构重构）（main）
+<prev>    fix: deploy-release 取出最新 RID 目录（main）
+<prev>    feat: Task 06 M5 工作流收敛（deploy-mode + 受控 host key + 发布三脚本）（main）
 ```
 
-## 4. 剩余工作（M5–M7，未开始）
+## 4. 剩余工作（M8–M11，待授权点 A）
 
-- M5 工作流收敛（release.yml + 三 workflow 改造 + deploy/verify/rollback 客户端脚本）
-- M6 /agent/ 完善（T21/T22）
-- M7 候选交付 → **授权点 A（生产切换授权）**
-- 之后：M8 服务器安装+首发、M9 真实客户端（含 Codex）、M10 状态翻转、M11 回滚演练
+- **授权点 A（当前）**：M7 授权包见下节；批准后开 M8
+- M8 服务器安装+首发（install-production.sh → 首次 activate → 公网冒烟）
+- M9 真实客户端（含 Codex 认证环境；阻断不得冒充）
+- M10 状态翻转（四入口 pending→available + changelog 真实日期）
+- M11 回滚演练与收尾
+
+## 4b. M7 授权包（申请生产切换授权）
+
+**候选 commit**：见 §3 latest（分支 task-06-m7-candidate）
+**候选 release**：见下方「离线 smoke 输出」（release ID / datasetVersion / dataThrough）
+**配置 diff**：`ops/nginx-agent.conf`（candidate）+ `ops/maas-agent@.service` + `ops/install-production.sh --dry-run` 输出（全部为新增候选文件；现有 server 块/静态行为不动）
+**离线 smoke**：`ops/verify-release.sh --offline dist-release/<rid>`（构建后执行，输出记录于本节末尾）
+**线上 smoke 命令**（M8 首发后执行）：
+
+```bash
+ops/verify-release.sh --online --expect-release <rid>
+# 覆盖：服务器 current/datasetVersion/dataThrough/gitCommit（固定 status 动作）
+#      + REST status/changes 同版本 + MCP initialize/tools/真实调用
+#      + RSS 两 feed content-type/ETag/304 + Skill manifest/install.sh
+```
+
+**回滚命令**：
+
+```bash
+# 查看可回滚版本（服务器只读）
+ops/verify-release.sh --online --expect-release <current-rid>   # 或 ssh ... status
+# 执行回滚（必须留原因；目标须覆盖当前 datasetVersion）
+ops/rollback-release.sh <previous-rid> --reason "<原因>"
+# 回滚后验收
+ops/verify-release.sh --online --expect-release <previous-rid>
+```
+
+**授权后动作序列**（M8，一次授权内连续执行）：
+1. 服务器执行 `ops/install-production.sh`（先 --dry-run 审查）
+2. 本地翻转 `ops/deploy-mode`：legacy → release（与安装同一受控操作）
+3. `ops/deploy-release.sh`（构建已就绪 → 上传 incoming → 激活 → 公网冒烟）
+4. 失败任意一步：`ops/rollback-release.sh` + 翻回 deploy-mode=legacy（旧 rsync 通道原样可用）
 
 ## 5. 已知限制
 
