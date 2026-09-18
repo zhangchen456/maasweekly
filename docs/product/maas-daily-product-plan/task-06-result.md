@@ -128,12 +128,15 @@
 ## 3. 提交记录（M5–M7，分支 task-06-m7-candidate）
 
 ```
-<latest>  data: 公开投影 2026-09-18（随每日抓取合入）
+aefc7af2d  docs: Task 06 M7 handoff（候选就绪待授权点 A）
+<prev>    fix: 补同步 09-17 抓取漏掉的 price-ledger.rendered.html
+<prev>    fix: 注册 Hello Minds/InclusionAI logo，修复 platform-logos 测试
+<prev>    fix: run-all-tests 失败分支的 bash 3.2 全角括号解析 bug
+<prev>    data: 公开投影 2026-09-18（随每日抓取合入）
 <prev>    merge origin/main（每日信源抓取 2026-09-17）
 <prev>    feat: Task 06 M7 候选（/agent/ 合同修正 + verify 四入口 + ops 运维文件）
-<prev>    feat: Task 06 M6 /agent/ 页面完善（T21/T22，§11 四段结构重构）（main）
-<prev>    fix: deploy-release 取出最新 RID 目录（main）
-<prev>    feat: Task 06 M5 工作流收敛（deploy-mode + 受控 host key + 发布三脚本）（main）
+<prev>    feat: Task 06 M6 /agent/ 页面完善（main）
+<prev>    feat: Task 06 M5 工作流收敛（main）
 ```
 
 ## 4. 剩余工作（M8–M11，待授权点 A）
@@ -146,10 +149,24 @@
 
 ## 4b. M7 授权包（申请生产切换授权）
 
-**候选 commit**：见 §3 latest（分支 task-06-m7-candidate）
-**候选 release**：见下方「离线 smoke 输出」（release ID / datasetVersion / dataThrough）
+**候选 commit**：aefc7af2d（分支 task-06-m7-candidate，PR → main）
+**候选 release**：`rl_aefc7af2d4_8b9fb7b09ead`（14575 文件 / 218,946,348 字节；datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
 **配置 diff**：`ops/nginx-agent.conf`（candidate）+ `ops/maas-agent@.service` + `ops/install-production.sh --dry-run` 输出（全部为新增候选文件；现有 server 块/静态行为不动）
-**离线 smoke**：`ops/verify-release.sh --offline dist-release/<rid>`（构建后执行，输出记录于本节末尾）
+**离线 smoke 输出**（2026-09-18 实测）：
+
+```
+$ ./ops/verify-release.sh --offline dist-release/rl_aefc7af2d4_8b9fb7b09ead
+✓ release 校验通过
+✓ 离线验收通过: dist-release/rl_aefc7af2d4_8b9fb7b09ead
+（manifest：files 14575 / bytes 218946348 / testsSkipped false / contracts rest:1.0 skill:1.0.0）
+
+$ PORT=8799 PUBLIC_DATA_ROOT=<release>/data/public/v1 node <release>/agent-api/dist/server.js
+[agent-api] 已加载数据版本 ds_8b9fb7b09ead…（release 内服务启动）
+GET /api/v1/status → 200：datasetVersion=ds_8b9fb7b09ead… / dataThrough=2026-09-18 / counts 3806 changes · 1383 prices
+POST /api/mcp initialize → serverInfo: maas-daily 1.0.0（Streamable HTTP）
+```
+
+构建链全绿：build-release.sh 完整执行（含 run-all-tests 21/21 + tracked-diff 复查 + manifest 生成）。
 **线上 smoke 命令**（M8 首发后执行）：
 
 ```bash
