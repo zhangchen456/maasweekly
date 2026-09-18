@@ -86,4 +86,5 @@ cat <<'EOF'
   nginx include 位：/srv/maasweekly/shared/nginx/  (激活器维护)
 EOF
 echo "✓ 安装完成（流量未切换——首次 activate 事务完成 nginx 绑定）"
-echo "  下一步：本地 ops/deploy-release.sh（deploy-mode 仍为 legacy，需先翻转）"
+echo "  下一步：MAAS_DEPLOY_MODE=release ops/deploy-release.sh --commit <approved-sha>"
+echo "  （通道经运行时环境变量注入；仓库 ops/deploy-mode 永久保持 legacy）"

@@ -6,12 +6,12 @@
 
 ## 一、当前状态（一句话）
 
-Task 06 **M1–M7 全部完成**。M7 生产候选在分支 `task-06-m7-candidate`（PR 已开到 main、未 merge），**等待授权点 A（生产切换授权）**。四入口仍 pending；生产服务器零改动；DEPLOY_MODE=legacy。
+Task 06 **M1–M7 全部完成（含授权点 A 前复验 P0 修复：deploy-mode 运行时覆盖 + 候选 SHA pin）**。最终候选在分支 `task-06-m7-candidate`（PR #1 → main、未 merge），`task-06-result.md` §4b 记录 APPROVED_COMMIT / APPROVED_RID，**候选已冻结，等待授权点 A**。四入口仍 pending；生产服务器零改动；仓库 `ops/deploy-mode` 永久 legacy（通道经 `MAAS_DEPLOY_MODE` 运行时注入）。
 
 ## 二、关键约束（红线，重启后必须先读）
 
 1. **未到授权点 A**——不得修改生产服务器、nginx、systemd、不得切换线上流量
-2. `ops/install-production.sh` 与 deploy-mode 翻转（legacy→release）是**授权后 M8 的同一受控操作**
+2. `ops/install-production.sh` 与 release 通道首发是**授权后 M8 的同一受控操作**；通道经 `MAAS_DEPLOY_MODE=release` 运行时注入，**仓库 tracked 文件 ops/deploy-mode 永久保持 legacy**（有红线测试锁定）
 3. Task 04 遗留：**Codex 客户端验证保持阻断**（无 OpenAI 认证环境，不能用 curl/SDK 冒充）
 4. 服务器只用于只读审计（`ssh -i ~/Downloads/zhangchen.pem root@47.237.135.97`）
 5. main 分支只经 PR 合入；工作分支 `task-06-m7-candidate`
@@ -50,7 +50,7 @@ Task 06 **M1–M7 全部完成**。M7 生产候选在分支 `task-06-m7-candidat
 
 ## 四、验证链（M7 完成时）
 
-- 全量回归 21/21（scripts/run-all-tests.sh，修 run-all-tests 失败分支 bug 后真实跑通）
+- 全量回归 22/22（P0 修复后挂入 test_deploy_mode 7 项；scripts/run-all-tests.sh）
 - 激活测试 18 项全绿（1 skip：macOS flock）
 - access-pages 含 M7 合同断言（provider/--dir 形态/无虚构参数/无写死模型名/路径）全绿
 - platform-logos 修复后全绿（Hello Minds/InclusionAI 注册）
@@ -58,8 +58,8 @@ Task 06 **M1–M7 全部完成**。M7 生产候选在分支 `task-06-m7-candidat
 
 ## 五、下一步（顺序固定）
 
-1. **授权点 A**：用户审阅 task-06-result.md §4b M7 授权包（候选 commit/release manifest/配置 diff/离线 smoke/线上 smoke 命令/回滚命令）→ 批准生产切换
-2. **M8**：服务器 `install-production.sh`（先 --dry-run）→ deploy-mode 翻转 release → `deploy-release.sh` 首发 → `verify-release.sh --online` 四入口验收
+1. **授权点 A**：用户审阅 task-06-result.md §4b M7 授权包（APPROVED_COMMIT/APPROVED_RID/manifest/配置 diff/离线 smoke/线上 smoke 命令/回滚命令）→ 批准生产切换
+2. **M8**：服务器 `install-production.sh`（先 --dry-run）→ 本地 `git checkout <APPROVED_COMMIT>`（detached HEAD 干净区）→ `MAAS_DEPLOY_MODE=release ops/deploy-release.sh --commit <APPROVED_COMMIT>` 首发 → `verify-release.sh --online --expect-release <APPROVED_RID>` 四入口验收；任一步失败 rollback（通道回退=下次不注入环境变量，无仓库状态要恢复）
 3. **M9**：真实客户端（Claude Code + Codex 阻断则保持）+ RSS 真实阅读器
 4. **M10**：四入口状态翻转（public-access.ts pending→available）+ changelog 真实日期 + 最终 release
 5. **M11**：回滚演练与收尾
@@ -72,7 +72,7 @@ git branch --show-current        # task-06-m7-candidate
 git log --oneline -5             # 应见 M7 系列 + logo/rendered 修复
 git status                       # 应干净
 python3 -m unittest discover -s tests -p 'test_release_activation.py'  # 18 项（1 skip）
-./scripts/run-all-tests.sh       # 21/21
+./scripts/run-all-tests.sh       # 22/22
 ```
 
 ## 七、历史踩坑（M3/M4 轮遗留，仍有效）
