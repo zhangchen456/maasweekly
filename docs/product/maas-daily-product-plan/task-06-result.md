@@ -128,7 +128,9 @@
 ## 3. 提交记录（M5–M7，分支 task-06-m7-candidate）
 
 ```
-aefc7af2d  docs: Task 06 M7 handoff（候选就绪待授权点 A）
+2152ab126  fix: M7 授权点 A 前复验 P0——deploy-mode 运行时覆盖 + 候选 SHA pin（=APPROVED_COMMIT）
+<prev>    docs: task-06-result M7 授权包定稿（原候选 rl_aefc7af2d4，已作废）
+<prev>    docs: Task 06 M7 handoff（候选就绪待授权点 A）
 <prev>    fix: 补同步 09-17 抓取漏掉的 price-ledger.rendered.html
 <prev>    fix: 注册 Hello Minds/InclusionAI logo，修复 platform-logos 测试
 <prev>    fix: run-all-tests 失败分支的 bash 3.2 全角括号解析 bug
@@ -149,30 +151,30 @@ aefc7af2d  docs: Task 06 M7 handoff（候选就绪待授权点 A）
 
 ## 4b. M7 授权包（申请生产切换授权）
 
-> **最终候选（P0 修复后重新构建；原 aefc7af2d/rl_aefc7af2d4 已作废）**
+> **最终候选（P0 修复后重新构建；原 aefc7af2d/rl_aefc7af2d4 已作废）——已冻结**
 >
-> - `APPROVED_COMMIT` = `<P0 修复 commit 的完整 SHA，构建后填入并冻结>`
-> - `APPROVED_RID` = `<P0 修复后 release build 的 RID，构建后填入并冻结>`
-> - 冻结纪律：本节填入后不再追加任何影响 release 的代码变化；后续文档性提交不改变 APPROVED_COMMIT。
+> - `APPROVED_COMMIT` = `2152ab1266e5dc1019f4b6af3283c8786d627837`
+> - `APPROVED_RID` = `rl_2152ab1266_8b9fb7b09ead`
+> - 重新构建验证（2026-09-18）：run-all-tests **22/22**（含 test_deploy_mode 7 项）→ build-release 完整执行 → `verify-release.sh --offline` 通过 → release 内 server 启动冒烟（REST status 200 / MCP initialize serverInfo maas-daily 1.0.0）
+> - 冻结纪律：本节填入后不再追加任何影响 release 的代码变化；后续文档性提交不改变 APPROVED_COMMIT。M8 构建产生的 RID 必须等于 APPROVED_RID（同一 commit + 同一 datasetVersion 的确定性构建；不一致即停止并排查）。
 
-**候选 commit**：aefc7af2d（已作废，见下方 P0 修复）→ 以 APPROVED_COMMIT 为准（分支 task-06-m7-candidate，PR → main）
-**候选 release**：`rl_aefc7af2d4_8b9fb7b09ead`（已作废）→ 以 APPROVED_RID 为准（14575 文件 / 218,946,348 字节量级；datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
+**候选 commit**：APPROVED_COMMIT = `2152ab126…`（P0 修复 commit；分支 task-06-m7-candidate，PR → main）
+**候选 release**：`rl_2152ab1266_8b9fb7b09ead`（14575 文件 / 218,946,348 字节；datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
 **配置 diff**：`ops/nginx-agent.conf`（candidate）+ `ops/maas-agent@.service` + `ops/install-production.sh --dry-run` 输出（全部为新增候选文件；现有 server 块/静态行为不动）
-**离线 smoke 输出**（2026-09-18 实测）：
+**离线 smoke 输出**（2026-09-18 实测，APPROVED_RID）：
 
 ```
-$ ./ops/verify-release.sh --offline dist-release/rl_aefc7af2d4_8b9fb7b09ead
+$ ./ops/verify-release.sh --offline dist-release/rl_2152ab1266_8b9fb7b09ead
 ✓ release 校验通过
-✓ 离线验收通过: dist-release/rl_aefc7af2d4_8b9fb7b09ead
-（manifest：files 14575 / bytes 218946348 / testsSkipped false / contracts rest:1.0 skill:1.0.0）
+✓ 离线验收通过: dist-release/rl_2152ab1266_8b9fb7b09ead
+（manifest：files 14575 / bytes 218946348 / testsSkipped false / contracts rest:1.0 skill:1.0.0 / gitCommit 2152ab1266…）
 
 $ PORT=8799 PUBLIC_DATA_ROOT=<release>/data/public/v1 node <release>/agent-api/dist/server.js
-[agent-api] 已加载数据版本 ds_8b9fb7b09ead…（release 内服务启动）
 GET /api/v1/status → 200：datasetVersion=ds_8b9fb7b09ead… / dataThrough=2026-09-18 / counts 3806 changes · 1383 prices
 POST /api/mcp initialize → serverInfo: maas-daily 1.0.0（Streamable HTTP）
 ```
 
-构建链全绿：build-release.sh 完整执行（含 run-all-tests 21/21 + tracked-diff 复查 + manifest 生成）。
+构建链全绿：build-release.sh 完整执行（含 run-all-tests **22/22** + tracked-diff 复查 + manifest 生成）。
 **线上 smoke 命令**（M8 首发后执行）：
 
 ```bash
