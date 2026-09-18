@@ -139,9 +139,36 @@ exit 0
             return []
         return [l.split(" ")[0] for l in self.nginx_log.read_text().splitlines()]
 
-    def effective_inc(self) -> str:
-        inc = self.root / "shared" / "nginx" / "agent-upstream.inc"
+    def effective_inc(self, name: str = "agent-upstream.inc") -> str:
+        inc = self.root / "shared" / "nginx" / name
         return inc.read_text() if inc.exists() else ""
+
+    def dyn_inc(self, name: str) -> str:
+        """读动态 include（三文件之一）。"""
+        return self.effective_inc(name)
+
+    def assert_incs_bound(self, rid: str, port: str):
+        """三 include 同时绑定同一 release/槽位（M8-B3 P0 核心不变量）。
+
+        作用域红线按指令行检查（跳过 # 注释行）：
+        upstream 文件无 root/location 指令；root 文件无 upstream 指令；
+        routes 文件无 upstream/root 指令、无 server 块。
+        """
+        up = self.dyn_inc("agent-upstream.inc")
+        sr = self.dyn_inc("site-root.inc")
+        rt = self.dyn_inc("agent-routes.inc")
+        self.assertIn(f"127.0.0.1:{port}", up)
+        self.assertIn(f"root {self.root}/releases/{rid}/site", sr)
+        self.assertIn("location /api/v1/", rt)
+        self.assertIn("location = /api/mcp", rt)
+        directives = lambda s: [l for l in s.splitlines() if l.strip() and not l.strip().startswith("#")]
+        up_d, sr_d, rt_d = directives(up), directives(sr), directives(rt)
+        self.assertFalse(any(l.strip().startswith("root ") for l in up_d))
+        self.assertFalse(any("location" in l for l in up_d))
+        self.assertFalse(any(l.strip().startswith("upstream") for l in sr_d))
+        self.assertFalse(any(l.strip().startswith("upstream") for l in rt_d))
+        self.assertFalse(any(l.strip().startswith("root ") for l in rt_d))
+        self.assertFalse(any(l.strip().startswith("server {") for l in rt_d))
 
 
 class TestT04Basic(ActivateFixture):
@@ -157,10 +184,8 @@ class TestT04Basic(ActivateFixture):
         self.assertIn("test", calls)
         self.assertIn("reload", calls)
         self.assertLess(calls.index("test"), calls.index("reload"))
-        # 生效 include 绑定新 release：root 与 upstream 同 rid
-        inc = self.effective_inc()
-        self.assertIn(f"root {self.root}/releases/{rid}/site", inc)
-        self.assertIn("upstream agent_api", inc)
+        # 三 include 同时生成并绑定新 release（作用域严格分离）
+        self.assert_incs_bound(rid, "8788")
 
     def test_idempotent_same_release(self):
         rid = self.rid("a")
@@ -226,8 +251,8 @@ class TestT05FailureKeepsCurrent(ActivateFixture):
 
     def _assert_old_alive(self, old_rid):
         self.assertEqual(self.current(), old_rid)
-        inc = self.effective_inc()
-        self.assertIn(f"root {self.root}/releases/{old_rid}/site", inc)
+        # 三 include 全部仍指向旧 release（root 在 site-root.inc，端口在 upstream）
+        self.assertIn(f"root {self.root}/releases/{old_rid}/site", self.dyn_inc("site-root.inc"))
 
     def _retry_same_rid(self, bad_rid):
         r = self.activate("activate", bad_rid, expect_rc=0)
@@ -354,26 +379,20 @@ class TestP1aTripleSwitch(ActivateFixture):
         slots = json.loads((self.root / "shared" / "state" / "slots.json").read_text())
         self.assertEqual(slots["rid_to_slot"][a], "blue")
         self.assertEqual(slots["slot_to_rid"]["blue"], a)
-        inc = self.effective_inc()
-        self.assertIn(f"root {self.root}/releases/{a}/site", inc)
-        self.assertIn("127.0.0.1:8788", inc)  # blue 端口
+        self.assert_incs_bound(a, "8788")
         # B → green
         self.activate("activate", b)
         slots = json.loads((self.root / "shared" / "state" / "slots.json").read_text())
         self.assertEqual(slots["rid_to_slot"][b], "green")
         self.assertEqual(slots["slot_to_rid"]["green"], b)
-        inc = self.effective_inc()
-        self.assertIn(f"root {self.root}/releases/{b}/site", inc)
-        self.assertIn("127.0.0.1:8789", inc)  # green 端口
+        self.assert_incs_bound(b, "8789")
         # C → blue（A 的旧映射被清理）
         self.activate("activate", c)
         slots = json.loads((self.root / "shared" / "state" / "slots.json").read_text())
         self.assertEqual(slots["rid_to_slot"][c], "blue")
         self.assertEqual(slots["slot_to_rid"]["blue"], c)
         self.assertNotIn(a, slots["rid_to_slot"])
-        inc = self.effective_inc()
-        self.assertIn(f"root {self.root}/releases/{c}/site", inc)
-        self.assertIn("127.0.0.1:8788", inc)
+        self.assert_incs_bound(c, "8788")
         # 停槽调用记录
         hook_log = (self.root / "shared" / "state" / "hook.log").read_text()
         self.assertRegex(hook_log, r"stop blue")
@@ -395,8 +414,9 @@ class TestT15Rollback(ActivateFixture):
         log = (self.root / "shared" / "state" / "activations.log").read_text()
         self.assertIn("rollback", log)
         self.assertIn("smoke-failed", log)
-        inc = self.effective_inc()
-        self.assertIn(f"root {self.root}/releases/{v1}/site", inc)
+        # rollback 后三 include 同步切回 v1（root 在 site-root.inc）
+        self.assertIn(f"root {self.root}/releases/{v1}/site", self.dyn_inc("site-root.inc"))
+        self.assertIn("location /api/v1/", self.dyn_inc("agent-routes.inc"))
 
     def test_rollback_requires_reason(self):
         v1 = self.rid("a")
@@ -458,6 +478,136 @@ class TestSkipTestsMarked(ActivateFixture):
         spec.loader.exec_module(v)
         errs = v.verify(self.root / "incoming" / rid)
         self.assertTrue(any("testsSkipped" in e and "禁止激活" in e for e in errs))
+
+
+class TestNginxThreeIncludeTx(ActivateFixture):
+    """M8-B3 P0：三 include 事务（nginx mixed-scope 修复）。
+
+    背景：旧版把 root（server ctx）与 upstream（http ctx）写进同一个
+    agent-upstream.inc——在真实 nginx 结构下无论 include 进哪个作用域都
+    必然 nginx -t 失败。修复为三个作用域严格分离的动态文件 + 全有或全无
+    事务恢复。
+    """
+
+    def _first_activation_compatible_state(self):
+        """install-production 生成的首发兼容态（三文件已存在）。"""
+        nginx_dir = self.root / "shared" / "nginx"
+        (nginx_dir / "site-root.inc").write_text("root /var/www/maasweekly;\n")
+        (nginx_dir / "agent-upstream.inc").write_text(
+            "upstream agent_api {\n    server 127.0.0.1:8788;\n}\n")
+        (nginx_dir / "agent-routes.inc").write_text(
+            "# intentionally empty before first activation\n")
+
+    def _setup_current(self):
+        """激活一个 release 作为当前版本（三 include 指向它）。"""
+        good = self.rid("a")
+        make_release(self.root, good, git_ts=1789000000)
+        self.activate("activate", good)
+        return good
+
+    def test_first_activation_from_compatible_state(self):
+        """首发边界（新形态）：三文件已存在（兼容态）→ 激活后全部切到新 release。"""
+        self._first_activation_compatible_state()
+        rid = self.rid("a")
+        make_release(self.root, rid, git_ts=1789000000)
+        r = self.activate("activate", rid)
+        self.assertIn("activated", r.stdout)
+        # 三 include 同时绑定新 release（不再依赖"文件不存在"的特殊态）
+        self.assert_incs_bound(rid, "8788")
+
+    def test_fail_nginx_test_restores_all_three(self):
+        """nginx -t 失败：三个 include 全部恢复兼容态（不允许部分恢复）。"""
+        self._first_activation_compatible_state()
+        old = self.rid("a")
+        make_release(self.root, old, git_ts=1789000000)
+        self.activate("activate", old)
+        # 此时三 include 指向 old；注入失败后激活新 release
+        (self.root / "shared/state/FAIL_nginx_test").write_text("")
+        bad = self.rid("c")
+        make_release(self.root, bad, git_ts=1789000200)
+        self.activate("activate", bad, expect_rc=7)
+        # 三个文件全部回到 old 绑定（snapshot-restore 全有或全无）
+        self.assert_incs_bound(old, "8788")
+        self.assertEqual(self.current(), old)
+
+    def test_fail_nginx_reload_restores_all_three(self):
+        """reload 失败：三 include 全部恢复。"""
+        old = self._setup_current()
+        (self.root / "shared/state/FAIL_nginx_reload").write_text("")
+        bad = self.rid("c")
+        make_release(self.root, bad, git_ts=1789000200)
+        self.activate("activate", bad, expect_rc=7)
+        self.assert_incs_bound(old, "8788")
+
+    def test_fail_entry_smoke_restores_all_three(self):
+        """切换后入口冒烟失败：三 include 全部恢复。"""
+        old = self._setup_current()
+        # MAAS_SMOKE_URL 由 activate() 注入；用失败 URL 触发 entry_smoke 失败
+        bad = self.rid("c")
+        make_release(self.root, bad, git_ts=1789000200)
+        self.activate("activate", bad, expect_rc=7,
+                      smoke_url="http://127.0.0.1:1/definitely-not-listening")
+        self.assert_incs_bound(old, "8788")
+
+    def test_routes_content_boundaries(self):
+        """agent-routes.inc 的 location 内容合同（继承动态 root，不硬编码路径）。"""
+        rid = self._setup_current()
+        rt = self.dyn_inc("agent-routes.inc")
+        self.assertIn("location = /feed.xml", rt)
+        self.assertIn("location = /feed/weekly.xml", rt)
+        self.assertIn("location /maas-skill/", rt)
+        # 继承 server root：不得硬编码 /srv/.../current 或 releases 路径
+        self.assertNotIn("/srv/maasweekly", rt)
+        # RSS 缓存 ≥30 分钟
+        self.assertIn("max-age=1800", rt)
+        # MCP no-store
+        self.assertIn("no-store", rt)
+
+
+class TestInstallProduction(unittest.TestCase):
+    """install-production.sh 路径解析与 nginx 稳定配置内容断言。"""
+
+    BASE = Path(__file__).resolve().parent.parent
+    OPS = BASE / "ops"
+
+    def test_ops_dir_resolution_from_ops_root(self):
+        """从 ops/ 直接执行时路径解析正确（真实仓库布局）。"""
+        p = subprocess.run(
+            ["bash", "-c",
+             f"cd {self.BASE} && ./ops/install-production.sh --dry-run"],
+            capture_output=True, text=True)
+        self.assertEqual(p.returncode, 0, p.stderr)
+        # 源路径解析到真实 ops/（不是 ops/server/..）
+        self.assertIn("'ops/maas-agent@.service'", p.stdout.replace(str(self.BASE) + "/", ""))
+        self.assertIn("ops/nginx/maasweekly-agent-http.conf", p.stdout)
+
+    def test_http_conf_no_server_directives(self):
+        """http 级配置不含 server/location/root（作用域红线）。"""
+        c = (self.OPS / "nginx" / "maasweekly-agent-http.conf").read_text()
+        directives = [l for l in c.splitlines()
+                      if l.strip() and not l.strip().startswith("#")]
+        self.assertTrue(any(l.strip().startswith("limit_req_zone") for l in directives))
+        self.assertIn("include /srv/maasweekly/shared/nginx/agent-upstream.inc;", c)
+        for l in directives:
+            self.assertFalse(l.strip().startswith("server {"), l)
+            self.assertFalse(l.strip().startswith("location"), l)
+            self.assertFalse(l.strip().startswith("root "), l)
+
+    def test_server_snippet_no_server_block_no_upstream(self):
+        """server snippet 不含 server { / upstream（作用域红线）。"""
+        c = (self.OPS / "nginx" / "maasweekly-agent-server.conf").read_text()
+        directives = [l for l in c.splitlines()
+                      if l.strip() and not l.strip().startswith("#")]
+        self.assertIn("include /srv/maasweekly/shared/nginx/agent-routes.inc;", c)
+        for l in directives:
+            self.assertFalse(l.strip().startswith("server {"), l)
+            self.assertFalse(l.strip().startswith("upstream"), l)
+
+    def test_deploy_mode_permanently_legacy(self):
+        content = (self.OPS / "deploy-mode").read_text()
+        for line in content.splitlines():
+            if line.startswith("DEPLOY_MODE="):
+                self.assertEqual(line, "DEPLOY_MODE=legacy")
 
 
 if __name__ == "__main__":
