@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_972b5fd4b7aed3ea82d03eec518292e9650d1f98b4801e22b096ed4f6f8b0559",
+  "sourceId": "openai-changelog",
+  "date": "2026-09-18",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "changelog",
+  "sourceUrl": "https://platform.openai.com/docs/changelog",
+  "title": "OpenAI · 更新日志来源更新",
+  "summary": "changelog 新增 input_file 支持扩展和 MCP servers 条目，删除旧版 input_file 描述和 MCP and Connectors，表明功能更新。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-17T23:25:29+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Expanded input_file support in the Responses API to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.",
+      "MCP servers"
+    ],
+    "removed_lines": [
+      "Expanded input_file support to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.",
+      "MCP and Connectors"
+    ],
+    "added_count": 2,
+    "removed_count": 2,
+    "raw_added_count": 2,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-18.json"
+  },
+  "permalink": "/item/obs_972b5fd4b7aed3ea82d03eec518292e9650d1f98b4801e22b096ed4f6f8b0559/"
+}

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_da285b38abc02ae04e2a2f5220d8eaf00a3718c6bb9271f6df312554be9c50f1",
+  "sourceId": "google-gemini-modellist",
+  "date": "2026-09-18",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "model_list",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+  "title": "Google Gemini API · 模型列表来源更新",
+  "summary": "模型列表更新日期至 2026-09-17，Imagen 4 状态从 Deprecated 变为 Shut down，确认关闭。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-17T23:25:29+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-09-15 UTC.",
+        "after": "Last updated 2026-09-17 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-17 UTC.\"],[],[]]"
+      },
+      {
+        "key": "to-image",
+        "before": "| Text-to-image model featuring fast and ultra-fast generation and exceptional clarity up to 2K resolution.",
+        "after": "| Text-to-image model featuring fast and ultra-fast generation (shut down)."
+      }
+    ],
+    "added_lines": [
+      "| Imagen 4 (Shut down)"
+    ],
+    "removed_lines": [
+      "| Imagen 4 (Deprecated)"
+    ],
+    "added_count": 1,
+    "removed_count": 1,
+    "raw_added_count": 4,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-18.json"
+  },
+  "permalink": "/item/obs_da285b38abc02ae04e2a2f5220d8eaf00a3718c6bb9271f6df312554be9c50f1/"
+}

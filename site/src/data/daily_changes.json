@@ -1,6 +1,1335 @@
 {
-  "updated_at": "2026-09-16T23:36:00",
+  "updated_at": "2026-09-17T23:25:29",
   "days": [
+    {
+      "date": "2026-09-18",
+      "stats": {
+        "total": 68,
+        "success": 68,
+        "failed": 0,
+        "changed": 19,
+        "unchanged": 49
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "model_list",
+          "url": "https://help.aliyun.com/zh/model-studio/models",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "| qwen3.8-max | qwen3.7-plus | qwen3.8-omni-flash",
+            "| qwen3.8-omni-flash | |",
+            "融合文本、图像、音频、视频等多种模态的理解与生成能力。音视频分析与文本生成选择 qwen3.8-omni-flash，通过 Chat Completions 或 Responses 调用；实时音视频对话选择 qwen3.5-omni-plus-realtime。"
+          ],
+          "removed_lines": [
+            "| qwen3.8-max | qwen3.7-plus | qwen3.5-omni-plus",
+            "融合文本、图像、音频、视频等多种模态的理解与生成能力"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "omni-plus-realtime",
+              "before": "| qwen3.5-omni-plus-realtime | qwen3.5-omni-plus |",
+              "after": "| qwen3.5-omni-plus-realtime | qwen3.8-omni-flash |"
+            },
+            {
+              "key": "omni-plus",
+              "before": "| qwen3.5-omni-plus | |",
+              "after": "说明如需离线语音输出，请使用 qwen3.5-omni-plus。"
+            }
+          ],
+          "signal_preview": "| qwen3.8-max | qwen3.7-plus | qwen3.8-omni-flash",
+          "raw_added_count": 5,
+          "raw_removed_count": 4,
+          "id": "obs_b6531d96e0cb86235dc078847c59a8fb69c172b4184eb2b58a5e0ad302d585ab",
+          "permalink": "/item/obs_b6531d96e0cb86235dc078847c59a8fb69c172b4184eb2b58a5e0ad302d585ab/",
+          "llm_summary": "模型列表新增 qwen3.8-max、qwen3.7-plus、qwen3.8-omni-flash，移除 qwen3.5-omni-plus，并更新了多模态模型说明，指向 qwen3.8-omni-flash 作为音视频分析推荐模型。"
+        },
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 10,
+          "added_lines": [
+            "qwen3-asr-flash |",
+            "qwen3.6-flash |",
+            "qwen3.8-livetranslate-flash-realtime |",
+            "| qwen3.8-omni-flash | 中国内地 | 0.8元 | 0.1元 | 2.7元 |",
+            "| qwen3.8-omni-flash | 全球 | 0.8元 | 0.1元 | 2.7元",
+            "| qwen3.8-omni-flash | 国际 | 1.094元 | 0.117元 | 3.427元 |",
+            "| 模型 ID（Model ID） | 服务部署范围 | 输入单价（每百万Token） | 缓存命中输入单价（每百万Token） | 输出单价（每百万Token）",
+            "说明Qwen3.5-Omni、Qwen3-Omni 和 Qwen-Omni-Turbo 系列仅在华北2（北京）地域下有免费额度，其他地域均无免费额度。"
+          ],
+          "removed_lines": [
+            "deepseek-v4-flash-0731-us",
+            "deepseek-v4-flash-us",
+            "deepseek-v4-pro-us",
+            "glm-5.2-us |",
+            "qwen-flash-2025-07-28-us |",
+            "qwen-flash-us",
+            "qwen-mt-lite-us |",
+            "qwen-plus-2025-12-01-us |",
+            "qwen-plus-us",
+            "qwen3-asr-flash-2025-09-08-us |"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "qwen3-asr-flash |",
+          "raw_added_count": 8,
+          "raw_removed_count": 19,
+          "id": "obs_f4239a6c4886b7407b3c24344d0b52ab9eda3f514fd831c3fa0061513bc96fec",
+          "permalink": "/item/obs_f4239a6c4886b7407b3c24344d0b52ab9eda3f514fd831c3fa0061513bc96fec/",
+          "llm_summary": "新增 qwen3.8-omni-flash 的定价（中国内地、全球、国际三档），同时新增 qwen3-asr-flash、qwen3.6-flash、qwen3.8-livetranslate-flash-realtime 的定价行，并删除多个美国地域的模型定价（如 deepseek-v4-flash-us、glm-5.2-us 等），可能反映地域服务调整。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "Expanded input_file support in the Responses API to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.",
+            "MCP servers"
+          ],
+          "removed_lines": [
+            "Expanded input_file support to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.",
+            "MCP and Connectors"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Expanded input_file support in the Responses API to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_972b5fd4b7aed3ea82d03eec518292e9650d1f98b4801e22b096ed4f6f8b0559",
+          "permalink": "/item/obs_972b5fd4b7aed3ea82d03eec518292e9650d1f98b4801e22b096ed4f6f8b0559/",
+          "llm_summary": "changelog 新增 input_file 支持扩展和 MCP servers 条目，删除旧版 input_file 描述和 MCP and Connectors，表明功能更新。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "Expanded input_file support in the Responses API to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.",
+            "MCP servers"
+          ],
+          "removed_lines": [
+            "Expanded input_file support to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.",
+            "MCP and Connectors"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Expanded input_file support in the Responses API to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_7910637ecbd59181a70eac3cc483643a92977d2d4015918468ab520c90c4e89c",
+          "permalink": "/item/obs_7910637ecbd59181a70eac3cc483643a92977d2d4015918468ab520c90c4e89c/",
+          "llm_summary": "博客内容与 changelog 同步更新，新增 input_file 扩展和 MCP servers 文章，删除旧版对应内容。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "The Compliance API local session endpoints now also return transcripts of Claude in Chrome sessions (product_surface value claude_in_chrome), in beta for Claude Enterprise organizations, with your existing Compliance Access Key and the read:compliance_user_data scope. See Sessions on users' machines."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "The Compliance API local session endpoints now also return transcripts of Claude in Chrome sessions (product_surface value claude_in_chrome), in beta for Claude Enterprise organizations, with your existing Compliance Access Key and the read:compliance_user_data scope. See Sessions on users' machines.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_85907a28a2395cf6413eda6df22d0cea75fb6529f28d51db311f60ca3f8438f9",
+          "permalink": "/item/obs_85907a28a2395cf6413eda6df22d0cea75fb6529f28d51db311f60ca3f8438f9/",
+          "llm_summary": "新增 Compliance API 本地会话端点返回 Chrome 会话转录的 beta 功能。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 6,
+          "added_lines": [
+            "Measurements for understanding the pace of AI development inside frontier labs",
+            "Today, the world can’t see what’s going on inside AI labs. Anthropic is proposing new metrics that would give the public visibility into frontier AI development."
+          ],
+          "removed_lines": [
+            "AnnouncementsAug 27, 2026",
+            "Introducing Claude Opus 5",
+            "Opus 5 is a step change improvement for the Opus tier powering long-running agents while delivering improvements in coding and professional work.",
+            "Previewing the Model Hardware Standard",
+            "ProductJul 24, 2026",
+            "We’re opening a research preview of the Model Hardware Standard (MHS), a shared specification for AI agents to safely operate physical devices, to a first group of scientific research labs and advanced manufacturers."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Measurements for understanding the pace of AI development inside frontier labs",
+          "raw_added_count": 5,
+          "raw_removed_count": 8,
+          "id": "obs_43395f2b7d23afb42afe155c149b55e4d40f0fac961f6e8ca32eaa30600b5349",
+          "permalink": "/item/obs_43395f2b7d23afb42afe155c149b55e4d40f0fac961f6e8ca32eaa30600b5349/",
+          "llm_summary": "博客新增关于衡量前沿AI发展速度的提案文章，删除旧公告（如 Claude Opus 5 发布、Model Hardware Standard 预览），表明内容更新。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "model_list",
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "| Imagen 4 (Shut down)"
+          ],
+          "removed_lines": [
+            "| Imagen 4 (Deprecated)"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-15 UTC.",
+              "after": "Last updated 2026-09-17 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-17 UTC.\"],[],[]]"
+            },
+            {
+              "key": "to-image",
+              "before": "| Text-to-image model featuring fast and ultra-fast generation and exceptional clarity up to 2K resolution.",
+              "after": "| Text-to-image model featuring fast and ultra-fast generation (shut down)."
+            }
+          ],
+          "signal_preview": "| Imagen 4 (Shut down)",
+          "raw_added_count": 4,
+          "raw_removed_count": 4,
+          "id": "obs_da285b38abc02ae04e2a2f5220d8eaf00a3718c6bb9271f6df312554be9c50f1",
+          "permalink": "/item/obs_da285b38abc02ae04e2a2f5220d8eaf00a3718c6bb9271f6df312554be9c50f1/",
+          "llm_summary": "模型列表更新日期至 2026-09-17，Imagen 4 状态从 Deprecated 变为 Shut down，确认关闭。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "changelog",
+          "url": "https://ai.google.dev/gemini-api/docs/changelog",
+          "status": "changed",
+          "added_count": 27,
+          "removed_count": 0,
+          "added_lines": [
+            "Antigravity Agent 09-2026: Released antigravity-preview-09-2026,",
+            "If you run on a remote sandbox (environment: \"remote\") and read only",
+            "If you run tools locally (local_environment) or parse function_call",
+            "See the Antigravity Agent guide.",
+            "antigravity-preview-05-2026 shuts down on October 5, 2026, tracked on the",
+            "deprecations page.",
+            "else changes.",
+            "output_text or model_output steps, update the agent string and nothing",
+            "snake_case, and file edits use line-range replacements instead of full",
+            "steps, the built-in tools changed. Parameters use PascalCase instead of",
+            "which replaces and deprecates antigravity-preview-05-2026.",
+            "| Capability",
+            "| Directory listing",
+            "| File and code search",
+            "| File creation",
+            "| File editing",
+            "| File reading",
+            "| None, agents used shell commands",
+            "| Shell execution",
+            "| Unchanged",
+            "| Web search",
+            "| code_execution(command, timeout_seconds)",
+            "| find_by_name(SearchDirectory, Pattern, MaxDepth) and grep_search(SearchPath, Query, IsRegex)",
+            "| google_search(queries)",
+            "| list_dir(DirectoryPath)",
+            "| list_files(path)",
+            "| read_file(path, offset, limit), byte offsets"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-15 UTC.",
+              "after": "Last updated 2026-09-17 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-17 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Antigravity Agent 09-2026: Released antigravity-preview-09-2026,",
+          "raw_added_count": 35,
+          "raw_removed_count": 2,
+          "id": "obs_6965eb2bc7e2a85c5fae0fc8e6e5e885e2d815a6b7fa320a52fd513f7bd81317",
+          "permalink": "/item/obs_6965eb2bc7e2a85c5fae0fc8e6e5e885e2d815a6b7fa320a52fd513f7bd81317/",
+          "llm_summary": "changelog 新增 Antigravity Agent 新预览版发布及弃用旧版的信息，并更新了工具使用说明。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "changelog",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-09 UTC.",
+              "after": "Last updated 2026-09-16 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-09 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-16 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-16 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_6b8b0055047f948e1b81807f4baeaf4f710dae6c9a4913957814ca7dba1355e5",
+          "permalink": "/item/obs_6b8b0055047f948e1b81807f4baeaf4f710dae6c9a4913957814ca7dba1355e5/",
+          "llm_summary": "changelog 更新日期至 2026-09-16，但无实质内容变化。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "model_list",
+          "url": "https://docs.cohere.com/docs/models",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Command A Translate Technical Report",
+            "North Small Translate Technical Report"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Command A Translate Technical Report",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_2ee9dcc44f8585e9ca192d6861bafc6ae763554e94223d2dd61a22a642300b50",
+          "permalink": "/item/obs_2ee9dcc44f8585e9ca192d6861bafc6ae763554e94223d2dd61a22a642300b50/",
+          "llm_summary": "新增 Command A Translate 和 North Small Translate 技术报告，可能对应新模型发布。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "pricing",
+          "url": "https://cohere.com/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Pricing | Secure and Scalable Enterprise AI | Cohere"
+          ],
+          "removed_lines": [
+            "$4,300Pricing | Secure and Scalable Enterprise AI | Cohere"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Pricing | Secure and Scalable Enterprise AI | Cohere",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_b1bf00522f477f1079d41457b8bce212338d63ae19d5ee16e4eabe28ab698c1f",
+          "permalink": "/item/obs_b1bf00522f477f1079d41457b8bce212338d63ae19d5ee16e4eabe28ab698c1f/",
+          "llm_summary": "定价页更新，移除 $4,300 价格信息，可能调整了企业版定价。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 5,
+          "added_lines": [
+            "Announcing Artificial Analysis Capability Indices v1.1",
+            "AnthropicOpenAIMetaAlibabaZ AISpaceXAIKimiGoogleDeepSeekInstitute of Foundation ModelsMiniMaxThinking MachinesMistral",
+            "Capability Indexes v1.1",
+            "Capability IndexesUpdated",
+            "New article published · 14 Sept",
+            "Z AIKimiDeepSeekAlibabaMiniMaxThinking MachinesNVIDIAMetaMistralOpenAI"
+          ],
+          "removed_lines": [
+            "AnthropicOpenAIMetaZ AISpaceXAIKimiGoogleAlibabaDeepSeekMBZUAI Institute of Foundation ModelsMiniMaxThinking MachinesMistral",
+            "Capability Indices v1.1",
+            "Capability IndicesUpdated",
+            "GPT-6 Astra (xhigh)See more",
+            "Z AIKimiAlibabaDeepSeekMiniMaxThinking MachinesNVIDIAMetaMistralOpenAI"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "gpt-",
+              "before": "GPT-6 Astra (high)",
+              "after": "GPT-6 Astra (high)See more"
+            }
+          ],
+          "signal_preview": "Announcing Artificial Analysis Capability Indices v1.1",
+          "raw_added_count": 9,
+          "raw_removed_count": 8,
+          "id": "obs_2a3346f8bfbd1fd11ae8b51b8abfaca22b8d075c275b8830ec51392b060d26a1",
+          "permalink": "/item/obs_2a3346f8bfbd1fd11ae8b51b8abfaca22b8d075c275b8830ec51392b060d26a1/",
+          "llm_summary": "发布能力指数 v1.1，更新模型列表，新增 Z AI、Kimi、DeepSeek 等，移除部分旧条目，并更新 GPT-6 Astra 的显示。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 7,
+          "added_lines": [
+            "claude-fable-5-high |",
+            "claude-fable-5-high1230±8",
+            "claude-fable-5-high1310±8",
+            "claude-fable-5-high1496±8",
+            "claude-fable-5-high1506±5",
+            "claude-fable-5-high1623+11/-11",
+            "claude-fable-5-high1628+7/-7"
+          ],
+          "removed_lines": [
+            "claude-fable-5 |",
+            "claude-fable-51230±8",
+            "claude-fable-51310±8",
+            "claude-fable-51496±8",
+            "claude-fable-51506±5",
+            "claude-fable-51623+11/-11",
+            "claude-fable-51628+7/-7"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "claude-fable-5-high |",
+          "raw_added_count": 7,
+          "raw_removed_count": 7,
+          "id": "obs_24d690c913f586458762d6202be18918f891274d42ed84241bac83b27e534276",
+          "permalink": "/item/obs_24d690c913f586458762d6202be18918f891274d42ed84241bac83b27e534276/",
+          "llm_summary": "新增 claude-fable-5-high 模型及其 Elo 分数，移除 claude-fable-5 旧条目，表明模型更新。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "MCP servers"
+          ],
+          "removed_lines": [
+            "MCP and Connectors"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_53e5f5ea1a29c5d4f74a7a928cac06c280e8b2abdce4a8698c2b3fec35740271",
+          "permalink": "/item/obs_53e5f5ea1a29c5d4f74a7a928cac06c280e8b2abdce4a8698c2b3fec35740271/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "MCP servers"
+          ],
+          "removed_lines": [
+            "MCP and Connectors"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_a270319bf6f33fb2876e93c343fe54acc3c491f84827afc3cb3823efc246edc4",
+          "permalink": "/item/obs_a270319bf6f33fb2876e93c343fe54acc3c491f84827afc3cb3823efc246edc4/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "\"arxiv:2205.13147\",",
+            "\"arxiv:2402.01613\",",
+            "\"custom_code\","
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 42,
+          "raw_removed_count": 37,
+          "id": "obs_e71787eab848762f5e15ba81275e2cdfeb1ac80c005ca16cbfbfeabc57e3e798",
+          "permalink": "/item/obs_e71787eab848762f5e15ba81275e2cdfeb1ac80c005ca16cbfbfeabc57e3e798/"
+        }
+      ],
+      "first_fetch": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "first_fetch",
+          "content_length": 1757
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "first_fetch",
+          "content_length": 1757
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "first_fetch",
+          "content_length": 2114
+        }
+      ],
+      "failed": [],
+      "highlights": [
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "新模型上线与定价调整并行",
+          "items": [
+            {
+              "text": "qwen3.8-omni-flash 上线，支持多模态理解与生成，定价输入0.8元/百万Token、输出2.7元/百万Token（中国内地及全球）",
+              "type": "release"
+            },
+            {
+              "text": "qwen3.8-max、qwen3.7-plus 新增至模型列表，同时 qwen3.5-omni-plus 被移除",
+              "type": "release"
+            },
+            {
+              "text": "qwen3.7-max 输入定价18.736元/百万Token、输出56.207元/百万Token，qwen3.7-plus 输入2.998元、输出11.991元（新定价）",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "Responses API 扩展文件类型支持，新增 MCP 服务器",
+          "items": [
+            {
+              "text": "Responses API 的 input_file 支持扩展至更多文档、演示文稿、表格、代码和文本文件类型",
+              "type": "other"
+            },
+            {
+              "text": "新增 MCP servers 支持",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Compliance API 扩展，博客提出前沿AI发展度量指标",
+          "items": [
+            {
+              "text": "Compliance API 本地会话端点新增返回 Claude 在 Chrome 会话中的转录（beta）",
+              "type": "other"
+            },
+            {
+              "text": "Anthropic 博客提出新指标以衡量前沿AI实验室内部发展速度",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "Imagen 4 关闭，Antigravity Agent 新预览版发布",
+          "items": [
+            {
+              "text": "Imagen 4 状态从 Deprecated 变为 Shut down，正式关闭",
+              "type": "sunset"
+            },
+            {
+              "text": "Antigravity Agent 发布 antigravity-preview-09-2026，取代并弃用 antigravity-preview-05-2026（2026-10-05 关闭）",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "新增技术报告，定价页更新",
+          "items": [
+            {
+              "text": "新增 Command A Translate 和 North Small Translate 技术报告",
+              "type": "other"
+            },
+            {
+              "text": "定价页更新，移除 $4,300 相关价格信息",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "发布能力指数 v1.1，更新模型列表",
+          "items": [
+            {
+              "text": "发布 Artificial Analysis Capability Indices v1.1",
+              "type": "other"
+            },
+            {
+              "text": "模型列表更新，新增 Z AI、Kimi、DeepSeek 等，移除部分旧条目",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "新模型 claude-fable-5-high 上榜",
+          "items": [
+            {
+              "text": "claude-fable-5-high 新增至榜单，Elo 分数 1623 (+11/-11) 等",
+              "type": "release"
+            }
+          ]
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_ae7ab00d9caacb9bff85434134d92e8377e54e8f2f56dbbf9ed5aba15991e63d",
+          "provider": "qwen",
+          "model": "qwen3.7-max",
+          "component": "input",
+          "current": "18.736000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_6f0f79af4d0112562a6437c4e906b337a840f4ed2c8e326fc6177d60fc4ab4d4",
+          "provider": "qwen",
+          "model": "qwen3.7-max",
+          "component": "output",
+          "current": "56.207000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_7b97a8c3c594bacaedddb1e7017fb6734e7f7a7b885623c1f4ba82a5ee931031",
+          "provider": "qwen",
+          "model": "qwen3.7-plus",
+          "component": "input",
+          "current": "2.998000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_fc38ec3da031dc4da81108b016214b56536601e14c3f4e8e2c74acffbc909e88",
+          "provider": "qwen",
+          "model": "qwen3.7-plus",
+          "component": "output",
+          "current": "11.991000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_8436702f2c14d2be628a0493489cb9c4aa222f491a1c297a37f0331b096cced1",
+          "provider": "qwen",
+          "model": "qwen3.7-plus",
+          "component": "input",
+          "current": "8.993000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_0836625a8cbe304a812122bf7aca79c6143a474d09212cb1d8a9c39a0f1a791b",
+          "provider": "qwen",
+          "model": "qwen3.7-plus",
+          "component": "output",
+          "current": "35.972000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_bc56e27ebfd6a0e9b624b88bf23c6e1d36164d0d8e741c28ac8e2abecf17dd3f",
+          "provider": "qwen",
+          "model": "qwen-plus",
+          "component": "input",
+          "current": "2.936000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_abb89f01d196daa705e822b0e09fc284ed181ea658f0fef088ad16877816abfa",
+          "provider": "qwen",
+          "model": "qwen-plus",
+          "component": "output",
+          "current": "29.357000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_9fa1fdda4fa14259b083762a5a63b838b8e8ec8a66fa742a865a390935ba96ec",
+          "provider": "qwen",
+          "model": "qwen-plus",
+          "component": "input",
+          "current": "8.807000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_a971c5a3c4017cfb1ba139d0ef19ebdd0dceed084dd792f9cd21db3a71b59f11",
+          "provider": "qwen",
+          "model": "qwen-plus",
+          "component": "output",
+          "current": "88.071000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_8e0eb3fc65750587660405b224d607e8129dfb2494a7b4afb3e76bdcf301dd2a",
+          "provider": "qwen",
+          "model": "qwen-plus-2025-12-01",
+          "component": "input",
+          "current": "2.936000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_07f039095a0f03ef9aa68ff565628138b40f441dd8c9d99bb3892568982259b0",
+          "provider": "qwen",
+          "model": "qwen-plus-2025-12-01",
+          "component": "output",
+          "current": "29.357000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_bb2d55b06ee475cf95913d281a8195e342a8303b38ae76c8fc1cab2707a988fd",
+          "provider": "qwen",
+          "model": "qwen-plus-2025-12-01",
+          "component": "input",
+          "current": "8.807000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_f4b820e1b7c52510170f83222333818ba67366715dbd1bf3e6c2f3dddfd39147",
+          "provider": "qwen",
+          "model": "qwen-plus-2025-12-01",
+          "component": "output",
+          "current": "88.071000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_97e0485f00e8e7e1a750bf501eddc23297bcc1dd07928c02ff8f8c766ab4cc88",
+          "provider": "qwen",
+          "model": "qwen3.6-flash",
+          "component": "input",
+          "current": "1.873550",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_1612e39810f9315c2c6fc9d237c2ef3e2f274973a420b8edaa7f369568d8ee8d",
+          "provider": "qwen",
+          "model": "qwen3.6-flash",
+          "component": "output",
+          "current": "11.241300",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_7b6c8882a11f1ecbd82da8eb42c441098e19c6578bb37ef089e7624bb43fb01b",
+          "provider": "qwen",
+          "model": "qwen3.6-flash",
+          "component": "input",
+          "current": "7.494200",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_c118febb1efd3b0ebf51e7feca97ee25118fa494cd3b0dd32b0fb83ff98c0d79",
+          "provider": "qwen",
+          "model": "qwen3.6-flash",
+          "component": "output",
+          "current": "29.975800",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_073d2db7caf10b9c086f32de5798eb6878d389cd4a8c6005cf8649107278991b",
+          "provider": "qwen",
+          "model": "qwen-flash",
+          "component": "input",
+          "current": "0.367000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_79569633f027d4551246a449973c606adc3729d3d748c765fc4639df29c4163b",
+          "provider": "qwen",
+          "model": "qwen-flash",
+          "component": "output",
+          "current": "2.936000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_a9e2e27eb0ec84ce47500ad7819d0752ed6d80b80a0e7dddc5d9036c7fb49df4",
+          "provider": "qwen",
+          "model": "qwen-flash",
+          "component": "input",
+          "current": "1.835000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_ccac2ae2b48a5a4f4b5729a8ef950fe5d713068bde5cafefff3dd54742296574",
+          "provider": "qwen",
+          "model": "qwen-flash",
+          "component": "output",
+          "current": "14.678000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_d93a1388140bc1e72cefa71cf04052f7744c4acec022e2dd31e8550806b5df55",
+          "provider": "qwen",
+          "model": "qwen-flash-2025-07-28",
+          "component": "input",
+          "current": "0.367000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_f204d3e3441138624f861f37fa7ac6720fdbe0508fab813d227fdf6032e99ce2",
+          "provider": "qwen",
+          "model": "qwen-flash-2025-07-28",
+          "component": "output",
+          "current": "2.936000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_d05fa8e88e3c51539293bf14e4ef36a30652f3fc608000b5a2352ff93e7bde63",
+          "provider": "qwen",
+          "model": "qwen-flash-2025-07-28",
+          "component": "input",
+          "current": "1.835000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_f449ce211f48546adb4ac86a28f01dc86860d30afe05e8c9762a628d060b05e2",
+          "provider": "qwen",
+          "model": "qwen-flash-2025-07-28",
+          "component": "output",
+          "current": "14.678000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_718bae4a93d786ae8afa4bae268eb5cd71fb219ca56aada92b1721abcdec7ee8",
+          "provider": "qwen",
+          "model": "qwen3.8-omni-flash",
+          "component": "input",
+          "current": "0.100000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_48b42b236b97af85cb39b4d2efdf99d5605e3db7d424b89347af14f547d8240f",
+          "provider": "qwen",
+          "model": "qwen3.8-omni-flash",
+          "component": "output",
+          "current": "2.700000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_c05ec6a9c4a352c14fdceb8325d19c0d052866e89435d0d5ff45522d22f60c40",
+          "provider": "qwen",
+          "model": "qwen3.8-omni-flash",
+          "component": "input",
+          "current": "0.100000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_8df9d874235c56f1fb4467796921c9c114184b5a7ff72b6ea39eea0cacdd63de",
+          "provider": "qwen",
+          "model": "qwen3.8-omni-flash",
+          "component": "output",
+          "current": "2.700000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_7ce89d3a802bddbf162f8526d615a31a405ecf8a6622f88093b7e44d206fa1a7",
+          "provider": "qwen",
+          "model": "qwen3-vl-flash",
+          "component": "input",
+          "current": "0.367000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_1bd9d58b15e0456703e00bc31b3c9aa7b22ff012aaff181782f0c69355e75334",
+          "provider": "qwen",
+          "model": "qwen3-vl-flash",
+          "component": "output",
+          "current": "2.936000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_57a5ebdb0b91f669d9d6f115d850fba7dd099a6d6b1638723c58ef33c2ab1095",
+          "provider": "qwen",
+          "model": "qwen3-vl-flash",
+          "component": "input",
+          "current": "0.881000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_eeda728bbcc211c73a17086f624ed1f1f9f8ecd138bd7c45cc1a84986c32b3bb",
+          "provider": "qwen",
+          "model": "qwen3-vl-flash",
+          "component": "output",
+          "current": "7.046000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_227892f4ade743e0c12595ae661aa20bdd7f43bfa443208a37e4a94fc9559683",
+          "provider": "qwen",
+          "model": "qwen3-vl-flash-2026-01-22",
+          "component": "input",
+          "current": "0.367000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_48710177f8e262db96e33ed3e9eef9f6c07eb217552a563053d2590286a09ed5",
+          "provider": "qwen",
+          "model": "qwen3-vl-flash-2026-01-22",
+          "component": "output",
+          "current": "2.936000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_229afd1929b1c7fdc2a836e0d098ff474e429d50d7e58cf41a3137d6c47c6007",
+          "provider": "qwen",
+          "model": "qwen3-vl-flash-2026-01-22",
+          "component": "input",
+          "current": "0.881000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_4d5a16d5d058a7149feddcc5f6d3f3e65afe09d8e25023b5b4ec4005a8f795de",
+          "provider": "qwen",
+          "model": "qwen3-vl-flash-2026-01-22",
+          "component": "output",
+          "current": "7.046000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_251a729f12513eaeb97c65d73306d34602ee4acb2751c893a44098ad353370c2",
+          "provider": "qwen",
+          "model": "qwen3-vl-flash-2025-10-15",
+          "component": "input",
+          "current": "0.367000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_fac3e5c5710459757e04206554cfab166b19c90ca780bfe1b16d0509efcb0907",
+          "provider": "qwen",
+          "model": "qwen3-vl-flash-2025-10-15",
+          "component": "output",
+          "current": "2.936000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_b642600a7ddd3a8b79167e7963e679c166f9441acd0a2385fe3d47c25a400dde",
+          "provider": "qwen",
+          "model": "qwen3-vl-flash-2025-10-15",
+          "component": "input",
+          "current": "0.881000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_71a582fb64e136dd7d20064570de8fad7a43d0c61355aca7df50cc630129e881",
+          "provider": "qwen",
+          "model": "qwen3-vl-flash-2025-10-15",
+          "component": "output",
+          "current": "7.046000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_3faa25ebac88a849341ab9d90b82e8c0c6ec00e22a3e1f62d9201aacff53bdff",
+          "provider": "qwen",
+          "model": "qwen-mt-lite",
+          "component": "input",
+          "current": "0.881000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_76f2809e5d691aa1984802bca36eca5cfa09c1622bc9d739b991a6241c6033a2",
+          "provider": "qwen",
+          "model": "qwen-mt-lite",
+          "component": "output",
+          "current": "2.642000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_1c4acf4d9550e4edca768e252fac8722d4b0b56c19c83e9a6f2417393c0e4d30",
+          "provider": "qwen",
+          "model": "qwen3.8-livetranslate-flash-realtime",
+          "component": "input",
+          "current": "3.300000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_602a24f99e79bb033175710f3f9e7a6924f38c42c794d4d520a9311ce0ba4bb9",
+          "provider": "qwen",
+          "model": "qwen3.8-livetranslate-flash-realtime",
+          "component": "output",
+          "current": "160.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_afb1e9ec47b87dee391e46147ca43def262bcb9e3446bd5e924e8a9e99bd9f34",
+          "provider": "qwen",
+          "model": "qwen3-asr-flash",
+          "component": "input",
+          "current": "0.000035",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_02c7a13402673a428d8b0cfaa95f1e01916f02ab4a3041c90f74ce0c38371da9",
+          "provider": "qwen",
+          "model": "qwen3-asr-flash-2025-09-08",
+          "component": "input",
+          "current": "0.000035",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        }
+      ]
+    },
     {
       "date": "2026-09-17",
       "stats": {

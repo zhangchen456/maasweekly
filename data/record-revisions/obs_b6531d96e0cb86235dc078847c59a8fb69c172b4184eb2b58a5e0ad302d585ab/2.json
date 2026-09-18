@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_b6531d96e0cb86235dc078847c59a8fb69c172b4184eb2b58a5e0ad302d585ab",
+  "sourceId": "alibaba-modellist",
+  "date": "2026-09-18",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "阿里百炼",
+  "sourceType": "model_list",
+  "sourceUrl": "https://help.aliyun.com/zh/model-studio/models",
+  "title": "阿里百炼 · 模型列表来源更新",
+  "summary": "模型列表新增 qwen3.8-max、qwen3.7-plus、qwen3.8-omni-flash，移除 qwen3.5-omni-plus，并更新了多模态模型说明，指向 qwen3.8-omni-flash 作为音视频分析推荐模型。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-17T23:25:29+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "omni-plus-realtime",
+        "before": "| qwen3.5-omni-plus-realtime | qwen3.5-omni-plus |",
+        "after": "| qwen3.5-omni-plus-realtime | qwen3.8-omni-flash |"
+      },
+      {
+        "key": "omni-plus",
+        "before": "| qwen3.5-omni-plus | |",
+        "after": "说明如需离线语音输出，请使用 qwen3.5-omni-plus。"
+      }
+    ],
+    "added_lines": [
+      "| qwen3.8-max | qwen3.7-plus | qwen3.8-omni-flash",
+      "| qwen3.8-omni-flash | |",
+      "融合文本、图像、音频、视频等多种模态的理解与生成能力。音视频分析与文本生成选择 qwen3.8-omni-flash，通过 Chat Completions 或 Responses 调用；实时音视频对话选择 qwen3.5-omni-plus-realtime。"
+    ],
+    "removed_lines": [
+      "| qwen3.8-max | qwen3.7-plus | qwen3.5-omni-plus",
+      "融合文本、图像、音频、视频等多种模态的理解与生成能力"
+    ],
+    "added_count": 3,
+    "removed_count": 2,
+    "raw_added_count": 5,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-18.json"
+  },
+  "permalink": "/item/obs_b6531d96e0cb86235dc078847c59a8fb69c172b4184eb2b58a5e0ad302d585ab/"
+}

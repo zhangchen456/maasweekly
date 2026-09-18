@@ -1,0 +1,691 @@
+{
+  "date": "2026-09-18",
+  "fetched_at": "2026-09-18T07:24:01.152220",
+  "stats": {
+    "total": 68,
+    "success": 68,
+    "failed": 0,
+    "changed": 19,
+    "unchanged": 49
+  },
+  "changes": [
+    {
+      "platform": "火山方舟",
+      "source_type": "model_list",
+      "url": "https://www.volcengine.com/docs/82379/1330310",
+      "status": "first_fetch",
+      "content_length": 1757
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "pricing",
+      "url": "https://www.volcengine.com/docs/82379/1544106",
+      "status": "first_fetch",
+      "content_length": 1757
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "changelog",
+      "url": "https://www.volcengine.com/docs/82379/1159177",
+      "status": "first_fetch",
+      "content_length": 2114
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "blog",
+      "url": "https://www.volcengine.com/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "model_list",
+      "url": "https://help.aliyun.com/zh/model-studio/models",
+      "status": "changed",
+      "added_count": 5,
+      "removed_count": 4,
+      "added_lines": [
+        "| qwen3.5-omni-plus-realtime | qwen3.8-omni-flash |",
+        "| qwen3.8-max | qwen3.7-plus | qwen3.8-omni-flash",
+        "| qwen3.8-omni-flash | |",
+        "融合文本、图像、音频、视频等多种模态的理解与生成能力。音视频分析与文本生成选择 qwen3.8-omni-flash，通过 Chat Completions 或 Responses 调用；实时音视频对话选择 qwen3.5-omni-plus-realtime。",
+        "说明如需离线语音输出，请使用 qwen3.5-omni-plus。"
+      ],
+      "removed_lines": [
+        "| qwen3.5-omni-plus | |",
+        "| qwen3.5-omni-plus-realtime | qwen3.5-omni-plus |",
+        "| qwen3.8-max | qwen3.7-plus | qwen3.5-omni-plus",
+        "融合文本、图像、音频、视频等多种模态的理解与生成能力"
+      ]
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "pricing",
+      "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "status": "changed",
+      "added_count": 8,
+      "removed_count": 19,
+      "added_lines": [
+        "qwen3-asr-flash |",
+        "qwen3.6-flash |",
+        "qwen3.8-livetranslate-flash-realtime |",
+        "| qwen3.8-omni-flash | 中国内地 | 0.8元 | 0.1元 | 2.7元 |",
+        "| qwen3.8-omni-flash | 全球 | 0.8元 | 0.1元 | 2.7元",
+        "| qwen3.8-omni-flash | 国际 | 1.094元 | 0.117元 | 3.427元 |",
+        "| 模型 ID（Model ID） | 服务部署范围 | 输入单价（每百万Token） | 缓存命中输入单价（每百万Token） | 输出单价（每百万Token）",
+        "说明Qwen3.5-Omni、Qwen3-Omni 和 Qwen-Omni-Turbo 系列仅在华北2（北京）地域下有免费额度，其他地域均无免费额度。"
+      ],
+      "removed_lines": [
+        "deepseek-v4-flash-0731-us",
+        "deepseek-v4-flash-us",
+        "deepseek-v4-pro-us",
+        "glm-5.2-us |",
+        "qwen-flash-2025-07-28-us |",
+        "qwen-flash-us",
+        "qwen-mt-lite-us |",
+        "qwen-plus-2025-12-01-us |",
+        "qwen-plus-us",
+        "qwen3-asr-flash-2025-09-08-us |"
+      ]
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "changelog",
+      "url": "https://help.aliyun.com/zh/model-studio/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "blog",
+      "url": "https://qwenlm.github.io/blog/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "model_list",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "pricing",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "changelog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Mmh8l4qwj",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "blog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "model_list",
+      "url": "https://cloud.tencent.com/document/product/1729/104753",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "pricing",
+      "url": "https://cloud.tencent.com/document/product/1729/97731",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "changelog",
+      "url": "https://cloud.tencent.com/document/product/1729/97765",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "blog",
+      "url": "https://cloud.tencent.com/document/product/1729/132069",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "model_list",
+      "url": "https://cloud.siliconflow.cn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "pricing",
+      "url": "https://siliconflow.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "changelog",
+      "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "blog",
+      "url": "https://siliconflow.cn/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "model_list",
+      "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "pricing",
+      "url": "https://bigmodel.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "changelog",
+      "url": "https://docs.bigmodel.cn/cn/update/new-releases",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "blog",
+      "url": "https://www.bigmodel.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "model_list",
+      "url": "https://platform.kimi.com/docs/api/models-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "pricing",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "changelog",
+      "url": "https://platform.kimi.com/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "blog",
+      "url": "https://www.moonshot.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "model_list",
+      "url": "https://platform.minimaxi.com/docs/guides/models-intro",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "pricing",
+      "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "changelog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "blog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "model_list",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "pricing",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "changelog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "blog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "model_list",
+      "url": "https://platform.openai.com/docs/models",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "MCP servers"
+      ],
+      "removed_lines": [
+        "MCP and Connectors"
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "pricing",
+      "url": "https://platform.openai.com/docs/pricing",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "MCP servers"
+      ],
+      "removed_lines": [
+        "MCP and Connectors"
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "changelog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 2,
+      "added_lines": [
+        "Expanded input_file support in the Responses API to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.",
+        "MCP servers"
+      ],
+      "removed_lines": [
+        "Expanded input_file support to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.",
+        "MCP and Connectors"
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "blog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 2,
+      "added_lines": [
+        "Expanded input_file support in the Responses API to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.",
+        "MCP servers"
+      ],
+      "removed_lines": [
+        "Expanded input_file support to accept more document, presentation, spreadsheet, code, and text file types. Learn more here.",
+        "MCP and Connectors"
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "model_list",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "pricing",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "changelog",
+      "url": "https://docs.anthropic.com/en/release-notes/api",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 0,
+      "added_lines": [
+        "September 18, 2026",
+        "The Compliance API local session endpoints now also return transcripts of Claude in Chrome sessions (product_surface value claude_in_chrome), in beta for Claude Enterprise organizations, with your existing Compliance Access Key and the read:compliance_user_data scope. See Sessions on users' machines."
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "blog",
+      "url": "https://www.anthropic.com/news",
+      "status": "changed",
+      "added_count": 5,
+      "removed_count": 8,
+      "added_lines": [
+        "Jul 30, 2026AnnouncementsInvestigating three real-world incidents in our cybersecurity evaluationsSee more",
+        "Measurements for understanding the pace of AI development inside frontier labs",
+        "Sep 17, 2026",
+        "Sep 17, 2026AnnouncementsIntroducing the Life Sciences Verification Program",
+        "Today, the world can’t see what’s going on inside AI labs. Anthropic is proposing new metrics that would give the public visibility into frontier AI development."
+      ],
+      "removed_lines": [
+        "AnnouncementsAug 27, 2026",
+        "Introducing Claude Opus 5",
+        "Jul 27, 2026AnnouncementsOur position on open-weights modelsSee more",
+        "Jul 30, 2026AnnouncementsInvestigating three real-world incidents in our cybersecurity evaluations",
+        "Opus 5 is a step change improvement for the Opus tier powering long-running agents while delivering improvements in coding and professional work.",
+        "Previewing the Model Hardware Standard",
+        "ProductJul 24, 2026",
+        "We’re opening a research preview of the Model Hardware Standard (MHS), a shared specification for AI agents to safely operate physical devices, to a first group of scientific research labs and advanced manufacturers."
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "model_list",
+      "url": "https://ai.google.dev/gemini-api/docs/models",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 4,
+      "added_lines": [
+        "Last updated 2026-09-17 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-17 UTC.\"],[],[]]",
+        "| Imagen 4 (Shut down)",
+        "| Text-to-image model featuring fast and ultra-fast generation (shut down)."
+      ],
+      "removed_lines": [
+        "Last updated 2026-09-15 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]",
+        "| Imagen 4 (Deprecated)",
+        "| Text-to-image model featuring fast and ultra-fast generation and exceptional clarity up to 2K resolution."
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "changelog",
+      "url": "https://ai.google.dev/gemini-api/docs/changelog",
+      "status": "changed",
+      "added_count": 35,
+      "removed_count": 2,
+      "added_lines": [
+        "Antigravity Agent 09-2026: Released antigravity-preview-09-2026,",
+        "If you run on a remote sandbox (environment: \"remote\") and read only",
+        "If you run tools locally (local_environment) or parse function_call",
+        "Last updated 2026-09-17 UTC.",
+        "See the Antigravity Agent guide.",
+        "September 17, 2026",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-17 UTC.\"],[],[]]",
+        "antigravity-preview-05-2026 shuts down on October 5, 2026, tracked on the",
+        "deprecations page.",
+        "else changes.",
+        "output_text or model_output steps, update the agent string and nothing",
+        "snake_case, and file edits use line-range replacements instead of full",
+        "steps, the built-in tools changed. Parameters use PascalCase instead of",
+        "which replaces and deprecates antigravity-preview-05-2026.",
+        "| Capability",
+        "| Directory listing",
+        "| File and code search",
+        "| File creation",
+        "| File editing",
+        "| File reading",
+        "| None, agents used shell commands",
+        "| Shell execution",
+        "| Unchanged",
+        "| Web search",
+        "| code_execution(command, timeout_seconds)",
+        "| find_by_name(SearchDirectory, Pattern, MaxDepth) and grep_search(SearchPath, Query, IsRegex)",
+        "| google_search(queries)",
+        "| list_dir(DirectoryPath)",
+        "| list_files(path)",
+        "| read_file(path, offset, limit), byte offsets"
+      ],
+      "removed_lines": [
+        "Last updated 2026-09-15 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-15 UTC.\"],[],[]]"
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "blog",
+      "url": "https://blog.google/technology/ai/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "model_list",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "pricing",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "changelog",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 2,
+      "added_lines": [
+        "Last updated 2026-09-16 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-16 UTC.\"],[],[]]"
+      ],
+      "removed_lines": [
+        "Last updated 2026-09-09 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-09 UTC.\"],[],[]]"
+      ]
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "blog",
+      "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "model_list",
+      "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "pricing",
+      "url": "https://mistral.ai/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "changelog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "blog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "model_list",
+      "url": "https://docs.cohere.com/docs/models",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 0,
+      "added_lines": [
+        "Command A Translate Technical Report",
+        "North Small Translate Technical Report"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "pricing",
+      "url": "https://cohere.com/pricing",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "Pricing | Secure and Scalable Enterprise AI | Cohere"
+      ],
+      "removed_lines": [
+        "$4,300Pricing | Secure and Scalable Enterprise AI | Cohere"
+      ]
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "changelog",
+      "url": "https://docs.cohere.com/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "blog",
+      "url": "https://txt.cohere.com/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "model_list",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "pricing",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "changelog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "blog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "讯飞星辰MaaS",
+      "source_type": "changelog",
+      "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+      "status": "unchanged"
+    },
+    {
+      "platform": "HuggingFace",
+      "source_type": "industry",
+      "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+      "status": "changed",
+      "added_count": 42,
+      "removed_count": 37,
+      "added_lines": [
+        "\"_id\": \"65c7188324e59a0e4f89d863\",",
+        "\"arxiv:2205.13147\",",
+        "\"arxiv:2402.01613\",",
+        "\"createdAt\": \"2024-02-10T06:32:35.000Z\",",
+        "\"custom_code\",",
+        "\"downloads\": 14975795,",
+        "\"downloads\": 15558794,",
+        "\"downloads\": 17310176,",
+        "\"downloads\": 17467072,",
+        "\"downloads\": 17841983,",
+        "\"downloads\": 18789941,",
+        "\"downloads\": 20042055,",
+        "\"downloads\": 21776108,",
+        "\"downloads\": 21924080,",
+        "\"downloads\": 22204509,",
+        "\"downloads\": 22327151,",
+        "\"downloads\": 23184492,",
+        "\"downloads\": 24996747,",
+        "\"downloads\": 255618777,",
+        "\"downloads\": 38094575,",
+        "\"downloads\": 45668102,",
+        "\"downloads\": 47631021,",
+        "\"downloads\": 56421997,",
+        "\"downloads\": 64529380,",
+        "\"downloads\": 88670869,",
+        "\"id\": \"nomic-ai/nomic-embed-text-v1.5\",",
+        "\"likes\": 1128,",
+        "\"likes\": 1559,",
+        "\"likes\": 1640,",
+        "\"likes\": 1883,"
+      ],
+      "removed_lines": [
+        "\"_id\": \"67449267a8b7b9f766e74310\",",
+        "\"createdAt\": \"2024-11-25T15:06:15.000Z\",",
+        "\"downloads\": 15437304,",
+        "\"downloads\": 15584259,",
+        "\"downloads\": 16925814,",
+        "\"downloads\": 17261813,",
+        "\"downloads\": 18034248,",
+        "\"downloads\": 18432686,",
+        "\"downloads\": 20053814,",
+        "\"downloads\": 21790053,"
+      ]
+    },
+    {
+      "platform": "Artificial Analysis",
+      "source_type": "industry",
+      "url": "https://artificialanalysis.ai/",
+      "status": "changed",
+      "added_count": 9,
+      "removed_count": 8,
+      "added_lines": [
+        "11 of 490 releases",
+        "12 of 322 models",
+        "Announcing Artificial Analysis Capability Indices v1.1",
+        "AnthropicOpenAIMetaAlibabaZ AISpaceXAIKimiGoogleDeepSeekInstitute of Foundation ModelsMiniMaxThinking MachinesMistral",
+        "Capability Indexes v1.1",
+        "Capability IndexesUpdated",
+        "GPT-6 Astra (high)See more",
+        "New article published · 14 Sept",
+        "Z AIKimiDeepSeekAlibabaMiniMaxThinking MachinesNVIDIAMetaMistralOpenAI"
+      ],
+      "removed_lines": [
+        "11 of 486 releases",
+        "12 of 319 models",
+        "AnthropicOpenAIMetaZ AISpaceXAIKimiGoogleAlibabaDeepSeekMBZUAI Institute of Foundation ModelsMiniMaxThinking MachinesMistral",
+        "Capability Indices v1.1",
+        "Capability IndicesUpdated",
+        "GPT-6 Astra (high)",
+        "GPT-6 Astra (xhigh)See more",
+        "Z AIKimiAlibabaDeepSeekMiniMaxThinking MachinesNVIDIAMetaMistralOpenAI"
+      ]
+    },
+    {
+      "platform": "LMArena",
+      "source_type": "industry",
+      "url": "https://lmarena.ai/leaderboard",
+      "status": "changed",
+      "added_count": 7,
+      "removed_count": 7,
+      "added_lines": [
+        "claude-fable-5-high |",
+        "claude-fable-5-high1230±8",
+        "claude-fable-5-high1310±8",
+        "claude-fable-5-high1496±8",
+        "claude-fable-5-high1506±5",
+        "claude-fable-5-high1623+11/-11",
+        "claude-fable-5-high1628+7/-7"
+      ],
+      "removed_lines": [
+        "claude-fable-5 |",
+        "claude-fable-51230±8",
+        "claude-fable-51310±8",
+        "claude-fable-51496±8",
+        "claude-fable-51506±5",
+        "claude-fable-51623+11/-11",
+        "claude-fable-51628+7/-7"
+      ]
+    }
+  ]
+}
