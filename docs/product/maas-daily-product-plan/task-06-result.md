@@ -128,7 +128,7 @@
 ## 3. 提交记录（M5–M7，分支 task-06-m7-candidate）
 
 ```
-24a7e12d8  docs: M8-B3 首发P0 记录 + 第四代候选冻结（=APPROVED_COMMIT）
+65fe566e5  fix: M8-B3 第二次首发双 P0——删 MDWE + release 权限收敛（=APPROVED_COMMIT）
 <prev>    fix: M8-B3 首发暴露 systemd WorkingDirectory/current P0（wrapper 修复）
 <prev>    fix: M8-B3 前 nginx mixed-scope P0——三 include 结构 + install nginx 接线（已作废）
 <prev>    docs: M7 最终候选冻结（2152ab1266/rl_2152ab1266，已作废）
@@ -155,11 +155,11 @@
 
 ## 4b. M7 授权包（申请生产切换授权）
 
-> **最终候选（M8-B3 首发 P0 修复后第四次构建；前三代已作废）——已冻结**
+> **最终候选（M8-B3 第二次首发双 P0 修复后第五次构建；前四代已作废）——已冻结**
 >
-> - `APPROVED_COMMIT` = `24a7e12d8624c2320142d3d0116bc4662383075d`
-> - `APPROVED_RID` = `rl_24a7e12d86_8b9fb7b09ead`
-> - 重新构建验证（2026-09-18）：run-all-tests **22/22**（激活套件 27→**34** 项）→ build-release 完整执行 → `verify-release.sh --offline` 通过 → release 内 server 启动冒烟（REST status 200 / MCP initialize）
+> - `APPROVED_COMMIT` = `65fe566e50d9956e222cb60ef148e4c527e705d9`
+> - `APPROVED_RID` = `rl_65fe566e50_8b9fb7b09ead`
+> - 重新构建验证（2026-09-18）：run-all-tests **22/22**（激活套件 34→**40** 项）→ build-release 完整执行 → `verify-release.sh --offline` 通过 → release 内 server 启动冒烟（REST status 200 / MCP initialize）
 > - 冻结纪律：本节填入后不再追加任何影响 release 的代码变化。M8 构建产生的 RID 必须等于 APPROVED_RID（不一致即停止并排查）。
 >
 > 作废记录：`6c45634f…`/`rl_6c45634f…`（首发暴露 systemd WorkingDirectory P0 作废）← `2152ab1266…`（nginx mixed-scope P0）← `aefc7af2d`（文档提交前进）
@@ -187,6 +187,14 @@ Main process exited, code=exited, status=200/CHDIR
 - 激活测试 27→**34** 项：候选无 current 启动（首发边界）/ **防混版核心**（current=A、slot env=B → status 必须返回 B 的 datasetVersion）/ wrapper 缺 env 拒启 / unit 静态合同（无 current 引用、ExecStart=wrapper、无 WorkingDirectory）/ installer 安装 wrapper
 - 顺手修 bash 3.2 全角标点前裸变量 3 处（deploy-release:93、lib-release:55；全仓扫描清零）
 
+### M8-B3 第二次首发双 P0（2026-09-18 第二次真实 activate 暴露）
+
+**实录**：wrapper 修复生效（前次 CHDIR P0 已关闭——候选成功进入 Node 启动阶段）→ 新故障层：
+- **P0-1：`MemoryDenyWriteExecute=true` 与 V8 JIT 根本冲突**。journal：`V8 fatal OS::SetPermissions → status=5/TRAP`（JIT 编译内存页设 RWX 被 MDWE 拦截）。transient 对照实验实锤：MDWE=yes → 同样崩溃；去掉 → Node 正常启动 status 200。**修复**：unit 删 MDWE（其余硬化全保留；不用 `--jitless` 规避）。
+- **P0-2：release 运行时权限缺失**。mv 不改属主——incoming（maasdeploy）移入 releases 后服务用户读不了数据（EACCES 实测）。**修复**：`prepare_release_runtime_permissions`（root:maasagent；目录 0750 / 文件 0640 / 原可执行 0750——不用 a+rX；symlink 逃逸复核）+ **失败恢复闭环** `restore_incoming_deploy_ownership`（候选退回 incoming 后归还上传属主——否则同 RID 重传被权限阻断）。
+
+事务恢复再次完全符合设计（current/三 include/槽位复原、候选退回 incoming、线上零影响）。激活测试 34→**40** 项（含失败后 incoming 属主还原 + 同 RID 重试成功闭环）。
+
 ### M8-B3 前 P0：nginx mixed-scope include（2026-09-18 B2 后只读检查发现）
 
 **缺陷**：`maasweekly-activate` 把 `root`（server context）与 `upstream agent_api`（http context）写进同一个 `agent-upstream.inc`——真实生产 nginx 结构下无论 include 进哪个作用域都必然 `nginx -t` 失败。**未 activate，线上零影响**（流量仍 100% legacy 静态站）。
@@ -207,8 +215,8 @@ Main process exited, code=exited, status=200/CHDIR
 
 **B1/B2 保留**：服务器 Node 22（/opt/node-v22.22.3 + /usr/bin/node symlink）、maasagent/maasdeploy、sudoers、systemd unit、agent.env 均已就位且不受本修复影响；新候选只需 **B2.1 幂等重跑 install-production** 补 nginx 接线（生成两个稳定配置 + 三个兼容态 include + 改造 https.conf，全程 nginx -t 失败自动回滚、旧站行为不变）。
 
-**候选 commit**：APPROVED_COMMIT = `24a7e12d8…`（M8-B3 首发P0 修复后第四次冻结；分支 task-06-m7-candidate，PR → main）
-**候选 release**：`rl_24a7e12d86_8b9fb7b09ead`（datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
+**候选 commit**：APPROVED_COMMIT = `65fe566e5…`（第五代冻结；分支 task-06-m7-candidate，PR → main）
+**候选 release**：`rl_65fe566e50_8b9fb7b09ead`（datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
 **配置 diff**：`ops/nginx/maasweekly-agent-http.conf`（conf.d）+ `ops/nginx/maasweekly-agent-server.conf`（snippet）+ `ops/maas-agent@.service` + `ops/install-production.sh`（nginx 接线段）+ 三个动态 include 初始兼容态；`maasweekly-https.conf` 仅 root 行替换为 include + 追加 agent snippet include（timestamp backup + nginx -t 失败自动恢复）
 **离线 smoke 输出**（2026-09-18 实测，APPROVED_RID）：
 
