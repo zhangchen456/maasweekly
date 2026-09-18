@@ -6,7 +6,7 @@
 
 ## 一、当前状态（一句话）
 
-Task 06 **M1–M7 完成；M8 进行中**（B1 Node22 ✓ / B2 systemd+用户+sudoers ✓ / B3 前发现并修复 nginx mixed-scope P0）。最终候选在分支 `task-06-m7-candidate`（PR #1 → main、未 merge）：`APPROVED_COMMIT`=`24a7e12d8624…` / `APPROVED_RID`=`rl_24a7e12d86_8b9fb7b09ead`（第四代）。**B3 首发已试一次：activate 候选冒烟失败（systemd WorkingDirectory/current P0），事务自动恢复零影响；已修复（wrapper）并重冻结。下一步=B2.1 幂等重跑覆盖 unit/wrapper → B3 重试**。四入口仍 pending；线上流量零变化（100% legacy 静态站）；仓库 `ops/deploy-mode` 永久 legacy（通道经 `MAAS_DEPLOY_MODE` 运行时注入）。
+Task 06 **M1–M7 完成；M8 进行中**（B1 Node22 ✓ / B2 systemd+用户+sudoers ✓ / B3 前发现并修复 nginx mixed-scope P0）。最终候选在分支 `task-06-m7-candidate`（PR #1 → main、未 merge）：`APPROVED_COMMIT`=`65fe566e50d9…` / `APPROVED_RID`=`rl_65fe566e50_8b9fb7b09ead`（第五代）。**B3 已试两次：第一次 CHDIR P0（wrapper 修复）；第二次双 P0（MDWE 删 V8 JIT 崩溃 + release 权限收敛闭环）。均事务自动恢复零影响。下一步=B2.3 幂等重跑覆盖 unit → B3 第三次**
 
 ## 二、关键约束（红线，重启后必须先读）
 
@@ -77,7 +77,7 @@ cd /Users/zhangchen/Work/maasweekly
 git branch --show-current        # task-06-m7-candidate
 git log --oneline -5             # 应见 M7 系列 + logo/rendered 修复
 git status                       # 应干净
-python3 -m unittest discover -s tests -p "test_release_activation.py"  # 34 项（1 skip）
+python3 -m unittest discover -s tests -p "test_release_activation.py"  # 40 项（1 skip）
 ./scripts/run-all-tests.sh       # 22/22
 ```
 
