@@ -400,8 +400,51 @@ except Exception:
   if [ "$keep" != "keep_release" ] && [ -d "$ROOT/releases/$rid" ]; then
     rm -rf "$ROOT/incoming/$rid"
     mv "$ROOT/releases/$rid" "$ROOT/incoming/$rid" || true
+    # mv 不改属主——退回后归还 maasdeploy（否则同 RID 重传被权限阻断；
+    # M8-B3 第二次首发 P0-2 的失败恢复闭环）
+    restore_incoming_deploy_ownership "$rid"
   fi
   log "activate $rid FAILED rc=${rc}（已恢复，可重试）"
+}
+
+# ---- release 运行时权限（M8-B3 第二次首发 P0-2）----
+# 上传时 release 属 maasdeploy；激活后服务用户 maasagent 必须可读/遍历，
+# 同时不扩大到其他本地用户（不用 a+rX）。目标：
+#   owner=root  group=maasagent
+#   目录 0750（运行用户可遍历）  普通文件 0640（只读）
+#   原本可执行文件 0750（保留 execute bit）
+# 越界防护：release 内任何符号链接必须指向 release 根内部（builder 已查，
+# 此处复核——chown/chmod -R 会跟随 symlink 改到外部目标）。
+# 运行属主/组（生产=root:maasagent——激活器由 root 经 sudo 运行，owner 恒 root；
+# 测试环境无 root/maasagent，经 MAAS_RELEASE_OWNER/MAAS_RELEASE_GROUP 注入当前用户）
+RUNTIME_OWNER="${MAAS_RELEASE_OWNER:-root}"
+RUNTIME_GROUP="${MAAS_RELEASE_GROUP:-maasagent}"
+
+prepare_release_runtime_permissions() {  # <release-dir>：失败返回非 0（→ activate 失败）
+  local dir="$1" link target
+  # 复核符号链接不逃逸（chown -R / find 跟随 symlink 的风险）
+  while IFS= read -r -d '' link; do
+    target="$(readlink "$link")"
+    case "$target" in
+      /*) die "release 含绝对路径符号链接（拒绝权限处理，退出 6）: $link → $target" 6 ;;
+    esac
+    if [ ! -e "$link" ]; then
+      die "release 含断链符号链接（退出 6）: $link" 6
+    fi
+  done < <(find "$dir" -type l -print0 2>/dev/null)
+  chown -R "${RUNTIME_OWNER}:${RUNTIME_GROUP}" "$dir" || return 6
+  find "$dir" -type d -exec chmod 0750 {} + || return 6
+  # 普通文件（无全部 x 位）→ 0640 只读（-perm -111 是 POSIX 前缀语义，
+  # GNU/BSD find 均支持；常规可执行文件即三 x 位俱全）
+  find "$dir" -type f ! -perm -111 -exec chmod 0640 {} + || return 6
+  # 原本可执行 → 0750 保留执行（.bin 链接、install.sh 等）
+  find "$dir" -type f -perm -111 -exec chmod 0750 {} + || return 6
+}
+
+restore_incoming_deploy_ownership() {  # <rid>：失败恢复路径专用——incoming 归还上传用户可重传
+  # 上传属主（生产=maasdeploy；测试经 MAAS_DEPLOY_OWNER 注入）
+  local owner="${MAAS_DEPLOY_OWNER:-maasdeploy}"
+  chown -R "$owner:$owner" "$ROOT/incoming/$1" 2>/dev/null || true
 }
 
 retention_cleanup() {
@@ -481,6 +524,12 @@ case "$cmd" in
     # 原子移动
     rm -rf "$ROOT/releases/$rid"
     mv "$in" "$ROOT/releases/$rid"
+    # 运行时权限收敛（M8-B3 P0-2：root:maasagent 0750/0640，服务用户可读、
+    # 其他本地用户无权限；失败 → activate 失败走统一恢复，release 退回 incoming）
+    if ! prepare_release_runtime_permissions "$ROOT/releases/$rid"; then
+      recover_failed_activation "$rid" 6
+      die "release 运行时权限收敛失败（已恢复；退出 6）" 6
+    fi
     # 蓝绿切换事务（失败 → 统一恢复 + 退回 incoming，同 RID 可重试）
     switch_rc=0
     switch_service_tx "$rid" || switch_rc=$?
