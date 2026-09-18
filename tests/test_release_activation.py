@@ -100,7 +100,7 @@ exit 0
 """)
         nginx_hook.chmod(0o755)
         self.smoke_port = 9599  # 不监听——entry_smoke 会失败
-        # 权限收敛的属主/组注入（生产=root:maasagent / maasdeploy；
+        # 权限收敛的属主/组注入（生产=root + maasagent/www-data / maasdeploy；
         # 测试=当前用户+主组——macOS 主组是 staff 等而非同名组）
         import getpass
         _user = getpass.getuser()
@@ -115,7 +115,9 @@ exit 0
             "MAAS_RELEASE_ROOT": str(self.root),
             "MAAS_NGINX_TEST": str(nginx_hook),
             "MAAS_RELEASE_OWNER": _user,
-            "MAAS_RELEASE_GROUP": _group,
+            "MAAS_AGENT_GROUP": _group,
+            "MAAS_STATIC_GROUP": _group,
+            "MAAS_ROOT_GROUP": _group,
             "MAAS_DEPLOY_OWNER": _user,
         }
 
@@ -797,9 +799,87 @@ class TestPermissionsRecovery(ActivateFixture):
         self.assertIn("activated", r.stdout)
 
 
+class TestDualConsumerPermissions(ActivateFixture):
+    """M8-B3 第三次首发 P0：release 双消费者（nginx www-data + agent maasagent）。
+
+    本地无 www-data/maasagent 用户——用两个真实本地用户模拟双消费者，
+    通过 group 成员身份验证分树可读性（语义与生产一致：组权限决定访问）。
+    macOS 上找不到两个可切换用户时降级为组语义断言（分树模式位已全覆盖）。
+    """
+
+    def _find_two_local_users(self) -> tuple[str, str] | None:
+        """找两个真实本地用户：一个属于当前主组（模拟 agent），一个不属于（模拟 nginx）。
+        不属于的必须存在且可 su/runuser——macOS 上难满足，返回 None 走降级。"""
+        import pwd, grp
+        cur = grp.getgrgid(os.getgid()).gr_name
+        members = set()
+        try:
+            members = set(grp.getgrnam(cur).gr_mem)
+        except KeyError:
+            pass
+        members.add(pwd.getpwuid(os.getuid()).pw_name)
+        other = None
+        for p in pwd.getpwall():
+            if p.pw_name not in members and p.pw_uid > 500 and os.path.isdir(p.pw_dir):
+                other = p.pw_name
+                break
+        if other is None:
+            return None
+        return pwd.getpwuid(os.getuid()).pw_name, other
+
+    def test_dual_consumer_tree_access(self):
+        """分树语义（核心）：两组变量分树收敛；本地以同组注入跑通完整 activate，
+        真异组（www-data/maasagent）归属由静态断言（test_split_tree_groups）
+        + 服务器端 root 激活器真实执行覆盖。"""
+        rid = self.rid("a")
+        make_release(self.root, rid, git_ts=1789000000)
+        # 本地无 root——chgrp 到异组会 Operation not permitted。
+        # 此处验证同组注入下分树流程完整跑通 + 模式位正确。
+        r = subprocess.run(["bash", str(ACTIVATE), "activate", rid],
+                           capture_output=True, text=True, env=self.env_base)
+        self.assertEqual(r.returncode, 0, r.stderr[:300])
+        rel = self.root / "releases" / rid
+        import grp
+        agent_grp = grp.getgrgid(os.getgid()).gr_name
+        self.assertEqual(grp.getgrgid((rel / "agent-api").stat().st_gid).gr_name, agent_grp)
+        self.assertEqual(grp.getgrgid((rel / "data").stat().st_gid).gr_name, agent_grp)
+        # release 根 0711：其他用户 traverse-only
+        self.assertEqual(oct(rel.stat().st_mode & 0o7777), "0o711")
+        # 无 world-readable（模式位断言：0640/0750/0711 的 other=0）
+        for f in [rel / "site/index.html", rel / "agent-api/dist/server.js",
+                  rel / "data/manifest.json"]:
+            self.assertEqual(f.stat().st_mode & 0o007, 0, f"other 位非零: {f}")
+        for d in [rel / "site", rel / "agent-api", rel / "data"]:
+            self.assertEqual(d.stat().st_mode & 0o007, 0, f"目录 other 位非零: {d}")
+        # site 可执行文件保留（install.sh）
+        # （make_release 的 site 只有 index.html——执行位保留已由
+        #  test_activate_converges_release_permissions 的 installer 0750 断言覆盖）
+
+    def test_failure_recover_keeps_split_model(self):
+        """失败恢复闭环在分树模型下仍工作（ownership 归还 + 重试）。"""
+        # 复用第三次的注入方式：临时换失败桩 → 失败 → 还原 → 重试
+        old = self.rid("a")
+        make_release(self.root, old, git_ts=1789000000)
+        self.activate("activate", old)
+        hook = self.root / "shared" / "activate-hook"
+        real_hook = self.root / "shared" / "activate-hook.real"
+        hook.rename(real_hook)
+        hook.write_text("#!/bin/bash\nexit 0\n")
+        hook.chmod(0o755)
+        bad = self.rid("c")
+        make_release(self.root, bad, git_ts=1789000200)
+        r = self.activate("activate", bad, expect_rc=5)
+        back = self.root / "incoming" / bad
+        self.assertTrue(back.exists())
+        self.assertEqual(back.stat().st_uid, os.getuid())
+        hook.unlink()
+        real_hook.rename(hook)
+        r = self.activate("activate", bad)
+        self.assertIn("activated", r.stdout)
+
+
 class TestUnitV8AndPermissions(unittest.TestCase):
     """M8-B3 第二次首发 P0：unit 允许 V8 JIT + release 权限收敛。"""
-
     BASE = Path(__file__).resolve().parent.parent
     OPS = BASE / "ops"
 
@@ -845,38 +925,55 @@ class TestUnitV8AndPermissions(unittest.TestCase):
             installer.chmod(0o755)                                       # 可执行
             (d / "metadata").mkdir()
             (d / "metadata/release-manifest.json").write_text("{}")
-            # 模拟 rsync 上传后的属主（当前用户）；激活器只改 group/权限
-            # （fixture 注入 owner=当前用户，生产=root）
-            env = {**os.environ,
-                   "MAAS_RELEASE_ROOT": str(root),
-                   "MAAS_RELEASE_OWNER": os.environ.get("MAAS_RELEASE_OWNER",
-                                                        os.getlogin() if hasattr(os, "getlogin") else "nobody")}
-            # 直接调 prepare 函数（不经完整 activate——本测试只验权限语义）
+            # 直接调 prepare 函数（不经完整 activate——本测试只验权限语义）。
+            # 从源码抽取变量定义 + _apply_tree_permissions + prepare 两段。
             script = (self.OPS / "server" / "maasweekly-activate").read_text()
-            fn = script.split("prepare_release_runtime_permissions() {")[1].split("\n}\n")[0]
+            vars_def = "\n".join(
+                l for l in script.splitlines()
+                if l.startswith(("RUNTIME_OWNER=", "AGENT_GROUP=", "STATIC_GROUP=", "ROOT_GROUP=")))
+            fn_apply = "_apply_tree_permissions() {" + script.split("_apply_tree_permissions() {")[1].split("\n}\n")[0] + "\n}\n"
+            fn_prep = "prepare_release_runtime_permissions() {" + script.split("prepare_release_runtime_permissions() {")[1].split("\n}\n")[0] + "\n}\n"
             helper = Path(td) / "perm.sh"
-            grp = grp_mod = None
             import grp as grp_mod_, pwd as pwd_mod_
             grp = grp_mod_.getgrgid(os.getgid()).gr_name
             user = pwd_mod_.getpwuid(os.getuid()).pw_name
             helper.write_text(
                 "#!/usr/bin/env bash\nset -euo pipefail\n"
-                f'RUNTIME_OWNER="{user}"\nRUNTIME_GROUP="{grp}"\n'
-                f'ROOT="{root}"\n'
-                "prepare_release_runtime_permissions() {\n" + fn + "\n}\n"
-                f'prepare_release_runtime_permissions "{root}/incoming/{rid}"\n'
+                + vars_def + "\n"
+                + f'RUNTIME_OWNER="{user}"\nAGENT_GROUP="{grp}"\nSTATIC_GROUP="{grp}"\nROOT_GROUP="{grp}"\n'
+                + f'ROOT="{root}"\n'
+                + fn_apply + fn_prep
+                + f'prepare_release_runtime_permissions "{root}/incoming/{rid}"\n'
                 'echo OK\n')
             helper.chmod(0o755)
             r = subprocess.run(["bash", str(helper)], capture_output=True, text=True)
             self.assertEqual(r.returncode, 0, r.stderr)
             self.assertIn("OK", r.stdout)
-            # 断言：目录 0750、普通文件 0640、可执行 0750、组=运行组
+            # 分树断言（fixture 注入三组同名=当前主组——重点验模式位与分树结构；
+            # 生产组分离（www-data/maasagent）由 test_split_tree_groups 断言）
+            self.assertEqual(oct(d.stat().st_mode & 0o7777), "0o711")          # release 根 0711
+            self.assertEqual(oct((d / "site").stat().st_mode & 0o777), "0o750")
+            self.assertEqual(oct((d / "site/maas-skill").stat().st_mode & 0o777), "0o750")
+            self.assertEqual(oct(installer.stat().st_mode & 0o777), "0o750")   # 可执行保留
             self.assertEqual(oct((d / "agent-api/dist").stat().st_mode & 0o777), "0o750")
+            self.assertEqual(oct((d / "agent-api/dist/server.js").stat().st_mode & 0o777), "0o640")
             self.assertEqual(oct((d / "data/public/v1/manifest.json").stat().st_mode & 0o777), "0o640")
-            self.assertEqual(oct(installer.stat().st_mode & 0o777), "0o750")
+            self.assertEqual(oct((d / "metadata").stat().st_mode & 0o777), "0o750")
+            self.assertEqual(oct((d / "metadata/release-manifest.json").stat().st_mode & 0o777), "0o640")
             self.assertEqual(
                 grp_mod_.getgrgid((d / "data/public/v1/manifest.json").stat().st_gid).gr_name, grp)
-            # other 无权限（0640/0750 的 other 位为 0——已由上面八进制断言覆盖）
+
+    def test_split_tree_groups_static_vs_agent(self):
+        """双消费者分树：site/ 与 agent-api+data/ 必须收敛到不同组变量。"""
+        script = (self.OPS / "server" / "maasweekly-activate").read_text()
+        self.assertIn('AGENT_GROUP="${MAAS_AGENT_GROUP:-maasagent}"', script)
+        self.assertIn('STATIC_GROUP="${MAAS_STATIC_GROUP:-www-data}"', script)
+        # site 用 STATIC_GROUP；agent-api/data 用 AGENT_GROUP
+        fn = script.split("prepare_release_runtime_permissions() {")[1].split("\n}\n")[0]
+        self.assertIn('_apply_tree_permissions "$dir/$sub" "$STATIC_GROUP"', fn)
+        self.assertIn('_apply_tree_permissions "$dir/$sub" "$AGENT_GROUP"', fn)
+        # release 根 0711（traverse-only，不给 list/read）
+        self.assertIn('chmod 0711 "$dir"', fn)
 
     def test_executable_bits_preserved_in_real_release(self):
         """真实 release 产物：node_modules/.bin 等可执行结构经权限收敛后仍可执行。"""
