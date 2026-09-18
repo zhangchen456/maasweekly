@@ -90,7 +90,7 @@ info "✓ 激活完成: $RID"
 
 # ---- 公网冒烟（必须看到激活的数据版本，防新旧混版）----
 DS_VER="$(python3 -c "import json; print(json.load(open('$MANIFEST'))['datasetVersion'])")"
-info "公网冒烟: $MAAS_PUBLIC_ORIGIN/api/v1/status（expect datasetVersion=$DS_VER）"
+info "公网冒烟: ${MAAS_PUBLIC_ORIGIN}/api/v1/status（expect datasetVersion: ${DS_VER}）"
 
 # 缓存穿透+重试（CDN/浏览器缓存容忍窗口）
 ok=false
@@ -107,4 +107,4 @@ done
 [ "$ok" = true ] \
   || die "公网冒烟失败：status 的 datasetVersion 未见新值（候选已切但外部不可视）"
 
-echo "✓ release 通道发布完成: $RID（datasetVersion=$DS_VER）"
+echo "✓ release 通道发布完成: ${RID}（datasetVersion: ${DS_VER}）"

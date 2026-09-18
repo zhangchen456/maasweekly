@@ -24,7 +24,7 @@ validate_rid "$RID"
 [ -n "$REASON" ] || die "用法: rollback-release.sh <rid> --reason \"<原因>\""
 
 # 服务器 current 应为要回滚的目标的前一个版本（不强制，便于运维观察）
-info "回滚 $RID（原因: $REASON）"
+info "回滚 ${RID}（原因: ${REASON}）"
 remote_rollback "$RID" "$REASON"
 echo "✓ 回滚已下发：$RID"
 

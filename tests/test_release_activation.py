@@ -426,6 +426,18 @@ class TestStatusAction(ActivateFixture):
         self.assertIn("current", r.stdout)
         self.assertIn("slots", r.stdout)
 
+    def test_status_metadata_readonly(self):
+        """M7：status 返回只读 metadata（datasetVersion/dataThrough/gitCommit）——
+        verify-release.sh 经此取值，不再开放任意 python3 -c。"""
+        rid = self.rid("a")
+        ds = "ds_" + ("ab12" * 16)
+        make_release(self.root, rid, git_ts=1789000000, ds=ds)
+        self.activate("activate", rid)
+        r = self.activate("status", expect_rc=0)
+        self.assertIn(f"datasetVersion: {ds}", r.stdout)
+        self.assertIn("dataThrough:    2026-09-16", r.stdout)
+        self.assertIn("gitCommit:", r.stdout)
+
 
 class TestSkipTestsMarked(ActivateFixture):
     """复验 P1c：testsSkipped=true 的 release 拒绝激活。"""
