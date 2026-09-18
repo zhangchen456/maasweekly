@@ -407,21 +407,35 @@ except Exception:
   log "activate $rid FAILED rc=${rc}（已恢复，可重试）"
 }
 
-# ---- release 运行时权限（M8-B3 第二次首发 P0-2）----
-# 上传时 release 属 maasdeploy；激活后服务用户 maasagent 必须可读/遍历，
-# 同时不扩大到其他本地用户（不用 a+rX）。目标：
-#   owner=root  group=maasagent
-#   目录 0750（运行用户可遍历）  普通文件 0640（只读）
-#   原本可执行文件 0750（保留 execute bit）
-# 越界防护：release 内任何符号链接必须指向 release 根内部（builder 已查，
-# 此处复核——chown/chmod -R 会跟随 symlink 改到外部目标）。
-# 运行属主/组（生产=root:maasagent——激活器由 root 经 sudo 运行，owner 恒 root；
-# 测试环境无 root/maasagent，经 MAAS_RELEASE_OWNER/MAAS_RELEASE_GROUP 注入当前用户）
+# ---- release 运行时权限：双消费者分树模型（M8-B3 第三次首发 P0）----
+# release 有两个运行时消费者（第三次首发暴露——前次只收敛到 maasagent，
+# nginx worker(www-data) 无法遍历导致 RSS/Skill/静态 404）：
+#   1. agent-api（Node 进程，用户 maasagent）——读 agent-api/ 与 data/
+#   2. nginx 静态服务（worker 用户 www-data）——读 site/（feed、Skill、静态页）
+# 目标权限（无 ACL、不改 nginx 全局用户、不用 world-readable）：
+#   <rid>/            root:root    0711  （其他用户仅 traverse——不允许 list/read）
+#   <rid>/site/       root:www-data       dirs 0750 / files 0640
+#   <rid>/agent-api/  root:maasagent      dirs 0750 / files 0640 / 原可执行 0750
+#   <rid>/data/       root:maasagent      dirs 0750 / files 0640
+#   <rid>/metadata/   root:root           激活器（root）自用，不给运行用户
+# 消费者识别不猜测：site/ 的读者是 nginx worker；agent-api/ 与 data/ 的读者
+# 是 agent 进程。组名可注入（测试环境：MAAS_AGENT_GROUP/MAAS_STATIC_GROUP）。
 RUNTIME_OWNER="${MAAS_RELEASE_OWNER:-root}"
-RUNTIME_GROUP="${MAAS_RELEASE_GROUP:-maasagent}"
+AGENT_GROUP="${MAAS_AGENT_GROUP:-maasagent}"
+STATIC_GROUP="${MAAS_STATIC_GROUP:-www-data}"
+ROOT_GROUP="${MAAS_ROOT_GROUP:-root}"
+
+_apply_tree_permissions() {  # <dir> <group>：树内统一收敛（0750/0640/原可执行 0750）
+  local dir="$1" grp="$2"
+  chown -R "${RUNTIME_OWNER}:${grp}" "$dir" || return 6
+  find "$dir" -type d -exec chmod 0750 {} + || return 6
+  # -perm -111 是 POSIX 前缀语义（GNU/BSD 通用）
+  find "$dir" -type f ! -perm -111 -exec chmod 0640 {} + || return 6
+  find "$dir" -type f -perm -111 -exec chmod 0750 {} + || return 6
+}
 
 prepare_release_runtime_permissions() {  # <release-dir>：失败返回非 0（→ activate 失败）
-  local dir="$1" link target
+  local dir="$1" link target sub
   # 复核符号链接不逃逸（chown -R / find 跟随 symlink 的风险）
   while IFS= read -r -d '' link; do
     target="$(readlink "$link")"
@@ -432,13 +446,26 @@ prepare_release_runtime_permissions() {  # <release-dir>：失败返回非 0（�
       die "release 含断链符号链接（退出 6）: $link" 6
     fi
   done < <(find "$dir" -type l -print0 2>/dev/null)
-  chown -R "${RUNTIME_OWNER}:${RUNTIME_GROUP}" "$dir" || return 6
-  find "$dir" -type d -exec chmod 0750 {} + || return 6
-  # 普通文件（无全部 x 位）→ 0640 只读（-perm -111 是 POSIX 前缀语义，
-  # GNU/BSD find 均支持；常规可执行文件即三 x 位俱全）
-  find "$dir" -type f ! -perm -111 -exec chmod 0640 {} + || return 6
-  # 原本可执行 → 0750 保留执行（.bin 链接、install.sh 等）
-  find "$dir" -type f -perm -111 -exec chmod 0750 {} + || return 6
+  # release 根：root:root 0711（其他用户只 traverse——子树权限才决定可读性）
+  chown "${RUNTIME_OWNER}:${ROOT_GROUP}" "$dir" || return 6
+  chmod 0711 "$dir" || return 6
+  # 分树收敛：静态树 → nginx 组；运行树 → agent 组
+  for sub in site; do
+    [ -d "$dir/$sub" ] || continue
+    _apply_tree_permissions "$dir/$sub" "$STATIC_GROUP" || return 6
+  done
+  for sub in agent-api data; do
+    [ -d "$dir/$sub" ] || continue
+    _apply_tree_permissions "$dir/$sub" "$AGENT_GROUP" || return 6
+  done
+  # 其余顶层目录（metadata 等）：root:root——激活器自用，不给运行用户
+  for sub in "$dir"/*; do
+    [ -d "$sub" ] || continue
+    case "$(basename "$sub")" in site|agent-api|data) continue ;; esac
+    chown -R "${RUNTIME_OWNER}:${ROOT_GROUP}" "$sub" || return 6
+    find "$sub" -type d -exec chmod 0750 {} + || return 6
+    find "$sub" -type f -exec chmod 0640 {} + || return 6
+  done
 }
 
 restore_incoming_deploy_ownership() {  # <rid>：失败恢复路径专用——incoming 归还上传用户可重传
