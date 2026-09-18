@@ -6,7 +6,7 @@
 
 ## 一、当前状态（一句话）
 
-Task 06 **M1–M7 完成；M8 进行中**（B1 Node22 ✓ / B2 systemd+用户+sudoers ✓ / B3 前发现并修复 nginx mixed-scope P0）。最终候选在分支 `task-06-m7-candidate`（PR #1 → main、未 merge）：`APPROVED_COMMIT`=`6c45634fe3a2…` / `APPROVED_RID`=`rl_6c45634fe3_8b9fb7b09ead`（第三代，前两代作废记录见 result §4b）。**候选已冻结，下一步=B2.1 幂等重跑 install-production 补 nginx 接线 → B3 首发**。四入口仍 pending；线上流量零变化（100% legacy 静态站）；仓库 `ops/deploy-mode` 永久 legacy（通道经 `MAAS_DEPLOY_MODE` 运行时注入）。
+Task 06 **M1–M7 完成；M8 进行中**（B1 Node22 ✓ / B2 systemd+用户+sudoers ✓ / B3 前发现并修复 nginx mixed-scope P0）。最终候选在分支 `task-06-m7-candidate`（PR #1 → main、未 merge）：`APPROVED_COMMIT`=`24a7e12d8624…` / `APPROVED_RID`=`rl_24a7e12d86_8b9fb7b09ead`（第四代）。**B3 首发已试一次：activate 候选冒烟失败（systemd WorkingDirectory/current P0），事务自动恢复零影响；已修复（wrapper）并重冻结。下一步=B2.1 幂等重跑覆盖 unit/wrapper → B3 重试**。四入口仍 pending；线上流量零变化（100% legacy 静态站）；仓库 `ops/deploy-mode` 永久 legacy（通道经 `MAAS_DEPLOY_MODE` 运行时注入）。
 
 ## 二、关键约束（红线，重启后必须先读）
 
@@ -56,7 +56,7 @@ Task 06 **M1–M7 完成；M8 进行中**（B1 Node22 ✓ / B2 systemd+用户+su
 
 ## 四、验证链（M7 完成时）
 
-- 全量回归 22/22（含 test_deploy_mode 7 项；激活套件 18→27 项）
+- 全量回归 22/22（激活套件 27→34 项：M8-B3 P0 后加候选 release 防混版 7 项）
 - 激活测试 18 项全绿（1 skip：macOS flock）
 - access-pages 含 M7 合同断言（provider/--dir 形态/无虚构参数/无写死模型名/路径）全绿
 - platform-logos 修复后全绿（Hello Minds/InclusionAI 注册）
@@ -64,7 +64,7 @@ Task 06 **M1–M7 完成；M8 进行中**（B1 Node22 ✓ / B2 systemd+用户+su
 
 ## 五、下一步（顺序固定）
 
-1. **B2.1（下一步）**：服务器幂等重跑 `install-production.sh`（先 --dry-run）——补 nginx 接线（conf.d/snippet 稳定配置 + 三 include 首发兼容态 + https.conf root→include 替换，nginx -t 失败自动恢复备份）→ 确认旧首页零变化
+1. **B2.1 重跑（下一步）**：从新 APPROVED_COMMIT 重制 staging → 幂等重跑 `install-production.sh`（覆盖旧 unit + 新增 maas-agent-run wrapper，daemon-reload；nginx 接线已就位不变）→ 确认 blue/green inactive、旧首页零变化
 2. **B3 首发**：本地 `git checkout <APPROVED_COMMIT>`（detached HEAD 干净区）→ `MAAS_DEPLOY_MODE=release ops/deploy-release.sh --commit <APPROVED_COMMIT>` → `verify-release.sh --online --expect-release <APPROVED_RID>` 四入口验收；任一步失败 rollback（通道回退=下次不注入环境变量，无仓库状态要恢复）
 3. **M9**：真实客户端（Claude Code + Codex 阻断则保持）+ RSS 真实阅读器
 4. **M10**：四入口状态翻转（public-access.ts pending→available）+ changelog 真实日期 + 最终 release
@@ -77,7 +77,7 @@ cd /Users/zhangchen/Work/maasweekly
 git branch --show-current        # task-06-m7-candidate
 git log --oneline -5             # 应见 M7 系列 + logo/rendered 修复
 git status                       # 应干净
-python3 -m unittest discover -s tests -p "test_release_activation.py"  # 27 项（1 skip）
+python3 -m unittest discover -s tests -p "test_release_activation.py"  # 34 项（1 skip）
 ./scripts/run-all-tests.sh       # 22/22
 ```
 
