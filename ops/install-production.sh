@@ -48,6 +48,7 @@ ENV_EXAMPLE_SRC="$OPS_DIR/maas-agent.env.example"
 SHELL_SRC="$OPS_DIR/server/maasweekly-deploy-shell"
 ACTIVATE_SRC="$OPS_DIR/server/maasweekly-activate"
 VERIFY_SRC="$OPS_DIR/server/release_manifest_verify.py"
+RUN_SRC="$OPS_DIR/server/maas-agent-run"
 NGINX_HTTP_SRC="$OPS_DIR/nginx/maasweekly-agent-http.conf"
 NGINX_SERVER_SRC="$OPS_DIR/nginx/maasweekly-agent-server.conf"
 NODE_BIN=/usr/bin/node
@@ -83,6 +84,8 @@ run "安装 maasweekly-activate → /usr/local/sbin（root only）" \
   "install -m 0750 -o root -g root '$ACTIVATE_SRC' /usr/local/sbin/maasweekly-activate"
 run "安装 release_manifest_verify.py → /usr/local/sbin" \
   "install -m 0750 -o root -g root '$VERIFY_SRC' /usr/local/sbin/release_manifest_verify.py"
+run "安装 maas-agent-run wrapper → /usr/local/bin（候选槽位运行候选 release，M8-B3 P0）" \
+  "install -m 0755 '$RUN_SRC' /usr/local/bin/maas-agent-run"
 run "sudoers：deploy 只能 NOPASSWD 调 activate（单行，不开放其他）" \
   "echo '$DEPLOY_USER ALL=(root) NOPASSWD: /usr/local/sbin/maasweekly-activate' > /etc/sudoers.d/maasweekly-activate && chmod 0440 /etc/sudoers.d/maasweekly-activate && visudo -cf /etc/sudoers.d/maasweekly-activate"
 
@@ -145,6 +148,7 @@ cat <<EOF
   /usr/local/bin/maasweekly-deploy-shell           (0755, deploy 用户 shell)
   /usr/local/sbin/maasweekly-activate              (0750, root)
   /usr/local/sbin/release_manifest_verify.py       (0750, root)
+  /usr/local/bin/maas-agent-run                    (0755, 槽位启动 wrapper：候选槽位运行候选 release)
   /etc/sudoers.d/maasweekly-activate               (0440, 单行 NOPASSWD)
   /srv/maasweekly/{incoming,releases,shared,locks} (0755 / deploy 可写 incoming)
   /srv/maasweekly/shared/agent.env                 (0740 root:maasagent)

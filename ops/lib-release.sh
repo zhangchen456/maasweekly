@@ -52,7 +52,7 @@ validate_rid() {
 # ---- SSH 封装：受控 known_hosts，严格 host key 校验 ----
 ssh_base() {
   [ -f "$MAAS_KNOWN_HOSTS" ] \
-    || die "受控 host key 缺失: $MAAS_KNOWN_HOSTS（不得用 ssh-keyscan 运行时抓取）"
+    || die "受控 host key 缺失: ${MAAS_KNOWN_HOSTS}（不得用 ssh-keyscan 运行时抓取）"
   echo "ssh -i $MAAS_SSH_KEY" \
        "-o UserKnownHostsFile=$MAAS_KNOWN_HOSTS" \
        "-o StrictHostKeyChecking=yes" \

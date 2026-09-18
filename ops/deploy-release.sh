@@ -90,7 +90,7 @@ info "✓ 上传完成: $RID → incoming"
 exit_code=0
 remote_activate "$RID" || exit_code=$?
 if [ "$exit_code" -ne 0 ]; then
-  echo "✗ 激活失败 exit=$exit_code（当前站点无变化；incoming 保留可诊断）" >&2
+  echo "✗ 激活失败 exit=${exit_code}（当前站点无变化；incoming 保留可诊断）" >&2
   exit "$exit_code"
 fi
 info "✓ 激活完成: $RID"
