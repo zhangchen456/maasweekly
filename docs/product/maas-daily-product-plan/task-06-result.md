@@ -153,14 +153,37 @@
 
 ## 4b. M7 授权包（申请生产切换授权）
 
-> **最终候选（M8-B3 P0 修复后第三次构建；前两代已作废）——已冻结**
+> **最终候选（M8-B3 首发 P0 修复后第四次构建；前三代已作废）——已冻结**
 >
-> - `APPROVED_COMMIT` = `6c45634fe3a2262d393c6491e25323889ca443fa`
-> - `APPROVED_RID` = `rl_6c45634fe3_8b9fb7b09ead`
-> - 重新构建验证（2026-09-18）：run-all-tests **22/22**（激活套件 18→**27** 项）→ build-release 完整执行 → `verify-release.sh --offline` 通过 → release 内 server 启动冒烟（REST status 200 / MCP initialize serverInfo maas-daily 1.0.0）
+> - `APPROVED_COMMIT` = `473e6786b…`（完整 SHA 构建后填入）
+> - `APPROVED_RID` = `rl_473e6786b_…`（构建后填入）
+> - 重新构建验证（2026-09-18）：run-all-tests **22/22**（激活套件 27→**34** 项）→ build-release 完整执行 → `verify-release.sh --offline` 通过 → release 内 server 启动冒烟（REST status 200 / MCP initialize）
 > - 冻结纪律：本节填入后不再追加任何影响 release 的代码变化。M8 构建产生的 RID 必须等于 APPROVED_RID（不一致即停止并排查）。
 >
-> 作废记录：`2152ab1266…`/`rl_2152ab1266…`（nginx mixed-scope P0 修复作废）← `aefc7af2d`/`rl_aefc7af2d4`（文档提交前进作废）
+> 作废记录：`6c45634f…`/`rl_6c45634f…`（首发暴露 systemd WorkingDirectory P0 作废）← `2152ab1266…`（nginx mixed-scope P0）← `aefc7af2d`（文档提交前进）
+
+### M8-B3 首发 P0：systemd WorkingDirectory/current（2026-09-18 首次真实 activate 暴露）
+
+**首发实录**：build 22/22 ✓ → manifest RID 与 APPROVED 完全一致 ✓ → rsync incoming ✓ → activate 在**候选槽位冒烟阶段失败（exit 5）**。journalctl 根因：
+
+```
+maas-agent@blue.service: Changing to the requested working directory failed: No such file or directory
+maas-agent@blue.service: Failed at step CHDIR spawning /usr/bin/node: No such file or directory
+Main process exited, code=exited, status=200/CHDIR
+```
+
+**结构性缺陷**（unit 硬编码 `WorkingDirectory=/srv/maasweekly/current/agent-api`）：
+1. 首发时 current 尚不存在（激活时序：起候选→冒烟→…→建指针）→ CHDIR 必然失败
+2. 后续发布会碰巧能启动，但候选槽位实际运行**旧 current 的 agent-api**——隐性混版
+
+**事务恢复实录**（设计按预期工作）：current/previous 未创建、三 include 完全恢复兼容态、blue/green inactive、候选退回 incoming（同 RID 可重试）、nginx -t 通过、线上零影响（legacy 站不受任何变化）。
+
+**修复（不变量：候选槽位必须运行候选 release，绝不依赖 current）**：
+- 新增 `ops/server/maas-agent-run` wrapper：`MAAS_RELEASE_DIR` 必填保护 + `exec /usr/bin/node ${MAAS_RELEASE_DIR}/agent-api/dist/server.js`（systemd ExecStart 不做 shell 变量展开——wrapper 语义明确可测；本地已用真实 release 产物验证启动）
+- unit 删除 WorkingDirectory，`ExecStart=/usr/local/bin/maas-agent-run`（slot env 驱动；`PUBLIC_DATA_ROOT` 同机制）
+- install-production 安装 wrapper 0755；**B2.1 幂等重跑即覆盖旧 unit/wrapper**（无需手工 patch 服务器）
+- 激活测试 27→**34** 项：候选无 current 启动（首发边界）/ **防混版核心**（current=A、slot env=B → status 必须返回 B 的 datasetVersion）/ wrapper 缺 env 拒启 / unit 静态合同（无 current 引用、ExecStart=wrapper、无 WorkingDirectory）/ installer 安装 wrapper
+- 顺手修 bash 3.2 全角标点前裸变量 3 处（deploy-release:93、lib-release:55；全仓扫描清零）
 
 ### M8-B3 前 P0：nginx mixed-scope include（2026-09-18 B2 后只读检查发现）
 
