@@ -200,6 +200,8 @@ class TestT03Preflight(unittest.TestCase):
                         "--author=test <t@t>", "--date=2026-09-17T00:00:00"],
                        check=True, env={"GIT_AUTHOR_NAME": "t",
                                         "GIT_COMMITTER_NAME": "t",
+                                        "GIT_AUTHOR_EMAIL": "t@t",
+                                        "GIT_COMMITTER_EMAIL": "t@t",
                                         "PATH": "/usr/bin:/bin:/usr/local/bin"})
         return d
 

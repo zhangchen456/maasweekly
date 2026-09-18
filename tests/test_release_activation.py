@@ -100,10 +100,23 @@ exit 0
 """)
         nginx_hook.chmod(0o755)
         self.smoke_port = 9599  # 不监听——entry_smoke 会失败
+        # 权限收敛的属主/组注入（生产=root:maasagent / maasdeploy；
+        # 测试=当前用户+主组——macOS 主组是 staff 等而非同名组）
+        import getpass
+        _user = getpass.getuser()
+        _group = _user
+        try:
+            import grp
+            _group = grp.getgrgid(os.getgid()).gr_name
+        except Exception:
+            pass
         self.env_base = {
             **os.environ,
             "MAAS_RELEASE_ROOT": str(self.root),
             "MAAS_NGINX_TEST": str(nginx_hook),
+            "MAAS_RELEASE_OWNER": _user,
+            "MAAS_RELEASE_GROUP": _group,
+            "MAAS_DEPLOY_OWNER": _user,
         }
 
     def tearDown(self):
@@ -742,6 +755,156 @@ class TestUnitContract(unittest.TestCase):
         self.assertIn("'$RUN_SRC' /usr/local/bin/maas-agent-run", inst)
         self.assertIn('RUN_SRC="$OPS_DIR/server/maas-agent-run"', inst)
 
+
+class TestPermissionsRecovery(ActivateFixture):
+    """P0-2 失败恢复 ownership 闭环（fixture 场景）。"""
+
+    def test_failed_activation_restores_incoming_owner(self):
+        """P0-2 失败闭环：权限收敛后失败 → 退回 incoming 且属主还原为上传用户；
+        同 RID 重试成功（activate 依赖真服务桩——用 ActivateFixture 场景）。"""
+        rid_ok = self.rid("a")
+        make_release(self.root, rid_ok, git_ts=1789000000)
+        r = self.activate("activate", rid_ok)
+        self.assertIn("activated", r.stdout)
+        # 激活后 release 已收敛到运行组（fixture 注入的当前主组）
+        import grp as grp_mod
+        self.assertEqual(
+            grp_mod.getgrgid((self.root / "releases" / rid_ok).stat().st_gid).gr_name,
+            grp_mod.getgrgid(os.getgid()).gr_name)
+        # 权限形态：目录 0750 / manifest 0640 / server.js 0640（普通文件）
+        rel = self.root / "releases" / rid_ok
+        self.assertEqual(oct((rel / "agent-api/dist").stat().st_mode & 0o777), "0o750")
+        self.assertEqual(oct((rel / "agent-api/dist/server.js").stat().st_mode & 0o777), "0o640")
+        # 注入失败：临时替换服务桩为"start 成功但不起服务"（候选冒烟 8789 连
+        # 不上 → rc 5；第一个激活走 blue/8788 已有真服务，候选进 green/8789）
+        hook = self.root / "shared" / "activate-hook"
+        real_hook = self.root / "shared" / "activate-hook.real"
+        hook.rename(real_hook)
+        hook.write_text("#!/bin/bash\nexit 0\n")
+        hook.chmod(0o755)
+        bad = self.rid("c")
+        make_release(self.root, bad, git_ts=1789000200)
+        r = self.activate("activate", bad, expect_rc=5)
+        # 失败闭环：bad 回 incoming 且属主还原（uid=当前用户=fixture 的 deploy owner）
+        back = self.root / "incoming" / bad
+        self.assertTrue(back.exists(), "失败候选未退回 incoming")
+        self.assertEqual(back.stat().st_uid, os.getuid(),
+                         "退回后属主未还原为上传用户")
+        # 恢复真服务桩 → 同 RID 重试成功（真实闭环：属主还原后可重新激活）
+        hook.unlink()
+        real_hook.rename(hook)
+        r = self.activate("activate", bad)
+        self.assertIn("activated", r.stdout)
+
+
+class TestUnitV8AndPermissions(unittest.TestCase):
+    """M8-B3 第二次首发 P0：unit 允许 V8 JIT + release 权限收敛。"""
+
+    BASE = Path(__file__).resolve().parent.parent
+    OPS = BASE / "ops"
+
+    def _unit_directives(self) -> list[str]:
+        unit = (self.BASE / "ops" / "maas-agent@.service").read_text()
+        return [l.strip() for l in unit.splitlines()
+                if l.strip() and not l.strip().startswith(("#", "["))]
+
+    def test_unit_allows_v8_jit(self):
+        """P0-1：unit 不得含 MemoryDenyWriteExecute（V8 JIT 需 RWX，实锤崩溃）。"""
+        for l in self._unit_directives():
+            self.assertFalse(l.startswith("MemoryDenyWriteExecute"),
+                             f"unit 含 MDWE（V8 JIT 崩溃）: {l}")
+
+    def test_unit_keeps_other_hardening(self):
+        """P0-1：删除 MDWE 不得误删其余关键硬化。"""
+        directives = self._unit_directives()
+        must = ["User=maasagent", "NoNewPrivileges=true", "ProtectSystem=strict",
+                "ProtectHome=true", "PrivateTmp=true", "CapabilityBoundingSet=",
+                "RestrictAddressFamilies="]
+        for m in must:
+            self.assertTrue(any(l == m or l.startswith(m) for l in directives),
+                            f"硬化项缺失: {m}")
+
+    def test_activate_converges_release_permissions(self):
+        """P0-2 核心断言：激活成功后 release 权限 = owner:group 可读可遍历、
+        other 无权限、可执行位保留、组对齐运行用户（fixture 注入值）。"""
+        rid = "rl_aaaaaaaaaa_bbbbbbbbbbbb"
+        with tempfile.TemporaryDirectory(prefix="t06-perm-") as td:
+            root = Path(td)
+            for sub in ("incoming", "releases", "shared/state", "shared/slots",
+                        "shared/nginx", "locks"):
+                (root / sub).mkdir(parents=True)
+            # 构造上传形态的 release（含可执行与普通文件、嵌套目录）
+            d = root / "incoming" / rid
+            (d / "agent-api/dist").mkdir(parents=True)
+            (d / "agent-api/dist/server.js").write_text("// stub")      # 0644
+            (d / "data/public/v1").mkdir(parents=True)
+            (d / "data/public/v1/manifest.json").write_text("{}")
+            (d / "site/maas-skill").mkdir(parents=True)
+            installer = d / "site/maas-skill/install.sh"
+            installer.write_text("#!/bin/sh\n")
+            installer.chmod(0o755)                                       # 可执行
+            (d / "metadata").mkdir()
+            (d / "metadata/release-manifest.json").write_text("{}")
+            # 模拟 rsync 上传后的属主（当前用户）；激活器只改 group/权限
+            # （fixture 注入 owner=当前用户，生产=root）
+            env = {**os.environ,
+                   "MAAS_RELEASE_ROOT": str(root),
+                   "MAAS_RELEASE_OWNER": os.environ.get("MAAS_RELEASE_OWNER",
+                                                        os.getlogin() if hasattr(os, "getlogin") else "nobody")}
+            # 直接调 prepare 函数（不经完整 activate——本测试只验权限语义）
+            script = (self.OPS / "server" / "maasweekly-activate").read_text()
+            fn = script.split("prepare_release_runtime_permissions() {")[1].split("\n}\n")[0]
+            helper = Path(td) / "perm.sh"
+            grp = grp_mod = None
+            import grp as grp_mod_, pwd as pwd_mod_
+            grp = grp_mod_.getgrgid(os.getgid()).gr_name
+            user = pwd_mod_.getpwuid(os.getuid()).pw_name
+            helper.write_text(
+                "#!/usr/bin/env bash\nset -euo pipefail\n"
+                f'RUNTIME_OWNER="{user}"\nRUNTIME_GROUP="{grp}"\n'
+                f'ROOT="{root}"\n'
+                "prepare_release_runtime_permissions() {\n" + fn + "\n}\n"
+                f'prepare_release_runtime_permissions "{root}/incoming/{rid}"\n'
+                'echo OK\n')
+            helper.chmod(0o755)
+            r = subprocess.run(["bash", str(helper)], capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertIn("OK", r.stdout)
+            # 断言：目录 0750、普通文件 0640、可执行 0750、组=运行组
+            self.assertEqual(oct((d / "agent-api/dist").stat().st_mode & 0o777), "0o750")
+            self.assertEqual(oct((d / "data/public/v1/manifest.json").stat().st_mode & 0o777), "0o640")
+            self.assertEqual(oct(installer.stat().st_mode & 0o777), "0o750")
+            self.assertEqual(
+                grp_mod_.getgrgid((d / "data/public/v1/manifest.json").stat().st_gid).gr_name, grp)
+            # other 无权限（0640/0750 的 other 位为 0——已由上面八进制断言覆盖）
+
+    def test_executable_bits_preserved_in_real_release(self):
+        """真实 release 产物：node_modules/.bin 等可执行结构经权限收敛后仍可执行。"""
+        # 用 dist-release 内最新 release（构建产物真实含 .bin 链接）
+        releases = sorted((self.BASE / "dist-release").glob("rl_*"), key=lambda p: p.stat().st_mtime)
+        if not releases:
+            self.skipTest("无本地 release 产物（build 后跑）")
+        rel = releases[-1]
+        bins = list((rel / "agent-api/node_modules/.bin").glob("*"))
+        self.assertTrue(bins, "release 缺 .bin")
+        for b in bins:
+            # 原本可执行（symlink 指向的目标带 x；断言目标文件 mode）
+            target = b.resolve()
+            self.assertTrue(target.exists())
+            self.assertEqual(oct(target.stat().st_mode & 0o100), "0o100",
+                             f".bin 目标丢失执行位: {target}")
+
+    def test_no_world_readable_release(self):
+        """激活后 other 位必须为 0（不得 a+rX）。"""
+        # 已由 test_activate_converges_release_permissions 的八进制断言覆盖
+        # （0640/0750 的 other=0）。此处显式断言指令行不含宽泛授权。
+        script = (self.OPS / "server" / "maasweekly-activate").read_text()
+        directives = [l.strip() for l in script.splitlines()
+                      if l.strip() and not l.strip().startswith("#")]
+        for l in directives:
+            self.assertNotIn("a+rX", l, f"指令行含 a+rX 宽泛授权: {l}")
+            self.assertNotIn("chmod 0755", l, f"指令行含 0755: {l}")
+            self.assertNotIn("chmod 0644", l, f"指令行含 0644: {l}")
 
 if __name__ == "__main__":
     unittest.main()

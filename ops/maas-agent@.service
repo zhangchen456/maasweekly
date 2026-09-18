@@ -34,7 +34,10 @@ ExecStart=/usr/local/bin/maas-agent-run
 Restart=on-failure
 RestartSec=2
 TimeoutStartSec=20
-# 资源与硬化：只读系统、无新权限、私有临时、限写、收回能力
+# 资源与硬化：只读系统、无新权限、私有临时、限写、收回能力。
+# 注：不得使用 MemoryDenyWriteExecute——Node/V8 JIT 需要把编译内存页设为
+# RWX（OS::SetPermissions），MDWE 下 V8 原生崩溃（status=5/TRAP，B3 第二次
+# 首发实锤，transient 对照实验验证去掉后 status 200）。其余硬化全部保留。
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
@@ -46,7 +49,6 @@ ProtectControlGroups=true
 RestrictNamespaces=true
 RestrictSUIDSGID=true
 LockPersonality=true
-MemoryDenyWriteExecute=true
 CapabilityBoundingSet=
 AmbientCapabilities=
 LimitNOFILE=8192
