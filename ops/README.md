@@ -14,7 +14,8 @@ Task 06 产物。本目录是发布协议的客户端与服务器侧脚本 + 生
 | `rollback-release.sh` | 回滚入口：`<rid> --reason`（必须留原因） | 本地 |
 | `maas-agent@.service` | agent-api 蓝绿槽位 systemd 模板（blue=8788 / green=8789） | 服务器 /etc/systemd/system/ |
 | `maas-agent.env.example` | 环境变量样例（仅变量名与安全默认值；真实 secret 现场生成） | 服务器 /srv/maasweekly/shared/agent.env |
-| `nginx-agent.conf` | nginx candidate 配置：REST/MCP 限流与代理、feed/Skill 行为头 | 服务器（候选 diff） |
+| `nginx/maasweekly-agent-http.conf` | nginx 稳定配置（http context）：REST/MCP 限流 zone + upstream include。安装到 `/etc/nginx/conf.d/maasweekly-agent.conf` | 服务器 |
+| `nginx/maasweekly-agent-server.conf` | nginx 稳定 snippet（server context）：routes include。安装到 `/etc/nginx/snippets/maasweekly-agent.conf` | 服务器 |
 | `install-production.sh` | 一次性幂等安装（M8 授权后执行；`--dry-run` 可审查） | 服务器 root |
 | `known_hosts.production` | 受控 host key（禁运行时 ssh-keyscan；轮换流程见下） | 本地 |
 | `server/maasweekly-deploy-shell` | maasdeploy 受限 shell：只放行 rsync-to-incoming / activate / rollback / status | 服务器 /usr/local/bin/ |
@@ -30,12 +31,15 @@ rsync → 服务器 incoming/<rid>/               # 受限 shell 只允许写这
       ↓
 maasweekly-activate activate <rid>            # flock 串行 → 校验 → 蓝绿切换
       1. 候选槽位起服务 + /api/v1/status 冒烟
-      2. 候选 nginx include（root 与 upstream 绑定同一 release）
-      3. nginx -t（候选 include 就位后校验真实配置）
-      4. 原子替换生效 include + reload
+      2. 三份候选 include 全部就位（作用域严格分离，M8-B3 P0）：
+         agent-upstream.inc（http ctx：upstream 槽位端口）
+         site-root.inc（server ctx：root <release>/site）
+         agent-routes.inc（server ctx：REST/MCP/RSS/Skill locations）
+      3. nginx -t（三份候选就位后校验真实配置）
+      4. reload + 指针切换
       5. 切换后入口冒烟（静态+API 同 release）
       6. 停旧槽（旧 worker 排空后）
-      ↓ 任一步失败 → 恢复旧状态，候选退回 incoming（同 RID 可重试）
+      ↓ 任一步失败 → 三 include 全有或全无恢复，候选退回 incoming（同 RID 可重试）
 verify-release.sh --online --expect-release <rid>   # 四入口验收
 ```
 
