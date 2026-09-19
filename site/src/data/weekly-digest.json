@@ -4,6 +4,14 @@
     "start": "2026-09-14",
     "end": "2026-09-20",
     "days": {
+      "2026-09-20": {
+        "substantive": 7,
+        "jitter": 1,
+        "failed": 2,
+        "releases": 2,
+        "pricings": 3,
+        "sunsets": 0
+      },
       "2026-09-19": {
         "substantive": 10,
         "jitter": 10,
@@ -54,12 +62,54 @@
       }
     },
     "totals": {
-      "substantive": 67,
-      "releases": 27,
-      "pricings": 11,
+      "substantive": 74,
+      "releases": 29,
+      "pricings": 14,
       "sunsets": 4
     },
     "highlights": [
+      {
+        "platform": "Kimi",
+        "date": "2026-09-20",
+        "text": "Kimi K3 模型 input 价格从 20 上调至 40 CNY/百万tokens，output 从 100 下调至 2 CNY/百万tokens，cache_read 从 2 上调至 20 CNY/百万tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "Kimi",
+        "date": "2026-09-20",
+        "text": "Kimi API 新增缓存写入按 TTL 档位（5min/1h）单独计费，缓存命中输入仅按命中价格计费",
+        "type": "pricing"
+      },
+      {
+        "platform": "DeepSeek",
+        "date": "2026-09-20",
+        "text": "DeepSeek V4 Pro 新增定价：input 0.66/1.32 USD，output 1.98/3.96 USD，cache_read 0.022/0.044 USD（高峰/空闲）",
+        "type": "pricing"
+      },
+      {
+        "platform": "DeepSeek",
+        "date": "2026-09-20",
+        "text": "DeepSeek 移除 V4 Pro 在 2026-09-14 后继续服务的公告，改为正式定价与并发限制说明",
+        "type": "other"
+      },
+      {
+        "platform": "DeepSeek",
+        "date": "2026-09-20",
+        "text": "DeepSeek 明确空闲时段为周一至周五 9:00-12:00、14:00-18:00 之外（含法定节假日）",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-20",
+        "text": "Artificial Analysis 发布 AA-Briefcase v1.1 基准，用于评估 agentic 知识工作表现，Elo 锚定 DeepSeek V4.1 Flash 为 1600",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-20",
+        "text": "Intelligence Index v4.3.2 整合 10 项评估，包括 AA-Briefcase v1.1、GDPval-AA v2.1 等",
+        "type": "release"
+      },
       {
         "platform": "阿里百炼",
         "date": "2026-09-19",

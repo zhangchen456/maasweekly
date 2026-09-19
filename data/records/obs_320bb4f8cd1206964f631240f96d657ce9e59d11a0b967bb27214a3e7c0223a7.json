@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_320bb4f8cd1206964f631240f96d657ce9e59d11a0b967bb27214a3e7c0223a7",
+  "sourceId": "deepseek-blog",
+  "date": "2026-09-20",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "DeepSeek",
+  "sourceType": "blog",
+  "sourceUrl": "https://api-docs.deepseek.com/zh-cn/news/",
+  "title": "DeepSeek · 博客来源更新",
+  "summary": "DeepSeek blog 同样移除了 V4 Pro 延期服务的英文说明，反映该信息已不再适用。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-19T22:43:55+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "deepseek-v4-pro",
+        "before": "deepseek-v4-pro(2)",
+        "after": "deepseek-v4-pro"
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [
+      "(2) In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!"
+    ],
+    "added_count": 0,
+    "removed_count": 1,
+    "raw_added_count": 1,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-20.json"
+  },
+  "permalink": "/item/obs_320bb4f8cd1206964f631240f96d657ce9e59d11a0b967bb27214a3e7c0223a7/"
+}

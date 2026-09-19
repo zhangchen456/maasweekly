@@ -1,6 +1,459 @@
 {
-  "updated_at": "2026-09-18T23:04:10",
+  "updated_at": "2026-09-19T22:43:55",
   "days": [
+    {
+      "date": "2026-09-20",
+      "stats": {
+        "total": 68,
+        "success": 66,
+        "failed": 2,
+        "changed": 8,
+        "unchanged": 58
+      },
+      "changed": [
+        {
+          "platform": "Kimi",
+          "source_type": "pricing",
+          "url": "https://platform.kimi.com/docs/pricing/chat",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "注：缓存写入 是指将请求前缀写入上下文缓存所产生的费用。Kimi API 对重复的请求前缀自动启用上下文缓存，缓存条目按有效期（TTL）分为 5min 和 1h 两档，不指定 TTL 时默认按 5min 档。在有效期内命中缓存的输入仅按”输入价格（缓存命中）“计费，命中后缓存有效期自动续期，不再收取缓存写入费用。"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "模型推理接口对 input 和 output 均实行按量计费",
+              "before": "模型推理接口对 Input 和 Output 均实行按量计费。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。",
+              "after": "模型推理接口对 Input 和 Output 均实行按量计费。对于 K3 系列模型，缓存写入按 TTL 档位（5min / 1h）单独计费；缓存命中的输入仅按缓存命中价格计费，不再重复收取缓存写入费用。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。"
+            }
+          ],
+          "signal_preview": "注：缓存写入 是指将请求前缀写入上下文缓存所产生的费用。Kimi API 对重复的请求前缀自动启用上下文缓存，缓存条目按有效期（TTL）分为 5min 和 1h 两档，不指定 TTL 时默认按 5min 档。在有效期内命中缓存的输入仅按”输入价格（缓存命中）“计费，命中后缓存有效期自动续期，不再收取缓存写入费用。",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_faa3de9a2e10aebff0774464635b54bfe851f333e4fbd700ef0776709add205d",
+          "permalink": "/item/obs_faa3de9a2e10aebff0774464635b54bfe851f333e4fbd700ef0776709add205d/",
+          "llm_summary": "Kimi 定价页更新了 K3 系列模型的缓存计费规则，新增缓存写入按 TTL 档位单独计费，并调整了缓存命中价格，同时移除了旧的文件接口免费说明，整体反映缓存计费体系细化。"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "model_list",
+          "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 5,
+          "added_lines": [
+            "(2) 空闲时段价格为高峰时段价格的一半。北京时间周一至周五（不含中国法定节假日）9:00 - 12:00、14:00 - 18:00 为高峰时段；其余时段，包括周末及中国法定节假日全天均为空闲时段。",
+            "(3) 更多并发限制细节，请参考限速与隔离。",
+            "| 价格(2) | 百万tokens输入",
+            "| 并发限制(3) | 2500 | 500"
+          ],
+          "removed_lines": [
+            "(2) 为响应广大用户的需求，我们决定在 2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变；如有变动，我们将另行通知。感谢您的理解与支持！",
+            "(3) 空闲时段价格为高峰时段价格的一半。高峰时段为北京时间周一至周五 9:00 - 12:00、14:00 - 18:00（其余为空闲时段）。",
+            "(4) 更多并发限制细节，请参考\u0000限速与隔离。",
+            "| 价格(3) | 百万tokens输入",
+            "| 并发限制(4) | 2500 | 500"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-flash",
+              "before": "| 模型 | deepseek-flash(1) | deepseek-v4-pro(2)",
+              "after": "| 模型 | deepseek-flash(1) | deepseek-v4-pro"
+            }
+          ],
+          "signal_preview": "(2) 空闲时段价格为高峰时段价格的一半。北京时间周一至周五（不含中国法定节假日）9:00 - 12:00、14:00 - 18:00 为高峰时段；其余时段，包括周末及中国法定节假日全天均为空闲时段。",
+          "raw_added_count": 5,
+          "raw_removed_count": 6,
+          "id": "obs_6ddc099c593e25ffc3758294bf3ceccf3fca1d8f333fe92aa63408d94eaca4b1",
+          "permalink": "/item/obs_6ddc099c593e25ffc3758294bf3ceccf3fca1d8f333fe92aa63408d94eaca4b1/",
+          "llm_summary": "DeepSeek 模型列表更新，移除了关于 V4 Pro 在 2026-09-14 后继续服务的临时公告，新增了正式的空闲时段定义和并发限制说明，表明 V4 Pro 已转为长期稳定服务。"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "pricing",
+          "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 5,
+          "added_lines": [
+            "(2) 空闲时段价格为高峰时段价格的一半。北京时间周一至周五（不含中国法定节假日）9:00 - 12:00、14:00 - 18:00 为高峰时段；其余时段，包括周末及中国法定节假日全天均为空闲时段。",
+            "(3) 更多并发限制细节，请参考限速与隔离。",
+            "| 价格(2) | 百万tokens输入",
+            "| 并发限制(3) | 2500 | 500"
+          ],
+          "removed_lines": [
+            "(2) 为响应广大用户的需求，我们决定在 2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变；如有变动，我们将另行通知。感谢您的理解与支持！",
+            "(3) 空闲时段价格为高峰时段价格的一半。高峰时段为北京时间周一至周五 9:00 - 12:00、14:00 - 18:00（其余为空闲时段）。",
+            "(4) 更多并发限制细节，请参考\u0000限速与隔离。",
+            "| 价格(3) | 百万tokens输入",
+            "| 并发限制(4) | 2500 | 500"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-flash",
+              "before": "| 模型 | deepseek-flash(1) | deepseek-v4-pro(2)",
+              "after": "| 模型 | deepseek-flash(1) | deepseek-v4-pro"
+            }
+          ],
+          "signal_preview": "(2) 空闲时段价格为高峰时段价格的一半。北京时间周一至周五（不含中国法定节假日）9:00 - 12:00、14:00 - 18:00 为高峰时段；其余时段，包括周末及中国法定节假日全天均为空闲时段。",
+          "raw_added_count": 5,
+          "raw_removed_count": 6,
+          "id": "obs_6d33eb555a41778ee0d42deb31e6932df49fdceca82236f3c340bdf75a4dc11e",
+          "permalink": "/item/obs_6d33eb555a41778ee0d42deb31e6932df49fdceca82236f3c340bdf75a4dc11e/",
+          "llm_summary": "DeepSeek 定价页同步更新，新增 V4 Pro 的输入/输出/缓存命中价格（高峰与空闲两档），并移除延期公告，对应正式定价落地。"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "changelog",
+          "url": "https://api-docs.deepseek.com/zh-cn/news/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "(2) In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-v4-pro",
+              "before": "deepseek-v4-pro(2)",
+              "after": "deepseek-v4-pro"
+            }
+          ],
+          "signal_preview": "deepseek-v4-pro",
+          "raw_added_count": 1,
+          "raw_removed_count": 2,
+          "id": "obs_af378a3f947d801a9636edbcd1d2fd17be803fdd2f9b208b1145185e1b7a9dc9",
+          "permalink": "/item/obs_af378a3f947d801a9636edbcd1d2fd17be803fdd2f9b208b1145185e1b7a9dc9/",
+          "llm_summary": "DeepSeek changelog 移除了关于 V4 Pro 继续服务的英文公告，与定价页更新一致，表明该公告已过期。"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "blog",
+          "url": "https://api-docs.deepseek.com/zh-cn/news/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "(2) In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-v4-pro",
+              "before": "deepseek-v4-pro(2)",
+              "after": "deepseek-v4-pro"
+            }
+          ],
+          "signal_preview": "deepseek-v4-pro",
+          "raw_added_count": 1,
+          "raw_removed_count": 2,
+          "id": "obs_320bb4f8cd1206964f631240f96d657ce9e59d11a0b967bb27214a3e7c0223a7",
+          "permalink": "/item/obs_320bb4f8cd1206964f631240f96d657ce9e59d11a0b967bb27214a3e7c0223a7/",
+          "llm_summary": "DeepSeek blog 同样移除了 V4 Pro 延期服务的英文说明，反映该信息已不再适用。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "changelog",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-16 UTC.",
+              "after": "Last updated 2026-09-18 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-16 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-18 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-18 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_9afe538436b0ff74890030510dafba47d060c8114d7e380575949e62e46a9f27",
+          "permalink": "/item/obs_9afe538436b0ff74890030510dafba47d060c8114d7e380575949e62e46a9f27/",
+          "llm_summary": "Vertex AI changelog 更新了最后修改时间至 2026-09-18，但内容无实质变化，仅维护性更新。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 20,
+          "removed_count": 2,
+          "added_lines": [
+            "AA-Briefcase v1.1",
+            "AA-Briefcase v1.1 is an agentic knowledge work benchmark developed by Artificial Analysis. AA-Briefcase Elo is a combined metric that aggregates rubric pass rate, analytical quality Elo and presentation Elo · Higher is better",
+            "AA-Briefcase v1.1Updated",
+            "AnthropicOpenAIMetaAlibabaZ AISpaceXAIStepFunKimiGoogleDeepSeekInstitute of Foundation ModelsMiniMaxThinking MachinesMistral",
+            "Artificial Analysis Intelligence Index v4.3.2",
+            "Artificial Analysis Intelligence Index v4.3.2 includes: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them.",
+            "Artificial Analysis Intelligence Index v4.3.2 incorporates 10 evaluations: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1",
+            "Capability Indexes",
+            "Elo rating for performance on real-world work tasks · Anchored to DeepSeek V4.1 Flash (max) at 1,600 · Higher is better",
+            "GDPval-AA v2.1",
+            "GDPval-AA v2.1 Leaderboard",
+            "GDPval-AA v2.1 evaluates AI models on real-world, economically valuable tasks across a wide range of occupations",
+            "GDPval-AA v2.1Updated",
+            "GPT-6 Astra (low)See more",
+            "GoogleStepFunThinking MachinesZ AIMiniMaxOpenAIAnthropicMetaNVIDIADeepSeekAlibabaSpaceXAIMistralKimi",
+            "Incorporates 7 evaluations: AA-Omniscience, GDPval-AA v2.1, AA-Briefcase v1.1, Humanity's Last Exam, AutomationBench-AA, AA-LCR v1.1, GDP.pdf · Higher is better",
+            "Methodology updated · 19 Sept",
+            "New language model evaluation · 18 Sept",
+            "Provider Voice Arena Preference Elo",
+            "Step 5 Preview"
+          ],
+          "removed_lines": [
+            "AA-Briefcase",
+            "AA-Briefcase is an agentic knowledge work benchmark developed by Artificial Analysis. AA-Briefcase Elo is a combined metric that aggregates rubric pass rate, analytical quality Elo and presentation Elo · Higher is better"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AA-Briefcase v1.1 is an agentic knowledge work benchmark developed by Artificial Analysis. AA-Briefcase Elo is a combined metric that aggregates rubric pass rate, analytical quality Elo and presentation Elo · Higher is better",
+          "raw_added_count": 28,
+          "raw_removed_count": 25,
+          "id": "obs_e4b90449eeac5aa64124246d907762bc0f9800b5313f9ac6d5454f50abee432e",
+          "permalink": "/item/obs_e4b90449eeac5aa64124246d907762bc0f9800b5313f9ac6d5454f50abee432e/",
+          "llm_summary": "Artificial Analysis 行业页新增 AA-Briefcase v1.1 基准和 Intelligence Index v4.3.2 的说明，并列出参与评估的模型厂商，同时移除旧版 AA-Briefcase 描述，对应基准版本升级。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 32,
+          "raw_removed_count": 32,
+          "id": "obs_41e81d8a5d67994f69db969cce3c0ccee8707f6d2d2f2398686618dbbd9290d9",
+          "permalink": "/item/obs_41e81d8a5d67994f69db969cce3c0ccee8707f6d2d2f2398686618dbbd9290d9/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Kimi",
+          "logo_summary": "K3 系列缓存计费规则细化，价格调整",
+          "items": [
+            {
+              "text": "Kimi K3 模型 input 价格从 20 上调至 40 CNY/百万tokens，output 从 100 下调至 2 CNY/百万tokens，cache_read 从 2 上调至 20 CNY/百万tokens",
+              "type": "pricing"
+            },
+            {
+              "text": "Kimi API 新增缓存写入按 TTL 档位（5min/1h）单独计费，缓存命中输入仅按命中价格计费",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "DeepSeek",
+          "logo_summary": "V4 Pro 定价与并发限制更新，移除延期公告",
+          "items": [
+            {
+              "text": "DeepSeek V4 Pro 新增定价：input 0.66/1.32 USD，output 1.98/3.96 USD，cache_read 0.022/0.044 USD（高峰/空闲）",
+              "type": "pricing"
+            },
+            {
+              "text": "DeepSeek 移除 V4 Pro 在 2026-09-14 后继续服务的公告，改为正式定价与并发限制说明",
+              "type": "other"
+            },
+            {
+              "text": "DeepSeek 明确空闲时段为周一至周五 9:00-12:00、14:00-18:00 之外（含法定节假日）",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "发布 AA-Briefcase v1.1 与 Intelligence Index v4.3.2",
+          "items": [
+            {
+              "text": "Artificial Analysis 发布 AA-Briefcase v1.1 基准，用于评估 agentic 知识工作表现，Elo 锚定 DeepSeek V4.1 Flash 为 1600",
+              "type": "release"
+            },
+            {
+              "text": "Intelligence Index v4.3.2 整合 10 项评估，包括 AA-Briefcase v1.1、GDPval-AA v2.1 等",
+              "type": "release"
+            }
+          ]
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_1c181425cf150d4797b5846787f8d6f0f890abd64f00c5211216935218a8fd34",
+          "provider": "kimi",
+          "model": "kimi-k3",
+          "component": "cache_read",
+          "previous": "2.000000",
+          "current": "20.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.kimi.com/docs/pricing/chat"
+        },
+        {
+          "id": "price_607db1e56157c3cd9af3b658d5f6c60791b03e7183faa6e97d4863d2a4ef3db2",
+          "provider": "kimi",
+          "model": "kimi-k3",
+          "component": "input",
+          "previous": "20.000000",
+          "current": "40.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.kimi.com/docs/pricing/chat"
+        },
+        {
+          "id": "price_2cf607385d1b5ee4ff3c199d02ece4f20ae9364f1d4c5788021725d790788a4e",
+          "provider": "kimi",
+          "model": "kimi-k3",
+          "component": "output",
+          "previous": "100.000000",
+          "current": "2.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.kimi.com/docs/pricing/chat"
+        },
+        {
+          "id": "price_212155877b8ecc9b0be5eb1663bec06fa40cda1aa95fa8880cbbb152d8a67d73",
+          "provider": "deepseek",
+          "model": "deepseek-v4-pro",
+          "component": "cache_read",
+          "current": "0.022000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        },
+        {
+          "id": "price_c45c4dadbedf3fb2f23f3ace0d7e36bcda38cf2701d06bbc725e594d24a046fb",
+          "provider": "deepseek",
+          "model": "deepseek-v4-pro",
+          "component": "cache_read",
+          "current": "0.044000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        },
+        {
+          "id": "price_5927c0d4f716bda3f64acaf073a30bfd25caf6bec31dcf7ccd171f0c6d36ed26",
+          "provider": "deepseek",
+          "model": "deepseek-v4-pro",
+          "component": "input",
+          "current": "0.660000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        },
+        {
+          "id": "price_fafe446c8faa458e4c854813f82dfa23e91f055b39485b556efb6e423f0c9dca",
+          "provider": "deepseek",
+          "model": "deepseek-v4-pro",
+          "component": "input",
+          "current": "1.320000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        },
+        {
+          "id": "price_3f4adb6e84d50634c63d7a56a22f98a634236de82f81394c4836ed433c934a2c",
+          "provider": "deepseek",
+          "model": "deepseek-v4-pro",
+          "component": "output",
+          "current": "1.980000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        },
+        {
+          "id": "price_7b9d649e13cca8abcbd44c7ee6e669aeb8fd16e999d1f9bc966c2bd73c318d11",
+          "provider": "deepseek",
+          "model": "deepseek-v4-pro",
+          "component": "output",
+          "current": "3.960000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        }
+      ]
+    },
     {
       "date": "2026-09-19",
       "stats": {
