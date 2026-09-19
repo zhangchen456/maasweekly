@@ -28,9 +28,9 @@ run() {  # run <名称> <命令...>
     echo "   ✓ $name"
   else
     FAILED+=("$name")
-    echo "   ✗ $name（退出码 $?）——日志关键内容："
+    echo "   ✗ ${name}（退出码 $?）——日志关键内容："
     tail -25 "$log" | sed 's/^/     /'
-    echo "   （完整日志: $log）"
+    echo "   （完整日志: ${log}）"
   fi
   rm -f "$log"
 }
@@ -50,6 +50,7 @@ run "test_public_export（Task 03）" python3 -m unittest discover -s tests -p '
 run "test_skill_package（Task 04）" python3 -m unittest discover -s tests -p 'test_skill_package.py'
 run "test_release_build（Task 06）" python3 -m unittest discover -s tests -p 'test_release_build.py'
 run "test_release_activation（Task 06）" python3 -m unittest discover -s tests -p 'test_release_activation.py'
+run "test_deploy_mode（Task 06 M7）" python3 -m unittest discover -s tests -p 'test_deploy_mode.py'
 
 # ---- site（构建 + 六测试）----
 if ! $QUICK; then

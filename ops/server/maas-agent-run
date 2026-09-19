@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# maas-agent-run：agent-api 槽位启动 wrapper（Task 06 M8-B3 P0）
+#
+# 安装位置：/usr/local/bin/maas-agent-run（install-production.sh，0755）
+#
+# 背景：首发暴露的 systemd WorkingDirectory/current P0——
+#   旧 unit 硬编码 WorkingDirectory=/srv/maasweekly/current/agent-api：
+#   1. 首发时 current 尚不存在 → CHDIR 失败（candidate start exit 200/CHDIR）
+#   2. 后续发布会从旧 current 运行 → 候选槽位不是候选 release（混版风险）
+#
+# 不变量：候选槽位必须运行候选 release（MAAS_RELEASE_DIR），绝不依赖 current。
+# systemd ExecStart 不做 shell 变量展开——经 EnvironmentFile 注入的
+# MAAS_RELEASE_DIR 在 wrapper（bash）内展开，语义明确可测。
+set -euo pipefail
+: "${MAAS_RELEASE_DIR:?slot env 缺 MAAS_RELEASE_DIR（应由 maasweekly-activate 写入 shared/slots/<slot>.env）}"
+exec /usr/bin/node "${MAAS_RELEASE_DIR}/agent-api/dist/server.js"

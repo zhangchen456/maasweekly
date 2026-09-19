@@ -31,7 +31,7 @@ case "$cmd" in
     [ -n "$target" ] || reject "rsync 无目标路径"
     case "$target" in
       "$INCOMING_ROOT"/*) : ;;
-      *) reject "rsync 只能写 $INCOMING_ROOT/ 下（收到: $target）" ;;
+      *) reject "rsync 只能写 ${INCOMING_ROOT}/ 下（收到: ${target}）" ;;
     esac
     # 路径第三段必须是合法 rid（incoming/<rid>/...）
     rid="$(echo "$target" | cut -d/ -f5)"
