@@ -6,7 +6,7 @@
 
 ## 一、当前状态（一句话）
 
-Task 06 **M8 首发完成（2026-09-20，第八代 rl_31c918e04d_24f83f7ea886）**——release 通道全量上线：四入口 online verify 全绿（REST/MCP/RSS/Skill）、分树权限生产验证通过（www-data 读 site、maasagent 读 runtime、互相隔离）、RSS Content-Type 合同达标（局部 types 清空）。current=rl_31c918e04d_24f83f7ea886（previous=rl_77f48c7b53，回滚链在）；蓝绿 green active（8789）；数据 dataThrough 2026-09-20。剩余：M9 真实客户端（含 Codex）、M10 四入口状态翻转、M11 回滚演练；CI deploy.yml 的 legacy rsync 需改为 release 通道（当前仍会失败，无害）。
+Task 06 **M8 首发完成（2026-09-20，第八代 rl_31c918e04d_24f83f7ea886）**——release 通道全量上线：四入口 online verify 全绿（REST/MCP/RSS/Skill）、分树权限生产验证通过（www-data 读 site、maasagent 读 runtime、互相隔离）、RSS Content-Type 合同达标（局部 types 清空）。current=rl_31c918e04d_24f83f7ea886（previous=rl_77f48c7b53，回滚链在）；蓝绿 green active（8789）；数据 dataThrough 2026-09-20。**M9 也已完成（同日）**：Claude Code MCP 五工具真实调用 PASS（含无结果语义如实报告）/ Skill 公网安装 PASS / RSS feedparser 真实订阅 PASS（pubDate 精度语义 + ETag 304）/ Codex BLOCKED（无真实认证环境，未伪造）。剩余：M10 状态翻转（只翻有证据的入口；Codex 不翻）+ CI deploy.yml 改 release 通道、M11 回滚演练。
 
 
 ## 二、关键约束（红线，重启后必须先读）
