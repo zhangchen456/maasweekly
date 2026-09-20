@@ -6,7 +6,7 @@
 
 ## 一、当前状态（一句话）
 
-Task 06 **M1–M7 完成；M8 进行中**（B1 Node22 ✓ / B2 systemd+用户+sudoers ✓ / B3 前发现并修复 nginx mixed-scope P0）。最终候选在分支 `task-06-m7-candidate`（PR #1 → main、未 merge）：`APPROVED_COMMIT`=`6bc9b0b7cc5f…` / `APPROVED_RID`=`rl_6bc9b0b7cc_8b9fb7b09ead`（第六代）。**B3 已试三次：CHDIR P0 → 双 P0（MDWE/权限）→ 双消费者 P0（分树）。第三次 activate 成功但静态层 404 → 已 emergency rollback 回 legacy。下一步=B2.4 幂等重跑 → B3 第四次**
+Task 06 **M1–M7 完成；M8 进行中**（B1 Node22 ✓ / B2 systemd+用户+sudoers ✓ / B3 前发现并修复 nginx mixed-scope P0）。最终候选在分支 `task-06-m7-candidate`（PR #1 → main、未 merge）：`APPROVED_COMMIT`=`77f48c7b53af…` / `APPROVED_RID`=`rl_77f48c7b53_24f83f7ea886`（第七代，数据至 2026-09-20）。**B3 已试四次：三次 P0 修复（已全关）+ 第四次 freshness 门禁正确拒绝（数据过期，非代码失败）。下一步=B3 第五次（数据已刷新，B2.4 激活器无需重装）**
 
 ## 二、关键约束（红线，重启后必须先读）
 
