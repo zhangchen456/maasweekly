@@ -1,6 +1,6 @@
 # Task 07 结果报告：模型实体关联、别名规范化与跨平台筛选
 
-日期：2026-09-20。当前状态：**T07-1（盘点与 Gold Set 基线）完成；T07-2 及之后未开始**。
+日期：2026-09-20。当前状态：**T07-1（盘点与 Gold Set 基线）+ T07-2（Model Registry + Resolver Contract）完成；T07-3 及之后未开始**。
 
 ## T07-1 交付记录
 
@@ -70,3 +70,56 @@ python3 pipeline/scripts/audit-model-identities.py --output /tmp/model-audit.jso
 3. Gold Set 49 项作为 resolver 首批评估基准（验收标准：零误绑——宁可 unresolved 不可错绑）
 4. provider 双命名体系折叠是 T07-2 前置（resolver 输入统一到公开 providerId）
 5. source_observation 的模型关联留 T07-3+（依赖 registry 先落地）
+
+
+## T07-2 交付记录（2026-09-20）
+
+### 交付物
+
+| 文件 | 内容 |
+|---|---|
+| `pipeline/model_identity/provider_map.py` | provider 双命名统一（qwen→alibaba 等；未知显式报错） |
+| `data/model-registry/models.json` | 首批 registry：**50 实体**（model 38 / family 4 / pointer 7 / non_model 1），95 个 alias |
+| `pipeline/model_identity/registry.py` | registry 加载 + 索引（alias 冲突检测内建） |
+| `pipeline/model_identity/resolver.py` | 四态解析（零 fuzzy；confidence=exact） |
+| `config/model-normalization-rules.json` | 噪音归一白名单（禁改清单显式声明） |
+| `pipeline/scripts/validate-model-registry.py` | 12 项 validator（只读） |
+| `tests/test_model_registry.py` | 24 项（T01-T18 全覆盖 + Gold false-positive=0 门禁） |
+| `docs/…/task-07-model-registry.md` | 设计文档（schema/优先级/禁止规则/分布） |
+
+### 核心数字
+
+- registry：50 实体 / 95 alias / 7 个 pointer（DeepSeek Flash 因真实数据只存在噪音序号形态，降为 ambiguous 不入 registry）
+- **全量 322 raw × provider（562 次解析）：resolved 107 / family 15 / ambiguous 0 / unresolved 440**
+- **危险输入 37 个（Gold 指针/噪音/家族 + 全量 latest/preview/next）：false positive = 0**
+- 测试：T07-2 套件 24 项 + T07-1 套件 16 项 + validator 12 项检查全部通过
+
+### 过程中测试逮住的错误（真实数据校验价值再证）
+
+- Gold 的 `gemini-2.5-flash-lite` 被同时写进 flash 与 flash-lite 两个条目 → registry 冲突检测拦截
+- Gold 把噪音序号 `(1)/(2)` 当 alias 收录进 DeepSeek Flash → resolver 误解析 → 修正为不收录（噪音属 unresolved 域）
+- family 实体 id 后缀不一致 / registry 排序漂移 → validator 拦截
+
+### 验证命令与退出码
+
+```
+$ python3 pipeline/scripts/validate-model-registry.py
+✓ Model Registry 校验通过（12 项检查零违规）       exit 0
+$ python3 -m unittest discover -s tests -p 'test_model_registry.py'
+Ran 24 tests — OK                                 exit 0
+$ python3 -m unittest discover -s tests -p 'test_model_identity_audit.py'
+Ran 16 tests — OK                                 exit 0
+```
+
+### 是否修改生产数据：**NO**
+
+- registry 是新增文件（data/model-registry/），未写入公开投影
+- 未改 REST/MCP/UI/公开数据
+- 未做生产发布
+
+### 下一步：T07-3 决策点
+
+判断标准（非解析率）：false positive 是否保持 0（当前 0）+ unresolved 是否
+集中可接受长尾（当前是——主体为首批未覆盖版本）。可开始「modelId 写入
+公开数据」的方案设计；建议先补一轮 registry 覆盖（anthropic 全版本、
+deepseek 清洗后条目）再动公开 schema。
