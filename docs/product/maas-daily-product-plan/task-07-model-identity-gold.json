@@ -1,0 +1,609 @@
+{
+  "meta": {
+    "task": "Task 07 T07-1",
+    "purpose": "模型身份人工基准（Gold Set）——resolver 评估用，不是生产 registry",
+    "createdAt": "2026-09-20",
+    "datasetVersion": "ds_24f83f7ea886b26ef59b87fabf45946a3cbf661c53cc74730c0286751ae7b74c",
+    "dataThrough": "2026-09-20",
+    "notes": [
+      "canonicalName 为人工判定的人类可读名；不引入 modelId 算法",
+      "providerId 使用公开投影体系（alibaba/volcengine/zhipu…）；ledger 侧 pricing providerId 见 public_providers.json 映射",
+      "knownAliases 只收录真实数据中出现过或厂商文档明确的写法；不含推测",
+      "classification 仅四值：model | family | ambiguous | non_model",
+      "所有「难例」类型均来自当前真实数据（见 inventory 文档）"
+    ]
+  },
+  "entries": [
+    {
+      "canonicalName": "Qwen3 Coder Plus",
+      "providerId": "alibaba",
+      "family": "qwen3-coder",
+      "knownAliases": [
+        "qwen3-coder-plus",
+        "qwen3-coder-plus-2025-07-22",
+        "qwen3-coder-plus-2025-09-23",
+        "Qwen3 Coder Plus"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "日期后缀是阿里百炼的版本快照写法（同一逻辑模型的 stable snapshot）——本判定为人工基准结论，resolver 不得自动合并"
+    },
+    {
+      "canonicalName": "Qwen3 Coder Flash",
+      "providerId": "alibaba",
+      "family": "qwen3-coder",
+      "knownAliases": [
+        "qwen3-coder-flash",
+        "qwen3-coder-flash-2025-07-28"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "同 family 不同 tier（plus/flash）——variant 区分样例"
+    },
+    {
+      "canonicalName": "Qwen3 Coder 30B A3B Instruct",
+      "providerId": "alibaba",
+      "family": "qwen3-coder",
+      "knownAliases": [
+        "qwen3-coder-30b-a3b-instruct"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "开源权重的参数规格形态（-30b-a3b）与闭源 tier 形态（plus/flash）混在同一 family——命名体系内部不一致样例"
+    },
+    {
+      "canonicalName": "Qwen3 Coder 480B A35B Instruct",
+      "providerId": "alibaba",
+      "family": "qwen3-coder",
+      "knownAliases": [
+        "qwen3-coder-480b-a35b-instruct"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "与 30b-a3b 同 family 不同参数规模——fuzzy 风险：30b/480b 只差数字"
+    },
+    {
+      "canonicalName": "Qwen Plus",
+      "providerId": "alibaba",
+      "family": "qwen-plus",
+      "knownAliases": [
+        "qwen-plus",
+        "qwen-plus-2024-12-20",
+        "qwen-plus-2025-01-12",
+        "qwen-plus-2025-01-25",
+        "qwen-plus-2025-04-28",
+        "qwen-plus-2025-07-14",
+        "qwen-plus-2025-07-28",
+        "qwen-plus-2025-09-11",
+        "qwen-plus-2025-12-01",
+        "Qwen Plus"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "8 个日期快照变体 + 无后缀基名——高频难例：无后缀与带日期是否同一模型需人工判定（百炼文档：无后缀=最新快照）"
+    },
+    {
+      "canonicalName": "Qwen3 VL Flash",
+      "providerId": "alibaba",
+      "family": "qwen3-vl",
+      "knownAliases": [
+        "qwen3-vl-flash",
+        "qwen3-vl-flash-2025-10-15",
+        "qwen3-vl-flash-2026-01-22"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "多模态子 family（vl）——与 qwen3-coder 平行"
+    },
+    {
+      "canonicalName": "Qwen3 Max",
+      "providerId": "alibaba",
+      "family": "qwen3-max",
+      "knownAliases": [
+        "qwen3-max",
+        "qwen3-max-2025-09-23",
+        "qwen3-max-2026-01-23"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "基名与日期快照；-preview 变体单列为 ambiguous 项（滚动指针不并入本 model）"
+    },
+    {
+      "canonicalName": "Qwen3.7 Flash",
+      "providerId": "alibaba",
+      "family": "qwen3.7",
+      "knownAliases": [
+        "qwen3.7-flash",
+        "qwen3.7-flash-2026-07-15"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "小数版本号 family（qwen3.5/3.6/3.7 并存）——3.5 与 35 的归一陷阱样例"
+    },
+    {
+      "canonicalName": "Qwen Flash",
+      "providerId": "alibaba",
+      "family": "qwen-flash",
+      "knownAliases": [
+        "qwen-flash",
+        "qwen-flash-2025-07-28"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "无版本号 family（qwen-flash vs qwen3-flash 是不同代——高风险自动误绑样例）"
+    },
+    {
+      "canonicalName": "Qwen3 Deep Research",
+      "providerId": "alibaba",
+      "family": "qwen3-deep-research",
+      "knownAliases": [
+        "qwen-deep-research",
+        "qwen-deep-research-2025-12-15"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "基名带 qwen- 前缀（旧代）而 family 归 qwen3——跨代命名真实样例"
+    },
+    {
+      "canonicalName": "Qwen3 TTS Flash",
+      "providerId": "alibaba",
+      "family": "qwen3-tts",
+      "knownAliases": [
+        "qwen3-tts-flash",
+        "qwen3-tts-flash-2025-09-18",
+        "qwen3-tts-flash-2025-11-27",
+        "qwen3-tts-flash-realtime-2025-09-18",
+        "qwen3-tts-flash-realtime-2025-11-27"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "realtime 变体与基名并存——语音模态的变体层级比文本深（flash/realtime × 日期双维度）"
+    },
+    {
+      "canonicalName": "Doubao Seed 2.0 Pro",
+      "providerId": "volcengine",
+      "family": "doubao-seed-2.0",
+      "knownAliases": [
+        "doubao-seed-2.0-pro"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "火山方舟体系；ledger 侧 pricing providerId=doubao（双体系样例）"
+    },
+    {
+      "canonicalName": "Doubao Seed 2.0 Mini",
+      "providerId": "volcengine",
+      "family": "doubao-seed-2.0",
+      "knownAliases": [
+        "doubao-seed-2.0-mini"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "同 family tier 变体"
+    },
+    {
+      "canonicalName": "Doubao Seed 1.6 Vision",
+      "providerId": "volcengine",
+      "family": "doubao-seed-1.6",
+      "knownAliases": [
+        "doubao-seed-1.6-vision"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "vision 独立条目；真实数据另有 doubao-1.5-vision-pro（1.5 代的 pro 档）——跨代相邻易误并"
+    },
+    {
+      "canonicalName": "Doubao 1.5 Pro 32K",
+      "providerId": "volcengine",
+      "family": "doubao-1.5",
+      "knownAliases": [
+        "doubao-1.5-pro-32k",
+        "doubao-pro-32k"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "同 family 两代命名并存（doubao-pro-32k 无代号 vs doubao-1.5-pro-32k）——真实跨代别名样例"
+    },
+    {
+      "canonicalName": "Doubao Embedding Vision",
+      "providerId": "volcengine",
+      "family": "doubao-embedding",
+      "knownAliases": [
+        "doubao-embedding-vision"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "embedding 模型——非 chat 类但确是具体模型"
+    },
+    {
+      "canonicalName": "GLM-5.3",
+      "providerId": "zhipu",
+      "family": "glm-5",
+      "knownAliases": [
+        "glm-5.3",
+        "GLM-5.3"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "ledger 侧 pricing providerId=glm（双体系样例）；display 名大小写不同（GLM-5.3）"
+    },
+    {
+      "canonicalName": "GLM-5.3 Flash",
+      "providerId": "zhipu",
+      "family": "glm-5",
+      "knownAliases": [
+        "glm-5.3-flash",
+        "GLM-5.3-Flash"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "glm-5 family 内小数版本 + tier 混合命名"
+    },
+    {
+      "canonicalName": "GLM-4.5V",
+      "providerId": "zhipu",
+      "family": "glm-4.5v",
+      "knownAliases": [
+        "glm-4.5v",
+        "GLM-4.5V"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "视觉 family（v 后缀）——大小写差异真实存在（raw glm-4.5v vs display GLM-4.5V）"
+    },
+    {
+      "canonicalName": "GLM-4.6V FlashX",
+      "providerId": "zhipu",
+      "family": "glm-4.6v",
+      "knownAliases": [
+        "glm-4.6v-flashx",
+        "GLM-4.6V-FlashX"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "FlashX 是智谱特有 tier 名（非通用 flash）——tier 词表因 provider 而异"
+    },
+    {
+      "canonicalName": "GLM-5.2",
+      "providerId": "zhipu",
+      "family": "glm-5",
+      "knownAliases": [
+        "glm-5.2",
+        "GLM-5.2"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "family_like 形态的真实样例（审计中 glm-5.x 系列被判 family_like——小数版本无 tier 后缀）"
+    },
+    {
+      "canonicalName": "Claude Opus 4.1",
+      "providerId": "anthropic",
+      "family": "claude-opus",
+      "knownAliases": [
+        "claude-opus-4.1",
+        "Claude Opus 4.1"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "anthropic 体系 raw 即 API id 形态——最易规范化的 provider 样例"
+    },
+    {
+      "canonicalName": "Claude Sonnet 4.5",
+      "providerId": "anthropic",
+      "family": "claude-sonnet",
+      "knownAliases": [
+        "claude-sonnet-4.5",
+        "Claude Sonnet 4.5"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "任务书指定难例：与 claude-sonnet-4 只差小数——禁止 fuzzy 自动合并"
+    },
+    {
+      "canonicalName": "Claude Fable 5.1",
+      "providerId": "anthropic",
+      "family": "claude-fable",
+      "knownAliases": [
+        "claude-fable-5.1",
+        "Claude Fable 5.1"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "当前数据真实存在的最新 Claude 系"
+    },
+    {
+      "canonicalName": "Claude Haiku 4.5",
+      "providerId": "anthropic",
+      "family": "claude-haiku",
+      "knownAliases": [
+        "claude-haiku-4.5",
+        "Claude Haiku 4.5"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "tier 词（haiku）语义稳定"
+    },
+    {
+      "canonicalName": "Claude Mythos 5.1",
+      "providerId": "anthropic",
+      "family": "claude-mythos",
+      "knownAliases": [
+        "claude-mythos-5.1",
+        "Claude Mythos 5.1"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "新 tier 名（mythos）——tier 词表开放性样例"
+    },
+    {
+      "canonicalName": "GPT-6 Astra",
+      "providerId": "openai",
+      "family": "gpt-6",
+      "knownAliases": [
+        "gpt-6-astra"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "openai 体系无 display name（raw=API id）——与 anthropic 同为高可信结构化"
+    },
+    {
+      "canonicalName": "GPT-5.6 Sol",
+      "providerId": "openai",
+      "family": "gpt-5.6",
+      "knownAliases": [
+        "gpt-5.6-sol"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "当前高频（cnt=71）"
+    },
+    {
+      "canonicalName": "GPT-5.6 Terra",
+      "providerId": "openai",
+      "family": "gpt-5.6",
+      "knownAliases": [
+        "gpt-5.6-terra"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "同 family 代号变体（sol/terra/luna/cyber）——代号不是 tier 词，fuzzy 无规律可循"
+    },
+    {
+      "canonicalName": "GPT-5.6 Luna",
+      "providerId": "openai",
+      "family": "gpt-5.6",
+      "knownAliases": [
+        "gpt-5.6-luna"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "同上"
+    },
+    {
+      "canonicalName": "Gemini 2.5 Pro",
+      "providerId": "google",
+      "family": "gemini-2.5",
+      "knownAliases": [
+        "gemini-2.5-pro",
+        "Gemini 2.5 Pro"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "google 双源（Gemini API + Vertex）同 providerId——展示名带空格"
+    },
+    {
+      "canonicalName": "Gemini 2.5 Flash",
+      "providerId": "google",
+      "family": "gemini-2.5",
+      "knownAliases": [
+        "gemini-2.5-flash",
+        "Gemini 2.5 Flash",
+        "gemini-2.5-flash-lite",
+        "Gemini 2.5 Flash-Lite"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "flash 与 flash-lite 是两个模型——lite 后缀语义样例；display 连字符位置不同（Flash-Lite vs FlashLite）"
+    },
+    {
+      "canonicalName": "Gemini 2.5 Flash Lite",
+      "providerId": "google",
+      "family": "gemini-2.5",
+      "knownAliases": [
+        "gemini-2.5-flash-lite",
+        "Gemini 2.5 Flash-Lite"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "独立于 flash 的轻量档——两模型禁止 fuzzy 合并"
+    },
+    {
+      "canonicalName": "Gemini 2.5 Computer Use Preview",
+      "providerId": "google",
+      "family": "gemini-2.5",
+      "knownAliases": [
+        "gemini-2.5-computer-use-preview",
+        "Gemini 2.5 Computer Use Preview"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "用途型变体（computer-use）+ preview 是 Google 产品名组成部分（官方命名，非滚动指针——区别于阿里 -preview 快照语义）"
+    },
+    {
+      "canonicalName": "Gemini 3 Flash Preview",
+      "providerId": "google",
+      "family": "gemini-3",
+      "knownAliases": [
+        "gemini-3-flash-preview"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "跨大版本 family（gemini-2.5 vs gemini-3）；Google preview 属产品命名"
+    },
+    {
+      "canonicalName": "DeepSeek V4 Pro",
+      "providerId": "deepseek",
+      "family": "deepseek-v4",
+      "knownAliases": [
+        "deepseek-v4-pro"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "deepseek 体系 raw 即常用名"
+    },
+    {
+      "canonicalName": "DeepSeek Flash",
+      "providerId": "deepseek",
+      "family": "deepseek-flash",
+      "knownAliases": [
+        "deepseek-flash-(1)",
+        "deepseek-flash (1)"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "页面序号后缀「(1)」混入模型名（抓取器把同名表格行的序号带进 raw）——数据质量真实样例：raw 含噪音，resolver 必须先清洗而非归一"
+    },
+    {
+      "canonicalName": "DeepSeek V4 Pro (2)",
+      "providerId": "deepseek",
+      "family": "deepseek-v4",
+      "knownAliases": [
+        "deepseek-v4-pro-(2)"
+      ],
+      "knownApiIds": [],
+      "classification": "ambiguous",
+      "notes": "同上：序号 (2) 无法判断是不同定价行还是不同模型——标记 ambiguous 待人工向厂商文档复核"
+    },
+    {
+      "canonicalName": "Kimi K3",
+      "providerId": "kimi",
+      "family": "kimi-k3",
+      "knownAliases": [
+        "kimi-k3"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "kimi 体系简洁（k2.6/k2.7-code/k3）"
+    },
+    {
+      "canonicalName": "Kimi K2.7 Code",
+      "providerId": "kimi",
+      "family": "kimi-k2.7",
+      "knownAliases": [
+        "kimi-k2.7-code",
+        "kimi-k2.7-code-highspeed"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "highspeed 变体——计费变体还是独立模型待复核"
+    },
+    {
+      "canonicalName": "Qwen3（family 级字符串）",
+      "providerId": "alibaba",
+      "family": "qwen3",
+      "knownAliases": [
+        "qwen3"
+      ],
+      "knownApiIds": [],
+      "classification": "family",
+      "notes": "family 级字符串真实存在于厂商文档/用户查询——resolver 必须能区分 family 与具体模型，不得把 family 自动映射到某个 variant"
+    },
+    {
+      "canonicalName": "Gemini 2.5（family 级字符串）",
+      "providerId": "google",
+      "family": "gemini-2.5",
+      "knownAliases": [
+        "gemini-2.5"
+      ],
+      "knownApiIds": [],
+      "classification": "family",
+      "notes": "同上——google 文档常见家族称谓"
+    },
+    {
+      "canonicalName": "GPT-5.6（family 级字符串）",
+      "providerId": "openai",
+      "family": "gpt-5.6",
+      "knownAliases": [
+        "gpt-5.6"
+      ],
+      "knownApiIds": [],
+      "classification": "family",
+      "notes": "当前价格数据不含裸 gpt-5.6（只有带代号变体）——但用户查询与文档会出现；收录为 family 基准"
+    },
+    {
+      "canonicalName": "GLM-5（family 级字符串）",
+      "providerId": "zhipu",
+      "family": "glm-5",
+      "knownAliases": [
+        "glm-5",
+        "GLM-5"
+      ],
+      "knownApiIds": [],
+      "classification": "family",
+      "notes": "glm-5.x 系列的家族称谓"
+    },
+    {
+      "canonicalName": "（空/泛指占位——latest）",
+      "providerId": "*",
+      "family": null,
+      "knownAliases": [
+        "latest",
+        "qwen-plus-latest",
+        "qwen-vl-ocr-latest",
+        "qwen-long-latest",
+        "qwen-tts-latest",
+        "qwen-omni-turbo-realtime-latest"
+      ],
+      "knownApiIds": [],
+      "classification": "non_model",
+      "notes": "真实数据存在 6+ 个 -latest 后缀串（qwen-plus-latest 等）——阿里百炼的滚动指针命名真实在库；latest 类永不自动猜真实模型"
+    },
+    {
+      "canonicalName": "（计费条件词——input/output）",
+      "providerId": "*",
+      "family": null,
+      "knownAliases": [
+        "input",
+        "output",
+        "cached"
+      ],
+      "knownApiIds": [],
+      "classification": "non_model",
+      "notes": "计费组件词不是模型——防误把 component 字段当模型名"
+    },
+    {
+      "canonicalName": "（页面噪音序号——deepseek-flash (N)）",
+      "providerId": "deepseek",
+      "family": "deepseek-flash",
+      "knownAliases": [
+        "(1)",
+        "(2)"
+      ],
+      "knownApiIds": [],
+      "classification": "non_model",
+      "notes": "抓取噪音模式：同名行的序号后缀。resolver 输入必须先过噪音清洗（剥离独立括号序号）再进归一——真实数据样例 deepseek-flash-(1)"
+    },
+    {
+      "canonicalName": "Qwen3 Coder Next（滚动指针型）",
+      "providerId": "alibaba",
+      "family": "qwen3-coder",
+      "knownAliases": [
+        "qwen3-coder-next"
+      ],
+      "knownApiIds": [],
+      "classification": "ambiguous",
+      "notes": "-next 是滚动指针（随时间指向不同快照）——是 model 还是 alias 机制取决于厂商语义；与 latest 同类风险，标记 ambiguous"
+    },
+    {
+      "canonicalName": "Qwen3 Max Preview",
+      "providerId": "alibaba",
+      "family": "qwen3-max",
+      "knownAliases": [
+        "qwen3-max-preview"
+      ],
+      "knownApiIds": [],
+      "classification": "ambiguous",
+      "notes": "preview 指针随发布周期变动指向——独立模型 or 阶段名待厂商文档判定"
+    }
+  ]
+}
