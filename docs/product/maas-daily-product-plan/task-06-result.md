@@ -155,14 +155,20 @@
 
 ## 4b. M7 授权包（申请生产切换授权）
 
-> **最终候选（M8-B3 第四次 freshness 拒绝后数据刷新，第七次构建；前六代已作废）——已冻结**
+> **最终候选（M8-B3 第五次 RSS Content-Type 合同修正后第八次构建；前七代已作废）——已冻结**
 >
-> - `APPROVED_COMMIT` = `77f48c7b53af85bf61476c206aa89de3cada0904`
-> - `APPROVED_RID` = `rl_77f48c7b53_24f83f7ea886`
-> - 重新构建验证（2026-09-18）：run-all-tests **22/22**（激活套件 40→**43** 项）→ build-release 完整执行 → `verify-release.sh --offline` 通过 → release 内 server 启动冒烟（REST status 200 / MCP initialize）
+> - `APPROVED_COMMIT` = `31c918e04d95ff54220cb511340df7b32780061c`
+> - `APPROVED_RID` = `rl_31c918e04d_24f83f7ea886`（datasetVersion `ds_24f83f7e…` / dataThrough 2026-09-20）
+> - 重新构建验证（2026-09-20）：run-all-tests **22/22**（激活套件 43→**44** 项）→ build-release 完整执行 → `verify-release.sh --offline` 通过 → release 内 server 启动冒烟（REST status 200 / MCP initialize）
 > - 冻结纪律：本节填入后不再追加任何影响 release 的代码变化。M8 构建产生的 RID 必须等于 APPROVED_RID（不一致即停止并排查）。
 >
-> 作废记录：`6c45634f…`/`rl_6c45634f…`（首发暴露 systemd WorkingDirectory P0 作废）← `2152ab1266…`（nginx mixed-scope P0）← `aefc7af2d`（文档提交前进）
+> 作废链（八代）：`77f48c7b5…`（第五次首发 RSS Content-Type 合同偏差——判例二类：保留现状滚动修复）← `6bc9b0b7c…`（freshness 拒绝，非代码失败）← `65fe566e5…`（双消费者 P0）← `24a7e12d86…`（双 P0）← `6c45634f…`（WorkingDirectory P0）← `2152ab1266…`（mixed-scope P0）← `aefc7af2d`
+
+### M8-B3 第五次首发：四入口实质可用，RSS Content-Type 合同偏差（2026-09-20）
+
+**activate 完全成功**——四入口实质全部可用：静态 200（新数据 09-20）、REST/MCP 全过（datasetVersion 一致）、feed 200 + 内容正确（65KB）、Skill 200。**分树权限模型生产验证通过**（www-data 读 site / agent 读 runtime / 互相隔离）。唯一残留：RSS `Content-Type` 为 `text/xml` 而非合同的 `application/rss+xml`（nginx mime.types 对 `.xml` 的映射覆盖 default_type）。
+
+**判例（第八代确立，写进 ops/README）**：verify 失败 ≠ 一律 rollback——纯非破坏性合同偏差且功能实质可用 → 保留现状、立即修复滚动发布（本例）；可用性/混版/数据错误 → 立即回退。**本次未回退**，第八代修复（feed location 局部 `types { }` 清空——作用域最小，不影响其他静态 XML）后滚动发布。
 
 ### M8-B3 首发 P0：systemd WorkingDirectory/current（2026-09-18 首次真实 activate 暴露）
 
@@ -240,7 +246,7 @@ Main process exited, code=exited, status=200/CHDIR
 **B1/B2 保留**：服务器 Node 22（/opt/node-v22.22.3 + /usr/bin/node symlink）、maasagent/maasdeploy、sudoers、systemd unit、agent.env 均已就位且不受本修复影响；新候选只需 **B2.1 幂等重跑 install-production** 补 nginx 接线（生成两个稳定配置 + 三个兼容态 include + 改造 https.conf，全程 nginx -t 失败自动回滚、旧站行为不变）。
 
 **候选 commit**：APPROVED_COMMIT = `65fe566e5…`（第五代冻结；分支 task-06-m7-candidate，PR → main）
-**候选 release**：`rl_77f48c7b53_24f83f7ea886`（datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
+**候选 release**：`rl_31c918e04d_24f83f7ea886`（datasetVersion `ds_24f83f7e…` / dataThrough 2026-09-20；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
 **配置 diff**：`ops/nginx/maasweekly-agent-http.conf`（conf.d）+ `ops/nginx/maasweekly-agent-server.conf`（snippet）+ `ops/maas-agent@.service` + `ops/install-production.sh`（nginx 接线段）+ 三个动态 include 初始兼容态；`maasweekly-https.conf` 仅 root 行替换为 include + 追加 agent snippet include（timestamp backup + nginx -t 失败自动恢复）
 **离线 smoke 输出**（2026-09-18 实测，APPROVED_RID）：
 
