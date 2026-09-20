@@ -6,7 +6,8 @@
 
 ## 一、当前状态（一句话）
 
-Task 06 **M1–M7 完成；M8 进行中**（B1 Node22 ✓ / B2 systemd+用户+sudoers ✓ / B3 前发现并修复 nginx mixed-scope P0）。最终候选在分支 `task-06-m7-candidate`（PR #1 → main、未 merge）：`APPROVED_COMMIT`=`77f48c7b53af…` / `APPROVED_RID`=`rl_77f48c7b53_24f83f7ea886`（第七代，数据至 2026-09-20）。**B3 已试四次：三次 P0 修复（已全关）+ 第四次 freshness 门禁正确拒绝（数据过期，非代码失败）。下一步=B3 第五次（数据已刷新，B2.4 激活器无需重装）**
+Task 06 **M8 首发完成（2026-09-20，第八代 rl_31c918e04d_24f83f7ea886）**——release 通道全量上线：四入口 online verify 全绿（REST/MCP/RSS/Skill）、分树权限生产验证通过（www-data 读 site、maasagent 读 runtime、互相隔离）、RSS Content-Type 合同达标（局部 types 清空）。current=rl_31c918e04d_24f83f7ea886（previous=rl_77f48c7b53，回滚链在）；蓝绿 green active（8789）；数据 dataThrough 2026-09-20。剩余：M9 真实客户端（含 Codex）、M10 四入口状态翻转、M11 回滚演练；CI deploy.yml 的 legacy rsync 需改为 release 通道（当前仍会失败，无害）。
+
 
 ## 二、关键约束（红线，重启后必须先读）
 
