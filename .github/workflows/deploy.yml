@@ -84,6 +84,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install Python deps
+        if: steps.changes.outputs.deploy == 'true'
+        run: pip install -q -r requirements.txt
 
       - name: Setup Node
         if: steps.changes.outputs.deploy == 'true'
