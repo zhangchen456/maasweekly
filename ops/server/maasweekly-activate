@@ -489,7 +489,7 @@ cur = (root / 'current').resolve()
 prev = (root / 'previous').resolve() if (root / 'previous').exists() else None
 now = time.time()
 keep_ds = set()
-for m in (root / 'releases').glob('*/data/manifest.json'):
+for m in (root / 'releases').glob('*/data/public/v1/manifest.json'):
     try:
         keep_ds |= {r['datasetVersion'] for r in json.load(open(m)).get('retainedVersions', [])}
     except Exception:
@@ -501,7 +501,7 @@ for d in (root / 'releases').iterdir():
         continue
     ds = None
     try:
-        ds = json.load(open(d / 'data' / 'manifest.json'))['datasetVersion']
+        ds = json.load(open(d / 'data' / 'public' / 'v1' / 'manifest.json'))['datasetVersion']
     except Exception:
         pass
     if ds in keep_ds:
@@ -586,9 +586,9 @@ case "$cmd" in
     if [ "$rid" != "$cur" ]; then
       "$PYTHON3" -c "
 import json
-m = json.load(open('$ROOT/releases/$rid/data/manifest.json'))
+m = json.load(open('$ROOT/releases/$rid/data/public/v1/manifest.json'))
 try:
-    cur_ds = json.load(open('$ROOT/releases/$cur/data/manifest.json'))['datasetVersion']
+    cur_ds = json.load(open('$ROOT/releases/$cur/data/public/v1/manifest.json'))['datasetVersion']
 except Exception:
     import sys; sys.exit(0)
 retained = [r['datasetVersion'] for r in m.get('retainedVersions', [])]

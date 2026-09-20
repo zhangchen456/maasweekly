@@ -126,7 +126,7 @@ def _read_contracts(root: Path) -> dict:
             contracts["skill"] = json.loads(skill.read_text())["packageVersion"]
         except (json.JSONDecodeError, KeyError):
             pass
-    dm = root / "data" / "manifest.json"
+    dm = root / "data" / "public" / "v1" / "manifest.json"
     if dm.exists():
         try:
             contracts["publicData"] = json.loads(dm.read_text())["schemaVersion"]
