@@ -135,6 +135,39 @@ def validate(registry: dict | None = None, gold: dict | None = None) -> list[str
     if keys != sorted(keys):
         errors.append('[11] registry 未按 (providerId, modelId) 排序')
 
+    # 10b/10c：alias 必须来自真实数据（audit raws——price.model 与 display 全集）
+    if not getattr(validate, '_skip_reality', False):
+        try:
+            import importlib.util as _ilu
+            _spec = _ilu.spec_from_file_location(
+                'audit_mi', BASE / 'pipeline/scripts/audit-model-identities.py')
+            _mod = _ilu.module_from_spec(_spec)
+            _spec.loader.exec_module(_mod)
+            real_raws = {r['raw'] for r in _mod.audit()['records']}
+            real_displays = set()
+            for r in _mod.audit()['records']:
+                real_displays.update(r.get('displayNames') or [])
+            for m in models:
+                # family 实体的 alias 是查询侧字符串（用户输入/文档），不在价格数据——豁免
+                if m['classification'] == 'family':
+                    continue
+                for a in m['aliases']:
+                    # source=public 的 alias 来自厂商文档/查询侧（非价格抓取）——豁免真实性到 Gold 人工域
+                    if a.get('source') == 'public':
+                        continue
+                    if a['type'] in ('raw', 'snapshot') and a['value'] not in real_raws:
+                        errors.append(f'[10b] raw/snapshot alias 不在真实数据: {a["value"]} ({m["modelId"]})')
+                    if a['type'] == 'display' and a['value'] not in real_displays:
+                        errors.append(f'[10b] display alias 不在真实数据: {a["value"]} ({m["modelId"]})')
+            for e in gld.get('entries', []):
+                if e['providerId'] == '*' or e['classification'] in ('family', 'non_model', 'ambiguous'):
+                    continue
+                for a in e['knownAliases']:
+                    if a == a.lower() and ' ' not in a and not a.startswith('(') and a not in real_raws:
+                        errors.append(f'[10c] Gold raw alias 不在真实数据: {a} ({e["canonicalName"]})')
+        except Exception as ex:  # 审计不可用时跳过（单测注入场景）
+            errors.append(f'[10b] 真实性校验失败: {ex}')
+
     return errors
 
 

@@ -296,5 +296,78 @@ class TestResolver(unittest.TestCase):
         self.assertIn('unresolved', statuses)
 
 
+class TestCoverageRound(unittest.TestCase):
+    """T07-2.5：补录轮专项（T01/T02/T03/T11/T12 + audit 稳定性）。"""
+
+    def _load_coverage(self):
+        import importlib.util as ilu
+        spec = ilu.spec_from_file_location(
+            'audit_cov', BASE / 'pipeline/scripts/audit-model-registry-coverage.py')
+        mod = ilu.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+
+    def test_unresolved_audit_stable(self):
+        """T01+T02：coverage audit 两次执行一致 + 排序稳定。"""
+        mod = self._load_coverage()
+        a = mod.audit_coverage()
+        b = mod.audit_coverage()
+        self.assertEqual(json.dumps(a, ensure_ascii=False, sort_keys=False),
+                         json.dumps(b, ensure_ascii=False, sort_keys=False))
+        rows = a['unresolved']
+        keys = [(-r['count'], r['providerId'], r['rawModel']) for r in rows]
+        self.assertEqual(keys, sorted(keys))
+
+    def test_anthropic_new_models_resolve(self):
+        """T03：Anthropic 新补录全部 exact resolve。"""
+        r = ModelResolver()
+        for raw in ('claude-opus-4', 'claude-opus-4.5', 'claude-opus-4.8',
+                    'claude-sonnet-4.6', 'claude-sonnet-5', 'claude-haiku-3.5'):
+            res = r.resolve('anthropic', raw)
+            self.assertEqual(res['status'], 'resolved', raw)
+            self.assertEqual(res['confidence'], 'exact')
+
+    def test_new_display_aliases_resolve(self):
+        """T04：新 display alias exact resolve。"""
+        r = ModelResolver()
+        res = r.resolve('anthropic', 'claude-opus-4.6', 'Claude Opus 4.6')
+        self.assertEqual(res['status'], 'resolved')
+        self.assertEqual(res['modelId'], 'anthropic:claude-opus-4.6')
+
+    def test_provider_dual_system_consistent(self):
+        """T11：qwen/doubao/glm 输入与 alibaba/volcengine/zhipu 结果一致。"""
+        r = ModelResolver()
+        for alias, canon, raw in (('qwen', 'alibaba', 'qwen3.5-plus'),
+                                   ('doubao', 'volcengine', 'doubao-seed-1.8'),
+                                   ('glm', 'zhipu', 'glm-4.7')):
+            res_a = r.resolve(alias, raw)
+            res_b = r.resolve(canon, raw)
+            self.assertEqual(res_a, res_b, f'{alias} vs {canon} 不一致')
+
+    def test_high_frequency_unresolved_reduced(self):
+        """T12：高频（count≥50）unresolved 显著减少（before Top20 全部 resolved 或
+        属风险类）。对照 before 清单中 count≥50 的 safe_manual_add 项。"""
+        r = ModelResolver()
+        # before 高频 safe_manual_add（T07-2.5a 输出的 count≥50 项抽样）
+        high_freq = ['qwen3.5-flash', 'qwen3.5-plus', 'doubao-seed-2.0-lite',
+                     'doubao-seed-1.8', 'doubao-seed-1.6', 'qwen3.7-plus',
+                     'doubao-seed-1.6-lite', 'qwen3.6-plus', 'qwen3.6-flash',
+                     'doubao-seed-1.6-flash', 'doubao-seed-2.0-code']
+        unresolved = []
+        for raw in high_freq:
+            res = r.resolve('alibaba', raw)
+            res_v = r.resolve('volcengine', raw) if raw.startswith('doubao') else res
+            if res['status'] != 'resolved' and res_v['status'] != 'resolved':
+                unresolved.append(raw)
+        self.assertEqual(unresolved, [], f'高频仍未 resolved: {unresolved}')
+
+    def test_reality_gate_no_ghost_aliases(self):
+        """T10：registry 的 pricing 来源 alias 必须在真实数据（validator 10b 复验）。"""
+        v = _load_validator()
+        errors = v.validate()
+        reality_errors = [e for e in errors if '[10b]' in e or '[10c]' in e]
+        self.assertEqual(reality_errors, [])
+
+
 if __name__ == '__main__':
     unittest.main()
