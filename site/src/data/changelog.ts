@@ -20,6 +20,38 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-09-20',
+    title: 'Agent 接口公开可用（GA）：REST / MCP / Skill / RSS 上线',
+    areas: [
+      {
+        area: 'web',
+        status: 'available',
+        note: '站点与全部入口页（/agent/ /method/ /changelog/）随 release rl_31c918e04d 发布',
+      },
+      {
+        area: 'rest',
+        status: 'available',
+        note: 'GET /api/v1/*（changes/prices/items/{id}/evidence/{id}/weekly/status）生产可用；四入口 online verify 通过，datasetVersion 与站点一致',
+      },
+      {
+        area: 'mcp',
+        status: 'available',
+        note: 'POST /api/mcp（Streamable HTTP，五工具 maas_get_*）生产可用；Claude Code 新会话真实调用验收通过（含无结果语义）。Codex 兼容验证仍阻断（无真实 OpenAI 认证环境，未以 curl 冒充）',
+      },
+      {
+        area: 'skill',
+        status: 'available',
+        note: 'Skill 包 1.0.0（/maas-skill/install.sh）生产可用；公网真实安装验收通过（manifest 校验、引用地址一致）',
+      },
+      {
+        area: 'rss',
+        status: 'available',
+        note: '/feed.xml（≤100 条）与 /feed/weekly.xml（≤30 期）生产可用；真实订阅器验收通过（pubDate 精度语义、ETag/304）',
+      },
+    ],
+    breaking: false,
+  },
+  {
     date: null,
     title: '公开接口初始状态（v1）',
     areas: [

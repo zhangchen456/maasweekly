@@ -132,14 +132,9 @@ jobs:
           fi
         id: datacommit
 
-      # ---- 6. 构建站点（数据已在上一步提交入 HEAD，dist 与数据源同版）----
-      - name: Build site
-        working-directory: site
-        run: |
-          npm ci
-          npm run build
-
-      # ---- 7. 部署到 aliyun-099（legacy 模式；release 模式的切换在 M8）----
+      # ---- 6/7. 部署（release 通道，Task 06 M10：与 deploy.yml/本地链同构）----
+      # 原「Build site」步骤移除——build-release.sh 统一构建（含全量测试），
+      # 避免双重构建；数据已提交入 HEAD，从精确 SHA 构建（§5.2 先提交后发布）。
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
@@ -148,8 +143,19 @@ jobs:
           cp ops/known_hosts.production ~/.ssh/known_hosts  # 受控 host key（T14 相关）
           chmod 600 ~/.ssh/known_hosts
 
-      - name: Deploy via rsync
-        run: rsync -az --delete -e "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts -o StrictHostKeyChecking=yes" site/dist/ ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}
+      - name: Deploy release (build → incoming → activate → smoke)
+        env:
+          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
+          MAAS_DEPLOY_MODE: release
+        run: |
+          ops/deploy-release.sh --commit "$(git rev-parse HEAD)"
+
+      - name: Online verify (four surfaces)
+        env:
+          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
+        run: |
+          RID=$(ls -td dist-release/rl_* | head -1 | xargs basename)
+          ops/verify-release.sh --online --expect-release "$RID"
 
       # ---- 8. 运行健康检查（最后一步：数据已提交部署，此时才把坏消息置红）----
       # fetch-prices 的 continue-on-error 会吞掉失败让 run 保持绿色；
