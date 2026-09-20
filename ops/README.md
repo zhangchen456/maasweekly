@@ -63,6 +63,17 @@ ops/verify-release.sh --online --expect-release <rid>
 服务器侧规则：目标 release 必须覆盖当前 datasetVersion（防数据回退丢公开 ID）；
 失败时只恢复指针/include/服务，目标 release 保留原位（P1 复验修复）。
 
+## online verify 失败的处置判例（2026-09-20 第八代确立）
+
+verify 失败 ≠ 一律 rollback。按失败性质分类：
+
+| 失败性质 | 处置 |
+|---|---|
+| 可用性（入口不可达/5xx）、新旧混版、数据错误、版本不一致 | **立即 emergency rollback**（首发无 previous 时用 legacy 回退） |
+| 纯非破坏性合同偏差（如响应头字面值），且功能实质可用、内容正确 | **保留现状**，立即修复并滚动发布下一 release |
+
+判例来源：B3 第五次首发（rl_77f48c7b53）——四入口实质全部可用（feed 200 + 内容正确 + 分树权限验证通过），仅 RSS `Content-Type` 为 `text/xml` 而非合同的 `application/rss+xml`（nginx mime.types 对 `.xml` 的映射覆盖了 `default_type`）。判定为第二类：保留上线状态，第八代修复（feed location 局部 `types { }` 清空）后滚动发布。回退判定的裁决权在用户/维护者，不在脚本。
+
 ## 故障排查
 
 | 症状 | 排查 |

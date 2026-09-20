@@ -579,6 +579,22 @@ class TestNginxThreeIncludeTx(ActivateFixture):
         # MCP no-store
         self.assertIn("no-store", rt)
 
+    def test_rss_locations_override_mime_types(self):
+        """第八代 P0：RSS Content-Type 合同——mime.types 把 .xml 映射为
+        text/xml，default_type 仅在 types 表无匹配时生效；两个 feed location
+        必须局部清空 types 再 default_type application/rss+xml（作用域最小，
+        不影响其他静态 XML）。"""
+        rid = self._setup_current()
+        rt = self.dyn_inc("agent-routes.inc")
+        for loc in ("location = /feed.xml", "location = /feed/weekly.xml"):
+            i = rt.index(loc)
+            block = rt[i:rt.index("}", rt.index("try_files", i))]
+            self.assertIn("types { }", block, f"{loc} 缺局部 types 清空（mime.types 会覆盖 default_type）")
+            self.assertIn("default_type application/rss+xml;", block)
+        # 局部清空不得泄漏到 feed 之外的 location（其他静态 XML 不受影响）
+        skill_block = rt[rt.index("location /maas-skill/"):]
+        self.assertNotIn("types { }", skill_block)
+
 
 class TestInstallProduction(unittest.TestCase):
     """install-production.sh 路径解析与 nginx 稳定配置内容断言。"""
