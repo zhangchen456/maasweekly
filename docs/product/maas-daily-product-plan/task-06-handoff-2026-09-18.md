@@ -6,8 +6,7 @@
 
 ## 一、当前状态（一句话）
 
-Task 06 **M8 首发完成（2026-09-20，第八代 rl_31c918e04d_24f83f7ea886）**——release 通道全量上线：四入口 online verify 全绿（REST/MCP/RSS/Skill）、分树权限生产验证通过（www-data 读 site、maasagent 读 runtime、互相隔离）、RSS Content-Type 合同达标（局部 types 清空）。current=rl_31c918e04d_24f83f7ea886（previous=rl_77f48c7b53，回滚链在）；蓝绿 green active（8789）；数据 dataThrough 2026-09-20。**M9/M10 均已完成（同日）**：M9 四项验收全过（MCP/Skill/RSS PASS、Codex BLOCKED）；M10 四入口 GA + changelog 2026-09-20 + 三 workflow 切 release 通道 + CI 真实成功 run（rl_a3d1a460b1，current 一致）+ T23 复核通过。**PR #1/#2/#3 已 merge 进 main**。线上 current=rl_a3d1a460b1_24f83f7ea886（previous=rl_0c3f66089e）。剩余：M11 回滚演练与最终收尾。
-
+**Task 06 完成（P0 首发完成，2026-09-20）**：M8 生产发布 PASS（六次首发五个 P0 逐层修复，最终 rl_a3d1a460b1_24f83f7ea886 全量上线）/ M9 真实消费者 PASS / M10 公开可用+CI release 通道 PASS / M11 回滚演练 PASS（30s 切换全绿、切回 32s 全绿、零中断）。Codex BLOCKED（无真实认证环境）。线上四入口 available；发布走 release 通道（CI 与本地同构）。M11 期间修复 rollback 路径漂移 bug（implementation+fixture 同错共振→fixture 改真实布局根治）。后续工作见仓库根 HANDOFF.md 与 product-plan.md 的下一任务。
 
 ## 二、关键约束（红线，重启后必须先读）
 
