@@ -145,13 +145,61 @@
 <prev>    feat: Task 06 M5 工作流收敛（main）
 ```
 
-## 4. 剩余工作（M8–M11，待授权点 A）
+## 4. 剩余工作（M10–M11）
 
-- **授权点 A（当前）**：M7 授权包见下节；批准后开 M8
-- M8 服务器安装+首发（install-production.sh → 首次 activate → 公网冒烟）
-- M9 真实客户端（含 Codex 认证环境；阻断不得冒充）
-- M10 状态翻转（四入口 pending→available + changelog 真实日期）
+- **M8 ✓ 完成（2026-09-20，第八代 rl_31c918e04d_24f83f7ea886 全量上线，四入口 online verify 全绿 + 分树权限生产验证）**
+- **M9 ✓ 完成（2026-09-20，本节下方 M9 验收记录）**
+- M10 状态翻转（public-access.ts pending→available + changelog 真实日期；**只翻有真实消费者证据的入口——Codex blocked 则不翻**）+ CI deploy.yml 改 release 通道
 - M11 回滚演练与收尾
+
+## 4a. M9 真实客户端验收记录（2026-09-20，全部对生产 rl_31c918e04d_24f83f7ea886）
+
+### Claude Code MCP：**PASS**
+
+新会话（`claude --print`，干净上下文、经 user 级 MCP 配置发现服务）真实调用，未经手工 curl 或服务端直连：
+
+- 发现并连接 `https://daily.maas.click/api/mcp` ✓（`claude mcp list` → Connected）
+- `maas_get_changes`（provider=openai，limit=3）：返回真实价格事件（gpt-5.6-sol output $30→$20 等 3 条，含证据 ID、observedAt、来源 URL）✓
+- `maas_get_prices`（model=gpt-4o）：**如实返回"未记录到"**（4 种查询组合均 0 条；当前价格库 1387 条不含 gpt-4o）——无结果语义按合同工作，客户端不用记忆补答 ✓
+- `maas_get_item`（price_17916be2…）：返回完整条目（价格变化、计费条件、关联证据、来源）✓
+- `maas_get_evidence`（ev_310be5…）：返回定价页抓取摘录（含表格数据、完整性 partial 及原因）✓
+- `maas_get_weekly`：返回最新一期（2026-09-01，日期型 ID，标题+要点）✓
+- **datasetVersion 一致性**：所有响应 `ds_24f83f7e…` / dataThrough 2026-09-20，与线上 status 一致 ✓
+- 附带验证：未配置 MCP 的干净会话按 Skill 纪律**如实报告不可用、不编造**（拒绝用记忆/curl 代替）✓；MCP 限流 1r/s burst5 行为正常（15 连发全 200，公网 RTT 自然间隔 >1s）；一次间歇连接超时后自动恢复（网络抖动，非限流）
+
+### Skill 公网安装：**PASS**
+
+真实用户路径（`curl install.sh → bash --dir`）：
+
+- manifest 可发现 / install.sh 可访问（公网）✓
+- 安装成功（`✓ maas-daily 1.0.0 已安装到 …`；manifest 7/7 文件全部就位）✓
+- SKILL.md frontmatter（name/description）正确 ✓
+- Skill 引用的 REST/MCP 地址与真实路由一致（`/api/v1/items/{id}`、`/api/v1/evidence/{id}`、`provider=openai` 等——M7 合同修正后形态）✓
+
+### RSS 真实消费：**PASS**
+
+feedparser 6.0.12（真实订阅解析器）：
+
+- `/feed.xml`：可订阅，标题「MaaS Daily — 最近变化」，100 条，最新条目 2026-09-19T22:43（昨日抓取观察时间），GUID 稳定 ✓
+- `/feed/weekly.xml`：可订阅，23 期，最新 2026-09-01 ✓
+- pubDate 精度语义符合合同：92 条 datetime 精度带 pubDate（RFC822 GMT）、8 条日期精度按合同**省略 pubDate 并在 description 标注「观察日期 YYYY-MM-DD（日期精度）」**✓
+- ETag 条件请求：`If-None-Match` → **304**（真实刷新行为）✓
+
+### Codex client：**BLOCKED**
+
+```
+Codex client: BLOCKED
+reason: 无真实 OpenAI 认证环境（Task 04 起持续），MCP/客户端条件未满足
+not tested via fake curl：是——未用 curl/SDK 冒充客户端验证
+unblock condition: 取得真实 Codex 认证环境后按 T18 验收（新会话完成
+变化→条目、价格→证据、最新周报链路）
+```
+
+BLOCKED 不影响 M9 其余判定。M10 状态翻转时 **Codex 相关入口不得翻 available**。
+
+### M9 结论
+
+关闭条件全部满足：Claude Code MCP **PASS** / Skill install **PASS** / RSS real consumer **PASS** / Codex **明确 BLOCKED**。**M9 关闭，进入 M10。**
 
 ## 4b. M7 授权包（申请生产切换授权）
 
