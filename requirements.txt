@@ -1,0 +1,8 @@
+# Python 运行依赖（pipeline + tests + scripts）
+# 安装：pip install -r requirements.txt
+# 声明原则：pipeline/ 代码 import 的三方库全部在此（本地 conda 环境可能
+# 恰好装了更多，但 CI 干净环境只保证这里列出的——Task 06 M10 教训：
+# 隐藏依赖假设在 CI 首跑暴露）。
+beautifulsoup4>=4.12
+requests>=2.31
+playwright>=1.40
