@@ -34,8 +34,8 @@ def make_release(root: Path, rid: str, git_ts: int, ds: str | None = None) -> Pa
     (d / "site" / "index.html").write_text(f"<html>{rid}</html>")
     src = rid.replace("rl_", "").replace("_", "")
     ds = ds or ("ds_" + (src * 8)[:64])
-    (d / "data").mkdir()
-    (d / "data" / "manifest.json").write_text(json.dumps({
+    (d / "data" / "public" / "v1").mkdir(parents=True)
+    (d / "data" / "public" / "v1" / "manifest.json").write_text(json.dumps({
         "schemaVersion": "1.0", "datasetVersion": ds, "dataThrough": "2026-09-16",
         "coverage": {}, "files": [],
         "retainedVersions": [{"datasetVersion": ds, "generatedAt": "2026-09-16T00:00:00Z"}],
@@ -367,10 +367,10 @@ class TestT06TwoVersions(ActivateFixture):
         make_release(self.root, v1, git_ts=1789000000, ds="ds_" + "1" * 64)
         self.activate("activate", v1)
         d2 = make_release(self.root, v2, git_ts=1789000100, ds="ds_" + "2" * 64)
-        m = json.loads((d2 / "data" / "manifest.json").read_text())
+        m = json.loads((d2 / "data" / "public" / "v1" / "manifest.json").read_text())
         m["retainedVersions"].append(
             {"datasetVersion": "ds_" + "1" * 64, "generatedAt": "x"})
-        (d2 / "data" / "manifest.json").write_text(json.dumps(m))
+        (d2 / "data" / "public" / "v1" / "manifest.json").write_text(json.dumps(m))
         mm = rm.build_manifest(
             d2, rid=v2, git_commit="c" * 40, git_ts=1789000100,
             dataset_version="ds_" + "2" * 64, data_through="2026-09-17",
@@ -863,7 +863,7 @@ class TestDualConsumerPermissions(ActivateFixture):
         self.assertEqual(oct(rel.stat().st_mode & 0o7777), "0o711")
         # 无 world-readable（模式位断言：0640/0750/0711 的 other=0）
         for f in [rel / "site/index.html", rel / "agent-api/dist/server.js",
-                  rel / "data/manifest.json"]:
+                  rel / "data/public/v1/manifest.json"]:
             self.assertEqual(f.stat().st_mode & 0o007, 0, f"other 位非零: {f}")
         for d in [rel / "site", rel / "agent-api", rel / "data"]:
             self.assertEqual(d.stat().st_mode & 0o007, 0, f"目录 other 位非零: {d}")
