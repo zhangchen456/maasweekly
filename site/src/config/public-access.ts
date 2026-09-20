@@ -47,27 +47,27 @@ export const PUBLIC_ACCESS = {
   },
   surfaces: {
     rss: {
-      status: 'pending',
+      status: 'available',
       locallyVerified: true,
-      reason: 'feed 本地构建与标准解析器验证通过；生产 URL 待 Task 06 部署并完成真实阅读器验收后可用',
+      reason: '生产 feed 于 2026-09-20 上线（rl_31c918e04d）；feedparser 真实订阅验收通过（pubDate 精度语义、ETag/304）',
       contractVersion: 'rss-v1',
     },
     skill: {
-      status: 'pending',
+      status: 'available',
       locallyVerified: true,
-      reason: 'Skill 包 1.0.0 已可下载安装；数据查询依赖 REST 生产路由，随 Task 06 部署后可用',
+      reason: '生产 Skill 包于 2026-09-20 上线；公网真实安装验收通过（manifest/install.sh/引用地址一致）',
       contractVersion: 'skill-v1（包版本 1.0.0）',
     },
     mcp: {
-      status: 'pending',
+      status: 'available',
       locallyVerified: true,
-      reason: '本地 Claude Code 真实验证通过；生产 /api/mcp 由 Task 06 部署',
+      reason: '生产 /api/mcp 于 2026-09-20 上线；Claude Code 新会话五工具真实调用验收通过',
       contractVersion: 'mcp-v1',
     },
     rest: {
-      status: 'pending',
+      status: 'available',
       locallyVerified: true,
-      reason: '本地实现与测试完成；生产 /api/v1/* 由 Task 06 部署',
+      reason: '生产 /api/v1/* 于 2026-09-20 上线；四入口 online verify 全绿（datasetVersion 与站点一致）',
       contractVersion: 'rest-v1',
     },
   },
@@ -75,15 +75,15 @@ export const PUBLIC_ACCESS = {
     {
       name: 'Claude Code',
       version: '2.1.259',
-      verifiedAt: '2026-09-16',
-      transport: 'MCP Streamable HTTP（headless 验证）',
+      verifiedAt: '2026-09-20',
+      transport: 'MCP Streamable HTTP（生产 URL 新会话五工具真实调用）',
       surface: 'mcp',
     },
   ],
   pendingClients: [
     {
       name: 'Codex',
-      unblockCondition: '需具备 OpenAI 认证环境后完成真实客户端工具发现与查询（Task 04 T18 遗留，Task 06 前阻断）',
+      unblockCondition: '无真实 OpenAI 认证环境（Task 04 T18 起持续阻断；未以 curl/SDK 冒充验证）。解除条件：取得认证环境后完成新会话工具发现与「变化→条目、价格→证据、最新周报」链路验收',
     },
   ],
 } as const;

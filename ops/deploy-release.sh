@@ -6,9 +6,15 @@
 #   ops/deploy-release.sh --local-only    # 只构建不发布（CI 倒挂/测试）
 #   ops/deploy-release.sh --commit <sha>  # 构建指定 commit（必须先 push）
 #
-# 通道（ops/deploy-mode 决定）：
+# 通道（deploy_mode() 决定：MAAS_DEPLOY_MODE 环境变量 > ops/deploy-mode 文件）：
 #   legacy  现有 rsync 到 /var/www/maasweekly（保持现状，无新机制介入）
 #   release incoming → 校验 → 蓝绿激活（服务器激活脚本负责锁/旧作业拒绝/回滚）
+#
+# release 通道首发标准链（授权点 A 后，见 task-06-result.md §4b）：
+#   git checkout <approved-sha>
+#   MAAS_DEPLOY_MODE=release ops/deploy-release.sh --commit <approved-sha>
+#   （环境变量注入通道——仓库 tracked 文件 ops/deploy-mode 永久保持 legacy，
+#    修改它会造成工作区脏，build-release.sh preflight 拒绝生产构建）
 #
 # 边界：不恢复直接 rsync 在线根目录的旁路；所有发布都经此入口。
 set -euo pipefail
@@ -66,12 +72,13 @@ if [ "$MODE" = "legacy" ]; then
   rsync -az --delete -e "$(rsync_ssh_rsh)" \
     "$RELEASE_DIR/site/" \
     "$MAAS_DEPLOY_USER@$MAAS_DEPLOY_HOST:/var/www/maasweekly/"
-  echo "✓ legacy 部署完成（$RID 的 site 已发布）"
+  echo "✓ legacy 部署完成（${RID} 的 site 已发布）"
   exit 0
 fi
 
 # ---- release 通道：incoming → 激活 → 公网冒烟 ----
-info "release 通道：上传 incoming → 激活 → 公网冒烟"
+# 仅在显式 MAAS_DEPLOY_MODE=release 时到达这里（仓库文件永不翻转）
+info "release 通道（运行时注入）：上传 incoming → 激活 → 公网冒烟"
 
 # 上传（rsync 服务端受限 shell 只放行 incoming/<rid>/）
 RSYNC_SSH="$(rsync_ssh_rsh)"
@@ -83,14 +90,14 @@ info "✓ 上传完成: $RID → incoming"
 exit_code=0
 remote_activate "$RID" || exit_code=$?
 if [ "$exit_code" -ne 0 ]; then
-  echo "✗ 激活失败 exit=$exit_code（当前站点无变化；incoming 保留可诊断）" >&2
+  echo "✗ 激活失败 exit=${exit_code}（当前站点无变化；incoming 保留可诊断）" >&2
   exit "$exit_code"
 fi
 info "✓ 激活完成: $RID"
 
 # ---- 公网冒烟（必须看到激活的数据版本，防新旧混版）----
 DS_VER="$(python3 -c "import json; print(json.load(open('$MANIFEST'))['datasetVersion'])")"
-info "公网冒烟: $MAAS_PUBLIC_ORIGIN/api/v1/status（expect datasetVersion=$DS_VER）"
+info "公网冒烟: ${MAAS_PUBLIC_ORIGIN}/api/v1/status（expect datasetVersion: ${DS_VER}）"
 
 # 缓存穿透+重试（CDN/浏览器缓存容忍窗口）
 ok=false
@@ -107,4 +114,4 @@ done
 [ "$ok" = true ] \
   || die "公网冒烟失败：status 的 datasetVersion 未见新值（候选已切但外部不可视）"
 
-echo "✓ release 通道发布完成: $RID（datasetVersion=$DS_VER）"
+echo "✓ release 通道发布完成: ${RID}（datasetVersion: ${DS_VER}）"

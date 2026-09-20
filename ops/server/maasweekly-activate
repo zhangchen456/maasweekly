@@ -7,7 +7,9 @@
 # 固定动作（无任意命令面，参数先过严格格式校验）：
 #   activate <release-id>                      # 校验→mv→蓝绿切换（含 nginx）→指针
 #   rollback <release-id> --reason "<text>"    # 显式回滚（留原因）
-#   status                                     # current/previous/槽位/最近激活
+#   status                                     # current/previous/槽位/最近激活 +
+#                                              #   只读 metadata（datasetVersion/
+#                                              #   dataThrough/gitCommit，M7）
 #   cleanup                                    # retention 清理
 #
 # 蓝绿切换完整事务（复验 P0b）：
@@ -119,9 +121,9 @@ os.replace(tmp, '$SLOTS_JSON')"
 }
 
 # ---- nginx 控制（复验 P0：候选 include 真正参与 nginx -t）----
-nginx_test() {  # 无参：校验当前生效配置（候选已就位到生效路径）
+nginx_test() {  # 无参：校验当前生效配置（三候选已就位到生效路径）
   if [ -n "$NGINX_TEST" ]; then
-    "$NGINX_TEST" test "$EFFECTIVE_INC"
+    "$NGINX_TEST" test
   else
     nginx -t
   fi
@@ -134,37 +136,117 @@ nginx_reload() {
   fi
 }
 
-# include 快照（首发边界：旧 include 可能不存在——用 .no-inc 标记"原本不
-# 存在"的快照态；.rollback.inc 存在=旧内容）。恢复时精确回到事务前状态。
-_inc_snapshot() {  # 事务开始前调用：记录旧 include 状态
-  rm -f "$ROOT/shared/nginx/.rollback.inc" "$ROOT/shared/nginx/.no-inc"
-  if [ -f "$EFFECTIVE_INC" ]; then
-    cp "$EFFECTIVE_INC" "$ROOT/shared/nginx/.rollback.inc"
-  else
-    : > "$ROOT/shared/nginx/.no-inc"
-  fi
+# include 快照（三 include 事务，M8-B3 P0：nginx mixed-scope 修复）。
+# 三个动态文件作用域严格固定，不允许混写：
+#   agent-upstream.inc  仅 http context（upstream agent_api）
+#   site-root.inc       仅 server context（root 指令）
+#   agent-routes.inc    仅 server context（/api、RSS、Skill locations）
+# 快照：每个文件记录 .rollback.<name>（旧内容存在）或 .no-inc-<name>
+# （原本不存在）；恢复时精确回到事务前状态（含"恢复到不存在"）。
+NGINX_DIR="$ROOT/shared/nginx"
+DYN_INCS=(agent-upstream.inc site-root.inc agent-routes.inc)
+
+_inc_snapshot() {  # 事务开始前调用：记录三个 include 的旧状态
+  local inc
+  for inc in "${DYN_INCS[@]}"; do
+    rm -f "$NGINX_DIR/.rollback.$inc" "$NGINX_DIR/.no-inc-$inc" "$NGINX_DIR/.candidate.$inc"
+    if [ -f "$NGINX_DIR/$inc" ]; then
+      cp "$NGINX_DIR/$inc" "$NGINX_DIR/.rollback.$inc"
+    else
+      : > "$NGINX_DIR/.no-inc-$inc"
+    fi
+  done
 }
-_inc_restore() {  # 恢复事务前的 include 状态（含"原本不存在"）
-  if [ -f "$ROOT/shared/nginx/.rollback.inc" ]; then
-    cp "$ROOT/shared/nginx/.rollback.inc" "$EFFECTIVE_INC"
+_inc_restore() {  # 全有或全无：三个文件全部恢复到事务前状态，再 reload
+  local inc restored=false
+  for inc in "${DYN_INCS[@]}"; do
+    if [ -f "$NGINX_DIR/.rollback.$inc" ]; then
+      cp "$NGINX_DIR/.rollback.$inc" "$NGINX_DIR/$inc"
+      restored=true
+    elif [ -f "$NGINX_DIR/.no-inc-$inc" ]; then
+      # 事务前该 include 不存在——恢复到不存在（候选残留必须删除）
+      rm -f "$NGINX_DIR/$inc"
+      restored=true
+    fi
+    rm -f "$NGINX_DIR/.rollback.$inc" "$NGINX_DIR/.no-inc-$inc" "$NGINX_DIR/.candidate.$inc"
+  done
+  # 只在有恢复动作时 reload（避免空 reload 干扰）；reload 失败不再重试
+  # （旧配置文件已就位，nginx 下次 reload 自然生效）
+  if [ "$restored" = true ]; then
     nginx_reload || true
-    rm -f "$ROOT/shared/nginx/.rollback.inc"
-  elif [ -f "$ROOT/shared/nginx/.no-inc" ]; then
-    # 事务前生效 include 不存在——恢复到不存在（候选残留必须删除，
-    # 否则留下指向已退回 incoming 的失效 root）
-    rm -f "$EFFECTIVE_INC"
-    rm -f "$ROOT/shared/nginx/.no-inc"
   fi
-  rm -f "$ROOT/shared/nginx/.candidate.inc"
 }
 
-EFFECTIVE_INC="$ROOT/shared/nginx/agent-upstream.inc"
-write_candidate_include() {  # <include-path> <rid> <port>：候选完整 include
-  cat > "$1" <<EOF
-# 由 maasweekly-activate 维护——勿手改
-# 静态 root 与 API upstream 绑定同一 release（防新旧混版）
-root $ROOT/releases/$2/site;
-upstream agent_api { server 127.0.0.1:$3; }
+write_candidate_incs() {  # <rid> <port>：三份候选内容全部写入生效路径
+  # 1. agent-upstream.inc —— 纯 http context（由 conf.d 稳定配置 include）
+  cat > "$NGINX_DIR/agent-upstream.inc" <<EOF
+# 由 maasweekly-activate 维护——勿手改（仅 http context）
+# API upstream 绑定当前槽位（与 site-root 同一事务切换，防新旧混版）
+upstream agent_api {
+    server 127.0.0.1:$2;
+}
+EOF
+  # 2. site-root.inc —— 纯 server context root（由 maasweekly-https.conf include）
+  cat > "$NGINX_DIR/site-root.inc" <<EOF
+# 由 maasweekly-activate 维护——勿手改（仅 server context root）
+# 静态根目录绑定当前 release（与 upstream 同一事务切换）
+root $ROOT/releases/$1/site;
+EOF
+  # 3. agent-routes.inc —— 纯 server context locations（REST/MCP/RSS/Skill）
+  cat > "$NGINX_DIR/agent-routes.inc" <<'EOF'
+# 由 maasweekly-activate 维护——勿手改（仅 server context locations）
+# REST：只代理回环 agent_api；GET/HEAD/OPTIONS；错误不缓存
+location /api/v1/ {
+    limit_req zone=api_anon burst=10 nodelay;
+    limit_req_status 429;
+    proxy_pass http://agent_api;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Request-Id $request_id;
+    proxy_connect_timeout 5s;
+    proxy_read_timeout 30s;
+    proxy_cache off;
+    limit_except GET HEAD OPTIONS { deny all; }
+}
+# MCP：独立限流桶（不消耗 REST）；POST no-store
+location = /api/mcp {
+    limit_req zone=mcp_anon burst=5 nodelay;
+    limit_req_status 429;
+    client_max_body_size 256k;
+    proxy_pass http://agent_api;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Request-Id $request_id;
+    proxy_connect_timeout 5s;
+    proxy_read_timeout 60s;
+    proxy_cache off;
+    add_header Cache-Control "no-store" always;
+    limit_except POST GET HEAD DELETE PUT { deny all; }
+}
+# RSS：content type（局部清空 types——mime.types 把 .xml 映射为 text/xml，
+# default_type 仅在 types 表无匹配时生效；精确 location 内清空才是正解，
+# 作用域最小，不影响其他静态 XML）+ 30 分钟缓存 + 稳定 ETag
+location = /feed.xml {
+    types { }
+    default_type application/rss+xml;
+    charset utf-8;
+    add_header Cache-Control "public, max-age=1800";
+    etag on;
+    try_files $uri =404;
+}
+location = /feed/weekly.xml {
+    types { }
+    default_type application/rss+xml;
+    charset utf-8;
+    add_header Cache-Control "public, max-age=1800";
+    etag on;
+    try_files $uri =404;
+}
+# Skill 包：同 release 提供（继承当前动态 root）
+location /maas-skill/ {
+    add_header Cache-Control "public, max-age=300";
+    try_files $uri =404;
+}
 EOF
 }
 
@@ -242,11 +324,12 @@ switch_service_tx() {  # <rid>：成功 0；候选失败 5；nginx 失败 7
   start_candidate "$cand_slot" "$rid" "$cand_port" || return 5
   candidate_smoke "$cand_port" || return 5
 
-  # 2. 事务前快照旧 include 状态（含"不存在"态——首发边界）
+  # 2. 事务前快照三 include 旧状态（含"不存在"态——异常与测试环境安全）
   _inc_snapshot
 
-  # 3. 候选 include 就位到生效路径 → nginx -t 校验的就是即将生效的配置
-  write_candidate_include "$EFFECTIVE_INC" "$rid" "$cand_port"
+  # 3. 三份候选全部就位到生效路径 → nginx -t 校验的就是即将生效的配置
+  #    （全有或全无：任一失败 _inc_restore 恢复全部三个）
+  write_candidate_incs "$rid" "$cand_port"
   if ! nginx_test; then
     _inc_restore
     return 7
@@ -273,7 +356,10 @@ switch_service_tx() {  # <rid>：成功 0；候选失败 5；nginx 失败 7
     return 7
   fi
   # 事务全部成功——清理快照
-  rm -f "$ROOT/shared/nginx/.rollback.inc" "$ROOT/shared/nginx/.no-inc"
+  local inc
+  for inc in "${DYN_INCS[@]}"; do
+    rm -f "$NGINX_DIR/.rollback.$inc" "$NGINX_DIR/.no-inc-$inc" "$NGINX_DIR/.candidate.$inc"
+  done
 
   # 7. 记录槽位映射 + 停旧槽（reload 已优雅排空旧 worker）
   slots_write "$rid" "$cand_slot"
@@ -320,8 +406,78 @@ except Exception:
   if [ "$keep" != "keep_release" ] && [ -d "$ROOT/releases/$rid" ]; then
     rm -rf "$ROOT/incoming/$rid"
     mv "$ROOT/releases/$rid" "$ROOT/incoming/$rid" || true
+    # mv 不改属主——退回后归还 maasdeploy（否则同 RID 重传被权限阻断；
+    # M8-B3 第二次首发 P0-2 的失败恢复闭环）
+    restore_incoming_deploy_ownership "$rid"
   fi
   log "activate $rid FAILED rc=${rc}（已恢复，可重试）"
+}
+
+# ---- release 运行时权限：双消费者分树模型（M8-B3 第三次首发 P0）----
+# release 有两个运行时消费者（第三次首发暴露——前次只收敛到 maasagent，
+# nginx worker(www-data) 无法遍历导致 RSS/Skill/静态 404）：
+#   1. agent-api（Node 进程，用户 maasagent）——读 agent-api/ 与 data/
+#   2. nginx 静态服务（worker 用户 www-data）——读 site/（feed、Skill、静态页）
+# 目标权限（无 ACL、不改 nginx 全局用户、不用 world-readable）：
+#   <rid>/            root:root    0711  （其他用户仅 traverse——不允许 list/read）
+#   <rid>/site/       root:www-data       dirs 0750 / files 0640
+#   <rid>/agent-api/  root:maasagent      dirs 0750 / files 0640 / 原可执行 0750
+#   <rid>/data/       root:maasagent      dirs 0750 / files 0640
+#   <rid>/metadata/   root:root           激活器（root）自用，不给运行用户
+# 消费者识别不猜测：site/ 的读者是 nginx worker；agent-api/ 与 data/ 的读者
+# 是 agent 进程。组名可注入（测试环境：MAAS_AGENT_GROUP/MAAS_STATIC_GROUP）。
+RUNTIME_OWNER="${MAAS_RELEASE_OWNER:-root}"
+AGENT_GROUP="${MAAS_AGENT_GROUP:-maasagent}"
+STATIC_GROUP="${MAAS_STATIC_GROUP:-www-data}"
+ROOT_GROUP="${MAAS_ROOT_GROUP:-root}"
+
+_apply_tree_permissions() {  # <dir> <group>：树内统一收敛（0750/0640/原可执行 0750）
+  local dir="$1" grp="$2"
+  chown -R "${RUNTIME_OWNER}:${grp}" "$dir" || return 6
+  find "$dir" -type d -exec chmod 0750 {} + || return 6
+  # -perm -111 是 POSIX 前缀语义（GNU/BSD 通用）
+  find "$dir" -type f ! -perm -111 -exec chmod 0640 {} + || return 6
+  find "$dir" -type f -perm -111 -exec chmod 0750 {} + || return 6
+}
+
+prepare_release_runtime_permissions() {  # <release-dir>：失败返回非 0（→ activate 失败）
+  local dir="$1" link target sub
+  # 复核符号链接不逃逸（chown -R / find 跟随 symlink 的风险）
+  while IFS= read -r -d '' link; do
+    target="$(readlink "$link")"
+    case "$target" in
+      /*) die "release 含绝对路径符号链接（拒绝权限处理，退出 6）: $link → $target" 6 ;;
+    esac
+    if [ ! -e "$link" ]; then
+      die "release 含断链符号链接（退出 6）: $link" 6
+    fi
+  done < <(find "$dir" -type l -print0 2>/dev/null)
+  # release 根：root:root 0711（其他用户只 traverse——子树权限才决定可读性）
+  chown "${RUNTIME_OWNER}:${ROOT_GROUP}" "$dir" || return 6
+  chmod 0711 "$dir" || return 6
+  # 分树收敛：静态树 → nginx 组；运行树 → agent 组
+  for sub in site; do
+    [ -d "$dir/$sub" ] || continue
+    _apply_tree_permissions "$dir/$sub" "$STATIC_GROUP" || return 6
+  done
+  for sub in agent-api data; do
+    [ -d "$dir/$sub" ] || continue
+    _apply_tree_permissions "$dir/$sub" "$AGENT_GROUP" || return 6
+  done
+  # 其余顶层目录（metadata 等）：root:root——激活器自用，不给运行用户
+  for sub in "$dir"/*; do
+    [ -d "$sub" ] || continue
+    case "$(basename "$sub")" in site|agent-api|data) continue ;; esac
+    chown -R "${RUNTIME_OWNER}:${ROOT_GROUP}" "$sub" || return 6
+    find "$sub" -type d -exec chmod 0750 {} + || return 6
+    find "$sub" -type f -exec chmod 0640 {} + || return 6
+  done
+}
+
+restore_incoming_deploy_ownership() {  # <rid>：失败恢复路径专用——incoming 归还上传用户可重传
+  # 上传属主（生产=maasdeploy；测试经 MAAS_DEPLOY_OWNER 注入）
+  local owner="${MAAS_DEPLOY_OWNER:-maasdeploy}"
+  chown -R "$owner:$owner" "$ROOT/incoming/$1" 2>/dev/null || true
 }
 
 retention_cleanup() {
@@ -401,6 +557,12 @@ case "$cmd" in
     # 原子移动
     rm -rf "$ROOT/releases/$rid"
     mv "$in" "$ROOT/releases/$rid"
+    # 运行时权限收敛（M8-B3 P0-2：root:maasagent 0750/0640，服务用户可读、
+    # 其他本地用户无权限；失败 → activate 失败走统一恢复，release 退回 incoming）
+    if ! prepare_release_runtime_permissions "$ROOT/releases/$rid"; then
+      recover_failed_activation "$rid" 6
+      die "release 运行时权限收敛失败（已恢复；退出 6）" 6
+    fi
     # 蓝绿切换事务（失败 → 统一恢复 + 退回 incoming，同 RID 可重试）
     switch_rc=0
     switch_service_tx "$rid" || switch_rc=$?
@@ -445,11 +607,24 @@ import sys; sys.exit(0 if cur_ds in retained + [m['datasetVersion']] else 1)" \
     echo "✓ rolled back to ${rid}（原因已记录）"
     ;;
   status)
-    echo "current:  $(current_release)"
+    # 只读 metadata（M7）：current release 的 datasetVersion/dataThrough/gitCommit
+    # ——经受限 shell 的固定 status 动作返回，替代客户端任意 python3 -c 读文件
+    cur="$(current_release)"
+    echo "current:  ${cur:-无}"
     echo "previous: $(readlink "$ROOT/previous" 2>/dev/null | sed 's|^releases/||' || echo 无)"
     echo "slots:    $(cat "$SLOTS_JSON" 2>/dev/null || echo 无)"
     echo "releases: $(ls "$ROOT/releases" 2>/dev/null | tr '\n' ' ')"
     echo "incoming: $(ls "$ROOT/incoming" 2>/dev/null | tr '\n' ' ')"
+    if [ -n "$cur" ]; then
+      cur_dir="$ROOT/releases/$cur"
+      echo "datasetVersion: $(manifest_field "$cur_dir" datasetVersion)"
+      echo "dataThrough:    $(manifest_field "$cur_dir" dataThrough)"
+      echo "gitCommit:      $(manifest_field "$cur_dir" gitCommit)"
+    else
+      echo "datasetVersion: 无（无 current release）"
+      echo "dataThrough:    无（无 current release）"
+      echo "gitCommit:      无（无 current release）"
+    fi
     echo "--- 最近激活 ---"
     tail -5 "$ROOT/shared/state/activations.log" 2>/dev/null || echo 无
     ;;
