@@ -223,15 +223,21 @@ location = /api/mcp {
     add_header Cache-Control "no-store" always;
     limit_except POST GET HEAD DELETE PUT { deny all; }
 }
-# RSS：content type + 30 分钟缓存 + 稳定 ETag（继承当前动态 root，不硬编码路径）
+# RSS：content type（局部清空 types——mime.types 把 .xml 映射为 text/xml，
+# default_type 仅在 types 表无匹配时生效；精确 location 内清空才是正解，
+# 作用域最小，不影响其他静态 XML）+ 30 分钟缓存 + 稳定 ETag
 location = /feed.xml {
-    default_type application/rss+xml; charset utf-8;
+    types { }
+    default_type application/rss+xml;
+    charset utf-8;
     add_header Cache-Control "public, max-age=1800";
     etag on;
     try_files $uri =404;
 }
 location = /feed/weekly.xml {
-    default_type application/rss+xml; charset utf-8;
+    types { }
+    default_type application/rss+xml;
+    charset utf-8;
     add_header Cache-Control "public, max-age=1800";
     etag on;
     try_files $uri =404;
