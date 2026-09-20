@@ -145,12 +145,22 @@
 <prev>    feat: Task 06 M5 工作流收敛（main）
 ```
 
-## 4. 剩余工作（M10–M11）
+## 4. 剩余工作（M11）
 
 - **M8 ✓ 完成（2026-09-20，第八代 rl_31c918e04d_24f83f7ea886 全量上线，四入口 online verify 全绿 + 分树权限生产验证）**
-- **M9 ✓ 完成（2026-09-20，本节下方 M9 验收记录）**
-- M10 状态翻转（public-access.ts pending→available + changelog 真实日期；**只翻有真实消费者证据的入口——Codex blocked 则不翻**）+ CI deploy.yml 改 release 通道
+- **M9 ✓ 完成（2026-09-20，M9 验收记录见 §4a）**
+- **M10 ✓ 完成（2026-09-20，验收记录见 §4a-2）**
 - M11 回滚演练与收尾
+
+## 4a-2. M10 验收记录（2026-09-20）
+
+**M10-1 状态翻转 PASS**：public-access.ts 四入口 pending→available（reason 记录真实验收证据；Claude Code verifiedAt=2026-09-20 生产 URL）；Codex 保持 pending + 真实阻断原因；changelog GA 条目（2026-09-20「Agent 接口公开可用」）。
+
+**M10-2 CI 切 release 通道 PASS**：三 workflow（deploy/daily-update/weekly-update）legacy rsync 全部替换为与本地生产验证链完全同构的 `MAAS_DEPLOY_MODE=release + deploy-release.sh --commit <SHA> + verify-release.sh --online`；安全边界保持（GitHub Actions 专用 forced-command key、只走受限 shell、无 root SSH）。
+
+**M10-3 状态版发布 PASS**：候选 rl_0c3f66089e_24f83f7ea886 发布成功 + online verify 四入口全绿 + **T23 公网复核**（/agent/ 已上线×8、徽标全 available、Codex 待验证+真实阻断原因、changelog 2026-09-20）。
+
+**M10-4 CI 真实成功 run PASS**（run 35493957494，2026-09-20）：main 上新 workflow 生效 → build-release 22/22 → 受限 SSH 上传 incoming → activate 成功 → online verify 四入口全绿 → **CI 生成 RID（rl_a3d1a460b1_24f83f7ea886）与 production current 一致**（独立复核：服务器 status + 公网 datasetVersion 一致；merge commit 产生新 RID 而 datasetVersion 不变——符合预期）。过程中暴露并修复两层 CI 环境依赖（PR #2 node_modules TS2688 / PR #3 requirements.txt bs4）——本地环境残留掩盖的隐藏假设，全部固化进仓库。
 
 ## 4a. M9 真实客户端验收记录（2026-09-20，全部对生产 rl_31c918e04d_24f83f7ea886）
 
