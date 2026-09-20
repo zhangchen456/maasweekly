@@ -1,6 +1,1074 @@
 {
-  "updated_at": "2026-09-17T23:25:29",
+  "updated_at": "2026-09-19T22:43:55",
   "days": [
+    {
+      "date": "2026-09-20",
+      "stats": {
+        "total": 68,
+        "success": 66,
+        "failed": 2,
+        "changed": 8,
+        "unchanged": 58
+      },
+      "changed": [
+        {
+          "platform": "Kimi",
+          "source_type": "pricing",
+          "url": "https://platform.kimi.com/docs/pricing/chat",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "注：缓存写入 是指将请求前缀写入上下文缓存所产生的费用。Kimi API 对重复的请求前缀自动启用上下文缓存，缓存条目按有效期（TTL）分为 5min 和 1h 两档，不指定 TTL 时默认按 5min 档。在有效期内命中缓存的输入仅按”输入价格（缓存命中）“计费，命中后缓存有效期自动续期，不再收取缓存写入费用。"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "模型推理接口对 input 和 output 均实行按量计费",
+              "before": "模型推理接口对 Input 和 Output 均实行按量计费。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。",
+              "after": "模型推理接口对 Input 和 Output 均实行按量计费。对于 K3 系列模型，缓存写入按 TTL 档位（5min / 1h）单独计费；缓存命中的输入仅按缓存命中价格计费，不再重复收取缓存写入费用。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。"
+            }
+          ],
+          "signal_preview": "注：缓存写入 是指将请求前缀写入上下文缓存所产生的费用。Kimi API 对重复的请求前缀自动启用上下文缓存，缓存条目按有效期（TTL）分为 5min 和 1h 两档，不指定 TTL 时默认按 5min 档。在有效期内命中缓存的输入仅按”输入价格（缓存命中）“计费，命中后缓存有效期自动续期，不再收取缓存写入费用。",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_faa3de9a2e10aebff0774464635b54bfe851f333e4fbd700ef0776709add205d",
+          "permalink": "/item/obs_faa3de9a2e10aebff0774464635b54bfe851f333e4fbd700ef0776709add205d/",
+          "llm_summary": "Kimi 定价页更新了 K3 系列模型的缓存计费规则，新增缓存写入按 TTL 档位单独计费，并调整了缓存命中价格，同时移除了旧的文件接口免费说明，整体反映缓存计费体系细化。"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "model_list",
+          "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 5,
+          "added_lines": [
+            "(2) 空闲时段价格为高峰时段价格的一半。北京时间周一至周五（不含中国法定节假日）9:00 - 12:00、14:00 - 18:00 为高峰时段；其余时段，包括周末及中国法定节假日全天均为空闲时段。",
+            "(3) 更多并发限制细节，请参考限速与隔离。",
+            "| 价格(2) | 百万tokens输入",
+            "| 并发限制(3) | 2500 | 500"
+          ],
+          "removed_lines": [
+            "(2) 为响应广大用户的需求，我们决定在 2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变；如有变动，我们将另行通知。感谢您的理解与支持！",
+            "(3) 空闲时段价格为高峰时段价格的一半。高峰时段为北京时间周一至周五 9:00 - 12:00、14:00 - 18:00（其余为空闲时段）。",
+            "(4) 更多并发限制细节，请参考\u0000限速与隔离。",
+            "| 价格(3) | 百万tokens输入",
+            "| 并发限制(4) | 2500 | 500"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-flash",
+              "before": "| 模型 | deepseek-flash(1) | deepseek-v4-pro(2)",
+              "after": "| 模型 | deepseek-flash(1) | deepseek-v4-pro"
+            }
+          ],
+          "signal_preview": "(2) 空闲时段价格为高峰时段价格的一半。北京时间周一至周五（不含中国法定节假日）9:00 - 12:00、14:00 - 18:00 为高峰时段；其余时段，包括周末及中国法定节假日全天均为空闲时段。",
+          "raw_added_count": 5,
+          "raw_removed_count": 6,
+          "id": "obs_6ddc099c593e25ffc3758294bf3ceccf3fca1d8f333fe92aa63408d94eaca4b1",
+          "permalink": "/item/obs_6ddc099c593e25ffc3758294bf3ceccf3fca1d8f333fe92aa63408d94eaca4b1/",
+          "llm_summary": "DeepSeek 模型列表更新，移除了关于 V4 Pro 在 2026-09-14 后继续服务的临时公告，新增了正式的空闲时段定义和并发限制说明，表明 V4 Pro 已转为长期稳定服务。"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "pricing",
+          "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 5,
+          "added_lines": [
+            "(2) 空闲时段价格为高峰时段价格的一半。北京时间周一至周五（不含中国法定节假日）9:00 - 12:00、14:00 - 18:00 为高峰时段；其余时段，包括周末及中国法定节假日全天均为空闲时段。",
+            "(3) 更多并发限制细节，请参考限速与隔离。",
+            "| 价格(2) | 百万tokens输入",
+            "| 并发限制(3) | 2500 | 500"
+          ],
+          "removed_lines": [
+            "(2) 为响应广大用户的需求，我们决定在 2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变；如有变动，我们将另行通知。感谢您的理解与支持！",
+            "(3) 空闲时段价格为高峰时段价格的一半。高峰时段为北京时间周一至周五 9:00 - 12:00、14:00 - 18:00（其余为空闲时段）。",
+            "(4) 更多并发限制细节，请参考\u0000限速与隔离。",
+            "| 价格(3) | 百万tokens输入",
+            "| 并发限制(4) | 2500 | 500"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-flash",
+              "before": "| 模型 | deepseek-flash(1) | deepseek-v4-pro(2)",
+              "after": "| 模型 | deepseek-flash(1) | deepseek-v4-pro"
+            }
+          ],
+          "signal_preview": "(2) 空闲时段价格为高峰时段价格的一半。北京时间周一至周五（不含中国法定节假日）9:00 - 12:00、14:00 - 18:00 为高峰时段；其余时段，包括周末及中国法定节假日全天均为空闲时段。",
+          "raw_added_count": 5,
+          "raw_removed_count": 6,
+          "id": "obs_6d33eb555a41778ee0d42deb31e6932df49fdceca82236f3c340bdf75a4dc11e",
+          "permalink": "/item/obs_6d33eb555a41778ee0d42deb31e6932df49fdceca82236f3c340bdf75a4dc11e/",
+          "llm_summary": "DeepSeek 定价页同步更新，新增 V4 Pro 的输入/输出/缓存命中价格（高峰与空闲两档），并移除延期公告，对应正式定价落地。"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "changelog",
+          "url": "https://api-docs.deepseek.com/zh-cn/news/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "(2) In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-v4-pro",
+              "before": "deepseek-v4-pro(2)",
+              "after": "deepseek-v4-pro"
+            }
+          ],
+          "signal_preview": "deepseek-v4-pro",
+          "raw_added_count": 1,
+          "raw_removed_count": 2,
+          "id": "obs_af378a3f947d801a9636edbcd1d2fd17be803fdd2f9b208b1145185e1b7a9dc9",
+          "permalink": "/item/obs_af378a3f947d801a9636edbcd1d2fd17be803fdd2f9b208b1145185e1b7a9dc9/",
+          "llm_summary": "DeepSeek changelog 移除了关于 V4 Pro 继续服务的英文公告，与定价页更新一致，表明该公告已过期。"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "blog",
+          "url": "https://api-docs.deepseek.com/zh-cn/news/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "(2) In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-v4-pro",
+              "before": "deepseek-v4-pro(2)",
+              "after": "deepseek-v4-pro"
+            }
+          ],
+          "signal_preview": "deepseek-v4-pro",
+          "raw_added_count": 1,
+          "raw_removed_count": 2,
+          "id": "obs_320bb4f8cd1206964f631240f96d657ce9e59d11a0b967bb27214a3e7c0223a7",
+          "permalink": "/item/obs_320bb4f8cd1206964f631240f96d657ce9e59d11a0b967bb27214a3e7c0223a7/",
+          "llm_summary": "DeepSeek blog 同样移除了 V4 Pro 延期服务的英文说明，反映该信息已不再适用。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "changelog",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-16 UTC.",
+              "after": "Last updated 2026-09-18 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-16 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-18 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-18 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_9afe538436b0ff74890030510dafba47d060c8114d7e380575949e62e46a9f27",
+          "permalink": "/item/obs_9afe538436b0ff74890030510dafba47d060c8114d7e380575949e62e46a9f27/",
+          "llm_summary": "Vertex AI changelog 更新了最后修改时间至 2026-09-18，但内容无实质变化，仅维护性更新。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 20,
+          "removed_count": 2,
+          "added_lines": [
+            "AA-Briefcase v1.1",
+            "AA-Briefcase v1.1 is an agentic knowledge work benchmark developed by Artificial Analysis. AA-Briefcase Elo is a combined metric that aggregates rubric pass rate, analytical quality Elo and presentation Elo · Higher is better",
+            "AA-Briefcase v1.1Updated",
+            "AnthropicOpenAIMetaAlibabaZ AISpaceXAIStepFunKimiGoogleDeepSeekInstitute of Foundation ModelsMiniMaxThinking MachinesMistral",
+            "Artificial Analysis Intelligence Index v4.3.2",
+            "Artificial Analysis Intelligence Index v4.3.2 includes: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them.",
+            "Artificial Analysis Intelligence Index v4.3.2 incorporates 10 evaluations: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1",
+            "Capability Indexes",
+            "Elo rating for performance on real-world work tasks · Anchored to DeepSeek V4.1 Flash (max) at 1,600 · Higher is better",
+            "GDPval-AA v2.1",
+            "GDPval-AA v2.1 Leaderboard",
+            "GDPval-AA v2.1 evaluates AI models on real-world, economically valuable tasks across a wide range of occupations",
+            "GDPval-AA v2.1Updated",
+            "GPT-6 Astra (low)See more",
+            "GoogleStepFunThinking MachinesZ AIMiniMaxOpenAIAnthropicMetaNVIDIADeepSeekAlibabaSpaceXAIMistralKimi",
+            "Incorporates 7 evaluations: AA-Omniscience, GDPval-AA v2.1, AA-Briefcase v1.1, Humanity's Last Exam, AutomationBench-AA, AA-LCR v1.1, GDP.pdf · Higher is better",
+            "Methodology updated · 19 Sept",
+            "New language model evaluation · 18 Sept",
+            "Provider Voice Arena Preference Elo",
+            "Step 5 Preview"
+          ],
+          "removed_lines": [
+            "AA-Briefcase",
+            "AA-Briefcase is an agentic knowledge work benchmark developed by Artificial Analysis. AA-Briefcase Elo is a combined metric that aggregates rubric pass rate, analytical quality Elo and presentation Elo · Higher is better"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AA-Briefcase v1.1 is an agentic knowledge work benchmark developed by Artificial Analysis. AA-Briefcase Elo is a combined metric that aggregates rubric pass rate, analytical quality Elo and presentation Elo · Higher is better",
+          "raw_added_count": 28,
+          "raw_removed_count": 25,
+          "id": "obs_e4b90449eeac5aa64124246d907762bc0f9800b5313f9ac6d5454f50abee432e",
+          "permalink": "/item/obs_e4b90449eeac5aa64124246d907762bc0f9800b5313f9ac6d5454f50abee432e/",
+          "llm_summary": "Artificial Analysis 行业页新增 AA-Briefcase v1.1 基准和 Intelligence Index v4.3.2 的说明，并列出参与评估的模型厂商，同时移除旧版 AA-Briefcase 描述，对应基准版本升级。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 32,
+          "raw_removed_count": 32,
+          "id": "obs_41e81d8a5d67994f69db969cce3c0ccee8707f6d2d2f2398686618dbbd9290d9",
+          "permalink": "/item/obs_41e81d8a5d67994f69db969cce3c0ccee8707f6d2d2f2398686618dbbd9290d9/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Kimi",
+          "logo_summary": "K3 系列缓存计费规则细化，价格调整",
+          "items": [
+            {
+              "text": "Kimi K3 模型 input 价格从 20 上调至 40 CNY/百万tokens，output 从 100 下调至 2 CNY/百万tokens，cache_read 从 2 上调至 20 CNY/百万tokens",
+              "type": "pricing"
+            },
+            {
+              "text": "Kimi API 新增缓存写入按 TTL 档位（5min/1h）单独计费，缓存命中输入仅按命中价格计费",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "DeepSeek",
+          "logo_summary": "V4 Pro 定价与并发限制更新，移除延期公告",
+          "items": [
+            {
+              "text": "DeepSeek V4 Pro 新增定价：input 0.66/1.32 USD，output 1.98/3.96 USD，cache_read 0.022/0.044 USD（高峰/空闲）",
+              "type": "pricing"
+            },
+            {
+              "text": "DeepSeek 移除 V4 Pro 在 2026-09-14 后继续服务的公告，改为正式定价与并发限制说明",
+              "type": "other"
+            },
+            {
+              "text": "DeepSeek 明确空闲时段为周一至周五 9:00-12:00、14:00-18:00 之外（含法定节假日）",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "发布 AA-Briefcase v1.1 与 Intelligence Index v4.3.2",
+          "items": [
+            {
+              "text": "Artificial Analysis 发布 AA-Briefcase v1.1 基准，用于评估 agentic 知识工作表现，Elo 锚定 DeepSeek V4.1 Flash 为 1600",
+              "type": "release"
+            },
+            {
+              "text": "Intelligence Index v4.3.2 整合 10 项评估，包括 AA-Briefcase v1.1、GDPval-AA v2.1 等",
+              "type": "release"
+            }
+          ]
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_1c181425cf150d4797b5846787f8d6f0f890abd64f00c5211216935218a8fd34",
+          "provider": "kimi",
+          "model": "kimi-k3",
+          "component": "cache_read",
+          "previous": "2.000000",
+          "current": "20.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.kimi.com/docs/pricing/chat"
+        },
+        {
+          "id": "price_607db1e56157c3cd9af3b658d5f6c60791b03e7183faa6e97d4863d2a4ef3db2",
+          "provider": "kimi",
+          "model": "kimi-k3",
+          "component": "input",
+          "previous": "20.000000",
+          "current": "40.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.kimi.com/docs/pricing/chat"
+        },
+        {
+          "id": "price_2cf607385d1b5ee4ff3c199d02ece4f20ae9364f1d4c5788021725d790788a4e",
+          "provider": "kimi",
+          "model": "kimi-k3",
+          "component": "output",
+          "previous": "100.000000",
+          "current": "2.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.kimi.com/docs/pricing/chat"
+        },
+        {
+          "id": "price_212155877b8ecc9b0be5eb1663bec06fa40cda1aa95fa8880cbbb152d8a67d73",
+          "provider": "deepseek",
+          "model": "deepseek-v4-pro",
+          "component": "cache_read",
+          "current": "0.022000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        },
+        {
+          "id": "price_c45c4dadbedf3fb2f23f3ace0d7e36bcda38cf2701d06bbc725e594d24a046fb",
+          "provider": "deepseek",
+          "model": "deepseek-v4-pro",
+          "component": "cache_read",
+          "current": "0.044000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        },
+        {
+          "id": "price_5927c0d4f716bda3f64acaf073a30bfd25caf6bec31dcf7ccd171f0c6d36ed26",
+          "provider": "deepseek",
+          "model": "deepseek-v4-pro",
+          "component": "input",
+          "current": "0.660000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        },
+        {
+          "id": "price_fafe446c8faa458e4c854813f82dfa23e91f055b39485b556efb6e423f0c9dca",
+          "provider": "deepseek",
+          "model": "deepseek-v4-pro",
+          "component": "input",
+          "current": "1.320000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        },
+        {
+          "id": "price_3f4adb6e84d50634c63d7a56a22f98a634236de82f81394c4836ed433c934a2c",
+          "provider": "deepseek",
+          "model": "deepseek-v4-pro",
+          "component": "output",
+          "current": "1.980000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        },
+        {
+          "id": "price_7b9d649e13cca8abcbd44c7ee6e669aeb8fd16e999d1f9bc966c2bd73c318d11",
+          "provider": "deepseek",
+          "model": "deepseek-v4-pro",
+          "component": "output",
+          "current": "3.960000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-19",
+      "stats": {
+        "total": 68,
+        "success": 66,
+        "failed": 2,
+        "changed": 20,
+        "unchanged": 46
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "model_list",
+          "url": "https://help.aliyun.com/zh/model-studio/models",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "| happyoyster-1.0-adventure | happyoyster-1.0-directing | happyoyster-1.0-acting邀测",
+            "实时交互的开放式世界模型，覆盖世界探索、实时导演、角色演绎三种模式"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| happyoyster-1.0-adventure | happyoyster-1.0-directing | happyoyster-1.0-acting邀测",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_bca0bf5bf71766077556925424856078c209e8fdf58831b1ad59a28b9c19b9d9",
+          "permalink": "/item/obs_bca0bf5bf71766077556925424856078c209e8fdf58831b1ad59a28b9c19b9d9/",
+          "llm_summary": "新增 happyoyster-1.0 系列三个邀测模型（adventure/directing/acting），描述为实时交互的开放式世界模型，覆盖世界探索、实时导演、角色演绎三种模式，表明阿里在交互式多模态方向的新布局。"
+        },
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 30,
+          "removed_count": 0,
+          "added_lines": [
+            "0.056146398元/次",
+            "0.112292796元/次",
+            "0.224586元/秒",
+            "0.336878元/秒",
+            "0.393025元/秒",
+            "0.625631元/秒",
+            "2.269918662元/次",
+            "HappyOyster-世界探索（Adventure）",
+            "HappyOyster-实时导演（Directing）",
+            "HappyOyster-角色演绎（Acting）",
+            "Qwen-MT-Uni",
+            "happyoyster-1.0-acting",
+            "happyoyster-1.0-adventure |",
+            "happyoyster-1.0-directing |",
+            "qwen-audio-3.1-tts-flash |",
+            "qwen-mt-uni |",
+            "世界体验（480P） |",
+            "世界体验（720P） |",
+            "世界体验：按输出视频时长（秒）计费，费用 = 视频时长 × 单价，不同分辨率（480P/720P）单价有差异。",
+            "世界体验：按输出视频时长（秒）计费，费用 = 视频时长 × 单价，仅支持 480P。",
+            "世界创建（无参考图） |",
+            "世界创建（有参考图） |",
+            "世界创建：按世界创建次数计费，费用 = 世界创建次数 × 单价。",
+            "世界创建：按世界创建次数计费，费用 = 世界创建次数 × 单价。是否使用参考图影响单价：无参考图与有参考图分别计价。",
+            "创建失败不计费，也不占用免费次数；删除音色不会恢复免费次数。",
+            "指令注入：按注入的指令次数计费，费用 = 指令次数 × 单价。",
+            "有效期：自开通百炼或模型发布之日起90天内（以较晚者为准）",
+            "计费规则：按 input_tokens 计费，按输入模态（文本/文档/图片/音频）分档计价，同步与异步价格一致。",
+            "说明以下模型所有地域均无免费额度。",
+            "请求失败不产生任何费用。"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "HappyOyster-世界探索（Adventure）",
+          "raw_added_count": 31,
+          "raw_removed_count": 0,
+          "id": "obs_f944415a37acb5540a88d6d10f9b756d4c7777b7bd763ad7c28d0a679a53d6f3",
+          "permalink": "/item/obs_f944415a37acb5540a88d6d10f9b756d4c7777b7bd763ad7c28d0a679a53d6f3/",
+          "llm_summary": "新增 HappyOyster 三个子模型及 Qwen-MT-Uni 的定价条目，包含按次和按秒计费，价格从 0.056 元/次到 2.27 元/次不等，对应新模型上架，同时 Qwen-MT-Uni 输入定价为 400 元/百万 tokens。"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "pricing",
+          "url": "https://siliconflow.cn/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Xing4.0-29B",
+            "XingChenAGI/Xing4.0-29B"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "XingChenAGI/Xing4.0-29B",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_af3f878fdd6bca4772c2e30b3102ad01fa45706aa79dfac3d1efd176343288a5",
+          "permalink": "/item/obs_af3f878fdd6bca4772c2e30b3102ad01fa45706aa79dfac3d1efd176343288a5/",
+          "llm_summary": "新增 Xing4.0-29B 模型定价条目，对应中国电信语义大模型的上架，但未显示具体价格数值，可能为按需定价或待补充。"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "blog",
+          "url": "https://siliconflow.cn/blog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "中国电信 Xing4.0-29B 语义大模型",
+            "全栈国产化・轻量 Agent 大模型・低算力高收益立即试用"
+          ],
+          "removed_lines": [
+            "中国电信 XingChen 系列语音模型",
+            "工业级语音转写 · 复杂会议与话者分离 · 上下文语义增强 · 中英及 60 种方言混合识别查看详情"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "中国电信 Xing4.0-29B 语义大模型",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_2dcb31ae24cd6768d569b7d07a3103a3fcfb7a23b0f17229405e36c0c38dc7af",
+          "permalink": "/item/obs_2dcb31ae24cd6768d569b7d07a3103a3fcfb7a23b0f17229405e36c0c38dc7af/",
+          "llm_summary": "博客新增中国电信 Xing4.0-29B 语义大模型宣传，强调全栈国产化、轻量 Agent、低算力高收益；同时删除 XingChen 系列语音模型介绍，表明产品线从语音转向语义大模型。"
+        },
+        {
+          "platform": "智谱AI",
+          "source_type": "model_list",
+          "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "| GLM-5.3-FlashX | 更快更流畅的 GLM-5.3-Flash",
+            "推理速度达 200 tokens/s | 1M | 128K"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| GLM-5.3-FlashX | 更快更流畅的 GLM-5.3-Flash",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_6b9f3d62c6ea5cdbec0083bdd9ecbf98d1f88878c98a6eafcfbee4f7698f6610",
+          "permalink": "/item/obs_6b9f3d62c6ea5cdbec0083bdd9ecbf98d1f88878c98a6eafcfbee4f7698f6610/",
+          "llm_summary": "新增 GLM-5.3-FlashX 模型，描述为更快更流畅的 GLM-5.3-Flash，推理速度 200 tokens/s，上下文 1M，输出 128K，是 Flash 系列的升级版本。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 3,
+          "added_lines": [
+            "Building AI to accelerate science and improve lives",
+            "The true measure of AI is who it helps. Here’s how it’s impacting lives today. We're focused on key areas where advanced technology can help make extraordinary progress …"
+          ],
+          "removed_lines": [
+            "Chromebooks",
+            "I/O 2026: Welcome to the agentic Gemini era",
+            "The latest from Google I/O: See how we’re helping you get more done with Gemini."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Building AI to accelerate science and improve lives",
+          "raw_added_count": 2,
+          "raw_removed_count": 3,
+          "id": "obs_ff43d126b77d4cc090a582d3cb48473c9cb50b18ad68a0b6779fc8f575541eca",
+          "permalink": "/item/obs_ff43d126b77d4cc090a582d3cb48473c9cb50b18ad68a0b6779fc8f575541eca/",
+          "llm_summary": "博客新增两篇关于 AI 加速科学和改善生活的文章，删除 Chromebook 和 I/O 2026 相关旧文，内容转向 AI 社会价值叙事。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-16 UTC.",
+              "after": "Last updated 2026-09-18 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-16 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-18 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-18 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_2be721b8aa43ed95c3fbe87f3da2140be99b258689c901aa851578d250783ba1",
+          "permalink": "/item/obs_2be721b8aa43ed95c3fbe87f3da2140be99b258689c901aa851578d250783ba1/",
+          "llm_summary": "仅更新了最后更新日期（从 9-16 到 9-18），以及反馈按钮的 HTML 结构变化，无实质模型列表变动。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "By Andrés Lagar-Cavilla • 4-minute read",
+            "Changing the game: Using agentic AI to secure infrastructure code"
+          ],
+          "removed_lines": [
+            "By Michael Gerstenhaber • 9-minute read",
+            "FinOps for the AI era: New flexible billing and cost controls for agents"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "By Andrés Lagar-Cavilla • 4-minute read",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_5c4dfeafaaebbc5c332c1a44e115b869762ef96342d25e10d43e9136c97b8f89",
+          "permalink": "/item/obs_5c4dfeafaaebbc5c332c1a44e115b869762ef96342d25e10d43e9136c97b8f89/",
+          "llm_summary": "新增文章『Using agentic AI to secure infrastructure code』，删除『FinOps for the AI era』，显示内容焦点从成本控制转向安全应用。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "Grok Voice Transcribe 2.0",
+            "September 17",
+            "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-1.0. See the Speech to Text docs."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: September 2, 2026",
+              "after": "Last updated: September 17, 2026"
+            }
+          ],
+          "signal_preview": "Grok Voice Transcribe 2.0",
+          "raw_added_count": 4,
+          "raw_removed_count": 1,
+          "id": "obs_02ae7428f5e91b437d37e5fbf41db7e93be4e72bd449a1363c955aaf884b7def",
+          "permalink": "/item/obs_02ae7428f5e91b437d37e5fbf41db7e93be4e72bd449a1363c955aaf884b7def/",
+          "llm_summary": "更新日期至 9 月 17 日，新增 Grok Voice Transcribe 2.0 条目，说明新语音转写模型可用，默认仍为 1.0，用户可指定版本。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "Grok Voice Transcribe 2.0",
+            "September 17",
+            "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-1.0. See the Speech to Text docs."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: September 2, 2026",
+              "after": "Last updated: September 17, 2026"
+            }
+          ],
+          "signal_preview": "Grok Voice Transcribe 2.0",
+          "raw_added_count": 4,
+          "raw_removed_count": 1,
+          "id": "obs_e80b6606d344d6d68e8eb55dda36058f1bac845e03103f157e06a440f8c636ce",
+          "permalink": "/item/obs_e80b6606d344d6d68e8eb55dda36058f1bac845e03103f157e06a440f8c636ce/",
+          "llm_summary": "与 changelog 同步更新，新增 Grok Voice Transcribe 2.0 发布说明，内容一致。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "Codex setup",
+            "Workload identity"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 2,
+          "id": "obs_e203d7aa760e0250d05a8c3092f3e05d805b33214a8c2a05ac8fe4befbbf3658",
+          "permalink": "/item/obs_e203d7aa760e0250d05a8c3092f3e05d805b33214a8c2a05ac8fe4befbbf3658/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "Codex setup",
+            "Workload identity"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 2,
+          "id": "obs_ba6a4863bee9ff8b822c8531ce056ec7be65f0521753f0841a9ff3021f219c3a",
+          "permalink": "/item/obs_ba6a4863bee9ff8b822c8531ce056ec7be65f0521753f0841a9ff3021f219c3a/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "Codex setup",
+            "Workload identity"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 2,
+          "id": "obs_1126c5c95ebfd2fd6a0736da04125004ef82b7e28f2c64857b2615b392dd232e",
+          "permalink": "/item/obs_1126c5c95ebfd2fd6a0736da04125004ef82b7e28f2c64857b2615b392dd232e/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "Codex setup",
+            "Workload identity"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 2,
+          "id": "obs_3a3410cd2805b179037820925910c8449758a1fe24df07e4f4773eed677f43de",
+          "permalink": "/item/obs_3a3410cd2805b179037820925910c8449758a1fe24df07e4f4773eed677f43de/"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_816e692f1253da9f74a11ddf123036ff527d77e9fffdaeb82e2cc33238f45658",
+          "permalink": "/item/obs_816e692f1253da9f74a11ddf123036ff527d77e9fffdaeb82e2cc33238f45658/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "pricing",
+          "url": "https://mistral.ai/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Get in touch"
+          ],
+          "removed_lines": [
+            "Contact sales"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_b9b88ad29dbe66b8b5cc9c9559ea741947baa57cc35e08a69c7099909583633f",
+          "permalink": "/item/obs_b9b88ad29dbe66b8b5cc9c9559ea741947baa57cc35e08a69c7099909583633f/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "changelog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Get in touch"
+          ],
+          "removed_lines": [
+            "Contact sales"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_ce3f533e3aebc0b468ee757bc4feefeaaebdadc769945233175192d11a1e29ac",
+          "permalink": "/item/obs_ce3f533e3aebc0b468ee757bc4feefeaaebdadc769945233175192d11a1e29ac/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "blog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Get in touch"
+          ],
+          "removed_lines": [
+            "Contact sales"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_35eb729c20a574a9ed2910733bb3b01b5f2bab4a05e9061024bef48b86a15a6e",
+          "permalink": "/item/obs_35eb729c20a574a9ed2910733bb3b01b5f2bab4a05e9061024bef48b86a15a6e/"
+        },
+        {
+          "platform": "讯飞星辰MaaS",
+          "source_type": "changelog",
+          "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 12,
+          "raw_removed_count": 11,
+          "id": "obs_64b31bb4697d9b67abe8cad5db21e82b33338e892ee6f73e1557225e60af7c84",
+          "permalink": "/item/obs_64b31bb4697d9b67abe8cad5db21e82b33338e892ee6f73e1557225e60af7c84/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 34,
+          "raw_removed_count": 34,
+          "id": "obs_f61af70379ec78857dd860d13d0ff67d5b2d7fa8ce1cc75b8844e121e45e15c0",
+          "permalink": "/item/obs_f61af70379ec78857dd860d13d0ff67d5b2d7fa8ce1cc75b8844e121e45e15c0/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "发布HappyOyster开放式世界模型及Qwen-MT-Uni定价",
+          "items": [
+            {
+              "text": "阿里百炼新增 happyoyster-1.0-adventure/directing/acting 三款邀测模型，覆盖世界探索、实时导演、角色演绎三种模式",
+              "type": "release"
+            },
+            {
+              "text": "新增 Qwen-MT-Uni 定价，输入 400 元/百万 tokens",
+              "type": "pricing"
+            },
+            {
+              "text": "HappyOyster 系列按次/按秒计费，价格区间 0.056 至 2.27 元",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "上架中国电信Xing4.0-29B语义大模型",
+          "items": [
+            {
+              "text": "硅基流动新增 Xing4.0-29B 语义大模型，主打全栈国产化、轻量 Agent、低算力高收益",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "智谱AI",
+          "logo_summary": "推出GLM-5.3-FlashX，推理速度提升至200 tokens/s",
+          "items": [
+            {
+              "text": "智谱AI 新增 GLM-5.3-FlashX，推理速度达 200 tokens/s，上下文 1M，输出 128K",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "博客更新：聚焦Agentic AI安全，移除FinOps文章",
+          "items": [
+            {
+              "text": "Google Vertex AI 博客新增『Using agentic AI to secure infrastructure code』，删除 FinOps 成本控制文章",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "发布Grok Voice Transcribe 2.0语音转写模型",
+          "items": [
+            {
+              "text": "xAI 发布 grok-voice-transcribe-2.0，默认仍为 1.0，用户可指定版本",
+              "type": "release"
+            }
+          ]
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_b485143eaa94bb52c81e6cfb80d5edf11625f96fb9d3a522073a8aa2d702c6be",
+          "provider": "qwen",
+          "model": "qwen-mt-uni",
+          "component": "input",
+          "current": "400.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_cc0bdf954188468c55a856d841903f434f5a0814605ad5dda77ce8cc1bd40da3",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-tts-flash",
+          "component": "input",
+          "current": "1.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_c03c318942a99c8a548637aa364f925365c5101d645dd3c05559f7a5b6a0784e",
+          "provider": "qwen",
+          "model": "qwen3.8-livetranslate-flash-realtime",
+          "component": "input",
+          "current": "4.010000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_5692368322f719f6b688dea07c2f3756b468129685b6d554e7c84cf1c9d5f465",
+          "provider": "qwen",
+          "model": "qwen3.8-livetranslate-flash-realtime",
+          "component": "output",
+          "current": "218.752000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        }
+      ]
+    },
     {
       "date": "2026-09-18",
       "stats": {

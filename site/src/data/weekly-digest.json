@@ -4,6 +4,22 @@
     "start": "2026-09-14",
     "end": "2026-09-20",
     "days": {
+      "2026-09-20": {
+        "substantive": 7,
+        "jitter": 1,
+        "failed": 2,
+        "releases": 2,
+        "pricings": 3,
+        "sunsets": 0
+      },
+      "2026-09-19": {
+        "substantive": 10,
+        "jitter": 10,
+        "failed": 2,
+        "releases": 4,
+        "pricings": 2,
+        "sunsets": 0
+      },
       "2026-09-18": {
         "substantive": 13,
         "jitter": 3,
@@ -46,12 +62,96 @@
       }
     },
     "totals": {
-      "substantive": 57,
-      "releases": 23,
-      "pricings": 9,
+      "substantive": 74,
+      "releases": 29,
+      "pricings": 14,
       "sunsets": 4
     },
     "highlights": [
+      {
+        "platform": "Kimi",
+        "date": "2026-09-20",
+        "text": "Kimi K3 模型 input 价格从 20 上调至 40 CNY/百万tokens，output 从 100 下调至 2 CNY/百万tokens，cache_read 从 2 上调至 20 CNY/百万tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "Kimi",
+        "date": "2026-09-20",
+        "text": "Kimi API 新增缓存写入按 TTL 档位（5min/1h）单独计费，缓存命中输入仅按命中价格计费",
+        "type": "pricing"
+      },
+      {
+        "platform": "DeepSeek",
+        "date": "2026-09-20",
+        "text": "DeepSeek V4 Pro 新增定价：input 0.66/1.32 USD，output 1.98/3.96 USD，cache_read 0.022/0.044 USD（高峰/空闲）",
+        "type": "pricing"
+      },
+      {
+        "platform": "DeepSeek",
+        "date": "2026-09-20",
+        "text": "DeepSeek 移除 V4 Pro 在 2026-09-14 后继续服务的公告，改为正式定价与并发限制说明",
+        "type": "other"
+      },
+      {
+        "platform": "DeepSeek",
+        "date": "2026-09-20",
+        "text": "DeepSeek 明确空闲时段为周一至周五 9:00-12:00、14:00-18:00 之外（含法定节假日）",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-20",
+        "text": "Artificial Analysis 发布 AA-Briefcase v1.1 基准，用于评估 agentic 知识工作表现，Elo 锚定 DeepSeek V4.1 Flash 为 1600",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-20",
+        "text": "Intelligence Index v4.3.2 整合 10 项评估，包括 AA-Briefcase v1.1、GDPval-AA v2.1 等",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-19",
+        "text": "阿里百炼新增 happyoyster-1.0-adventure/directing/acting 三款邀测模型，覆盖世界探索、实时导演、角色演绎三种模式",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-19",
+        "text": "新增 Qwen-MT-Uni 定价，输入 400 元/百万 tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-19",
+        "text": "HappyOyster 系列按次/按秒计费，价格区间 0.056 至 2.27 元",
+        "type": "pricing"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-09-19",
+        "text": "硅基流动新增 Xing4.0-29B 语义大模型，主打全栈国产化、轻量 Agent、低算力高收益",
+        "type": "release"
+      },
+      {
+        "platform": "智谱AI",
+        "date": "2026-09-19",
+        "text": "智谱AI 新增 GLM-5.3-FlashX，推理速度达 200 tokens/s，上下文 1M，输出 128K",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-19",
+        "text": "Google Vertex AI 博客新增『Using agentic AI to secure infrastructure code』，删除 FinOps 成本控制文章",
+        "type": "other"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-09-19",
+        "text": "xAI 发布 grok-voice-transcribe-2.0，默认仍为 1.0，用户可指定版本",
+        "type": "release"
+      },
       {
         "platform": "阿里百炼",
         "date": "2026-09-18",

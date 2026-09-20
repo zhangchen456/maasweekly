@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_faa3de9a2e10aebff0774464635b54bfe851f333e4fbd700ef0776709add205d",
+  "sourceId": "kimi-pricing",
+  "date": "2026-09-20",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Kimi",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.kimi.com/docs/pricing/chat",
+  "title": "Kimi · 定价来源更新",
+  "summary": "Kimi 定价页更新了 K3 系列模型的缓存计费规则，新增缓存写入按 TTL 档位单独计费，并调整了缓存命中价格，同时移除了旧的文件接口免费说明，整体反映缓存计费体系细化。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-19T22:43:55+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "模型推理接口对 input 和 output 均实行按量计费",
+        "before": "模型推理接口对 Input 和 Output 均实行按量计费。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。",
+        "after": "模型推理接口对 Input 和 Output 均实行按量计费。对于 K3 系列模型，缓存写入按 TTL 档位（5min / 1h）单独计费；缓存命中的输入仅按缓存命中价格计费，不再重复收取缓存写入费用。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。"
+      }
+    ],
+    "added_lines": [
+      "注：缓存写入 是指将请求前缀写入上下文缓存所产生的费用。Kimi API 对重复的请求前缀自动启用上下文缓存，缓存条目按有效期（TTL）分为 5min 和 1h 两档，不指定 TTL 时默认按 5min 档。在有效期内命中缓存的输入仅按”输入价格（缓存命中）“计费，命中后缓存有效期自动续期，不再收取缓存写入费用。"
+    ],
+    "removed_lines": [],
+    "added_count": 1,
+    "removed_count": 0,
+    "raw_added_count": 2,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-20.json"
+  },
+  "permalink": "/item/obs_faa3de9a2e10aebff0774464635b54bfe851f333e4fbd700ef0776709add205d/"
+}

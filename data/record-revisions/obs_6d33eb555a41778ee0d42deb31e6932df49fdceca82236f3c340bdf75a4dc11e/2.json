@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_6d33eb555a41778ee0d42deb31e6932df49fdceca82236f3c340bdf75a4dc11e",
+  "sourceId": "deepseek-pricing",
+  "date": "2026-09-20",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "DeepSeek",
+  "sourceType": "pricing",
+  "sourceUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+  "title": "DeepSeek · 定价来源更新",
+  "summary": "DeepSeek 定价页同步更新，新增 V4 Pro 的输入/输出/缓存命中价格（高峰与空闲两档），并移除延期公告，对应正式定价落地。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-19T22:43:55+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "deepseek-flash",
+        "before": "| 模型 | deepseek-flash(1) | deepseek-v4-pro(2)",
+        "after": "| 模型 | deepseek-flash(1) | deepseek-v4-pro"
+      }
+    ],
+    "added_lines": [
+      "(2) 空闲时段价格为高峰时段价格的一半。北京时间周一至周五（不含中国法定节假日）9:00 - 12:00、14:00 - 18:00 为高峰时段；其余时段，包括周末及中国法定节假日全天均为空闲时段。",
+      "(3) 更多并发限制细节，请参考限速与隔离。",
+      "| 价格(2) | 百万tokens输入",
+      "| 并发限制(3) | 2500 | 500"
+    ],
+    "removed_lines": [
+      "(2) 为响应广大用户的需求，我们决定在 2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变；如有变动，我们将另行通知。感谢您的理解与支持！",
+      "(3) 空闲时段价格为高峰时段价格的一半。高峰时段为北京时间周一至周五 9:00 - 12:00、14:00 - 18:00（其余为空闲时段）。",
+      "(4) 更多并发限制细节，请参考\u0000限速与隔离。",
+      "| 价格(3) | 百万tokens输入",
+      "| 并发限制(4) | 2500 | 500"
+    ],
+    "added_count": 4,
+    "removed_count": 5,
+    "raw_added_count": 5,
+    "raw_removed_count": 6
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-20.json"
+  },
+  "permalink": "/item/obs_6d33eb555a41778ee0d42deb31e6932df49fdceca82236f3c340bdf75a4dc11e/"
+}
