@@ -1,6 +1,16 @@
 # Task 06 结果报告：生产发布、运行保障与 P0 首发验收
 
-日期：2026-09-17（M1–M4）/ 2026-09-18（M5–M7）。状态：**M1–M5 完成；M6 完成（页面 §11 重构 + M7 合同修正）；M7 生产候选就绪（分支 task-06-m7-candidate，已提交未 merge）——等待授权点 A**。四入口仍为 pending（public-access.ts 未翻转）。本任务未修改生产服务器、nginx、systemd 或线上流量；DEPLOY_MODE=legacy。
+日期：2026-09-17（M1–M4）/ 2026-09-18（M5–M8）/ 2026-09-20（M9–M11）。
+
+**最终状态：Task 06 完成（P0 首发完成）——2026-09-20**
+
+- M8 Production release: **PASS**（六次首发、五个 P0 逐层修复；最终 rl_a3d1a460b1_24f83f7ea886 全量上线）
+- M9 Real consumer acceptance: **PASS**（MCP 五工具/Skill 安装/RSS 订阅）
+- M10 Public availability + CI release channel: **PASS**（四入口 available + changelog 2026-09-20 + CI 真实成功 run）
+- M11 Rollback drill: **PASS**（rollback 30s 切换 + 四入口绿 + 切回 32s + 四入口绿，零用户可见中断）
+- Codex client: **BLOCKED**（无真实 OpenAI 认证环境，未伪造）
+
+线上 current=rl_a3d1a460b1_24f83f7ea886 / previous=rl_0c3f66089e_24f83f7ea886 / datasetVersion ds_24f83f7e… / dataThrough 2026-09-20。四入口 available（Codex 客户端条目 pending）。发布通道：release（CI 与本地同构）。
 
 ## M7 生产候选（2026-09-18，分支 task-06-m7-candidate）
 
@@ -145,12 +155,33 @@
 <prev>    feat: Task 06 M5 工作流收敛（main）
 ```
 
-## 4. 剩余工作（M10–M11）
+## 4. 剩余工作（无——Task 06 关闭）
 
-- **M8 ✓ 完成（2026-09-20，第八代 rl_31c918e04d_24f83f7ea886 全量上线，四入口 online verify 全绿 + 分树权限生产验证）**
-- **M9 ✓ 完成（2026-09-20，本节下方 M9 验收记录）**
-- M10 状态翻转（public-access.ts pending→available + changelog 真实日期；**只翻有真实消费者证据的入口——Codex blocked 则不翻**）+ CI deploy.yml 改 release 通道
-- M11 回滚演练与收尾
+- **M8 ✓ / M9 ✓ / M10 ✓ / M11 ✓（验收记录见 §4a / §4a-2 / §4a-3）**
+
+## 4a-3. M11 回滚演练记录（2026-09-20）
+
+**演练实录（生产，零用户可见中断）**：
+1. rollback rl_a3d1a460b1 → rl_0c3f66089e（reason: "M11 rollback drill 2026-09-20"）：**耗时 30s**，current/previous 交换、槽位 blue↔green 切换、三 include 原子切换
+2. previous 四入口 online verify：**全绿**（datasetVersion 一致 ds_24f83f7e…）
+3. 切回 rl_a3d1a460b1（rollback 语义——切到 releases 中指定版本）：**耗时 32s**
+4. current 四入口 online verify：**全绿**；nginx -t PASS
+
+**M11 首次执行暴露的真实路径漂移 bug（高价值发现）**：rollback 被兼容性检查拒绝（rc=4）——implementation 与 fixture **同时**引用旧 `data/manifest.json`（M3 布局修正后真实路径为 `data/public/v1/manifest.json`），导致**测试假绿**（测试与实现同错共振）；真实生产 fail-safe 拒绝回滚（方向正确）。修复（commit 2e60e63fb）：激活器三处路径（rollback 兼容检查/retention retainedVersions/ds 读取）+ builder publicData 合同读取（此前 fail-soft 静默跳过）+ **fixture 改真实 release 布局**（根治同错共振）。修复后 44 项 + 22/22 全绿，服务器幂等重装（状态零变化门禁通过）后演练完成。
+
+**切回路径的语义澄清（记入运维知识）**：activate 语义 = "激活新上传 release"（要求 incoming 存在）；"切回 releases 中已有版本" 的正确入口是 rollback（第二次 rollback 即恢复）。演练中 activate 尝试被正确拒绝（incoming 不存在）——非 bug，是设计边界。
+
+**运维判例（已写 ops/README）**：verify 失败分两类——可用性/混版/数据错误 → 立即回退；非破坏性合同偏差且功能可用 → 保留现状滚动修复（第八代 RSS Content-Type 判例）。
+
+## 4a-2. M10 验收记录（2026-09-20）
+
+**M10-1 状态翻转 PASS**：public-access.ts 四入口 pending→available（reason 记录真实验收证据；Claude Code verifiedAt=2026-09-20 生产 URL）；Codex 保持 pending + 真实阻断原因；changelog GA 条目（2026-09-20「Agent 接口公开可用」）。
+
+**M10-2 CI 切 release 通道 PASS**：三 workflow（deploy/daily-update/weekly-update）legacy rsync 全部替换为与本地生产验证链完全同构的 `MAAS_DEPLOY_MODE=release + deploy-release.sh --commit <SHA> + verify-release.sh --online`；安全边界保持（GitHub Actions 专用 forced-command key、只走受限 shell、无 root SSH）。
+
+**M10-3 状态版发布 PASS**：候选 rl_0c3f66089e_24f83f7ea886 发布成功 + online verify 四入口全绿 + **T23 公网复核**（/agent/ 已上线×8、徽标全 available、Codex 待验证+真实阻断原因、changelog 2026-09-20）。
+
+**M10-4 CI 真实成功 run PASS**（run 35493957494，2026-09-20）：main 上新 workflow 生效 → build-release 22/22 → 受限 SSH 上传 incoming → activate 成功 → online verify 四入口全绿 → **CI 生成 RID（rl_a3d1a460b1_24f83f7ea886）与 production current 一致**（独立复核：服务器 status + 公网 datasetVersion 一致；merge commit 产生新 RID 而 datasetVersion 不变——符合预期）。过程中暴露并修复两层 CI 环境依赖（PR #2 node_modules TS2688 / PR #3 requirements.txt bs4）——本地环境残留掩盖的隐藏假设，全部固化进仓库。
 
 ## 4a. M9 真实客户端验收记录（2026-09-20，全部对生产 rl_31c918e04d_24f83f7ea886）
 
