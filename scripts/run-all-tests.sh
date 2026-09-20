@@ -37,6 +37,14 @@ run() {  # run <名称> <命令...>
 
 echo "══ Task 01–06 统一回归 ══"
 
+# ---- 依赖就位（幂等：本地已装则秒过；CI 干净环境必需）----
+# run-all-tests 的 site/agent-api 测试假设 node_modules 已存在——本地靠历史
+# 安装残留恰好成立，CI 全新环境会 TS2688（@types/node 缺失）。统一在此装齐。
+if ! $QUICK; then
+  [ -d site/node_modules ] || (cd site && npm ci --silent)
+  [ -d services/agent-api/node_modules ] || (cd services/agent-api && npm ci --silent)
+fi
+
 # ---- 归档与导出门禁 ----
 run "export-public-data --check" python3 pipeline/scripts/export-public-data.py --check
 run "validate-archive（Task 01）" python3 pipeline/scripts/validate-archive.py
