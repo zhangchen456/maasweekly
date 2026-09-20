@@ -1,6 +1,6 @@
 # Task 07 结果报告：模型实体关联、别名规范化与跨平台筛选
 
-日期：2026-09-20。当前状态：**T07-1（盘点与 Gold Set 基线）+ T07-2（Model Registry + Resolver Contract）完成；T07-3 及之后未开始**。
+日期：2026-09-20。当前状态：**T07-1 + T07-2 + T07-2.5（Coverage 补录）完成；T07-3 及之后未开始**。
 
 ## T07-1 交付记录
 
@@ -123,3 +123,18 @@ Ran 16 tests — OK                                 exit 0
 集中可接受长尾（当前是——主体为首批未覆盖版本）。可开始「modelId 写入
 公开数据」的方案设计；建议先补一轮 registry 覆盖（anthropic 全版本、
 deepseek 清洗后条目）再动公开 schema。
+
+
+## T07-2.5 交付记录（2026-09-20）
+
+详见 `task-07-registry-coverage.md`。核心：
+
+- **registry：50 → 121 实体**（model 107 / family 7 / pointer 7）、95 → 203 alias
+- **resolver before/after：resolved 107 → 259、unresolved 440 → 288（-152）、family/ambiguous 不变**
+- Anthropic unresolved 11 → 0（全量补录 + 3 family）；Alibaba 高频 28 项；各家低风险项
+- **DeepSeek (1)/(2) source check 实锤：页脚注释标记**（页面正文「(1) 模型名请使用 deepseek-flash」）——修复位置在 extractor（本阶段只留方案设计，未改抓取链，不涉及 fact_key）
+- Gold 扩展 50 → 57 项（含真实负样例：未登记快照/区域变体）
+- validator 增强（registry/Gold alias 真实性门禁——逮住并修正 2 处违规）
+- 测试 30+16 项；run-all-tests 26/26
+- **false positive = 0 保持**
+- 建议：可进入 T07-3 公开数据 schema 设计

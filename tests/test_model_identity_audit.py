@@ -145,9 +145,9 @@ class TestGoldSet(unittest.TestCase):
                           f"非法 classification: {e['classification']}")
 
     def test_size_range(self):
-        """任务书要求 30-50 项。"""
+        """T07-1 要求 30-50 项；T07-2.5 任务书明确要求扩展 Gold（≥50 上限放宽）。"""
         self.assertGreaterEqual(len(self.entries), 30)
-        self.assertLessEqual(len(self.entries), 50)
+        self.assertLessEqual(len(self.entries), 80)
 
     def test_multi_provider_coverage(self):
         """覆盖多个 provider（≥6 个非通配）。"""
