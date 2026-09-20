@@ -456,12 +456,11 @@
       "providerId": "deepseek",
       "family": "deepseek-flash",
       "knownAliases": [
-        "deepseek-flash-(1)",
-        "deepseek-flash (1)"
+        "deepseek-flash-(1)"
       ],
       "knownApiIds": [],
-      "classification": "model",
-      "notes": "页面序号后缀「(1)」混入模型名（抓取器把同名表格行的序号带进 raw）——数据质量真实样例：raw 含噪音，resolver 必须先清洗而非归一"
+      "classification": "ambiguous",
+      "notes": "真实数据只存在 deepseek-flash-(1)（页面序号噪音）——裸名不在库。序号是否可剥离未判定 → ambiguous；registry 不收录（resolver 保持 unresolved）"
     },
     {
       "canonicalName": "DeepSeek V4 Pro (2)",
@@ -604,6 +603,18 @@
       "knownApiIds": [],
       "classification": "ambiguous",
       "notes": "preview 指针随发布周期变动指向——独立模型 or 阶段名待厂商文档判定"
+    },
+    {
+      "canonicalName": "Claude Sonnet 4",
+      "providerId": "anthropic",
+      "family": "claude-sonnet",
+      "knownAliases": [
+        "claude-sonnet-4",
+        "Claude Sonnet 4"
+      ],
+      "knownApiIds": [],
+      "classification": "model",
+      "notes": "任务书指定难例：与 claude-sonnet-4.5 只差小数版本——真实数据在库，独立模型禁止 fuzzy 合并"
     }
   ]
 }

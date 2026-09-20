@@ -1,0 +1,965 @@
+{
+  "schemaVersion": "1.0",
+  "models": [
+    {
+      "modelId": "alibaba:qwen-flash",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen Flash",
+      "familyId": "alibaba:qwen-flash",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "qwen-flash",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen-flash-2025-07-28",
+          "type": "snapshot",
+          "source": "pricing"
+        }
+      ],
+      "notes": "无版本号 family（qwen-flash vs qwen3-flash 是不同代——高风险自动误绑样例）"
+    },
+    {
+      "modelId": "alibaba:qwen-long-latest",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen Long（latest 指针）",
+      "familyId": "alibaba:qwen-long",
+      "classification": "pointer",
+      "aliases": [
+        {
+          "value": "qwen-long-latest",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "同上"
+    },
+    {
+      "modelId": "alibaba:qwen-omni-turbo-realtime-latest",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen Omni Turbo Realtime（latest 指针）",
+      "familyId": "alibaba:qwen-omni",
+      "classification": "pointer",
+      "aliases": [
+        {
+          "value": "qwen-omni-turbo-realtime-latest",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "同上"
+    },
+    {
+      "modelId": "alibaba:qwen-plus",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen Plus",
+      "familyId": "alibaba:qwen-plus",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "qwen-plus",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen-plus-2024-12-20",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen-plus-2025-01-12",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen-plus-2025-01-25",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen-plus-2025-04-28",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen-plus-2025-07-14",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen-plus-2025-07-28",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen-plus-2025-09-11",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen-plus-2025-12-01",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "Qwen Plus",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "8 个日期快照变体 + 无后缀基名——高频难例：无后缀与带日期是否同一模型需人工判定（百炼文档：无后缀=最新快照）"
+    },
+    {
+      "modelId": "alibaba:qwen-plus-latest",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen Plus（latest 指针）",
+      "familyId": "alibaba:qwen-plus",
+      "classification": "pointer",
+      "aliases": [
+        {
+          "value": "qwen-plus-latest",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "滚动指针：指向 qwen-plus 家族当前最新快照，随时间变动——绝不解析为固定模型"
+    },
+    {
+      "modelId": "alibaba:qwen-tts-latest",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen TTS（latest 指针）",
+      "familyId": "alibaba:qwen-tts",
+      "classification": "pointer",
+      "aliases": [
+        {
+          "value": "qwen-tts-latest",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "同上"
+    },
+    {
+      "modelId": "alibaba:qwen-vl-ocr-latest",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen VL OCR（latest 指针）",
+      "familyId": "alibaba:qwen-vl-ocr",
+      "classification": "pointer",
+      "aliases": [
+        {
+          "value": "qwen-vl-ocr-latest",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "同上"
+    },
+    {
+      "modelId": "alibaba:qwen3",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3（family 级字符串）",
+      "familyId": "alibaba:qwen3",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "qwen3",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "family 级字符串真实存在于厂商文档/用户查询——resolver 必须能区分 family 与具体模型，不得把 family 自动映射到某个 variant"
+    },
+    {
+      "modelId": "alibaba:qwen3-coder-30b-a3b-instruct",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 Coder 30B A3B Instruct",
+      "familyId": "alibaba:qwen3-coder",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "qwen3-coder-30b-a3b-instruct",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "开源权重的参数规格形态（-30b-a3b）与闭源 tier 形态（plus/flash）混在同一 family——命名体系内部不一致样例"
+    },
+    {
+      "modelId": "alibaba:qwen3-coder-480b-a35b-instruct",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 Coder 480B A35B Instruct",
+      "familyId": "alibaba:qwen3-coder",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "qwen3-coder-480b-a35b-instruct",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "与 30b-a3b 同 family 不同参数规模——fuzzy 风险：30b/480b 只差数字"
+    },
+    {
+      "modelId": "alibaba:qwen3-coder-flash",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 Coder Flash",
+      "familyId": "alibaba:qwen3-coder",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "qwen3-coder-flash",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen3-coder-flash-2025-07-28",
+          "type": "snapshot",
+          "source": "pricing"
+        }
+      ],
+      "notes": "同 family 不同 tier（plus/flash）——variant 区分样例"
+    },
+    {
+      "modelId": "alibaba:qwen3-coder-next",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 Coder Next（滚动指针型）",
+      "familyId": "alibaba:qwen3-coder",
+      "classification": "pointer",
+      "aliases": [
+        {
+          "value": "qwen3-coder-next",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "-next 是滚动指针（随时间指向不同快照）——是 model 还是 alias 机制取决于厂商语义；与 latest 同类风险，标记 ambiguous"
+    },
+    {
+      "modelId": "alibaba:qwen3-coder-plus",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 Coder Plus",
+      "familyId": "alibaba:qwen3-coder",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "qwen3-coder-plus",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen3-coder-plus-2025-07-22",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen3-coder-plus-2025-09-23",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "Qwen3 Coder Plus",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "日期后缀是阿里百炼的版本快照写法（同一逻辑模型的 stable snapshot）——本判定为人工基准结论，resolver 不得自动合并"
+    },
+    {
+      "modelId": "alibaba:qwen3-deep-research",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 Deep Research",
+      "familyId": "alibaba:qwen3-deep-research",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "qwen-deep-research",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen-deep-research-2025-12-15",
+          "type": "snapshot",
+          "source": "pricing"
+        }
+      ],
+      "notes": "基名带 qwen- 前缀（旧代）而 family 归 qwen3——跨代命名真实样例"
+    },
+    {
+      "modelId": "alibaba:qwen3-max",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 Max",
+      "familyId": "alibaba:qwen3-max",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "qwen3-max",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen3-max-2025-09-23",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen3-max-2026-01-23",
+          "type": "snapshot",
+          "source": "pricing"
+        }
+      ],
+      "notes": "基名与日期快照；-preview 变体单列为 ambiguous 项（滚动指针不并入本 model）"
+    },
+    {
+      "modelId": "alibaba:qwen3-max-preview",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 Max Preview",
+      "familyId": "alibaba:qwen3-max",
+      "classification": "pointer",
+      "aliases": [
+        {
+          "value": "qwen3-max-preview",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "preview 指针随发布周期变动指向——独立模型 or 阶段名待厂商文档判定"
+    },
+    {
+      "modelId": "alibaba:qwen3-tts-flash",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 TTS Flash",
+      "familyId": "alibaba:qwen3-tts",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "qwen3-tts-flash",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen3-tts-flash-2025-09-18",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen3-tts-flash-2025-11-27",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen3-tts-flash-realtime-2025-09-18",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen3-tts-flash-realtime-2025-11-27",
+          "type": "snapshot",
+          "source": "pricing"
+        }
+      ],
+      "notes": "realtime 变体与基名并存——语音模态的变体层级比文本深（flash/realtime × 日期双维度）"
+    },
+    {
+      "modelId": "alibaba:qwen3-vl-flash",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 VL Flash",
+      "familyId": "alibaba:qwen3-vl",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "qwen3-vl-flash",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen3-vl-flash-2025-10-15",
+          "type": "snapshot",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen3-vl-flash-2026-01-22",
+          "type": "snapshot",
+          "source": "pricing"
+        }
+      ],
+      "notes": "多模态子 family（vl）——与 qwen3-coder 平行"
+    },
+    {
+      "modelId": "alibaba:qwen3.7-flash",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3.7 Flash",
+      "familyId": "alibaba:qwen3.7",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "qwen3.7-flash",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "qwen3.7-flash-2026-07-15",
+          "type": "snapshot",
+          "source": "pricing"
+        }
+      ],
+      "notes": "小数版本号 family（qwen3.5/3.6/3.7 并存）——3.5 与 35 的归一陷阱样例"
+    },
+    {
+      "modelId": "anthropic:claude-fable-5.1",
+      "providerId": "anthropic",
+      "canonicalName": "Claude Fable 5.1",
+      "familyId": "anthropic:claude-fable",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "claude-fable-5.1",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "Claude Fable 5.1",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "当前数据真实存在的最新 Claude 系"
+    },
+    {
+      "modelId": "anthropic:claude-haiku-4.5",
+      "providerId": "anthropic",
+      "canonicalName": "Claude Haiku 4.5",
+      "familyId": "anthropic:claude-haiku",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "claude-haiku-4.5",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "Claude Haiku 4.5",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "tier 词（haiku）语义稳定"
+    },
+    {
+      "modelId": "anthropic:claude-mythos-5.1",
+      "providerId": "anthropic",
+      "canonicalName": "Claude Mythos 5.1",
+      "familyId": "anthropic:claude-mythos",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "claude-mythos-5.1",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "Claude Mythos 5.1",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "新 tier 名（mythos）——tier 词表开放性样例"
+    },
+    {
+      "modelId": "anthropic:claude-opus-4.1",
+      "providerId": "anthropic",
+      "canonicalName": "Claude Opus 4.1",
+      "familyId": "anthropic:claude-opus",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "claude-opus-4.1",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "Claude Opus 4.1",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "anthropic 体系 raw 即 API id 形态——最易规范化的 provider 样例"
+    },
+    {
+      "modelId": "anthropic:claude-sonnet-4",
+      "providerId": "anthropic",
+      "canonicalName": "Claude Sonnet 4",
+      "familyId": "anthropic:claude-sonnet",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "claude-sonnet-4",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "Claude Sonnet 4",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "与 claude-sonnet-4.5 只差小数版本——独立模型"
+    },
+    {
+      "modelId": "anthropic:claude-sonnet-4.5",
+      "providerId": "anthropic",
+      "canonicalName": "Claude Sonnet 4.5",
+      "familyId": "anthropic:claude-sonnet",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "claude-sonnet-4.5",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "Claude Sonnet 4.5",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "任务书指定难例：与 claude-sonnet-4 只差小数——禁止 fuzzy 自动合并"
+    },
+    {
+      "modelId": "deepseek:deepseek-v4-pro",
+      "providerId": "deepseek",
+      "canonicalName": "DeepSeek V4 Pro",
+      "familyId": "deepseek:deepseek-v4",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "deepseek-v4-pro",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "deepseek 体系 raw 即常用名"
+    },
+    {
+      "modelId": "google:gemini-2.5",
+      "providerId": "google",
+      "canonicalName": "Gemini 2.5（family 级字符串）",
+      "familyId": "google:gemini-2.5",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "gemini-2.5",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "同上——google 文档常见家族称谓"
+    },
+    {
+      "modelId": "google:gemini-2.5-computer-use-preview",
+      "providerId": "google",
+      "canonicalName": "Gemini 2.5 Computer Use Preview",
+      "familyId": "google:gemini-2.5",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "gemini-2.5-computer-use-preview",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "Gemini 2.5 Computer Use Preview",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "用途型变体（computer-use）+ preview 是 Google 产品名组成部分（官方命名，非滚动指针——区别于阿里 -preview 快照语义）"
+    },
+    {
+      "modelId": "google:gemini-2.5-flash",
+      "providerId": "google",
+      "canonicalName": "Gemini 2.5 Flash",
+      "familyId": "google:gemini-2.5",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "gemini-2.5-flash",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "Gemini 2.5 Flash",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "flash 与 flash-lite 是两个模型——lite 后缀语义样例；display 连字符位置不同（Flash-Lite vs FlashLite）"
+    },
+    {
+      "modelId": "google:gemini-2.5-flash-lite",
+      "providerId": "google",
+      "canonicalName": "Gemini 2.5 Flash Lite",
+      "familyId": "google:gemini-2.5",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "gemini-2.5-flash-lite",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "Gemini 2.5 Flash-Lite",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "独立于 flash 的轻量档——两模型禁止 fuzzy 合并"
+    },
+    {
+      "modelId": "google:gemini-2.5-pro",
+      "providerId": "google",
+      "canonicalName": "Gemini 2.5 Pro",
+      "familyId": "google:gemini-2.5",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "gemini-2.5-pro",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "Gemini 2.5 Pro",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "google 双源（Gemini API + Vertex）同 providerId——展示名带空格"
+    },
+    {
+      "modelId": "google:gemini-3-flash-preview",
+      "providerId": "google",
+      "canonicalName": "Gemini 3 Flash Preview",
+      "familyId": "google:gemini-3",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "gemini-3-flash-preview",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "跨大版本 family（gemini-2.5 vs gemini-3）；Google preview 属产品命名"
+    },
+    {
+      "modelId": "kimi:kimi-k2.7-code",
+      "providerId": "kimi",
+      "canonicalName": "Kimi K2.7 Code",
+      "familyId": "kimi:kimi-k2.7",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "kimi-k2.7-code",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "kimi-k2.7-code-highspeed",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "highspeed 变体——计费变体还是独立模型待复核"
+    },
+    {
+      "modelId": "kimi:kimi-k3",
+      "providerId": "kimi",
+      "canonicalName": "Kimi K3",
+      "familyId": "kimi:kimi-k3",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "kimi-k3",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "kimi 体系简洁（k2.6/k2.7-code/k3）"
+    },
+    {
+      "modelId": "openai:gpt-5.6",
+      "providerId": "openai",
+      "canonicalName": "GPT-5.6（family 级字符串）",
+      "familyId": "openai:gpt-5.6",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "gpt-5.6",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "当前价格数据不含裸 gpt-5.6（只有带代号变体）——但用户查询与文档会出现；收录为 family 基准"
+    },
+    {
+      "modelId": "openai:gpt-5.6-luna",
+      "providerId": "openai",
+      "canonicalName": "GPT-5.6 Luna",
+      "familyId": "openai:gpt-5.6",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "gpt-5.6-luna",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "同上"
+    },
+    {
+      "modelId": "openai:gpt-5.6-sol",
+      "providerId": "openai",
+      "canonicalName": "GPT-5.6 Sol",
+      "familyId": "openai:gpt-5.6",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "gpt-5.6-sol",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "当前高频（cnt=71）"
+    },
+    {
+      "modelId": "openai:gpt-5.6-terra",
+      "providerId": "openai",
+      "canonicalName": "GPT-5.6 Terra",
+      "familyId": "openai:gpt-5.6",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "gpt-5.6-terra",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "同 family 代号变体（sol/terra/luna/cyber）——代号不是 tier 词，fuzzy 无规律可循"
+    },
+    {
+      "modelId": "openai:gpt-6-astra",
+      "providerId": "openai",
+      "canonicalName": "GPT-6 Astra",
+      "familyId": "openai:gpt-6",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "gpt-6-astra",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "openai 体系无 display name（raw=API id）——与 anthropic 同为高可信结构化"
+    },
+    {
+      "modelId": "volcengine:doubao-1.5-pro-32k",
+      "providerId": "volcengine",
+      "canonicalName": "Doubao 1.5 Pro 32K",
+      "familyId": "volcengine:doubao-1.5",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "doubao-1.5-pro-32k",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "doubao-pro-32k",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "同 family 两代命名并存（doubao-pro-32k 无代号 vs doubao-1.5-pro-32k）——真实跨代别名样例"
+    },
+    {
+      "modelId": "volcengine:doubao-embedding-vision",
+      "providerId": "volcengine",
+      "canonicalName": "Doubao Embedding Vision",
+      "familyId": "volcengine:doubao-embedding",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "doubao-embedding-vision",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "embedding 模型——非 chat 类但确是具体模型"
+    },
+    {
+      "modelId": "volcengine:doubao-seed-1.6-vision",
+      "providerId": "volcengine",
+      "canonicalName": "Doubao Seed 1.6 Vision",
+      "familyId": "volcengine:doubao-seed-1.6",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "doubao-seed-1.6-vision",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "vision 独立条目；真实数据另有 doubao-1.5-vision-pro（1.5 代的 pro 档）——跨代相邻易误并"
+    },
+    {
+      "modelId": "volcengine:doubao-seed-2.0-mini",
+      "providerId": "volcengine",
+      "canonicalName": "Doubao Seed 2.0 Mini",
+      "familyId": "volcengine:doubao-seed-2.0",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "doubao-seed-2.0-mini",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "同 family tier 变体"
+    },
+    {
+      "modelId": "volcengine:doubao-seed-2.0-pro",
+      "providerId": "volcengine",
+      "canonicalName": "Doubao Seed 2.0 Pro",
+      "familyId": "volcengine:doubao-seed-2.0",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "doubao-seed-2.0-pro",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "火山方舟体系；ledger 侧 pricing providerId=doubao（双体系样例）"
+    },
+    {
+      "modelId": "zhipu:glm-4.5v",
+      "providerId": "zhipu",
+      "canonicalName": "GLM-4.5V",
+      "familyId": "zhipu:glm-4.5v",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "glm-4.5v",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "GLM-4.5V",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "视觉 family（v 后缀）——大小写差异真实存在（raw glm-4.5v vs display GLM-4.5V）"
+    },
+    {
+      "modelId": "zhipu:glm-4.6v-flashx",
+      "providerId": "zhipu",
+      "canonicalName": "GLM-4.6V FlashX",
+      "familyId": "zhipu:glm-4.6v",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "glm-4.6v-flashx",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "GLM-4.6V-FlashX",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "FlashX 是智谱特有 tier 名（非通用 flash）——tier 词表因 provider 而异"
+    },
+    {
+      "modelId": "zhipu:glm-5",
+      "providerId": "zhipu",
+      "canonicalName": "GLM-5（family 级字符串）",
+      "familyId": "zhipu:glm-5",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "glm-5",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "GLM-5",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "glm-5.x 系列的家族称谓"
+    },
+    {
+      "modelId": "zhipu:glm-5.2",
+      "providerId": "zhipu",
+      "canonicalName": "GLM-5.2",
+      "familyId": "zhipu:glm-5",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "glm-5.2",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "GLM-5.2",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "family_like 形态的真实样例（审计中 glm-5.x 系列被判 family_like——小数版本无 tier 后缀）"
+    },
+    {
+      "modelId": "zhipu:glm-5.3",
+      "providerId": "zhipu",
+      "canonicalName": "GLM-5.3",
+      "familyId": "zhipu:glm-5",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "glm-5.3",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "GLM-5.3",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "ledger 侧 pricing providerId=glm（双体系样例）；display 名大小写不同（GLM-5.3）"
+    },
+    {
+      "modelId": "zhipu:glm-5.3-flash",
+      "providerId": "zhipu",
+      "canonicalName": "GLM-5.3 Flash",
+      "familyId": "zhipu:glm-5",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "glm-5.3-flash",
+          "type": "raw",
+          "source": "pricing"
+        },
+        {
+          "value": "GLM-5.3-Flash",
+          "type": "display",
+          "source": "public"
+        }
+      ],
+      "notes": "glm-5 family 内小数版本 + tier 混合命名"
+    }
+  ]
+}

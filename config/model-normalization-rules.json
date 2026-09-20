@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0",
+  "comment": "模型名安全归一白名单（Task 07 T07-2）——只放无 identity 语义的 normalization；噪音序号/日期/latest/preview 等绝不在此裁剪",
+  "rules": {
+    "trim": true,
+    "unicodeNFC": true,
+    "collapseWhitespace": true,
+    "lowercase": true
+  },
+  "explicitlyForbidden": [
+    "stripDateSuffix（日期后缀是快照语义，人工判定域）",
+    "stripLatest/next/preview（滚动指针语义）",
+    "stripRegionSuffix（-us 等区域变体）",
+    "stripNoiseIndex（-(1)/(2) 可能对应不同定价行）",
+    "stripEmoji（可能是产品名真实组成）",
+    "stripGenerationNumber / contextWindowMarker"
+  ]
+}
