@@ -155,10 +155,10 @@
 
 ## 4b. M7 授权包（申请生产切换授权）
 
-> **最终候选（M8-B3 第三次首发双消费者 P0 修复后第六次构建；前五代已作废）——已冻结**
+> **最终候选（M8-B3 第四次 freshness 拒绝后数据刷新，第七次构建；前六代已作废）——已冻结**
 >
-> - `APPROVED_COMMIT` = `6bc9b0b7cc5f83ee050b174af4e7c075fd5f5978`
-> - `APPROVED_RID` = `rl_6bc9b0b7cc_8b9fb7b09ead`
+> - `APPROVED_COMMIT` = `77f48c7b53af85bf61476c206aa89de3cada0904`
+> - `APPROVED_RID` = `rl_77f48c7b53_24f83f7ea886`
 > - 重新构建验证（2026-09-18）：run-all-tests **22/22**（激活套件 40→**43** 项）→ build-release 完整执行 → `verify-release.sh --offline` 通过 → release 内 server 启动冒烟（REST status 200 / MCP initialize）
 > - 冻结纪律：本节填入后不再追加任何影响 release 的代码变化。M8 构建产生的 RID 必须等于 APPROVED_RID（不一致即停止并排查）。
 >
@@ -186,6 +186,12 @@ Main process exited, code=exited, status=200/CHDIR
 - install-production 安装 wrapper 0755；**B2.1 幂等重跑即覆盖旧 unit/wrapper**（无需手工 patch 服务器）
 - 激活测试 27→**34** 项：候选无 current 启动（首发边界）/ **防混版核心**（current=A、slot env=B → status 必须返回 B 的 datasetVersion）/ wrapper 缺 env 拒启 / unit 静态合同（无 current 引用、ExecStart=wrapper、无 WorkingDirectory）/ installer 安装 wrapper
 - 顺手修 bash 3.2 全角标点前裸变量 3 处（deploy-release:93、lib-release:55；全仓扫描清零）
+
+### M8-B3 第四次首发：freshness 门禁正确拒绝（2026-09-20，非代码失败）
+
+第六代候选（6bc9b0b7c，09-18 冻结）到 09-20 首发时，`openrouter.json` snapshot_date（09-16）超过 4 天新鲜度门限——**build 测试阶段即拒绝**（无上传、无 activate、零线上影响）。这是门禁在正确工作（防过期数据发布），非候选代码缺陷。**第七代（77f48c7b5）= 合入 09-18/19/20 抓取数据 + 公开投影刷新（ds_24f83f7e…，dataThrough 2026-09-20）+ 两个新上榜 app 的 logo 注册（CodeGPT / draco-cascade-bench）**，ops/scripts/tests 零变化——B2.4 已就位的第六代激活器无需重装。
+
+**顺带背景**：09-18 23:00 起 CI 每日抓取的 deploy 步骤失败（新受限 shell 只允许 incoming，legacy rsync 被拒）——数据正常入库 main，仅站点更新滞后；第七代首发成功即把三天数据一次带上线。
 
 ### M8-B3 第三次首发 P0：双消费者权限（2026-09-18 第三次真实 activate 暴露）
 
@@ -234,7 +240,7 @@ Main process exited, code=exited, status=200/CHDIR
 **B1/B2 保留**：服务器 Node 22（/opt/node-v22.22.3 + /usr/bin/node symlink）、maasagent/maasdeploy、sudoers、systemd unit、agent.env 均已就位且不受本修复影响；新候选只需 **B2.1 幂等重跑 install-production** 补 nginx 接线（生成两个稳定配置 + 三个兼容态 include + 改造 https.conf，全程 nginx -t 失败自动回滚、旧站行为不变）。
 
 **候选 commit**：APPROVED_COMMIT = `65fe566e5…`（第五代冻结；分支 task-06-m7-candidate，PR → main）
-**候选 release**：`rl_6bc9b0b7cc_8b9fb7b09ead`（datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
+**候选 release**：`rl_77f48c7b53_24f83f7ea886`（datasetVersion `ds_8b9fb7b09ead…` / dataThrough 2026-09-18；contracts rest 1.0 + skill 1.0.0；testsSkipped=false）
 **配置 diff**：`ops/nginx/maasweekly-agent-http.conf`（conf.d）+ `ops/nginx/maasweekly-agent-server.conf`（snippet）+ `ops/maas-agent@.service` + `ops/install-production.sh`（nginx 接线段）+ 三个动态 include 初始兼容态；`maasweekly-https.conf` 仅 root 行替换为 include + 追加 agent snippet include（timestamp backup + nginx -t 失败自动恢复）
 **离线 smoke 输出**（2026-09-18 实测，APPROVED_RID）：
 
