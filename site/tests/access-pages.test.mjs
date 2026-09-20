@@ -107,13 +107,15 @@ console.log('[4] T02/T03/T05：/agent/ 页面内容');
   check('MCP 配置 URL 来自 config', html.includes(`${PUBLIC_ACCESS.canonicalBaseUrl}/api/mcp`));
   check('REST base URL 正确', html.includes(`${PUBLIC_ACCESS.canonicalBaseUrl}/api/v1`));
   check('feed 双地址', html.includes('/feed.xml') && html.includes('/feed/weekly.xml'));
-  // pending 卡含 Task 06 解除说明
-  check('pending 卡含 Task 06 说明', html.includes('Task 06'));
-  // 复验 P1-2：RSS 未部署必须显示 pending（不伪装已上线）
-  check('RSS 卡显示待部署（未伪装已上线）',
-    /RSS[\s\S]{0,400}?待部署/.test(html) && !/RSS[\s\S]{0,400}?已上线/.test(html));
-  check('RSS 卡含真实状态原因（本地验证通过待部署）',
-    /RSS[\s\S]{0,800}?生产 URL 待 Task 06/.test(html));
+  // M10 GA（2026-09-20）：四入口已上线——状态与真实证据同步翻转（T23 断言）
+  // Codex 仍待验证（无真实认证环境，保持 pending——不为全绿强翻）
+  check('四入口显示已上线（T23）', (html.match(/已上线/g) || []).length >= 4);
+  check('RSS 卡显示已上线（GA 后状态真实）',
+    /RSS[\s\S]{0,400}?已上线/.test(html) && !/RSS[\s\S]{0,400}?待部署/.test(html));
+  check('RSS 卡含上线证据说明（2026-09-20 验收）',
+    /RSS[\s\S]{0,800}?2026-09-20/.test(html));
+  check('Codex 保持待验证（未伪造通过）', /Codex[\s\S]{0,300}?待验证/.test(html));
+  check('changelog 含 GA 日期 2026-09-20', html.includes('2026-09-20') || read('changelog/index.html').includes('2026-09-20'));
   // CopyBlock aria
   check('复制反馈 aria-live', html.includes('aria-live="polite"'));
   // 成功示例来自 release

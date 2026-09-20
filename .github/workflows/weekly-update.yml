@@ -104,14 +104,8 @@ jobs:
             git push
           fi
 
-      # ---- 构建部署（数据已提交，dist 与数据源同版）----
-      - name: Build site
-        if: steps.mode.outputs.mode != 'aggregate'
-        working-directory: site
-        run: |
-          npm ci
-          npm run build
-
+      # ---- 构建部署（release 通道，Task 06 M10；数据已提交，从精确 SHA 构建）----
+      # 原 Build site 步骤移除——build-release.sh 统一构建（含全量测试）
       - name: Setup SSH key
         if: steps.mode.outputs.mode != 'aggregate'
         run: |
@@ -121,6 +115,18 @@ jobs:
           cp ops/known_hosts.production ~/.ssh/known_hosts  # 受控 host key
           chmod 600 ~/.ssh/known_hosts
 
-      - name: Deploy via rsync
+      - name: Deploy release (build → incoming → activate → smoke)
         if: steps.mode.outputs.mode != 'aggregate'
-        run: rsync -az --delete -e "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts -o StrictHostKeyChecking=yes" site/dist/ ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}
+        env:
+          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
+          MAAS_DEPLOY_MODE: release
+        run: |
+          ops/deploy-release.sh --commit "$(git rev-parse HEAD)"
+
+      - name: Online verify (four surfaces)
+        if: steps.mode.outputs.mode != 'aggregate'
+        env:
+          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
+        run: |
+          RID=$(ls -td dist-release/rl_* | head -1 | xargs basename)
+          ops/verify-release.sh --online --expect-release "$RID"
