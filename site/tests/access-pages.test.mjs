@@ -102,17 +102,20 @@ console.log('[4] T02/T03/T05：/agent/ 页面内容');
   check('Codex 标为待验证', html.includes('待验证：Codex'));
   check('Codex 无「已支持」徽标', !/已支持[^<]*Codex|Codex[^<]*已支持/.test(html));
   // T05 示例一致性
-  check('Skill 安装命令 --dir 占位符', html.includes('--dir &lt;你的技能目录&gt;') || html.includes('--dir <你的技能目录>'));
+  // M7 合同修正：--dir 是最终 Skill 目录（示例用真实形态，不再是尖括号占位符）
+  check('Skill 安装命令 --dir 最终目录', html.includes('--dir ~/.claude/skills/maas-daily'));
   check('MCP 配置 URL 来自 config', html.includes(`${PUBLIC_ACCESS.canonicalBaseUrl}/api/mcp`));
   check('REST base URL 正确', html.includes(`${PUBLIC_ACCESS.canonicalBaseUrl}/api/v1`));
   check('feed 双地址', html.includes('/feed.xml') && html.includes('/feed/weekly.xml'));
-  // pending 卡含 Task 06 解除说明
-  check('pending 卡含 Task 06 说明', html.includes('Task 06'));
-  // 复验 P1-2：RSS 未部署必须显示 pending（不伪装已上线）
-  check('RSS 卡显示待部署（未伪装已上线）',
-    /RSS[\s\S]{0,400}?待部署/.test(html) && !/RSS[\s\S]{0,400}?已上线/.test(html));
-  check('RSS 卡含真实状态原因（本地验证通过待部署）',
-    /RSS[\s\S]{0,800}?生产 URL 待 Task 06/.test(html));
+  // M10 GA（2026-09-20）：四入口已上线——状态与真实证据同步翻转（T23 断言）
+  // Codex 仍待验证（无真实认证环境，保持 pending——不为全绿强翻）
+  check('四入口显示已上线（T23）', (html.match(/已上线/g) || []).length >= 4);
+  check('RSS 卡显示已上线（GA 后状态真实）',
+    /RSS[\s\S]{0,400}?已上线/.test(html) && !/RSS[\s\S]{0,400}?待部署/.test(html));
+  check('RSS 卡含上线证据说明（2026-09-20 验收）',
+    /RSS[\s\S]{0,800}?2026-09-20/.test(html));
+  check('Codex 保持待验证（未伪造通过）', /Codex[\s\S]{0,300}?待验证/.test(html));
+  check('changelog 含 GA 日期 2026-09-20', html.includes('2026-09-20') || read('changelog/index.html').includes('2026-09-20'));
   // CopyBlock aria
   check('复制反馈 aria-live', html.includes('aria-live="polite"'));
   // 成功示例来自 release
@@ -190,8 +193,14 @@ console.log('[8] T15/T22（自动部分）：CSS 与焦点');
   check('复制按钮为原生 button', html.includes('data-copy-btn'));
   check('五个 MCP 工具名', ['maas_get_changes', 'maas_get_prices', 'maas_get_item', 'maas_get_evidence', 'maas_get_weekly']
     .every((t) => html.includes(t)));
-  check('六类 REST 端点', ['/status', '/changes', '/prices', '/item', '/evidence', '/weekly']
+  // M7 合同修正：路径 /items/{id}、/evidence/{id}（ROUTES 真实定义）
+  check('六类 REST 端点', ['/status', '/changes', '/prices', '/items/{id}', '/evidence/{id}', '/weekly']
     .every((p) => html.includes(`/api/v1${p}`)));
+  // M7 合同修正：查询参数 provider（非 platform）；无 --update/--uninstall；无写死模型名
+  check('REST 查询参数用 provider', html.includes('changes?provider=') && !html.includes('platform=openai'));
+  check('Skill 更新=同 --dir 重跑', html.includes('同一') && html.includes('--dir 重跑') || html.includes('--dir 重跑'));
+  check('无虚构安装器参数', !html.includes('--update') && !html.includes('--uninstall'));
+  check('无写死模型名样例', !/gpt-\d|claude-\d|gemini-\d/.test(html));
   // 手动部分（320/375/768/桌面/键盘）记录在 task-06-result.md
 }
 

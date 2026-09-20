@@ -1,13 +1,19 @@
-# deploy-mode：部署通道迁移开关（Task 06 M5，D7）
+# deploy-mode：部署通道迁移开关（Task 06 M5，D7；M7 P0 修复）
 #
-# 服务器与三 workflow 共用此文件决定本次发布的部署通道：
+# 本文件是 deploy_mode() 的**回退配置**，永久保持 DEPLOY_MODE=legacy。
+# 不得通过修改本文件切换通道——本文件是 tracked 文件，改动会污染
+# clean worktree，build-release.sh preflight 会拒绝生产构建，且存在
+# "忘记改回"的风险。
+#
+# 通道定义：
 #   legacy  aliyun-099 /var/www/maasweekly 的 rsync 直写（当前生产行为，向后兼容）
 #   release /srv/maasweekly 的 incoming → 校验 → 蓝绿激活（Task 06 新通道）
 #
-# 默认 legacy —— 一切现状不变。切换到 release 的时机：
-#   授权点 A 通过（Task 06 M7 候选交付被批准）后，
-#   在 M8 服务器安装完成且第一次用药 smoke 通过的位置翻转。
+# release 通道的正确用法（M8 首发执行链，见 task-06-result.md §4b）：
+#   git checkout <approved-sha>                      # detached HEAD，工作区干净
+#   MAAS_DEPLOY_MODE=release ops/deploy-release.sh --commit <approved-sha>
 #
-# 由 ops/deploy-release.sh 与 ops/install-production.sh 读取。
-# 仓库内保持 legacy，生产翻转是"安装+翻转"同一个受控操作（手动，非 CI 自动）。
+# 即：通道切换是**每次发布的运行时参数**（MAAS_DEPLOY_MODE 环境变量），
+# 不是仓库状态。安装（install-production.sh）与通道切换是授权点 A 后
+# 的同一受控操作（手动，非 CI 自动）。
 DEPLOY_MODE=legacy

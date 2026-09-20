@@ -1,14 +1,18 @@
 name: 线上更新（构建部署）
 
-# 轻量部署工作流：只构建 + rsync 到 aliyun-099，不抓取数据。
+# release 通道部署工作流（Task 06 M10：取代 legacy rsync 直写）。
+# 与本地发布链完全同构（生产已验证的同一套）：
+#   build-release.sh（含全量测试）→ manifest → 受限 SSH 上传 incoming
+#   → maasweekly-activate 激活 → verify-release.sh --online 四入口验收
 # 触发方式：
 #   1. push 到 main（job 内自查改动范围：代码改动才部署，纯数据提交跳过）
-#   2. 手动触发（无服务器权限的协作者通过这里部署）
+#   2. 手动触发
 #
-# 有 aliyun-099 访问权限的人也可以本地直连部署（效果等价）：
-#   cd site && npm run build
-#   rsync -az --delete dist/ maasdeploy@47.237.135.97:/var/www/maasweekly/
-#   （或 root 身份：rsync -az --delete site/dist/ aliyun-099:/var/www/maasweekly/）
+# 安全边界（与本地链一致）：
+#   - deploy key 用 GitHub Actions 专用 forced-command key（DEPLOY_SSH_KEY secret）
+#   - 只走 maasdeploy 受限 shell（rsync-incoming/activate/rollback/status）
+#   - 不使用 root SSH；激活在服务器侧以 root 经 sudoers 单行 NOPASSWD 执行
+#   - 通道经 MAAS_DEPLOY_MODE=release 运行时注入（仓库 ops/deploy-mode 永久 legacy）
 
 on:
   # 不用 paths 过滤：GitHub 的 paths 匹配在大 push（>3000 文件）下只检查
@@ -28,7 +32,7 @@ concurrency:
 env:
   DEPLOY_HOST: 47.237.135.97
   DEPLOY_USER: maasdeploy
-  DEPLOY_PATH: /var/www/maasweekly/
+  MAAS_DEPLOY_MODE: release
 
 jobs:
   deploy:
@@ -37,7 +41,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          # 取全量历史：改动自查需要 diff push 的 before..after 范围
+          # build-release.sh 从精确 commit 构建（fetch 全历史供 diff 自查）
           fetch-depth: 0
 
       - name: Detect deployable changes
@@ -75,6 +79,12 @@ jobs:
             echo "deploy=true" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Setup Python
+        if: steps.changes.outputs.deploy == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Setup Node
         if: steps.changes.outputs.deploy == 'true'
         uses: actions/setup-node@v4
@@ -82,13 +92,6 @@ jobs:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: site/package-lock.json
-
-      - name: Build site
-        if: steps.changes.outputs.deploy == 'true'
-        working-directory: site
-        run: |
-          npm ci
-          npm run build
 
       - name: Setup SSH key
         if: steps.changes.outputs.deploy == 'true'
@@ -100,6 +103,22 @@ jobs:
           cp ops/known_hosts.production ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
-      - name: Deploy via rsync
+      # ---- release 通道（与本地生产验证链同构）----
+      # build-release.sh：preflight（干净 worktree + 精确 commit）→ 全量测试
+      # （22 项）→ manifest → release 产物；deploy-release.sh：上传 incoming →
+      # 激活（服务器侧锁/校验/分树权限/蓝绿/nginx 事务）→ 公网冒烟。
+      - name: Build release and deploy
         if: steps.changes.outputs.deploy == 'true'
-        run: rsync -az --delete -e "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts -o StrictHostKeyChecking=yes" site/dist/ ${{ env.DEPLOY_USER }}@${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}
+        env:
+          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
+        run: |
+          ops/deploy-release.sh --commit "${{ github.sha }}"
+
+      # 四入口 online verify（REST/MCP/RSS/Skill 与 current 同版本）
+      - name: Online verify (four surfaces)
+        if: steps.changes.outputs.deploy == 'true'
+        env:
+          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
+        run: |
+          RID=$(ls -td dist-release/rl_* | head -1 | xargs basename)
+          ops/verify-release.sh --online --expect-release "$RID"
