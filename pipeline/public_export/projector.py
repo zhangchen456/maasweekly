@@ -17,7 +17,25 @@ from __future__ import annotations
 
 from collections import defaultdict
 
-from .loaders import ExportError, LoadedInputs
+from .loaders import ExportError
+
+# Task 07 T07-3：model identity 公开投影（唯一入口——registry 损坏 fail closed）
+try:
+    from model_identity.projector import ModelIdentityProjector
+    _mi_projector = ModelIdentityProjector()
+    _mi_gate_errors: list[str] = []  # 构建时累计 gate 违规（exporter 检查）
+except Exception as _mi_ex:  # registry 损坏 → fail closed
+    raise ExportError(f"model identity registry 加载失败（fail closed）: {_mi_ex}") from _mi_ex
+
+
+def _model_identity_fields(provider_id: str, raw_model: str,
+                           display_name: str | None = None) -> dict:
+    """公开投影 + build gate（§十五：违规累计到 _mi_gate_errors）。"""
+    out = _mi_projector.project(provider_id, raw_model, display_name)
+    errs = _mi_projector.verify_projection(out)
+    for e in errs:
+        _mi_gate_errors.append(f"{provider_id}/{raw_model}: {e}")
+    return out
 
 VALID_SUMMARY_ORIGINS = {"rule", "llm", "manual", None}
 
@@ -204,6 +222,7 @@ def project_price_change(record: dict, fact_versions: dict,
         "price": {
             "factKey": record["fact_key"],
             "model": record["model"],
+            **_model_identity_fields(provider_id, record["model"]),
             "component": record["component"],
             "currency": record["currency"],
             "unitQuantity": record["unitQuantity"],
@@ -263,6 +282,7 @@ def project_price_fact(pfv: dict, pm: dict,
         "providerId": provider_id,
         "sourceId": source_id,
         "modelKey": pfv["model_key"],
+        **_model_identity_fields(provider_id, pfv["model_key"]),
         "component": pfv["component"],
         "amount": pfv["amount"],
         "currency": pfv["currency"],

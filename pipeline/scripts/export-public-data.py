@@ -80,6 +80,11 @@ def build_release(input_root: Path) -> dict:
 
     errs = validator.validate_entities(changes, prices, evidence, weekly, status)
     errs += validator.validate_references(changes, prices, evidence)
+    # Task 07 §十五：model identity build gate（违规 → fail closed 零写入）
+    import public_export.projector as _pp
+    if _pp._mi_gate_errors:
+        raise ExportError("model identity gate 违规（" + str(len(_pp._mi_gate_errors))
+                          + " 项）: " + "; ".join(_pp._mi_gate_errors[:10]))
     if errs:
         raise ExportError("投影校验失败（" + str(len(errs)) + " 项）: "
                           + "; ".join(errs[:10]))

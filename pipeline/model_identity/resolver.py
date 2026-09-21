@@ -68,23 +68,25 @@ class ModelResolver:
 
     @staticmethod
     def _resolved(model_id: str, family_id: str | None, matched_by: str) -> dict:
-        return {'status': 'resolved', 'modelId': model_id,
-                'familyId': family_id, 'matchedBy': matched_by,
-                'confidence': 'exact'}
+        return {'status': 'resolved', 'resolutionType': 'model',
+                'modelId': model_id, 'familyId': family_id,
+                'matchedBy': matched_by, 'confidence': 'exact'}
 
     @staticmethod
-    def _family(family_id: str, candidates: list[str]) -> dict:
-        return {'status': 'family', 'familyId': family_id,
-                'candidateModelIds': sorted(candidates)}
+    def _family(family_id: str, candidates: list[str],
+                resolution_type: str = 'family') -> dict:
+        return {'status': 'family', 'resolutionType': resolution_type,
+                'familyId': family_id, 'candidateModelIds': sorted(candidates)}
 
     @staticmethod
     def _ambiguous(candidates: list[str], reason: str) -> dict:
-        return {'status': 'ambiguous', 'candidateModelIds': sorted(candidates),
-                'reason': reason}
+        return {'status': 'ambiguous', 'resolutionType': 'ambiguous',
+                'candidateModelIds': sorted(candidates), 'reason': reason}
 
     @staticmethod
     def _unresolved(reason: str) -> dict:
-        return {'status': 'unresolved', 'reason': reason}
+        return {'status': 'unresolved', 'resolutionType': 'unresolved',
+                'reason': reason}
 
     # ------------------------------------------------------------------
     # 主解析
@@ -118,16 +120,18 @@ class ModelResolver:
             if hit:
                 m = self.idx['modelById'][hit]
                 cls = m['classification']
-                # pointer 实体命中：绝不落到固定模型——返回家族 + 指针说明
+                # pointer 实体命中：绝不落到固定模型——resolutionType=pointer
+                # （区别于真实 family 查询：公开投影不把指针伪装成家族）
                 if cls == 'pointer':
                     fam = m.get('familyId')
                     if fam and fam in self.idx['familyMembers']:
-                        return self._family(fam, self.idx['familyMembers'][fam])
+                        return self._family(fam, self.idx['familyMembers'][fam],
+                                            resolution_type='pointer')
                     return self._unresolved(f'pointer 实体（无家族成员可列）: {n}')
                 # family 实体命中 → family 状态（候选为家族成员）
                 if cls == 'family':
                     cands = self.idx['familyMembers'].get(m['familyId'], [])
-                    return self._family(m['familyId'], cands)
+                    return self._family(m['familyId'], cands, resolution_type='family')
                 return self._resolved(hit, m.get('familyId'),
                                       'alias' if n == raw else 'display_alias')
 
@@ -154,7 +158,7 @@ class ModelResolver:
                 if (m['classification'] == 'family'
                         and (n == m.get('familyId') or n == m['modelId'].split(':', 1)[-1])):
                     cands = self.idx['familyMembers'].get(m['familyId'], [])
-                    return self._family(m['familyId'], cands)
+                    return self._family(m['familyId'], cands, resolution_type='family')
 
         # 7. ambiguous 探测：normalized 前缀级多候选（同 provider 内
         #    多个 registry 条目的 slug 以输入为前缀——仅提示，不绑定）

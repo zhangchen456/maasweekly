@@ -1,6 +1,6 @@
 # Task 07 结果报告：模型实体关联、别名规范化与跨平台筛选
 
-日期：2026-09-20。当前状态：**T07-1 + T07-2 + T07-2.5（Coverage 补录）完成；T07-3 及之后未开始**。
+日期：2026-09-21。当前状态：**T07-1 + T07-2 + T07-2.5 + T07-3（Public Model Identity）完成；T07-4 及之后未开始**。
 
 ## T07-1 交付记录
 
@@ -138,3 +138,47 @@ deepseek 清洗后条目）再动公开 schema。
 - 测试 30+16 项；run-all-tests 26/26
 - **false positive = 0 保持**
 - 建议：可进入 T07-3 公开数据 schema 设计
+
+
+## T07-3 交付记录（2026-09-21）
+
+详见 `task-07-public-model-identity.md`。核心：
+
+### 交付物
+
+| 文件 | 内容 |
+|---|---|
+| `pipeline/model_identity/projector.py` | model identity 公开投影唯一入口（project_model_identity + verify_projection gate） |
+| `pipeline/public_export/projector.py` | 接入 projector（prices/changes/items 三处经 helper） |
+| `pipeline/scripts/export-public-data.py` | build gate（_mi_gate_errors → fail closed 零写入） |
+| `services/agent-api/src/query.ts` | modelId/familyId 精确过滤（+400 invalid、model 旧语义保留） |
+| `services/agent-api/src/mcp-tools.ts` | modelId/familyId 参数（与 REST 共用 query core） |
+| `services/agent-api/src/dataset.ts` | PriceEntity 加可选 modelId/modelName/familyId/familyName |
+| `tests/test_model_public_projection.py` | 11 项（projection 契约 + gate） |
+| `services/agent-api/src/tests/model-identity.test.ts` | 6 项（REST modelId/familyId 查询契约 T08–T17） |
+
+### 核心数字
+
+- **family 正式实体**：7→24（升级 17 个有明确产品语义的 grouping key）
+- **resolver after 分布**：resolved 259 / family 15 / ambiguous 0 / unresolved 288
+- **prices 有 modelId**：859/1387（62%）；**price_change 有 modelId**：2814/4156（68%）
+- **source_observation modelId 泄漏**：0（244 条天然不含）
+- **datasetVersion 规则**：同输入稳定（familyName 后缀清理、alias 增补均不改变；实际引用的 modelId/familyId 变化才改变）
+- **false positive = 0**（dangerous inputs 38 个零 resolved）
+
+### 过程中修出的真实问题（测试逮住）
+
+- `access-pages` 测试断言的 RSS 已上线 + GA 日期（M6/M10 改动后必须同步——否则 site 测试假绿）
+- REST `changes` filter 首次把 `source_observation` 与 `price_change` 用同一 `modelId` 过滤——
+  `pc.price?.modelId` 对 SO 是 undefined → return false（自然过滤）。确认 `source_observation` 天然过滤正确，不伪造 modelId。
+- `fixture` 的 `price` 写盘需透传 optional identity 字段——否则 `query.ts` filter 读 `price.modelId` 时为 undefined。
+
+### 是否修改生产数据：**NO**
+
+- 新增文件（projector/mcp-tools/query/dataset），未写入公开 schema
+- 未做生产发布
+
+### 下一步：T07-4 UI 模型筛选
+
+判断标准（非解析率）：false positive = 0 保持 ✓；unresolved 288 主体为快照待确认 112 + 低频长尾 150 + 区域 15 + emoji 7。
+T07-4 可做：`/agent/` 页面 UI 模型筛选器、模型详情页、`/api/v1/models` 端点。

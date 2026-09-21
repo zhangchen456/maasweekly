@@ -79,8 +79,8 @@ function timingSafeEqualStr(a: string, b: string): boolean {
 // ---------------------------------------------------------------------------
 
 const KNOWN_PARAMS: Record<Endpoint, Set<string>> = {
-  changes: new Set(['provider', 'type', 'q', 'from', 'to', 'limit', 'cursor', 'includeWithdrawn']),
-  prices: new Set(['provider', 'model', 'component', 'region', 'billingMode', 'q', 'limit', 'cursor']),
+  changes: new Set(['provider', 'type', 'q', 'from', 'to', 'limit', 'cursor', 'includeWithdrawn', 'modelId', 'familyId']),
+  prices: new Set(['provider', 'model', 'component', 'region', 'billingMode', 'q', 'limit', 'cursor', 'modelId', 'familyId']),
   weekly: new Set(['limit', 'cursor']),
 };
 
@@ -209,7 +209,30 @@ export function normalizeQuery(
     const model = raw.get('model');
     if (model !== null) {
       // 大小写不敏感精确匹配（规范化后），不维护别名推断
+      // ——model 语义=modelKey 原始串（backward compat 红线：绝不改成 modelId 语义）
       params.model = model.trim().toLowerCase();
+    }
+  }
+
+  // Task 07 T07-3：modelId / familyId 精确过滤（与 model 语义严格区分）
+  const modelId = raw.get('modelId');
+  if (modelId !== null) {
+    const v = modelId.trim();
+    if (!/^[a-z0-9-]+:[a-z0-9.-]+$/.test(v)) {
+      problems.push(bad('invalid_model_id', `modelId 格式非法: ${v}`,
+        '完整精确 modelId，如 alibaba:qwen3-coder-plus'));
+    } else {
+      params.modelId = v;
+    }
+  }
+  const familyId = raw.get('familyId');
+  if (familyId !== null) {
+    const v = familyId.trim();
+    if (!/^[a-z0-9-]+:[a-z0-9.-]+$/.test(v)) {
+      problems.push(bad('invalid_family_id', `familyId 格式非法: ${v}`,
+        '完整正式 familyId，如 anthropic:claude-opus'));
+    } else {
+      params.familyId = v;
     }
   }
 
@@ -382,6 +405,16 @@ export function listChanges(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPay
     if (c.observationDate < from || c.observationDate >= to) return false;
     if (p.provider !== undefined && c.providerId !== p.provider) return false;
     if (p.type !== undefined && c.recordType !== p.type) return false;
+    // Task 07 T07-3：modelId/familyId 精确过滤（identity 在 price_change.price；
+    // source_observation 无结构化模型——自然过滤，不伪造）
+    if (p.modelId !== undefined) {
+      const pc = c as unknown as { price?: { modelId?: string } };
+      if (pc.price?.modelId !== p.modelId) return false;
+    }
+    if (p.familyId !== undefined) {
+      const pc = c as unknown as { price?: { familyId?: string } };
+      if (pc.price?.familyId !== p.familyId) return false;
+    }
     if (p.q !== undefined) {
       const q = p.q as string;
       const hay = `${c.title} ${c.summary ?? ''}`.toLowerCase();
@@ -410,6 +443,8 @@ export function listPrices(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPayl
   let out = ds.prices.filter((e) => {
     if (p.provider !== undefined && e.providerId !== p.provider) return false;
     if (p.model !== undefined && e.modelKey.toLowerCase() !== p.model) return false;
+    if (p.modelId !== undefined && e.modelId !== p.modelId) return false;
+    if (p.familyId !== undefined && e.familyId !== p.familyId) return false;
     if (p.component !== undefined && e.component !== p.component) return false;
     if (p.region !== undefined && e.region !== p.region) return false;
     if (p.billingMode !== undefined && e.billingMode !== p.billingMode) return false;

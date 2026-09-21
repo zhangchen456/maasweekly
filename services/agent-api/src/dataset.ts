@@ -76,6 +76,11 @@ export interface PriceEntity {
   providerId: string;
   sourceId: string;
   modelKey: string;
+  /** Task 07 T07-3：可选 model identity（unresolved/pointer 不写——零伪造） */
+  modelId?: string;
+  modelName?: string;
+  familyId?: string;
+  familyName?: string;
   component: string;
   amount: string;
   currency: string;
