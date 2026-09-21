@@ -30,6 +30,12 @@ import type {
 const providerField = z.string().optional().describe(
   '平台 ID（providerId），如 openai、alibaba。有效值以 status.providers 为准；未知值返回错误而非空列表');
 
+const modelIdField = z.string().optional().describe(
+  '稳定模型实体 ID（精确匹配），如 alibaba:qwen3-coder-plus。与 model（原始 modelKey 字符串）语义不同；来源：价格记录的 modelId 字段');
+
+const familyIdField = z.string().optional().describe(
+  '正式模型家族 ID（精确匹配），如 anthropic:claude-opus。只匹配 registry 正式注册的家族；不按字符串包含猜');
+
 const qField = z.string().optional().describe(
   '文本包含匹配（trim + 大小写不敏感）。查价格时按模型名包含匹配；与 model 的区别：model 是精确匹配，q 是包含匹配。不确定完整模型名时用 q');
 
@@ -46,6 +52,8 @@ const CHANGES_SCHEMA = {
   type: z.enum(['source_observation', 'source', 'price_change', 'price']).optional().describe(
     'source_observation=来源页面观察（页面内容变化，不等于模型发布/下线）；price_change=价格事件'),
   q: qField.describe('标题/摘要文本包含匹配'),
+  modelId: modelIdField,
+  familyId: familyIdField,
   from: z.string().regex(DATE_RE).optional().describe(
     '窗口起点（含），YYYY-MM-DD，必须与 to 成对；不传时默认最近 7 个上海日历日（锚定数据 dataThrough，不是今天）'),
   to: z.string().regex(DATE_RE).optional().describe(
@@ -58,7 +66,9 @@ const CHANGES_SCHEMA = {
 
 const PRICES_SCHEMA = {
   model: z.string().optional().describe(
-    '模型名精确匹配（大小写不敏感、规范化后），无别名推断。要「找类似名字的模型」请改用 q'),
+    '模型名精确匹配（原始 modelKey 字符串，大小写不敏感），无别名推断。要「找类似名字的模型」请改用 q'),
+  modelId: modelIdField,
+  familyId: familyIdField,
   provider: providerField,
   component: z.string().optional().describe(
     '计费组件：input / output / cache_read / cache_write。未知值返回错误并列出有效值'),

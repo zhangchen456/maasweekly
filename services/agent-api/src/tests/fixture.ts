@@ -23,6 +23,11 @@ export interface FixturePrice {
   factKey: string;
   providerId: string;
   modelKey: string;
+  /** Task 07 T07-3：可选 model identity 字段（fixture 直写——测试投影后的过滤） */
+  modelId?: string;
+  modelName?: string;
+  familyId?: string;
+  familyName?: string;
   component: string;
   amount?: string;
   currency?: string;
@@ -97,6 +102,8 @@ export class ReleaseFixture {
       providerId: p.providerId,
       sourceId: `${p.providerId}-pricing`,
       modelKey: p.modelKey,
+      ...(p.modelId ? { modelId: p.modelId, modelName: p.modelName ?? p.modelKey } : {}),
+      ...(p.familyId ? { familyId: p.familyId, familyName: p.familyName } : {}),
       component: p.component,
       amount: p.amount ?? '1.000000',
       currency: p.currency ?? 'USD',

@@ -2,6 +2,21 @@
   "schemaVersion": "1.0",
   "models": [
     {
+      "modelId": "alibaba:qwen-coder",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen Coder",
+      "familyId": "alibaba:qwen-coder",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "qwen-coder",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
+    },
+    {
       "modelId": "alibaba:qwen-coder-plus",
       "providerId": "alibaba",
       "canonicalName": "Qwen Coder Plus",
@@ -82,6 +97,21 @@
       "notes": "同上"
     },
     {
+      "modelId": "alibaba:qwen-math",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen Math",
+      "familyId": "alibaba:qwen-math",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "qwen-math",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
+    },
+    {
       "modelId": "alibaba:qwen-math-plus",
       "providerId": "alibaba",
       "canonicalName": "Qwen Math Plus",
@@ -125,6 +155,21 @@
         }
       ],
       "notes": "T07-2.5 补录：高频无风险特征（无日期基名歧义/指针/序号/emoji）"
+    },
+    {
+      "modelId": "alibaba:qwen-mt",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen MT",
+      "familyId": "alibaba:qwen-mt",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "qwen-mt",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
     },
     {
       "modelId": "alibaba:qwen-mt-flash",
@@ -309,7 +354,7 @@
     {
       "modelId": "alibaba:qwen3",
       "providerId": "alibaba",
-      "canonicalName": "Qwen3（family 级字符串）",
+      "canonicalName": "Qwen3",
       "familyId": "alibaba:qwen3",
       "classification": "family",
       "aliases": [
@@ -365,6 +410,21 @@
         }
       ],
       "notes": "T07-2.5 补录：高频无风险特征（无日期基名歧义/指针/序号/emoji）"
+    },
+    {
+      "modelId": "alibaba:qwen3-coder",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 Coder",
+      "familyId": "alibaba:qwen3-coder",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "qwen3-coder",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 5，产品语义明确）"
     },
     {
       "modelId": "alibaba:qwen3-coder-30b-a3b-instruct",
@@ -497,6 +557,21 @@
       "notes": "基名带 qwen- 前缀（旧代）而 family 归 qwen3——跨代命名真实样例"
     },
     {
+      "modelId": "alibaba:qwen3-livetranslate",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 LiveTranslate",
+      "familyId": "alibaba:qwen3-livetranslate",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "qwen3-livetranslate",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
+    },
+    {
       "modelId": "alibaba:qwen3-livetranslate-flash",
       "providerId": "alibaba",
       "canonicalName": "Qwen3 LiveTranslate Flash",
@@ -575,6 +650,21 @@
         }
       ],
       "notes": "preview 指针随发布周期变动指向——独立模型 or 阶段名待厂商文档判定"
+    },
+    {
+      "modelId": "alibaba:qwen3-omni",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 Omni",
+      "familyId": "alibaba:qwen3-omni",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "qwen3-omni",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
     },
     {
       "modelId": "alibaba:qwen3-omni-flash",
@@ -687,6 +777,21 @@
       "notes": "realtime 变体与基名并存——语音模态的变体层级比文本深（flash/realtime × 日期双维度）"
     },
     {
+      "modelId": "alibaba:qwen3-vl",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3 VL",
+      "familyId": "alibaba:qwen3-vl",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "qwen3-vl",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 3，产品语义明确）"
+    },
+    {
       "modelId": "alibaba:qwen3-vl-embedding",
       "providerId": "alibaba",
       "canonicalName": "Qwen3 VL Embedding",
@@ -752,6 +857,21 @@
       "notes": "T07-2.5 补录：高频无风险特征（无日期基名歧义/指针/序号/emoji）"
     },
     {
+      "modelId": "alibaba:qwen3.5",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3.5",
+      "familyId": "alibaba:qwen3.5",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "qwen3.5",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
+    },
+    {
       "modelId": "alibaba:qwen3.5-flash",
       "providerId": "alibaba",
       "canonicalName": "Qwen3.5 Flash",
@@ -790,6 +910,21 @@
         }
       ],
       "notes": "T07-2.5 补录：高频无风险特征（无日期基名歧义/指针/序号/emoji）"
+    },
+    {
+      "modelId": "alibaba:qwen3.5-omni",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3.5 Omni",
+      "familyId": "alibaba:qwen3.5-omni",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "qwen3.5-omni",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
     },
     {
       "modelId": "alibaba:qwen3.5-omni-flash",
@@ -847,6 +982,21 @@
       "notes": "T07-2.5 补录：高频无风险特征（无日期基名歧义/指针/序号/emoji）"
     },
     {
+      "modelId": "alibaba:qwen3.6",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3.6",
+      "familyId": "alibaba:qwen3.6",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "qwen3.6",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
+    },
+    {
       "modelId": "alibaba:qwen3.6-flash",
       "providerId": "alibaba",
       "canonicalName": "Qwen3.6 Flash",
@@ -885,6 +1035,21 @@
         }
       ],
       "notes": "T07-2.5 补录：高频无风险特征（无日期基名歧义/指针/序号/emoji）"
+    },
+    {
+      "modelId": "alibaba:qwen3.7",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3.7",
+      "familyId": "alibaba:qwen3.7",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "qwen3.7",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 3，产品语义明确）"
     },
     {
       "modelId": "alibaba:qwen3.7-flash",
@@ -957,6 +1122,21 @@
       "notes": "T07-2.5 补录：高频无风险特征（无日期基名歧义/指针/序号/emoji）"
     },
     {
+      "modelId": "anthropic:claude-fable",
+      "providerId": "anthropic",
+      "canonicalName": "Claude Fable",
+      "familyId": "anthropic:claude-fable",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "claude-fable",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
+    },
+    {
       "modelId": "anthropic:claude-fable-5",
       "providerId": "anthropic",
       "canonicalName": "Claude Fable 5",
@@ -999,7 +1179,7 @@
     {
       "modelId": "anthropic:claude-haiku",
       "providerId": "anthropic",
-      "canonicalName": "Claude Haiku（family）",
+      "canonicalName": "Claude Haiku",
       "familyId": "anthropic:claude-haiku",
       "classification": "family",
       "aliases": [
@@ -1052,6 +1232,21 @@
       "notes": "tier 词（haiku）语义稳定"
     },
     {
+      "modelId": "anthropic:claude-mythos",
+      "providerId": "anthropic",
+      "canonicalName": "Claude Mythos",
+      "familyId": "anthropic:claude-mythos",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "claude-mythos",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
+    },
+    {
       "modelId": "anthropic:claude-mythos-5",
       "providerId": "anthropic",
       "canonicalName": "Claude Mythos 5",
@@ -1094,7 +1289,7 @@
     {
       "modelId": "anthropic:claude-opus",
       "providerId": "anthropic",
-      "canonicalName": "Claude Opus（family）",
+      "canonicalName": "Claude Opus",
       "familyId": "anthropic:claude-opus",
       "classification": "family",
       "aliases": [
@@ -1249,7 +1444,7 @@
     {
       "modelId": "anthropic:claude-sonnet",
       "providerId": "anthropic",
-      "canonicalName": "Claude Sonnet（family）",
+      "canonicalName": "Claude Sonnet",
       "familyId": "anthropic:claude-sonnet",
       "classification": "family",
       "aliases": [
@@ -1404,7 +1599,7 @@
     {
       "modelId": "google:gemini-2.5",
       "providerId": "google",
-      "canonicalName": "Gemini 2.5（family 级字符串）",
+      "canonicalName": "Gemini 2.5",
       "familyId": "google:gemini-2.5",
       "classification": "family",
       "aliases": [
@@ -1532,6 +1727,21 @@
       "notes": "T07-2.5 补录：Google 稳定项（preview 已按产品名语义判别）"
     },
     {
+      "modelId": "google:gemini-3.5",
+      "providerId": "google",
+      "canonicalName": "Gemini 3.5",
+      "familyId": "google:gemini-3.5",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "gemini-3.5",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
+    },
+    {
       "modelId": "google:gemini-3.5-flash",
       "providerId": "google",
       "canonicalName": "Gemini 3.5 Flash",
@@ -1622,6 +1832,21 @@
       "notes": "T07-2.5 补录：Google 稳定项（preview 已按产品名语义判别）"
     },
     {
+      "modelId": "google:gemini-omni",
+      "providerId": "google",
+      "canonicalName": "Gemini Omni",
+      "familyId": "google:gemini-omni",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "gemini-omni",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
+    },
+    {
       "modelId": "google:gemini-omni-flash",
       "providerId": "google",
       "canonicalName": "Gemini Omni Flash",
@@ -1704,7 +1929,7 @@
     {
       "modelId": "openai:gpt-5.6",
       "providerId": "openai",
-      "canonicalName": "GPT-5.6（family 级字符串）",
+      "canonicalName": "GPT-5.6",
       "familyId": "openai:gpt-5.6",
       "classification": "family",
       "aliases": [
@@ -1887,6 +2112,21 @@
       "notes": "T07-2.5 补录：Doubao 高频稳定项"
     },
     {
+      "modelId": "volcengine:doubao-seed-2.0",
+      "providerId": "volcengine",
+      "canonicalName": "Doubao Seed 2.0",
+      "familyId": "volcengine:doubao-seed-2.0",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "doubao-seed-2.0",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 4，产品语义明确）"
+    },
+    {
       "modelId": "volcengine:doubao-seed-2.0-code",
       "providerId": "volcengine",
       "canonicalName": "Doubao Seed 2.0 Code",
@@ -1945,6 +2185,21 @@
         }
       ],
       "notes": "火山方舟体系；ledger 侧 pricing providerId=doubao（双体系样例）"
+    },
+    {
+      "modelId": "volcengine:doubao-seed-2.1",
+      "providerId": "volcengine",
+      "canonicalName": "Doubao Seed 2.1",
+      "familyId": "volcengine:doubao-seed-2.1",
+      "classification": "family",
+      "aliases": [
+        {
+          "value": "doubao-seed-2.1",
+          "type": "raw",
+          "source": "public"
+        }
+      ],
+      "notes": "T07-3：升级为正式 family（成员 2，产品语义明确）"
     },
     {
       "modelId": "volcengine:doubao-seed-2.1-pro",
@@ -2064,7 +2319,7 @@
     {
       "modelId": "zhipu:glm-5",
       "providerId": "zhipu",
-      "canonicalName": "GLM-5（family 级字符串）",
+      "canonicalName": "GLM-5",
       "familyId": "zhipu:glm-5",
       "classification": "family",
       "aliases": [

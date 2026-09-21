@@ -120,6 +120,14 @@ def validate(registry: dict | None = None, gold: dict | None = None) -> list[str
                 if not fid.startswith(m['providerId'] + ':'):
                     errors.append(f'[5] familyId 跨 provider: {fid} vs {m["providerId"]} ({m["modelId"]})')
 
+    # 5c. public-family-reference-complete（盘点报告：grouping-only 引用清单）
+    grouping_only = sorted({m['familyId'] for m in models
+                            if m['classification'] == 'model' and m['familyId'] not in family_entities})
+    # 不阻断（grouping key 合法存在），但输出到报告
+    if grouping_only:
+        # 存到模块级供审计读取
+        validate.grouping_only_families = grouping_only
+
     # 10. Gold Set 模型类 raw alias 在 registry 存在
     reg_alias_values = {a['value'] for m in models for a in m['aliases']}
     for e in gld.get('entries', []):
