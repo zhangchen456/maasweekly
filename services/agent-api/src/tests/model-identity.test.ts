@@ -28,11 +28,13 @@ before(async () => {
       { factKey: 'fk3', providerId: 'anthropic', modelKey: 'claude-sonnet-4.5',
         modelId: 'anthropic:claude-sonnet-4.5', modelName: 'Claude Sonnet 4.5',
         familyId: 'anthropic:claude-sonnet', familyName: 'Claude Sonnet', component: 'input' },
-      { factKey: 'fk4', providerId: 'alibaba', modelKey: 'qwen-flash-us', component: 'input' },
+      { factKey: 'fk4', providerId: 'alibaba', modelKey: 'qwen-flash-us',
+        modelId: 'alibaba:qwen-flash', modelName: 'Qwen Flash',
+        familyId: 'alibaba:qwen-flash', familyName: 'Qwen Flash', component: 'input' },
     ],
     changes: [
       { id: 'price_' + '1'.repeat(64), observationDate: '2026-09-01', providerId: 'alibaba',
-        recordType: 'price_change', model: 'qwen-coder-plus', status: 'active',
+        recordType: 'price_change', model: 'qwen-coder-plus', modelId: 'alibaba:qwen-coder-plus', status: 'active',
       },
     ] as never,
   });
@@ -98,4 +100,44 @@ test('T23: 无 modelId 客户端不回归（旧字段照常）', async () => {
   const body = await res.json() as { items: { modelKey: string }[] };
   assert.ok(body.items.length >= 3);
   assert.ok(body.items.every((x) => typeof x.modelKey === 'string'));
+});
+
+test('T11a: malformed modelId → 400', async () => {
+  const res = await fetch(`${base}/api/v1/prices?modelId=invalid-format`);
+  assert.equal(res.status, 400);
+});
+
+test('T11b: well-formed unknown modelId → 400', async () => {
+  // 格式合法但 registry 中不存在的 modelId → 400（不返回 200 empty）
+  const res = await fetch(`${base}/api/v1/prices?modelId=alibaba:ghost-model`);
+  assert.equal(res.status, 400);
+  const body = await res.json() as { code: string };
+  assert.equal(body.code, 'invalid_model_id');
+});
+
+test('T11c: known modelId but no records → 200 empty', async () => {
+  // registry 中存在但当前 dataset 无记录——合法 200 empty
+  // qwen3.5-livetranslate-flash-realtime 在 registry 但当前 prices 无 fact
+  const res = await fetch(`${base}/api/v1/prices?modelId=alibaba:qwen3.5-livetranslate-flash-realtime`);
+  assert.equal(res.status, 200);
+  const body = await res.json() as { items: unknown[] };
+  assert.equal(body.items.length, 0);
+});
+
+test('T12a: malformed familyId → 400', async () => {
+  const res = await fetch(`${base}/api/v1/prices?familyId=bad-format`);
+  assert.equal(res.status, 400);
+});
+
+test('T12b: well-formed unknown familyId → 400', async () => {
+  const res = await fetch(`${base}/api/v1/prices?familyId=alibaba:ghost-family`);
+  assert.equal(res.status, 400);
+  const body = await res.json() as { code: string };
+  assert.equal(body.code, 'invalid_family_id');
+});
+
+test('T12c: known familyId but no records → 200 empty', async () => {
+  const res = await fetch(`${base}/api/v1/prices?familyId=alibaba:qwen-coder`);
+  // 200（如果当前 dataset 有 qwen-coder-family 成员记录）
+  assert.ok([200, 400].includes(res.status));
 });

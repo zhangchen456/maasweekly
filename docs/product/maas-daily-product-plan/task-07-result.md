@@ -175,7 +175,7 @@ deepseek 清洗后条目）再动公开 schema。
 
 ### 是否修改生产数据：**NO**
 
-- 新增文件（projector/mcp-tools/query/dataset），未写入公开 schema
+- 新增文件（projector/mcp-tools/query/dataset），schema 加 additive optional fields，OpenAPI 同步
 - 未做生产发布
 
 ### 下一步：T07-4 UI 模型筛选
