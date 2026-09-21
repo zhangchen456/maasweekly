@@ -34,6 +34,12 @@ export interface ChangeEntity {
   revision: number;
   status: 'active' | 'withdrawn';
   recordType: 'source_observation' | 'price_change';
+  /** Task 07 T07-3：可选 model identity（unresolved/pointer 不写——零伪造）。
+   * price_change 透过 price.modelId 间接携带；source_observation 无。 */
+  modelId?: string | null;
+  modelName?: string | null;
+  familyId?: string | null;
+  familyName?: string | null;
   providerId: string | null;
   sourceId: string;
   sourceType?: string | null;
@@ -171,6 +177,11 @@ export class Dataset {
     components: Set<string>;
     billingModes: Set<string>;
     regions: Set<string>;
+    /** Task 07 T07-3：合法 model identity 集合（来源：registry public contract，
+     * 不在 TS 手工枚举）。unknown modelId/familyId → 400 invalid。
+     * pointer/non_model 不得作为合法 modelId filter。 */
+    validModelIds: Set<string>;
+    validFamilyIds: Set<string>;
   };
 
   private constructor(
@@ -199,6 +210,10 @@ export class Dataset {
       components: new Set(prices.map((p) => p.component)),
       billingModes: new Set(prices.map((p) => p.billingMode)),
       regions: new Set(prices.map((p) => p.region)),
+      validModelIds: new Set(
+        changes.map((c) => c.modelId ?? '').filter((m: string) => m.length > 0)),
+      validFamilyIds: new Set(
+        changes.map((c) => c.familyId ?? '').filter((f: string) => f.length > 0)),
     };
   }
 

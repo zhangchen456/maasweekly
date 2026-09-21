@@ -215,12 +215,18 @@ export function normalizeQuery(
   }
 
   // Task 07 T07-3：modelId / familyId 精确过滤（与 model 语义严格区分）
+  // Task 07 T07-3：modelId/familyId 必须区分 格式非法 / registry 不存在 / 已存在无记录。
+  // 不在 TS 手工枚举——用 ds.enums.validModelIds/validFamilyIds
+  // （来源：registry public contract，见 dataset.enums）
   const modelId = raw.get('modelId');
   if (modelId !== null) {
     const v = modelId.trim();
     if (!/^[a-z0-9-]+:[a-z0-9.-]+$/.test(v)) {
       problems.push(bad('invalid_model_id', `modelId 格式非法: ${v}`,
         '完整精确 modelId，如 alibaba:qwen3-coder-plus'));
+    } else if (!ds.enums.validModelIds.has(v)) {
+      problems.push(bad('invalid_model_id', `未知 modelId: ${v}`,
+        'registry 中不存在该 modelId'));
     } else {
       params.modelId = v;
     }
@@ -231,6 +237,9 @@ export function normalizeQuery(
     if (!/^[a-z0-9-]+:[a-z0-9.-]+$/.test(v)) {
       problems.push(bad('invalid_family_id', `familyId 格式非法: ${v}`,
         '完整正式 familyId，如 anthropic:claude-opus'));
+    } else if (!ds.enums.validFamilyIds.has(v)) {
+      problems.push(bad('invalid_family_id', `未知 familyId: ${v}`,
+        'registry 中不存在该 familyId'));
     } else {
       params.familyId = v;
     }

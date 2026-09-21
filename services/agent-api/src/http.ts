@@ -29,12 +29,12 @@ export interface RouteMeta {
 /** 路由元数据（OpenAPI 对照测试 import 此表，T17）。 */
 export const ROUTES: RouteMeta[] = [
   { method: 'GET', path: '/api/v1/changes',
-    params: ['provider', 'type', 'q', 'from', 'to', 'limit', 'cursor', 'includeWithdrawn'],
+    params: ['provider', 'modelId', 'familyId', 'type', 'q', 'from', 'to', 'limit', 'cursor', 'includeWithdrawn'],
     statusCodes: [200, 304, 400, 409, 413, 429, 503] },
   { method: 'GET', path: '/api/v1/items/{id}', params: [],
     statusCodes: [200, 304, 404, 429, 503] },
   { method: 'GET', path: '/api/v1/prices',
-    params: ['provider', 'model', 'component', 'region', 'billingMode', 'q', 'limit', 'cursor'],
+    params: ['provider', 'model', 'modelId', 'familyId', 'component', 'region', 'billingMode', 'q', 'limit', 'cursor'],
     statusCodes: [200, 304, 400, 409, 413, 429, 503] },
   { method: 'GET', path: '/api/v1/evidence/{id}', params: [],
     statusCodes: [200, 304, 404, 429, 503] },
