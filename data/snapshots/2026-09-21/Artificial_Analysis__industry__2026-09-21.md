@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-21T07:01:16.320566 -->
+<!-- fetched: 2026-09-21T13:50:17.947352 -->
 
 AI Model & API Providers Analysis | Artificial Analysis
 Artificial Analysis
@@ -158,7 +158,7 @@ Measures the performance of models on specific capabilities and industries
 Finance & AccountingStrategy & OpsLegalHealthcare & MedicalEngineeringEconomics
 Artificial Analysis Finance & Accounting Index
 Incorporates 7 evaluations: AA-Omniscience, GDPval-AA v2.1, AA-Briefcase v1.1, Humanity's Last Exam, AutomationBench-AA, AA-LCR v1.1, GDP.pdf · Higher is better
-25 of 25 models
+26 of 26 models
 Benchmarks
 Intelligence Evaluations
 Intelligence evaluations measured independently by Artificial Analysis · Higher is better

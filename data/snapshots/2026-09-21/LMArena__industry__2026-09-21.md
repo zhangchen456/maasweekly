@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-21T07:01:18.071392 -->
+<!-- fetched: 2026-09-21T13:50:20.423508 -->
 
 Arena Leaderboard | Compare & Benchmark the Best Frontier AI Models
 New Chat

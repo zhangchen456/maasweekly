@@ -5,16 +5,16 @@
     "end": "2026-09-27",
     "days": {
       "2026-09-21": {
-        "substantive": 2,
-        "jitter": 2,
-        "failed": 3,
+        "substantive": 3,
+        "jitter": 3,
+        "failed": 2,
         "releases": 1,
         "pricings": 1,
         "sunsets": 1
       }
     },
     "totals": {
-      "substantive": 2,
+      "substantive": 3,
       "releases": 1,
       "pricings": 1,
       "sunsets": 1
@@ -38,7 +38,20 @@
         "text": "qwen3.5-omni-plus 从模型列表移除，但定价页仍保留",
         "type": "sunset"
       }
-    ]
+    ],
+    "story": {
+      "theme": "音频模型迭代与清理并行",
+      "sections": [
+        {
+          "title": "音频模型密集迭代",
+          "body": "9月21日，阿里百炼上线qwen-audio-3.1-realtime-plus，替代3.0版本，定价输入40 CNY/百万tokens、输出150 CNY/百万tokens。同日，火山方舟发布AgentPilot OpenAPI使用指南，聚焦智能体集成。本周仅此一天有模型发布，但音频实时模型升级信号明确，显示厂商在语音交互赛道加速迭代。"
+        },
+        {
+          "title": "下线与清理：omni-plus移除",
+          "body": "9月21日，qwen3.5-omni-plus从阿里百炼模型列表移除，但定价页仍保留，形成不一致状态。这种“列表移除、定价残留”现象常见于过渡期，可能为后续彻底下线做准备。本周仅此一个下线事件，但清理动作与新品上线同日发生，暗示阿里在音频产品线上进行新旧切换。"
+        }
+      ]
+    }
   },
   {
     "week": "2026-W38",

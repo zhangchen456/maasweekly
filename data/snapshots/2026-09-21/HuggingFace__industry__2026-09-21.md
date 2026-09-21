@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-21T07:01:16.107625 -->
+<!-- fetched: 2026-09-21T13:50:17.711375 -->
 
 [
   {
@@ -65,7 +65,7 @@
   {
     "_id": "621ffdc136468d709f17a20e",
     "id": "cross-encoder/ms-marco-MiniLM-L6-v2",
-    "likes": 346,
+    "likes": 347,
     "private": false,
     "downloads": 88652424,
     "tags": [
@@ -96,7 +96,7 @@
   {
     "_id": "64fff537d522560505ad6567",
     "id": "BAAI/bge-small-en-v1.5",
-    "likes": 587,
+    "likes": 588,
     "private": false,
     "downloads": 64447211,
     "tags": [
@@ -131,7 +131,7 @@
   {
     "_id": "621ffdc136468d709f17b61d",
     "id": "google/electra-base-discriminator",
-    "likes": 181,
+    "likes": 183,
     "private": false,
     "downloads": 50116218,
     "tags": [
@@ -188,7 +188,7 @@
   {
     "_id": "621ffdc136468d709f1802ec",
     "id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-    "likes": 1407,
+    "likes": 1408,
     "private": false,
     "downloads": 45742916,
     "tags": [
@@ -268,7 +268,7 @@
   {
     "_id": "65b53851e602b6c2c96e78da",
     "id": "BAAI/bge-m3",
-    "likes": 3581,
+    "likes": 3584,
     "private": false,
     "downloads": 37633121,
     "tags": [
@@ -342,7 +342,7 @@
   {
     "_id": "680da718233834890aa01f51",
     "id": "Qwen/Qwen3-0.6B",
-    "likes": 1648,
+    "likes": 1653,
     "private": false,
     "downloads": 23745227,
     "tags": [
@@ -369,7 +369,7 @@
   {
     "_id": "69037c2ff37fdfe285722818",
     "id": "amazon/chronos-2",
-    "likes": 483,
+    "likes": 484,
     "private": false,
     "downloads": 22527541,
     "tags": [
@@ -477,7 +477,7 @@
   {
     "_id": "621ffdc036468d709f174364",
     "id": "FacebookAI/xlm-roberta-base",
-    "likes": 922,
+    "likes": 923,
     "private": false,
     "downloads": 21013884,
     "tags": [
@@ -598,7 +598,7 @@
   {
     "_id": "6a6bd1dc7034404148ec9107",
     "id": "Comfy-Org/MiniMax-H3",
-    "likes": 1941,
+    "likes": 1948,
     "private": false,
     "downloads": 20700265,
     "tags": [
@@ -616,7 +616,7 @@
   {
     "_id": "68ea05fb43df37d95ad2491d",
     "id": "Qwen/Qwen3-VL-8B-Instruct",
-    "likes": 1135,
+    "likes": 1136,
     "private": false,
     "downloads": 19744243,
     "tags": [
@@ -644,7 +644,7 @@
   {
     "_id": "639c045c34967bcf4564bdc5",
     "id": "timm/mobilenetv3_small_100.lamb_in1k",
-    "likes": 122,
+    "likes": 123,
     "private": false,
     "downloads": 18269111,
     "tags": [
@@ -696,7 +696,7 @@
   {
     "_id": "65f44de295b7d70871c368eb",
     "id": "BAAI/bge-reranker-v2-m3",
-    "likes": 1206,
+    "likes": 1207,
     "private": false,
     "downloads": 17465321,
     "tags": [
@@ -753,7 +753,7 @@
   {
     "_id": "65c7188324e59a0e4f89d863",
     "id": "nomic-ai/nomic-embed-text-v1.5",
-    "likes": 935,
+    "likes": 936,
     "private": false,
     "downloads": 14480893,
     "tags": [

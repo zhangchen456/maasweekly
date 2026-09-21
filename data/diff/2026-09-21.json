@@ -1,12 +1,12 @@
 {
   "date": "2026-09-21",
-  "fetched_at": "2026-09-21T07:01:18.075200",
+  "fetched_at": "2026-09-21T13:50:20.427847",
   "stats": {
     "total": 68,
-    "success": 65,
-    "failed": 3,
-    "changed": 4,
-    "unchanged": 61
+    "success": 66,
+    "failed": 2,
+    "changed": 6,
+    "unchanged": 60
   },
   "changes": [
     {
@@ -27,8 +27,22 @@
       "platform": "火山方舟",
       "source_type": "changelog",
       "url": "https://www.volcengine.com/docs/82379/1159177",
-      "status": "fetch_failed",
-      "error": "提取后内容过短 (raw_len=11071)"
+      "status": "changed",
+      "added_count": 10,
+      "removed_count": 0,
+      "added_lines": [
+        "AgentPilot OpenAPI 使用指南",
+        "AgentPilot SDK 参考",
+        "PromptPilot",
+        "PromptPilot 概述",
+        "PromptPilot 管理",
+        "PromptPilot 订阅管理",
+        "VideoPilot API",
+        "VideoPilot 功能介绍",
+        "视觉理解 Solution",
+        "高代码应用创建部署指南"
+      ],
+      "removed_lines": []
     },
     {
       "platform": "火山方舟",
@@ -439,8 +453,8 @@
       "source_type": "industry",
       "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
       "status": "changed",
-      "added_count": 34,
-      "removed_count": 34,
+      "added_count": 38,
+      "removed_count": 38,
       "added_lines": [
         "\"downloads\": 14480893,",
         "\"downloads\": 15132408,",
@@ -462,16 +476,16 @@
         "\"downloads\": 50116218,",
         "\"downloads\": 64447211,",
         "\"downloads\": 88652424,",
-        "\"likes\": 1135,",
-        "\"likes\": 1206,",
+        "\"likes\": 1136,",
+        "\"likes\": 1207,",
+        "\"likes\": 123,",
         "\"likes\": 1378,",
-        "\"likes\": 1407,",
+        "\"likes\": 1408,",
         "\"likes\": 1564,",
-        "\"likes\": 1648,",
-        "\"likes\": 1941,",
-        "\"likes\": 3365,",
-        "\"likes\": 346,",
-        "\"likes\": 3581,"
+        "\"likes\": 1653,",
+        "\"likes\": 183,",
+        "\"likes\": 1948,",
+        "\"likes\": 3365,"
       ],
       "removed_lines": [
         "\"downloads\": 14708283,",
@@ -490,7 +504,15 @@
       "platform": "Artificial Analysis",
       "source_type": "industry",
       "url": "https://artificialanalysis.ai/",
-      "status": "unchanged"
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "26 of 26 models"
+      ],
+      "removed_lines": [
+        "25 of 25 models"
+      ]
     },
     {
       "platform": "LMArena",
