@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_d1277711f717e87b29e92ae79ac74c4520beb1cfaa52273aab85b4983101cdef",
+  "sourceId": "google-vertex-pricing",
+  "date": "2026-09-22",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Vertex AI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+  "title": "Google Vertex AI · 定价来源更新",
+  "summary": "支持模型列表更新，移除 Claude Opus 4.1，新增 Claude Opus 4.6，并简化了区域定价说明。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-21T23:53:00+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Models Supported: Claude Haiku 4.5, Claude Sonnet 4.5, Claude Sonnet 4.6, Claude Sonnet 4, Claude Opus 4, Claude Opus 4.5 and Claude Opus 4.6."
+    ],
+    "removed_lines": [
+      "Claude Opus 4.1 |",
+      "Models with uniform pricing across all regions",
+      "﻿Models Supported: Claude Haiku 4.5, Claude Sonnet 4.5, Claude Sonnet 4.6, Claude Sonnet 4, Claude Opus 4.1, Claude Opus 4, Claude Opus 4.5 and Claude Opus 4.6."
+    ],
+    "added_count": 1,
+    "removed_count": 3,
+    "raw_added_count": 1,
+    "raw_removed_count": 3
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-22.json"
+  },
+  "permalink": "/item/obs_d1277711f717e87b29e92ae79ac74c4520beb1cfaa52273aab85b4983101cdef/"
+}

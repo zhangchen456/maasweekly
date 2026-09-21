@@ -1,8 +1,8 @@
 {
   "source": "OpenRouter Session Cost",
   "source_url": "https://openrouter.ai/rankings",
-  "snapshot_date": "2026-09-13",
-  "as_of": "2026-09-14T06:38:56.569Z",
+  "snapshot_date": "2026-09-20",
+  "as_of": "2026-09-21T06:30:45.860Z",
   "window_days": 30,
   "manual": false,
   "note": "编程 Agent 每次会话成本中位数（USD，付费流量），按 harness × 模型 × 轮次聚合，源数据每周刷新。主口径为 10-49 轮的典型工作会话，每组 harness 展示该档成本最低的 3 个模型组合。",
@@ -15,19 +15,19 @@
           "model": "Llama 3.3 70b Instruct",
           "permaslug": "meta-llama/llama-3.3-70b-instruct",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.009039188
+          "median_cost_usd": 0.008279437
         },
         {
           "model": "Ling 3.0 Flash 20260723",
           "permaslug": "inclusionai/ling-3.0-flash-20260723",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.010539721
+          "median_cost_usd": 0.00834666
         },
         {
           "model": "MiMo V2.5 20260422",
           "permaslug": "xiaomi/mimo-v2.5-20260422",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.018598355
+          "median_cost_usd": 0.019870304
         }
       ]
     },
@@ -39,19 +39,19 @@
           "model": "Muse Spark 1.3 Contributor 20260902",
           "permaslug": "meta/muse-spark-1.3-contributor-20260902",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.01273125
+          "median_cost_usd": 0.01249675
         },
         {
           "model": "DeepSeek V4 Flash 20260731",
           "permaslug": "deepseek/deepseek-v4-flash-20260731",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.016491374
+          "median_cost_usd": 0.013103833
         },
         {
           "model": "GLM 5.3 Flash 20260826",
           "permaslug": "z-ai/glm-5.3-flash-20260826",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.01961004
+          "median_cost_usd": 0.022390367
         }
       ]
     },
@@ -63,19 +63,19 @@
           "model": "MiMo V2.5 20260422",
           "permaslug": "xiaomi/mimo-v2.5-20260422",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.026838278
-        },
-        {
-          "model": "Muse Spark 1.3 Contributor 20260902",
-          "permaslug": "meta/muse-spark-1.3-contributor-20260902",
-          "turn_range": "10-49-turns",
-          "median_cost_usd": 0.031927124
+          "median_cost_usd": 0.026215333
         },
         {
           "model": "DeepSeek V4 Flash 20260731",
           "permaslug": "deepseek/deepseek-v4-flash-20260731",
           "turn_range": "10-49-turns",
-          "median_cost_usd": 0.03527915
+          "median_cost_usd": 0.031611696
+        },
+        {
+          "model": "Muse Spark 1.3 Contributor 20260902",
+          "permaslug": "meta/muse-spark-1.3-contributor-20260902",
+          "turn_range": "10-49-turns",
+          "median_cost_usd": 0.0319912
         }
       ]
     }

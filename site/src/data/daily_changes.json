@@ -1,6 +1,1025 @@
 {
-  "updated_at": "2026-09-21T05:50:21",
+  "updated_at": "2026-09-21T23:53:00",
   "days": [
+    {
+      "date": "2026-09-22",
+      "stats": {
+        "total": 68,
+        "success": 67,
+        "failed": 1,
+        "changed": 18,
+        "unchanged": 49
+      },
+      "changed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 9,
+          "added_lines": [
+            "Plugin 异常处理"
+          ],
+          "removed_lines": [
+            "AgentPilot OpenAPI 使用指南",
+            "AgentPilot SDK 参考",
+            "PromptPilot",
+            "PromptPilot 概述",
+            "PromptPilot 管理",
+            "PromptPilot 订阅管理",
+            "VideoPilot API",
+            "VideoPilot 功能介绍",
+            "视觉理解 Solution"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Plugin 异常处理",
+          "raw_added_count": 2,
+          "raw_removed_count": 11,
+          "id": "obs_8a0aa721474e84c3bc1a180fbe14c1df1b14fdf8cd4ffbc585e4e1f1c1a5f8b5",
+          "permalink": "/item/obs_8a0aa721474e84c3bc1a180fbe14c1df1b14fdf8cd4ffbc585e4e1f1c1a5f8b5/",
+          "llm_summary": "新增了 Plugin 异常处理文档，同时删除了 AgentPilot 和 PromptPilot 相关文档，可能表示产品线调整或文档重构。"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "审核版权合作与生成视频"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "审核版权合作与生成视频",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_3ac1b11bdd1baf5e89339edd1a742427151da83fb306d2c8dc717183bc7fac51",
+          "permalink": "/item/obs_3ac1b11bdd1baf5e89339edd1a742427151da83fb306d2c8dc717183bc7fac51/",
+          "llm_summary": "新增了『审核版权合作与生成视频』功能，表明平台在内容审核和视频生成方面有新的能力上线。"
+        },
+        {
+          "platform": "阿里百炼",
+          "source_type": "model_list",
+          "url": "https://help.aliyun.com/zh/model-studio/models",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "| qwen-audio-3.1-asr-flash-streaming | qwen-audio-3.1-asr-flash-filetrans | qwen3.8-omni-flash-realtime",
+            "| qwen3.8-omni-flash-realtime | qwen3.8-omni-flash |"
+          ],
+          "removed_lines": [
+            "| qwen-audio-3.0-asr-flash-streaming | qwen-audio-3.0-asr-flash-filetrans | qwen3.5-omni-plus-realtime",
+            "| qwen3.5-omni-plus-realtime | qwen3.8-omni-flash |"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "qwen-audio-3.1-realtime-plus",
+              "before": "| qwen-audio-3.1-realtime-plus | qwen3.5-omni-plus |",
+              "after": "| qwen-audio-3.1-realtime-plus | qwen3.5-omni-plus | qwen3.8-omni-flash-realtime"
+            },
+            {
+              "key": "omni-flash",
+              "before": "融合文本、图像、音频、视频等多种模态的理解与生成能力。音视频分析与文本生成选择 qwen3.8-omni-flash，通过 Chat Completions 或 Responses 调用；实时音视频对话选择 qwen3.5-omni-plus-realtime。",
+              "after": "融合文本、图像、音频、视频等多种模态的理解与生成能力。音视频分析与文本生成选择 qwen3.8-omni-flash，通过 Chat Completions 或 Responses 调用；实时音视频对话选择 qwen3.8-omni-flash-realtime。"
+            }
+          ],
+          "signal_preview": "| qwen-audio-3.1-asr-flash-streaming | qwen-audio-3.1-asr-flash-filetrans | qwen3.8-omni-flash-realtime",
+          "raw_added_count": 4,
+          "raw_removed_count": 4,
+          "id": "obs_1984ecf2fe76ae2b5b0ecdb74af63b5fa6a4c261bd3f35c997dea3a8923deefa",
+          "permalink": "/item/obs_1984ecf2fe76ae2b5b0ecdb74af63b5fa6a4c261bd3f35c997dea3a8923deefa/",
+          "llm_summary": "模型列表更新，新增 qwen3.8-omni-flash-realtime，并移除 qwen3.5-omni-plus-realtime，同时新增 ASR 模型 qwen-audio-3.1-asr-flash-streaming 和 filetrans，替换了旧版 qwen-audio-3.0 系列。"
+        },
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 23,
+          "removed_count": 0,
+          "added_lines": [
+            "100万Token |",
+            "Qwen-Audio-3.x-ASR-Flash-Streaming",
+            "ZHIPU/GLM-5.3-FlashX |",
+            "qwen-audio-3.1-asr-flash-filetrans：按输入和输出 Token 数分别计费。",
+            "qwen-audio-3.1-asr-flash-streaming：按输入和输出 Token 数分别计费。",
+            "qwen-audio-3.1-asr-flash：按输入和输出 Token 数分别计费。",
+            "qwen3.8-omni-flash-realtime |",
+            "stepfun/step-5-preview |",
+            "vanchin/deepseek-v4.1-flash",
+            "| qwen-audio-3.0-asr-flash | 0.00022元/秒 | 不计费 | 36,000秒（10小时）",
+            "| qwen-audio-3.0-asr-flash | 国际 | 0.00026元/秒 | 不计费",
+            "| qwen-audio-3.0-asr-flash-filetrans | 0.00022元/秒 | 不计费 | 36,000秒（10小时）",
+            "| qwen-audio-3.0-asr-flash-filetrans | 国际 | 0.00026元/秒 | 不计费",
+            "| qwen-audio-3.0-asr-flash-streaming | 0.00033元/秒 | 不计费 | 36,000秒（10小时）",
+            "| qwen-audio-3.0-asr-flash-streaming | 国际 | 0.00066元/秒 | 不计费",
+            "| qwen-audio-3.1-asr-flash | 0.8元/百万 Token | 2.7元/百万 Token | 100万 Token",
+            "| qwen-audio-3.1-asr-flash | 国际 | 1.094元/百万 Token | 3.427元/百万 Token",
+            "| qwen-audio-3.1-asr-flash-filetrans | 0.8元/百万 Token | 2.7元/百万 Token | 100万 Token",
+            "| qwen-audio-3.1-asr-flash-filetrans | 国际 | 1.094元/百万 Token | 3.427元/百万 Token",
+            "| qwen-audio-3.1-asr-flash-message | 6元 | 4.5元 | 100万Token",
+            "| qwen-audio-3.1-asr-flash-message | 国际 | 6.781元 | 5.104元",
+            "| qwen-audio-3.1-asr-flash-streaming | 6元/百万 Token | 4.5元/百万 Token | 100万 Token",
+            "| qwen-audio-3.1-asr-flash-streaming | 国际 | 6.781元/百万 Token | 5.104元/百万 Token"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "qwen-audio-",
+              "before": "Qwen-Audio-3.0-ASR-Flash",
+              "after": "Qwen-Audio-3.1-ASR-Flash-Message"
+            },
+            {
+              "key": "qwen-audio-",
+              "before": "Qwen-Audio-3.0-ASR-Flash-Filetrans",
+              "after": "Qwen-Audio-3.x-ASR-Flash"
+            },
+            {
+              "key": "qwen-audio-",
+              "before": "Qwen-Audio-3.0-ASR-Flash-Streaming",
+              "after": "Qwen-Audio-3.x-ASR-Flash-Filetrans"
+            },
+            {
+              "key": "qwen-audio-3.0-asr-flash-filetrans",
+              "before": "qwen-audio-3.0-asr-flash-filetrans |",
+              "after": "qwen-audio-3.0-asr-flash-filetrans：按输入音频的秒数计费，输出不计费。"
+            },
+            {
+              "key": "qwen-audio-3.0-asr-flash-streaming",
+              "before": "qwen-audio-3.0-asr-flash-streaming |",
+              "after": "qwen-audio-3.0-asr-flash-streaming：按输入音频的秒数计费，输出不计费。"
+            },
+            {
+              "key": "qwen-audio-3.0-asr-flash",
+              "before": "qwen-audio-3.0-asr-flash |",
+              "after": "qwen-audio-3.0-asr-flash：按输入音频的秒数计费，输出不计费。"
+            },
+            {
+              "key": "qwen-audio-3.1-tts-flash",
+              "before": "qwen-audio-3.1-tts-flash |",
+              "after": "| qwen-audio-3.1-tts-flash | 1.5元 | 12元 | 100万 Token |"
+            }
+          ],
+          "signal_preview": "Qwen-Audio-3.x-ASR-Flash-Streaming",
+          "raw_added_count": 47,
+          "raw_removed_count": 7,
+          "id": "obs_aacbc92fc40dbe5e4c426a110c30fc084fb54d9ff61716f1b648f5b9f3fc8ed3",
+          "permalink": "/item/obs_aacbc92fc40dbe5e4c426a110c30fc084fb54d9ff61716f1b648f5b9f3fc8ed3/",
+          "llm_summary": "定价页面新增了多个 ASR 模型的计费说明，并调整了 qwen-audio-3.1-tts-flash 的价格，同时新增了第三方模型如 ZHIPU/GLM-5.3-FlashX 和 stepfun/step-5-preview。"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "changelog",
+          "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "创建对话请求（Anthropic） POST",
+            "创建对话请求（OpenAI） POST",
+            "创建快速决策请求（TypeSafe） POST"
+          ],
+          "removed_lines": [
+            "创建对话请求(Anthropic) POST",
+            "创建对话请求(OpenAI) POST"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "创建对话请求（Anthropic） POST",
+          "raw_added_count": 3,
+          "raw_removed_count": 2,
+          "id": "obs_df10ec06cbfba2f2112f288362b73a7c623dfea7d1289090d867461d0d473918",
+          "permalink": "/item/obs_df10ec06cbfba2f2112f288362b73a7c623dfea7d1289090d867461d0d473918/",
+          "llm_summary": "API 文档更新，新增了 Anthropic 和 OpenAI 兼容的对话请求接口，以及 TypeSafe 快速决策请求，删除了旧版文档，表明 API 接口规范化。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 3,
+          "added_lines": [
+            "Models Supported: Claude Haiku 4.5, Claude Sonnet 4.5, Claude Sonnet 4.6, Claude Sonnet 4, Claude Opus 4, Claude Opus 4.5 and Claude Opus 4.6."
+          ],
+          "removed_lines": [
+            "Claude Opus 4.1 |",
+            "Models with uniform pricing across all regions",
+            "﻿Models Supported: Claude Haiku 4.5, Claude Sonnet 4.5, Claude Sonnet 4.6, Claude Sonnet 4, Claude Opus 4.1, Claude Opus 4, Claude Opus 4.5 and Claude Opus 4.6."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Models Supported: Claude Haiku 4.5, Claude Sonnet 4.5, Claude Sonnet 4.6, Claude Sonnet 4, Claude Opus 4, Claude Opus 4.5 and Claude Opus 4.6.",
+          "raw_added_count": 1,
+          "raw_removed_count": 3,
+          "id": "obs_d1277711f717e87b29e92ae79ac74c4520beb1cfaa52273aab85b4983101cdef",
+          "permalink": "/item/obs_d1277711f717e87b29e92ae79ac74c4520beb1cfaa52273aab85b4983101cdef/",
+          "llm_summary": "支持模型列表更新，移除 Claude Opus 4.1，新增 Claude Opus 4.6，并简化了区域定价说明。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 3,
+          "added_lines": [
+            "By Michael Gerstenhaber • 9-minute read",
+            "FinOps for the AI era: New flexible billing and cost controls for agents"
+          ],
+          "removed_lines": [
+            "By Hitesh Bhatia • 4-minute read",
+            "How Airtel delivered its flawless Indian Premiere League 2026 cricket broadcasts",
+            "Media & Entertainment"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "By Michael Gerstenhaber • 9-minute read",
+          "raw_added_count": 2,
+          "raw_removed_count": 3,
+          "id": "obs_0c208a362344ba5eaab33b37f3740908d4a78790c8822d707eb42e596f735577",
+          "permalink": "/item/obs_0c208a362344ba5eaab33b37f3740908d4a78790c8822d707eb42e596f735577/",
+          "llm_summary": "新增了关于 FinOps 的博客文章，删除了关于 Airtel 的案例，表明内容重心转向成本管理。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "model_list",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "Encrypted reasoning",
+            "Meet grok-4.7",
+            "On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. See Encrypted reasoning content."
+          ],
+          "removed_lines": [
+            "Meet grok-4.6"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: August 21, 2026",
+              "after": "Last updated: September 21, 2026"
+            },
+            {
+              "key": "newgrok-",
+              "before": "Newgrok-4.6",
+              "after": "Newgrok-4.7"
+            },
+            {
+              "key": "cut-off",
+              "before": "The knowledge cut-off date of Grok 4.6 is February 1, 2026.",
+              "after": "The knowledge cut-off date of Grok 4.7 is May 2026."
+            },
+            {
+              "key": "your choice depends on your use case",
+              "before": "Your choice depends on your use case. We have dedicated models and APIs for audio, image, and video capabilities. For everything else, including code, use Grok 4.6. It is the most intelligent and fastest model we’ve built.",
+              "after": "Your choice depends on your use case. We have dedicated models and APIs for audio, image, and video capabilities. For everything else, including code, use Grok 4.7. It is the most capable model we’ve built."
+            }
+          ],
+          "signal_preview": "Meet grok-4.7",
+          "raw_added_count": 7,
+          "raw_removed_count": 5,
+          "id": "obs_29a5154dc9ec1323f37839c38579f91c98608bc6275532429ad514a396ed42b5",
+          "permalink": "/item/obs_29a5154dc9ec1323f37839c38579f91c98608bc6275532429ad514a396ed42b5/",
+          "llm_summary": "模型列表更新，从 Grok 4.6 升级到 Grok 4.7，知识截止日期更新至 2026 年 5 月，并新增加密推理功能。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "pricing",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "Encrypted reasoning",
+            "Meet grok-4.7",
+            "On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. See Encrypted reasoning content."
+          ],
+          "removed_lines": [
+            "Meet grok-4.6"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: August 21, 2026",
+              "after": "Last updated: September 21, 2026"
+            },
+            {
+              "key": "newgrok-",
+              "before": "Newgrok-4.6",
+              "after": "Newgrok-4.7"
+            },
+            {
+              "key": "cut-off",
+              "before": "The knowledge cut-off date of Grok 4.6 is February 1, 2026.",
+              "after": "The knowledge cut-off date of Grok 4.7 is May 2026."
+            },
+            {
+              "key": "your choice depends on your use case",
+              "before": "Your choice depends on your use case. We have dedicated models and APIs for audio, image, and video capabilities. For everything else, including code, use Grok 4.6. It is the most intelligent and fastest model we’ve built.",
+              "after": "Your choice depends on your use case. We have dedicated models and APIs for audio, image, and video capabilities. For everything else, including code, use Grok 4.7. It is the most capable model we’ve built."
+            }
+          ],
+          "signal_preview": "Meet grok-4.7",
+          "raw_added_count": 7,
+          "raw_removed_count": 5,
+          "id": "obs_b8916ba4d106d848d75618ac2e1e4eb4fdddde2dbf634e5446a3ba5b3d43dcff",
+          "permalink": "/item/obs_b8916ba4d106d848d75618ac2e1e4eb4fdddde2dbf634e5446a3ba5b3d43dcff/",
+          "llm_summary": "定价页面更新，模型名称从 grok-4.6 改为 grok-4.7，并新增加密推理相关说明。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast, the same model at twice the token rates, is available only through Cursor and Grok Build, not on the public xAI API. See the Grok 4.7 overview and the announcement.",
+            "Meet grok-4.7",
+            "September 21"
+          ],
+          "removed_lines": [
+            "Meet grok-4.6"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: September 17, 2026",
+              "after": "Last updated: September 21, 2026"
+            }
+          ],
+          "signal_preview": "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast, the same model at twice the token rates, is available only through Cursor and Grok Build, not on the public xAI API. See the Grok 4.7 overview and the announcement.",
+          "raw_added_count": 4,
+          "raw_removed_count": 2,
+          "id": "obs_be81c9cd2a853b249b95074d457a3a1aed4eb7b7d4ed5241beaa31e3bafbc099",
+          "permalink": "/item/obs_be81c9cd2a853b249b95074d457a3a1aed4eb7b7d4ed5241beaa31e3bafbc099/",
+          "llm_summary": "更新日志新增 Grok 4.7 发布说明，包含 500k 上下文窗口等特性。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast, the same model at twice the token rates, is available only through Cursor and Grok Build, not on the public xAI API. See the Grok 4.7 overview and the announcement.",
+            "Meet grok-4.7",
+            "September 21"
+          ],
+          "removed_lines": [
+            "Meet grok-4.6"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: September 17, 2026",
+              "after": "Last updated: September 21, 2026"
+            }
+          ],
+          "signal_preview": "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast, the same model at twice the token rates, is available only through Cursor and Grok Build, not on the public xAI API. See the Grok 4.7 overview and the announcement.",
+          "raw_added_count": 4,
+          "raw_removed_count": 2,
+          "id": "obs_1934e0b53c3f046e563cf73a3bca3e18e9eff8753cdfe73459839c48f38238ae",
+          "permalink": "/item/obs_1934e0b53c3f046e563cf73a3bca3e18e9eff8753cdfe73459839c48f38238ae/",
+          "llm_summary": "博客新增 Grok 4.7 发布文章，内容与 changelog 一致。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 13,
+          "removed_count": 0,
+          "added_lines": [
+            "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailScalewayTogether AI",
+            "Announcing the Artificial Analysis Intelligence Index v4.3See more",
+            "AnthropicAnthropic + CognitionOpenAIOpenAI + CognitionSpaceXAIMetaZ.aiMoonshot AIAlibaba CloudDeepSeekGoogle",
+            "AnthropicOpenAIMetaSpaceXAIXiaomiAlibabaZ AIStepFunKimiGoogleDeepSeekInstitute of Foundation ModelsMiniMaxThinking MachinesMistral",
+            "AnthropicOpenAIMetaSpaceXAIZ AIKimiGoogleDeepSeekOther Models",
+            "Benchmarking Grok 4.7",
+            "GoogleStepFunThinking MachinesZ AIXiaomiMiniMaxOpenAIAnthropicMetaSpaceXAINVIDIADeepSeekAlibabaMistralKimi",
+            "Grok 4.7 (high)",
+            "Grok 4.7 (xhigh)",
+            "MiMo-V2.6-Pro",
+            "New article published · 21 Sept",
+            "New language model evaluation · 21 Sept",
+            "ProprietaryOpen WeightsOpen Weights (Commercial Use Restricted)"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailScalewayTogether AI",
+          "raw_added_count": 25,
+          "raw_removed_count": 27,
+          "id": "obs_392b6ed0280214a9646baa01583ee24fdfaed3e636166d01afa227530c3a00c6",
+          "permalink": "/item/obs_392b6ed0280214a9646baa01583ee24fdfaed3e636166d01afa227530c3a00c6/",
+          "llm_summary": "新增了 Grok 4.7 的基准测试结果，并更新了智能指数 v4.3，同时新增了多个模型提供商的列表。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "grok-imagine-image-2.0",
+              "before": "grok-imagine-image-2.0 (low)1315",
+              "after": "grok-imagine-image-2.0 (low)1315±12"
+            },
+            {
+              "key": "grok-imagine-image-2.0",
+              "before": "grok-imagine-image-2.0 (low)1439",
+              "after": "grok-imagine-image-2.0 (low)1439±8"
+            }
+          ],
+          "signal_preview": "grok-imagine-image-2.0 (low)1315±12",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_4365f5e3ca73b34f23ba02bc0a79fa8e1000b492212fa99ad3940bb2b4c15bb4",
+          "permalink": "/item/obs_4365f5e3ca73b34f23ba02bc0a79fa8e1000b492212fa99ad3940bb2b4c15bb4/",
+          "llm_summary": "排行榜分数微调，grok-imagine-image-2.0 的 Elo 分数增加了置信区间，但无实质变化。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "WebRTC with WARP"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_1531c0a923ff2eb70082c4f2496ed3daf46828e4895804824057f3b0a0c0a4d5",
+          "permalink": "/item/obs_1531c0a923ff2eb70082c4f2496ed3daf46828e4895804824057f3b0a0c0a4d5/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "WebRTC with WARP"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_e489ed89aa736de55505af3a1c71d4e280f8ec6c47e46463537da7aaaabb8c1b",
+          "permalink": "/item/obs_e489ed89aa736de55505af3a1c71d4e280f8ec6c47e46463537da7aaaabb8c1b/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "WebRTC with WARP"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_f14b16a291f169cf34b9e46a9bc3df5464ac55b8c5b5c89c3e373c6db7f4e1d1",
+          "permalink": "/item/obs_f14b16a291f169cf34b9e46a9bc3df5464ac55b8c5b5c89c3e373c6db7f4e1d1/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "WebRTC with WARP"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_a0868d75ed82565d58e427ce68698c836ef9c22535d7d2eaed3c3b9278f5a270",
+          "permalink": "/item/obs_a0868d75ed82565d58e427ce68698c836ef9c22535d7d2eaed3c3b9278f5a270/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 33,
+          "raw_removed_count": 33,
+          "id": "obs_5775182b533ce5d518295039b6670fcc698232982fafbff2cde43a40ef551cd6",
+          "permalink": "/item/obs_5775182b533ce5d518295039b6670fcc698232982fafbff2cde43a40ef551cd6/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "xAI",
+          "logo_summary": "Grok 4.7 发布，支持加密推理",
+          "items": [
+            {
+              "text": "xAI 发布 Grok 4.7，知识截止至 2026 年 5 月，支持 500k 上下文窗口，并新增 Encrypted reasoning 功能。",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "Qwen3.8-Omni 系列上线，ASR 定价调整",
+          "items": [
+            {
+              "text": "阿里百炼新增 qwen3.8-omni-flash-realtime 模型，并替换 qwen3.5-omni-plus-realtime。",
+              "type": "release"
+            },
+            {
+              "text": "Qwen-Audio-3.1-ASR-Flash 系列定价更新，按输入输出 Token 计费，并新增 Qwen-Audio-3.x-ASR-Flash-Streaming。",
+              "type": "pricing"
+            },
+            {
+              "text": "qwen-audio-3.1-tts-flash 输入价格上调至 1.5 元/百万 Token，输出 12 元/百万 Token。",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "文档更新，新增版权合作审核",
+          "items": [
+            {
+              "text": "火山方舟新增『审核版权合作与生成视频』功能，并移除 PromptPilot 相关文档。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "支持模型列表更新，新增 FinOps 功能",
+          "items": [
+            {
+              "text": "Google Vertex AI 更新支持模型列表，移除 Claude Opus 4.1，新增 Claude Opus 4.6 等。",
+              "type": "release"
+            },
+            {
+              "text": "Google Vertex AI 发布博客，介绍面向 AI 时代的 FinOps 灵活计费与成本控制。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "API 文档更新，新增 TypeSafe 请求",
+          "items": [
+            {
+              "text": "硅基流动新增创建对话请求（Anthropic/OpenAI）和创建快速决策请求（TypeSafe）的 API 文档。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "发布 Grok 4.7 评测，更新智能指数",
+          "items": [
+            {
+              "text": "Artificial Analysis 发布 Grok 4.7 基准测试，并更新 Intelligence Index v4.3。",
+              "type": "other"
+            }
+          ]
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_a68801ccf83d404022fd4d1f451a791fc19ac29833103b6902fc77146b0ed5c5",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-tts-flash",
+          "component": "input",
+          "previous": "1.000000",
+          "current": "1.500000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_1c2b837532d5540820b89228788e35e429f69dfc8986d23b71f45e77472e2fca",
+          "provider": "qwen",
+          "model": "qwen-audio-3.0-realtime-flash",
+          "component": "input",
+          "previous": "30.000000",
+          "current": "6.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_086dbba0cea4b93d2cdb6fd25c8f956b6f946c74f0140203b9a333d9770bcf6d",
+          "provider": "qwen",
+          "model": "qwen-audio-3.0-realtime-flash",
+          "component": "output",
+          "previous": "100.000000",
+          "current": "12.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_1e5bbd8705be981d217d28759917c3935618bc65bbbbcfb8f590c6cafcaa32ef",
+          "provider": "qwen",
+          "model": "qwen-audio-3.0-realtime-flash",
+          "component": "input",
+          "previous": "33.724000",
+          "current": "6.781000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_94318a5030637be010dd565467a821953a5730f61301b101966da974a3324825",
+          "provider": "qwen",
+          "model": "qwen-audio-3.0-realtime-flash",
+          "component": "output",
+          "previous": "112.413000",
+          "current": "13.636000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_b9538ad5ecc3f7fa03106c1fac82aaa38b1c3700e759d73fc282c9f9600b58d0",
+          "provider": "doubao",
+          "model": "doubao-seed-2.1-lite",
+          "component": "input",
+          "current": "0.400000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
+        },
+        {
+          "id": "price_0ad05e348ee55a33dc0c960febd77506d63fe1af3efc5ca06ca364110b52060d",
+          "provider": "doubao",
+          "model": "doubao-seed-2.1-lite",
+          "component": "cache_read",
+          "current": "0.160000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
+        },
+        {
+          "id": "price_0f45d3cc5ac7d5baea1a7f059d23dda7c6737f89665849db03590d51bb05932e",
+          "provider": "doubao",
+          "model": "doubao-seed-2.1-lite",
+          "component": "output",
+          "current": "1.350000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
+        },
+        {
+          "id": "price_dc9c817d5605a3096cb34965377e2c6811df98ea3faa1c062c372bd6ba5c9287",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-tts-flash",
+          "component": "output",
+          "current": "12.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_96fa363b62322e5f9009e0ea481edeb14eb232e6d82db4b2f4219d252ec3cf1c",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash-message",
+          "component": "input",
+          "current": "6.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_8ee2b74da2cc84fe9f3941c7702dddeeae790169dffd3bb634131003f7407003",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash-message",
+          "component": "output",
+          "current": "4.500000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_612da2eaefde207ffdeb423d0b5a57bce3d34dd6bca06a28e8c9addfe9bbc5dd",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash-message",
+          "component": "input",
+          "current": "6.781000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_d6c44083b0ad9e1d0cea9f07820d501f7c2c41ff8fcf2e3402d59256cbdd3ccd",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash-message",
+          "component": "output",
+          "current": "5.104000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_da78e5d472e1d79032a06a379837f36a56556596f5331e1304aa961bd991a6d0",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash-streaming",
+          "component": "input",
+          "current": "6.000000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_54fa536e19786a130df3bb203addf804c89dfdc5bdd15c7a39a35d6d94e5fd85",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash-streaming",
+          "component": "output",
+          "current": "4.500000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_0651c9a7858b10e61a80e84f6ad73aa9dd3c4a3db5f732925615024d76a5c0c9",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash-streaming",
+          "component": "input",
+          "current": "6.781000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_c1ce91a24a176bed82b5a4f853afebacaf24ba7496db1bf8cb37001ee6ade928",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash-streaming",
+          "component": "output",
+          "current": "5.104000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_64ece353e98ab14faa548ebc6d3ebc8298873a6f0e7e8a3681292040f1956687",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash-filetrans",
+          "component": "input",
+          "current": "0.800000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_1036e32700fa25bb7a072b93ac9fef1bd8d8e8b224d9b7253910641eb36d30f7",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash-filetrans",
+          "component": "output",
+          "current": "2.700000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_a9c515aa90f75e7670504ba28a13f721b72fd136c50c44f0cd8cc8cbe84db366",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash-filetrans",
+          "component": "input",
+          "current": "1.094000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_a54b8e02602245a3c40bc93ee4c88dbb2b71766643382774307cff28300cd14a",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash-filetrans",
+          "component": "output",
+          "current": "3.427000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_ec109f857f874e2682e3865defaab5dabea6f4bcf0d1b314c4533ae2c448972a",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash",
+          "component": "input",
+          "current": "0.800000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_9f7b8a931002bb8c808acf4733c8e6497f8e115e06daa6f8b9e24d342e1b0730",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash",
+          "component": "output",
+          "current": "2.700000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_23731aa53ee2080dd111123387d480b868a439414604ab9797a29a49bbd513fe",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash",
+          "component": "input",
+          "current": "1.094000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_7006c998264b6cf26de13f0df5416ea4015882878432b57251d052eb1960e3f4",
+          "provider": "qwen",
+          "model": "qwen-audio-3.1-asr-flash",
+          "component": "output",
+          "current": "3.427000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        }
+      ]
+    },
     {
       "date": "2026-09-21",
       "stats": {
