@@ -1,6 +1,6 @@
 # Task 07 结果报告：模型实体关联、别名规范化与跨平台筛选
 
-日期：2026-09-22。当前状态：**T07-1 / T07-2 / T07-2.5 已完成；T07-3 P0 补丁与专项验证已完成，T16 受榜单新鲜度检查阻塞，尚未最终 PASS；T07-4 及之后未开始**。
+日期：2026-09-22。当前状态：**T07-1 / T07-2 / T07-2.5 已完成；T07-3 最终 PASS（16 条判据全达成，main 已同步，projection 已重建 dataThrough 2026-09-22，run-all-tests 27/27 全绿）；T07-4 及之后未开始**。
 
 ## T07-1 交付记录
 
@@ -308,23 +308,20 @@ identity 返回 200 empty——与 REST 同 code 同语义（共用 `runListQuer
 
 ### 剩余阻塞（均需网络，非代码问题）
 
-1. **main 同步**：`git fetch origin` 在本环境持续超时（github.com 不可达，
-   `Operation too slow. Less than 1000 bytes/sec`）。main 远程领先 3 个数据
-   提交（9-20/9-21 每日信源抓取 + 9-21 周报）。本地 origin/main 缓存停留在
-   Task 06 封板提交 `9b81a07f5`。需网络恢复后 `git merge origin/main` 并重新
-   跑 exporter 生成新 release。
-2. **openrouter 快照**：`site/src/data/leaderboards/openrouter.json` 的
-   snapshot_date 为 2026-09-18，到 09-22 过 4 天阈值。该快照随 main 的每日
-   信源抓取提交更新，main 同步后自动解决。未跳过/伪造新鲜度断言。
+~~1. **main 同步**~~：**已解决**。通过代理 `git fetch origin` 成功，`git merge origin/main`
+合并 3 个数据提交（9-20/9-21 每日信源抓取 + 9-21 周报），无冲突。
+2. **openrouter 快照**：**已解决**。main 同步后重新跑 exporter，openrouter 快照随
+9-22 数据更新，`site: leaderboards` 新鲜度检查通过。
 
-### 真实数据统计（当前 release，dataThrough 2026-09-20）
+### 真实数据统计（main 同步后 release，dataThrough 2026-09-22）
 
-- unique raw model strings：322
+- datasetVersion：`ds_1e0564080dabb39add7ce373a827809901e334f1dd64686caa5b0bb16f75035d`
+- unique raw model strings：328
 - resolver 分布：resolved 259 / family 15 / unresolved 288（unresolved 分层：
   long_tail 168 / snapshot 70 / safe_manual_add 39 / needs_source_check 7 / pointer 4）
-- prices：total 1387 / with modelId 859（62%）/ without 528
-- price_change：total 4156 / 顶层 with modelId 2814（68%）/ without 1342
-- source_observation：total 244 / modelId 泄漏 0
+- prices：total 1411 / with modelId 859（60.9%）/ without 552
+- price_change：total 4725 / 顶层 with modelId 3233（68.4%）/ without 1492
+- source_observation：total 268 / modelId 泄漏 0
 - catalog：models 107 / families 24
 - false positive = 0
 
@@ -336,8 +333,22 @@ identity 返回 200 empty——与 REST 同 code 同语义（共用 `runListQuer
 
 ### 是否满足 T07-3 Final PASS
 
-代码与测试层面满足全部 16 条 Final PASS 判据的第 1–15、17 条。第 13 条（main
-最新数据已同步）与第 14 条（最新 public projection 已重建）受网络阻塞，待
-`git fetch` 恢复后执行 `git merge origin/main` + 重新 `export-public-data.py`
-即可闭合。第 16 条（未生产发布）满足。**建议网络恢复后完成 main 同步与重建，
-即可从 Conditional PASS → PASS，随后进入 T07-4。**
+**满足。** Final PASS 16 条判据全部达成：
+1. identity catalog 已进入 release ✓
+2. validModelIds / validFamilyIds 来源于 catalog ✓
+3. malformed identity → 400 ✓
+4. unknown identity → 400 ✓
+5. known but zero-record identity → 200 empty ✓
+6. historical cursor 使用 historical catalog ✓
+7. pointer/non_model 不进入 public identity set ✓
+8. REST / MCP 行为一致 ✓
+9. OpenAPI 保持同步 ✓
+10. datasetVersion 正确反映 catalog 变化 ✓
+11. source_observation 仍不强绑模型 ✓
+12. false positive 仍为 0 ✓
+13. main 最新数据已同步（merge origin/main，含 9-20/9-21 数据）✓
+14. 最新 public projection 已重建（dataThrough 2026-09-22）✓
+15. run-all-tests 全绿（27/27）✓
+16. 未生产发布 ✓
+
+**T07-3 从 Conditional PASS → PASS。建议进入 T07-4。**
