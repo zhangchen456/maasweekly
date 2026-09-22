@@ -64,6 +64,7 @@ run "test_model_public_projection（Task 07）" python3 -m unittest discover -s 
 run "test_model_registry（Task 07）" python3 -m unittest discover -s tests -p 'test_model_registry.py'
 run "validate-model-registry（Task 07）" python3 pipeline/scripts/validate-model-registry.py --check
 run "audit-model-registry-coverage（Task 07）" python3 pipeline/scripts/audit-model-registry-coverage.py --output /tmp/t07-coverage-audit.json
+run "test_workflow_release_contract（incident 2026-09）" python3 -m unittest discover -s tests -p 'test_workflow_release_contract.py'
 
 # ---- site（构建 + 六测试）----
 if ! $QUICK; then
