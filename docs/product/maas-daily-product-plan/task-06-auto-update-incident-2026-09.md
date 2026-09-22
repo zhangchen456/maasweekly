@@ -174,3 +174,58 @@ skip_fetch=true 会：
 
 修复后两者分离：release failure 不会再发生（projection 在 commit 前生成）；
 health-check failure 保留原语义（环境失效时置红）。
+
+## Final Recovery / Closure
+
+### 恢复过程
+
+1. merge `fix/workflow-public-projection` → main（fast-forward，含 workflow 修复
+   + workflow contract 测试 + incident 文档）
+2. 首次触发 `daily-update skip_fetch=true` → 失败：`test_price_archive` 报
+   `ModuleNotFoundError: No module named 'bs4'`（bs4 只在抓取步骤装，skip_fetch
+   跳过抓取 → build-release tests 缺 bs4）
+3. 修复：daily/weekly Setup Python 后新增 `Install Python dependencies`
+   （`pip install -r requirements.txt`，始终执行）+ 测试 T09
+4. 第二次触发 `daily-update skip_fetch=true` → 全绿，生产 activate 成功
+
+### bs4 CI 依赖 bug（恢复过程额外发现）
+
+根因：bs4 原来只在抓取步骤（Setup Playwright / Fetch pricing / Pricing
+regression）装，这些步骤都有 `if: !skip_fetch`。skip_fetch=true 时
+build-release run-all-tests 的 test_price_archive 需要 bs4 → ModuleNotFoundError。
+
+修复：daily/weekly 在 Setup Python 后始终 `pip install -r requirements.txt`。
+
+CI 设计约束（后续必须遵守）：**构建依赖必须在构建环境统一安装，不能靠前置
+业务步骤"顺带装上"**——可跳过的业务步骤不应承载构建依赖。
+
+### 最终对齐状态
+
+| 维度 | 值 |
+|---|---|
+| Git main HEAD | `12692c595194c5f93a5fe5d0364f5062071bc218` |
+| public manifest datasetVersion | `ds_0d06b42023365c32f6b79f0e98d730fef9af93b57865626e737307b4d5aafce5` |
+| production /api/v1/status datasetVersion | `ds_0d06b42023365c32f6b79f0e98d730fef9af93b57865626e737307b4d5aafce5` |
+| production current RID | `rl_12692c5951_0d06b4202336` |
+| dataThrough | `2026-09-22` |
+| coverage.changes.count | 4993 |
+| coverage.prices.facts | 1411 |
+
+### 四入口 online verify（全部 PASS）
+
+| 入口 | HTTP |
+|---|---|
+| `/api/v1/status` | 200 |
+| `/api/v1/changes` | 200 |
+| `/api/v1/prices` | 200 |
+| `/feed.xml` | 200 |
+| `/maas-skill/SKILL.md` | 200 |
+
+workflow Online verify 日志确认：REST /api/v1/status + REST /api/v1/changes +
+MCP 工具调用 + RSS + Skill 四入口 datasetVersion 全部一致。
+
+### Incident 状态：CLOSED
+
+根因（workflow commit 前未生成 tracked 产物）已修复；skip_fetch=true 恢复路径
+已经过真实生产验证；bs4 CI 依赖 bug 已修复；生产已恢复到 dataThrough 2026-09-22，
+四者对齐，四入口 200。
