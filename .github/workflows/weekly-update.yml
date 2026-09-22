@@ -43,6 +43,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      # Python 依赖（始终装：build-release run-all-tests 的 test_price_archive
+      # 需要 bs4；import/full 模式 commit 前不装会被 build-release 拒载）
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:

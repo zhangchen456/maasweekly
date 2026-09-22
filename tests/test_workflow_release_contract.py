@@ -130,6 +130,17 @@ class TestDailyWorkflowContract(unittest.TestCase):
             self.assertNotIn("skip_fetch", ln,
                              f"Deploy 步骤不应被 skip_fetch 守卫: {ln}")
 
+    def test_T09_python_deps_always_installed(self):
+        """T09: Python 依赖（bs4）始终安装——skip_fetch=true 时抓取步骤的
+        pip install 被跳过，build-release run-all-tests 的 test_price_archive
+        仍需 bs4。Install Python dependencies 步骤不应被 skip_fetch 守卫。"""
+        dep_block = self._step_block("Install Python dependencies")
+        if_lines = [ln for ln in dep_block.splitlines()
+                    if ln.strip().startswith("if:") or ln.strip().startswith("if :")]
+        self.assertEqual(if_lines, [],
+                         f"Install Python dependencies 不应被守卫: {if_lines}")
+        self.assertIn("requirements.txt", dep_block)
+
     def _step_block(self, name_needle: str) -> str:
         """提取某 step 的文本块（从 `- name: <needle>` 到下一个 `- name:`）。"""
         lines = self.text.splitlines()
