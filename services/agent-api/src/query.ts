@@ -414,16 +414,10 @@ export function listChanges(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPay
     if (c.observationDate < from || c.observationDate >= to) return false;
     if (p.provider !== undefined && c.providerId !== p.provider) return false;
     if (p.type !== undefined && c.recordType !== p.type) return false;
-    // Task 07 T07-3：modelId/familyId 精确过滤（identity 在 price_change.price；
-    // source_observation 无结构化模型——自然过滤，不伪造）
-    if (p.modelId !== undefined) {
-      const pc = c as unknown as { price?: { modelId?: string } };
-      if (pc.price?.modelId !== p.modelId) return false;
-    }
-    if (p.familyId !== undefined) {
-      const pc = c as unknown as { price?: { familyId?: string } };
-      if (pc.price?.familyId !== p.familyId) return false;
-    }
+    // Task 07 T07-3：modelId/familyId 精确过滤（identity 在 price_change 顶层；
+    // source_observation 无结构化 model——自然过滤，不伪造）
+    if (p.modelId !== undefined && c.modelId !== p.modelId) return false;
+    if (p.familyId !== undefined && c.familyId !== p.familyId) return false;
     if (p.q !== undefined) {
       const q = p.q as string;
       const hay = `${c.title} ${c.summary ?? ''}`.toLowerCase();

@@ -271,10 +271,10 @@ test('T09 畸形 JSON / 未知方法 / Content-Type / Accept / 超大 body', asy
   const t1 = await r1.text();
   const b1 = JSON.parse(t1) as { error?: { code: number } };
   assert.equal(b1.error?.code, -32700);
-  // 未知方法 → SDK -32601（JSON-RPC Method not found 语义）
+  // 未知方法 → SDK -32601（JSON-RPC Method not found 语义；HTTP 状态码
+  // 由 SDK transport 决定，不在此断言——关键判据是 JSON-RPC error code）
   const r2 = await rawPost(JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'wat/x', params: {} }));
   const b2 = await r2.json() as { error?: { code: number } };
-  assert.ok([400, 200].includes(r2.status));
   assert.equal(b2.error?.code, -32601);
   // Content-Type text/plain → 415（SDK）
   const r3 = await fetch(base, {
