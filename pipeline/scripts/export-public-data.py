@@ -39,12 +39,48 @@ REPO_ROOT = BASE
 DEFAULT_OUTPUT = BASE / "data" / "public" / "v1"
 PROVIDER_MAP = BASE / "pipeline" / "config" / "public_providers.json"
 BUSINESS_FILES = ("changes.json", "items.json", "prices.json",
-                  "evidence.json", "weekly.json", "status.json")
+                  "evidence.json", "weekly.json", "status.json",
+                  "model-identities.json")
 RETENTION_DAYS = 7
+
+
+def _build_model_identities(identity_projector) -> dict:
+    """冻结 public-valid registry identities；不公开 grouping-only family。"""
+    models, families = [], []
+    for m in identity_projector.registry["models"]:
+        if m["classification"] == "model":
+            entry = {"modelId": m["modelId"], "modelName": m["canonicalName"]}
+            fid = m.get("familyId")
+            if fid in identity_projector._public_families:
+                entry.update(familyId=fid,
+                             familyName=identity_projector.idx["modelById"][fid]["canonicalName"])
+            models.append(entry)
+        elif m["classification"] == "family":
+            families.append({"familyId": m["modelId"], "familyName": m["canonicalName"]})
+    errors = [error for entry in models + families
+              for error in identity_projector.verify_projection(entry)]
+    if errors:
+        raise ExportError("identity catalog 非法: " + "; ".join(errors))
+    catalog = {"models": sorted(models, key=lambda m: m["modelId"]),
+               "families": sorted(families, key=lambda f: f["familyId"])}
+    errors = validator.validate_identity_catalog(catalog)
+    if errors:
+        raise ExportError("identity catalog 非法: " + "; ".join(errors))
+    return catalog
 
 
 def build_release(input_root: Path) -> dict:
     """加载 → 投影 → 校验 → 返回 {collections, datasetVersion, dataThrough}。"""
+    # catalog 与实体投影必须使用同一输入根的 registry，每次构建重置缓存和错误。
+    from model_identity.projector import ModelIdentityProjector
+    from model_identity.registry import load_registry
+    try:
+        projector._mi_projector = ModelIdentityProjector(
+            load_registry(input_root / "data/model-registry/models.json"))
+        projector._mi_gate_errors.clear()
+        model_identities = _build_model_identities(projector._mi_projector)
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        raise ExportError(f"model identity registry/catalog 加载失败: {exc}") from exc
     li = loaders.load_all(input_root, PROVIDER_MAP)
     pm = li.provider_map
     si = projector.SourceStatusIndex(li.daily_changes, li.source_registry)
@@ -92,11 +128,13 @@ def build_release(input_root: Path) -> dict:
     data_through = canonical.compute_data_through(changes, prices, weekly)
     version = canonical.compute_dataset_version(
         {"changes": changes, "items": items, "prices": prices,
-         "evidence": evidence, "weekly": weekly, "status": status},
+         "evidence": evidence, "weekly": weekly, "status": status,
+         "modelIdentities": model_identities},
         data_through)
     return {"changes": changes, "items": items, "prices": prices,
             "evidence": evidence, "weekly": weekly, "status": status,
-            "datasetVersion": version, "dataThrough": data_through}
+            "datasetVersion": version, "dataThrough": data_through,
+            "modelIdentities": model_identities}
 
 
 def coverage_of(rel: dict) -> dict:
@@ -121,7 +159,7 @@ def write_release(rel: dict, out_dir: Path, version: str) -> list[dict]:
     """
     files_meta: list[dict] = []
     for name in BUSINESS_FILES:
-        key = name[:-5]  # changes.json → changes
+        key = "modelIdentities" if name == "model-identities.json" else name[:-5]
         payload = rel[key]
         text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
         data = text.encode("utf-8")
@@ -163,7 +201,8 @@ def publish(output_root: Path, rel: dict) -> int:
                     sorted(target.glob("*.json")) if f.name != "manifest.json"}
         same = all(
             existing.get(name) ==
-            (json.dumps(rel[name[:-5]], ensure_ascii=False, indent=2) + "\n").encode()
+            (json.dumps(rel["modelIdentities" if name == "model-identities.json" else name[:-5]],
+                          ensure_ascii=False, indent=2) + "\n").encode()
             for name in BUSINESS_FILES)
         # per-release manifest 缺失（P1-1 升级前的旧形态）→ 视为需重写
         has_release_manifest = (target / "manifest.json").exists()

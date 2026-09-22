@@ -29,7 +29,7 @@ from public_export import canonical  # noqa: E402
 SCRIPT = BASE / "pipeline" / "scripts" / "export-public-data.py"
 PROVIDER_MAP = BASE / "pipeline" / "config" / "public_providers.json"
 BUSINESS = ("changes.json", "items.json", "prices.json",
-            "evidence.json", "weekly.json", "status.json")
+            "evidence.json", "weekly.json", "status.json", "model-identities.json")
 
 
 def run_cli(*args, input_root: Path | None = None) -> subprocess.CompletedProcess:
@@ -134,6 +134,8 @@ class FixtureRepo:
         self._write_current({})
 
     def _write_registry(self):
+        shutil.copy(BASE / "data/model-registry/models.json",
+                    self._p("data/model-registry/models.json"))
         shutil.copy(BASE / "pipeline" / "config" / "source_registry.json",
                     self._p("pipeline/config/source_registry.json"))
 
@@ -438,6 +440,97 @@ class TestCanonical(unittest.TestCase):
         v3 = canonical.compute_dataset_version(cols, "2026-09-11")
         self.assertNotEqual(v2, v3)
         self.assertNotEqual(v1, v3)
+
+
+
+class TestIdentityCatalog(unittest.TestCase):
+    def setUp(self):
+        self.fx = FixtureRepo()
+        self.addCleanup(self.fx.cleanup)
+        self.fx.add_obs()
+        self.out = Path(tempfile.mkdtemp(prefix="t07-catalog-"))
+        self.addCleanup(shutil.rmtree, self.out, True)
+        self.registry_path = self.fx.root / 'data/model-registry/models.json'
+
+    def export(self):
+        r = run_cli('--output-dir', str(self.out), input_root=self.fx.root)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        manifest = json.loads((self.out / 'manifest.json').read_text())
+        directory = self.out / 'releases' / manifest['datasetVersion']
+        return manifest, directory, json.loads((directory / 'model-identities.json').read_text())
+
+    def test_catalog_exact_public_membership_and_manifest(self):
+        manifest, directory, catalog = self.export()
+        registry = json.loads(self.registry_path.read_text())['models']
+        self.assertEqual({m['modelId'] for m in catalog['models']},
+                         {m['modelId'] for m in registry if m['classification'] == 'model'})
+        self.assertEqual({f['familyId'] for f in catalog['families']},
+                         {f['modelId'] for f in registry if f['classification'] == 'family'})
+        families = {f['familyId'] for f in catalog['families']}
+        self.assertTrue(all(m.get('familyId') in families for m in catalog['models'] if 'familyId' in m))
+        # Fixture 只有 source observation，catalog identities 在三种记录里全无。
+        for name in ('changes', 'prices', 'items'):
+            self.assertTrue(all('modelId' not in row and 'familyId' not in row
+                                for row in json.loads((directory / f'{name}.json').read_text())))
+        entry = next(f for f in manifest['files'] if f['path'].endswith('/model-identities.json'))
+        raw = (directory / 'model-identities.json').read_bytes()
+        self.assertEqual(entry['bytes'], len(raw))
+        self.assertEqual(entry['sha256'], hashlib.sha256(raw).hexdigest())
+        release_manifest = json.loads((directory / 'manifest.json').read_text())
+        self.assertIn(entry, release_manifest['files'])
+
+    def test_catalog_only_changes_version_and_freezes_history(self):
+        first, old_dir, catalog = self.export()
+        old_hash = tree_hash(old_dir)
+        registry = json.loads(self.registry_path.read_text())
+        registry['models'].extend([
+            {'modelId': 'alibaba:zero-family', 'providerId': 'alibaba', 'canonicalName': 'Zero Family',
+             'familyId': 'alibaba:zero-family', 'classification': 'family', 'aliases': []},
+            {'modelId': 'alibaba:zero-model', 'providerId': 'alibaba', 'canonicalName': 'Zero Model',
+             'familyId': 'alibaba:zero-family', 'classification': 'model', 'aliases': []},
+        ])
+        self.registry_path.write_text(json.dumps(registry))
+        second, new_dir, new_catalog = self.export()
+        self.assertNotEqual(first['datasetVersion'], second['datasetVersion'])
+        self.assertEqual(tree_hash(old_dir), old_hash)
+        for name in BUSINESS:
+            if name != 'model-identities.json':
+                self.assertEqual((old_dir / name).read_bytes(), (new_dir / name).read_bytes())
+        self.assertNotIn('alibaba:zero-model', {m['modelId'] for m in catalog['models']})
+        self.assertIn('alibaba:zero-model', {m['modelId'] for m in new_catalog['models']})
+        # Registry 行顺序/notes/无命中 alias 不是公开合同，不改变版本或文件字节。
+        registry['models'].reverse()
+        registry['models'][0]['notes'] = 'internal-only'
+        registry['models'][0]['aliases'].append({'value': 'unused-test-alias', 'type': 'raw', 'source': 'test'})
+        self.registry_path.write_text(json.dumps(registry))
+        third, _, _ = self.export()
+        self.assertEqual(second['datasetVersion'], third['datasetVersion'])
+        self.assertEqual(second['files'], third['files'])
+
+    def test_missing_or_invalid_registry_fails_without_writes(self):
+        self.export()
+        before = tree_hash(self.out)
+        for content in (None, '{', '{"models": [{"classification": "model"}]}'):
+            if content is None:
+                self.registry_path.unlink()
+            else:
+                self.registry_path.write_text(content)
+            r = run_cli('--output-dir', str(self.out), input_root=self.fx.root)
+            self.assertNotEqual(r.returncode, 0)
+            self.assertEqual(tree_hash(self.out), before)
+
+    def test_catalog_check_rejects_missing_and_tampered(self):
+        manifest, directory, _ = self.export()
+        file = directory / 'model-identities.json'
+        raw = file.read_bytes()
+        file.write_bytes(raw.replace(b'Claude', b'ClauDe', 1))
+        self.assertNotEqual(run_cli('--check', '--output-dir', str(self.out)).returncode, 0)
+        file.unlink()
+        self.assertNotEqual(run_cli('--check', '--output-dir', str(self.out)).returncode, 0)
+        file.write_bytes(raw)
+        manifest['files'] = [f for f in manifest['files'] if not f['path'].endswith('/model-identities.json')]
+        (self.out / 'manifest.json').write_text(json.dumps(manifest))
+        self.assertNotEqual(run_cli('--check', '--output-dir', str(self.out)).returncode, 0)
 
 
 if __name__ == "__main__":

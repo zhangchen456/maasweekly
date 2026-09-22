@@ -5,8 +5,13 @@
 import { mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import type { ModelIdentityCatalog } from '../dataset.js';
 
 export interface FixtureChange {
+  modelId?: string;
+  modelName?: string;
+  familyId?: string;
+  familyName?: string;
   id: string;
   observationDate: string;
   providerId?: string | null;
@@ -46,6 +51,7 @@ export class ReleaseFixture {
 
   /** 写一套完整 release（覆盖指定版本目录），并更新 manifest。 */
   writeRelease(version: string, opts: {
+    modelIdentities?: ModelIdentityCatalog;
     changes?: FixtureChange[];
     prices?: FixturePrice[];
     weekly?: string[];
@@ -55,6 +61,8 @@ export class ReleaseFixture {
     mkdirSync(dir, { recursive: true });
     const changes = (opts.changes ?? []).map((c) => ({
       id: c.id,
+      ...(c.modelId ? { modelId: c.modelId, modelName: c.modelName } : {}),
+      ...(c.familyId ? { familyId: c.familyId, familyName: c.familyName } : {}),
       revision: 1,
       status: c.status ?? 'active',
       recordType: c.recordType ?? 'source_observation',
@@ -178,6 +186,7 @@ export class ReleaseFixture {
     write('evidence.json', evidence);
     write('weekly.json', weekly);
     write('status.json', status);
+    write('model-identities.json', opts.modelIdentities ?? { models: [], families: [] });
     // per-release manifest（P1-1：历史版本同校验的数据源）
     writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify({
       schemaVersion: '1.0',
