@@ -116,18 +116,38 @@ jobs:
         run: python3 site/scripts/fetch-images.py
         continue-on-error: true
 
+      # ---- 4. 生成由数据驱动的 tracked 产物（§5.2：所有数据驱动的 tracked 文件
+      #      必须在 commit 前生成并提交，否则 build-release.sh [3/6] tracked diff
+      #      gate 拒载。含 public projection + site prebuild 产物）----
+      # 4a. site prebuild 产物（price-ledger.fragment/rendered.html、maas-skill/）
+      - name: Prebuild site artifacts
+        run: |
+          node site/scripts/build-price-fragment.mjs
+          node site/scripts/render-price-ledger.mjs
+          python3 site/scripts/build-skill-package.py
+      # 4b. 公开数据投影（skip_fetch=true 时也跑——把仓库已有新数据重新生成
+      # projection，用于故障恢复）
+      - name: Export public data
+        run: python3 pipeline/scripts/export-public-data.py
+      - name: Validate public data
+        run: python3 pipeline/scripts/export-public-data.py --check
+
       # ---- 5. 先提交数据（§5.2：数据先入库，构建/发布从精确 SHA 进行）----
-      - name: Commit new data
-        if: ${{ !inputs.skip_fetch }}
+      # commit 包含原始抓取数据 + public projection（data/public/v1/ 属 data/）。
+      # skip_fetch=true 时仍执行：仅提交 projection 变化用于恢复发布。
+      - name: Commit new data + public projection
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ site/src/data/
-          # live_feeds.json 也在 site/src/data/ 下，包含提炼事件，一并提交
+          git add data/ site/src/data/ site/public/maas-skill/
           if git diff --cached --quiet; then
             echo "无数据变化，跳过提交"
           else
-            git commit -m "data: 每日信源抓取 $(date +'%Y-%m-%d')"
+            if [ "${{ inputs.skip_fetch }}" = "true" ]; then
+              git commit -m "data: 重建 public projection $(date +'%Y-%m-%d')"
+            else
+              git commit -m "data: 每日信源抓取 $(date +'%Y-%m-%d')"
+            fi
             git push
           fi
         id: datacommit
