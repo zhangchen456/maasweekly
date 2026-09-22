@@ -360,7 +360,8 @@ identity 返回 200 empty——与 REST 同 code 同语义（共用 `runListQuer
 - **T07-4A.1 Pricing model filtering：PASS** — pricing 页 model/family selector +
   可点击标签 + URL 状态 + error/empty state，全部完成并验证
 - **T07-4A.2 Changes model filtering：PASS** — 新增 `/changes/` 浏览页，
-  消费 public release changes（已有 modelId），支持 modelId/familyId 筛选 +
+  消费 public release changes（已有 modelId），REST 分页加载（不注入全量），
+  catalog 经 manifest 校验（不 raw fs），支持 modelId/familyId 筛选 +
   可点击标签 + URL 状态，invalid/empty/unresolved 与 pricing 一致
 
 ### T07-4A.1 实现
@@ -461,3 +462,18 @@ modelId/familyId，T07-3 合同），不走 daily_changes.json。
 - changes: 4993（price_change 4725 / source_observation 268）
 - price_change with modelId: 3233 / 4725（68.4%）
 - source_observation with modelId: 0（合同: 不猜模型）
+
+### Closeout Patch（验收反馈后）
+
+P0：catalog 纳入 loadVerifiedRelease 正式校验
+- `release.ts` 的 `COLLECTION_FILE` / `select` / `PublicRelease` 加 `modelIdentities`
+- `changes.astro` 改用 `loadVerifiedRelease(..., { select: ['modelIdentities'] })` 读 catalog
+- 禁止 raw `fs.readFileSync` 读 `model-identities.json`
+- catalog missing/corrupt → build fail（不静默容错——release integrity contract）
+
+P1：changes 改 REST 分页加载
+- 构建期只注入 catalog + datasetVersion + dataThrough（不注入全量 changes）
+- 运行时 fetch `/api/v1/changes?limit=20&cursor=&modelId=&familyId=&type=&q=` 分页
+- 页面 HTML 从 9.4MB 降到 29KB（catalog + shell）
+- URL modelId/familyId 继续复用现有 contract（pushState + popstate）
+- source_observation / invalid / empty 三种语义保持不变

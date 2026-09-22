@@ -72,12 +72,15 @@ export interface PublicRelease {
   coverage: ReleaseManifest['coverage'];
   changes?: ChangeRecord[];
   weekly?: WeeklyRecord[];
+  /** T07-4A.2：model identity catalog（从 model-identities.json 经 manifest 校验加载） */
+  modelIdentities?: { models: { modelId: string; modelName: string; familyId?: string; familyName?: string }[]; families: { familyId: string; familyName: string }[] };
 }
 
 const DS_VERSION_RE = /^ds_[0-9a-f]{64}$/;
-const COLLECTION_FILE: Record<'changes' | 'weekly', string> = {
+const COLLECTION_FILE: Record<'changes' | 'weekly' | 'modelIdentities', string> = {
   changes: 'changes.json',
   weekly: 'weekly.json',
+  modelIdentities: 'model-identities.json',
 };
 
 export function defaultPublicReleaseDir(): string {
@@ -104,7 +107,7 @@ function assertManifestPath(entryPath: string, version: string): void {
  */
 export function loadVerifiedRelease(
   baseDir?: string,
-  opts?: { select?: Array<'changes' | 'weekly'> },
+  opts?: { select?: Array<'changes' | 'weekly' | 'modelIdentities'> },
 ): PublicRelease {
   const root = baseDir ?? defaultPublicReleaseDir();
   const manifestPath = path.join(root, 'manifest.json');
