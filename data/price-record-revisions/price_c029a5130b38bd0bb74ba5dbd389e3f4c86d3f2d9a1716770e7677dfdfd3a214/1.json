@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "price_c029a5130b38bd0bb74ba5dbd389e3f4c86d3f2d9a1716770e7677dfdfd3a214",
+  "date": "2026-09-21",
+  "recordType": "price_change",
+  "fact_key": "6aa417f5ef52d480acd02865adf087434493ad5cceff66a70d6642cd6de5b40b",
+  "provider": "qwen",
+  "model": "qwen-plus-2025-07-28",
+  "component": "output",
+  "currency": "CNY",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "cn",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": {
+    "min": 0,
+    "max": 128000
+  },
+  "timeCondition": null,
+  "beforeVersionId": "pfv_1cb2528be324c4de79278f57068b402cdcce29a68af759376ef7269ea3bc5a90",
+  "afterVersionId": "pfv_7cb7dafddd00b9b8c4ea2b56ca4bc69f1fb9f88af37e5281c9febc55aa5abe0f",
+  "beforeEvidenceId": "ev_dfd2c567bd681caba691338634d05961f91e1adc716daa6ba85ad4d4ec93d448",
+  "afterEvidenceId": "ev_09f878e05227b4861edd7b4425309834d55b5511ec5f7efa8259990916d787c4",
+  "beforeObservedAt": "2026-09-19T22:43:37+00:00",
+  "afterObservedAt": "2026-09-20T23:02:27+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "8",
+    "current": "2",
+    "direction": "down",
+    "percent": "-75.00"
+  },
+  "revision": 1,
+  "status": "active",
+  "revisedAt": null,
+  "revisionReason": null,
+  "permalink": "/item/price_c029a5130b38bd0bb74ba5dbd389e3f4c86d3f2d9a1716770e7677dfdfd3a214/",
+  "provenance": {}
+}

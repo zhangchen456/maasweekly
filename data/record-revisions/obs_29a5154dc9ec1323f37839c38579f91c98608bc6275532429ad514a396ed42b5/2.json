@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_29a5154dc9ec1323f37839c38579f91c98608bc6275532429ad514a396ed42b5",
+  "sourceId": "xai-modellist",
+  "date": "2026-09-22",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "xAI",
+  "sourceType": "model_list",
+  "sourceUrl": "https://docs.x.ai/docs/models",
+  "title": "xAI · 模型列表来源更新",
+  "summary": "模型列表更新，从 Grok 4.6 升级到 Grok 4.7，知识截止日期更新至 2026 年 5 月，并新增加密推理功能。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-21T23:53:00+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated: August 21, 2026",
+        "after": "Last updated: September 21, 2026"
+      },
+      {
+        "key": "newgrok-",
+        "before": "Newgrok-4.6",
+        "after": "Newgrok-4.7"
+      },
+      {
+        "key": "cut-off",
+        "before": "The knowledge cut-off date of Grok 4.6 is February 1, 2026.",
+        "after": "The knowledge cut-off date of Grok 4.7 is May 2026."
+      },
+      {
+        "key": "your choice depends on your use case",
+        "before": "Your choice depends on your use case. We have dedicated models and APIs for audio, image, and video capabilities. For everything else, including code, use Grok 4.6. It is the most intelligent and fastest model we’ve built.",
+        "after": "Your choice depends on your use case. We have dedicated models and APIs for audio, image, and video capabilities. For everything else, including code, use Grok 4.7. It is the most capable model we’ve built."
+      }
+    ],
+    "added_lines": [
+      "Encrypted reasoning",
+      "Meet grok-4.7",
+      "On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. See Encrypted reasoning content."
+    ],
+    "removed_lines": [
+      "Meet grok-4.6"
+    ],
+    "added_count": 3,
+    "removed_count": 1,
+    "raw_added_count": 7,
+    "raw_removed_count": 5
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-22.json"
+  },
+  "permalink": "/item/obs_29a5154dc9ec1323f37839c38579f91c98608bc6275532429ad514a396ed42b5/"
+}

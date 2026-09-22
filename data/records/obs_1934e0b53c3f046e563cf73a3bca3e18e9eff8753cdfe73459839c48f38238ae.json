@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_1934e0b53c3f046e563cf73a3bca3e18e9eff8753cdfe73459839c48f38238ae",
+  "sourceId": "xai-blog",
+  "date": "2026-09-22",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "xAI",
+  "sourceType": "blog",
+  "sourceUrl": "https://docs.x.ai/docs/release-notes",
+  "title": "xAI · 博客来源更新",
+  "summary": "博客新增 Grok 4.7 发布文章，内容与 changelog 一致。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-21T23:53:00+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated: September 17, 2026",
+        "after": "Last updated: September 21, 2026"
+      }
+    ],
+    "added_lines": [
+      "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast, the same model at twice the token rates, is available only through Cursor and Grok Build, not on the public xAI API. See the Grok 4.7 overview and the announcement.",
+      "Meet grok-4.7",
+      "September 21"
+    ],
+    "removed_lines": [
+      "Meet grok-4.6"
+    ],
+    "added_count": 3,
+    "removed_count": 1,
+    "raw_added_count": 4,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-22.json"
+  },
+  "permalink": "/item/obs_1934e0b53c3f046e563cf73a3bca3e18e9eff8753cdfe73459839c48f38238ae/"
+}

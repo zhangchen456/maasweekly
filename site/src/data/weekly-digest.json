@@ -1,5 +1,121 @@
 [
   {
+    "week": "2026-W39",
+    "start": "2026-09-21",
+    "end": "2026-09-27",
+    "days": {
+      "2026-09-22": {
+        "substantive": 13,
+        "jitter": 5,
+        "failed": 1,
+        "releases": 3,
+        "pricings": 2,
+        "sunsets": 0
+      },
+      "2026-09-21": {
+        "substantive": 3,
+        "jitter": 3,
+        "failed": 2,
+        "releases": 1,
+        "pricings": 1,
+        "sunsets": 1
+      }
+    },
+    "totals": {
+      "substantive": 16,
+      "releases": 4,
+      "pricings": 3,
+      "sunsets": 1
+    },
+    "highlights": [
+      {
+        "platform": "xAI",
+        "date": "2026-09-22",
+        "text": "xAI 发布 Grok 4.7，知识截止至 2026 年 5 月，支持 500k 上下文窗口，并新增 Encrypted reasoning 功能。",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-22",
+        "text": "阿里百炼新增 qwen3.8-omni-flash-realtime 模型，并替换 qwen3.5-omni-plus-realtime。",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-22",
+        "text": "Qwen-Audio-3.1-ASR-Flash 系列定价更新，按输入输出 Token 计费，并新增 Qwen-Audio-3.x-ASR-Flash-Streaming。",
+        "type": "pricing"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-22",
+        "text": "qwen-audio-3.1-tts-flash 输入价格上调至 1.5 元/百万 Token，输出 12 元/百万 Token。",
+        "type": "pricing"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-09-22",
+        "text": "火山方舟新增『审核版权合作与生成视频』功能，并移除 PromptPilot 相关文档。",
+        "type": "other"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-22",
+        "text": "Google Vertex AI 更新支持模型列表，移除 Claude Opus 4.1，新增 Claude Opus 4.6 等。",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-22",
+        "text": "Google Vertex AI 发布博客，介绍面向 AI 时代的 FinOps 灵活计费与成本控制。",
+        "type": "other"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-09-22",
+        "text": "硅基流动新增创建对话请求（Anthropic/OpenAI）和创建快速决策请求（TypeSafe）的 API 文档。",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-22",
+        "text": "Artificial Analysis 发布 Grok 4.7 基准测试，并更新 Intelligence Index v4.3。",
+        "type": "other"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-21",
+        "text": "qwen-audio-3.1-realtime-plus 上线，替代 qwen-audio-3.0-realtime-plus",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-21",
+        "text": "qwen-audio-3.1-realtime-plus 定价公布：输入 40 CNY/百万tokens，输出 150 CNY/百万tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-21",
+        "text": "qwen3.5-omni-plus 从模型列表移除，但定价页仍保留",
+        "type": "sunset"
+      }
+    ],
+    "story": {
+      "theme": "音频模型迭代与清理并行",
+      "sections": [
+        {
+          "title": "音频模型密集迭代",
+          "body": "9月21日，阿里百炼上线qwen-audio-3.1-realtime-plus，替代3.0版本，定价输入40 CNY/百万tokens、输出150 CNY/百万tokens。同日，火山方舟发布AgentPilot OpenAPI使用指南，聚焦智能体集成。本周仅此一天有模型发布，但音频实时模型升级信号明确，显示厂商在语音交互赛道加速迭代。"
+        },
+        {
+          "title": "下线与清理：omni-plus移除",
+          "body": "9月21日，qwen3.5-omni-plus从阿里百炼模型列表移除，但定价页仍保留，形成不一致状态。这种“列表移除、定价残留”现象常见于过渡期，可能为后续彻底下线做准备。本周仅此一个下线事件，但清理动作与新品上线同日发生，暗示阿里在音频产品线上进行新旧切换。"
+        }
+      ]
+    }
+  },
+  {
     "week": "2026-W38",
     "start": "2026-09-14",
     "end": "2026-09-20",
