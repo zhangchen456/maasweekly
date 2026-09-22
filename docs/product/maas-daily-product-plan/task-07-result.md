@@ -352,3 +352,66 @@ identity 返回 200 empty——与 REST 同 code 同语义（共用 `runListQuer
 16. 未生产发布 ✓
 
 **T07-3 从 Conditional PASS → PASS。建议进入 T07-4。**
+
+## T07-4A 模型筛选与模型入口（2026-09-22）
+
+### 范围
+
+- **T07-4A.1 Pricing model filtering：PASS** — pricing 页 model/family selector +
+  可点击标签 + URL 状态 + error/empty state，全部完成并验证
+- **T07-4A.2 Changes model filtering：DEFERRED** — 站点当前无消费 public release
+  changes 数据的浏览页（index 读 daily_changes.json 无 modelId），需新建 changes
+  browser，留后续补阶段
+
+### T07-4A.1 实现
+
+**ledger identity 注入**（复用 T07-3 projector，不在抓取器重实现）：
+- `build_view_dataset` 接收 `identity_projector` 回调
+- `fetch-prices.py` 传入 `ModelIdentityProjector`（canonicalize + project）
+- ledger price dict 增加 additive 的 modelId/modelName/familyId/familyName
+- unresolved/pointer/未知 provider → 不写 identity（零伪造）
+- ledger 与 public projection 用同一 projector，同 model 的 modelId 一致（0 mismatches）
+
+**UI**（price-ledger.template.html）：
+- toolbar 新增 model/family selector（options 来自 catalog，不从 ledger 反推）
+- model 标签可点击（设置 modelId 筛选）；family 标签可点击（设置 familyId 筛选）
+- modelId/familyId 互斥（选 model 清 family，反之亦然）
+- URL 状态可分享（?modelId= / ?familyId=，刷新保留，pushState + popstate 支持 back/forward）
+- 筛选状态摘要（chip + 一键清除）
+- **invalid modelId/familyId → 显式 error state**（"未找到模型" + 清除筛选按钮，不 fallback 到默认列表）
+- known-but-empty → 正常空状态（合法 identity 但无记录，不显示 error）
+- unresolved 只显示 raw modelKey，不伪造可点击 canonical 标签
+- 可访问性：label/aria-label/键盘可操作/focus 可见
+
+**Closeout Patch 修复**（验收反馈后）：
+1. invalid identity 不再 silent fallback → 显式 error state + 清除按钮 + 不显示正常列表
+2. 补 popstate 处理（back/forward 重新从 URL 解析，selector/chip/list 同步）
+3. selector/tag/chip 改 URL 用 pushState（产生历史条目，back/forward 可用）
+
+### 测试
+
+- `site/tests/model-identity-ui.test.mjs`（20 项）：catalog 来源、ledger identity 注入、
+  ledger/public projection 一致性、unresolved 不伪造
+- `site/tests/model-identity-ui-contract.test.mjs`（21 项，jsdom DOM 交互）：
+  valid/invalid URL restore、selector 改 URL、model/family 互斥、clear 删 URL param、
+  known-but-empty 非 error、invalid → error state、tag click、无筛选回归
+
+### 验证
+
+| 命令 | 结果 |
+|---|---|
+| `run-all-tests.sh` | 30/30 全绿 |
+| 浏览器验证 invalid error / popstate / known-empty | 全部通过 |
+
+### 不变
+
+- 未新增 `/api/v1/models`（留 T07-4B）
+- 未改 registry/resolver/fact_key/record IDs
+- false positive = 0 保持
+- 未生产发布
+
+### 下一步
+
+T07-4A.2（Changes 浏览与模型筛选）→ T07-4B（/api/v1/models + /model/:id）。
+
+产品结构顺序：Identity backend → Prices 按模型浏览 → Changes 按模型浏览 → Model Detail 聚合两者。
