@@ -359,9 +359,9 @@ identity 返回 200 empty——与 REST 同 code 同语义（共用 `runListQuer
 
 - **T07-4A.1 Pricing model filtering：PASS** — pricing 页 model/family selector +
   可点击标签 + URL 状态 + error/empty state，全部完成并验证
-- **T07-4A.2 Changes model filtering：DEFERRED** — 站点当前无消费 public release
-  changes 数据的浏览页（index 读 daily_changes.json 无 modelId），需新建 changes
-  browser，留后续补阶段
+- **T07-4A.2 Changes model filtering：PASS** — 新增 `/changes/` 浏览页，
+  消费 public release changes（已有 modelId），支持 modelId/familyId 筛选 +
+  可点击标签 + URL 状态，invalid/empty/unresolved 与 pricing 一致
 
 ### T07-4A.1 实现
 
@@ -412,6 +412,52 @@ identity 返回 200 empty——与 REST 同 code 同语义（共用 `runListQuer
 
 ### 下一步
 
-T07-4A.2（Changes 浏览与模型筛选）→ T07-4B（/api/v1/models + /model/:id）。
+T07-4B（/api/v1/models + /model/:id）。
 
 产品结构顺序：Identity backend → Prices 按模型浏览 → Changes 按模型浏览 → Model Detail 聚合两者。
+
+## T07-4A.2 Changes Browser（2026-09-22）
+
+### 实现
+
+新增 `/changes/` 页面（`changes.astro`），直接消费 public release changes（已有
+modelId/familyId，T07-3 合同），不走 daily_changes.json。
+
+- `release.ts` 的 `ChangeRecord` 接口加 modelId/familyId/modelName/familyName 可选字段
+- 构建期注入 release changes + catalog（selector options 来源）
+- model/family selector + 可点击标签 + URL 状态（pushState + popstate）
+- modelId/familyId 互斥
+- invalid → 显式 error state（不 fallback）；known-but-empty → 正常空状态
+- source_observation 无 modelId → 不显示 model-tag（不猜模型）
+- 导航加入"变化"入口
+- 分页（每页 20 条）+ 搜索 + 类型筛选
+
+### 三种 UI 语义（与 pricing 完全一致）
+
+| 场景 | 行为 |
+|---|---|
+| invalid identity | error state + 清除筛选，不显示正常列表 |
+| valid identity + zero records | 正常空状态（"当前数据范围内暂无相关记录"） |
+| unresolved raw record | 正常展示，无 model-tag（不伪造 canonical） |
+
+### 测试
+
+- `site/tests/changes-browser-contract.test.mjs`（12 项）：数据合同
+ （price_change modelId 在 catalog、familyId 引用正式 family、
+  source_observation 无 modelId、unresolved 不写 modelName）
+- `site/tests/changes-browser-ui.test.mjs`（20 项，jsdom DOM 交互）：
+  URL restore、selector 改 URL、互斥、clear、known-but-empty、invalid error、
+  source_observation 无 model-tag、tag click、无筛选回归
+
+### 验证
+
+| 命令 | 结果 |
+|---|---|
+| `run-all-tests.sh` | 32/32 全绿 |
+| 浏览器验证 invalid/error/known-empty/source_observation | 全部通过 |
+
+### 数据
+
+- changes: 4993（price_change 4725 / source_observation 268）
+- price_change with modelId: 3233 / 4725（68.4%）
+- source_observation with modelId: 0（合同: 不猜模型）

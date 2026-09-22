@@ -31,6 +31,11 @@ export interface ChangeRecord {
   summary: string | null;
   summaryOrigin: 'rule' | 'llm' | 'manual' | null;
   changeType: string;
+  /** T07-3：可选 model identity（unresolved/pointer/source_observation 不写——零伪造） */
+  modelId?: string;
+  modelName?: string;
+  familyId?: string;
+  familyName?: string;
   price?: {
     model: string; component: string; currency: string;
     beforeAmount: string | null; afterAmount: string | null;
