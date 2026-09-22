@@ -11,7 +11,7 @@
 from __future__ import annotations
 
 from decimal import Decimal, InvalidOperation
-from typing import Any
+from typing import Any, Callable
 
 # 手动维护的汇率快照（追浪 app_setting 运营可配的等价简化）。
 # base USD；rates: currency → 每 1 USD 兑换数。调整时更新 as_of。
@@ -72,10 +72,17 @@ def build_view_dataset(
     fx_snapshot: dict | None = None,
     default_currency: str = "CNY",
     evidence_links: dict[str, str] | None = None,  # 内存 ev id → 持久 ev_id（Task 02 台账入口）
+    identity_projector: Callable[[str, str, str | None], dict] | None = None,
 ) -> dict[str, Any]:
     """构建 ledger.json（模板注入用 dataset）。
 
     facts: fact_to_dict 产出的 dict 列表（本轮 + partial 沿用的上轮 stale facts）
+
+    identity_projector: T07-4A 模型身份投影回调（provider_id, model_key,
+        display_name → {modelId, modelName, familyId, familyName} 或 {}）。
+        复用 model_identity projector，不在本模块重新实现 identity 规则。
+        ledger provider 是 pricing 体系（qwen/doubao/glm…），回调内部负责
+        canonicalize。unresolved/pointer → {}（additive optional，不伪造）。
     """
     fx = fx_snapshot or DEFAULT_FX
     base_currency = fx.get("base", "USD")
@@ -149,6 +156,11 @@ def build_view_dataset(
             "evidence_link": (f"/evidence/{evidence_links[f['evidence_id']]}/"
                               if evidence_links and f.get("evidence_id")
                               and f["evidence_id"] in evidence_links else None),
+            # T07-4A：模型身份投影（additive optional，复用 model_identity projector；
+            # unresolved/pointer → 不写 identity 字段，不伪造 canonical model）
+            **(identity_projector(provider, model,
+                                  model_profiles.get(f"{provider}:{model}", model))
+               if identity_projector else {}),
         })
 
     return {
