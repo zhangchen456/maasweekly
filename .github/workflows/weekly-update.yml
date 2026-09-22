@@ -91,12 +91,30 @@ jobs:
           python3 site/scripts/import-weekly.py
           python3 site/scripts/extract-structured.py
 
+      # ---- 生成由数据驱动的 tracked 产物（§5.2：所有数据驱动的 tracked 文件
+      #      必须在 commit 前生成并提交，否则 build-release.sh [3/6] tracked
+      #      diff gate 拒载。aggregate 模式只汇总素材不部署，不生成产物）----
+      - name: Prebuild site artifacts
+        if: steps.mode.outputs.mode != 'aggregate'
+        run: |
+          node site/scripts/build-price-fragment.mjs
+          node site/scripts/render-price-ledger.mjs
+          python3 site/scripts/build-skill-package.py
+      - name: Export public data
+        if: steps.mode.outputs.mode != 'aggregate'
+        run: python3 pipeline/scripts/export-public-data.py
+      - name: Validate public data
+        if: steps.mode.outputs.mode != 'aggregate'
+        run: python3 pipeline/scripts/export-public-data.py --check
+
       # ---- 提交数据（§5.2：先入库）----
-      - name: Commit new data
+      # aggregate 模式提交素材（data/weekly 等汇总）；full/import 模式提交
+      # 素材 + public projection + site prebuild 产物。
+      - name: Commit new data + public projection
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ site/src/content/ site/src/data/
+          git add data/ site/src/content/ site/src/data/ site/public/maas-skill/
           if git diff --cached --quiet; then
             echo "无数据变化，跳过提交"
           else
