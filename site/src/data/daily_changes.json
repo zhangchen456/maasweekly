@@ -1,6 +1,1071 @@
 {
-  "updated_at": "2026-09-21T23:53:00",
+  "updated_at": "2026-09-22T23:33:15",
   "days": [
+    {
+      "date": "2026-09-23",
+      "stats": {
+        "total": 68,
+        "success": 67,
+        "failed": 1,
+        "changed": 20,
+        "unchanged": 47
+      },
+      "changed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Apply Patch（代码补丁工具）"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "doubao seedream",
+              "before": "Doubao Seedream 5.0 pro 实现交互编辑指南",
+              "after": "Doubao Seedream 5.0 pro / flash 实现交互编辑指南"
+            },
+            {
+              "key": "doubao seedream",
+              "before": "Doubao Seedream 5.0 pro 教程",
+              "after": "Doubao Seedream 5.0 pro / flash 教程"
+            }
+          ],
+          "signal_preview": "Apply Patch（代码补丁工具）",
+          "raw_added_count": 4,
+          "raw_removed_count": 3,
+          "id": "obs_79a76c086a7720c4a80c413fa345495b596305b56b05ce45d3661b9d99e5e1cc",
+          "permalink": "/item/obs_79a76c086a7720c4a80c413fa345495b596305b56b05ce45d3661b9d99e5e1cc/",
+          "llm_summary": "更新了 Doubao Seedream 5.0 pro 与 flash 的交互编辑指南和教程，将模型范围从单一 pro 扩展至包含 flash 版本，并新增 Apply Patch 代码补丁工具，表明该系列模型功能持续增强。"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 10,
+          "added_lines": [
+            "平台客户行为准则及违约处理规则"
+          ],
+          "removed_lines": [
+            "AgentPilot OpenAPI 使用指南",
+            "AgentPilot SDK 参考",
+            "PromptPilot",
+            "PromptPilot 概述",
+            "PromptPilot 管理",
+            "PromptPilot 订阅管理",
+            "VideoPilot API",
+            "VideoPilot 功能介绍",
+            "上下文缓存(Context API)（待下线）",
+            "视觉理解 Solution"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "平台客户行为准则及违约处理规则",
+          "raw_added_count": 1,
+          "raw_removed_count": 11,
+          "id": "obs_12af2420d6cd083558db1a91f894cb98b13866eb0f87b441a8bd9b68331ad392",
+          "permalink": "/item/obs_12af2420d6cd083558db1a91f894cb98b13866eb0f87b441a8bd9b68331ad392/",
+          "llm_summary": "新增平台客户行为准则及违约处理规则，同时删除 AgentPilot OpenAPI 使用指南、AgentPilot SDK 参考及 PromptPilot 相关文档，显示产品线调整，可能下架或合并相关功能。"
+        },
+        {
+          "platform": "百度千帆",
+          "source_type": "pricing",
+          "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 7,
+          "added_lines": [],
+          "removed_lines": [
+            "| GLM-5.2（空闲时段为限时活动，9月21日20点恢复原价）",
+            "| 命中缓存（空闲时段：22:00-次日8:00）",
+            "| 命中缓存（高峰时段：8:00-22:00）",
+            "| 输入（空闲时段：22:00-次日8:00）",
+            "| 输入（高峰时段：8:00-22:00）",
+            "| 输出（空闲时段：22:00-次日8:00）",
+            "| 输出（高峰时段：8:00-22:00）"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 8,
+          "id": "obs_50da8b9b59e3a03bd55acbd98fbaefcb77d7a090622db9dfb8277ef4ef398ff1",
+          "permalink": "/item/obs_50da8b9b59e3a03bd55acbd98fbaefcb77d7a090622db9dfb8277ef4ef398ff1/",
+          "llm_summary": "删除了 GLM-5.2 空闲时段限时活动的全部定价行（输入、输出、缓存），对应限时活动于9月21日20点结束，模型恢复原价。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 10,
+          "removed_count": 9,
+          "added_lines": [
+            "$0.1 / Input MTok",
+            "$0.5 / Output MTok",
+            "$10 / Output MTok",
+            "API Partner Setup",
+            "Built to power complex coding and agentic workflows.",
+            "If you're not sure where to start, use GPT-6 Astra, our flagship model for complex reasoning and coding. Choose GPT-6 Sol to balance intelligence and cost, or GPT-6 Luna for cost-sensitive, high-volume workloads.",
+            "Our most efficient model for focused, high-volume tasks.",
+            "Private Safety Processing",
+            "Start with GPT-6 Astra for complex reasoning and coding, choose GPT-6 Sol to balance intelligence and cost, or use GPT-6 Luna for cost-sensitive, high-volume workloads.",
+            "Using GPT-6"
+          ],
+          "removed_lines": [
+            "Compare model capabilities and specifications.",
+            "Flagship model for complex professional work",
+            "GPT-5.6 Luna",
+            "GPT-5.6 Sol",
+            "$0.20 / Input MTok",
+            "$1.20 / Output MTok",
+            "$12 / Output MTok",
+            "$20 / Output MTok",
+            "$4 / Input MTok"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "$0.1 / Input MTok",
+          "raw_added_count": 12,
+          "raw_removed_count": 18,
+          "id": "obs_b265d80c08d79ce46fb5cbfb64e7982e3b9edcbedfdeed7837a51f8e1218b133",
+          "permalink": "/item/obs_b265d80c08d79ce46fb5cbfb64e7982e3b9edcbedfdeed7837a51f8e1218b133/",
+          "llm_summary": "新增 GPT-6 Sol 与 GPT-6 Luna 的模型条目，包含定价（$2/$10 与 $0.1/$0.5 每百万 tokens）及描述，同时移除 GPT-5.6 Sol 与 GPT-5.6 Luna 的条目，表明模型代际更新。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 10,
+          "removed_count": 8,
+          "added_lines": [
+            "API Partner Setup",
+            "For GPT-6 Astra, Sol, and Luna, EU data residency is available only with Standard processing. See Fast mode compatibility.",
+            "For GPT-6 Sol and Luna, EU data residency is available only with Standard processing.",
+            "Private Safety Processing",
+            "| gpt-6-luna | $0.05 | $0.005 | $0.0625 | $0.25 | $0.10 | $0.01 | $0.125 | $0.375",
+            "| gpt-6-luna | $0.10 | $0.01 | $0.125 | $0.50 | $0.20 | $0.02 | $0.25 | $0.75",
+            "| gpt-6-luna | $0.20 | $0.02 | $0.25 | $1.00 | $0.40 | $0.04 | $0.50 | $1.50",
+            "| gpt-6-sol | $1.00 | $0.10 | $1.25 | $5.00 | $2.00 | $0.20 | $2.50 | $7.50",
+            "| gpt-6-sol | $2.00 | $0.20 | $2.50 | $10.00 | $4.00 | $0.40 | $5.00 | $15.00",
+            "| gpt-6-sol | $4.00 | $0.40 | $5.00 | $20.00 | $8.00 | $0.80 | $10.00 | $30.00"
+          ],
+          "removed_lines": [
+            "Fast mode is unavailable for GPT-6 Astra with EU data residency. Use Standard processing for those requests. See Fast mode compatibility.",
+            "| gpt-5.6-luna | $0.10 | $0.01 | $0.125 | $0.60 | $0.20 | $0.02 | $0.25 | $0.90",
+            "| gpt-5.6-luna | $0.20 | $0.02 | $0.25 | $1.20 | $0.40 | $0.04 | $0.50 | $1.80",
+            "| gpt-5.6-luna | $0.40 | $0.04 | $0.50 | $2.40 | $0.80 | $0.08 | $1.00 | $3.60",
+            "| gpt-5.6-sol | $2.00 | $0.20 | $2.50 | $10.00 | $4.00 | $0.40 | $5.00 | $15.00",
+            "| gpt-5.6-sol | $8.00 | $0.80 | $10.00 | $40.00 | $16.00 | $1.60 | $20.00 | $60.00",
+            "| gpt-5.6-terra | $1.00 | $0.10 | $1.25 | $6.00 | $2.00 | $0.20 | $2.50 | $9.00",
+            "| gpt-5.6-terra | $2.00 | $0.20 | $2.50 | $12.00 | $4.00 | $0.40 | $5.00 | $18.00"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "regional processing (data residency) endpoints are charged a",
+              "before": "Regional processing (data residency) endpoints are charged a 10% uplift for models released on or after March 5, 2026, that are eligible for data residency. See our Your data guide for supported regions and processing details. OpenAI models in Amazon Bedrock are billed through AWS. Bedrock pricing in commercial regions matches OpenAI direct pricing for equivalent services.",
+              "after": "Regional processing (data residency) endpoints are charged a 10% uplift for models released on or after March 5, 2026, that are eligible for data residency. For GPT-6 Sol and Luna, EU data residency is available only with Standard processing. See our Your data guide for supported regions and processing details. OpenAI models in Amazon Bedrock are billed through AWS. Bedrock pricing in commercial regions matches OpenAI direct pricing for equivalent services."
+            },
+            {
+              "key": "using gpt-",
+              "before": "Using GPT-6 Astra",
+              "after": "Using GPT-6"
+            }
+          ],
+          "signal_preview": "For GPT-6 Astra, Sol, and Luna, EU data residency is available only with Standard processing. See Fast mode compatibility.",
+          "raw_added_count": 12,
+          "raw_removed_count": 11,
+          "id": "obs_91125dab02b516d85dddc2e8b4790328a4c9de7bde50f9ddd983e9e3a0718cba",
+          "permalink": "/item/obs_91125dab02b516d85dddc2e8b4790328a4c9de7bde50f9ddd983e9e3a0718cba/",
+          "llm_summary": "新增 gpt-6-sol 与 gpt-6-luna 的完整定价表（含标准、批量、缓存等），删除 gpt-5.6-sol 与 gpt-5.6-luna 的定价，并更新数据驻留说明，明确 EU 数据驻留仅支持 Standard 处理。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 0,
+          "added_lines": [
+            "API Partner Setup",
+            "Compare capabilities in the model catalog, and see pricing for cache writes, longer prompts, and other processing tiers.",
+            "GPT-6 Luna: $0.10 input, $0.01 cached input, and $0.50 output.",
+            "GPT-6 Sol: $2 input, $0.20 cached input, and $10 output.",
+            "Private Safety Processing",
+            "Released GPT-6 Sol (gpt-6-sol) and GPT-6 Luna (gpt-6-luna).",
+            "Standard pricing per 1M tokens for prompts with up to 272K input tokens:",
+            "These reasoning models accept text and image inputs and generate text through the Responses and Chat Completions APIs."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "using gpt-",
+              "before": "Using GPT-6 Astra",
+              "after": "Using GPT-6"
+            }
+          ],
+          "signal_preview": "Compare capabilities in the model catalog, and see pricing for cache writes, longer prompts, and other processing tiers.",
+          "raw_added_count": 9,
+          "raw_removed_count": 1,
+          "id": "obs_87ba1e3d90e588d1c1aa5595d923de1a476e87337358830700f442c01ad134e0",
+          "permalink": "/item/obs_87ba1e3d90e588d1c1aa5595d923de1a476e87337358830700f442c01ad134e0/",
+          "llm_summary": "新增发布 GPT-6 Sol 与 GPT-6 Luna 的公告，包含定价与能力说明，并更新模型选择指南为『Using GPT-6』，同时新增 API Partner Setup 与 Private Safety Processing 功能。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 0,
+          "added_lines": [
+            "API Partner Setup",
+            "Compare capabilities in the model catalog, and see pricing for cache writes, longer prompts, and other processing tiers.",
+            "GPT-6 Luna: $0.10 input, $0.01 cached input, and $0.50 output.",
+            "GPT-6 Sol: $2 input, $0.20 cached input, and $10 output.",
+            "Private Safety Processing",
+            "Released GPT-6 Sol (gpt-6-sol) and GPT-6 Luna (gpt-6-luna).",
+            "Standard pricing per 1M tokens for prompts with up to 272K input tokens:",
+            "These reasoning models accept text and image inputs and generate text through the Responses and Chat Completions APIs."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "using gpt-",
+              "before": "Using GPT-6 Astra",
+              "after": "Using GPT-6"
+            }
+          ],
+          "signal_preview": "Compare capabilities in the model catalog, and see pricing for cache writes, longer prompts, and other processing tiers.",
+          "raw_added_count": 9,
+          "raw_removed_count": 1,
+          "id": "obs_d982db9b4001296a4fbf77bb81a12933811387d57aad8d48ed15749182ecb6a2",
+          "permalink": "/item/obs_d982db9b4001296a4fbf77bb81a12933811387d57aad8d48ed15749182ecb6a2/",
+          "llm_summary": "博客内容与 changelog 同步，新增 GPT-6 Sol/Luna 发布信息、定价细节及新功能，删除旧模型相关描述，反映官方发布动态。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "model_list",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 4,
+          "added_lines": [
+            "Claude Opus 5.5For long-running agentic coding and knowledge work |",
+            "| Default effort | high | medium | high | Not supported",
+            "| Pricing | $10 / input MTok$50 / output MTok | $4 / input MTok$20 / output MTok | $2 / input MTok$10 / output MTok | $1 / input MTok$5 / output MTok",
+            "| Reliable knowledge cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Feb 2025",
+            "| Thinking | Adaptive (always on) | Adaptive (always on) | Adaptive | Extended"
+          ],
+          "removed_lines": [
+            "| Default effort | high | high | high | Not supported",
+            "| Pricing | $10 / input MTok$50 / output MTok | $5 / input MTok$25 / output MTok | $2 / input MTok$10 / output MTok | $1 / input MTok$5 / output MTok",
+            "| Reliable knowledge cutoff | Jun 2026 | May 2026 | Jan 2026 | Feb 2025",
+            "| Thinking | Adaptive (always on) | Adaptive | Adaptive | Extended"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5For complex agentic coding and enterprise work |",
+              "after": "Claude Opus 5.5"
+            },
+            {
+              "key": "long-horizon",
+              "before": "If you're unsure which model to use, start with Claude Opus 5 for most workloads. Use Claude Fable 5.1 for demanding reasoning and long-horizon agentic work, or when your evals on Claude Opus 5 at higher effort still fall short. All current models support text and image input, text output, multilingual capabilities, vision, and tool use. Each model's page lists the platforms it's available on.",
+              "after": "If you're unsure which model to use, start with Claude Opus 5.5 for most workloads. Use Claude Fable 5.1 for demanding reasoning and long-horizon agentic work, or when your evals on Claude Opus 5.5 at higher effort still fall short. All current models support text and image input, text output, multilingual capabilities, vision, and tool use. Each model's page lists the platforms it's available on."
+            },
+            {
+              "key": "output quality",
+              "before": "Output quality: When migrating from a previous model generation, you may notice larger improvements in overall performance. If you're on Claude Opus 4.8 or earlier, see Migrating to Claude Opus 5.",
+              "after": "Output quality: When migrating from a previous model generation, you may notice larger improvements in overall performance. If you're on Claude Opus 5 or earlier, see Migrating to Claude Opus 5.5."
+            },
+            {
+              "key": "claude-fable-5-1",
+              "before": "| Claude API ID | claude-fable-5-1 | claude-opus-5 | claude-sonnet-5 | claude-haiku-4-5-20251001",
+              "after": "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5-20251001"
+            }
+          ],
+          "signal_preview": "Claude Opus 5.5For long-running agentic coding and knowledge work |",
+          "raw_added_count": 9,
+          "raw_removed_count": 8,
+          "id": "obs_f3e4bb5447959c64ea92d9551d6f1dfa22aa5b0a5235d5a05883191d32bbbc02",
+          "permalink": "/item/obs_f3e4bb5447959c64ea92d9551d6f1dfa22aa5b0a5235d5a05883191d32bbbc02/",
+          "llm_summary": "将 Claude Opus 5 替换为 Claude Opus 5.5，更新 API ID、定价（$4/$20 vs 原 $5/$25）、知识截止日期（Jun 2026）及 thinking 设置（Adaptive always on），并新增默认 effort 为 high 的说明。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "pricing",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+          "status": "changed",
+          "added_count": 9,
+          "removed_count": 2,
+          "added_lines": [
+            "1 Cache hits and refreshes on Claude Fable 5.1 and Claude Mythos 5.1 are priced at 0.025x the base input price.",
+            "2 Cache hits and refreshes on Claude Opus 5.5 are priced at 0.05x the base input price.",
+            "All other models use the standard 0.1x multiplier.",
+            "Claude Opus 5.5",
+            "| Cache read (hit) | 0.1x base input price (0.025x on Claude Fable 5.1 and Claude Mythos 5.1; 0.05x on Claude Opus 5.5) | Same duration as the preceding write",
+            "| Claude Opus 5.5 | $2 / MTok | $10 / MTok",
+            "| Claude Opus 5.5 | $4 / MTok | $5 / MTok | $8 / MTok | $0.20 / MTok2 | $20 / MTok",
+            "| Claude Opus 5.5 | $8 / MTok | $40 / MTok",
+            "| Claude Opus 5.5 | auto, none | 286 tokens"
+          ],
+          "removed_lines": [
+            "1 Cache hits and refreshes on Claude Fable 5.1 and Claude Mythos 5.1 are priced at 0.025x the base input price. All other models use the standard 0.1x multiplier.",
+            "| Cache read (hit) | 0.1x base input price (0.025x on Claude Fable 5.1 and Claude Mythos 5.1) | Same duration as the preceding write"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "cache write tokens are charged when content is first stored",
+              "before": "Cache write tokens are charged when content is first stored. Cache read tokens are charged when a subsequent request retrieves the cached content. A cache hit costs 10% of the standard input price, which means caching pays off after one cache read for the 5-minute duration (1.25x write), or after two cache reads for the 1-hour duration (2x write). On Claude Fable 5.1 and Claude Mythos 5.1, a cache hit costs 2.5% of the standard input price ($0.25 USD per million tokens).",
+              "after": "Cache write tokens are charged when content is first stored. Cache read tokens are charged when a subsequent request retrieves the cached content. A cache hit costs 10% of the standard input price, which means caching pays off after one cache read for the 5-minute duration (1.25x write), or after two cache reads for the 1-hour duration (2x write). On Claude Fable 5.1 and Claude Mythos 5.1, a cache hit costs 2.5% of the standard input price ($0.25 USD per million tokens). On Claude Opus 5.5, a cache hit costs 5% of the standard input price ($0.20 USD per million tokens)."
+            },
+            {
+              "key": "first-party",
+              "before": "Fast mode, in research preview, provides significantly faster output for Claude Opus 5 and Claude Opus 4.8 at premium pricing. Fast mode pricing applies across the full context window, including requests over 200k input tokens. Fast mode is available on the Claude API (first-party) only; it is not available on Claude Platform on AWS or partner-operated cloud platforms.",
+              "after": "Fast mode, in research preview, provides significantly faster output for Claude Opus 5.5, Claude Opus 5, and Claude Opus 4.8 at premium pricing. Fast mode pricing applies across the full context window, including requests over 200k input tokens. Fast mode is available on the Claude API (first-party) only; it is not available on Claude Platform on AWS or partner-operated cloud platforms."
+            }
+          ],
+          "signal_preview": "1 Cache hits and refreshes on Claude Fable 5.1 and Claude Mythos 5.1 are priced at 0.025x the base input price.",
+          "raw_added_count": 11,
+          "raw_removed_count": 4,
+          "id": "obs_5af37b10c8d15021d8fdc57062b9dbeb82a25d99ec1f6b8d520f722b5b86c74f",
+          "permalink": "/item/obs_5af37b10c8d15021d8fdc57062b9dbeb82a25d99ec1f6b8d520f722b5b86c74f/",
+          "llm_summary": "新增 Claude Opus 5.5 的完整定价行（输入 $4、输出 $20、缓存读取 $0.2 等），并更新缓存读取倍率说明，明确 Opus 5.5 为 0.05x，同时扩展 Fast mode 支持范围至 Opus 5.5。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 0,
+          "added_lines": [
+            "Fast mode (research preview) is available for Claude Opus 5.5 on the Claude API.",
+            "On Claude Opus 5.5, thinking can't be disabled: thinking: {\"type\": \"disabled\"} and thinking: {\"type\": \"enabled\", ...} return a 400 error. Omit the thinking field and control thinking depth with the effort parameter. tool_choice types any and tool also return a 400 error, as on Claude Fable 5.1; use auto with strict tool use. On the Claude API and Google Cloud, computer use on this model requires the computer_toolset_20260801 toolset and the earlier computer_20251124 tool returns a 400 error; on Amazon Bedrock, computer_20251124 keeps working. See the migration guide.",
+            "Tools can now be defined inside a mid-conversation system message, in beta on the Claude API with the inline-tools-2026-09-15 beta header. A tool_addition block can carry the tool's full definition (tool: {\"type\": \"tool_definition\", \"definition\": {...}}), so you can add a tool, change its schema, or move a server tool to a newer version without editing tools or invalidating the prompt cache. The same header covers adding and removing tools by reference. With the MCP connector's mcp-client-2026-09-15 beta header as well, the definition can be an MCP toolset, and a response records each server's fetched tool list in an mcp_tool_listing block, which pins that list when you send it back.",
+            "We've launched Claude Opus 5.5 (claude-opus-5-5), a model for long-running agentic coding and knowledge work. It has a 1M token context window by default, 128k max output tokens, and always-on adaptive thinking, at $4 / $20 USD per MTok (Claude Opus 5 is $5 / $25). Claude Opus 5.5 is available on the Claude API, Claude in Amazon Bedrock, Claude Platform on AWS, Claude on Google Cloud, and Claude in Microsoft Foundry. See What's new in Claude Opus 5.5 for capabilities, API changes, and migration guidance.",
+            "With the thinking-binding-controls-2026-08-01 beta header, the input_transformations response field gains a second entry type, thinking_mismatch_allowed. It names a thinking block that failed the prefix check on a request where the API doesn't enforce that check: on Claude Fable 5.1, for example, a request from an account created before August 31, 2026, with prefix_mismatch_behavior unset. The block still reaches the model unchanged. Log these entries to find history edits in production traffic before you opt into enforcement. See Set the mismatch behavior and read input_transformations."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Fast mode (research preview) is available for Claude Opus 5.5 on the Claude API.",
+          "raw_added_count": 6,
+          "raw_removed_count": 0,
+          "id": "obs_810c0a921a4498ecc31bd222c687227c2d27eea1ee727afbecb3731c78d7d326",
+          "permalink": "/item/obs_810c0a921a4498ecc31bd222c687227c2d27eea1ee727afbecb3731c78d7d326/",
+          "llm_summary": "新增 Claude Opus 5.5 发布公告，说明其 1M 上下文窗口、thinking 不可禁用，以及 Fast mode 可用；同时新增 inline-tools beta 功能与 thinking-binding-controls 更新。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 2,
+          "added_lines": [
+            "AnnouncementsAug 27, 2026",
+            "AnnouncementsSep 22, 2026",
+            "Introducing Claude Opus 5.5",
+            "Opus 5.5 performs at the level of Claude Fable 5.1 on most work and costs 40% less to run than Opus 5.",
+            "Previewing the Model Hardware Standard",
+            "We’re opening a research preview of the Model Hardware Standard (MHS), a shared specification for AI agents to safely operate physical devices, to a first group of scientific research labs and advanced manufacturers."
+          ],
+          "removed_lines": [
+            "Measurements for understanding the pace of AI development inside frontier labs",
+            "Today, the world can’t see what’s going on inside AI labs. Anthropic is proposing new metrics that would give the public visibility into frontier AI development."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Introducing Claude Opus 5.5",
+          "raw_added_count": 6,
+          "raw_removed_count": 3,
+          "id": "obs_6820027088afec2211fc1987538d617747acf21e608c24229c4cbdb7a4b1a590",
+          "permalink": "/item/obs_6820027088afec2211fc1987538d617747acf21e608c24229c4cbdb7a4b1a590/",
+          "llm_summary": "新增『Introducing Claude Opus 5.5』博客，强调性能与 Fable 5.1 相当但成本降低 40%；另新增『Previewing the Model Hardware Standard』，删除旧博文，显示内容更新。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "model_list",
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 0,
+          "added_lines": [
+            "3.5 Flash-Lite or 3.8 Flash. This helps us maintain sufficient capacity for",
+            "Note: To ensure reliable performance for everyone, we are limiting",
+            "These models are not deprecated and will continue to be served until further",
+            "access to the 2.5 models to users who have actively used them in the past.",
+            "both ongoing legacy workflows and new applications.",
+            "notice through the API. For any new projects, use our latest models:"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-17 UTC.",
+              "after": "Last updated 2026-09-22 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-17 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-22 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "3.5 Flash-Lite or 3.8 Flash. This helps us maintain sufficient capacity for",
+          "raw_added_count": 8,
+          "raw_removed_count": 2,
+          "id": "obs_4fa08b678f3489a688d8cce69fbb54fe73e1fc0c8e143afcaf8a56ea47a53bac",
+          "permalink": "/item/obs_4fa08b678f3489a688d8cce69fbb54fe73e1fc0c8e143afcaf8a56ea47a53bac/",
+          "llm_summary": "更新日期至 2026-09-22，新增关于限制 Gemini 2.5 模型访问的说明，并建议新项目使用 3.5 Flash-Lite 或 3.8 Flash，但未改变模型列表本身。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-16 UTC.",
+              "after": "Last updated 2026-09-22 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-16 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-22 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-22 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_bd2f754ce92b0eac2d417c0782665b6146e1257b82172cfe217682b5f64aeb74",
+          "permalink": "/item/obs_bd2f754ce92b0eac2d417c0782665b6146e1257b82172cfe217682b5f64aeb74/",
+          "llm_summary": "仅更新日期至 2026-09-22，无实质定价变化，可能为页面维护性更新。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "changelog",
+          "url": "https://ai.google.dev/gemini-api/docs/changelog",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 0,
+          "added_lines": [
+            "Gemini 2.5 models access update: To ensure reliable performance for",
+            "actively used them in the past. These models are not deprecated and will",
+            "continue to be served until further notice through the API. For any new",
+            "everyone, we are limiting access to the 2.5 models to users who have",
+            "helps us maintain sufficient capacity for both ongoing legacy workflows and",
+            "new applications.",
+            "projects, use our latest models: 3.5 Flash-Lite or 3.8 Flash. This"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-17 UTC.",
+              "after": "Last updated 2026-09-22 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-17 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-22 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Gemini 2.5 models access update: To ensure reliable performance for",
+          "raw_added_count": 10,
+          "raw_removed_count": 2,
+          "id": "obs_9e745afa8306666f6d9a4d27097f9f4d87bd95b61aa2573c1904d323f37098f6",
+          "permalink": "/item/obs_9e745afa8306666f6d9a4d27097f9f4d87bd95b61aa2573c1904d323f37098f6/",
+          "llm_summary": "新增 Gemini 2.5 模型访问限制公告，说明为保障性能将限制访问，但模型未弃用，新项目建议使用最新模型。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-18 UTC.",
+              "after": "Last updated 2026-09-22 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-18 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-22 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-22 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_cc1107f6cf90c80bd0a977811f4616a9769ae97590f11147ab58961c87e9f9c9",
+          "permalink": "/item/obs_cc1107f6cf90c80bd0a977811f4616a9769ae97590f11147ab58961c87e9f9c9/",
+          "llm_summary": "仅更新日期至 2026-09-22，无实质内容变化。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "model_list",
+          "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "third-party",
+              "before": "A third-party open source text model from Z.ai with a 1M-token context window.",
+              "after": "A third-party open weight text model from Z.ai with a 1M-token context window."
+            }
+          ],
+          "signal_preview": "A third-party open weight text model from Z.ai with a 1M-token context window.",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_88f3197e947e9928d48c29dc3511223566599df203d58b4c5ace384631d37d43",
+          "permalink": "/item/obs_88f3197e947e9928d48c29dc3511223566599df203d58b4c5ace384631d37d43/",
+          "llm_summary": "将 Z.ai 模型的描述从『open source』改为『open weight』，措辞更精确，反映模型许可性质。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 2,
+          "added_lines": [
+            "AI change management: A human-centric approach"
+          ],
+          "removed_lines": [
+            "AI Needs Evidenced Standards, Not A Cartel",
+            "Tiny Aya in the wild: What people are building with open multilingual AI"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AI change management: A human-centric approach",
+          "raw_added_count": 2,
+          "raw_removed_count": 3,
+          "id": "obs_b9ec7a896d1901ad21f0fad6d10572aaef783c9130197d7b356ed99edb7a39b3",
+          "permalink": "/item/obs_b9ec7a896d1901ad21f0fad6d10572aaef783c9130197d7b356ed99edb7a39b3/",
+          "llm_summary": "新增关于 AI 变更管理的文章，删除两篇旧文（AI 标准与 Tiny Aya 相关），内容主题转向企业实施。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 21,
+          "removed_count": 1,
+          "added_lines": [
+            "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailSambaNovaScalewayTogether AI",
+            "AnthropicOpenAIMetaSpaceXAIXiaomiZ AIGoogleDeepSeekOther Models",
+            "Arena Preference Elo",
+            "Benchmarking Grok 4.7See more",
+            "Claude Opus 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+            "Claude Opus 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+            "Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+            "Claude Opus 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+            "Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+            "Claude Opus 5.5 takes the top spot on the Artificial Analysis Intelligence Index",
+            "Figures represent performance of the model's first-party API or the median across providers where a first-party API is not available.",
+            "GPT-6 Luna (Non-reasoning)",
+            "GPT-6 Luna (high)",
+            "GPT-6 Luna (low)",
+            "GPT-6 Luna (max)",
+            "GPT-6 Luna (medium)",
+            "GPT-6 Luna (xhigh)",
+            "GPT-6 Sol (Non-reasoning)",
+            "GPT-6 Sol (high)",
+            "GPT-6 Sol (low)",
+            "GPT-6 Sol (max)"
+          ],
+          "removed_lines": [
+            "Agnes 3.0 Flash"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailSambaNovaScalewayTogether AI",
+          "raw_added_count": 37,
+          "raw_removed_count": 46,
+          "id": "obs_3808981d74882d43bc9b4e9f2fc02a2285d3d1804070823bc077072d1570a7f5",
+          "permalink": "/item/obs_3808981d74882d43bc9b4e9f2fc02a2285d3d1804070823bc077072d1570a7f5/",
+          "llm_summary": "新增 Claude Opus 5.5 在多个 effort 级别下的评测数据，并显示其在 Intelligence Index 上排名第一；同时新增 GPT-6 Luna 非推理模式，删除 Agnes 3.0 Flash，反映模型评测更新。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 27,
+          "removed_count": 7,
+          "added_lines": [
+            "4Bytedancedreamina-seedance-2.5-720p1477±7",
+            "5Bytedancedreamina-seedance-2.0-720p1475±7",
+            "7Bytedancedreamina-seedance-2.5-720p1474±9",
+            "7hidream-o1-video-1.01456",
+            "claude-fable-5.1-max1755+11/-11",
+            "claude-opus-5-high1661+6/-6",
+            "claude-opus-5-max1691+7/-7",
+            "flux-3-video-202608111449±5",
+            "flux-3-video1493",
+            "gemini-3.1-flash-image (nano-banana-2) [web-search]1260±4",
+            "gemini-omni-1.1-flash1516±15",
+            "gemini-omni-flash1465±6",
+            "gemini-omni-flash1513±9",
+            "gpt-6-astra-max1793+12/-12",
+            "gpt-image-2.5-flare1401",
+            "gpt-image-2.5-flare1482",
+            "gpt-image-2.5-sunburst1423",
+            "gpt-image-2.5-sunburst1526",
+            "grok-4.7-xhigh1632+17/-17",
+            "grok-imagine-image-2.0 (low)1302±9",
+            "grok-imagine-image-2.0 (low)1430±6",
+            "grok-imagine-video-1.5-agent1492",
+            "kimi-k3-max1658+7/-7",
+            "mai-image-2.61334±6",
+            "mai-image-2.61429±6",
+            "minimax-h31460±9",
+            "minimax-h31495±5"
+          ],
+          "removed_lines": [
+            "4Bytedancedreamina-seedance-2.5-720p1475±8",
+            "5Bytedancedreamina-seedance-2.0-720p1474±7",
+            "6Bytedancedreamina-seedance-2.5-720p1482±12",
+            "8hidream-o1-video-1.01452",
+            "claude-fable-5-high1628+7/-7",
+            "claude-fable-5.1-max1758+14/-14",
+            "claude-opus-5-high1660+7/-7"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "bytedanceseedream-",
+              "before": "10Bytedanceseedream-5.0-pro1257±4",
+              "after": "10Bytedanceseedream-5.0-pro1256±4"
+            },
+            {
+              "key": "seedance-2.0-720p1479",
+              "before": "7Bytedancedreamina-seedance-2.0-720p1479±8",
+              "after": "5Bytedancedreamina-seedance-2.0-720p1479±8"
+            },
+            {
+              "key": "bytedanceseedream-",
+              "before": "8Bytedanceseedream-5.0-pro1394±4",
+              "after": "8Bytedanceseedream-5.0-pro1394±3"
+            }
+          ],
+          "signal_preview": "Bytedancedreamina-seedance-2.5-720p: 1477±7",
+          "raw_added_count": 37,
+          "raw_removed_count": 37,
+          "id": "obs_c3ae04ed2360d03c7eed19f5e3a0499bfffd8e2946625f66f3592201051e17d2",
+          "permalink": "/item/obs_c3ae04ed2360d03c7eed19f5e3a0499bfffd8e2946625f66f3592201051e17d2/",
+          "llm_summary": "新增多个模型榜单数据，包括 claude-fable-5.1-max、claude-opus-5-max、gemini-omni-1.1-flash 等，并更新部分模型 Elo 分数，但变化幅度较小，属于常规榜单刷新。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 32,
+          "raw_removed_count": 32,
+          "id": "obs_50b46fb31f70e098041d83a9ae55b3fb86f2360f68efe1d0f8338631174ee9be",
+          "permalink": "/item/obs_50b46fb31f70e098041d83a9ae55b3fb86f2360f68efe1d0f8338631174ee9be/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11071)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "OpenAI",
+          "logo_summary": "发布GPT-6 Sol与Luna，定价分层明确",
+          "items": [
+            {
+              "text": "OpenAI 发布 GPT-6 Sol (gpt-6-sol) 与 GPT-6 Luna (gpt-6-luna)，支持文本与图像输入，通过 Responses 和 Chat Completions API 提供。",
+              "type": "release"
+            },
+            {
+              "text": "GPT-6 Sol 定价 $2/MTok 输入、$0.2 缓存输入、$10/MTok 输出；GPT-6 Luna 定价 $0.1/MTok 输入、$0.01 缓存输入、$0.5/MTok 输出。",
+              "type": "pricing"
+            },
+            {
+              "text": "新增 API Partner Setup 与 Private Safety Processing 功能，并更新模型选择指南为『Using GPT-6』。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "推出Claude Opus 5.5，性能提升且降价",
+          "items": [
+            {
+              "text": "Anthropic 发布 Claude Opus 5.5 (claude-opus-5-5)，面向长时 agentic 编码与知识工作，默认 1M token 上下文窗口，支持 128k 输出。",
+              "type": "release"
+            },
+            {
+              "text": "Claude Opus 5.5 定价 $4/MTok 输入、$20/MTok 输出，较 Opus 5 降低 40% 成本；缓存读取折扣为 0.05x 基础输入价。",
+              "type": "pricing"
+            },
+            {
+              "text": "Claude Opus 5.5 支持 Fast mode（研究预览），且 thinking 不可禁用；新增 inline-tools beta 功能。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "限制Gemini 2.5访问，引导新项目用新模型",
+          "items": [
+            {
+              "text": "Gemini API 宣布限制 Gemini 2.5 模型访问，仅对活跃用户开放，但模型未弃用，将继续服务至另行通知。",
+              "type": "other"
+            },
+            {
+              "text": "新项目建议使用最新模型：3.5 Flash-Lite 或 3.8 Flash，以保障容量与性能。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "Seedream 5.0系列文档更新，新增代码补丁工具",
+          "items": [
+            {
+              "text": "火山方舟更新 Doubao Seedream 5.0 pro / flash 的交互编辑指南与教程，覆盖范围扩大。",
+              "type": "other"
+            },
+            {
+              "text": "新增 Apply Patch（代码补丁工具），并发布平台客户行为准则及违约处理规则。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "百度千帆",
+          "logo_summary": "GLM-5.2限时活动结束，恢复原价",
+          "items": [
+            {
+              "text": "百度千帆移除 GLM-5.2 空闲时段限时活动定价，9月21日20点起恢复原价，涉及输入、输出及缓存计费。",
+              "type": "pricing"
+            }
+          ]
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_a92c9f1da5aac00a1ff0d7b4b121f72873e5bfa28890ff0cd25ab2631c578ed5",
+          "provider": "google",
+          "model": "gemini-2.5-computer-use-preview",
+          "component": "input",
+          "previous": "1.000000",
+          "current": "1.250000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "id": "price_2d5356a275ad74aade8014eb7779622b9a409d7c0b2c6bff51307888dbc8593b",
+          "provider": "google",
+          "model": "gemini-2.5-computer-use-preview",
+          "component": "output",
+          "previous": "5.000000",
+          "current": "10.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "id": "price_9c4f7ac33eba9a572a9232845333dcd1184e5940d9c4e502b7f3426fa16ba49d",
+          "provider": "anthropic",
+          "model": "claude-opus-5.5",
+          "component": "input",
+          "current": "4.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+        },
+        {
+          "id": "price_3bea2980ad4e09fef22d86c1c906dd07ee736f8b20ed08c9fe525d2f96fe810c",
+          "provider": "anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "5.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+        },
+        {
+          "id": "price_9a135fdd4a55492cd1ddb8526f4e76507ea40e248caefc032cbabe2d9f5830e3",
+          "provider": "anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "8.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+        },
+        {
+          "id": "price_7eedc0b632f2a9abd35cf462fdca6f4df45235e58161becf88f8cb38e984bd8f",
+          "provider": "anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_read",
+          "current": "0.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+        },
+        {
+          "id": "price_9e48377754cca7d82df8704f3a4d1b0d476a8b0f5684dba1548fdbe0afc85625",
+          "provider": "anthropic",
+          "model": "claude-opus-5.5",
+          "component": "output",
+          "current": "20.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+        },
+        {
+          "id": "price_725c37df416c953b00d4d260c2e385e655dd006a734d7d9894a83f4322819dc1",
+          "provider": "doubao",
+          "model": "doubao-seedream-5-0-flash",
+          "component": "output",
+          "current": "0.120000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
+        },
+        {
+          "id": "price_0110aa37157a2177259bc460bbdbeeecd10ffe89259b4b4b41b0dc1aa2f89361",
+          "provider": "google",
+          "model": "gemini-robotics-er-2-streaming-preview",
+          "component": "input",
+          "current": "1.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "id": "price_7e8ab5379d8ee27086e5a242bb6ffa1bb165c222fb7d537a8860ffa8b8f257da",
+          "provider": "google",
+          "model": "gemini-robotics-er-2-streaming-preview",
+          "component": "output",
+          "current": "5.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "id": "price_0c28bbd66e4a0308ff6720aa0596e474785a4b562b37ef7ed94920af7b09c55f",
+          "provider": "openai",
+          "model": "gpt-6-sol",
+          "component": "input",
+          "current": "8.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_5b9fccdadde968afc46d264caa783ebf714ecc283a4cac2ba837f77398241d04",
+          "provider": "openai",
+          "model": "gpt-6-sol",
+          "component": "cache_read",
+          "current": "0.800000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_87c2796752d76f912bf77e1a11e1fed373f6fc4c83e2bff9a1fcae9e576c403a",
+          "provider": "openai",
+          "model": "gpt-6-sol",
+          "component": "cache_write",
+          "current": "10.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_4a83b2dec520b18dbeecd6403d143494b356bde386fdeb8ff067a3852a24c320",
+          "provider": "openai",
+          "model": "gpt-6-sol",
+          "component": "output",
+          "current": "30.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_322a702548db7a73a3614b0e7c9427bab169d53e2c9c7eaae0a8570c42831ed0",
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "component": "input",
+          "current": "0.400000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_afeec70a9de6c377d039ee54decf85eda02943f4241de9f53e5d98442dc36a5e",
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "component": "cache_read",
+          "current": "0.040000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_bb0d6db7323a9ae4f21ec690f1102a35412002950c0493e584a6c0617c7837e2",
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "component": "cache_write",
+          "current": "0.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_193b06b6d1e876a77ef939a3b1312ee97a172c0bc2ea7484e26c1e43e0c46e7d",
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "component": "output",
+          "current": "1.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        }
+      ]
+    },
     {
       "date": "2026-09-22",
       "stats": {

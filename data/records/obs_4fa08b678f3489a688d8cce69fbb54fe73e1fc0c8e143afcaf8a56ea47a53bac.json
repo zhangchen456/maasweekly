@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_4fa08b678f3489a688d8cce69fbb54fe73e1fc0c8e143afcaf8a56ea47a53bac",
+  "sourceId": "google-gemini-modellist",
+  "date": "2026-09-23",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "model_list",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+  "title": "Google Gemini API · 模型列表来源更新",
+  "summary": "更新日期至 2026-09-22，新增关于限制 Gemini 2.5 模型访问的说明，并建议新项目使用 3.5 Flash-Lite 或 3.8 Flash，但未改变模型列表本身。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-22T23:33:15+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-09-17 UTC.",
+        "after": "Last updated 2026-09-22 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-17 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-22 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "3.5 Flash-Lite or 3.8 Flash. This helps us maintain sufficient capacity for",
+      "Note: To ensure reliable performance for everyone, we are limiting",
+      "These models are not deprecated and will continue to be served until further",
+      "access to the 2.5 models to users who have actively used them in the past.",
+      "both ongoing legacy workflows and new applications.",
+      "notice through the API. For any new projects, use our latest models:"
+    ],
+    "removed_lines": [],
+    "added_count": 6,
+    "removed_count": 0,
+    "raw_added_count": 8,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-23.json"
+  },
+  "permalink": "/item/obs_4fa08b678f3489a688d8cce69fbb54fe73e1fc0c8e143afcaf8a56ea47a53bac/"
+}

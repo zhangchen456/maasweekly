@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_91125dab02b516d85dddc2e8b4790328a4c9de7bde50f9ddd983e9e3a0718cba",
+  "sourceId": "openai-pricing",
+  "date": "2026-09-23",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.openai.com/docs/pricing",
+  "title": "OpenAI · 定价来源更新",
+  "summary": "新增 gpt-6-sol 与 gpt-6-luna 的完整定价表（含标准、批量、缓存等），删除 gpt-5.6-sol 与 gpt-5.6-luna 的定价，并更新数据驻留说明，明确 EU 数据驻留仅支持 Standard 处理。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-22T23:33:15+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "regional processing (data residency) endpoints are charged a",
+        "before": "Regional processing (data residency) endpoints are charged a 10% uplift for models released on or after March 5, 2026, that are eligible for data residency. See our Your data guide for supported regions and processing details. OpenAI models in Amazon Bedrock are billed through AWS. Bedrock pricing in commercial regions matches OpenAI direct pricing for equivalent services.",
+        "after": "Regional processing (data residency) endpoints are charged a 10% uplift for models released on or after March 5, 2026, that are eligible for data residency. For GPT-6 Sol and Luna, EU data residency is available only with Standard processing. See our Your data guide for supported regions and processing details. OpenAI models in Amazon Bedrock are billed through AWS. Bedrock pricing in commercial regions matches OpenAI direct pricing for equivalent services."
+      },
+      {
+        "key": "using gpt-",
+        "before": "Using GPT-6 Astra",
+        "after": "Using GPT-6"
+      }
+    ],
+    "added_lines": [
+      "API Partner Setup",
+      "For GPT-6 Astra, Sol, and Luna, EU data residency is available only with Standard processing. See Fast mode compatibility.",
+      "For GPT-6 Sol and Luna, EU data residency is available only with Standard processing.",
+      "Private Safety Processing",
+      "| gpt-6-luna | $0.05 | $0.005 | $0.0625 | $0.25 | $0.10 | $0.01 | $0.125 | $0.375",
+      "| gpt-6-luna | $0.10 | $0.01 | $0.125 | $0.50 | $0.20 | $0.02 | $0.25 | $0.75",
+      "| gpt-6-luna | $0.20 | $0.02 | $0.25 | $1.00 | $0.40 | $0.04 | $0.50 | $1.50",
+      "| gpt-6-sol | $1.00 | $0.10 | $1.25 | $5.00 | $2.00 | $0.20 | $2.50 | $7.50",
+      "| gpt-6-sol | $2.00 | $0.20 | $2.50 | $10.00 | $4.00 | $0.40 | $5.00 | $15.00",
+      "| gpt-6-sol | $4.00 | $0.40 | $5.00 | $20.00 | $8.00 | $0.80 | $10.00 | $30.00"
+    ],
+    "removed_lines": [
+      "Fast mode is unavailable for GPT-6 Astra with EU data residency. Use Standard processing for those requests. See Fast mode compatibility.",
+      "| gpt-5.6-luna | $0.10 | $0.01 | $0.125 | $0.60 | $0.20 | $0.02 | $0.25 | $0.90",
+      "| gpt-5.6-luna | $0.20 | $0.02 | $0.25 | $1.20 | $0.40 | $0.04 | $0.50 | $1.80",
+      "| gpt-5.6-luna | $0.40 | $0.04 | $0.50 | $2.40 | $0.80 | $0.08 | $1.00 | $3.60",
+      "| gpt-5.6-sol | $2.00 | $0.20 | $2.50 | $10.00 | $4.00 | $0.40 | $5.00 | $15.00",
+      "| gpt-5.6-sol | $8.00 | $0.80 | $10.00 | $40.00 | $16.00 | $1.60 | $20.00 | $60.00",
+      "| gpt-5.6-terra | $1.00 | $0.10 | $1.25 | $6.00 | $2.00 | $0.20 | $2.50 | $9.00",
+      "| gpt-5.6-terra | $2.00 | $0.20 | $2.50 | $12.00 | $4.00 | $0.40 | $5.00 | $18.00"
+    ],
+    "added_count": 10,
+    "removed_count": 8,
+    "raw_added_count": 12,
+    "raw_removed_count": 11
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-23.json"
+  },
+  "permalink": "/item/obs_91125dab02b516d85dddc2e8b4790328a4c9de7bde50f9ddd983e9e3a0718cba/"
+}

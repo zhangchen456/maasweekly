@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_9e745afa8306666f6d9a4d27097f9f4d87bd95b61aa2573c1904d323f37098f6",
+  "sourceId": "google-gemini-changelog",
+  "date": "2026-09-23",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "changelog",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+  "title": "Google Gemini API · 更新日志来源更新",
+  "summary": "新增 Gemini 2.5 模型访问限制公告，说明为保障性能将限制访问，但模型未弃用，新项目建议使用最新模型。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-22T23:33:15+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-09-17 UTC.",
+        "after": "Last updated 2026-09-22 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-17 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-22 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "Gemini 2.5 models access update: To ensure reliable performance for",
+      "actively used them in the past. These models are not deprecated and will",
+      "continue to be served until further notice through the API. For any new",
+      "everyone, we are limiting access to the 2.5 models to users who have",
+      "helps us maintain sufficient capacity for both ongoing legacy workflows and",
+      "new applications.",
+      "projects, use our latest models: 3.5 Flash-Lite or 3.8 Flash. This"
+    ],
+    "removed_lines": [],
+    "added_count": 7,
+    "removed_count": 0,
+    "raw_added_count": 10,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-23.json"
+  },
+  "permalink": "/item/obs_9e745afa8306666f6d9a4d27097f9f4d87bd95b61aa2573c1904d323f37098f6/"
+}

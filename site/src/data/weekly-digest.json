@@ -4,6 +4,14 @@
     "start": "2026-09-21",
     "end": "2026-09-27",
     "days": {
+      "2026-09-23": {
+        "substantive": 19,
+        "jitter": 1,
+        "failed": 1,
+        "releases": 2,
+        "pricings": 3,
+        "sunsets": 0
+      },
       "2026-09-22": {
         "substantive": 13,
         "jitter": 5,
@@ -22,12 +30,78 @@
       }
     },
     "totals": {
-      "substantive": 16,
-      "releases": 4,
-      "pricings": 3,
+      "substantive": 35,
+      "releases": 6,
+      "pricings": 6,
       "sunsets": 1
     },
     "highlights": [
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-23",
+        "text": "OpenAI 发布 GPT-6 Sol (gpt-6-sol) 与 GPT-6 Luna (gpt-6-luna)，支持文本与图像输入，通过 Responses 和 Chat Completions API 提供。",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-23",
+        "text": "GPT-6 Sol 定价 $2/MTok 输入、$0.2 缓存输入、$10/MTok 输出；GPT-6 Luna 定价 $0.1/MTok 输入、$0.01 缓存输入、$0.5/MTok 输出。",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-23",
+        "text": "新增 API Partner Setup 与 Private Safety Processing 功能，并更新模型选择指南为『Using GPT-6』。",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-23",
+        "text": "Anthropic 发布 Claude Opus 5.5 (claude-opus-5-5)，面向长时 agentic 编码与知识工作，默认 1M token 上下文窗口，支持 128k 输出。",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-23",
+        "text": "Claude Opus 5.5 定价 $4/MTok 输入、$20/MTok 输出，较 Opus 5 降低 40% 成本；缓存读取折扣为 0.05x 基础输入价。",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-23",
+        "text": "Claude Opus 5.5 支持 Fast mode（研究预览），且 thinking 不可禁用；新增 inline-tools beta 功能。",
+        "type": "other"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-09-23",
+        "text": "Gemini API 宣布限制 Gemini 2.5 模型访问，仅对活跃用户开放，但模型未弃用，将继续服务至另行通知。",
+        "type": "other"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-09-23",
+        "text": "新项目建议使用最新模型：3.5 Flash-Lite 或 3.8 Flash，以保障容量与性能。",
+        "type": "other"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-09-23",
+        "text": "火山方舟更新 Doubao Seedream 5.0 pro / flash 的交互编辑指南与教程，覆盖范围扩大。",
+        "type": "other"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-09-23",
+        "text": "新增 Apply Patch（代码补丁工具），并发布平台客户行为准则及违约处理规则。",
+        "type": "other"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-09-23",
+        "text": "百度千帆移除 GLM-5.2 空闲时段限时活动定价，9月21日20点起恢复原价，涉及输入、输出及缓存计费。",
+        "type": "pricing"
+      },
       {
         "platform": "xAI",
         "date": "2026-09-22",
