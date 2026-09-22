@@ -75,6 +75,8 @@ run "site: rss（Task 05）" bash -c 'cd site && node --experimental-strip-types
 run "site: pricing" bash -c 'cd site && node tests/pricing.test.mjs'
 run "site: model-identity-ui（T07-4A）" bash -c 'cd site && node tests/model-identity-ui.test.mjs'
 run "site: model-identity-ui-contract（T07-4A）" bash -c 'cd site && node tests/model-identity-ui-contract.test.mjs'
+run "site: changes-browser-contract（T07-4A.2）" bash -c 'cd site && node tests/changes-browser-contract.test.mjs'
+run "site: changes-browser-ui（T07-4A.2）" bash -c 'cd site && node tests/changes-browser-ui.test.mjs'
 run "site: platform-logos" bash -c 'cd site && node tests/platform-logos.test.mjs'
 run "site: leaderboards" bash -c 'cd site && node tests/leaderboards.test.mjs'
 run "site: records（含残留检测）" bash -c 'cd site && node tests/records.test.mjs'

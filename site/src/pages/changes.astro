@@ -1,0 +1,226 @@
+---
+// /changes/：变化浏览（T07-4A.2）。消费 public release changes（已有 modelId/familyId，
+// T07-3 合同）。支持 modelId/familyId 筛选 + 可点击标签 + URL 状态。
+// invalid/empty/unresolved 三种语义与 pricing 页完全一致。
+import Layout from '../layouts/Layout.astro';
+import { loadVerifiedRelease } from '../lib/release';
+
+const release = loadVerifiedRelease(undefined, { select: ['changes'] });
+const changes = release.changes ?? [];
+
+// 构建期读 catalog（selector options 来源，不从 changes 反推）
+const catalogPath = '../data/public/v1/releases/' + release.datasetVersion + '/model-identities.json';
+import fs from 'node:fs';
+let catalog = { models: [], families: [] };
+try {
+  catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf-8'));
+} catch (e) {
+  // catalog 缺失不阻塞——selector 为空
+}
+
+// provider 名映射（从 changes 的 providerId 反推展示名——用 title 里的展示名更稳）
+const providerLabels: Record<string, string> = {
+  openai: 'OpenAI', anthropic: 'Anthropic', google: 'Google', deepseek: 'DeepSeek',
+  alibaba: '阿里百炼', volcengine: '火山引擎', zhipu: '智谱', kimi: 'Kimi',
+  baidu: '百度', xai: 'xAI', mistral: 'Mistral', cohere: 'Cohere',
+  minimax: 'MiniMax', siliconflow: 'SiliconFlow', tencent: '腾讯', xfyun: '讯飞',
+};
+---
+<Layout title="变化浏览 — MaaS Daily" description="MaaS 平台变化流：来源观察与价格事件，按模型筛选">
+  <section class="hero">
+    <div class="shell">
+      <div class="eyebrow">CHANGES</div>
+      <h1>平台变化流</h1>
+      <p class="lead">来源观察与价格事件，按模型或系列筛选。数据截至 {release.dataThrough}，
+        共 {changes.length} 条记录。</p>
+    </div>
+  </section>
+
+  <div class="shell">
+    <div class="changes-toolbar">
+      <input id="q" type="search" placeholder="搜索标题…" aria-label="搜索变化">
+      <select id="model-filter" aria-label="按模型筛选"></select>
+      <select id="family-filter" aria-label="按模型系列筛选"></select>
+      <select id="type-filter" aria-label="按类型筛选">
+        <option value="">全部类型</option>
+        <option value="price_change">价格事件</option>
+        <option value="source_observation">来源观察</option>
+      </select>
+    </div>
+    <div id="filter-summary" class="filter-summary" hidden></div>
+    <div id="filter-error" class="filter-error" hidden></div>
+    <div id="changes-list" class="changes-list"></div>
+    <div id="empty-state" class="empty-state" hidden>当前数据范围内暂无相关记录。</div>
+    <div class="pagination">
+      <span id="page-label"></span>
+      <div class="row">
+        <button id="prev" aria-label="上一页">←</button>
+        <button id="next" aria-label="下一页">→</button>
+      </div>
+    </div>
+  </div>
+
+  <script id="changes-data" type="application/json" set:html={JSON.stringify(changes)}></script>
+  <script id="catalog-data" type="application/json" set:html={JSON.stringify(catalog)}></script>
+  <script id="provider-labels" type="application/json" set:html={JSON.stringify(providerLabels)}></script>
+
+  <script is:inline>
+    (function(){
+      const $=id=>document.getElementById(id);
+      const changes=JSON.parse($('changes-data').textContent);
+      const catalog=JSON.parse($('catalog-data').textContent);
+      const providerLabels=JSON.parse($('provider-labels').textContent);
+      const catalogModels=[...catalog.models].sort((a,b)=>(a.modelName||'').localeCompare(b.modelName||''));
+      const catalogFamilies=[...catalog.families].sort((a,b)=>(a.familyName||'').localeCompare(b.familyName||''));
+      let modelIdFilter=null,familyIdFilter=null,filterError=null,query='',typeFilter='',page=0;
+      const PAGE_SIZE=20;
+
+      function parseUrlFilter(){
+        const u=new URL(location.href);
+        const mid=u.searchParams.get('modelId'),fid=u.searchParams.get('familyId');
+        modelIdFilter=null;familyIdFilter=null;filterError=null;
+        if(mid){if(catalogModels.some(m=>m.modelId===mid))modelIdFilter=mid;else filterError={type:'modelId',value:mid}}
+        else if(fid){if(catalogFamilies.some(f=>f.familyId===fid))familyIdFilter=fid;else filterError={type:'familyId',value:fid}}
+      }
+      function syncUrlState(){
+        const u=new URL(location.href);
+        u.searchParams.delete('modelId');u.searchParams.delete('familyId');
+        if(modelIdFilter)u.searchParams.set('modelId',modelIdFilter);
+        if(familyIdFilter)u.searchParams.set('familyId',familyIdFilter);
+        history.pushState(null,'',u);
+      }
+      function el(tag,cls,text){const x=document.createElement(tag);if(cls)x.className=cls;if(text!==undefined)x.textContent=String(text);return x}
+
+      function initSelectors(){
+        const mf=$('model-filter'),ff=$('family-filter');
+        mf.innerHTML='<option value="">模型</option>';
+        catalogModels.forEach(m=>{const o=el('option','',m.modelName);o.value=m.modelId;mf.append(o)});
+        ff.innerHTML='<option value="">模型系列</option>';
+        catalogFamilies.forEach(f=>{const o=el('option','',f.familyName);o.value=f.familyId;ff.append(o)});
+        mf.value=modelIdFilter||'';ff.value=familyIdFilter||'';
+      }
+
+      function filtered(){
+        return changes.filter(c=>{
+          if(modelIdFilter&&c.modelId!==modelIdFilter)return false;
+          if(familyIdFilter&&c.familyId!==familyIdFilter)return false;
+          if(typeFilter&&c.recordType!==typeFilter)return false;
+          if(query){const hay=(c.title+' '+(c.summary||'')).toLowerCase();if(!hay.includes(query.toLowerCase()))return false}
+          return true;
+        });
+      }
+
+      function renderList(){
+        const list=$('changes-list');list.replaceChildren();
+        if(filterError){$('empty-state').hidden=true;return}
+        const items=filtered();
+        page=Math.max(0,Math.min(page,Math.ceil(items.length/PAGE_SIZE)-1));
+        const slice=items.slice(page*PAGE_SIZE,page*PAGE_SIZE+PAGE_SIZE);
+        for(const c of slice){
+          const card=el('article','change-card');
+          const head=el('div','change-head');
+          const date=el('span','change-date',c.observationDate);
+          const type=el('span','change-type',c.recordType==='price_change'?'价格事件':'来源观察');
+          const prov=el('span','change-provider',providerLabels[c.providerId]||c.providerId||'');
+          head.append(date,type,prov);
+          const title=el('a','change-title',c.title);
+          title.href='/item/'+c.id+'/';
+          card.append(head,title);
+          // model/family tag（有 modelId 才显示，可点击）
+          if(c.modelId){
+            const tagRow=el('div','change-tags');
+            const mtag=el('button','model-tag',c.modelName||c.modelId);
+            mtag.setAttribute('aria-label','筛选模型 '+(c.modelName||c.modelId));
+            mtag.setAttribute('type','button');
+            mtag.onclick=()=>{modelIdFilter=c.modelId;familyIdFilter=null;filterError=null;page=0;syncUrlState();initSelectors();renderAll()};
+            tagRow.append(mtag);
+            if(c.familyId&&c.familyName){
+              const ftag=el('button','family-tag',c.familyName);
+              ftag.setAttribute('aria-label','筛选系列 '+c.familyName);
+              ftag.setAttribute('type','button');
+              ftag.onclick=()=>{familyIdFilter=c.familyId;modelIdFilter=null;filterError=null;page=0;syncUrlState();initSelectors();renderAll()};
+              tagRow.append(ftag);
+            }
+            card.append(tagRow);
+          }
+          if(c.summary){card.append(el('p','change-summary',c.summary.slice(0,200)))}
+          list.append(card);
+        }
+        $('empty-state').hidden=items.length>0;
+        $('page-label').textContent=items.length?`${page*PAGE_SIZE+1}–${Math.min((page+1)*PAGE_SIZE,items.length)} / ${items.length}`:'0 / 0';
+        $('prev').disabled=page===0;
+        $('next').disabled=(page+1)*PAGE_SIZE>=items.length;
+      }
+
+      function renderFilterSummary(){
+        const fs=$('filter-summary');fs.replaceChildren();fs.hidden=true;
+        function chip(label,value,clearFn){
+          const c=el('span','filter-chip');
+          c.append(el('span','',label+value));
+          const x=el('button','','×');x.setAttribute('aria-label','清除筛选');
+          x.onclick=clearFn;c.append(x);fs.append(c);fs.hidden=false;
+        }
+        if(modelIdFilter)chip('模型：',catalogModels.find(m=>m.modelId===modelIdFilter)?.modelName||modelIdFilter,()=>{modelIdFilter=null;filterError=null;syncUrlState();initSelectors();renderAll()});
+        else if(familyIdFilter)chip('模型系列：',catalogFamilies.find(f=>f.familyId===familyIdFilter)?.familyName||familyIdFilter,()=>{familyIdFilter=null;filterError=null;syncUrlState();initSelectors();renderAll()});
+      }
+
+      function renderFilterError(){
+        const fe=$('filter-error');
+        if(!filterError){fe.hidden=true;fe.replaceChildren();return}
+        fe.hidden=false;fe.replaceChildren();
+        const p=el('p','','未找到模型：'+filterError.value+'。该 ID 不在当前模型目录中。');
+        const btn=el('button','','清除筛选');btn.setAttribute('type','button');
+        btn.onclick=()=>{filterError=null;syncUrlState();initSelectors();renderAll()};
+        const row=el('div','row');row.append(p,btn);fe.append(row);
+      }
+
+      function renderAll(){renderFilterError();renderFilterSummary();renderList()}
+
+      // 事件绑定
+      $('q').oninput=e=>{query=e.target.value.trim();page=0;renderList()};
+      $('model-filter').onchange=e=>{modelIdFilter=e.target.value||null;familyIdFilter=null;filterError=null;page=0;syncUrlState();initSelectors();renderAll()};
+      $('family-filter').onchange=e=>{familyIdFilter=e.target.value||null;modelIdFilter=null;filterError=null;page=0;syncUrlState();initSelectors();renderAll()};
+      $('type-filter').onchange=e=>{typeFilter=e.target.value;page=0;renderList()};
+      $('prev').onclick=()=>{page--;renderList()};
+      $('next').onclick=()=>{page++;renderList()};
+      window.addEventListener('popstate',()=>{parseUrlFilter();initSelectors();renderAll()});
+
+      // 初始化
+      parseUrlFilter();initSelectors();renderAll();
+    })();
+  </script>
+</Layout>
+
+<style>
+  .hero{padding:40px 0 20px}
+  .hero h1{font-size:32px;margin:8px 0}
+  .hero .lead{color:var(--muted,#666);max-width:600px}
+  .changes-toolbar{display:flex;flex-wrap:wrap;gap:10px;padding:16px 0;border-bottom:1px solid var(--line,#e5e5e5)}
+  .changes-toolbar input,.changes-toolbar select{min-width:0;padding:8px 11px;border:1px solid var(--line,#ddd);border-radius:8px;font:inherit;background:var(--raised,#f7f7f7)}
+  .changes-toolbar input{flex:1;min-width:180px}
+  .filter-summary{display:flex;flex-wrap:wrap;gap:8px;padding:10px 0}
+  .filter-summary:empty{display:none}
+  .filter-chip{display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border-radius:30px;background:var(--soft,#eef);border:1px solid var(--line,#ddd);font-size:12px}
+  .filter-chip button{border:0;background:transparent;padding:0;cursor:pointer;color:var(--muted,#888);font-size:14px;line-height:1}
+  .filter-error{padding:14px 0;color:#a33}
+  .filter-error:empty{display:none}
+  .filter-error .row{display:flex;justify-content:space-between;align-items:center;gap:14px}
+  .filter-error button{flex-shrink:0;font-size:11px;padding:6px 13px;border:1px solid #a33;border-radius:8px;background:transparent;color:#a33;cursor:pointer}
+  .changes-list{padding:16px 0}
+  .change-card{padding:14px 0;border-bottom:1px solid var(--line,#eee)}
+  .change-head{display:flex;gap:10px;align-items:center;font-size:12px;color:var(--muted,#888);margin-bottom:6px}
+  .change-type{padding:2px 8px;border-radius:6px;background:var(--soft,#eef);font-size:11px}
+  .change-title{display:block;font-weight:550;color:var(--ink,#222);text-decoration:none;line-height:1.5}
+  .change-title:hover{color:var(--blue,#0066cc)}
+  .change-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .model-tag{display:inline-flex;font-size:11px;font-weight:500;color:var(--blue,#0066cc);background:var(--soft,#eef);border:1px solid var(--line,#bcd);border-radius:7px;padding:2px 8px;cursor:pointer}
+  .model-tag:hover{background:var(--blue,#0066cc);color:#fff}
+  .family-tag{display:inline-block;font-size:10px;color:var(--muted,#666);background:var(--raised,#f7f7f7);border:1px solid var(--line,#ddd);border-radius:6px;padding:1px 7px;cursor:pointer}
+  .family-tag:hover{border-color:var(--blue,#0066cc);color:var(--blue,#0066cc)}
+  .change-summary{margin:6px 0 0;font-size:12px;color:var(--muted,#777);line-height:1.6}
+  .empty-state{padding:40px 20px;text-align:center;color:var(--muted,#999)}
+  .pagination{display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-size:12px;color:var(--muted,#888)}
+  .pagination button{padding:5px 12px;border:1px solid var(--line,#ddd);border-radius:8px;background:transparent;cursor:pointer}
+  .pagination button:disabled{opacity:.4;cursor:default}
+  @media(max-width:720px){.changes-toolbar{flex-direction:column}.changes-toolbar input{width:100%}}
+</style>
