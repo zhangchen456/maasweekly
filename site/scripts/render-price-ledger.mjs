@@ -37,7 +37,25 @@ const providerLogos = Object.fromEntries(providers.flatMap((provider) => {
   const file = logoLookup.get(normalize(provider));
   return file ? [[provider, file]] : [];
 }));
-const renderedData = { ...ledger, provider_logos: providerLogos };
+
+// T07-4A：注入 model identity catalog（selector options 来源）。
+// 从当前 release 的 model-identities.json 读取，不从 ledger.prices 反推。
+// 只含 catalog.models / catalog.families（pointer/non_model 已在 exporter 排除）。
+let modelIdentities = { models: [], families: [] };
+try {
+  const manifestPath = resolve(root, '..', 'data', 'public', 'v1', 'manifest.json');
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf-8'));
+  const catEntry = manifest.files.find((f) => f.path.endsWith('/model-identities.json'));
+  if (catEntry) {
+    const catPath = resolve(root, '..', 'data', 'public', 'v1', catEntry.path);
+    modelIdentities = JSON.parse(readFileSync(catPath, 'utf-8'));
+  }
+} catch (e) {
+  // catalog 缺失不阻塞 ledger 渲染——selector 会为空（构建期容错）
+  console.warn('model-identities.json 不可读，selector 将为空:', e.message);
+}
+
+const renderedData = { ...ledger, provider_logos: providerLogos, modelIdentities };
 
 const safeJson = JSON.stringify(renderedData)
   .replace(/<\//g, '<\\/')

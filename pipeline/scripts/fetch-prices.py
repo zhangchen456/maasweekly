@@ -43,6 +43,8 @@ from pricing.normalize import normalize_and_validate     # noqa: E402
 from pricing.providers import PlaywrightSourceProvider, provider_for, KimiPlaywrightProvider  # noqa: E402
 from pricing.registry import all_entries                 # noqa: E402
 from pricing.view_data import DEFAULT_FX, build_view_dataset, fact_to_dict  # noqa: E402
+from model_identity.projector import ModelIdentityProjector  # noqa: E402
+from model_identity.provider_map import canonicalize_provider_id, UnknownProviderError  # noqa: E402
 
 PRICING_DIR = BASE_DIR / "site" / "src" / "data" / "pricing"
 LEDGER_FILE = PRICING_DIR / "ledger.json"
@@ -269,6 +271,19 @@ async def run(only: list[str] | None, dry_run: bool) -> int:
                     all_facts.extend(reused)
                     print(f"  [not_run] {e.source_key} 保留既有 {len(reused)} 条事实")
 
+    # T07-4A：模型身份投影回调（复用 model_identity projector；ledger provider
+    # 是 pricing 体系，回调内 canonicalize 后投影。unresolved/pointer/未知 provider
+    # → {}，不伪造 canonical identity。与 public projection 用同一 projector）
+    _mi_projector = ModelIdentityProjector()
+
+    def _ledger_identity(provider_id: str, raw_model: str,
+                         display_name: str | None = None) -> dict:
+        try:
+            canonical = canonicalize_provider_id(provider_id)
+        except UnknownProviderError:
+            return {}  # 未知 provider 不伪造 identity
+        return _mi_projector.project(canonical, raw_model, display_name)
+
     dataset = build_view_dataset(
         all_facts, profiles, source_urls,
         failed_sources=failed,
@@ -277,6 +292,7 @@ async def run(only: list[str] | None, dry_run: bool) -> int:
         fx_snapshot=DEFAULT_FX,
         default_currency=DEFAULT_CURRENCY,
         evidence_links=evidence_links,
+        identity_projector=_ledger_identity,
     )
 
     # diff 与事件（旧口径：daily_changes.price_changes 兼容消费者）
