@@ -54,12 +54,46 @@ familyId  = 正式注册的模型家族 ID（family 改名不改既有 modelId�
 与 REST 共用 query core。示例：「查询 `anthropic:claude-sonnet-4.5` 的价格」→
 `modelId` 精确 filter。
 
-## 7. datasetVersion 规则
+## 7. Release identity catalog 与 datasetVersion
 
-- 同输入 + 同 registry → datasetVersion 稳定。
-- 修改实际被公开引用的 model identity → datasetVersion 改变（如 familyName 去后缀、
-  alias 增删不影响；但 modelId/familyId 的投影字段变化才算）。
-- registry 中仅 notes/家族增补（未进投影）→ 不应仅因此改变 datasetVersion。
+合法 identity 来自 **该 release 内冻结的 registry catalog**；记录存在性来自
+`prices/changes/items`。两者独立：catalog 存在但三个集合均无记录时，
+`prices` 与 `changes` 的 `modelId` / `familyId` 查询均返回 `200 + items=[]`；
+catalog 不存在则分别返回 `400 invalid_model_id` / `invalid_family_id`。
+
+每个新 release 包含内部文件 `model-identities.json`：
+
+```json
+{
+  "models": [
+    {
+      "modelId": "anthropic:claude-sonnet-4.5",
+      "modelName": "Claude Sonnet 4.5",
+      "familyId": "anthropic:claude-sonnet",
+      "familyName": "Claude Sonnet"
+    }
+  ],
+  "families": [
+    {"familyId": "anthropic:claude-sonnet", "familyName": "Claude Sonnet"}
+  ]
+}
+```
+
+- `models` 只含 `classification=model`；`families` 只含 `classification=family`。
+  pointer、non_model、ambiguous、unresolved 不进入合法集合；model 的 grouping-only
+  family 不公开，只有正式 family 才附 `familyId/familyName`。
+- exporter 使用同一输入根的 registry 构建 catalog 与实体投影，按 identity ID 稳定排序。
+- catalog 写入当前与 per-release manifest，记录 `bytes/sha256`，以
+  `modelIdentities` 集合参与 `datasetVersion` 计算。新增零记录模型/家族、名称或
+  正式家族关系变化都会产生新版本；notes、未影响投影的 alias 和 registry 行顺序不影响版本。
+- Dataset 通过现有路径与 `bytes/sha256` 校验读取 catalog，再校验结构、ID 唯一性、
+  名称和正式家族引用；只从 `models/families` 构建合法 ID 集合，不从记录反推。
+- cursor 加载目标 release 自己的 manifest/catalog，并用该版本合法集合重验查询。
+  current 增删 identity 不改变历史查询语义。
+- catalog 缺失或损坏时拒绝加载；热重载失败保留上一有效 Dataset。补丁前没有 catalog
+  的旧 release 不回填当前 registry，也不改写旧版本；对应 cursor 按既有合同返回
+  `409 dataset_version_expired`，从第一页重查。
+- 本阶段 catalog 仅供 runtime 内部使用，不增加 HTTP `/models` endpoint，也不发布到站点。
 
 ## 8. Backward compatibility
 

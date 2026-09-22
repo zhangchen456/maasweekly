@@ -10,6 +10,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from pathlib import Path
 
@@ -151,13 +152,53 @@ def validate_references(changes: list[dict], prices: list[dict],
     return errors
 
 
+def validate_identity_catalog(catalog) -> list[str]:
+    """catalog 只保存公开身份；校验结构、唯一性与正式 family 引用。"""
+    if not isinstance(catalog, dict) or not all(
+            isinstance(catalog.get(key), list) for key in ("models", "families")):
+        return ["identity catalog 结构非法"]
+    errors = []
+    families, models = {}, set()
+    def valid_id(value):
+        return isinstance(value, str) and re.fullmatch(r"[a-z0-9-]+:[a-z0-9.-]+", value)
+    def valid_name(value):
+        return isinstance(value, str) and bool(value.strip())
+    for family in catalog["families"]:
+        if not isinstance(family, dict):
+            errors.append("identity catalog family 结构非法")
+            continue
+        fid, name = family.get("familyId"), family.get("familyName")
+        if not valid_id(fid) or not valid_name(name) or fid in families:
+            errors.append("identity catalog family 非法/重复")
+            continue
+        families[fid] = name
+    for model in catalog["models"]:
+        if not isinstance(model, dict):
+            errors.append("identity catalog model 结构非法")
+            continue
+        mid = model.get("modelId")
+        if not valid_id(mid) or not valid_name(model.get("modelName")) or mid in models or mid in families:
+            errors.append("identity catalog model 非法/重复")
+            continue
+        models.add(mid)
+        if "familyId" in model or "familyName" in model:
+            fid, name = model.get("familyId"), model.get("familyName")
+            if (not valid_id(fid) or not valid_name(name) or fid not in families
+                    or families[fid] != name or mid.split(":")[0] != fid.split(":")[0]):
+                errors.append("identity catalog model 引用非正式 family")
+    return errors
+
+
 def validate_release_files(root: Path, manifest: dict) -> list[str]:
     """manifest 与 release 文件的 hash/bytes/路径校验（--check 与服务端共用）。"""
     errors: list[str] = []
     root = root.resolve()
+    catalog_path = f"releases/{manifest.get('datasetVersion')}/model-identities.json"
+    if sum(f.get("path") == catalog_path for f in manifest.get("files", [])) != 1:
+        errors.append("manifest 必须包含唯一 model-identities.json")
     for f in manifest.get("files") or []:
         rel = f.get("path") or ""
-        if not re.match(r"^releases/ds_[0-9a-f]{64}/[a-z]+\.json$", rel):
+        if not re.match(r"^releases/ds_[0-9a-f]{64}/[a-z]+(?:-[a-z]+)*\.json$", rel):
             _err(errors, f"manifest 路径非法: {rel}")
             continue
         p = root / rel
@@ -182,6 +223,11 @@ def validate_release_files(root: Path, manifest: dict) -> list[str]:
         actual = hashlib.sha256(data).hexdigest()
         if actual != f.get("sha256"):
             _err(errors, f"manifest sha256 不符: {rel}")
+        if rel == catalog_path:
+            try:
+                errors.extend(validate_identity_catalog(json.loads(data)))
+            except (ValueError, UnicodeError):
+                errors.append("identity catalog JSON 损坏")
     # manifest 自身
     if not re.match(r"^ds_[0-9a-f]{64}$", manifest.get("datasetVersion") or ""):
         _err(errors, "manifest datasetVersion 非法")

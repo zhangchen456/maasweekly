@@ -7,6 +7,8 @@
 修复后优先级：MAAS_DEPLOY_MODE 环境变量 > ops/deploy-mode 文件 > 默认 legacy。
 仓库文件永久保持 legacy。
 """
+from __future__ import annotations
+
 import os
 import subprocess
 import tempfile

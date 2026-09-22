@@ -9,9 +9,9 @@
 ### 1.1 datasetVersion
 
 `ds_<64 hex>`，由六个公开集合（changes/items/prices/evidence/weekly/status）
-的规范内容摘要计算：UTF-8、对象键排序、稳定数组排序、紧凑 JSON；
+及 release 内冻结的 `modelIdentities` catalog 的规范内容摘要计算：UTF-8、对象键排序、稳定数组排序、紧凑 JSON；
 排除 `generatedAt`（墙钟）与任何构建路径。同输入重建得到相同版本与
-相同业务文件字节；任一实体、状态或 coverage 变化产生新版本。
+相同业务文件字节；任一实体、状态、coverage 或 catalog 公开身份/名称/家族关系变化产生新版本。
 
 `manifest.json` 的 `files[].sha256` 记录**实际文件字节**哈希（供
 `--check` 与服务端启动校验），与 datasetVersion 的规范内容摘要分离。
@@ -82,6 +82,13 @@ Decimal 字符串（如 `"1.500000"`），禁止浮点。原币种（USD/CNY）�
   dataThrough 锚定最近 7 个上海日历日（不使用请求机器墙钟）。
 - provider/component/billingMode/region 用枚举（来自当前 release 的
   status）；未知值 400，不静默空列表。
+- `modelId` / `familyId` 的合法集合来自该 release 的 `model-identities.json`，
+  不从 changes/prices/items 反推。catalog 的 `models` 只含正式 model，
+  `families` 只含正式 family；合法但整个 dataset 无记录 → 200 + 空 items，
+  未登记 → 400 `invalid_model_id` / `invalid_family_id`。
+- catalog 为内部辅助文件，进入 manifest、bytes/SHA-256 校验和 datasetVersion，
+  不新增公开 `/models` endpoint。历史 cursor 只用目标 release 自己的 catalog
+  重验查询；缺失/损坏（含补丁前未携带 catalog 的旧版本）按 409 处理，不回填当前 registry。
 - **cursor**：base64url 规范 JSON，绑定 schemaVersion/datasetVersion/
   endpoint/查询摘要(qh)/排序键，并携带原始查询参数（翻页时服务端
   恢复查询，客户端只传 cursor）。**cursor 带 HMAC-SHA256 服务端签名**

@@ -1,6 +1,6 @@
 # Task 07 结果报告：模型实体关联、别名规范化与跨平台筛选
 
-日期：2026-09-21。当前状态：**T07-1 + T07-2 + T07-2.5 + T07-3（Public Model Identity）完成；T07-4 及之后未开始**。
+日期：2026-09-22。当前状态：**T07-1 / T07-2 / T07-2.5 已完成；T07-3 P0 补丁与专项验证已完成，T16 受榜单新鲜度检查阻塞，尚未最终 PASS；T07-4 及之后未开始**。
 
 ## T07-1 交付记录
 
@@ -163,7 +163,7 @@ deepseek 清洗后条目）再动公开 schema。
 - **resolver after 分布**：resolved 259 / family 15 / ambiguous 0 / unresolved 288
 - **prices 有 modelId**：859/1387（62%）；**price_change 有 modelId**：2814/4156（68%）
 - **source_observation modelId 泄漏**：0（244 条天然不含）
-- **datasetVersion 规则**：同输入稳定（familyName 后缀清理、alias 增补均不改变；实际引用的 modelId/familyId 变化才改变）
+- **datasetVersion 规则（2026-09-22 修正）**：同输入稳定；完整 identity catalog 参与摘要，公开名称/家族关系及零记录 identity 增删也产生新版本；notes 和未影响投影的 alias 不改变版本
 - **false positive = 0**（dangerous inputs 38 个零 resolved）
 
 ### 过程中修出的真实问题（测试逮住）
@@ -182,3 +182,51 @@ deepseek 清洗后条目）再动公开 schema。
 
 判断标准（非解析率）：false positive = 0 保持 ✓；unresolved 288 主体为快照待确认 112 + 低频长尾 150 + 区域 15 + emoji 7。
 T07-4 可做：`/agent/` 页面 UI 模型筛选器、模型详情页、`/api/v1/models` 端点。
+
+
+## T07-3 P0 contract fix（2026-09-22）
+
+合法 identity 改为 release 内冻结的 registry catalog，记录存在性仍由 prices/changes
+决定。恢复被清空的 `tests/test_public_export.py`，保留原 12 项并增加 4 项导出回归。
+
+- 文件结构：`model-identities.json` 包含 `models` 与 `families`；真实数据为 107 个
+  model、24 个正式 family。排除 pointer/non_model 和 34 个 grouping-only family。
+- exporter 将 catalog 纳入版本摘要与两份 manifest，并给出 bytes/SHA-256；catalog
+  与公开实体统一使用 `--input-root` 中的 registry。仅改 catalog 也产生新版本。
+- Dataset 的 current/history 两条路径均经文件完整性与结构校验读取冻结 catalog。
+  缺失/损坏拒载；热重载失败保留旧数据；补丁前无 catalog 的历史版本不回填、不改写，
+  对应 cursor 返回 409 并要求从第一页重查。
+- T11c/T11d/T12c/T12d 明确断言 identity 在 changes/prices/items 三者均不存在，
+  REST 两端点均严格 200 empty；格式合法但 unknown 继续 400。
+- T13/T14 验证历史版本从磁盘加载及 current 增删 identity 的隔离；T15 验证文件缺失、
+  manifest 缺项、bytes/hash 篡改、非法 JSON、错误结构和悬空 family 均拒载。
+- `npm test` 已纳入 identity suite；统一回归入口补入 public projection suite。
+- 新本地数据版本：`ds_0f6ba3dd3b42bae655a76ea69436427c608c215218c757b01d71eec2c4856722`，
+  dataThrough=2026-09-20。未部署；未开始 T07-4；未新增公开 HTTP endpoint。
+
+### 本次验证
+
+| 命令 / 检查 | 结果 |
+|---|---|
+| `python3 -m unittest discover -s tests -p 'test_public_export.py'` | 16/16，exit 0 |
+| `node --test --test-force-exit dist/tests/model-identity.test.js`（agent-api） | 23/23，exit 0 |
+| `./scripts/run-all-tests.sh`（完整运行，含 site build） | 25/27，exit 1；两项失败见下 |
+| `python3 -m unittest discover -s tests -p 'test_deploy_mode.py'`（兼容修正后补测） | 7/7，exit 0 |
+| 真实 current 与 loadDirect 加载比对 | 两者均 107 models / 24 families；registry 成员精确一致；真实 catalog-only model 1 个 |
+| `git diff --check` | exit 0 |
+
+完整回归的 Python 失败原因是 `test_deploy_mode.py` 在本机 Python 3.9 上求值
+`dict[str, str] | None` 注解；已加 `from __future__ import annotations`，7 项定向
+补测通过，无部署逻辑变更。完整回归中的其余 25 组通过，包括 public projection、
+registry、REST（含 23 项 identity 测试）、MCP、真实数据 MCP、site build 和 records。
+
+**剩余阻塞：T16 未全绿。** `site: leaderboards` 的 OpenRouter 快照日期为
+2026-09-18，在 2026-09-22 执行时超过 4 天新鲜度阈值。只读尝试
+`python3 pipeline/scripts/fetch-leaderboards.py --dry-run` 提示当前环境缺少
+`OPENROUTER_API_KEY`；随后按用户提供的位置读取 `~/.zshrc` 的 `OPENROUTER_KEY`，
+仅在抓取子进程中映射变量名。三个数据集请求均以 curl HTTP 22 失败，保留旧数据；
+本地也没有更新的原始榜单快照。
+保留新鲜度断言与数据日期，没有跳过测试或伪造新快照。待从已有授权抓取环境刷新
+榜单后重新跑统一回归，才能确认 T16 和 T07-3 最终 PASS。
+
+用户要求暂停后续验证并提交当前修复；未重新运行完整回归，T16 状态保持未通过。

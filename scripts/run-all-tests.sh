@@ -60,6 +60,7 @@ run "test_release_build（Task 06）" python3 -m unittest discover -s tests -p '
 run "test_release_activation（Task 06）" python3 -m unittest discover -s tests -p 'test_release_activation.py'
 run "test_deploy_mode（Task 06 M7）" python3 -m unittest discover -s tests -p 'test_deploy_mode.py'
 run "test_model_identity_audit（Task 07）" python3 -m unittest discover -s tests -p 'test_model_identity_audit.py'
+run "test_model_public_projection（Task 07）" python3 -m unittest discover -s tests -p 'test_model_public_projection.py'
 run "test_model_registry（Task 07）" python3 -m unittest discover -s tests -p 'test_model_registry.py'
 run "validate-model-registry（Task 07）" python3 pipeline/scripts/validate-model-registry.py --check
 run "audit-model-registry-coverage（Task 07）" python3 pipeline/scripts/audit-model-registry-coverage.py --output /tmp/t07-coverage-audit.json

@@ -14,6 +14,11 @@ import path from 'node:path';
 
 export const SCHEMA_VERSION = '1.0';
 
+export interface ModelIdentityCatalog {
+  models: { modelId: string; modelName: string; familyId?: string; familyName?: string }[];
+  families: { familyId: string; familyName: string }[];
+}
+
 export interface ManifestFileEntry {
   path: string;
   sha256: string;
@@ -154,7 +159,7 @@ export interface StatusEntity {
 
 export class DatasetError extends Error {}
 
-const RELEASE_PATH_RE = /^releases\/ds_[0-9a-f]{64}\/[a-z]+\.json$/;
+const RELEASE_PATH_RE = /^releases\/ds_[0-9a-f]{64}\/[a-z]+(?:-[a-z]+)*\.json$/;
 const DS_RE = /^ds_[0-9a-f]{64}$/;
 
 export class Dataset {
@@ -171,13 +176,16 @@ export class Dataset {
   readonly weekly: WeeklyEntity[];         // 排序：date 升序
   readonly status: StatusEntity;
 
+  /** Task 07 T07-3：identity catalog（from release 的 model-identities.json） */
+  readonly modelIdentities: ModelIdentityCatalog;
+
   readonly enums: {
     providers: Set<string>;
     changeTypes: Set<string>;
     components: Set<string>;
     billingModes: Set<string>;
     regions: Set<string>;
-    /** Task 07 T07-3：合法 model identity 集合（来源：registry public contract，
+    /** Task 07 T07-3：合法 model identity 集合（来源：该 release 冻结的 registry catalog，
      * 不在 TS 手工枚举）。unknown modelId/familyId → 400 invalid。
      * pointer/non_model 不得作为合法 modelId filter。 */
     validModelIds: Set<string>;
@@ -192,6 +200,7 @@ export class Dataset {
     evidence: EvidenceEntity[],
     weekly: WeeklyEntity[],
     status: StatusEntity,
+    root: string,
   ) {
     this.manifest = manifest;
     this.version = manifest.datasetVersion;
@@ -204,6 +213,7 @@ export class Dataset {
     this.evidenceById = new Map(evidence.map((e) => [e.id, e]));
     this.weekly = weekly;
     this.status = status;
+    this.modelIdentities = Dataset.readIdentityCatalog(root, manifest);
     this.enums = {
       providers: new Set(status.providers.map((p) => p.providerId)),
       changeTypes: new Set(changes.map((c) => c.changeType)),
@@ -211,9 +221,9 @@ export class Dataset {
       billingModes: new Set(prices.map((p) => p.billingMode)),
       regions: new Set(prices.map((p) => p.region)),
       validModelIds: new Set(
-        changes.map((c) => c.modelId ?? '').filter((m: string) => m.length > 0)),
+        this.modelIdentities.models.map((m) => m.modelId)),
       validFamilyIds: new Set(
-        changes.map((c) => c.familyId ?? '').filter((f: string) => f.length > 0)),
+        this.modelIdentities.families.map((f) => f.familyId)),
     };
   }
 
@@ -243,7 +253,7 @@ export class Dataset {
     const weekly = Dataset.readArr<WeeklyEntity[]>(rootAbs, manifest, 'weekly');
     const status = Dataset.readArr<StatusEntity>(rootAbs, manifest, 'status');
     Dataset.spotCheck(changes, prices, evidence, weekly, status);
-    return new Dataset(manifest, changes, items, prices, evidence, weekly, status);
+    return new Dataset(manifest, changes, items, prices, evidence, weekly, status, rootAbs);
   }
 
   /** 直接加载指定版本（cursor 固定版本）。
@@ -294,7 +304,40 @@ export class Dataset {
       data['evidence'] as EvidenceEntity[],
       data['weekly'] as WeeklyEntity[],
       data['status'] as StatusEntity,
+      rootAbs,
     );
+  }
+
+  private static readIdentityCatalog(root: string, manifest: Manifest): ModelIdentityCatalog {
+    let raw: unknown;
+    try {
+      raw = Dataset.readArr<unknown>(root, manifest, 'model-identities');
+    } catch (error) {
+      throw new DatasetError(`identity catalog 不可读: ${(error as Error).message}`);
+    }
+    const fail = (): never => { throw new DatasetError('identity catalog 结构非法'); };
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return fail();
+    const catalog = raw as ModelIdentityCatalog;
+    if (!Array.isArray(catalog.models) || !Array.isArray(catalog.families)) return fail();
+    const validId = (v: unknown): v is string =>
+      typeof v === 'string' && /^[a-z0-9-]+:[a-z0-9.-]+$/.test(v);
+    const validName = (v: unknown): v is string => typeof v === 'string' && v.trim().length > 0;
+    const families = new Map<string, string>();
+    for (const f of catalog.families) {
+      if (!f || !validId(f.familyId) || !validName(f.familyName) || families.has(f.familyId)) return fail();
+      families.set(f.familyId, f.familyName);
+    }
+    const models = new Set<string>();
+    for (const m of catalog.models) {
+      if (!m || !validId(m.modelId) || !validName(m.modelName) || models.has(m.modelId) || families.has(m.modelId)) return fail();
+      if (m.familyId !== undefined || m.familyName !== undefined) {
+        if (!validId(m.familyId) || !validName(m.familyName) || !families.has(m.familyId) ||
+            families.get(m.familyId) !== m.familyName ||
+            m.modelId.split(':')[0] !== m.familyId.split(':')[0]) return fail();
+      }
+      models.add(m.modelId);
+    }
+    return catalog;
   }
 
   private static readArr<T>(rootAbs: string, manifest: Manifest, name: string): T {

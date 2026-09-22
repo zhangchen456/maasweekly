@@ -105,7 +105,8 @@ def compute_dataset_version(collections: dict[str, list[dict] | dict],
     """datasetVersion = ds_<64hex>。
 
     输入 collections：{"changes": [...], "items": [...], "prices": [...],
-    "evidence": [...], "weekly": [...], "status": {...}}——全部为
+    "evidence": [...], "weekly": [...], "status": {...},
+    "modelIdentities": {"models": [...], "families": [...]}}——全部为
     排序完成后的公开实体（不含 datasetVersion/generatedAt 包装字段，
     那些在哈希之后注入文件）。status 是单实体 dict。
     """
