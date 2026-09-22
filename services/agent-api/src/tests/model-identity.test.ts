@@ -10,9 +10,14 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { Dataset, DatasetError, DatasetHolder } from '../dataset.js';
 import { createHandler } from '../http.js';
+import { createMcpHandler } from '../mcp.js';
 import { ReleaseFixture } from './fixture.js';
-import { runListQuery, normalizeQuery, encodeCursor } from '../query.js';
+import { runListQuery, normalizeQuery, encodeCursor, setCursorSecret } from '../query.js';
 import type { ModelIdentityCatalog } from '../dataset.js';
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
+
+setCursorSecret('t07-identity-mcp-secret');
 
 const zeroModel = 'alibaba:zero-model';
 const zeroFamily = 'alibaba:zero-family';
@@ -177,6 +182,20 @@ test('T11d: changes endpoint known-but-zero-record → 200 empty', async () => {
   assert.equal(body.items.length, 0);
 });
 
+test('T11e: changes endpoint modelId 正向过滤生效（顶层 modelId，非 price.modelId）', async () => {
+  // before 的 change（09-01，modelId=alibaba:qwen-coder-plus）在默认窗口外，
+  // 用显式窗口包含它，验证 changes endpoint 顶层 modelId 过滤真实命中。
+  const res = await fetch(`${base}/api/v1/changes?modelId=alibaba:qwen-coder-plus&from=2026-09-01&to=2026-09-02`);
+  assert.equal(res.status, 200);
+  const body = await res.json() as { items: { modelId?: string }[] };
+  assert.equal(body.items.length, 1);
+  assert.equal(body.items[0]!.modelId, 'alibaba:qwen-coder-plus');
+  // 反向：用不匹配的 modelId 查同一窗口，应 200 empty（非零记录 identity）
+  const res2 = await fetch(`${base}/api/v1/changes?modelId=alibaba:qwen-coder-turbo&from=2026-09-01&to=2026-09-02`);
+  assert.equal(res2.status, 200);
+  assert.deepEqual((await res2.json() as { items: unknown[] }).items, []);
+});
+
 test('T12d: changes endpoint known familyId → 200', async () => {
   const res = await fetch(`${base}/api/v1/changes?familyId=${zeroFamily}`);
   assert.equal(res.status, 200);
@@ -281,3 +300,59 @@ for (const corruption of ['missing-file', 'missing-entry', 'bytes', 'hash', 'mal
     } finally { fx.cleanup(); }
   });
 }
+
+// ---------------------------------------------------------------------------
+// T18/T19：REST 与 MCP 在 identity 校验上行为一致（共用 runListQuery）
+// MCP 侧：unknown identity → isError + invalid_*；known-but-empty → 200 empty
+// ---------------------------------------------------------------------------
+test('T18/T19: MCP unknown identity 与 REST 一致 / known-but-empty 一致', async () => {
+  const root = mkdtempSync(path.join(tmpdir(), 't07-mcp-identity-'));
+  const mcpFx = new ReleaseFixture(root);
+  mcpFx.writeRelease('ds_' + 'd'.repeat(64), {
+    modelIdentities: catalog,
+    prices: [
+      { factKey: 'fk1', providerId: 'alibaba', modelKey: 'qwen-coder-plus',
+        modelId: 'alibaba:qwen-coder-plus', modelName: 'Qwen Coder Plus',
+        familyId: 'alibaba:qwen-coder', familyName: 'Qwen Coder', component: 'input' },
+    ],
+  });
+  const mcpHolder = new DatasetHolder(root);
+  assert.equal(mcpHolder.reload(), true, mcpHolder.lastReloadError ?? 'reload failed');
+  const mcpServer = http.createServer(createMcpHandler(mcpHolder, {
+    originAllowlist: ['https://daily.maas.click'],
+    maxBodyBytes: 64 * 1024,
+    rateLimit: { capacity: 100, refillPerMinute: 1000 },
+  }));
+  await new Promise<void>((r) => mcpServer.listen(0, '127.0.0.1', () => r()));
+  const mcpBase = `http://127.0.0.1:${(mcpServer.address() as { port: number }).port}/api/mcp`;
+  const client = new Client({ name: 't07-identity-mcp', version: '1.0' });
+  await client.connect(new StreamableHTTPClientTransport(new URL(mcpBase)));
+  try {
+    // T18：unknown identity → isError + invalid_model_id（与 REST 同 code）
+    const unknown = await client.callTool({ name: 'maas_get_prices', arguments: { modelId: 'alibaba:ghost-model' } }) as unknown as
+      { isError?: boolean; structuredContent?: { error?: { code: string } } };
+    assert.equal(unknown.isError, true);
+    assert.equal(unknown.structuredContent!.error!.code, 'invalid_model_id');
+
+    const unknownFamily = await client.callTool({ name: 'maas_get_prices', arguments: { familyId: 'alibaba:ghost-family' } }) as unknown as
+      { isError?: boolean; structuredContent?: { error?: { code: string } } };
+    assert.equal(unknownFamily.isError, true);
+    assert.equal(unknownFamily.structuredContent!.error!.code, 'invalid_family_id');
+
+    // T19：known-but-empty identity → 200 empty（与 REST 同语义）
+    const empty = await client.callTool({ name: 'maas_get_prices', arguments: { modelId: zeroModel } }) as unknown as
+      { isError?: boolean; structuredContent?: { items?: unknown[] } };
+    assert.equal(empty.isError, undefined);
+    assert.deepEqual(empty.structuredContent!.items, []);
+
+    const emptyFamily = await client.callTool({ name: 'maas_get_changes', arguments: { familyId: zeroFamily } }) as unknown as
+      { isError?: boolean; structuredContent?: { items?: unknown[] } };
+    assert.equal(emptyFamily.isError, undefined);
+    assert.deepEqual(emptyFamily.structuredContent!.items, []);
+  } finally {
+    await client.close().catch(() => {});
+    mcpServer.closeAllConnections?.();
+    await new Promise<void>((r) => mcpServer.close(() => r()));
+    mcpFx.cleanup();
+  }
+});

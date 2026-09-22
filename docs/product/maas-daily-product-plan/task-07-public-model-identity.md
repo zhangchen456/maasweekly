@@ -44,8 +44,13 @@ familyId  = 正式注册的模型家族 ID（family 改名不改既有 modelId�
 - `?modelId=<canonicalProviderId>:<canonicalSlug>`：精确匹配（如
   `alibaba:qwen3-coder-plus`）。
 - `?familyId=<providerId>:<familySlug>`：精确匹配（只匹配正式 family）。
-- 未知 `modelId`/`familyId` → 400 `invalid_model_id`/`invalid_family_id`（不静默）。
-- 合法但无记录 → 200 + empty items。
+- 三层语义（严格区分，无模糊断言）：
+  1. **格式非法**（不符 `^[a-z0-9-]+:[a-z0-9.-]+$`）→ 400 `invalid_model_id`/`invalid_family_id`
+  2. **格式合法但 registry 不存在**（不在该 release catalog）→ 400 `invalid_model_id`/`invalid_family_id`
+  3. **catalog 存在但当前 dataset 零记录** → 200 + empty items（changes/prices 均如此）
+- changes endpoint 读**顶层** `c.modelId`/`c.familyId`（price_change 的 identity
+  经 `_model_identity_fields` 注入顶层，非 `c.price.modelId`）；source_observation
+  顶层 modelId 为 null → 自然过滤，不伪造。
 - 旧 `?model=` 语义保留（=原始 modelKey 字符串精确匹配）。
 
 ## 6. MCP
@@ -115,8 +120,13 @@ python3 pipeline/scripts/audit-model-registry-coverage.py  # unresolved 分层
 python3 -m unittest discover -s tests -p 'test_model_registry.py'         # 30 项
 python3 -m unittest discover -s tests -p 'test_model_identity_audit.py'   # 16 项
 python3 -m unittest discover -s tests -p 'test_model_public_projection.py' # 11 项
-./scripts/run-all-tests.sh                                   # 26/26
+./scripts/run-all-tests.sh                                   # 25/26（leaderboards 数据新鲜度阻塞）
 ```
+
+T01–T20 测试覆盖（详见 task-07-result.md）：malformed/unknown/known-empty
+三层语义（T01–T08）、catalog 进 manifest + hash/bytes（T09/T10）、catalog
+缺失/篡改拒载（T11/T12）、pointer/non_model/internal-grouping 不进入（T13–T15）、
+historical catalog 隔离 + cursor 不污染（T16/T17）、REST/MCP 一致性（T18/T19）。
 
 ## 11. 真实数据验收
 

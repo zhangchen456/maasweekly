@@ -169,9 +169,13 @@ deepseek 清洗后条目）再动公开 schema。
 ### 过程中修出的真实问题（测试逮住）
 
 - `access-pages` 测试断言的 RSS 已上线 + GA 日期（M6/M10 改动后必须同步——否则 site 测试假绿）
-- REST `changes` filter 首次把 `source_observation` 与 `price_change` 用同一 `modelId` 过滤——
-  `pc.price?.modelId` 对 SO 是 undefined → return false（自然过滤）。确认 `source_observation` 天然过滤正确，不伪造 modelId。
-- `fixture` 的 `price` 写盘需透传 optional identity 字段——否则 `query.ts` filter 读 `price.modelId` 时为 undefined。
+- REST `changes` filter 把 `source_observation` 与 `price_change` 用同一 `modelId` 过滤。
+  price_change 的 identity 投影在**顶层** `c.modelId`/`c.familyId`（经
+  `_model_identity_fields` 注入），不在 `c.price.modelId`；`listChanges` 读顶层
+  `c.modelId !== p.modelId` 判定。`source_observation` 顶层 modelId 为 null →
+  return false（自然过滤，不伪造）。T11e 正向断言 changes endpoint 顶层 modelId
+  过滤真实命中（非零记录 identity）。
+- `fixture` 的 change/price 写盘透传 optional identity 字段到顶层，与真实投影一致。
 
 ### 是否修改生产数据：**NO**
 
@@ -230,3 +234,110 @@ registry、REST（含 23 项 identity 测试）、MCP、真实数据 MCP、site 
 榜单后重新跑统一回归，才能确认 T16 和 T07-3 最终 PASS。
 
 用户要求暂停后续验证并提交当前修复；未重新运行完整回归，T16 状态保持未通过。
+
+## T07-3 最终闭环（2026-09-22，本会话）
+
+### 修复：changes endpoint modelId/familyId 过滤读错字段
+
+`listChanges` 原用 `pc.price?.modelId` 过滤，但 exporter 把 price_change 的
+identity 投影在**顶层** `c.modelId`（`_model_identity_fields` 经 `**` 注入），
+`c.price.modelId` 从不存在。后果：changes endpoint 的 modelId/familyId 过滤在
+真实数据上**完全失效**——所有 `?modelId=` 查询 changes 都返回空集（过滤恒为
+false），与 prices endpoint 行为不一致。测试未抓到，因为既有用例只覆盖零记录
+identity（T11d/T12d，空集无论读哪个字段都成立）。
+
+修复：`listChanges` 改读顶层 `c.modelId`/`c.familyId`，与 `ChangeEntity` 接口
+声明和真实投影一致。新增 T11e 正向用例（显式窗口内命中 1 条 price_change），
+锁定顶层过滤真实生效。
+
+### 补齐 T18/T19：REST/MCP identity 行为一致性
+
+MCP 侧此前无 modelId/familyId 测试。新增 T18/T19：用独立 MCP handler +
+catalog fixture 验证 MCP `maas_get_prices`/`maas_get_changes` 对 unknown
+identity 返回 `isError + invalid_model_id/invalid_family_id`，对 known-but-empty
+identity 返回 200 empty——与 REST 同 code 同语义（共用 `runListQuery`/`normalizeQuery`）。
+
+### 删除模糊断言
+
+`mcp.test.ts` 的 JSON-RPC 未知方法用例原有 `assert.ok([400, 200].includes(r2.status))`
+模糊断言；改为只断言 JSON-RPC error code `-32601`（HTTP 状态码由 SDK transport
+决定，非 identity 校验判据）。identity 校验场景无任何 `[200,400].includes` 模糊断言。
+
+### T01–T20 覆盖度
+
+| 任务书 | 测试 | 状态 |
+|---|---|---|
+| T01 malformed modelId→400 | T11a | ✓ |
+| T02 well-formed unknown modelId→400 | T11b | ✓ |
+| T03 known modelId 零记录→200 empty | T11c | ✓ |
+| T04 changes 零记录→200 empty | T11d | ✓ |
+| T04a changes modelId 正向过滤 | T11e（新增） | ✓ |
+| T05 malformed familyId→400 | T12a | ✓ |
+| T06 well-formed unknown familyId→400 | T12b | ✓ |
+| T07 known familyId 零记录→200 empty | T12c | ✓ |
+| T08 changes familyId 零记录→200 empty | T12d | ✓ |
+| T09 catalog 进入 release manifest | test_catalog_exact_public_membership_and_manifest | ✓ |
+| T10 catalog hash/bytes 正确 | 同上（manifest sha256/bytes 校验） | ✓ |
+| T11 catalog 缺失→load fail | T15 missing-file/missing-entry | ✓ |
+| T12 catalog 篡改→load fail | T15 bytes/hash/malformed/shape/dangling | ✓ |
+| T13 pointer 不进入 models | test_catalog_exact_public_membership + test_pointer_not_fixed_model | ✓ |
+| T14 non_model 不进入 models | classification=='model' 过滤（Python catalog 测试） | ✓ |
+| T15 internal grouping 不进入 families | test_only_public_family_entities_projected | ✓ |
+| T16 historical release 用自己 catalog | T13 + test_catalog_only_changes_version | ✓ |
+| T17 current 新增不污染旧 cursor | T14 | ✓ |
+| T18 REST/MCP unknown identity 一致 | T18/T19（新增） | ✓ |
+| T19 REST/MCP known-empty 一致 | T18/T19（新增） | ✓ |
+| T20 run-all-tests 全绿 | 25/26（leaderboards 数据新鲜度阻塞，见下） | ⏳ |
+
+### 本次验证
+
+| 命令 / 检查 | 结果 |
+|---|---|
+| `python3 pipeline/scripts/export-public-data.py --check` | ✓ 7 文件含 catalog，dataThrough 2026-09-20 |
+| `python3 pipeline/scripts/validate-model-registry.py --check` | exit 0 |
+| `python3 pipeline/scripts/audit-model-identities.py` | exit 0；fuzzy 候选 0 |
+| `python3 pipeline/scripts/audit-model-registry-coverage.py` | exit 0；resolved 259 / family 15 / unresolved 288 |
+| `test_model_identity_audit.py` | 16/16 OK |
+| `test_model_public_projection.py` | 11/11 OK |
+| `test_model_registry.py` | 30/30 OK |
+| `test_public_export.py` | 16/16 OK |
+| `agent-api: REST`（含 model-identity 25 项） | 51/51 pass |
+| `agent-api: MCP` | 13/13 pass |
+| `agent-api: MCP 真实数据` | pass |
+| `./scripts/run-all-tests.sh --quick` | 25/26；唯一失败 `site: leaderboards`（openrouter 快照 09-18 过 4 天阈值） |
+
+### 剩余阻塞（均需网络，非代码问题）
+
+1. **main 同步**：`git fetch origin` 在本环境持续超时（github.com 不可达，
+   `Operation too slow. Less than 1000 bytes/sec`）。main 远程领先 3 个数据
+   提交（9-20/9-21 每日信源抓取 + 9-21 周报）。本地 origin/main 缓存停留在
+   Task 06 封板提交 `9b81a07f5`。需网络恢复后 `git merge origin/main` 并重新
+   跑 exporter 生成新 release。
+2. **openrouter 快照**：`site/src/data/leaderboards/openrouter.json` 的
+   snapshot_date 为 2026-09-18，到 09-22 过 4 天阈值。该快照随 main 的每日
+   信源抓取提交更新，main 同步后自动解决。未跳过/伪造新鲜度断言。
+
+### 真实数据统计（当前 release，dataThrough 2026-09-20）
+
+- unique raw model strings：322
+- resolver 分布：resolved 259 / family 15 / unresolved 288（unresolved 分层：
+  long_tail 168 / snapshot 70 / safe_manual_add 39 / needs_source_check 7 / pointer 4）
+- prices：total 1387 / with modelId 859（62%）/ without 528
+- price_change：total 4156 / 顶层 with modelId 2814（68%）/ without 1342
+- source_observation：total 244 / modelId 泄漏 0
+- catalog：models 107 / families 24
+- false positive = 0
+
+### 是否修改生产数据：**NO**
+
+- 修改 `query.ts`（changes endpoint 顶层 modelId 过滤修复）、`model-identity.test.ts`
+  （T11e/T18/T19 新增）、`mcp.test.ts`（模糊断言删除）、两份文档
+- 未做生产发布；未 merge main；未操作服务器
+
+### 是否满足 T07-3 Final PASS
+
+代码与测试层面满足全部 16 条 Final PASS 判据的第 1–15、17 条。第 13 条（main
+最新数据已同步）与第 14 条（最新 public projection 已重建）受网络阻塞，待
+`git fetch` 恢复后执行 `git merge origin/main` + 重新 `export-public-data.py`
+即可闭合。第 16 条（未生产发布）满足。**建议网络恢复后完成 main 同步与重建，
+即可从 Conditional PASS → PASS，随后进入 T07-4。**
