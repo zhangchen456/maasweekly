@@ -138,6 +138,18 @@
           "503": { "$ref": "#/components/responses/Problem" }
         }
       }
+    },
+    "/api/v1/models": {
+      "get": {
+        "summary": "模型目录",
+        "description": "返回当前 release 冻结的模型身份目录（model-identities.json 经 manifest bytes/sha256 校验）。models 只含 classification=model；families 只含 classification=family。pointer/non_model/ambiguous/unresolved 不进入。不从 prices/changes/ledger 反推；不做 fuzzy/alias/LLM 推断。catalog 缺失/损坏 → fail closed。",
+        "responses": {
+          "200": { "description": "模型目录", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ModelsEnvelope" } } } },
+          "304": { "description": "Not Modified" },
+          "429": { "$ref": "#/components/responses/Problem" },
+          "503": { "$ref": "#/components/responses/Problem" }
+        }
+      }
     }
   },
   "components": {
@@ -205,6 +217,37 @@
           "datasetVersion": { "type": ["string", "null"] },
           "status": { "type": "object" }
         }
+      },
+      "ModelIdentity": {
+        "type": "object",
+        "properties": {
+          "modelId": { "type": "string", "pattern": "^[a-z0-9-]+:[a-z0-9.-]+$" },
+          "modelName": { "type": "string" },
+          "familyId": { "type": "string", "pattern": "^[a-z0-9-]+:[a-z0-9.-]+$" },
+          "familyName": { "type": "string" }
+        },
+        "required": ["modelId", "modelName"]
+      },
+      "FamilyIdentity": {
+        "type": "object",
+        "properties": {
+          "familyId": { "type": "string", "pattern": "^[a-z0-9-]+:[a-z0-9.-]+$" },
+          "familyName": { "type": "string" }
+        },
+        "required": ["familyId", "familyName"]
+      },
+      "ModelsEnvelope": {
+        "type": "object",
+        "properties": {
+          "schemaVersion": { "const": "1.0" },
+          "datasetVersion": { "type": ["string", "null"], "pattern": "^ds_[0-9a-f]{64}$" },
+          "dataThrough": { "type": ["string", "null"] },
+          "query": { "type": "object" },
+          "coverage": { "type": "object" },
+          "models": { "type": "array", "items": { "$ref": "#/components/schemas/ModelIdentity" } },
+          "families": { "type": "array", "items": { "$ref": "#/components/schemas/FamilyIdentity" } }
+        },
+        "required": ["schemaVersion", "datasetVersion", "models", "families"]
       },
       "Problem": {
         "type": "object",

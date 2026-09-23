@@ -44,6 +44,8 @@ export const ROUTES: RouteMeta[] = [
     statusCodes: [200, 304, 404, 429, 503] },
   { method: 'GET', path: '/api/v1/status', params: [],
     statusCodes: [200, 304, 429, 503] },
+  { method: 'GET', path: '/api/v1/models', params: [],
+    statusCodes: [200, 304, 429, 503] },
 ];
 
 // ---------------------------------------------------------------------------
@@ -233,7 +235,7 @@ export function createHandler(holder: DatasetHolder, config: ServerConfig) {
       const rest = seg.slice(2);
       try {
         if (rest.length === 0) {
-          notFound(res, requestId, '根路径无内容；可用端点: /api/v1/changes /prices /items/{id} /evidence/{id} /weekly /weekly/{id} /status');
+          notFound(res, requestId, '根路径无内容；可用端点: /api/v1/changes /prices /items/{id} /evidence/{id} /weekly /weekly/{id} /models /status');
           return;
         }
         if (!ds && rest[0] !== 'status') {
@@ -296,6 +298,17 @@ export function createHandler(holder: DatasetHolder, config: ServerConfig) {
                             } },
                 };
             return sendJson(req, res, requestId, 200, payload);
+          }
+          case 'models': {
+            // T07-4B.1：模型目录（直接来自 release-frozen model-identities.json，
+            // 经 manifest bytes/sha256 校验——dataset.ts readIdentityCatalog。
+            // 不从 prices/changes/ledger 反推；不做 fuzzy/alias/LLM 推断）
+            const dsModels = ds!;
+            return sendJson(req, res, requestId, 200, {
+              ...envelope(dsModels, {}, dsModels.coverage),
+              models: dsModels.modelIdentities.models,
+              families: dsModels.modelIdentities.families,
+            });
           }
           default:
             notFound(res, requestId, `未知端点: /${rest.join('/')}`);
