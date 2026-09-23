@@ -67,6 +67,7 @@ const providerLabels: Record<string, string> = {
       const catalogModels=[...catalog.models].sort((a,b)=>(a.modelName||'').localeCompare(b.modelName||''));
       const catalogFamilies=[...catalog.families].sort((a,b)=>(a.familyName||'').localeCompare(b.familyName||''));
       let modelIdFilter=null,familyIdFilter=null,filterError=null,query='',typeFilter='',cursor=null,nextCursor=null,loading=false;
+      const cursorStack=[]; // 翻页历史：prev pop 回到上一页的 cursor（null 表示第一页）
 
       function parseUrlFilter(){
         const u=new URL(location.href);
@@ -98,15 +99,23 @@ const providerLabels: Record<string, string> = {
         mf.value=modelIdFilter||'';ff.value=familyIdFilter||'';
       }
 
+      // 翻页时清空 cursor stack（filter 改变 → 重新从第一页开始）
+      function resetCursorStack(){cursor=null;cursorStack.length=0}
+
       async function fetchChanges(){
         if(filterError){$('changes-list').replaceChildren();$('empty-state').hidden=true;$('page-label').textContent='';$('prev').disabled=true;$('next').disabled=true;return}
         $('loading').hidden=false;$('empty-state').hidden=true;
-        const params=new URLSearchParams();params.set('limit','20');
-        if(modelIdFilter)params.set('modelId',modelIdFilter);
-        if(familyIdFilter)params.set('familyId',familyIdFilter);
-        if(typeFilter)params.set('type',typeFilter);
-        if(query)params.set('q',query);
-        if(cursor)params.set('cursor',cursor);
+        // cursor 合同：cursor 是唯一参数（后端 cursor_conflict 门禁）。
+        // 第一页带 limit/filters；翻页只带 cursor（cursor 内已绑定查询参数）。
+        const params=new URLSearchParams();
+        if(cursor){params.set('cursor',cursor)}
+        else{
+          params.set('limit','20');
+          if(modelIdFilter)params.set('modelId',modelIdFilter);
+          if(familyIdFilter)params.set('familyId',familyIdFilter);
+          if(typeFilter)params.set('type',typeFilter);
+          if(query)params.set('q',query);
+        }
         try{
           const res=await fetch(apiBase+'/changes?'+params.toString());
           if(res.status===400){
@@ -145,13 +154,13 @@ const providerLabels: Record<string, string> = {
             const mtag=el('button','model-tag',c.modelName||c.modelId);
             mtag.setAttribute('aria-label','筛选模型 '+(c.modelName||c.modelId));
             mtag.setAttribute('type','button');
-            mtag.onclick=()=>{modelIdFilter=c.modelId;familyIdFilter=null;filterError=null;cursor=null;syncUrlState();initSelectors();renderAll()};
+            mtag.onclick=()=>{modelIdFilter=c.modelId;familyIdFilter=null;filterError=null;resetCursorStack();syncUrlState();initSelectors();renderAll()};
             tagRow.append(mtag);
             if(c.familyId&&c.familyName){
               const ftag=el('button','family-tag',c.familyName);
               ftag.setAttribute('aria-label','筛选系列 '+c.familyName);
               ftag.setAttribute('type','button');
-              ftag.onclick=()=>{familyIdFilter=c.familyId;modelIdFilter=null;filterError=null;cursor=null;syncUrlState();initSelectors();renderAll()};
+              ftag.onclick=()=>{familyIdFilter=c.familyId;modelIdFilter=null;filterError=null;resetCursorStack();syncUrlState();initSelectors();renderAll()};
               tagRow.append(ftag);
             }
             card.append(tagRow);
@@ -160,7 +169,7 @@ const providerLabels: Record<string, string> = {
           list.append(card);
         }
         $('page-label').textContent=items.length?`${cursor?'续':1}–${items.length}${nextCursor?'+':' / '+items.length}`:'0';
-        $('prev').disabled=!cursor;
+        $('prev').disabled=cursorStack.length===0;
         $('next').disabled=!nextCursor;
       }
 
@@ -172,8 +181,8 @@ const providerLabels: Record<string, string> = {
           const x=el('button','','×');x.setAttribute('aria-label','清除筛选');
           x.onclick=clearFn;c.append(x);fs.append(c);fs.hidden=false;
         }
-        if(modelIdFilter)chip('模型：',catalogModels.find(m=>m.modelId===modelIdFilter)?.modelName||modelIdFilter,()=>{modelIdFilter=null;filterError=null;cursor=null;syncUrlState();initSelectors();renderAll()});
-        else if(familyIdFilter)chip('模型系列：',catalogFamilies.find(f=>f.familyId===familyIdFilter)?.familyName||familyIdFilter,()=>{familyIdFilter=null;filterError=null;cursor=null;syncUrlState();initSelectors();renderAll()});
+        if(modelIdFilter)chip('模型：',catalogModels.find(m=>m.modelId===modelIdFilter)?.modelName||modelIdFilter,()=>{modelIdFilter=null;filterError=null;resetCursorStack();syncUrlState();initSelectors();renderAll()});
+        else if(familyIdFilter)chip('模型系列：',catalogFamilies.find(f=>f.familyId===familyIdFilter)?.familyName||familyIdFilter,()=>{familyIdFilter=null;filterError=null;resetCursorStack();syncUrlState();initSelectors();renderAll()});
       }
 
       function renderFilterError(){
@@ -182,7 +191,7 @@ const providerLabels: Record<string, string> = {
         fe.hidden=false;fe.replaceChildren();
         const p=el('p','','未找到模型：'+filterError.value+'。该 ID 不在当前模型目录中。');
         const btn=el('button','','清除筛选');btn.setAttribute('type','button');
-        btn.onclick=()=>{filterError=null;cursor=null;syncUrlState();initSelectors();renderAll()};
+        btn.onclick=()=>{filterError=null;resetCursorStack();syncUrlState();initSelectors();renderAll()};
         const row=el('div','row');row.append(p,btn);fe.append(row);
       }
 
@@ -190,12 +199,12 @@ const providerLabels: Record<string, string> = {
 
       // 事件绑定
       let qTimer;
-      $('q').oninput=e=>{query=e.target.value.trim();cursor=null;clearTimeout(qTimer);qTimer=setTimeout(()=>{syncUrlState();renderAll()},300)};
-      $('model-filter').onchange=e=>{modelIdFilter=e.target.value||null;familyIdFilter=null;filterError=null;cursor=null;syncUrlState();initSelectors();renderAll()};
-      $('family-filter').onchange=e=>{familyIdFilter=e.target.value||null;modelIdFilter=null;filterError=null;cursor=null;syncUrlState();initSelectors();renderAll()};
-      $('type-filter').onchange=e=>{typeFilter=e.target.value;cursor=null;syncUrlState();renderAll()};
-      $('prev').onclick=()=>{/* cursor 分页暂用客户端累积——简化：第一页无 prev */};
-      $('next').onclick=()=>{cursor=nextCursor;fetchChanges()};
+      $('q').oninput=e=>{query=e.target.value.trim();resetCursorStack();clearTimeout(qTimer);qTimer=setTimeout(()=>{syncUrlState();renderAll()},300)};
+      $('model-filter').onchange=e=>{modelIdFilter=e.target.value||null;familyIdFilter=null;filterError=null;resetCursorStack();syncUrlState();initSelectors();renderAll()};
+      $('family-filter').onchange=e=>{familyIdFilter=e.target.value||null;modelIdFilter=null;filterError=null;resetCursorStack();syncUrlState();initSelectors();renderAll()};
+      $('type-filter').onchange=e=>{typeFilter=e.target.value;resetCursorStack();syncUrlState();renderAll()};
+      $('prev').onclick=()=>{if(cursorStack.length===0)return;cursor=cursorStack.pop();fetchChanges()};
+      $('next').onclick=()=>{if(!nextCursor)return;cursorStack.push(cursor);cursor=nextCursor;fetchChanges()};
       window.addEventListener('popstate',()=>{parseUrlFilter();initSelectors();renderAll()});
 
       // 初始化
