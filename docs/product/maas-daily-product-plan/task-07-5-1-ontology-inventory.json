@@ -1,0 +1,4454 @@
+{
+  "meta": {
+    "script": "pipeline/scripts/ontology-inventory.py",
+    "generatedFrom": "仓库真实数据（registry + public release + ledger + source config）",
+    "principle": "candidate ≠ verified；false positive = 0；禁止 fuzzy/embedding/LLM",
+    "datasetVersion": "ds_3911a1c6cde3f63075a0412e82f46e58057eb3102e1b17213419642f098b9a9a",
+    "dataThrough": "2026-09-23"
+  },
+  "stats": {
+    "publicModels": 107,
+    "developer": {
+      "candidate": 8,
+      "unresolved": 0
+    },
+    "upstream": {
+      "candidate": 107,
+      "unresolved": 0
+    },
+    "platformCardinality": {
+      "candidate-1": 106,
+      "unresolved": 1
+    },
+    "modelIdToAvailabilityCardinality": {
+      "1": 106,
+      "0": 1
+    },
+    "observedModelKeyCardinality": {
+      "single": 81,
+      "multiple": 25,
+      "zero": 1
+    },
+    "ontologyStatus": {
+      "single-platform-candidate": 106,
+      "no-data": 1
+    }
+  },
+  "googleStats": {
+    "total": 14,
+    "geminiSourceOnly": 14,
+    "vertexSourceOnly": 0,
+    "bothSources": 0,
+    "noSourceFootprint": 0,
+    "multiPlatformCandidates": []
+  },
+  "pointerInventory": [
+    {
+      "pointerModelId": "alibaba:qwen-long-latest",
+      "canonicalName": "Qwen Long（latest 指针）",
+      "familyId": "alibaba:qwen-long",
+      "aliases": [
+        "qwen-long-latest"
+      ],
+      "notes": "同上"
+    },
+    {
+      "pointerModelId": "alibaba:qwen-omni-turbo-realtime-latest",
+      "canonicalName": "Qwen Omni Turbo Realtime（latest 指针）",
+      "familyId": "alibaba:qwen-omni",
+      "aliases": [
+        "qwen-omni-turbo-realtime-latest"
+      ],
+      "notes": "同上"
+    },
+    {
+      "pointerModelId": "alibaba:qwen-plus-latest",
+      "canonicalName": "Qwen Plus（latest 指针）",
+      "familyId": "alibaba:qwen-plus",
+      "aliases": [
+        "qwen-plus-latest"
+      ],
+      "notes": "滚动指针：指向 qwen-plus 家族当前最新快照，随时间变动——绝不解析为固定模型"
+    },
+    {
+      "pointerModelId": "alibaba:qwen-tts-latest",
+      "canonicalName": "Qwen TTS（latest 指针）",
+      "familyId": "alibaba:qwen-tts",
+      "aliases": [
+        "qwen-tts-latest"
+      ],
+      "notes": "同上"
+    },
+    {
+      "pointerModelId": "alibaba:qwen-vl-ocr-latest",
+      "canonicalName": "Qwen VL OCR（latest 指针）",
+      "familyId": "alibaba:qwen-vl-ocr",
+      "aliases": [
+        "qwen-vl-ocr-latest"
+      ],
+      "notes": "同上"
+    },
+    {
+      "pointerModelId": "alibaba:qwen3-coder-next",
+      "canonicalName": "Qwen3 Coder Next（滚动指针型）",
+      "familyId": "alibaba:qwen3-coder",
+      "aliases": [
+        "qwen3-coder-next"
+      ],
+      "notes": "-next 是滚动指针（随时间指向不同快照）——是 model 还是 alias 机制取决于厂商语义；与 latest 同类风险，标记 ambiguous"
+    },
+    {
+      "pointerModelId": "alibaba:qwen3-max-preview",
+      "canonicalName": "Qwen3 Max Preview",
+      "familyId": "alibaba:qwen3-max",
+      "aliases": [
+        "qwen3-max-preview"
+      ],
+      "notes": "preview 指针随发布周期变动指向——独立模型 or 阶段名待厂商文档判定"
+    }
+  ],
+  "previewInventory": [
+    {
+      "modelId": "google:gemini-2.5-computer-use-preview",
+      "candidateUpstreamModelId": "google:gemini-2.5-computer-use-preview",
+      "ontologyStatus": "single-platform-candidate",
+      "evidenceStatus": "unresolved"
+    },
+    {
+      "modelId": "google:gemini-3-flash-preview",
+      "candidateUpstreamModelId": "google:gemini-3-flash-preview",
+      "ontologyStatus": "single-platform-candidate",
+      "evidenceStatus": "unresolved"
+    },
+    {
+      "modelId": "google:gemini-omni-flash-preview",
+      "candidateUpstreamModelId": "google:gemini-omni-flash-preview",
+      "ontologyStatus": "single-platform-candidate",
+      "evidenceStatus": "unresolved"
+    }
+  ],
+  "regionStats": {
+    "modelsWithMultipleRegions": 33,
+    "sample": {
+      "alibaba:qwen-flash": [
+        "cn",
+        "global",
+        "us"
+      ],
+      "alibaba:qwen-max": [
+        "cn",
+        "global"
+      ],
+      "alibaba:qwen-mt-flash": [
+        "cn",
+        "global"
+      ],
+      "alibaba:qwen-mt-plus": [
+        "cn",
+        "global"
+      ],
+      "alibaba:qwen-plus": [
+        "cn",
+        "global",
+        "us"
+      ]
+    },
+    "conclusion": "region 出现在 price fact 中，但同一 modelId 有多 region——region 更可能是 price fact condition 而非 Availability 属性（待 T07-5.1 Gold Set 验证）"
+  },
+  "snapshotStats": {
+    "totalSnapshotAliases": 43,
+    "modelsWithSnapshots": 23,
+    "sample": [
+      {
+        "modelId": "alibaba:qwen-flash",
+        "snapshotValue": "qwen-flash-2025-07-28",
+        "source": "pricing"
+      },
+      {
+        "modelId": "alibaba:qwen-plus",
+        "snapshotValue": "qwen-plus-2024-12-20",
+        "source": "pricing"
+      },
+      {
+        "modelId": "alibaba:qwen-plus",
+        "snapshotValue": "qwen-plus-2025-01-12",
+        "source": "pricing"
+      },
+      {
+        "modelId": "alibaba:qwen-plus",
+        "snapshotValue": "qwen-plus-2025-01-25",
+        "source": "pricing"
+      },
+      {
+        "modelId": "alibaba:qwen-plus",
+        "snapshotValue": "qwen-plus-2025-04-28",
+        "source": "pricing"
+      }
+    ]
+  },
+  "inventory": [
+    {
+      "modelId": "alibaba:qwen-coder-plus",
+      "modelName": "Qwen Coder Plus",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen-coder",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen-coder-plus",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-coder-plus"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 2,
+      "changeRecordCount": 4
+    },
+    {
+      "modelId": "alibaba:qwen-coder-turbo",
+      "modelName": "Qwen Coder Turbo",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen-coder",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen-coder-turbo",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-coder-turbo"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 2,
+      "changeRecordCount": 4
+    },
+    {
+      "modelId": "alibaba:qwen-doc-turbo",
+      "modelName": "Qwen Doc Turbo",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen-doc",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen-doc-turbo",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-doc-turbo"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 2,
+      "changeRecordCount": 4
+    },
+    {
+      "modelId": "alibaba:qwen-flash",
+      "modelName": "Qwen Flash",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen-flash",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen-flash",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-flash",
+        "qwen-flash-2025-07-28"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 1
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 28,
+      "changeRecordCount": 84
+    },
+    {
+      "modelId": "alibaba:qwen-math-plus",
+      "modelName": "Qwen Math Plus",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen-math",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen-math-plus",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-math-plus"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 2,
+      "changeRecordCount": 4
+    },
+    {
+      "modelId": "alibaba:qwen-math-turbo",
+      "modelName": "Qwen Math Turbo",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen-math",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen-math-turbo",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-math-turbo"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 2,
+      "changeRecordCount": 4
+    },
+    {
+      "modelId": "alibaba:qwen-max",
+      "modelName": "Qwen Max",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen-max",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen-max",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-max"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 4,
+      "changeRecordCount": 8
+    },
+    {
+      "modelId": "alibaba:qwen-mt-flash",
+      "modelName": "Qwen MT Flash",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen-mt",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen-mt-flash",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-mt-flash"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 4,
+      "changeRecordCount": 14
+    },
+    {
+      "modelId": "alibaba:qwen-mt-plus",
+      "modelName": "Qwen MT Plus",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen-mt",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen-mt-plus",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-mt-plus"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 4,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "alibaba:qwen-plus",
+      "modelName": "Qwen Plus",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen-plus",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen-plus",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-plus",
+        "qwen-plus-2024-12-20",
+        "qwen-plus-2025-01-12",
+        "qwen-plus-2025-01-25",
+        "qwen-plus-2025-04-28",
+        "qwen-plus-2025-07-14",
+        "qwen-plus-2025-07-28",
+        "qwen-plus-2025-09-11",
+        "qwen-plus-2025-12-01"
+      ],
+      "observedModelKeyCount": 9,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 8,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 9,
+        "public": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 64,
+      "changeRecordCount": 313
+    },
+    {
+      "modelId": "alibaba:qwen-plus-character",
+      "modelName": "Qwen Plus Character",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen-plus-character",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen-plus-character",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-plus-character"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 4,
+      "changeRecordCount": 20
+    },
+    {
+      "modelId": "alibaba:qwen-turbo",
+      "modelName": "Qwen Turbo",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen-turbo",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen-turbo",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-turbo"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 4,
+      "changeRecordCount": 16
+    },
+    {
+      "modelId": "alibaba:qwen3-14b",
+      "modelName": "Qwen3 14B",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-14b",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-14b"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 4,
+      "changeRecordCount": 22
+    },
+    {
+      "modelId": "alibaba:qwen3-32b",
+      "modelName": "Qwen3 32B",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-32b",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-32b"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 4,
+      "changeRecordCount": 13
+    },
+    {
+      "modelId": "alibaba:qwen3-8b",
+      "modelName": "Qwen3 8B",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-8b",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-8b"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 4,
+      "changeRecordCount": 23
+    },
+    {
+      "modelId": "alibaba:qwen3-coder-30b-a3b-instruct",
+      "modelName": "Qwen3 Coder 30B A3B Instruct",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-coder",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-coder-30b-a3b-instruct",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-coder-30b-a3b-instruct"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 8,
+      "changeRecordCount": 44
+    },
+    {
+      "modelId": "alibaba:qwen3-coder-480b-a35b-instruct",
+      "modelName": "Qwen3 Coder 480B A35B Instruct",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-coder",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-coder-480b-a35b-instruct",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-coder-480b-a35b-instruct"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 8,
+      "changeRecordCount": 42
+    },
+    {
+      "modelId": "alibaba:qwen3-coder-flash",
+      "modelName": "Qwen3 Coder Flash",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-coder",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-coder-flash",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-coder-flash",
+        "qwen3-coder-flash-2025-07-28"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 1
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 16,
+      "changeRecordCount": 90
+    },
+    {
+      "modelId": "alibaba:qwen3-coder-next-80b-a3b-instruct",
+      "modelName": "Qwen3 Coder Next 80B A3B Instruct",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-coder",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-coder-next-80b-a3b-instruct",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-next-80b-a3b-instruct"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 4,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "alibaba:qwen3-coder-plus",
+      "modelName": "Qwen3 Coder Plus",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-coder",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-coder-plus",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-coder-plus",
+        "qwen3-coder-plus-2025-07-22",
+        "qwen3-coder-plus-2025-09-23"
+      ],
+      "observedModelKeyCount": 3,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 2,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 3,
+        "public": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 24,
+      "changeRecordCount": 144
+    },
+    {
+      "modelId": "alibaba:qwen3-deep-research",
+      "modelName": "Qwen3 Deep Research",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-deep-research",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-deep-research",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen-deep-research",
+        "qwen-deep-research-2025-12-15"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 1
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 4,
+      "changeRecordCount": 8
+    },
+    {
+      "modelId": "alibaba:qwen3-livetranslate-flash",
+      "modelName": "Qwen3 LiveTranslate Flash",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-livetranslate",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-livetranslate-flash",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-livetranslate-flash",
+        "qwen3-livetranslate-flash-2025-12-01"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 1
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 8,
+      "changeRecordCount": 49
+    },
+    {
+      "modelId": "alibaba:qwen3-livetranslate-flash-realtime",
+      "modelName": "Qwen3 LiveTranslate Flash Realtime",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-livetranslate",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-livetranslate-flash-realtime",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-livetranslate-flash-realtime",
+        "qwen3-livetranslate-flash-realtime-2025-09-22"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 1
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 8,
+      "changeRecordCount": 52
+    },
+    {
+      "modelId": "alibaba:qwen3-max",
+      "modelName": "Qwen3 Max",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-max",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-max",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-max",
+        "qwen3-max-2025-09-23",
+        "qwen3-max-2026-01-23"
+      ],
+      "observedModelKeyCount": 3,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 2
+      },
+      "registryAliasSources": {
+        "pricing": 3
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 24,
+      "changeRecordCount": 139
+    },
+    {
+      "modelId": "alibaba:qwen3-omni-flash",
+      "modelName": "Qwen3 Omni Flash",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-omni",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-omni-flash",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-omni-flash",
+        "qwen3-omni-flash-2025-09-15",
+        "qwen3-omni-flash-2025-12-01"
+      ],
+      "observedModelKeyCount": 3,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 2
+      },
+      "registryAliasSources": {
+        "pricing": 3
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 12,
+      "changeRecordCount": 94
+    },
+    {
+      "modelId": "alibaba:qwen3-omni-flash-realtime",
+      "modelName": "Qwen3 Omni Flash Realtime",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-omni",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-omni-flash-realtime",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-omni-flash-realtime",
+        "qwen3-omni-flash-realtime-2025-09-15",
+        "qwen3-omni-flash-realtime-2025-12-01"
+      ],
+      "observedModelKeyCount": 3,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 2
+      },
+      "registryAliasSources": {
+        "pricing": 3
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 12,
+      "changeRecordCount": 93
+    },
+    {
+      "modelId": "alibaba:qwen3-omni-plus",
+      "modelName": "Qwen3.5 Omni Plus",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3.5-omni",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-omni-plus",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3.5-omni-plus",
+        "qwen3.5-omni-plus-2026-03-15",
+        "qwen3.5-omni-plus-realtime"
+      ],
+      "observedModelKeyCount": 3,
+      "registryAliasTypes": {
+        "raw": 2,
+        "snapshot": 1
+      },
+      "registryAliasSources": {
+        "pricing": 3
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 12,
+      "changeRecordCount": 79
+    },
+    {
+      "modelId": "alibaba:qwen3-tts-flash",
+      "modelName": "Qwen3 TTS Flash",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-tts",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-tts-flash",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-tts-flash",
+        "qwen3-tts-flash-2025-09-18",
+        "qwen3-tts-flash-2025-11-27",
+        "qwen3-tts-flash-realtime-2025-09-18",
+        "qwen3-tts-flash-realtime-2025-11-27"
+      ],
+      "observedModelKeyCount": 5,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 4
+      },
+      "registryAliasSources": {
+        "pricing": 5
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 10,
+      "changeRecordCount": 20
+    },
+    {
+      "modelId": "alibaba:qwen3-vl-embedding",
+      "modelName": "Qwen3 VL Embedding",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-vl",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-vl-embedding",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-vl-embedding"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 1,
+      "changeRecordCount": 7
+    },
+    {
+      "modelId": "alibaba:qwen3-vl-flash",
+      "modelName": "Qwen3 VL Flash",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-vl",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-vl-flash",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-vl-flash",
+        "qwen3-vl-flash-2025-10-15",
+        "qwen3-vl-flash-2026-01-22"
+      ],
+      "observedModelKeyCount": 3,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 2
+      },
+      "registryAliasSources": {
+        "pricing": 3
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 36,
+      "changeRecordCount": 159
+    },
+    {
+      "modelId": "alibaba:qwen3-vl-plus",
+      "modelName": "Qwen3 VL Plus",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3-vl",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3-vl-plus",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3-vl-plus",
+        "qwen3-vl-plus-2025-09-23",
+        "qwen3-vl-plus-2025-12-19"
+      ],
+      "observedModelKeyCount": 3,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 2
+      },
+      "registryAliasSources": {
+        "pricing": 3
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 24,
+      "changeRecordCount": 131
+    },
+    {
+      "modelId": "alibaba:qwen3.5-flash",
+      "modelName": "Qwen3.5 Flash",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3.5",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3.5-flash",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3.5-flash",
+        "qwen3.5-flash-2026-02-23"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 1
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 20,
+      "changeRecordCount": 98
+    },
+    {
+      "modelId": "alibaba:qwen3.5-livetranslate-flash-realtime",
+      "modelName": "Qwen3.5 LiveTranslate Flash Realtime",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3.5-livetranslate",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3.5-livetranslate-flash-realtime",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3.5-livetranslate-flash-realtime",
+        "qwen3.5-livetranslate-flash-realtime-2026-05-19"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 1
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 8,
+      "changeRecordCount": 51
+    },
+    {
+      "modelId": "alibaba:qwen3.5-omni-flash",
+      "modelName": "Qwen3.5 Omni Flash",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3.5-omni",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3.5-omni-flash",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3.5-omni-flash",
+        "qwen3.5-omni-flash-2026-03-15",
+        "qwen3.5-omni-flash-realtime",
+        "qwen3.5-omni-flash-realtime-2026-03-15"
+      ],
+      "observedModelKeyCount": 4,
+      "registryAliasTypes": {
+        "raw": 2,
+        "snapshot": 2
+      },
+      "registryAliasSources": {
+        "pricing": 4
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 16,
+      "changeRecordCount": 106
+    },
+    {
+      "modelId": "alibaba:qwen3.5-plus",
+      "modelName": "Qwen3.5 Plus",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3.5",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3.5-plus",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3.5-plus",
+        "qwen3.5-plus-2026-02-15",
+        "qwen3.5-plus-2026-04-20"
+      ],
+      "observedModelKeyCount": 3,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 2
+      },
+      "registryAliasSources": {
+        "pricing": 3
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 28,
+      "changeRecordCount": 107
+    },
+    {
+      "modelId": "alibaba:qwen3.6-flash",
+      "modelName": "Qwen3.6 Flash",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3.6",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3.6-flash",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3.6-flash",
+        "qwen3.6-flash-2026-04-16"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 1
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 20,
+      "changeRecordCount": 49
+    },
+    {
+      "modelId": "alibaba:qwen3.6-plus",
+      "modelName": "Qwen3.6 Plus",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3.6",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3.6-plus",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3.6-plus",
+        "qwen3.6-plus-2026-04-02"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 1
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 16,
+      "changeRecordCount": 53
+    },
+    {
+      "modelId": "alibaba:qwen3.7-flash",
+      "modelName": "Qwen3.7 Flash",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3.7",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3.7-flash",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3.7-flash",
+        "qwen3.7-flash-2026-07-15"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 1
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 16,
+      "changeRecordCount": 96
+    },
+    {
+      "modelId": "alibaba:qwen3.7-max",
+      "modelName": "Qwen3.7 Max",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3.7",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3.7-max",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3.7-max",
+        "qwen3.7-max-2026-05-17",
+        "qwen3.7-max-2026-05-20",
+        "qwen3.7-max-2026-06-08"
+      ],
+      "observedModelKeyCount": 4,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 3
+      },
+      "registryAliasSources": {
+        "pricing": 4
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 16,
+      "changeRecordCount": 41
+    },
+    {
+      "modelId": "alibaba:qwen3.7-plus",
+      "modelName": "Qwen3.7 Plus",
+      "legacyProviderId": "alibaba",
+      "familyId": "alibaba:qwen3.7",
+      "classification": "model",
+      "candidateDeveloperId": "alibaba-qwen",
+      "candidateUpstreamModelId": "alibaba-qwen:qwen3.7-plus",
+      "candidatePlatformIds": [
+        "alibaba-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "qwen3.7-plus",
+        "qwen3.7-plus-2026-05-26"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 1,
+        "snapshot": 1
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "alibaba-pricing"
+      ],
+      "changeSourceIds": [
+        "alibaba-pricing"
+      ],
+      "priceSourceIds": [
+        "alibaba-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://help.aliyun.com/zh/model-studio/model-pricing"
+      ],
+      "priceRecordCount": 20,
+      "changeRecordCount": 62
+    },
+    {
+      "modelId": "anthropic:claude-fable-5",
+      "modelName": "Claude Fable 5",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-fable",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-fable-5",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-fable-5"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-fable-5.1",
+      "modelName": "Claude Fable 5.1",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-fable",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-fable-5.1",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-fable-5.1"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-haiku-3.5",
+      "modelName": "Claude Haiku 3.5",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-haiku",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-haiku-3.5",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-haiku-3.5"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-haiku-4.5",
+      "modelName": "Claude Haiku 4.5",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-haiku",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-haiku-4.5",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-haiku-4.5"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-mythos-5",
+      "modelName": "Claude Mythos 5",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-mythos",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-mythos-5",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-mythos-5"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-mythos-5.1",
+      "modelName": "Claude Mythos 5.1",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-mythos",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-mythos-5.1",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-mythos-5.1"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-opus-4",
+      "modelName": "Claude Opus 4",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-opus",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-opus-4",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-opus-4"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-opus-4.1",
+      "modelName": "Claude Opus 4.1",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-opus",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-opus-4.1",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-opus-4.1"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-opus-4.5",
+      "modelName": "Claude Opus 4.5",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-opus",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-opus-4.5",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-opus-4.5"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-opus-4.6",
+      "modelName": "Claude Opus 4.6",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-opus",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-opus-4.6",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-opus-4.6"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-opus-4.7",
+      "modelName": "Claude Opus 4.7",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-opus",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-opus-4.7",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-opus-4.7"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-opus-4.8",
+      "modelName": "Claude Opus 4.8",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-opus",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-opus-4.8",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-opus-4.8"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-opus-5",
+      "modelName": "Claude Opus 5",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-opus",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-opus-5",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-opus-5"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-sonnet-4",
+      "modelName": "Claude Sonnet 4",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-sonnet",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-sonnet-4",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-sonnet-4"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-sonnet-4.5",
+      "modelName": "Claude Sonnet 4.5",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-sonnet",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-sonnet-4.5",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-sonnet-4.5"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-sonnet-4.6",
+      "modelName": "Claude Sonnet 4.6",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-sonnet",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-sonnet-4.6",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-sonnet-4.6"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "anthropic:claude-sonnet-5",
+      "modelName": "Claude Sonnet 5",
+      "legacyProviderId": "anthropic",
+      "familyId": "anthropic:claude-sonnet",
+      "classification": "model",
+      "candidateDeveloperId": "anthropic",
+      "candidateUpstreamModelId": "anthropic:claude-sonnet-5",
+      "candidatePlatformIds": [
+        "anthropic-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "claude-sonnet-5"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "anthropic-pricing"
+      ],
+      "changeSourceIds": [
+        "anthropic-pricing"
+      ],
+      "priceSourceIds": [
+        "anthropic-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://docs.anthropic.com/en/docs/about-claude/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 10
+    },
+    {
+      "modelId": "deepseek:deepseek-flash",
+      "modelName": "DeepSeek Flash",
+      "legacyProviderId": "deepseek",
+      "familyId": "deepseek:deepseek-flash",
+      "classification": "model",
+      "candidateDeveloperId": "deepseek",
+      "candidateUpstreamModelId": "deepseek:deepseek-flash",
+      "candidatePlatformIds": [],
+      "candidateAvailabilityCount": 0,
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "no-data",
+      "observedModelKeys": [],
+      "observedModelKeyCount": 0,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "public": 1
+      },
+      "sourceIds": [],
+      "changeSourceIds": [],
+      "priceSourceIds": [],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 0,
+      "changeRecordCount": 0
+    },
+    {
+      "modelId": "deepseek:deepseek-v4-flash",
+      "modelName": "DeepSeek V4 Flash（旧名）",
+      "legacyProviderId": "deepseek",
+      "familyId": "deepseek:deepseek-v4-flash",
+      "classification": "model",
+      "candidateDeveloperId": "deepseek",
+      "candidateUpstreamModelId": "deepseek:deepseek-v4-flash",
+      "candidatePlatformIds": [
+        "deepseek-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "deepseek-v4-flash"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "deepseek-pricing"
+      ],
+      "changeSourceIds": [
+        "deepseek-pricing"
+      ],
+      "priceSourceIds": [
+        "deepseek-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 6,
+      "changeRecordCount": 12
+    },
+    {
+      "modelId": "deepseek:deepseek-v4-flash-vision-exp",
+      "modelName": "DeepSeek V4 Flash Vision Exp（旧名）",
+      "legacyProviderId": "deepseek",
+      "familyId": "deepseek:deepseek-v4-flash-vision-exp",
+      "classification": "model",
+      "candidateDeveloperId": "deepseek",
+      "candidateUpstreamModelId": "deepseek:deepseek-v4-flash-vision-exp",
+      "candidatePlatformIds": [
+        "deepseek-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "deepseek-v4-flash-vision-exp"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "deepseek-pricing"
+      ],
+      "changeSourceIds": [
+        "deepseek-pricing"
+      ],
+      "priceSourceIds": [
+        "deepseek-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 6,
+      "changeRecordCount": 12
+    },
+    {
+      "modelId": "deepseek:deepseek-v4-pro",
+      "modelName": "DeepSeek V4 Pro",
+      "legacyProviderId": "deepseek",
+      "familyId": "deepseek:deepseek-v4",
+      "classification": "model",
+      "candidateDeveloperId": "deepseek",
+      "candidateUpstreamModelId": "deepseek:deepseek-v4-pro",
+      "candidatePlatformIds": [
+        "deepseek-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "deepseek-v4-pro"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "deepseek-pricing"
+      ],
+      "changeSourceIds": [
+        "deepseek-pricing"
+      ],
+      "priceSourceIds": [
+        "deepseek-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 12
+    },
+    {
+      "modelId": "google:gemini-2.5-computer-use-preview",
+      "modelName": "Gemini 2.5 Computer Use Preview",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-2.5",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-2.5-computer-use-preview",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-2.5-computer-use-preview"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 2,
+      "changeRecordCount": 8
+    },
+    {
+      "modelId": "google:gemini-2.5-flash",
+      "modelName": "Gemini 2.5 Flash",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-2.5",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-2.5-flash",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-2.5-flash"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "google:gemini-2.5-flash-lite",
+      "modelName": "Gemini 2.5 Flash Lite",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-2.5",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-2.5-flash-lite",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-2.5-flash-lite"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "google:gemini-2.5-pro",
+      "modelName": "Gemini 2.5 Pro",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-2.5",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-2.5-pro",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-2.5-pro"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "google:gemini-3-flash-preview",
+      "modelName": "Gemini 3 Flash Preview",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-3",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-3-flash-preview",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-3-flash-preview"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "google:gemini-3.1-flash-lite",
+      "modelName": "Gemini 3.1 Flash Lite",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-3.1",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-3.1-flash-lite",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-3.1-flash-lite"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "google:gemini-3.5-flash",
+      "modelName": "Gemini 3.5 Flash",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-3.5",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-3.5-flash",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-3.5-flash"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "google:gemini-3.5-flash-lite",
+      "modelName": "Gemini 3.5 Flash Lite",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-3.5",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-3.5-flash-lite",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-3.5-flash-lite"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "google:gemini-3.6-flash",
+      "modelName": "Gemini 3.6 Flash",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-3.6",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-3.6-flash",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-3.6-flash"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "google:gemini-3.7-flash",
+      "modelName": "Gemini 3.7 Flash",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-3.7",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-3.7-flash",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-3.7-flash"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "google:gemini-3.8-flash",
+      "modelName": "Gemini 3.8 Flash",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-3.8",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-3.8-flash",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-3.8-flash"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "google:gemini-embedding",
+      "modelName": "Gemini Embedding",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-embedding",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-embedding",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-embedding"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 1,
+      "changeRecordCount": 2
+    },
+    {
+      "modelId": "google:gemini-omni-flash",
+      "modelName": "Gemini Omni Flash",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-omni",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-omni-flash",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-omni-flash"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 2,
+      "changeRecordCount": 4
+    },
+    {
+      "modelId": "google:gemini-omni-flash-preview",
+      "modelName": "Gemini Omni Flash Preview",
+      "legacyProviderId": "google",
+      "familyId": "google:gemini-omni",
+      "classification": "model",
+      "candidateDeveloperId": "google",
+      "candidateUpstreamModelId": "google:gemini-omni-flash-preview",
+      "candidatePlatformIds": [
+        "google-gemini"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gemini-omni-flash-preview"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "google-gemini-pricing"
+      ],
+      "changeSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "priceSourceIds": [
+        "google-gemini-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "priceRecordCount": 2,
+      "changeRecordCount": 4
+    },
+    {
+      "modelId": "kimi:kimi-k2.6",
+      "modelName": "Kimi K2.6",
+      "legacyProviderId": "kimi",
+      "familyId": "kimi:kimi-k2.6",
+      "classification": "model",
+      "candidateDeveloperId": "moonshot-kimi",
+      "candidateUpstreamModelId": "moonshot-kimi:kimi-k2.6",
+      "candidatePlatformIds": [
+        "kimi-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "kimi-k2.6"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "kimi-pricing"
+      ],
+      "changeSourceIds": [
+        "kimi-pricing"
+      ],
+      "priceSourceIds": [
+        "kimi-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://platform.kimi.com/docs/pricing/chat"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "kimi:kimi-k2.7-code",
+      "modelName": "Kimi K2.7 Code",
+      "legacyProviderId": "kimi",
+      "familyId": "kimi:kimi-k2.7",
+      "classification": "model",
+      "candidateDeveloperId": "moonshot-kimi",
+      "candidateUpstreamModelId": "moonshot-kimi:kimi-k2.7-code",
+      "candidatePlatformIds": [
+        "kimi-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "kimi-k2.7-code",
+        "kimi-k2.7-code-highspeed"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 2
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "kimi-pricing"
+      ],
+      "changeSourceIds": [
+        "kimi-pricing"
+      ],
+      "priceSourceIds": [
+        "kimi-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://platform.kimi.com/docs/pricing/chat"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 12
+    },
+    {
+      "modelId": "kimi:kimi-k3",
+      "modelName": "Kimi K3",
+      "legacyProviderId": "kimi",
+      "familyId": "kimi:kimi-k3",
+      "classification": "model",
+      "candidateDeveloperId": "moonshot-kimi",
+      "candidateUpstreamModelId": "moonshot-kimi:kimi-k3",
+      "candidatePlatformIds": [
+        "kimi-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "kimi-k3"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "kimi-pricing"
+      ],
+      "changeSourceIds": [
+        "kimi-pricing"
+      ],
+      "priceSourceIds": [
+        "kimi-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://platform.kimi.com/docs/pricing/chat"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 9
+    },
+    {
+      "modelId": "openai:gpt-5.6-luna",
+      "modelName": "GPT-5.6 Luna",
+      "legacyProviderId": "openai",
+      "familyId": "openai:gpt-5.6",
+      "classification": "model",
+      "candidateDeveloperId": "openai",
+      "candidateUpstreamModelId": "openai:gpt-5.6-luna",
+      "candidatePlatformIds": [
+        "openai-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gpt-5.6-luna"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "openai-pricing"
+      ],
+      "changeSourceIds": [
+        "openai-pricing"
+      ],
+      "priceSourceIds": [
+        "openai-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 4,
+      "changeRecordCount": 27
+    },
+    {
+      "modelId": "openai:gpt-5.6-sol",
+      "modelName": "GPT-5.6 Sol",
+      "legacyProviderId": "openai",
+      "familyId": "openai:gpt-5.6",
+      "classification": "model",
+      "candidateDeveloperId": "openai",
+      "candidateUpstreamModelId": "openai:gpt-5.6-sol",
+      "candidatePlatformIds": [
+        "openai-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gpt-5.6-sol"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "openai-pricing"
+      ],
+      "changeSourceIds": [
+        "openai-pricing"
+      ],
+      "priceSourceIds": [
+        "openai-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "priceRecordCount": 4,
+      "changeRecordCount": 31
+    },
+    {
+      "modelId": "openai:gpt-5.6-terra",
+      "modelName": "GPT-5.6 Terra",
+      "legacyProviderId": "openai",
+      "familyId": "openai:gpt-5.6",
+      "classification": "model",
+      "candidateDeveloperId": "openai",
+      "candidateUpstreamModelId": "openai:gpt-5.6-terra",
+      "candidatePlatformIds": [
+        "openai-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gpt-5.6-terra"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "openai-pricing"
+      ],
+      "changeSourceIds": [
+        "openai-pricing"
+      ],
+      "priceSourceIds": [
+        "openai-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 4,
+      "changeRecordCount": 31
+    },
+    {
+      "modelId": "openai:gpt-6-astra",
+      "modelName": "GPT-6 Astra",
+      "legacyProviderId": "openai",
+      "familyId": "openai:gpt-6",
+      "classification": "model",
+      "candidateDeveloperId": "openai",
+      "candidateUpstreamModelId": "openai:gpt-6-astra",
+      "candidatePlatformIds": [
+        "openai-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "gpt-6-astra"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "openai-pricing"
+      ],
+      "changeSourceIds": [
+        "openai-pricing"
+      ],
+      "priceSourceIds": [
+        "openai-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "priceRecordCount": 4,
+      "changeRecordCount": 32
+    },
+    {
+      "modelId": "volcengine:doubao-1.5-pro-32k",
+      "modelName": "Doubao 1.5 Pro 32K",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-1.5",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-1.5-pro-32k",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-1.5-pro-32k",
+        "doubao-pro-32k"
+      ],
+      "observedModelKeyCount": 2,
+      "registryAliasTypes": {
+        "raw": 2
+      },
+      "registryAliasSources": {
+        "pricing": 2
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 6,
+      "changeRecordCount": 22
+    },
+    {
+      "modelId": "volcengine:doubao-embedding-vision",
+      "modelName": "Doubao Embedding Vision",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-embedding",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-embedding-vision",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-embedding-vision"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://www.volcengine.com/docs/82379/1544106"
+      ],
+      "priceRecordCount": 1,
+      "changeRecordCount": 7
+    },
+    {
+      "modelId": "volcengine:doubao-seed-1.6",
+      "modelName": "Doubao Seed 1.6",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-seed-1.6",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-1.6",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-seed-1.6"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 9,
+      "changeRecordCount": 41
+    },
+    {
+      "modelId": "volcengine:doubao-seed-1.6-flash",
+      "modelName": "Doubao Seed 1.6 Flash",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-seed-1.6",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-1.6-flash",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-seed-1.6-flash"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 9,
+      "changeRecordCount": 38
+    },
+    {
+      "modelId": "volcengine:doubao-seed-1.6-lite",
+      "modelName": "Doubao Seed 1.6 Lite",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-seed-1.6",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-1.6-lite",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-seed-1.6-lite"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 9,
+      "changeRecordCount": 35
+    },
+    {
+      "modelId": "volcengine:doubao-seed-1.6-vision",
+      "modelName": "Doubao Seed 1.6 Vision",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-seed-1.6",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-1.6-vision",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-seed-1.6-vision"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 9,
+      "changeRecordCount": 40
+    },
+    {
+      "modelId": "volcengine:doubao-seed-1.8",
+      "modelName": "Doubao Seed 1.8",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-seed-1.8",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-1.8",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-seed-1.8"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 9,
+      "changeRecordCount": 42
+    },
+    {
+      "modelId": "volcengine:doubao-seed-2.0-code",
+      "modelName": "Doubao Seed 2.0 Code",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-seed-2.0",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-2.0-code",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-seed-2.0-code"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://www.volcengine.com/docs/82379/1544106"
+      ],
+      "priceRecordCount": 9,
+      "changeRecordCount": 44
+    },
+    {
+      "modelId": "volcengine:doubao-seed-2.0-lite",
+      "modelName": "Doubao Seed 2.0 Lite",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-seed-2.0",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-2.0-lite",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-seed-2.0-lite"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://www.volcengine.com/docs/82379/1544106"
+      ],
+      "priceRecordCount": 9,
+      "changeRecordCount": 59
+    },
+    {
+      "modelId": "volcengine:doubao-seed-2.0-mini",
+      "modelName": "Doubao Seed 2.0 Mini",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-seed-2.0",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-2.0-mini",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-seed-2.0-mini"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://www.volcengine.com/docs/82379/1544106"
+      ],
+      "priceRecordCount": 9,
+      "changeRecordCount": 63
+    },
+    {
+      "modelId": "volcengine:doubao-seed-2.0-pro",
+      "modelName": "Doubao Seed 2.0 Pro",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-seed-2.0",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-2.0-pro",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-seed-2.0-pro"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://www.volcengine.com/docs/82379/1544106"
+      ],
+      "priceRecordCount": 9,
+      "changeRecordCount": 64
+    },
+    {
+      "modelId": "volcengine:doubao-seed-2.1-pro",
+      "modelName": "Doubao Seed 2.1 Pro",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-seed-2.1",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-2.1-pro",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-seed-2.1-pro"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://www.volcengine.com/docs/82379/1544106"
+      ],
+      "priceRecordCount": 6,
+      "changeRecordCount": 17
+    },
+    {
+      "modelId": "volcengine:doubao-seed-2.1-turbo",
+      "modelName": "Doubao Seed 2.1 Turbo",
+      "legacyProviderId": "volcengine",
+      "familyId": "volcengine:doubao-seed-2.1",
+      "classification": "model",
+      "candidateDeveloperId": "bytedance-doubao",
+      "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-2.1-turbo",
+      "candidatePlatformIds": [
+        "volcengine-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "doubao-seed-2.1-turbo"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "volcengine-pricing"
+      ],
+      "changeSourceIds": [
+        "volcengine-pricing"
+      ],
+      "priceSourceIds": [
+        "volcengine-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://www.volcengine.com/docs/82379/1544106"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 23
+    },
+    {
+      "modelId": "zhipu:glm-4.5-air",
+      "modelName": "GLM-4.5 Air",
+      "legacyProviderId": "zhipu",
+      "familyId": "zhipu:glm-4.5",
+      "classification": "model",
+      "candidateDeveloperId": "zhipu",
+      "candidateUpstreamModelId": "zhipu:glm-4.5-air",
+      "candidatePlatformIds": [
+        "zhipu-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "glm-4.5-air"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "zhipu-pricing"
+      ],
+      "changeSourceIds": [
+        "zhipu-pricing"
+      ],
+      "priceSourceIds": [
+        "zhipu-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 6,
+      "changeRecordCount": 12
+    },
+    {
+      "modelId": "zhipu:glm-4.5v",
+      "modelName": "GLM-4.5V",
+      "legacyProviderId": "zhipu",
+      "familyId": "zhipu:glm-4.5v",
+      "classification": "model",
+      "candidateDeveloperId": "zhipu",
+      "candidateUpstreamModelId": "zhipu:glm-4.5v",
+      "candidatePlatformIds": [
+        "zhipu-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "glm-4.5v"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "zhipu-pricing"
+      ],
+      "changeSourceIds": [
+        "zhipu-pricing"
+      ],
+      "priceSourceIds": [
+        "zhipu-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://open.bigmodel.cn/pricing"
+      ],
+      "priceRecordCount": 10,
+      "changeRecordCount": 16
+    },
+    {
+      "modelId": "zhipu:glm-4.6v-flashx",
+      "modelName": "GLM-4.6V FlashX",
+      "legacyProviderId": "zhipu",
+      "familyId": "zhipu:glm-4.6v",
+      "classification": "model",
+      "candidateDeveloperId": "zhipu",
+      "candidateUpstreamModelId": "zhipu:glm-4.6v-flashx",
+      "candidatePlatformIds": [
+        "zhipu-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "glm-4.6v-flashx"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "zhipu-pricing"
+      ],
+      "changeSourceIds": [
+        "zhipu-pricing"
+      ],
+      "priceSourceIds": [
+        "zhipu-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://open.bigmodel.cn/pricing"
+      ],
+      "priceRecordCount": 10,
+      "changeRecordCount": 16
+    },
+    {
+      "modelId": "zhipu:glm-4.7",
+      "modelName": "GLM-4.7",
+      "legacyProviderId": "zhipu",
+      "familyId": "zhipu:glm-4.7",
+      "classification": "model",
+      "candidateDeveloperId": "zhipu",
+      "candidateUpstreamModelId": "zhipu:glm-4.7",
+      "candidatePlatformIds": [
+        "zhipu-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "glm-4.7"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "zhipu-pricing"
+      ],
+      "changeSourceIds": [
+        "zhipu-pricing"
+      ],
+      "priceSourceIds": [
+        "zhipu-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 6,
+      "changeRecordCount": 12
+    },
+    {
+      "modelId": "zhipu:glm-4.7-flashx",
+      "modelName": "GLM-4.7 FlashX",
+      "legacyProviderId": "zhipu",
+      "familyId": "zhipu:glm-4.7",
+      "classification": "model",
+      "candidateDeveloperId": "zhipu",
+      "candidateUpstreamModelId": "zhipu:glm-4.7-flashx",
+      "candidatePlatformIds": [
+        "zhipu-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "glm-4.7-flashx"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "zhipu-pricing"
+      ],
+      "changeSourceIds": [
+        "zhipu-pricing"
+      ],
+      "priceSourceIds": [
+        "zhipu-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "zhipu:glm-5-turbo",
+      "modelName": "GLM-5 Turbo",
+      "legacyProviderId": "zhipu",
+      "familyId": "zhipu:glm-5",
+      "classification": "model",
+      "candidateDeveloperId": "zhipu",
+      "candidateUpstreamModelId": "zhipu:glm-5-turbo",
+      "candidatePlatformIds": [
+        "zhipu-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "glm-5-turbo"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "zhipu-pricing"
+      ],
+      "changeSourceIds": [
+        "zhipu-pricing"
+      ],
+      "priceSourceIds": [
+        "zhipu-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 6,
+      "changeRecordCount": 12
+    },
+    {
+      "modelId": "zhipu:glm-5.1",
+      "modelName": "GLM-5.1",
+      "legacyProviderId": "zhipu",
+      "familyId": "zhipu:glm-5",
+      "classification": "model",
+      "candidateDeveloperId": "zhipu",
+      "candidateUpstreamModelId": "zhipu:glm-5.1",
+      "candidatePlatformIds": [
+        "zhipu-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "glm-5.1"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1
+      },
+      "sourceIds": [
+        "zhipu-pricing"
+      ],
+      "changeSourceIds": [
+        "zhipu-pricing"
+      ],
+      "priceSourceIds": [
+        "zhipu-pricing"
+      ],
+      "ledgerSourceUrls": [],
+      "priceRecordCount": 10,
+      "changeRecordCount": 16
+    },
+    {
+      "modelId": "zhipu:glm-5.2",
+      "modelName": "GLM-5.2",
+      "legacyProviderId": "zhipu",
+      "familyId": "zhipu:glm-5",
+      "classification": "model",
+      "candidateDeveloperId": "zhipu",
+      "candidateUpstreamModelId": "zhipu:glm-5.2",
+      "candidatePlatformIds": [
+        "zhipu-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "glm-5.2"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "zhipu-pricing"
+      ],
+      "changeSourceIds": [
+        "zhipu-pricing"
+      ],
+      "priceSourceIds": [
+        "zhipu-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://open.bigmodel.cn/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "zhipu:glm-5.3",
+      "modelName": "GLM-5.3",
+      "legacyProviderId": "zhipu",
+      "familyId": "zhipu:glm-5",
+      "classification": "model",
+      "candidateDeveloperId": "zhipu",
+      "candidateUpstreamModelId": "zhipu:glm-5.3",
+      "candidatePlatformIds": [
+        "zhipu-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "glm-5.3"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "zhipu-pricing"
+      ],
+      "changeSourceIds": [
+        "zhipu-pricing"
+      ],
+      "priceSourceIds": [
+        "zhipu-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://open.bigmodel.cn/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 6
+    },
+    {
+      "modelId": "zhipu:glm-5.3-flash",
+      "modelName": "GLM-5.3 Flash",
+      "legacyProviderId": "zhipu",
+      "familyId": "zhipu:glm-5",
+      "classification": "model",
+      "candidateDeveloperId": "zhipu",
+      "candidateUpstreamModelId": "zhipu:glm-5.3-flash",
+      "candidatePlatformIds": [
+        "zhipu-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "glm-5.3-flash"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "zhipu-pricing"
+      ],
+      "changeSourceIds": [
+        "zhipu-pricing"
+      ],
+      "priceSourceIds": [
+        "zhipu-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://open.bigmodel.cn/pricing"
+      ],
+      "priceRecordCount": 3,
+      "changeRecordCount": 9
+    },
+    {
+      "modelId": "zhipu:glm-5v-turbo",
+      "modelName": "GLM-5V Turbo",
+      "legacyProviderId": "zhipu",
+      "familyId": "zhipu:glm-5v",
+      "classification": "model",
+      "candidateDeveloperId": "zhipu",
+      "candidateUpstreamModelId": "zhipu:glm-5v-turbo",
+      "candidatePlatformIds": [
+        "zhipu-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "glm-5v-turbo"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "zhipu-pricing"
+      ],
+      "changeSourceIds": [
+        "zhipu-pricing"
+      ],
+      "priceSourceIds": [
+        "zhipu-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://open.bigmodel.cn/pricing"
+      ],
+      "priceRecordCount": 10,
+      "changeRecordCount": 16
+    },
+    {
+      "modelId": "zhipu:glm-ocr",
+      "modelName": "GLM-OCR",
+      "legacyProviderId": "zhipu",
+      "familyId": "zhipu:glm-ocr",
+      "classification": "model",
+      "candidateDeveloperId": "zhipu",
+      "candidateUpstreamModelId": "zhipu:glm-ocr",
+      "candidatePlatformIds": [
+        "zhipu-pricing"
+      ],
+      "candidateAvailabilityCount": 1,
+      "availabilityStatus": "candidate-1",
+      "ontologyStatus": "single-platform-candidate",
+      "observedModelKeys": [
+        "glm-ocr"
+      ],
+      "observedModelKeyCount": 1,
+      "registryAliasTypes": {
+        "raw": 1,
+        "display": 1
+      },
+      "registryAliasSources": {
+        "pricing": 1,
+        "public": 1
+      },
+      "sourceIds": [
+        "zhipu-pricing"
+      ],
+      "changeSourceIds": [
+        "zhipu-pricing"
+      ],
+      "priceSourceIds": [
+        "zhipu-pricing"
+      ],
+      "ledgerSourceUrls": [
+        "https://open.bigmodel.cn/pricing"
+      ],
+      "priceRecordCount": 2,
+      "changeRecordCount": 2
+    }
+  ]
+}
