@@ -93,14 +93,15 @@ def main() -> int:
         # 从 prices 反查 sourceId
         price_source_ids = sorted(set(p.get("sourceId") for p in price_rows if p.get("sourceId")))
 
-        # source → providerId → candidate platforms
+        # source → providerId → source footprint（不是 platform mapping）
         all_source_ids = sorted(set(change_source_ids) | set(price_source_ids))
         source_providers = sorted(set(s2p.get(s) for s in all_source_ids if s2p.get(s)))
 
-        # candidate platform IDs（从 source 名前缀推断，candidate ≠ verified）
-        # source 名如 google-gemini-pricing → candidate platform "google-gemini"
-        # source 名如 google-vertex-pricing → candidate platform "google-vertex"
-        candidate_platforms = sorted(set(
+        # source footprint IDs（从 source 名前缀推断 source family，不是 Platform）
+        # source 名如 google-gemini-pricing → source family "google-gemini"
+        # source 名如 google-vertex-pricing → source family "google-vertex"
+        # 这是 observed source footprint，不是 ontology Platform——Platform 需独立验证
+        source_footprint_ids = sorted(set(
             "-".join(s.split("-")[:2]) if s and s.count("-") >= 1 else s
             for s in all_source_ids if s
         ))
@@ -109,15 +110,20 @@ def main() -> int:
         ledger_prices = [p for p in ledger.get("prices", []) if p.get("modelId") == mid]
         ledger_source_urls = sorted(set(p.get("source_url", "") for p in ledger_prices if p.get("source_url")))
 
-        # cardinality
-        availability_count = len(candidate_platforms) if candidate_platforms else 0
+        # source footprint cardinality（不是 availability cardinality）
+        source_footprint_count = len(source_footprint_ids) if source_footprint_ids else 0
         if not all_source_ids and not price_rows and not change_rows:
-            availability_count = 0
-            avail_status = "unresolved"
-        elif len(candidate_platforms) <= 1:
-            avail_status = "candidate-1"
+            source_footprint_count = 0
+            footprint_status = "no-data"
+        elif len(source_footprint_ids) <= 1:
+            footprint_status = "single-source-footprint"
         else:
-            avail_status = "candidate-N"
+            footprint_status = "multi-source-footprint"
+
+        # availability cardinality：不可从 source footprint 直接推出
+        # source footprint != Platform；1 个 source footprint 不等于 1 个 availability
+        availability_cardinality = "unresolved"
+        availability_status = "unresolved"
 
         # developer candidate（从 providerId 推断，candidate ≠ verified）
         dev_candidates = {
@@ -139,13 +145,13 @@ def main() -> int:
         else:
             candidate_upstream = "unresolved"
 
-        # ontology status
+        # ontology status（基于 source footprint，不是 availability）
         if not all_source_ids and not price_rows and not change_rows:
             ontology_status = "no-data"
-        elif avail_status == "candidate-N":
-            ontology_status = "multi-platform-candidate"
+        elif footprint_status == "multi-source-footprint":
+            ontology_status = "multi-source-footprint"
         else:
-            ontology_status = "single-platform-candidate"
+            ontology_status = "single-source-footprint"
 
         inventory.append({
             "modelId": mid,
@@ -155,9 +161,11 @@ def main() -> int:
             "classification": reg.get("classification"),
             "candidateDeveloperId": candidate_developer,
             "candidateUpstreamModelId": candidate_upstream,
-            "candidatePlatformIds": candidate_platforms,
-            "candidateAvailabilityCount": availability_count,
-            "availabilityStatus": avail_status,
+            "sourceFootprintIds": source_footprint_ids,
+            "sourceFootprintCount": source_footprint_count,
+            "sourceFootprintStatus": footprint_status,
+            "availabilityCardinality": availability_cardinality,
+            "availabilityStatus": availability_status,
             "ontologyStatus": ontology_status,
             "observedModelKeys": observed_keys_from_prices,
             "observedModelKeyCount": len(observed_keys_from_prices),
@@ -172,18 +180,45 @@ def main() -> int:
         })
 
     # ---- 2. 统计 ----
+    # developer：区分 unique candidate entities 与 model→developer mappings
+    dev_entities = set(i["candidateDeveloperId"] for i in inventory if i["candidateDeveloperId"] != "unresolved")
+    dev_mappings = sum(1 for i in inventory if i["candidateDeveloperId"] != "unresolved")
+    dev_unresolved = sum(1 for i in inventory if i["candidateDeveloperId"] == "unresolved")
+
+    # upstream：区分 unique candidate entities 与 model→upstream mappings
+    up_entities = set(i["candidateUpstreamModelId"] for i in inventory if i["candidateUpstreamModelId"] != "unresolved")
+    up_mappings = sum(1 for i in inventory if i["candidateUpstreamModelId"] != "unresolved")
+    up_unresolved = sum(1 for i in inventory if i["candidateUpstreamModelId"] == "unresolved")
+
     stats = {
         "publicModels": len(catalog["models"]),
+        "release": {
+            "datasetVersion": manifest["datasetVersion"],
+            "dataThrough": manifest["dataThrough"],
+            "manifestChangesCount": manifest["coverage"]["changes"]["count"],
+            "manifestPricesCount": manifest["coverage"]["prices"]["facts"],
+            "actualChangesLen": len(changes),
+            "actualPricesLen": len(prices),
+        },
         "developer": {
-            "candidate": len(set(i["candidateDeveloperId"] for i in inventory if i["candidateDeveloperId"] != "unresolved")),
-            "unresolved": sum(1 for i in inventory if i["candidateDeveloperId"] == "unresolved"),
+            "candidateEntities": len(dev_entities),
+            "candidateEntitiesList": sorted(dev_entities),
+            "modelDeveloperCandidateMappings": dev_mappings,
+            "unresolvedMappings": dev_unresolved,
         },
         "upstream": {
-            "candidate": len(set(i["candidateUpstreamModelId"] for i in inventory if i["candidateUpstreamModelId"] != "unresolved")),
-            "unresolved": sum(1 for i in inventory if i["candidateUpstreamModelId"] == "unresolved"),
+            "candidateEntities": len(up_entities),
+            "modelUpstreamCandidateMappings": up_mappings,
+            "unresolvedMappings": up_unresolved,
         },
-        "platformCardinality": dict(Counter(i["availabilityStatus"] for i in inventory)),
-        "modelIdToAvailabilityCardinality": dict(Counter(i["candidateAvailabilityCount"] for i in inventory)),
+        "sourceFootprintCardinality": dict(Counter(i["sourceFootprintStatus"] for i in inventory)),
+        "availabilityCardinality": {
+            "conclusion": "unresolved — source footprint != availability；不可从现有数据直接推出",
+            "single": None,
+            "multiple": None,
+            "zero": None,
+            "unresolved": len(inventory),
+        },
         "observedModelKeyCardinality": {
             "single": sum(1 for i in inventory if i["observedModelKeyCount"] == 1),
             "multiple": sum(1 for i in inventory if i["observedModelKeyCount"] > 1),
@@ -194,18 +229,19 @@ def main() -> int:
 
     # ---- 3. Google 专项 ----
     google_models = [i for i in inventory if i["legacyProviderId"] == "google"]
-    google_gemini_only = [i for i in google_models if any("gemini" in p for p in i["candidatePlatformIds"]) and not any("vertex" in p for p in i["candidatePlatformIds"])]
-    google_vertex_only = [i for i in google_models if any("vertex" in p for p in i["candidatePlatformIds"]) and not any("gemini" in p for p in i["candidatePlatformIds"])]
-    google_both = [i for i in google_models if any("gemini" in p for p in i["candidatePlatformIds"]) and any("vertex" in p for p in i["candidatePlatformIds"])]
-    google_neither = [i for i in google_models if not i["candidatePlatformIds"]]
+    google_gemini_only = [i for i in google_models if any("gemini" in p for p in i["sourceFootprintIds"]) and not any("vertex" in p for p in i["sourceFootprintIds"])]
+    google_vertex_only = [i for i in google_models if any("vertex" in p for p in i["sourceFootprintIds"]) and not any("gemini" in p for p in i["sourceFootprintIds"])]
+    google_both = [i for i in google_models if any("gemini" in p for p in i["sourceFootprintIds"]) and any("vertex" in p for p in i["sourceFootprintIds"])]
+    google_neither = [i for i in google_models if not i["sourceFootprintIds"]]
 
     google_stats = {
         "total": len(google_models),
-        "geminiSourceOnly": len(google_gemini_only),
-        "vertexSourceOnly": len(google_vertex_only),
-        "bothSources": len(google_both),
+        "geminiSourceFootprintOnly": len(google_gemini_only),
+        "vertexSourceFootprintOnly": len(google_vertex_only),
+        "bothSourceFootprints": len(google_both),
         "noSourceFootprint": len(google_neither),
-        "multiPlatformCandidates": [i["modelId"] for i in google_both],
+        "multiSourceFootprintModels": [i["modelId"] for i in google_both],
+        "conclusion": "observed source footprint（不是 platform/availability mapping）；14 个 Google model 的 identity-bearing records 全部来自 google-gemini-pricing source，0 个来自 google-vertex-* source。但这不等于'只存在于 Gemini API 不存在于 Vertex AI'——platform mapping 需官方文档验证",
     }
 
     # ---- 4. pointer 专项 ----
@@ -237,6 +273,14 @@ def main() -> int:
         if len(regions) > 1:
             region_stats[mid] = sorted(regions)
 
+    # status：检查是否有模型 availability 层面的 status 数据
+    # price fact 有 field_state（confirmed/stale），但那是数据质量状态，不是 availability
+    status_evidence = {
+        "availabilityStatusDataFound": False,
+        "fieldStateValues": sorted(set(p.get("field_state") for p in prices if p.get("field_state"))),
+        "conclusion": "not evidenced / unresolved — 当前仓库无 availability 层面 status 数据；field_state 是数据质量状态，不是 availability",
+    }
+
     # ---- 7. snapshot 专项 ----
     snapshot_aliases = []
     for m in registry["models"]:
@@ -264,8 +308,9 @@ def main() -> int:
         "regionStats": {
             "modelsWithMultipleRegions": len(region_stats),
             "sample": dict(list(region_stats.items())[:5]),
-            "conclusion": "region 出现在 price fact 中，但同一 modelId 有多 region——region 更可能是 price fact condition 而非 Availability 属性（待 T07-5.1 Gold Set 验证）",
+            "conclusion": "当前仓库只提供 price-fact-level evidence；region 是 price fact 条件维度。是否属于 Availability ontology = unresolved；第一版 core Availability identity 不应包含 region",
         },
+        "statusStats": status_evidence,
         "snapshotStats": {
             "totalSnapshotAliases": len(snapshot_aliases),
             "modelsWithSnapshots": len(set(s["modelId"] for s in snapshot_aliases)),
@@ -278,14 +323,18 @@ def main() -> int:
     out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"✓ Ontology inventory → {out_path}")
     print(f"  publicModels={stats['publicModels']}")
-    print(f"  platform cardinality: {stats['platformCardinality']}")
-    print(f"  modelId→availability: {stats['modelIdToAvailabilityCardinality']}")
+    print(f"  release: {manifest['datasetVersion'][:20]}... dataThrough={manifest['dataThrough']}")
+    print(f"  changes={len(changes)} prices={len(prices)}")
+    print(f"  developer candidateEntities={stats['developer']['candidateEntities']} modelMappings={stats['developer']['modelDeveloperCandidateMappings']}")
+    print(f"  source footprint: {stats['sourceFootprintCardinality']}")
+    print(f"  availability cardinality: {stats['availabilityCardinality']['conclusion'][:60]}...")
     print(f"  observedModelKey: {stats['observedModelKeyCardinality']}")
-    print(f"  Google: {google_stats}")
+    print(f"  Google: gemini-only={google_stats['geminiSourceFootprintOnly']} vertex-only={google_stats['vertexSourceFootprintOnly']} both={google_stats['bothSourceFootprints']}")
     print(f"  pointers: {len(pointer_inventory)}")
     print(f"  previews: {len(preview_inventory)}")
     print(f"  snapshots: {len(snapshot_aliases)} aliases / {len(set(s['modelId'] for s in snapshot_aliases))} models")
     print(f"  region: {len(region_stats)} models with multiple regions")
+    print(f"  status: evidenced={status_evidence['availabilityStatusDataFound']}")
     return 0
 
 

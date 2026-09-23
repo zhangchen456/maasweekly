@@ -2,7 +2,9 @@
   "meta": {
     "description": "T07-5.1 Ontology Gold Set — 跨平台/开发者/平台/上游模型/可用性映射验证",
     "principle": "candidate ≠ verified；false positive = 0；禁止 fuzzy/embedding/LLM",
-    "evidenceTypes": ["official-docs", "provider-mapping", "manual", "registry-data", "unresolved"]
+    "evidenceTypes": ["official-docs", "provider-mapping", "manual", "registry-data", "unresolved"],
+    "verificationStatusValues": ["verified", "candidate", "unresolved"],
+    "note": "每个 relation 独立标 verification status；repo-derived candidate ≠ verified relation"
   },
   "goldSet": [
     {
@@ -12,58 +14,86 @@
       "expectedPlatform": "anthropic-api",
       "expectedAvailability": "single",
       "expectedIdentifiers": ["claude-sonnet-4.5"],
+      "relationStatus": {
+        "developerStatus": "candidate",
+        "platformStatus": "candidate",
+        "upstreamStatus": "candidate",
+        "availabilityStatus": "unresolved",
+        "identifierStatus": "verified"
+      },
       "evidence": {
         "sourceType": "registry-data",
         "sourceId": "anthropic-pricing",
         "verifiedAt": "2026-09-23",
-        "verificationNote": "registry modelId + pricing source 一致；developer=platform 合一"
+        "verificationNote": "registry modelId + pricing source 一致；developer=platform 是候选推断（repo 无独立 developer/platform 实体验证）"
       },
-      "reason": "Anthropic 自己开发并运营 API，developer=platform"
+      "reason": "Anthropic 自己开发并运营 API，developer=platform——但这是候选推断，非独立 verified"
     },
     {
       "input": "alibaba:qwen3-coder-plus",
       "expectedDeveloper": "alibaba-qwen",
       "expectedUpstreamModel": "alibaba-qwen:qwen3-coder-plus",
       "expectedPlatform": "alibaba-bailian",
-      "expectedAvailability": "single",
+      "expectedAvailability": "unresolved",
       "expectedIdentifiers": ["qwen3-coder-plus", "qwen3-coder-plus-2025-07-22", "qwen3-coder-plus-2025-09-23"],
+      "relationStatus": {
+        "developerStatus": "candidate",
+        "platformStatus": "candidate",
+        "upstreamStatus": "candidate",
+        "availabilityStatus": "unresolved",
+        "identifierStatus": "verified"
+      },
       "evidence": {
         "sourceType": "registry-data",
         "sourceId": "alibaba-pricing",
         "verifiedAt": "2026-09-23",
-        "verificationNote": "ledger provider=qwen→alibaba；平台=阿里百炼≠开发者=阿里通义"
+        "verificationNote": "ledger provider=qwen→alibaba；source footprint=alibaba-pricing。developer=阿里通义、platform=阿里百炼是候选推断，repo 无独立实体验证"
       },
-      "reason": "developer ≠ platform：阿里通义开发模型，阿里百炼运营平台"
+      "reason": "developer ≠ platform 候选：阿里通义开发模型，阿里百炼运营平台——需官方文档 verified"
     },
     {
       "input": "volcengine:doubao-seed-1.6",
       "expectedDeveloper": "bytedance-doubao",
       "expectedUpstreamModel": "bytedance-doubao:doubao-seed-1.6",
       "expectedPlatform": "volcengine-ark",
-      "expectedAvailability": "single",
+      "expectedAvailability": "unresolved",
       "expectedIdentifiers": ["doubao-seed-1.6"],
+      "relationStatus": {
+        "developerStatus": "candidate",
+        "platformStatus": "candidate",
+        "upstreamStatus": "candidate",
+        "availabilityStatus": "unresolved",
+        "identifierStatus": "verified"
+      },
       "evidence": {
         "sourceType": "registry-data",
         "sourceId": "volcengine-pricing",
         "verifiedAt": "2026-09-23",
-        "verificationNote": "ledger provider=doubao→volcengine；平台=火山方舟≠开发者=字节跳动"
+        "verificationNote": "ledger provider=doubao→volcengine；source footprint=volcengine-pricing。developer=字节跳动是候选推断"
       },
-      "reason": "developer ≠ platform：字节跳动开发模型，火山方舟运营平台"
+      "reason": "developer ≠ platform 候选：字节跳动开发模型，火山方舟运营平台——需官方文档 verified"
     },
     {
       "input": "google:gemini-2.5-pro",
       "expectedDeveloper": "google",
       "expectedUpstreamModel": "google:gemini-2.5-pro",
       "expectedPlatform": "unresolved",
-      "expectedAvailability": "single-candidate",
+      "expectedAvailability": "unresolved",
       "expectedIdentifiers": ["gemini-2.5-pro"],
+      "relationStatus": {
+        "developerStatus": "candidate",
+        "platformStatus": "unresolved",
+        "upstreamStatus": "candidate",
+        "availabilityStatus": "unresolved",
+        "identifierStatus": "verified"
+      },
       "evidence": {
         "sourceType": "registry-data",
         "sourceId": "google-gemini-pricing",
         "verifiedAt": "2026-09-23",
-        "verificationNote": "inventory 证明 14 个 google model 全部只在 google-gemini-pricing source 出现，0 个在 vertex source。但 providerId=google 聚合了 gemini+vertex 8 个 source，platform mapping 仍需官方文档验证"
+        "verificationNote": "inventory 证明 14 个 google model 的 identity-bearing records 全部来自 google-gemini-pricing source（observed source footprint），0 个来自 vertex source。但 providerId=google 聚合 gemini+vertex 8 个 source，platform mapping 仍需官方文档验证"
       },
-      "reason": "Google namespace 含 Gemini API + Vertex AI 两组 source，但实际 model 数据全部来自 Gemini source。platform 是 gemini-api 还是 vertex-ai 或两者，需官方文档验证"
+      "reason": "Google namespace 含 Gemini API + Vertex AI 两组 source；observed source footprint 全是 gemini，但不等于'只存在于 Gemini API'——platform mapping unresolved"
     },
     {
       "input": "deepseek:deepseek-flash",
@@ -72,6 +102,13 @@
       "expectedPlatform": "unresolved",
       "expectedAvailability": "zero",
       "expectedIdentifiers": [],
+      "relationStatus": {
+        "developerStatus": "candidate",
+        "platformStatus": "unresolved",
+        "upstreamStatus": "candidate",
+        "availabilityStatus": "unresolved",
+        "identifierStatus": "unresolved"
+      },
       "evidence": {
         "sourceType": "registry-data",
         "sourceId": "catalog-only",
@@ -87,6 +124,13 @@
       "expectedPlatform": "unresolved",
       "expectedAvailability": "unresolved",
       "expectedIdentifiers": ["qwen-plus-latest"],
+      "relationStatus": {
+        "developerStatus": "unresolved",
+        "platformStatus": "unresolved",
+        "upstreamStatus": "unresolved",
+        "availabilityStatus": "unresolved",
+        "identifierStatus": "unresolved"
+      },
       "evidence": {
         "sourceType": "registry-data",
         "sourceId": "registry-pointer",
@@ -100,8 +144,15 @@
       "expectedDeveloper": "google",
       "expectedUpstreamModel": "unresolved",
       "expectedPlatform": "unresolved",
-      "expectedAvailability": "single-candidate",
+      "expectedAvailability": "unresolved",
       "expectedIdentifiers": ["gemini-3-flash-preview"],
+      "relationStatus": {
+        "developerStatus": "candidate",
+        "platformStatus": "unresolved",
+        "upstreamStatus": "unresolved",
+        "availabilityStatus": "unresolved",
+        "identifierStatus": "verified"
+      },
       "evidence": {
         "sourceType": "unresolved",
         "sourceId": "google-gemini-pricing",
@@ -115,45 +166,66 @@
       "expectedDeveloper": "zhipu",
       "expectedUpstreamModel": "zhipu:glm-4.7",
       "expectedPlatform": "zhipu-platform",
-      "expectedAvailability": "single",
+      "expectedAvailability": "unresolved",
       "expectedIdentifiers": ["glm-4.7"],
+      "relationStatus": {
+        "developerStatus": "candidate",
+        "platformStatus": "candidate",
+        "upstreamStatus": "candidate",
+        "availabilityStatus": "unresolved",
+        "identifierStatus": "verified"
+      },
       "evidence": {
         "sourceType": "registry-data",
         "sourceId": "zhipu-pricing",
         "verifiedAt": "2026-09-23",
-        "verificationNote": "developer=platform 合一；智谱开发并运营"
+        "verificationNote": "developer=platform 合一候选；智谱开发并运营——候选推断，非独立 verified"
       },
-      "reason": "developer=platform：智谱开发 GLM，智谱开放平台运营"
+      "reason": "developer=platform 候选：智谱开发 GLM，智谱开放平台运营"
     },
     {
       "input": "kimi:kimi-k3",
       "expectedDeveloper": "moonshot-kimi",
       "expectedUpstreamModel": "moonshot-kimi:kimi-k3",
       "expectedPlatform": "kimi-platform",
-      "expectedAvailability": "single",
+      "expectedAvailability": "unresolved",
       "expectedIdentifiers": ["kimi-k3"],
+      "relationStatus": {
+        "developerStatus": "candidate",
+        "platformStatus": "candidate",
+        "upstreamStatus": "candidate",
+        "availabilityStatus": "unresolved",
+        "identifierStatus": "verified"
+      },
       "evidence": {
         "sourceType": "registry-data",
         "sourceId": "kimi-pricing",
         "verifiedAt": "2026-09-23",
-        "verificationNote": "developer=Moonshot AI，platform=Kimi Platform"
+        "verificationNote": "developer=Moonshot AI 候选，platform=Kimi Platform 候选——repo 无独立实体验证"
       },
-      "reason": "developer=platform 合一（品牌名 Kimi = 平台名）"
+      "reason": "developer=platform 候选（品牌名 Kimi = 平台名）"
     },
     {
       "input": "openai:gpt-6-astra",
       "expectedDeveloper": "openai",
       "expectedUpstreamModel": "openai:gpt-6-astra",
       "expectedPlatform": "openai-api",
-      "expectedAvailability": "single",
+      "expectedAvailability": "unresolved",
       "expectedIdentifiers": ["gpt-6-astra"],
+      "relationStatus": {
+        "developerStatus": "candidate",
+        "platformStatus": "candidate",
+        "upstreamStatus": "candidate",
+        "availabilityStatus": "unresolved",
+        "identifierStatus": "verified"
+      },
       "evidence": {
         "sourceType": "registry-data",
         "sourceId": "openai-pricing",
         "verifiedAt": "2026-09-23",
-        "verificationNote": "developer=platform 合一"
+        "verificationNote": "developer=platform 合一候选——repo 无独立实体验证"
       },
-      "reason": "developer=platform：OpenAI 开发 GPT，OpenAI API 运营"
+      "reason": "developer=platform 候选：OpenAI 开发 GPT，OpenAI API 运营"
     }
   ],
   "coverageMatrix": {
@@ -165,5 +237,18 @@
     "pointer": ["alibaba:qwen-plus-latest"],
     "preview": ["google:gemini-3-flash-preview"],
     "unresolved": ["deepseek:deepseek-flash", "google:gemini-3-flash-preview"]
+  },
+  "verificationSummary": {
+    "developerVerified": 0,
+    "developerCandidate": 8,
+    "developerUnresolved": 2,
+    "platformVerified": 0,
+    "platformCandidate": 6,
+    "platformUnresolved": 4,
+    "availabilityVerified": 0,
+    "availabilityUnresolved": 10,
+    "identifierVerified": 7,
+    "identifierUnresolved": 3,
+    "note": "repo-derived candidate ≠ verified relation；availability 全部 unresolved（source footprint != availability）"
   }
 }
