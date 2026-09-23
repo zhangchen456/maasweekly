@@ -4,6 +4,14 @@
     "start": "2026-09-21",
     "end": "2026-09-27",
     "days": {
+      "2026-09-24": {
+        "substantive": 17,
+        "jitter": 1,
+        "failed": 0,
+        "releases": 3,
+        "pricings": 5,
+        "sunsets": 1
+      },
       "2026-09-23": {
         "substantive": 19,
         "jitter": 1,
@@ -30,12 +38,90 @@
       }
     },
     "totals": {
-      "substantive": 35,
-      "releases": 6,
-      "pricings": 6,
-      "sunsets": 1
+      "substantive": 52,
+      "releases": 9,
+      "pricings": 11,
+      "sunsets": 2
     },
     "highlights": [
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-09-24",
+        "text": "Gemini 3.8 Flash TTS 与 Gemini 3.8 Flash-Lite TTS 正式GA，分别定位旗舰创意与高性价比语音合成",
+        "type": "release"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-09-24",
+        "text": "Gemini 3.8 Flash TTS 定价 $0.5/百万tokens输入、$9/百万tokens输出；Flash-Lite TTS 定价 $0.5/百万tokens输入、$6/百万tokens输出",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-09-24",
+        "text": "2027年1月1日起将启用输入缓存新价格，涉及文本与音频计费调整",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-24",
+        "text": "Claude 模型家族新增 claude-fable-5-1，与 claude-opus-5-5、claude-sonnet-5、claude-haiku-4-5 并列，定价 $10/$50 至 $1/$5 每百万tokens",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-24",
+        "text": "模型列表新增各云平台ID（AWS、Google Cloud、Microsoft Foundry）及上下文窗口、输出长度等规格",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-24",
+        "text": "pricing 页面新增多档缓存价格（$0.08-$1.50/MTok），并移除旧版Claude Consumption Units说明",
+        "type": "pricing"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-09-24",
+        "text": "Agent Plan Medium 及以上档位上线 Kimi K3 模型，并支持 Doubao-Seedream-5.0 与 Doubao-Seedance-2.0",
+        "type": "release"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-09-24",
+        "text": "Agent Plan 新增『Agent 进化』Harness 能力，API Key 管理功能上线",
+        "type": "other"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-09-24",
+        "text": "Chat API 按 token 付费新增低延迟模式，支持 doubao-seed-2.0-pro 与 doubao-seed-2.0-lite",
+        "type": "other"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-09-24",
+        "text": "DeepSeek-V4.1-Flash 与 DeepSeek-V4-Pro-0813 新增定价，GLM-5.3 同步调整",
+        "type": "pricing"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-09-24",
+        "text": "DeepSeek-V3.2 与 DeepSeek-V4-Flash 标记为即将下线",
+        "type": "sunset"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-09-24",
+        "text": "DeepSeek-V4-Flash-0731 推出空闲时段限时活动（8月25日0点起生效）",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-24",
+        "text": "OpenAI 博客新增文章『Bringing my LED display to life with GPT-Live-1 and Codex』，替换旧文",
+        "type": "other"
+      },
       {
         "platform": "OpenAI",
         "date": "2026-09-23",
