@@ -29,9 +29,9 @@
 
 ### 1.2 ledger provider vs canonical provider
 
-ledger（pricing 数据源）用 **pricing provider**（`qwen`/`doubao`/`glm`），canonical 用 **platform provider**（`alibaba`/`volcengine`/`zhipu`）。`public_providers.json` 的 `pricingProviderIdToProvider` 做映射。
+ledger（pricing 数据源）用 **pricing provider**（`qwen`/`doubao`/`glm`），canonical 用 **providerId**（`alibaba`/`volcengine`/`zhipu`）。`public_providers.json` 的 `pricingProviderIdToProvider` 做映射。
 
-这进一步证明：ledger 的 provider 更接近**模型品牌**，canonical 的 provider 更接近**平台**，但 canonical 把 alibaba（平台）和 anthropic（开发者）混在了一起。
+两者都是 public query namespace 层面的映射，**不等价于 Developer 或 Platform**。ledger 的 pricing provider 更接近模型品牌（Qwen/Doubao/GLM），canonical 的 providerId 是聚合命名空间——但都只是 legacy namespace，不承担新 ontology 语义。
 
 ### 1.3 当前数据无跨平台同模型
 
@@ -43,10 +43,13 @@ T07-5.1 必须把这类统计正式产出成可复核 inventory（持久化脚�
 
 ### 1.4 snapshot / pointer / preview
 
-当前数据存在同一平台内的变体：
-- **日期快照**：`qwen-flash-2025-07-28`（快照）、`qwen-flash`（基名）
-- **指针**：`qwen-plus-latest`、`gemini-3-flash-preview`
-- 这些目前是 unresolved 或 pointer，不进入 catalog
+当前数据存在同一 namespace 内的变体，三类语义不同：
+
+- **snapshot**：`qwen-flash-2025-07-28`（日期快照）、`qwen-flash`（基名）——registry 标 `type=snapshot`
+- **pointer**：`qwen-plus-latest` 等带 `-latest`/`-next` 的串，registry 明确标 `classification=pointer`。pointer 具有时间性（指向目标随时间变化）
+- **preview**：`gemini-3-flash-preview` 等——**ontology 语义未定**（evidence-driven unresolved）。当前 resolver 规定"禁止删除 -preview / 禁止指针猜测"只说明 identity resolver 不擅自合并，**不证明 preview 是 pointer，也不证明是独立 upstream model**
+
+这些目前不进入 public catalog（unresolved 或 pointer），但 T07-5.1 需验证它们在新 ontology 中的归类。
 
 ## 2. Problem statement
 
@@ -57,7 +60,7 @@ T07-5.1 必须把这类统计正式产出成可复核 inventory（持久化脚�
 3. `alibaba:qwen3-coder-plus` 的开发者是谁？（阿里通义，不是"阿里百炼"）
 4. 同一上游模型在不同平台的价格事实有哪些？
 
-根本问题：**provider 同时承载了"平台"和"开发者"两种语义**，且没有显式的"上游模型"实体。
+根本问题：**当前 `providerId` 是 legacy public query namespace，不是 Developer 或 Platform**，且没有显式的"上游模型"实体。`providerId` 无法可靠回答跨平台/跨产品面的模型关系问题（Google namespace 同时聚合 Gemini API + Vertex AI source 是明确反例）。
 
 ## 3. Terminology
 
@@ -142,11 +145,11 @@ existing modelId ──maps to──→ Availability (cardinality 待 T07-5.1 �
 | deepseek:deepseek-v4-pro | DeepSeek | DeepSeek V4 Pro | DeepSeek API | deepseek-v4-pro |
 | kimi:kimi-k3 | Moonshot AI | Kimi K3 | Kimi Platform | kimi-k3 |
 
-**关键观察**：
-- 当前数据**全部是 developer=platform 的情况**（开发者自己运营平台）
-- `alibaba`/`volcengine` 是例外：平台≠模型品牌（阿里百炼≠Qwen，火山方舟≠Doubao）
-- snapshot（`qwen3-coder-plus-2025-07-22`）是同一 availability 的 observed modelKey 变体，不是独立 upstream model
-- 当前**无跨平台同模型**数据（Claude 只在 Anthropic，不在 Bedrock/Vertex）
+**关键观察（candidate mapping，尚未经 T07-5.1 Gold Set/evidence 验证）**：
+- 上述 mapping 是基于现有数据的**候选映射**，不是 verified ontology relation
+- "developer=platform"与"平台≠品牌"并存说明 `providerId` 不能可靠决定 Developer 或 Platform——Google namespace（Gemini API + Vertex AI）是更明确的反例
+- snapshot（`qwen3-coder-plus-2025-07-22`）是同一 availability 的 observed identifier 候选，不是独立 upstream model 候选——但 T07 registry classification ≠ 自动成为 T07-5 ontology truth，仍需 evidence 验证
+- **跨平台同模型 cardinality 未经验证**——T07-5.1 必须正式产出可复核 inventory，不能基于此候选表假设
 
 ## 7. Proposed schema
 
@@ -154,30 +157,41 @@ existing modelId ──maps to──→ Availability (cardinality 待 T07-5.1 �
 
 ```
 data/model-registry/
-  developers.json     # Developer 实体
-  platforms.json      # Platform 实体
+  developers.json      # Developer 实体
+  platforms.json       # Platform 实体
   upstream-models.json # Upstream Model 实体
-  models.json         # 现有（保留 modelId + 新增 availabilityId 字段）
-
-data/model-registry/
-  availabilities.json # Availability relation（upstreamModelId × platformId × modelKey）
+  models.json          # 现有（保留 modelId）
+  availabilities.json  # Availability relation（upstreamModelId × platformId + observedIdentifiers[]）
 ```
 
-**现有 models.json 变更（additive）**：
+**现有 models.json 变更（additive，但 mapping schema 标为 T07-5.1 pending）**：
 
 ```json
 {
   "modelId": "alibaba:qwen3-coder-plus",  // 保留不变
-  "providerId": "alibaba",                 // 保留不变
-  "upstreamModelId": "alibaba-qwen:qwen3-coder-plus",  // 新增（additive）
-  "developerId": "alibaba-qwen",           // 新增（additive）
-  "platformId": "alibaba-bailian",         // 新增（additive）
+  "providerId": "alibaba",                 // 保留不变（legacy namespace）
+  "upstreamModelId": "alibaba-qwen:qwen3-coder-plus",  // 新增候选（additive，待 T07-5.1 验证）
+  "developerId": "alibaba-qwen",           // 新增候选（additive，待 T07-5.1 验证）
+  "platformId": "alibaba-bailian",         // 新增候选（additive，待 T07-5.1 验证）
   "canonicalName": "Qwen3 Coder Plus",     // 保留
   "familyId": "alibaba:qwen-coder",        // 保留
   "classification": "model",              // 保留
   "aliases": [...]                         // 保留
 }
 ```
+
+**注意**：`upstreamModelId` / `developerId` / `platformId` 是单值还是多值（如 `availabilityIds[]`），由 T07-5.1 cardinality 结果决定。如果 `google:gemini-2.5-pro` 对应多个 availability，则 `models.json` 可能需要 `availabilityIds[]` 或独立 relation 文件，而不是单值 `platformId`。**现阶段不固定 mapping schema**。
+
+### Availability relation 设计候选
+
+```
+Availability
+  = upstreamModelId × platformId
+  + observedIdentifiers[]  (1:N，含 modelKey/snapshot/pointer/SKU)
+  + region / status
+```
+
+**修正（review 后）**：Availability 的 observed identifier 是 **1:N**（registry 里 qwen-plus 下有多个 snapshot 证明），不是单值 `modelKey`。具体唯一性与 cardinality 由 T07-5.1 决定。
 
 ## 8. Alternative architecture comparison
 
@@ -255,7 +269,7 @@ data/model-registry/
 
 ## 12. Unresolved cases
 
-- snapshot（`qwen3-coder-plus-2025-07-22`）：属于同一 availability 的 observed identifier 变体（1:N），不是独立 upstream model
+- snapshot（`qwen3-coder-plus-2025-07-22`）：T07 registry 已将其标为 `alibaba:qwen3-coder-plus` 的 `type=snapshot` alias。但 **T07 registry classification ≠ 自动成为 T07-5 ontology truth**——T07-5.1 仍需验证 snapshot alias 对应 upstream/availability 的 evidence，不能仅凭 T07 classification 自动归入同一 Availability
 - pointer（`qwen-plus-latest`）：指向某个 upstream model，但本身不是 upstream model。**pointer 具有时间性**——`latest` 指向的目标会随时间变化，因此 pointer → target 必须考虑 `observedAt` / `validFrom` / `validTo`，不能只做 `pointer → upstreamModelId` 静态映射
 - preview（`gemini-3-flash-preview`）：**ontology 语义未定**（修正——不能固定为"独立 upstream model"）：
   - 有官方证据证明是独立版本 → independent upstream model
@@ -270,7 +284,7 @@ data/model-registry/
 1. **provider 语义拆分风险**：`alibaba`→`alibaba-qwen`(developer) + `alibaba-bailian`(platform) 可能影响现有 provider filter 语义——需保持 `providerId` 不变，只加新字段
 2. **跨平台 false positive 风险**：`claude-sonnet-4.5` 在不同平台的 modelKey 可能不同（如 Bedrock 用 `anthropic.claude-sonnet-4.5`），不能自动字符串匹配
 3. **数据源覆盖风险**：当前只有厂商自己的定价页，跨平台数据需要新增数据源
-4. **registry 维护成本**：新增 4 个实体文件增加维护负担——但当前 107 个 model 的映射可半自动生成（provider→developer/platform 已可从现有数据推断）
+4. **registry 维护成本**：新增 4 个实体文件增加维护负担——可以基于现有数据生成 candidate mapping，但 candidate ≠ verified ontology relation。Google namespace 已证明 `providerId` 不能可靠决定 platform，正式 registry 必须经过 Gold Set / evidence gate
 
 ## 14. Recommended implementation phases
 
@@ -283,13 +297,13 @@ data/model-registry/
 ### T07-5.2 Developer / Platform registry
 
 - 新增 `developers.json` / `platforms.json`
-- 从现有 provider 推断初始实体（8-16 个 developer，8-16 个 platform）
+- 基于现有数据生成 candidate developer/platform 实体（8-16 个候选），candidate ≠ verified，正式 registry 必须经过 Gold Set / evidence gate
 - validator + 测试
 
 ### T07-5.3 Upstream Model registry
 
 - 新增 `upstream-models.json`
-- 从现有 modelId 推断初始 upstream model（107 个）
+- 基于现有 modelId 生成 candidate upstream model（107 个候选），candidate ≠ verified，必须经过 Gold Set / evidence gate
 - developer 关联
 
 ### T07-5.4 Availability relation
@@ -374,3 +388,14 @@ Developer          Platform
 5. **跨平台同模型统计修正**：从"零个模型名出现在多个 provider（不可复核的 Agent 分析）"改为"T07-5.1 必须正式产出可复核 inventory"
 
 **pointer 时间性补充**：pointer（如 `qwen-plus-latest`）指向的目标会随时间变化，pointer → target 必须考虑 `observedAt` / `validFrom` / `validTo`，不能做静态映射。
+
+### 第二轮 Review 修订（文档一致性收口）
+
+基于仓库实际代码复审，清理 6 处旧语义残留：
+
+1. **§1.2 / §2**：删除"canonical provider 更接近平台""provider 同时承载平台和开发者语义"。统一定义 `providerId = legacy public query / source aggregation namespace ≠ Developer ≠ Platform`
+2. **§1.4**：把 `gemini-3-flash-preview` 从 pointer 示例移出。snapshot / pointer / preview 分别描述，preview ontology semantic = unresolved / evidence-driven
+3. **§6**：删除"当前数据全部 developer=platform""当前无跨平台同模型数据"等未经 inventory 验证的结论。表格改为 candidate mapping examples，明确待 T07-5.1 Gold Set/evidence 验证
+4. **§7 / §9**：models.json 不固定单值 `availabilityId`/`platformId`（mapping schema 标为 T07-5.1 pending）。availabilities.json 从 `upstreamModelId × platformId × modelKey` 改为 `upstreamModelId × platformId + observedIdentifiers[]`（1:N）
+5. **§13 / T07-5.2 / T07-5.3**：删除"provider → developer/platform 可自动推断""107 upstream model 可直接从 modelId 推断"。统一改为"candidate generation ≠ verified mapping，正式 registry 必须经过 Gold Set / evidence gate"
+6. **§15 snapshot**：修正 `qwen-flash-2025-07-28` 当前状态——registry 实际标为 `type=snapshot` alias（不是 pointer/unresolved）。明确"T07 registry classification ≠ 自动成为 T07-5 ontology truth"
