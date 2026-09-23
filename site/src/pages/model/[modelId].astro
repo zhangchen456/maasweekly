@@ -1,0 +1,187 @@
+---
+// /model/:modelId — 模型详情页（T07-4B.2）
+// 静态预生成：catalog 驱动（107 个 model route），runtime fetch changes/prices。
+// 身份数据来自 release-frozen catalog（loadVerifiedRelease select modelIdentities）。
+// changes/prices 通过 /api/v1/changes?modelId= 与 /api/v1/prices?modelId= 运行时获取。
+import Layout from '../../layouts/Layout.astro';
+import { loadVerifiedRelease } from '../../lib/release';
+import { PUBLIC_ACCESS } from '../../config/public-access';
+
+const release = loadVerifiedRelease(undefined, { select: ['modelIdentities'] });
+const catalog = release.modelIdentities!;
+const apiBase = PUBLIC_ACCESS.paths.apiBase;
+
+export async function getStaticPaths() {
+  // catalog 驱动 route 生成（只有 catalog 中的 modelId 才生成页面）。
+  // getStaticPaths 在构建时独立执行，内部重新读 catalog 保证作用域正确。
+  const rel = loadVerifiedRelease(undefined, { select: ['modelIdentities'] });
+  const cat = rel.modelIdentities!;
+  return cat.models.map((m) => ({
+    params: { modelId: m.modelId },
+    props: { model: m },
+  }));
+}
+
+const { model } = Astro.props as { model: { modelId: string; modelName: string; familyId?: string; familyName?: string } };
+
+// 从 catalog 找 family 信息
+const family = model.familyId
+  ? catalog.families.find((f) => f.familyId === model.familyId)
+  : undefined;
+
+const providerLabels: Record<string, string> = {
+  openai: 'OpenAI', anthropic: 'Anthropic', google: 'Google', deepseek: 'DeepSeek',
+  alibaba: '阿里百炼', volcengine: '火山引擎', zhipu: '智谱', kimi: 'Kimi',
+  baidu: '百度', xai: 'xAI', mistral: 'Mistral', cohere: 'Cohere',
+  minimax: 'MiniMax', siliconflow: 'SiliconFlow', tencent: '腾讯', xfyun: '讯飞',
+};
+const providerId = model.modelId.split(':')[0];
+const providerLabel = providerLabels[providerId] || providerId;
+---
+<Layout title={`${model.modelName} — 模型详情 — MaaS Daily`} description={`${model.modelName}（${model.modelId}）的变化与价格`}>
+  <section class="model-hero">
+    <div class="shell">
+      <div class="eyebrow">MODEL</div>
+      <h1>{model.modelName}</h1>
+      <div class="model-meta">
+        <span class="model-id">{model.modelId}</span>
+        {family && (
+          <span class="model-family">系列：<a href={`/changes/?familyId=${family.familyId}`}>{family.familyName}</a></span>
+        )}
+        <span class="model-provider">{providerLabel}</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="shell model-detail" data-model-id={model.modelId} data-api-base={apiBase}>
+    <section class="model-section">
+      <h2>API / 模型名</h2>
+      <p class="muted small">该 canonical modelId 在当前数据中实际出现过的原始 API 模型名（modelKey）。modelKey ≠ modelId——modelKey 是来源原始标识。</p>
+      <div id="model-keys" class="model-keys">加载中…</div>
+    </section>
+
+    <section class="model-section">
+      <div class="section-head">
+        <h2>最近变化</h2>
+        <a class="section-link" href={`/changes/?modelId=${model.modelId}`}>查看全部 →</a>
+      </div>
+      <div id="recent-changes" class="recent-changes">加载中…</div>
+    </section>
+
+    <section class="model-section">
+      <h2>当前价格</h2>
+      <p class="muted small">该模型当前可观察到的价格事实（来源平台、计费条件、输入/输出价格）。不做最低价推荐。</p>
+      <div id="current-prices" class="current-prices">加载中…</div>
+    </section>
+  </div>
+
+  <script is:inline define:vars={{ apiBase, modelId: model.modelId }}>
+    (function(){
+      const $=id=>document.getElementById(id);
+
+      async function fetchJson(url){
+        const res=await fetch(url);
+        if(!res.ok)throw new Error('HTTP '+res.status);
+        return res.json();
+      }
+
+      // Recent changes
+      async function loadChanges(){
+        try{
+          const data=await fetchJson(apiBase+'/changes?modelId='+encodeURIComponent(modelId)+'&limit=10');
+          const items=data.items||[];
+          const el=$('recent-changes');
+          if(items.length===0){el.textContent='当前数据范围内暂无变化记录。';el.className='empty-state';return}
+          el.replaceChildren();
+          el.className='recent-changes';
+          for(const c of items){
+            const card=document.createElement('article');card.className='change-card';
+            const head=document.createElement('div');head.className='change-head';
+            const date=document.createElement('span');date.className='change-date';date.textContent=c.observationDate;
+            const type=document.createElement('span');type.className='change-type';
+            type.textContent=c.recordType==='price_change'?'价格事件':'来源观察';
+            head.append(date,type);
+            const title=document.createElement('a');title.className='change-title';title.textContent=c.title;
+            title.href='/item/'+c.id+'/';
+            card.append(head,title);
+            if(c.summary){const p=document.createElement('p');p.className='change-summary';p.textContent=c.summary.slice(0,160);card.append(p)}
+            el.append(card);
+          }
+        }catch(e){$('recent-changes').textContent='加载失败：'+e.message}
+      }
+
+      // Current prices
+      async function loadPrices(){
+        try{
+          const data=await fetchJson(apiBase+'/prices?modelId='+encodeURIComponent(modelId)+'&limit=30');
+          const items=data.items||[];
+          const el=$('current-prices');
+          if(items.length===0){el.textContent='当前数据范围内暂无价格记录。';el.className='empty-state';return}
+          el.replaceChildren();
+          el.className='current-prices';
+          // 汇总 observed modelKey（从 prices API 返回的 modelKey 字段）
+          const keys=new Set();
+          for(const p of items){if(p.modelKey)keys.add(p.modelKey)}
+          // 渲染 modelKeys 区
+          const keysEl=$('model-keys');
+          keysEl.replaceChildren();
+          if(keys.size>0){
+            for(const k of [...keys].sort()){
+              const tag=document.createElement('span');tag.className='model-key-tag';tag.textContent=k;
+              keysEl.append(tag);
+            }
+          }else{keysEl.textContent='当前数据中无原始 modelKey 记录。';keysEl.className='muted small'}
+
+          // 价格表
+          const table=document.createElement('table');table.className='price-table';
+          const thead=document.createElement('thead');const hr=document.createElement('tr');
+          for(const h of ['modelKey','component','region','billingMode','amount','currency']){
+            const th=document.createElement('th');th.textContent=h;hr.append(th);
+          }
+          thead.append(hr);table.append(thead);
+          const tbody=document.createElement('tbody');
+          for(const p of items){
+            const tr=document.createElement('tr');
+            for(const f of ['modelKey','component','region','billingMode','amount','currency']){
+              const td=document.createElement('td');td.textContent=p[f]??'—';tr.append(td);
+            }
+            tbody.append(tr);
+          }
+          table.append(tbody);el.append(table);
+        }catch(e){$('current-prices').textContent='加载失败：'+e.message}
+      }
+
+      loadChanges();loadPrices();
+    })();
+  </script>
+</Layout>
+
+<style>
+  .model-hero{padding:36px 0 20px}
+  .model-hero h1{font-size:30px;margin:8px 0}
+  .model-meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted)}
+  .model-id{font-family:monospace;background:var(--panel-solid);padding:3px 10px;border-radius:6px;border:1px solid var(--line);font-size:12px}
+  .model-family a{color:var(--cyan);text-decoration:none}
+  .model-detail{padding:20px 0}
+  .model-section{padding:20px 0;border-bottom:1px solid var(--line)}
+  .model-section h2{font-size:18px;margin-bottom:10px}
+  .section-head{display:flex;justify-content:space-between;align-items:center}
+  .section-link{font-size:13px;color:var(--cyan);text-decoration:none}
+  .section-link:hover{text-decoration:underline}
+  .muted{color:var(--muted)}
+  .small{font-size:12px}
+  .model-keys{display:flex;gap:6px;flex-wrap:wrap;padding:8px 0}
+  .model-key-tag{font-family:monospace;font-size:11px;background:var(--raised);border:1px solid var(--line);border-radius:6px;padding:2px 8px}
+  .recent-changes,.current-prices{padding:8px 0}
+  .change-card{padding:12px 0;border-bottom:1px solid var(--line)}
+  .change-head{display:flex;gap:10px;font-size:12px;color:var(--muted);margin-bottom:4px}
+  .change-type{padding:2px 8px;border-radius:6px;background:var(--acid-dim);font-size:11px}
+  .change-title{display:block;font-weight:550;color:var(--paper);text-decoration:none;line-height:1.5}
+  .change-title:hover{color:var(--cyan)}
+  .change-summary{margin:4px 0 0;font-size:12px;color:var(--muted);line-height:1.6}
+  .empty-state{padding:30px 0;text-align:center;color:var(--muted)}
+  .price-table{width:100%;border-collapse:collapse;font-size:12px}
+  .price-table th{text-align:left;font-size:10px;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line)}
+  .price-table td{padding:8px 10px;border-bottom:1px solid var(--line)}
+  .price-table td:first-child{font-family:monospace;font-size:11px}
+</style>
