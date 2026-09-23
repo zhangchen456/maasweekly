@@ -33,7 +33,7 @@ ledger（pricing 数据源）用 **pricing provider**（`qwen`/`doubao`/`glm`）
 
 两者都是 public query namespace 层面的映射，**不等价于 Developer 或 Platform**。ledger 的 pricing provider 更接近模型品牌（Qwen/Doubao/GLM），canonical 的 providerId 是聚合命名空间——但都只是 legacy namespace，不承担新 ontology 语义。
 
-### 1.3 当前数据无跨平台同模型
+### 1.3 跨平台同模型现状待 T07-5.1 inventory 验证
 
 **修正（review 后）**：之前文档写"对 ledger 2598 条 price 按 model_display_name 分组，零个模型名出现在多个 provider"——这一分析结果**在仓库内没有可复核的脚本或持久化产物**，属于 Agent 临时分析，不能作为 ontology 的硬前提。
 
@@ -49,13 +49,13 @@ T07-5.1 必须把这类统计正式产出成可复核 inventory（持久化脚�
 - **pointer**：`qwen-plus-latest` 等带 `-latest`/`-next` 的串，registry 明确标 `classification=pointer`。pointer 具有时间性（指向目标随时间变化）
 - **preview**：`gemini-3-flash-preview` 等——**ontology 语义未定**（evidence-driven unresolved）。当前 resolver 规定"禁止删除 -preview / 禁止指针猜测"只说明 identity resolver 不擅自合并，**不证明 preview 是 pointer，也不证明是独立 upstream model**
 
-这些目前不进入 public catalog（unresolved 或 pointer），但 T07-5.1 需验证它们在新 ontology 中的归类。
+这些 identifier 不一定形成独立 public entity；pointer 被排除，snapshot/preview 语义由现有 identity 与 T07-5 evidence 分别处理。T07-5.1 需验证它们在新 ontology 中的归类。
 
 ## 2. Problem statement
 
 当前 ontology 无法回答：
 
-1. Claude Sonnet 4.5 在哪些平台可用？（当前只有 Anthropic API）
+1. Claude Sonnet 4.5 在哪些平台可用？
 2. 不同平台的 `claude-sonnet-4.5` 是否同一个上游模型？
 3. `alibaba:qwen3-coder-plus` 的开发者是谁？（阿里通义，不是"阿里百炼"）
 4. 同一上游模型在不同平台的价格事实有哪些？
@@ -69,7 +69,7 @@ T07-5.1 必须把这类统计正式产出成可复核 inventory（持久化脚�
 | **Developer** | 模型的开发/拥有方（Anthropic, 阿里通义, 字节跳动, DeepSeek） | 部分隐含在 providerId |
 | **Platform** | 模型被调用/销售的平台（Anthropic API, 阿里百炼, 火山方舟, Bedrock, Vertex） | 部分对应 providerId |
 | **Upstream Model** | 跨平台稳定的模型实体（Claude Sonnet 4.5, Qwen3 Coder Plus） | 不存在 |
-| **Availability** | 某 upstream model 在某平台上的可用性（含 modelKey/region/status） | 不存在 |
+| **Availability** | 某 upstream model 在某 platform 上的可用关系；observed identifiers 为 1:N；region/status 是否属于 Availability 属性由 T07-5.1 验证 | 不存在 |
 | **modelKey** | 平台上的原始 API model string（qwen3-coder-plus, claude-sonnet-4.5） | 已存在于 prices/changes |
 | **modelId** | provider-scoped canonical observed identity（T07-3 已定义） | **保留不变** |
 
@@ -136,8 +136,8 @@ existing modelId ──maps to──→ Availability (cardinality 待 T07-5.1 �
 | anthropic:claude-opus-5 | Anthropic | Claude Opus 5 | Anthropic API | claude-opus-5 |
 | openai:gpt-6-astra | OpenAI | GPT-6 Astra | OpenAI API | gpt-6-astra |
 | openai:gpt-5.6-sol | OpenAI | GPT-5.6 Sol | OpenAI API | gpt-5.6-sol |
-| google:gemini-2.5-pro | Google | Gemini 2.5 Pro | Google Vertex AI / Gemini API | gemini-2.5-pro |
-| google:gemini-3-flash-preview | Google | Gemini 3 Flash Preview | Google Vertex AI / Gemini API | gemini-3-flash-preview |
+| google:gemini-2.5-pro | Google | Gemini 2.5 Pro | Gemini API / Vertex AI candidates，mapping/cardinality unresolved | gemini-2.5-pro |
+| google:gemini-3-flash-preview | Google | Gemini 3 Flash Preview | Gemini API / Vertex AI candidates，mapping/cardinality unresolved | gemini-3-flash-preview |
 | alibaba:qwen3-coder-plus | 阿里通义 | Qwen3 Coder Plus | 阿里百炼 | qwen3-coder-plus |
 | alibaba:qwen3-coder-plus | 阿里通义 | Qwen3 Coder Plus | 阿里百炼 | qwen3-coder-plus-2025-07-22 (snapshot) |
 | volcengine:doubao-seed-1.6 | 字节跳动 | Doubao Seed 1.6 | 火山方舟 | doubao-seed-1.6 |
@@ -215,14 +215,14 @@ Availability
 | 未来 query 能力 | 弱（无法直接查"Claude 在哪些平台"） | 强（availability relation 可直接查） |
 | 跨平台扩展 | 难（Bedrock Claude 需新建 modelId 再关联） | 自然（新建 availability 即可） |
 
-**推荐方案 B**：虽然当前数据无跨平台同模型，但方案 B 的实体分离让未来扩展自然——新增 Bedrock Claude 只需加 availability，不需改 upstream model。方案 A 在跨平台场景会产生 `anthropic:claude-sonnet-4.5` 和 `bedrock:claude-sonnet-4.5` 两个 modelId，关联关系隐含在字段里，查询不便。
+**推荐方案 B**：当前跨平台覆盖情况尚未形成可复核 inventory，但方案 B 的实体分离让未来扩展自然——新增 Bedrock Claude 只需加 availability，不需改 upstream model。方案 A 在跨平台场景会产生 `anthropic:claude-sonnet-4.5` 和 `bedrock:claude-sonnet-4.5` 两个 modelId，关联关系隐含在字段里，查询不便。
 
 ## 9. Migration strategy
 
 ### Phase 1：只加实体，不改现有行为
 
 1. 新增 `developers.json` / `platforms.json` / `upstream-models.json` / `availabilities.json`
-2. 现有 `models.json` 加 additive 字段（`upstreamModelId`/`developerId`/`platformId`）
+2. 现有 `models.json` 的 mapping 字段（`upstreamModelId`/`developerId`/`platformId` 单值还是 `availabilityIds[]` 多值）**待 T07-5.1 cardinality 验证后确定**，不预先固定 schema
 3. public projection 不变（model-identities.json 不加新字段）
 4. API/UI 不变
 
@@ -283,7 +283,7 @@ Availability
 
 1. **provider 语义拆分风险**：`alibaba`→`alibaba-qwen`(developer) + `alibaba-bailian`(platform) 可能影响现有 provider filter 语义——需保持 `providerId` 不变，只加新字段
 2. **跨平台 false positive 风险**：`claude-sonnet-4.5` 在不同平台的 modelKey 可能不同（如 Bedrock 用 `anthropic.claude-sonnet-4.5`），不能自动字符串匹配
-3. **数据源覆盖风险**：当前只有厂商自己的定价页，跨平台数据需要新增数据源
+3. **数据源覆盖风险**：当前跨平台覆盖情况尚未形成可复核 inventory，仓库已有 Gemini/Vertex 两组 source，实际模型与价格覆盖待 T07-5.1 inventory
 4. **registry 维护成本**：新增 4 个实体文件增加维护负担——可以基于现有数据生成 candidate mapping，但 candidate ≠ verified ontology relation。Google namespace 已证明 `providerId` 不能可靠决定 platform，正式 registry 必须经过 Gold Set / evidence gate
 
 ## 14. Recommended implementation phases
@@ -309,7 +309,7 @@ Availability
 ### T07-5.4 Availability relation
 
 - 新增 `availabilities.json`
-- 关联 upstreamModel × platform × modelKey
+- 关联 upstreamModel × platform + observedIdentifiers[]（1:N）
 - 现有 modelId → availability 映射
 
 ### T07-5.5 Public projection
@@ -331,7 +331,7 @@ Availability
 
 1. **跨平台同模型判定**：`claude-sonnet-4.5` 在 Bedrock 和 Anthropic API 是否同一上游模型——需要官方文档证据，不能字符串匹配
 2. **developer 与 platform 分离**：`alibaba` 是平台还是开发者——需要人工判定（阿里百炼=平台，阿里通义=开发者）
-3. **snapshot vs 独立模型**：`qwen-flash-2025-07-28` 是 `qwen-flash` 的快照还是独立模型——当前标 pointer/unresolved，不自动归并
+3. **snapshot vs 独立模型**：`qwen-flash-2025-07-28` 是 `qwen-flash` 的快照还是独立模型——registry 标为 `type=snapshot` alias，但 T07 registry classification ≠ 自动成为 T07-5 ontology truth，不自动归并
 4. **family 跨平台**：`anthropic:claude-sonnet` 和未来 `bedrock:claude-sonnet` 的 family 关系——需要 upstream family 实体，不在本轮设计
 
 ---
