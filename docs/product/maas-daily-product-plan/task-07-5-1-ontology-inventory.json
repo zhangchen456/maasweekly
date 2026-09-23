@@ -8,21 +8,44 @@
   },
   "stats": {
     "publicModels": 107,
+    "release": {
+      "datasetVersion": "ds_3911a1c6cde3f63075a0412e82f46e58057eb3102e1b17213419642f098b9a9a",
+      "dataThrough": "2026-09-23",
+      "manifestChangesCount": 5286,
+      "manifestPricesCount": 1425,
+      "actualChangesLen": 5286,
+      "actualPricesLen": 1425
+    },
     "developer": {
-      "candidate": 8,
-      "unresolved": 0
+      "candidateEntities": 8,
+      "candidateEntitiesList": [
+        "alibaba-qwen",
+        "anthropic",
+        "bytedance-doubao",
+        "deepseek",
+        "google",
+        "moonshot-kimi",
+        "openai",
+        "zhipu"
+      ],
+      "modelDeveloperCandidateMappings": 107,
+      "unresolvedMappings": 0
     },
     "upstream": {
-      "candidate": 107,
-      "unresolved": 0
+      "candidateEntities": 107,
+      "modelUpstreamCandidateMappings": 107,
+      "unresolvedMappings": 0
     },
-    "platformCardinality": {
-      "candidate-1": 106,
-      "unresolved": 1
+    "sourceFootprintCardinality": {
+      "single-source-footprint": 106,
+      "no-data": 1
     },
-    "modelIdToAvailabilityCardinality": {
-      "1": 106,
-      "0": 1
+    "availabilityCardinality": {
+      "conclusion": "unresolved — source footprint != availability；不可从现有数据直接推出",
+      "single": null,
+      "multiple": null,
+      "zero": null,
+      "unresolved": 107
     },
     "observedModelKeyCardinality": {
       "single": 81,
@@ -30,17 +53,18 @@
       "zero": 1
     },
     "ontologyStatus": {
-      "single-platform-candidate": 106,
+      "single-source-footprint": 106,
       "no-data": 1
     }
   },
   "googleStats": {
     "total": 14,
-    "geminiSourceOnly": 14,
-    "vertexSourceOnly": 0,
-    "bothSources": 0,
+    "geminiSourceFootprintOnly": 14,
+    "vertexSourceFootprintOnly": 0,
+    "bothSourceFootprints": 0,
     "noSourceFootprint": 0,
-    "multiPlatformCandidates": []
+    "multiSourceFootprintModels": [],
+    "conclusion": "observed source footprint（不是 platform/availability mapping）；14 个 Google model 的 identity-bearing records 全部来自 google-gemini-pricing source，0 个来自 google-vertex-* source。但这不等于'只存在于 Gemini API 不存在于 Vertex AI'——platform mapping 需官方文档验证"
   },
   "pointerInventory": [
     {
@@ -111,19 +135,19 @@
     {
       "modelId": "google:gemini-2.5-computer-use-preview",
       "candidateUpstreamModelId": "google:gemini-2.5-computer-use-preview",
-      "ontologyStatus": "single-platform-candidate",
+      "ontologyStatus": "single-source-footprint",
       "evidenceStatus": "unresolved"
     },
     {
       "modelId": "google:gemini-3-flash-preview",
       "candidateUpstreamModelId": "google:gemini-3-flash-preview",
-      "ontologyStatus": "single-platform-candidate",
+      "ontologyStatus": "single-source-footprint",
       "evidenceStatus": "unresolved"
     },
     {
       "modelId": "google:gemini-omni-flash-preview",
       "candidateUpstreamModelId": "google:gemini-omni-flash-preview",
-      "ontologyStatus": "single-platform-candidate",
+      "ontologyStatus": "single-source-footprint",
       "evidenceStatus": "unresolved"
     }
   ],
@@ -153,7 +177,12 @@
         "us"
       ]
     },
-    "conclusion": "region 出现在 price fact 中，但同一 modelId 有多 region——region 更可能是 price fact condition 而非 Availability 属性（待 T07-5.1 Gold Set 验证）"
+    "conclusion": "当前仓库只提供 price-fact-level evidence；region 是 price fact 条件维度。是否属于 Availability ontology = unresolved；第一版 core Availability identity 不应包含 region"
+  },
+  "statusStats": {
+    "availabilityStatusDataFound": false,
+    "fieldStateValues": [],
+    "conclusion": "not evidenced / unresolved — 当前仓库无 availability 层面 status 数据；field_state 是数据质量状态，不是 availability"
   },
   "snapshotStats": {
     "totalSnapshotAliases": 43,
@@ -195,12 +224,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen-coder-plus",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-coder-plus"
       ],
@@ -234,12 +265,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen-coder-turbo",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-coder-turbo"
       ],
@@ -273,12 +306,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen-doc-turbo",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-doc-turbo"
       ],
@@ -312,12 +347,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-flash",
         "qwen-flash-2025-07-28"
@@ -353,12 +390,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen-math-plus",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-math-plus"
       ],
@@ -392,12 +431,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen-math-turbo",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-math-turbo"
       ],
@@ -431,12 +472,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen-max",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-max"
       ],
@@ -470,12 +513,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen-mt-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-mt-flash"
       ],
@@ -509,12 +554,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen-mt-plus",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-mt-plus"
       ],
@@ -548,12 +595,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen-plus",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-plus",
         "qwen-plus-2024-12-20",
@@ -598,12 +647,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen-plus-character",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-plus-character"
       ],
@@ -637,12 +688,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen-turbo",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-turbo"
       ],
@@ -676,12 +729,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-14b",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-14b"
       ],
@@ -715,12 +770,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-32b",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-32b"
       ],
@@ -754,12 +811,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-8b",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-8b"
       ],
@@ -793,12 +852,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-coder-30b-a3b-instruct",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-coder-30b-a3b-instruct"
       ],
@@ -832,12 +893,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-coder-480b-a35b-instruct",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-coder-480b-a35b-instruct"
       ],
@@ -871,12 +934,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-coder-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-coder-flash",
         "qwen3-coder-flash-2025-07-28"
@@ -912,12 +977,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-coder-next-80b-a3b-instruct",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-next-80b-a3b-instruct"
       ],
@@ -951,12 +1018,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-coder-plus",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-coder-plus",
         "qwen3-coder-plus-2025-07-22",
@@ -995,12 +1064,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-deep-research",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen-deep-research",
         "qwen-deep-research-2025-12-15"
@@ -1036,12 +1107,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-livetranslate-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-livetranslate-flash",
         "qwen3-livetranslate-flash-2025-12-01"
@@ -1077,12 +1150,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-livetranslate-flash-realtime",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-livetranslate-flash-realtime",
         "qwen3-livetranslate-flash-realtime-2025-09-22"
@@ -1118,12 +1193,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-max",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-max",
         "qwen3-max-2025-09-23",
@@ -1160,12 +1237,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-omni-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-omni-flash",
         "qwen3-omni-flash-2025-09-15",
@@ -1202,12 +1281,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-omni-flash-realtime",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-omni-flash-realtime",
         "qwen3-omni-flash-realtime-2025-09-15",
@@ -1244,12 +1325,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-omni-plus",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3.5-omni-plus",
         "qwen3.5-omni-plus-2026-03-15",
@@ -1286,12 +1369,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-tts-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-tts-flash",
         "qwen3-tts-flash-2025-09-18",
@@ -1330,12 +1415,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-vl-embedding",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-vl-embedding"
       ],
@@ -1369,12 +1456,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-vl-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-vl-flash",
         "qwen3-vl-flash-2025-10-15",
@@ -1411,12 +1500,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3-vl-plus",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3-vl-plus",
         "qwen3-vl-plus-2025-09-23",
@@ -1453,12 +1544,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3.5-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3.5-flash",
         "qwen3.5-flash-2026-02-23"
@@ -1494,12 +1587,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3.5-livetranslate-flash-realtime",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3.5-livetranslate-flash-realtime",
         "qwen3.5-livetranslate-flash-realtime-2026-05-19"
@@ -1535,12 +1630,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3.5-omni-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3.5-omni-flash",
         "qwen3.5-omni-flash-2026-03-15",
@@ -1578,12 +1675,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3.5-plus",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3.5-plus",
         "qwen3.5-plus-2026-02-15",
@@ -1620,12 +1719,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3.6-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3.6-flash",
         "qwen3.6-flash-2026-04-16"
@@ -1661,12 +1762,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3.6-plus",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3.6-plus",
         "qwen3.6-plus-2026-04-02"
@@ -1702,12 +1805,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3.7-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3.7-flash",
         "qwen3.7-flash-2026-07-15"
@@ -1743,12 +1848,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3.7-max",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3.7-max",
         "qwen3.7-max-2026-05-17",
@@ -1786,12 +1893,14 @@
       "classification": "model",
       "candidateDeveloperId": "alibaba-qwen",
       "candidateUpstreamModelId": "alibaba-qwen:qwen3.7-plus",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "alibaba-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "qwen3.7-plus",
         "qwen3.7-plus-2026-05-26"
@@ -1827,12 +1936,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-fable-5",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-fable-5"
       ],
@@ -1868,12 +1979,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-fable-5.1",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-fable-5.1"
       ],
@@ -1909,12 +2022,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-haiku-3.5",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-haiku-3.5"
       ],
@@ -1950,12 +2065,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-haiku-4.5",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-haiku-4.5"
       ],
@@ -1991,12 +2108,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-mythos-5",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-mythos-5"
       ],
@@ -2032,12 +2151,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-mythos-5.1",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-mythos-5.1"
       ],
@@ -2073,12 +2194,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-opus-4",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-opus-4"
       ],
@@ -2114,12 +2237,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-opus-4.1",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-opus-4.1"
       ],
@@ -2155,12 +2280,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-opus-4.5",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-opus-4.5"
       ],
@@ -2196,12 +2323,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-opus-4.6",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-opus-4.6"
       ],
@@ -2237,12 +2366,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-opus-4.7",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-opus-4.7"
       ],
@@ -2278,12 +2409,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-opus-4.8",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-opus-4.8"
       ],
@@ -2319,12 +2452,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-opus-5",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-opus-5"
       ],
@@ -2360,12 +2495,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-sonnet-4",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-sonnet-4"
       ],
@@ -2401,12 +2538,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-sonnet-4.5",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-sonnet-4.5"
       ],
@@ -2442,12 +2581,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-sonnet-4.6",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-sonnet-4.6"
       ],
@@ -2483,12 +2624,14 @@
       "classification": "model",
       "candidateDeveloperId": "anthropic",
       "candidateUpstreamModelId": "anthropic:claude-sonnet-5",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "anthropic-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "claude-sonnet-5"
       ],
@@ -2524,8 +2667,10 @@
       "classification": "model",
       "candidateDeveloperId": "deepseek",
       "candidateUpstreamModelId": "deepseek:deepseek-flash",
-      "candidatePlatformIds": [],
-      "candidateAvailabilityCount": 0,
+      "sourceFootprintIds": [],
+      "sourceFootprintCount": 0,
+      "sourceFootprintStatus": "no-data",
+      "availabilityCardinality": "unresolved",
       "availabilityStatus": "unresolved",
       "ontologyStatus": "no-data",
       "observedModelKeys": [],
@@ -2551,12 +2696,14 @@
       "classification": "model",
       "candidateDeveloperId": "deepseek",
       "candidateUpstreamModelId": "deepseek:deepseek-v4-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "deepseek-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "deepseek-v4-flash"
       ],
@@ -2588,12 +2735,14 @@
       "classification": "model",
       "candidateDeveloperId": "deepseek",
       "candidateUpstreamModelId": "deepseek:deepseek-v4-flash-vision-exp",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "deepseek-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "deepseek-v4-flash-vision-exp"
       ],
@@ -2625,12 +2774,14 @@
       "classification": "model",
       "candidateDeveloperId": "deepseek",
       "candidateUpstreamModelId": "deepseek:deepseek-v4-pro",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "deepseek-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "deepseek-v4-pro"
       ],
@@ -2664,12 +2815,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-2.5-computer-use-preview",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-2.5-computer-use-preview"
       ],
@@ -2705,12 +2858,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-2.5-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-2.5-flash"
       ],
@@ -2746,12 +2901,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-2.5-flash-lite",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-2.5-flash-lite"
       ],
@@ -2787,12 +2944,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-2.5-pro",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-2.5-pro"
       ],
@@ -2828,12 +2987,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-3-flash-preview",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-3-flash-preview"
       ],
@@ -2867,12 +3028,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-3.1-flash-lite",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-3.1-flash-lite"
       ],
@@ -2908,12 +3071,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-3.5-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-3.5-flash"
       ],
@@ -2947,12 +3112,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-3.5-flash-lite",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-3.5-flash-lite"
       ],
@@ -2986,12 +3153,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-3.6-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-3.6-flash"
       ],
@@ -3025,12 +3194,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-3.7-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-3.7-flash"
       ],
@@ -3064,12 +3235,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-3.8-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-3.8-flash"
       ],
@@ -3103,12 +3276,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-embedding",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-embedding"
       ],
@@ -3140,12 +3315,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-omni-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-omni-flash"
       ],
@@ -3179,12 +3356,14 @@
       "classification": "model",
       "candidateDeveloperId": "google",
       "candidateUpstreamModelId": "google:gemini-omni-flash-preview",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "google-gemini"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gemini-omni-flash-preview"
       ],
@@ -3218,12 +3397,14 @@
       "classification": "model",
       "candidateDeveloperId": "moonshot-kimi",
       "candidateUpstreamModelId": "moonshot-kimi:kimi-k2.6",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "kimi-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "kimi-k2.6"
       ],
@@ -3257,12 +3438,14 @@
       "classification": "model",
       "candidateDeveloperId": "moonshot-kimi",
       "candidateUpstreamModelId": "moonshot-kimi:kimi-k2.7-code",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "kimi-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "kimi-k2.7-code",
         "kimi-k2.7-code-highspeed"
@@ -3297,12 +3480,14 @@
       "classification": "model",
       "candidateDeveloperId": "moonshot-kimi",
       "candidateUpstreamModelId": "moonshot-kimi:kimi-k3",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "kimi-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "kimi-k3"
       ],
@@ -3336,12 +3521,14 @@
       "classification": "model",
       "candidateDeveloperId": "openai",
       "candidateUpstreamModelId": "openai:gpt-5.6-luna",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "openai-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gpt-5.6-luna"
       ],
@@ -3373,12 +3560,14 @@
       "classification": "model",
       "candidateDeveloperId": "openai",
       "candidateUpstreamModelId": "openai:gpt-5.6-sol",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "openai-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gpt-5.6-sol"
       ],
@@ -3412,12 +3601,14 @@
       "classification": "model",
       "candidateDeveloperId": "openai",
       "candidateUpstreamModelId": "openai:gpt-5.6-terra",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "openai-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gpt-5.6-terra"
       ],
@@ -3449,12 +3640,14 @@
       "classification": "model",
       "candidateDeveloperId": "openai",
       "candidateUpstreamModelId": "openai:gpt-6-astra",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "openai-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "gpt-6-astra"
       ],
@@ -3488,12 +3681,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-1.5-pro-32k",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-1.5-pro-32k",
         "doubao-pro-32k"
@@ -3526,12 +3721,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-embedding-vision",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-embedding-vision"
       ],
@@ -3565,12 +3762,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-1.6",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-seed-1.6"
       ],
@@ -3602,12 +3801,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-1.6-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-seed-1.6-flash"
       ],
@@ -3639,12 +3840,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-1.6-lite",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-seed-1.6-lite"
       ],
@@ -3676,12 +3879,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-1.6-vision",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-seed-1.6-vision"
       ],
@@ -3713,12 +3918,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-1.8",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-seed-1.8"
       ],
@@ -3750,12 +3957,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-2.0-code",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-seed-2.0-code"
       ],
@@ -3789,12 +3998,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-2.0-lite",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-seed-2.0-lite"
       ],
@@ -3828,12 +4039,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-2.0-mini",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-seed-2.0-mini"
       ],
@@ -3867,12 +4080,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-2.0-pro",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-seed-2.0-pro"
       ],
@@ -3906,12 +4121,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-2.1-pro",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-seed-2.1-pro"
       ],
@@ -3945,12 +4162,14 @@
       "classification": "model",
       "candidateDeveloperId": "bytedance-doubao",
       "candidateUpstreamModelId": "bytedance-doubao:doubao-seed-2.1-turbo",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "volcengine-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "doubao-seed-2.1-turbo"
       ],
@@ -3984,12 +4203,14 @@
       "classification": "model",
       "candidateDeveloperId": "zhipu",
       "candidateUpstreamModelId": "zhipu:glm-4.5-air",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "zhipu-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "glm-4.5-air"
       ],
@@ -4021,12 +4242,14 @@
       "classification": "model",
       "candidateDeveloperId": "zhipu",
       "candidateUpstreamModelId": "zhipu:glm-4.5v",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "zhipu-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "glm-4.5v"
       ],
@@ -4062,12 +4285,14 @@
       "classification": "model",
       "candidateDeveloperId": "zhipu",
       "candidateUpstreamModelId": "zhipu:glm-4.6v-flashx",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "zhipu-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "glm-4.6v-flashx"
       ],
@@ -4103,12 +4328,14 @@
       "classification": "model",
       "candidateDeveloperId": "zhipu",
       "candidateUpstreamModelId": "zhipu:glm-4.7",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "zhipu-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "glm-4.7"
       ],
@@ -4140,12 +4367,14 @@
       "classification": "model",
       "candidateDeveloperId": "zhipu",
       "candidateUpstreamModelId": "zhipu:glm-4.7-flashx",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "zhipu-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "glm-4.7-flashx"
       ],
@@ -4177,12 +4406,14 @@
       "classification": "model",
       "candidateDeveloperId": "zhipu",
       "candidateUpstreamModelId": "zhipu:glm-5-turbo",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "zhipu-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "glm-5-turbo"
       ],
@@ -4216,12 +4447,14 @@
       "classification": "model",
       "candidateDeveloperId": "zhipu",
       "candidateUpstreamModelId": "zhipu:glm-5.1",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "zhipu-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "glm-5.1"
       ],
@@ -4253,12 +4486,14 @@
       "classification": "model",
       "candidateDeveloperId": "zhipu",
       "candidateUpstreamModelId": "zhipu:glm-5.2",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "zhipu-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "glm-5.2"
       ],
@@ -4294,12 +4529,14 @@
       "classification": "model",
       "candidateDeveloperId": "zhipu",
       "candidateUpstreamModelId": "zhipu:glm-5.3",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "zhipu-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "glm-5.3"
       ],
@@ -4335,12 +4572,14 @@
       "classification": "model",
       "candidateDeveloperId": "zhipu",
       "candidateUpstreamModelId": "zhipu:glm-5.3-flash",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "zhipu-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "glm-5.3-flash"
       ],
@@ -4376,12 +4615,14 @@
       "classification": "model",
       "candidateDeveloperId": "zhipu",
       "candidateUpstreamModelId": "zhipu:glm-5v-turbo",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "zhipu-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "glm-5v-turbo"
       ],
@@ -4417,12 +4658,14 @@
       "classification": "model",
       "candidateDeveloperId": "zhipu",
       "candidateUpstreamModelId": "zhipu:glm-ocr",
-      "candidatePlatformIds": [
+      "sourceFootprintIds": [
         "zhipu-pricing"
       ],
-      "candidateAvailabilityCount": 1,
-      "availabilityStatus": "candidate-1",
-      "ontologyStatus": "single-platform-candidate",
+      "sourceFootprintCount": 1,
+      "sourceFootprintStatus": "single-source-footprint",
+      "availabilityCardinality": "unresolved",
+      "availabilityStatus": "unresolved",
+      "ontologyStatus": "single-source-footprint",
       "observedModelKeys": [
         "glm-ocr"
       ],

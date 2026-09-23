@@ -1,6 +1,6 @@
 # T07-5.1 Ontology Inventory + Gold Set
 
-日期：2026-09-23。状态：**Inventory 完成，Gold Set 建立，分析完成**。
+日期：2026-09-23。状态：**Inventory 完成（correction pass），Gold Set 建立，分析完成**。
 
 前置：T07-5 Ontology Design FINAL PASS（commit `784948f6a`）。
 
@@ -19,7 +19,7 @@
 python3 pipeline/scripts/ontology-inventory.py
 ```
 
-脚本从仓库真实数据生成 inventory，不依赖临时分析。
+脚本从仓库真实数据生成 inventory，不依赖临时分析。datasetVersion / dataThrough / changes / prices 等数字全部从 manifest 与 release 文件读取，写入 result，不人工写死。
 
 ## 输入文件
 
@@ -27,9 +27,11 @@ python3 pipeline/scripts/ontology-inventory.py
 - `pipeline/config/public_providers.json`（sourceToProvider / pricingProviderIdToProvider）
 - `pipeline/config/maas_official_sources.json`（17 platform metadata，含 vendor 字段）
 - `data/public/v1/releases/<datasetVersion>/model-identities.json`（catalog：107 models / 24 families）
-- `data/public/v1/releases/<datasetVersion>/changes.json`（4993 changes）
-- `data/public/v1/releases/<datasetVersion>/prices.json`（1425 prices）
-- `site/src/data/pricing/ledger.json`（2598 ledger prices，含 source_url）
+- `data/public/v1/releases/<datasetVersion>/changes.json`（manifest coverage.count 行 changes）
+- `data/public/v1/releases/<datasetVersion>/prices.json`（manifest coverage.facts 行 prices）
+- `site/src/data/pricing/ledger.json`（ledger prices，含 source_url）
+
+**注意**：changes/prices 行数由脚本从 release 文件读取并写入 result，不人工写死。当前 release 的数字见 inventory result `stats.release`。
 
 ## 107 model inventory coverage
 
@@ -39,65 +41,65 @@ python3 pipeline/scripts/ontology-inventory.py
 | 有 price/change 记录 | 106 |
 | 无记录（known-but-empty） | 1（`deepseek:deepseek-flash`） |
 
-## developer verified/candidate/unresolved
+## developer candidate entities / mappings
 
-| 状态 | 数量 | 说明 |
-|---|---|---|
-| candidate | 107 | 全部从 providerId 推断候选（candidate ≠ verified） |
-| unresolved | 0 | — |
-
-**注意**：developer 全部是 candidate（从 providerId 推断），没有 Gold Set verified 的批量 mapping。Gold Set 覆盖 10 个代表，其中 8 个有 evidence 的 developer mapping。
-
-## upstream verified/candidate/unresolved
-
-| 状态 | 数量 |
+| 维度 | 数量 |
 |---|---|
-| candidate | 107（developer:model-slug 格式） |
-| unresolved | 0 |
+| candidate developer entities | 8 |
+| model→developer candidate mappings | 107 |
+| unresolved mappings | 0 |
 
-## platform cardinality 分布
+**注意**：8 是 unique candidate developer entities 数，107 是 model→developer mapping 数。两者是不同指标。全部是 candidate（从 providerId 推断），candidate ≠ verified。Gold Set 覆盖 10 个代表，0 个 developer relation verified，8 个 candidate，2 个 unresolved。
 
-| cardinality | 数量 | 说明 |
-|---|---|---|
-| 1（candidate） | 106 | 1 个 candidate platform |
-| 0 | 1 | `deepseek:deepseek-flash`（无 price/change 记录） |
-| 2+ | **0** | **没有 1:N availability** |
+## upstream candidate entities / mappings
 
-**关键结论：modelId → Availability cardinality 全部是 1（或 0），没有 1:N**。
+| 维度 | 数量 |
+|---|---|
+| candidate upstream entities | 107 |
+| model→upstream candidate mappings | 107 |
+| unresolved mappings | 0 |
 
-## modelId → availability cardinality 分布
+107 个 upstream entity（每个 model slug 唯一，entity 数 = mapping 数）。全部是 candidate。
 
-```
-0 availability: 1（deepseek:deepseek-flash，known-but-empty）
-1 availability: 106
-2+ availabilities: 0
-```
+## source footprint cardinality（不是 availability cardinality）
 
-**1:N 不存在**。当前数据中，每个有记录的 modelId 只在一个 source/platform footprint 出现。
+| source footprint | 数量 |
+|---|---|
+| single-source-footprint | 106 |
+| no-data | 1 |
+| multi-source-footprint | 0 |
+
+**重要**：这是 **observed source footprint**（identity-bearing records 实际来自哪些 source），**不是 availability cardinality**。source footprint != Platform；1 个 source footprint 不等于 1 个 availability。
+
+## availability cardinality
+
+| 状态 |
+|---|
+| **unresolved** — source footprint != availability；不可从现有数据直接推出 |
+
+**修正（review 后）**：之前版本写"1:N 不存在""modelId → Availability 1:1"——这是把 source footprint 提升成了 availability 事实，证据不足。source footprint 只证明 identity-bearing records 来自 1 个 source family，不证明 model 只在 1 个 platform 有 1 个 availability。
+
+正确状态：availability cardinality = **unresolved**，尚不能从现有数据直接推出。
 
 ## Google Gemini/Vertex 实际结果
 
 | 维度 | 数量 |
 |---|---|
 | Google total | 14 |
-| Gemini source only | 14 |
-| Vertex source only | 0 |
-| Both sources | **0** |
+| Gemini source footprint only | 14 |
+| Vertex source footprint only | 0 |
+| Both source footprints | **0** |
 | No source footprint | 0 |
 
-**关键结论**：虽然 `providerId=google` 聚合了 8 个 source（gemini + vertex），但 14 个 Google model 的 price/change 记录**全部来自 `google-gemini-pricing` source，0 个来自 Vertex source**。Google namespace 下的 model 没有出现 1:N availability。
-
-**但**：providerId=google 同时聚合 Gemini API 和 Vertex AI 两组 source 是事实。platform mapping（gemini-api vs vertex-ai）仍需官方文档验证——当前数据无法区分 model 实际在哪个 platform 可用，只能确认 source footprint。
+**修正（review 后）**：这是 **observed source footprint**（14 个 Google model 的 identity-bearing records 全部来自 `google-gemini-pricing` source，0 个来自 `google-vertex-*` source）。**这不等于"只存在于 Gemini API 不存在于 Vertex AI"**——platform mapping 仍需官方文档验证。
 
 ## 是否真实发现 1:N availability
 
-**否**。当前数据中 modelId → availability 全部是 1:1（或 0:0）。Google 虽然有 8 个 source，但实际 model 数据全部来自 Gemini source。
+**unresolved**。当前数据只证明 source footprint 是 1:1（106 个有 1 个 source footprint），但 source footprint != availability。不能从 source footprint 1:1 推出 availability 1:1。
 
 ## 哪些 model 当前无法区分 platform
 
-全部 107 个 model 的 platform 都是 **candidate**（从 source footprint 推断），不是 verified。但 source footprint 清晰：106 个有 1 个 source footprint，1 个无记录。
-
-Google 14 个 model 虽然全部来自 `google-gemini-pricing`，但 `providerId=google` 聚合了 Gemini API + Vertex AI——**platform 是 Gemini API 还是 Vertex AI 需官方文档验证**，当前数据无法区分。
+全部 107 个 model 的 platform 都是 **candidate / unresolved**。source footprint 清晰（106 个有 1 个 source footprint），但 source footprint != Platform——Platform 需独立验证。Google 14 个 model 虽全部来自 Gemini source，但 platform mapping（gemini-api vs vertex-ai）unresolved。
 
 ## observedIdentifiers cardinality
 
@@ -133,24 +135,29 @@ Google 14 个 model 虽然全部来自 `google-gemini-pricing`，但 `providerId
 | 有多 region 的 model 数 | 33 |
 | 样例 | `alibaba:qwen-plus`: ['cn', 'global'] |
 
-**结论**：region 出现在 price fact 中，同一 modelId 有多 region。region 更可能是 **price fact condition**（价格条件）而非 Availability 属性。同一 model 在同一 platform 上的不同 region 属于同一 Availability，只是价格条件不同。**region 不应作为 Availability 属性**（待 Gold Set 最终验证，但当前数据支持此结论）。
+**修正（review 后）**：当前仓库只提供 price-fact-level evidence（region 是 price fact 条件维度）。**是否属于 Availability ontology = unresolved**——"没有证据支持它属于"不能转换成"证据证明它不属于"。第一版 core Availability identity 不应包含 region（保守），但未来如果模型只在某些 region 可调用，region 可能成为 Availability 覆盖范围属性。
 
 ## status 是否属于 Availability
 
-当前数据中没有模型 availability 层面的 `status` 字段（active/deprecated）。price fact 有 `field_state`（confirmed/stale），但那是数据质量状态，不是模型 availability。**status 不应作为 Availability 属性**——当前数据无支持。
+| 维度 | 结果 |
+|---|---|
+| availability status 数据 | 无 |
+| field_state 值 | confirmed / stale（数据质量状态） |
+
+**结论**：**not evidenced / unresolved**——当前仓库无 availability 层面 status 数据。"没有证据支持"不能转换成"证据证明它不属于"。
 
 ## developerId namespace 推荐
 
 | providerId | candidateDeveloperId | 说明 |
 |---|---|---|
-| anthropic | anthropic | developer=platform |
-| openai | openai | developer=platform |
-| google | google | developer=platform（但 platform 含 Gemini+Vertex，待验证） |
-| deepseek | deepseek | developer=platform |
-| kimi | moonshot-kimi | developer(Moonshot AI) ≠ brand(Kimi) |
-| zhipu | zhipu | developer=platform |
-| alibaba | alibaba-qwen | developer(阿里通义) ≠ platform(阿里百炼) |
-| volcengine | bytedance-doubao | developer(字节跳动) ≠ platform(火山方舟) |
+| anthropic | anthropic | developer=platform 候选 |
+| openai | openai | developer=platform 候选 |
+| google | google | developer=platform 候选（但 platform 含 Gemini+Vertex，待验证） |
+| deepseek | deepseek | developer=platform 候选 |
+| kimi | moonshot-kimi | developer(Moonshot AI) ≠ brand(Kimi) 候选 |
+| zhipu | zhipu | developer=platform 候选 |
+| alibaba | alibaba-qwen | developer(阿里通义) ≠ platform(阿里百炼) 候选 |
+| volcengine | bytedance-doubao | developer(字节跳动) ≠ platform(火山方舟) 候选 |
 
 **命名规则**：`developerId` 用 `<company>-<brand>` 格式（如 `alibaba-qwen`、`bytedance-doubao`），developer=platform 时用单一名（如 `anthropic`、`openai`）。
 
@@ -158,46 +165,40 @@ Google 14 个 model 虽然全部来自 `google-gemini-pricing`，但 `providerId
 
 **命名规则**：`<developerId>:<model-slug>`（如 `alibaba-qwen:qwen3-coder-plus`、`anthropic:claude-sonnet-4.5`）。
 
-**碰撞分析**：当前 107 个 model 的 slug 在 developer 范围内唯一，无碰撞。但跨 developer 可能存在同名 slug（如 `qwen-plus` 在 alibaba-qwen 下）——developerId 前缀避免碰撞。
-
-**rename 风险**：现有 modelId（`alibaba:qwen3-coder-plus`）与 candidate upstreamModelId（`alibaba-qwen:qwen3-coder-plus`）不同——mapping 需保持 modelId 不变，upstreamModelId 是 additive。
+**碰撞分析**：当前 107 个 model 的 slug 在 developer 范围内唯一，无碰撞。但跨 developer 可能存在同名 slug——developerId 前缀避免碰撞。
 
 ## 是否发现四实体模型反例
 
-**否**。当前数据不推翻四实体模型（Developer / Platform / Upstream Model / Availability）。关键发现：
-
-1. **1:N availability 不存在**——当前数据支持 modelId → Availability 1:1（可保持 schema 简单）
-2. **Google 1:N 预期未发生**——14 个 Google model 全部只在 Gemini source 出现（但 platform mapping 需验证）
-3. **region 是 price fact condition**，不是 Availability 属性
-4. **pointer 需 temporal relation**，不适合作为普通 observedIdentifier
+**否**。当前数据不推翻四实体模型。但关键修正：**availability cardinality = unresolved**（不是 1:1）。source footprint 是 1:1，但 source footprint != availability。
 
 ## 是否需要修改 T07-5 ontology design
 
 **不需要**。设计文档的四实体模型和 cardinality 待验证的立场仍然成立。关键修正：
 
-- modelId → Availability 当前是 1:1，可保持 schema 简单（单值 `platformId` 可行）
-- 但 Google namespace 的 platform mapping 仍需官方文档验证（candidate ≠ verified）
-- Availability 的 observedIdentifiers 是 1:N（25 个 model 有多 modelKey，含 snapshot）
+- availability cardinality = unresolved（source footprint 1:1 不等于 availability 1:1）
+- Availability 的 observedIdentifiers 是 1:N（25 个 model 有多 modelKey）
 - pointer 需独立 temporal relation，不是普通 observedIdentifier
-- region/status 不属于 Availability，属于 price fact
+- region/status = unresolved（不是"不属于"）
 
 ## 哪些 mapping 仍 unresolved
 
-1. Google 14 个 model 的 platform mapping（gemini-api vs vertex-ai）——需官方文档
-2. 3 个 preview model 的 ontology 语义——需官方文档
-3. 107 个 developer/upstream mapping 全部是 candidate——需 Gold Set 扩展验证
-4. pointer → target temporal relation——需 T07-5.4 设计
+1. 全部 107 个 model 的 availability cardinality = unresolved
+2. Google 14 model 的 platform mapping（gemini-api vs vertex-ai）
+3. 3 个 preview model 的 ontology 语义
+4. 107 个 developer/upstream 全部是 candidate（0 verified）
+5. pointer → target temporal relation
+6. region/status 是否属于 Availability = unresolved
 
-## tests / validation
+## Gold Set verification summary
 
-inventory 脚本可重复执行：
-```bash
-python3 pipeline/scripts/ontology-inventory.py
-```
+| relation | verified | candidate | unresolved |
+|---|---|---|---|
+| developer | 0 | 8 | 2 |
+| platform | 0 | 6 | 4 |
+| availability | 0 | 0 | 10 |
+| identifier | 7 | 0 | 3 |
 
-输出持久化到 `task-07-5-1-ontology-inventory.json`，可 diff/review。
-
-Gold Set 10 条覆盖：developer=platform / developer≠platform / multi-source namespace / multiple modelKeys / snapshot / pointer / preview / unresolved / known-but-empty。
+repo-derived candidate ≠ verified relation；availability 全部 unresolved（source footprint != availability）。
 
 ## git status
 
