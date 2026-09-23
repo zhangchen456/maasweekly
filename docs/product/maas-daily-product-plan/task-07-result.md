@@ -1,6 +1,6 @@
 # Task 07 结果报告：模型实体关联、别名规范化与跨平台筛选
 
-日期：2026-09-22。当前状态：**T07-1 / T07-2 / T07-2.5 已完成；T07-3 最终 PASS（16 条判据全达成，main 已同步，projection 已重建 dataThrough 2026-09-22，run-all-tests 27/27 全绿）；T07-4 及之后未开始**。
+日期：2026-09-22。当前状态：**T07-1 / T07-2 / T07-2.5 已完成；T07-3 最终 PASS；T07-4A.1 PASS；T07-4A.2 PASS（Closeout Patch PASS）；T07-4A FINAL PASS；T07-4B.1 FINAL PASS；T07-4B.2 FINAL PASS；T07-4B FINAL PASS（merge-ready checkpoint 完成）；T07-5 及之后未开始**。
 
 ## T07-1 交付记录
 
@@ -477,3 +477,64 @@ P1：changes 改 REST 分页加载
 - 页面 HTML 从 9.4MB 降到 29KB（catalog + shell）
 - URL modelId/familyId 继续复用现有 contract（pushState + popstate）
 - source_observation / invalid / empty 三种语义保持不变
+
+## T07-4B Model Catalog API + Model Detail Page（2026-09-23）
+
+### T07-4B.1 GET /api/v1/models（FINAL PASS）
+
+新增 `/api/v1/models` endpoint，直接返回 release-frozen `model-identities.json`（经
+manifest bytes/sha256 校验，dataset.ts readIdentityCatalog）。不从 prices/changes/ledger
+反推；不做 fuzzy/alias/LLM 推断。
+
+- API contract：`{ schemaVersion, datasetVersion, dataThrough, query, coverage, models[], families[] }`
+- models 只含 classification=model；families 只含 classification=family
+- catalog missing/corrupt → fail closed（release integrity contract）
+- OpenAPI 加 `/api/v1/models` + ModelsEnvelope/ModelIdentity/FamilyIdentity schema
+- 测试 T20/T20a/T20b：200 + datasetVersion + 与 catalog 逐项一致 + 走 verified loader
+
+### T07-4B.2 /model/:modelId（FINAL PASS）
+
+新增 `/model/:modelId` 静态预生成页面（catalog 驱动 107 个 route），runtime fetch
+changes/prices。
+
+- 身份区：modelName/modelId/familyName+familyId/provider（来自 catalog）
+- observed modelKey：从 `/api/v1/prices?modelId=` 返回的 modelKey 字段汇总（observed，
+  非 registry alias 猜测）
+- 最近变化：`/api/v1/changes?modelId=...&limit=10` + 查看全部入口
+- 当前价格：`/api/v1/prices?modelId=...&limit=30` + 价格表（多记录）
+- 三种语义：catalog 存在 → 正常页；不存在 → 404；合法无记录 → empty state
+- 页面 HTML ≈ 10.4KB（shell + script，不含全量 changes/prices）
+- 测试 14 项：route generation / catalog identity / unknown 404 / empty / API query /
+  no identity guessing / runtime fetch / observed modelKey
+
+### Merge-ready Checkpoint
+
+- branch: `task-07-t07-4b2-model-detail`
+- ahead main 0, behind main 20（main 无新提交）
+- 完整包含：main 最新（Cursor logo + incident 修复）+ T07-1~4B.2 全部
+- run-all-tests: 33/33 全绿
+- local-only release: `rl_f46f931a01_3911a1c6cde3`
+- datasetVersion: `ds_3911a1c6cde3...`，dataThrough 2026-09-23
+- /changes/ HTML: 32KB（REST 分页，不含全量）
+- /model/ HTML: 11KB（runtime fetch，不含全量）
+- generated diff: clean（git diff --check exit 0）
+- 未 merge main，未 production deploy
+
+### Task 07 各子任务状态
+
+| 子任务 | 状态 |
+|---|---|
+| T07-1 Model Inventory + Gold Set | PASS |
+| T07-2 Registry + Resolver | PASS |
+| T07-2.5 Registry Coverage | PASS |
+| T07-3 Public Model Identity | FINAL PASS |
+| T07-4A.1 Pricing Model Filtering | PASS |
+| T07-4A.2 Changes Browser | FINAL PASS |
+| T07-4A | FINAL PASS |
+| T07-4B.1 /api/v1/models | FINAL PASS |
+| T07-4B.2 /model/:modelId | FINAL PASS |
+| T07-4B | FINAL PASS |
+
+Identity 链只有一套 truth：registry → resolver → projector → model-identities.json →
+Dataset verified loader → REST → UI。无前端 alias map、无 substring/startswith/regex
+family inference、无 fuzzy/LLM identity、无第二套 catalog。
