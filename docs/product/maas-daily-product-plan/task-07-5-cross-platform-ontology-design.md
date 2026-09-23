@@ -8,20 +8,24 @@
 
 ### 1.1 当前 provider namespace 实际语义
 
-当前 `providerId`（modelId 前缀）混合了三种不同概念：
+**修正（review 后）**：当前 `providerId`（modelId 前缀）**最准确的定义不是"平台"，也不是"开发者"，而是一个 public query namespace / 聚合命名空间**。它服务于现有 API 的 provider/sourceId 映射与 changes/prices 共用查询，不等于 Platform，也不等于 Developer。
 
-| providerId | displayName | 实际语义 | 模型品牌 | 说明 |
-|---|---|---|---|---|
-| alibaba | 阿里百炼 | **API 平台** | Qwen（通义千问） | 平台=阿里百炼，模型开发者=阿里通义 |
-| volcengine | 火山方舟 | **API 平台** | Doubao（豆包） | 平台=火山方舟，模型开发者=字节跳动 |
-| zhipu | 智谱AI | **开发者+平台合一** | GLM | 开发者=智谱，平台=智谱开放平台 |
-| anthropic | Anthropic | **开发者+平台合一** | Claude | 开发者=Anthropic，平台=Anthropic API |
-| openai | OpenAI | **开发者+平台合一** | GPT | 开发者=OpenAI，平台=OpenAI API |
-| google | Google | **开发者+平台合一** | Gemini | 开发者=Google，平台=Vertex AI / Gemini API |
-| deepseek | DeepSeek | **开发者+平台合一** | DeepSeek | 开发者=DeepSeek，平台=DeepSeek API |
-| kimi | Kimi | **开发者+平台合一** | Kimi/Moonshot | 开发者=Moonshot AI，平台=Kimi |
+`public_providers.json` 的 `sourceToProvider` 证明：多个 source 聚合到同一个 `providerId`。最明显的反例是 Google——8 个 source（google-gemini-blog/pricing/changelog/modellist + google-vertex-blog/pricing/changelog/modellist）全部映射成 `providerId = google`。因此 `google` 不能等价于 Gemini API，也不能等价于 Vertex AI，更不能简单定义成"开发者=平台合一"。它实际上把至少两个平台/产品面的 source 聚合到了一个 namespace 下。
 
-**核心冲突**：`alibaba` 和 `volcengine` 是**纯平台**（模型品牌 Qwen/Doubao 不是平台名），而 `anthropic`/`openai`/`google` 是**开发者=平台**。当前 system 把这两种不同关系混在同一个 `providerId` 字段里。
+各 namespace 的历史背景（**不是 ontology 定义，只是背景描述**）：
+
+| providerId | displayName | 历史背景 | 模型品牌 |
+|---|---|---|---|
+| alibaba | 阿里百炼 | 聚合了阿里百炼平台 source | Qwen（通义千问） |
+| volcengine | 火山方舟 | 聚合了火山方舟平台 source | Doubao（豆包） |
+| zhipu | 智谱AI | 聚合了智谱开放平台 source | GLM |
+| anthropic | Anthropic | 聚合了 Anthropic API source | Claude |
+| openai | OpenAI | 聚合了 OpenAI API source | GPT |
+| google | Google | 聚合了 Gemini API + Vertex AI source（8 个 source） | Gemini |
+| deepseek | DeepSeek | 聚合了 DeepSeek API source | DeepSeek |
+| kimi | Kimi | 聚合了 Kimi Platform source | Kimi/Moonshot |
+
+**核心结论（修正）**：`providerId` 是历史兼容的 public query namespace，**不属于 T07-5 新 ontology 四实体中的任何一个**。T07-5 新增的是另一层更准确的实体关系（Developer / Platform / Upstream Model / Availability），`providerId` 继续服务现有 API（`modelId` / provider filter），不承担新 ontology 语义。
 
 ### 1.2 ledger provider vs canonical provider
 
@@ -31,7 +35,11 @@ ledger（pricing 数据源）用 **pricing provider**（`qwen`/`doubao`/`glm`）
 
 ### 1.3 当前数据无跨平台同模型
 
-对 ledger 2598 条 price 做 `model_display_name` 分组，**零个模型名出现在多个 provider**。当前 MaaS Daily 数据源是各厂商自己的定价页，不包含第三方平台（如 Bedrock/Vertex/OpenRouter）的价格。因此当前数据**没有跨平台同模型的实际需求**。
+**修正（review 后）**：之前文档写"对 ledger 2598 条 price 按 model_display_name 分组，零个模型名出现在多个 provider"——这一分析结果**在仓库内没有可复核的脚本或持久化产物**，属于 Agent 临时分析，不能作为 ontology 的硬前提。
+
+T07-5.1 必须把这类统计正式产出成可复核 inventory（持久化脚本 + 结果文件 + Gold Set），而不是只写一句结论。
+
+当前可以确认的仓库事实是：`sourceToProvider` 把 8 个 google source 聚合到 `providerId=google`，说明同一 namespace 下可能包含多个平台/产品面 source。因此 **modelId → Availability 的 cardinality 不能假设为 1:1**，T07-5.1 必须真正验证。
 
 ### 1.4 snapshot / pointer / preview
 
@@ -90,22 +98,30 @@ developerId: "anthropic" / "alibaba-qwen"
 ### 4.4 Availability（平台可用性）
 
 ```
-availabilityId: "anthropic-api:claude-sonnet-4.5" / "alibaba-bailian:qwen3-coder-plus"
+availabilityId: "anthropic-api:claude-sonnet-4.5" / "alibaba-bailian:qwen-plus"
 upstreamModelId: "anthropic:claude-sonnet-4.5"
 platformId: "anthropic-api" / "alibaba-bailian"
-modelKey: "claude-sonnet-4.5" / "qwen3-coder-plus"  // 该平台上的实际 API model string
+observedIdentifiers: [  // 1:N（一个 availability 可有多个 observed identifier）
+  { value: "qwen-plus", type: "canonical" },
+  { value: "qwen-plus-2025-07-28", type: "snapshot" },
+  { value: "qwen-plus-latest", type: "pointer" }  // pointer 需带时间性（见 §12）
+]
 region: "global" / "cn"
 status: "active" / "deprecated"
 ```
+
+**修正（review 后）**：Availability 的 observed identifier 是 **1:N**，不是单值 `modelKey`。registry 里 `alibaba:qwen-plus` 下同时存在 `qwen-plus`、`qwen-plus-2024-12-20`、`qwen-plus-2025-01-12`、`qwen-plus-2025-07-28` 等，registry 标 `type=snapshot`。这证明一个 availability 显然可以有多个 observed identifier。
 
 ## 5. Candidate relations
 
 ```
 Developer ──develops──→ Upstream Model
 Upstream Model ──available on──→ Platform (via Availability)
-Availability ──has modelKey──→ raw API string
-existing modelId ──maps to──→ Availability (1:1 in current data)
+Availability ──has observedIdentifiers[]──→ raw API strings (1:N)
+existing modelId ──maps to──→ Availability (cardinality 待 T07-5.1 验证，不假设 1:1)
 ```
+
+**修正（review 后）**：`existing modelId → Availability` 的 cardinality **不假设 1:1**。如 `google:gemini-2.5-pro` 可能对应 Gemini API + Vertex AI 两个 availability，T07-5.1 必须验证。
 
 ## 6. Real-data examples
 
@@ -239,11 +255,15 @@ data/model-registry/
 
 ## 12. Unresolved cases
 
-- snapshot（`qwen3-coder-plus-2025-07-22`）：属于同一 availability 的 observed modelKey 变体，不是独立 upstream model
-- pointer（`qwen-plus-latest`）：指向某个 upstream model，但本身不是 upstream model
-- preview（`gemini-3-flash-preview`）：是独立 upstream model（preview 是模型名一部分）
+- snapshot（`qwen3-coder-plus-2025-07-22`）：属于同一 availability 的 observed identifier 变体（1:N），不是独立 upstream model
+- pointer（`qwen-plus-latest`）：指向某个 upstream model，但本身不是 upstream model。**pointer 具有时间性**——`latest` 指向的目标会随时间变化，因此 pointer → target 必须考虑 `observedAt` / `validFrom` / `validTo`，不能只做 `pointer → upstreamModelId` 静态映射
+- preview（`gemini-3-flash-preview`）：**ontology 语义未定**（修正——不能固定为"独立 upstream model"）：
+  - 有官方证据证明是独立版本 → independent upstream model
+  - 只是 endpoint / lifecycle label → variant / availability identifier
+  - 证据不足 → unresolved
+  - 当前 resolver 规定"禁止删除 -preview / 禁止指针猜测"只说明 identity resolver 不擅自合并，**不证明 preview 一定是独立 upstream model**
 - emoji/噪音（`deepseek-flash-(1)`）：extractor 噪音，不进入 ontology
-- **跨平台同模型当前无数据**：Bedrock/Vertex 的 Claude/Gemini 不在当前数据源——ontology 设计应支持但不提前实现
+- **跨平台同模型当前无可靠 inventory**：Bedrock/Vertex 的 Claude/Gemini 是否在当前数据源内待 T07-5.1 正式盘点——ontology 设计应支持但不提前实现
 
 ## 13. Risks
 
@@ -306,7 +326,51 @@ data/model-registry/
 
 1. **modelId 保留不变**——新 ontology 是 additive
 2. **推荐方案 B（独立实体+relation）**——为跨平台扩展打基础
-3. **当前数据无跨平台同模型**——ontology 设计支持但不提前实现
-4. **provider 语义拆分**——`alibaba`/`volcengine` 的平台≠品牌是主要冲突
-5. **证据可审计**——跨平台关系需官方文档证据，禁止自动推断
-6. **false positive = 0**——宁可 unresolved，不可错绑
+3. **providerId 是 legacy public query namespace**——不属于新 ontology 四实体（Developer/Platform/Upstream Model/Availability），继续服务现有 API，不承担新 ontology 语义
+4. **modelId → Availability cardinality 不假设 1:1**——T07-5.1 必须验证（google namespace 下含 Gemini API + Vertex AI 两个平台 source）
+5. **Availability 的 observed identifier 是 1:N**——不是单值 modelKey（registry 里 qwen-plus 下有多个 snapshot 证明）
+6. **preview ontology 语义未定**——evidence-driven，不固定为"独立 upstream model"
+7. **pointer 具有时间性**——pointer → target 需考虑 observedAt/validFrom/validTo，不能做静态映射
+8. **证据可审计**——跨平台关系需官方文档证据，禁止自动推断
+9. **false positive = 0**——宁可 unresolved，不可错绑
+
+### 修正后的基础模型
+
+```
+Legacy Provider Namespace (providerId)
+        │
+        │ compatibility mapping（继续服务现有 API，不属于新 ontology）
+        ▼
+Current modelId
+        │
+        ├───────────────┐
+        ▼               ▼
+Upstream Model      Availability
+        │               │
+        ▼               ▼
+Developer          Platform
+                        │
+                        ▼
+              Observed Identifiers (1:N)
+              modelKey / snapshot / pointer / SKU
+```
+
+**关键变化**：`providerId` 不属于新 ontology 四实体中的任何一个。它是历史兼容 namespace，继续服务现有 API（`modelId` / provider filter）。T07-5 新增的是另一层更准确的实体关系。
+
+### T07-4B 技术债记录（T07-5.5/UI 阶段处理）
+
+`/model/[modelId].astro` 里有手写 `providerLabels` map + `model.modelId.split(':')[0]`——这在 T07-4B 还能工作（展示 legacy provider namespace），但 T07-5 后不能继续当成 Platform 或 Developer。T07-5.5/UI 阶段必须移除这种语义依赖。
+
+---
+
+## Review 修订记录（2026-09-23）
+
+基于仓库实际代码和数据结构 review，修正四点：
+
+1. **providerId 定义修正**：从"平台/开发者混合"改为"legacy public query namespace / 聚合命名空间"——google 8 个 source（gemini + vertex）全部聚合到 `providerId=google` 证明它不是平台也不是开发者，而是聚合命名空间
+2. **modelId → Availability cardinality 修正**：从"1:1"改为"不假设 1:1，T07-5.1 验证"——google namespace 含 Gemini API + Vertex AI 两个平台 source，modelId 可能对应多个 availability
+3. **Availability modelKey 修正**：从"单值 modelKey"改为"1:N observedIdentifiers"——registry 里 qwen-plus 下有多个 snapshot 证明一个 availability 有多个 observed identifier
+4. **preview 结论修正**：从"独立 upstream model"改为"evidence-driven unresolved"——resolver 规定"禁止删除 -preview"只说明不擅自合并，不证明 preview 一定是独立 upstream model
+5. **跨平台同模型统计修正**：从"零个模型名出现在多个 provider（不可复核的 Agent 分析）"改为"T07-5.1 必须正式产出可复核 inventory"
+
+**pointer 时间性补充**：pointer（如 `qwen-plus-latest`）指向的目标会随时间变化，pointer → target 必须考虑 `observedAt` / `validFrom` / `validTo`，不能做静态映射。
