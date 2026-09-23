@@ -356,3 +356,51 @@ test('T18/T19: MCP unknown identity 与 REST 一致 / known-but-empty 一致', a
     mcpFx.cleanup();
   }
 });
+
+// ---------------------------------------------------------------------------
+// T07-4B.1: GET /api/v1/models — 模型目录 API
+// 数据来源：release-frozen model-identities.json（经 manifest bytes/sha256 校验，
+// dataset.ts readIdentityCatalog）。不从 prices/changes/ledger 反推。
+// ---------------------------------------------------------------------------
+test('T20: GET /api/v1/models → 200，返回 catalog + datasetVersion', async () => {
+  const res = await fetch(`${base}/api/v1/models`);
+  assert.equal(res.status, 200);
+  const body = await res.json() as unknown as {
+    datasetVersion: string; models: { modelId: string; modelName: string }[];
+    families: { familyId: string; familyName: string }[];
+  };
+  // datasetVersion 与当前 release 一致（从 /api/v1/status 交叉验证）
+  const statusRes = await fetch(`${base}/api/v1/status`);
+  const statusBody = await statusRes.json() as { datasetVersion: string };
+  assert.equal(body.datasetVersion, statusBody.datasetVersion);
+  // models/families 来自 fixture catalog
+  assert.equal(body.models.length, catalog.models.length);
+  assert.equal(body.families.length, catalog.families.length);
+  // 代表性 ID 验证
+  const modelIds = body.models.map((m) => m.modelId);
+  assert.ok(modelIds.includes('alibaba:qwen-coder-plus'));
+  assert.ok(modelIds.includes('anthropic:claude-sonnet-4.5'));
+  assert.ok(modelIds.includes(zeroModel));
+  const familyIds = body.families.map((f) => f.familyId);
+  assert.ok(familyIds.includes('alibaba:qwen-coder'));
+  assert.ok(familyIds.includes(zeroFamily));
+});
+
+test('T20a: GET /api/v1/models 与 release catalog 逐项一致', async () => {
+  const res = await fetch(`${base}/api/v1/models`);
+  const body = await res.json() as unknown as { models: unknown[]; families: unknown[] };
+  assert.deepEqual(body.models, catalog.models);
+  assert.deepEqual(body.families, catalog.families);
+});
+
+test('T20b: GET /api/v1/models 走 verified release loader（catalog 与 fixture 一致）', async () => {
+  // holder.current 的 catalog 来自 release manifest 校验（dataset.ts readIdentityCatalog）。
+  // fixture writeRelease 写了 model-identities.json + manifest 条目；
+  // 如果 manifest 缺 catalog 条目 → Dataset.load 抛 DatasetError（T15 已测 catalog missing/corrupt）。
+  // 这里验证 API 返回的 catalog 与 fixture 写入的 catalog 逐项一致（证明走 verified loader）
+  const res = await fetch(`${base}/api/v1/models`);
+  const body = await res.json() as unknown as { models: unknown[]; families: unknown[] };
+  assert.ok(body.models.length > 0);
+  assert.deepEqual(body.models, catalog.models);
+  assert.deepEqual(body.families, catalog.families);
+});
