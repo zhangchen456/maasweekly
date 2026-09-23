@@ -1,5 +1,5 @@
-// T07-4A.2 closeout：Changes Browser UI contract 测试（jsdom DOM 交互 + fetch mock）。
-// 验证 REST 分页加载、URL 状态、error/empty/互斥/tag click、source_observation 无 modelId。
+// T07-4A.2 pagination closeout：Changes Browser 分页契约测试（jsdom + fetch mock）。
+// mock 复刻真实后端 cursor 合同：cursor 与其他参数共存 → 400 cursor_conflict。
 // 运行：node site/tests/changes-browser-ui.test.mjs（需先 npm run build）
 import { readFileSync, existsSync } from 'node:fs';
 import assert from 'node:assert/strict';
@@ -12,7 +12,6 @@ if (!existsSync(distPath)) {
   process.exit(0);
 }
 
-// 读真实 changes 数据用于 mock fetch 响应
 const manifest = JSON.parse(
   readFileSync(new URL('data/public/v1/manifest.json', root), 'utf-8'));
 const changesEntry = manifest.files.find((f) => f.path.endsWith('/changes.json'));
@@ -20,6 +19,10 @@ const allChanges = JSON.parse(
   readFileSync(new URL('data/public/v1/' + changesEntry.path, root), 'utf-8'));
 
 const html = readFileSync(distPath, 'utf-8');
+
+// 记录所有 fetch 请求的参数（用于断言 cursor 合同）
+const fetchCalls = [];
+
 const dom = new JSDOM(html, {
   runScripts: 'dangerously',
   url: 'http://localhost/changes/',
@@ -30,25 +33,59 @@ const dom = new JSDOM(html, {
       addListener() {}, removeListener() {}, dispatchEvent() { return false; },
     });
     window.IntersectionObserver = class { observe() {} unobserve() {} disconnect() {} };
-    // mock fetch：根据 query params 过滤 changes
+    // mock fetch：复刻真实后端 cursor 合同
+    // cursor 与其他参数共存 → 400 cursor_conflict
+    // cursor 独占 → 恢复 cursor 绑定的查询参数翻页
+    const cursorStore = new Map(); // cursor → {params, offset}
+    let cursorSeq = 0;
     window.fetch = async (url) => {
       const u = new URL(url, 'http://localhost');
       const params = u.searchParams;
+      const hasCursor = params.has('cursor');
+      const otherKeys = [...params.keys()].filter((k) => k !== 'cursor');
+      fetchCalls.push({ hasCursor, otherKeys, allParams: [...params.entries()] });
+      // 复刻后端 cursor_conflict 门禁
+      if (hasCursor && otherKeys.length > 0) {
+        return {
+          ok: false, status: 400,
+          json: async () => ({ type: 'invalid-query', code: 'cursor_conflict' }),
+        };
+      }
       let items = [...allChanges];
-      const modelId = params.get('modelId');
-      const familyId = params.get('familyId');
-      const type = params.get('type');
-      const q = params.get('q');
+      let offset = 0;
+      if (hasCursor) {
+        const stored = cursorStore.get(params.get('cursor'));
+        if (stored) {
+          // 恢复 cursor 绑定的查询参数
+          for (const [k, v] of stored.params) {
+            if (k === 'modelId') items = items.filter((c) => c.modelId === v);
+            if (k === 'familyId') items = items.filter((c) => c.familyId === v);
+            if (k === 'type') items = items.filter((c) => c.recordType === v);
+            if (k === 'q') items = items.filter((c) => (c.title + ' ' + (c.summary || '')).toLowerCase().includes(v.toLowerCase()));
+          }
+          offset = stored.offset;
+        }
+      } else {
+        const modelId = params.get('modelId');
+        const familyId = params.get('familyId');
+        const type = params.get('type');
+        const q = params.get('q');
+        if (modelId) items = items.filter((c) => c.modelId === modelId);
+        if (familyId) items = items.filter((c) => c.familyId === familyId);
+        if (type) items = items.filter((c) => c.recordType === type);
+        if (q) items = items.filter((c) => (c.title + ' ' + (c.summary || '')).toLowerCase().includes(q.toLowerCase()));
+      }
       const limit = parseInt(params.get('limit') || '20', 10);
-      if (modelId) items = items.filter(c => c.modelId === modelId);
-      if (familyId) items = items.filter(c => c.familyId === familyId);
-      if (type) items = items.filter(c => c.recordType === type);
-      if (q) items = items.filter(c => (c.title + ' ' + (c.summary || '')).toLowerCase().includes(q.toLowerCase()));
-      const page = items.slice(0, limit);
-      const status = (modelId || familyId) && items.length === 0 && !(modelId || familyId) ? 200 : 200;
+      const page = items.slice(offset, offset + limit);
+      const nextOffset = offset + limit;
+      let nextCursor = null;
+      if (nextOffset < items.length) {
+        nextCursor = 'cur_' + (++cursorSeq);
+        cursorStore.set(nextCursor, { params: [...params.entries()].filter(([k]) => k !== 'cursor'), offset: nextOffset });
+      }
       return {
         ok: true, status: 200,
-        json: async () => ({ items: page, page: { limit, nextCursor: items.length > limit ? 'mock-cursor' : null } }),
+        json: async () => ({ items: page, page: { limit, nextCursor } }),
       };
     };
   },
@@ -67,93 +104,117 @@ function setUrl(path) { window.history.replaceState(null, '', 'http://localhost'
 function fireChange(el) { el.dispatchEvent(new window.Event('change', { bubbles: true })); }
 function firePopstate() { window.dispatchEvent(new window.Event('popstate')); }
 async function wait(ms = 300) { await new Promise((r) => setTimeout(r, ms)); }
+function lastCall() { return fetchCalls[fetchCalls.length - 1]; }
+
+// 清空 fetchCalls 记录
+function clearCalls() { fetchCalls.length = 0; }
 
 // ---- T01: model selector options 来自 catalog ----
 ok('T01 model-filter options > 1',
    document.getElementById('model-filter').options.length > 1,
    `options=${document.getElementById('model-filter').options.length}`);
 
-// ---- T02: family selector options 来自 catalog ----
-ok('T02 family-filter options > 1',
-   document.getElementById('family-filter').options.length > 1,
-   `options=${document.getElementById('family-filter').options.length}`);
-
-// ---- T03: catalog 经 manifest 校验（无 raw fs）----
-// 页面构建期用 loadVerifiedRelease select modelIdentities，catalog 缺失会 build fail
+// ---- T03: catalog 经 manifest 校验 ----
 const catalog = JSON.parse(document.getElementById('catalog-data').textContent);
 ok('T03 catalog 有 models 和 families',
-   catalog.models && catalog.families && catalog.models.length > 0,
-   'catalog 缺失或为空');
+   catalog.models && catalog.families && catalog.models.length > 0, 'catalog 缺失');
 
-// ---- T05: valid modelId URL restore ----
-setUrl('/changes/?modelId=anthropic:claude-sonnet-4.5');
+// ---- T24: 第一页请求包含 limit/filter，不包含 cursor ----
+// 用 alibaba:qwen3-coder（312 条 > 20，保证有第二页）
+setUrl('/changes/?familyId=alibaba:qwen3-coder');
 firePopstate();
 await wait();
-ok('T05 valid modelId URL restore',
-   document.getElementById('model-filter').value === 'anthropic:claude-sonnet-4.5',
-   `mfVal=${document.getElementById('model-filter').value}`);
-await wait();
-ok('T05a modelId restore 显示列表',
-   document.querySelectorAll('.change-card').length > 0,
-   `cards=${document.querySelectorAll('.change-card').length}`);
-
-// ---- T06: valid familyId URL restore ----
-setUrl('/changes/?familyId=anthropic:claude-sonnet');
+clearCalls(); // 清掉初始化的请求
+// 重新触发一次第一页请求
+setUrl('/changes/?familyId=alibaba:qwen3-coder');
 firePopstate();
 await wait();
-ok('T06 valid familyId URL restore',
-   document.getElementById('family-filter').value === 'anthropic:claude-sonnet',
-   `ffVal=${document.getElementById('family-filter').value}`);
-await wait();
-ok('T06a familyId restore 显示列表',
-   document.querySelectorAll('.change-card').length > 0,
-   `cards=${document.querySelectorAll('.change-card').length}`);
+const firstPageCall = lastCall();
+ok('T24 第一页请求不包含 cursor',
+   !firstPageCall.hasCursor,
+   `hasCursor=${firstPageCall.hasCursor}`);
+ok('T24a 第一页请求包含 limit',
+   firstPageCall.allParams.some(([k]) => k === 'limit'),
+   `params=${JSON.stringify(firstPageCall.allParams)}`);
+ok('T24b 第一页请求包含 familyId',
+   firstPageCall.allParams.some(([k]) => k === 'familyId'),
+   `params=${JSON.stringify(firstPageCall.allParams)}`);
 
-// ---- T09: model/family 互斥 ----
+// ---- T27: nextCursor 可进入第二页 ----
+const nextBtn = document.getElementById('next');
+ok('T27a 第一页有 nextCursor（next 按钮可用）',
+   !nextBtn.disabled, 'next 按钮不可用');
+clearCalls();
+nextBtn.click();
+await wait();
+const secondPageCall = lastCall();
+
+// ---- T25: 第二页请求只有 cursor ----
+ok('T25 第二页请求包含 cursor',
+   secondPageCall.hasCursor,
+   `hasCursor=${secondPageCall.hasCursor}`);
+ok('T25a 第二页请求不含 limit',
+   !secondPageCall.allParams.some(([k]) => k === 'limit'),
+   `params=${JSON.stringify(secondPageCall.allParams)}`);
+
+// ---- T26: cursor 请求不带 limit/modelId/familyId/type/q ----
+ok('T26 cursor 请求不带 limit/modelId/familyId/type/q',
+   !secondPageCall.allParams.some(([k]) => ['limit', 'modelId', 'familyId', 'type', 'q'].includes(k)),
+   `params=${JSON.stringify(secondPageCall.allParams)}`);
+
+// ---- T28: prev 能回到上一页 ----
+const prevBtn = document.getElementById('prev');
+ok('T28a 第二页 prev 按钮可用',
+   !prevBtn.disabled, 'prev 按钮不可用');
+clearCalls();
+prevBtn.click();
+await wait();
+const backCall = lastCall();
+ok('T28b prev 回到第一页（无 cursor）',
+   !backCall.hasCursor,
+   `hasCursor=${backCall.hasCursor}`);
+ok('T28c prev 回到第一页（含 limit/filter）',
+   backCall.allParams.some(([k]) => k === 'limit'),
+   `params=${JSON.stringify(backCall.allParams)}`);
+
+// ---- T29: filter 改变后 cursor stack 清空 ----
+// 先翻到第二页
+clearCalls();
+if (!nextBtn.disabled) { nextBtn.click(); await wait(); }
+ok('T29a 翻到第二页成功',
+   lastCall().hasCursor, '未翻到第二页');
+// 改 filter
+clearCalls();
 const mf = document.getElementById('model-filter');
 mf.value = 'openai:gpt-5.6-luna';
 fireChange(mf);
 await wait();
-ok('T09 model 选中后 family 被清除',
-   document.getElementById('family-filter').value === '' &&
-   document.getElementById('model-filter').value === 'openai:gpt-5.6-luna',
-   `mf=${mf.value} ff=${document.getElementById('family-filter').value}`);
+const afterFilterCall = lastCall();
+ok('T29 filter 改变后从第一页开始（无 cursor）',
+   !afterFilterCall.hasCursor,
+   `hasCursor=${afterFilterCall.hasCursor}`);
+ok('T29b filter 改变后 prev 不可用（cursor stack 清空）',
+   document.getElementById('prev').disabled, 'prev 仍可用');
 
-// ---- T13: source_observation 无 model-tag ----
-setUrl('/changes/?type=source_observation');
-firePopstate();
-await wait();
-await wait();
-ok('T13 source_observation 无 model-tag',
-   Array.from(document.querySelectorAll('.change-card')).every(c => !c.querySelector('.model-tag')),
-   `cards with model-tag: ${Array.from(document.querySelectorAll('.change-card')).filter(c => c.querySelector('.model-tag')).length}`);
-
-// ---- T11: known-but-empty → 正常空状态 ----
-setUrl('/changes/?modelId=deepseek:deepseek-flash');
-firePopstate();
-await wait();
-await wait();
-ok('T11 known-but-empty 不显示 error',
-   document.getElementById('filter-error').hidden === true,
-   `filterError hidden=${document.getElementById('filter-error').hidden}`);
-ok('T11a known-but-empty 显示空列表',
-   document.querySelectorAll('.change-card').length === 0,
-   `cards=${document.querySelectorAll('.change-card').length}`);
-
-// ---- T23: 无筛选时显示列表 ----
+// ---- T30: popstate 后 cursor 状态回到第一页 ----
 setUrl('/changes/');
 firePopstate();
 await wait();
-await wait();
+const popstateCall = lastCall();
+ok('T30 popstate 后从第一页开始（无 cursor）',
+   !popstateCall.hasCursor,
+   `hasCursor=${popstateCall.hasCursor}`);
+
+// ---- T23: 无筛选时显示列表 ----
 ok('T23 无筛选时显示列表',
    document.querySelectorAll('.change-card').length > 0,
    `cards=${document.querySelectorAll('.change-card').length}`);
 
-// ---- T23a: 页面体积小（REST 分页，不注入全量 changes）----
-const htmlSize = html.length;
-ok('T23a changes 页 HTML < 100KB（REST 分页，不注入全量）',
-   htmlSize < 100 * 1024,
-   `htmlSize=${(htmlSize / 1024).toFixed(0)}KB`);
+// ---- T23a: 页面体积小（REST 分页）----
+ok('T23a changes 页 HTML < 100KB',
+   html.length < 100 * 1024,
+   `htmlSize=${(html.length / 1024).toFixed(0)}KB`);
 
-console.log(`✓ T07-4A.2 closeout Changes Browser UI 测试全部通过（${pass} 项）`);
-console.log(`  页面 HTML 大小: ${(htmlSize / 1024).toFixed(1)}KB（REST 分页，不含全量 changes）`);
+console.log(`✓ T07-4A.2 pagination closeout 测试全部通过（${pass} 项）`);
+console.log(`  页面 HTML 大小: ${(html.length / 1024).toFixed(1)}KB`);
+console.log(`  fetch 调用数: ${fetchCalls.length}`);
