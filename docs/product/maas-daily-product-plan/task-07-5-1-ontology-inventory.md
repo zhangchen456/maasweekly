@@ -25,7 +25,6 @@ python3 pipeline/scripts/ontology-inventory.py
 
 - `data/model-registry/models.json`（registry：107 model + 24 family + 7 pointer）
 - `pipeline/config/public_providers.json`（sourceToProvider / pricingProviderIdToProvider）
-- `pipeline/config/maas_official_sources.json`（17 platform metadata，含 vendor 字段）
 - `data/public/v1/releases/<datasetVersion>/model-identities.json`（catalog：107 models / 24 families）
 - `data/public/v1/releases/<datasetVersion>/changes.json`（manifest coverage.count 行 changes）
 - `data/public/v1/releases/<datasetVersion>/prices.json`（manifest coverage.facts 行 prices）
@@ -49,7 +48,7 @@ python3 pipeline/scripts/ontology-inventory.py
 | model→developer candidate mappings | 107 |
 | unresolved mappings | 0 |
 
-**注意**：8 是 unique candidate developer entities 数，107 是 model→developer mapping 数。两者是不同指标。全部是 candidate（从 providerId 推断），candidate ≠ verified。Gold Set 覆盖 10 个代表，0 个 developer relation verified，8 个 candidate，2 个 unresolved。
+**注意**：8 是 unique candidate developer entities 数，107 是 model→developer mapping 数。两者是不同指标。全部是 candidate（从 providerId 推断），candidate ≠ verified。Gold Set 覆盖 10 个代表：0 个 developer relation verified，9 个 candidate，1 个 unresolved（以脚本动态 verificationSummary 为准）。
 
 ## upstream candidate entities / mappings
 
