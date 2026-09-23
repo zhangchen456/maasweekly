@@ -42,7 +42,6 @@ def main() -> int:
     # ---- 加载数据 ----
     registry = load_json(BASE / "data/model-registry/models.json")
     pub_providers = load_json(BASE / "pipeline/config/public_providers.json")
-    maas_sources = load_json(BASE / "pipeline/config/maas_official_sources.json")
 
     # 读当前 release
     manifest = load_json(BASE / "data/public/v1/manifest.json")
@@ -60,9 +59,6 @@ def main() -> int:
     for s, p in s2p.items():
         if p is not None:
             p2s[p].append(s)
-
-    # platforms from maas_official_sources（含 vendor 字段）
-    platforms_meta = {p["name"]: p for p in maas_sources["platforms"]}
 
     # registry model 索引
     reg_by_id = {m["modelId"]: m for m in registry["models"]}
@@ -293,6 +289,86 @@ def main() -> int:
                 })
 
     # ---- 输出 ----
+    # Validation gate：发现不一致直接 fail（非 0 退出）
+    errors = []
+
+    # catalog/inventory modelId 唯一性 + 数量一致
+    catalog_ids = [m["modelId"] for m in catalog["models"]]
+    inv_ids = [i["modelId"] for i in inventory]
+    if len(catalog_ids) != len(set(catalog_ids)):
+        errors.append(f"catalog modelId 不唯一: {len(catalog_ids)} ids, {len(set(catalog_ids))} unique")
+    if len(inv_ids) != len(set(inv_ids)):
+        errors.append(f"inventory modelId 不唯一: {len(inv_ids)} ids, {len(set(inv_ids))} unique")
+    if len(inventory) != len(catalog["models"]):
+        errors.append(f"inventory 行数({len(inventory)}) != catalog model 数({len(catalog['models'])})")
+    if set(inv_ids) != set(catalog_ids):
+        errors.append("inventory modelId set != catalog modelId set")
+
+    # manifest coverage 与实际 array length 一致
+    if manifest["coverage"]["changes"]["count"] != len(changes):
+        errors.append(f"manifest changes count({manifest['coverage']['changes']['count']}) != len(changes)({len(changes)})")
+    if manifest["coverage"]["prices"]["facts"] != len(prices):
+        errors.append(f"manifest prices facts({manifest['coverage']['prices']['facts']}) != len(prices)({len(prices)})")
+
+    # Gold Set validation
+    gold_path = BASE / "docs/product/maas-daily-product-plan/task-07-5-1-ontology-gold-set.json"
+    gold = load_json(gold_path)
+    gold_inputs = [g["input"] for g in gold["goldSet"]]
+    if len(gold_inputs) != len(set(gold_inputs)):
+        errors.append(f"Gold Set input 不唯一: {len(gold_inputs)} inputs, {len(set(gold_inputs))} unique")
+    # Gold Set input 必须存在于 catalog 或 registry
+    reg_ids_all = set(m["modelId"] for m in registry["models"])
+    for gi in gold_inputs:
+        if gi not in set(catalog_ids) and gi not in reg_ids_all:
+            errors.append(f"Gold Set input 不在 catalog/registry: {gi}")
+    # coverageMatrix 引用必须存在于 goldSet
+    cm = gold.get("coverageMatrix", {})
+    for key, vals in cm.items():
+        for v in vals:
+            if v not in gold_inputs:
+                errors.append(f"coverageMatrix[{key}] 引用不存在于 goldSet: {v}")
+    # Gold Set relationStatus 与 expected value 一致性
+    for g in gold["goldSet"]:
+        rs = g.get("relationStatus", {})
+        ea = g.get("expectedAvailability")
+        if ea and rs.get("availabilityStatus") and ea != "unresolved" and rs["availabilityStatus"] == "unresolved":
+            errors.append(f"Gold Set {g['input']}: expectedAvailability='{ea}' 与 availabilityStatus='unresolved' 冲突")
+
+    if errors:
+        print("✗ Validation failed:", file=sys.stderr)
+        for e in errors:
+            print(f"  - {e}", file=sys.stderr)
+        return 1
+
+    # Gold Set verification summary（从 goldSet 动态计算）
+    def count_status(field):
+        vals = [g.get("relationStatus", {}).get(field) for g in gold["goldSet"]]
+        return {
+            "verified": sum(1 for v in vals if v == "verified"),
+            "candidate": sum(1 for v in vals if v == "candidate"),
+            "unresolved": sum(1 for v in vals if v == "unresolved"),
+        }
+    gold_summary = {
+        "developer": count_status("developerStatus"),
+        "platform": count_status("platformStatus"),
+        "upstream": count_status("upstreamStatus"),
+        "availability": count_status("availabilityStatus"),
+        "identifier": count_status("identifierStatus"),
+        "note": "从 goldSet 动态计算；repo-derived candidate ≠ verified relation",
+    }
+    gold["verificationSummary"] = gold_summary
+    gold_path.write_text(json.dumps(gold, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    # 107-model Platform verification summary
+    # source footprint != Platform；全量 Platform mapping 未由 inventory 自动生成
+    # Gold Set 人工 candidate 与 107-model full inventory 分开统计
+    platform_107 = {
+        "verifiedPlatformMappings": 0,
+        "candidatePlatformMappings": 0,
+        "unresolvedPlatformMappings": len(inventory),
+        "conclusion": "Platform mapping 未由 inventory 自动生成（source footprint != Platform）；全量 unresolved",
+    }
+
     result = {
         "meta": {
             "script": "pipeline/scripts/ontology-inventory.py",
@@ -316,6 +392,7 @@ def main() -> int:
             "modelsWithSnapshots": len(set(s["modelId"] for s in snapshot_aliases)),
             "sample": snapshot_aliases[:5],
         },
+        "platform107Summary": platform_107,
         "inventory": inventory,
     }
 
