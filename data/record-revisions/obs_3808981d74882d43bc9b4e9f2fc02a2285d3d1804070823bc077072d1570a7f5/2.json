@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_3808981d74882d43bc9b4e9f2fc02a2285d3d1804070823bc077072d1570a7f5",
+  "sourceId": "aa-industry",
+  "date": "2026-09-23",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "新增 Claude Opus 5.5 在多个 effort 级别下的评测数据，并显示其在 Intelligence Index 上排名第一；同时新增 GPT-6 Luna 非推理模式，删除 Agnes 3.0 Flash，反映模型评测更新。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-22T23:33:15+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailSambaNovaScalewayTogether AI",
+      "AnthropicOpenAIMetaSpaceXAIXiaomiZ AIGoogleDeepSeekOther Models",
+      "Arena Preference Elo",
+      "Benchmarking Grok 4.7See more",
+      "Claude Opus 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+      "Claude Opus 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+      "Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+      "Claude Opus 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+      "Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+      "Claude Opus 5.5 takes the top spot on the Artificial Analysis Intelligence Index",
+      "Figures represent performance of the model's first-party API or the median across providers where a first-party API is not available.",
+      "GPT-6 Luna (Non-reasoning)",
+      "GPT-6 Luna (high)",
+      "GPT-6 Luna (low)",
+      "GPT-6 Luna (max)",
+      "GPT-6 Luna (medium)",
+      "GPT-6 Luna (xhigh)",
+      "GPT-6 Sol (Non-reasoning)",
+      "GPT-6 Sol (high)",
+      "GPT-6 Sol (low)",
+      "GPT-6 Sol (max)"
+    ],
+    "removed_lines": [
+      "Agnes 3.0 Flash"
+    ],
+    "added_count": 21,
+    "removed_count": 1,
+    "raw_added_count": 37,
+    "raw_removed_count": 46
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-23.json"
+  },
+  "permalink": "/item/obs_3808981d74882d43bc9b4e9f2fc02a2285d3d1804070823bc077072d1570a7f5/"
+}

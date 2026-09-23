@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_87ba1e3d90e588d1c1aa5595d923de1a476e87337358830700f442c01ad134e0",
+  "sourceId": "openai-changelog",
+  "date": "2026-09-23",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "changelog",
+  "sourceUrl": "https://platform.openai.com/docs/changelog",
+  "title": "OpenAI · 更新日志来源更新",
+  "summary": "新增发布 GPT-6 Sol 与 GPT-6 Luna 的公告，包含定价与能力说明，并更新模型选择指南为『Using GPT-6』，同时新增 API Partner Setup 与 Private Safety Processing 功能。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-22T23:33:15+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "using gpt-",
+        "before": "Using GPT-6 Astra",
+        "after": "Using GPT-6"
+      }
+    ],
+    "added_lines": [
+      "API Partner Setup",
+      "Compare capabilities in the model catalog, and see pricing for cache writes, longer prompts, and other processing tiers.",
+      "GPT-6 Luna: $0.10 input, $0.01 cached input, and $0.50 output.",
+      "GPT-6 Sol: $2 input, $0.20 cached input, and $10 output.",
+      "Private Safety Processing",
+      "Released GPT-6 Sol (gpt-6-sol) and GPT-6 Luna (gpt-6-luna).",
+      "Standard pricing per 1M tokens for prompts with up to 272K input tokens:",
+      "These reasoning models accept text and image inputs and generate text through the Responses and Chat Completions APIs."
+    ],
+    "removed_lines": [],
+    "added_count": 8,
+    "removed_count": 0,
+    "raw_added_count": 9,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-23.json"
+  },
+  "permalink": "/item/obs_87ba1e3d90e588d1c1aa5595d923de1a476e87337358830700f442c01ad134e0/"
+}

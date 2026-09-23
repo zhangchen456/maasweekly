@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_810c0a921a4498ecc31bd222c687227c2d27eea1ee727afbecb3731c78d7d326",
+  "sourceId": "anthropic-changelog",
+  "date": "2026-09-23",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.anthropic.com/en/release-notes/api",
+  "title": "Anthropic · 更新日志来源更新",
+  "summary": "新增 Claude Opus 5.5 发布公告，说明其 1M 上下文窗口、thinking 不可禁用，以及 Fast mode 可用；同时新增 inline-tools beta 功能与 thinking-binding-controls 更新。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-22T23:33:15+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Fast mode (research preview) is available for Claude Opus 5.5 on the Claude API.",
+      "On Claude Opus 5.5, thinking can't be disabled: thinking: {\"type\": \"disabled\"} and thinking: {\"type\": \"enabled\", ...} return a 400 error. Omit the thinking field and control thinking depth with the effort parameter. tool_choice types any and tool also return a 400 error, as on Claude Fable 5.1; use auto with strict tool use. On the Claude API and Google Cloud, computer use on this model requires the computer_toolset_20260801 toolset and the earlier computer_20251124 tool returns a 400 error; on Amazon Bedrock, computer_20251124 keeps working. See the migration guide.",
+      "Tools can now be defined inside a mid-conversation system message, in beta on the Claude API with the inline-tools-2026-09-15 beta header. A tool_addition block can carry the tool's full definition (tool: {\"type\": \"tool_definition\", \"definition\": {...}}), so you can add a tool, change its schema, or move a server tool to a newer version without editing tools or invalidating the prompt cache. The same header covers adding and removing tools by reference. With the MCP connector's mcp-client-2026-09-15 beta header as well, the definition can be an MCP toolset, and a response records each server's fetched tool list in an mcp_tool_listing block, which pins that list when you send it back.",
+      "We've launched Claude Opus 5.5 (claude-opus-5-5), a model for long-running agentic coding and knowledge work. It has a 1M token context window by default, 128k max output tokens, and always-on adaptive thinking, at $4 / $20 USD per MTok (Claude Opus 5 is $5 / $25). Claude Opus 5.5 is available on the Claude API, Claude in Amazon Bedrock, Claude Platform on AWS, Claude on Google Cloud, and Claude in Microsoft Foundry. See What's new in Claude Opus 5.5 for capabilities, API changes, and migration guidance.",
+      "With the thinking-binding-controls-2026-08-01 beta header, the input_transformations response field gains a second entry type, thinking_mismatch_allowed. It names a thinking block that failed the prefix check on a request where the API doesn't enforce that check: on Claude Fable 5.1, for example, a request from an account created before August 31, 2026, with prefix_mismatch_behavior unset. The block still reaches the model unchanged. Log these entries to find history edits in production traffic before you opt into enforcement. See Set the mismatch behavior and read input_transformations."
+    ],
+    "removed_lines": [],
+    "added_count": 5,
+    "removed_count": 0,
+    "raw_added_count": 6,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-23.json"
+  },
+  "permalink": "/item/obs_810c0a921a4498ecc31bd222c687227c2d27eea1ee727afbecb3731c78d7d326/"
+}

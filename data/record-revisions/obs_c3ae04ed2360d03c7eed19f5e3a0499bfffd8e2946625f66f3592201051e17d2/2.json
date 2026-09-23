@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_c3ae04ed2360d03c7eed19f5e3a0499bfffd8e2946625f66f3592201051e17d2",
+  "sourceId": "lmarena-industry",
+  "date": "2026-09-23",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "LMArena",
+  "sourceType": "industry",
+  "sourceUrl": "https://lmarena.ai/leaderboard",
+  "title": "LMArena · 行业数据来源更新",
+  "summary": "新增多个模型榜单数据，包括 claude-fable-5.1-max、claude-opus-5-max、gemini-omni-1.1-flash 等，并更新部分模型 Elo 分数，但变化幅度较小，属于常规榜单刷新。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-22T23:33:15+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "bytedanceseedream-",
+        "before": "10Bytedanceseedream-5.0-pro1257±4",
+        "after": "10Bytedanceseedream-5.0-pro1256±4"
+      },
+      {
+        "key": "seedance-2.0-720p1479",
+        "before": "7Bytedancedreamina-seedance-2.0-720p1479±8",
+        "after": "5Bytedancedreamina-seedance-2.0-720p1479±8"
+      },
+      {
+        "key": "bytedanceseedream-",
+        "before": "8Bytedanceseedream-5.0-pro1394±4",
+        "after": "8Bytedanceseedream-5.0-pro1394±3"
+      }
+    ],
+    "added_lines": [
+      "4Bytedancedreamina-seedance-2.5-720p1477±7",
+      "5Bytedancedreamina-seedance-2.0-720p1475±7",
+      "7Bytedancedreamina-seedance-2.5-720p1474±9",
+      "7hidream-o1-video-1.01456",
+      "claude-fable-5.1-max1755+11/-11",
+      "claude-opus-5-high1661+6/-6",
+      "claude-opus-5-max1691+7/-7",
+      "flux-3-video-202608111449±5",
+      "flux-3-video1493",
+      "gemini-3.1-flash-image (nano-banana-2) [web-search]1260±4",
+      "gemini-omni-1.1-flash1516±15",
+      "gemini-omni-flash1465±6",
+      "gemini-omni-flash1513±9",
+      "gpt-6-astra-max1793+12/-12",
+      "gpt-image-2.5-flare1401",
+      "gpt-image-2.5-flare1482",
+      "gpt-image-2.5-sunburst1423",
+      "gpt-image-2.5-sunburst1526",
+      "grok-4.7-xhigh1632+17/-17",
+      "grok-imagine-image-2.0 (low)1302±9",
+      "grok-imagine-image-2.0 (low)1430±6",
+      "grok-imagine-video-1.5-agent1492",
+      "kimi-k3-max1658+7/-7",
+      "mai-image-2.61334±6",
+      "mai-image-2.61429±6",
+      "minimax-h31460±9",
+      "minimax-h31495±5"
+    ],
+    "removed_lines": [
+      "4Bytedancedreamina-seedance-2.5-720p1475±8",
+      "5Bytedancedreamina-seedance-2.0-720p1474±7",
+      "6Bytedancedreamina-seedance-2.5-720p1482±12",
+      "8hidream-o1-video-1.01452",
+      "claude-fable-5-high1628+7/-7",
+      "claude-fable-5.1-max1758+14/-14",
+      "claude-opus-5-high1660+7/-7"
+    ],
+    "added_count": 27,
+    "removed_count": 7,
+    "raw_added_count": 37,
+    "raw_removed_count": 37
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-23.json"
+  },
+  "permalink": "/item/obs_c3ae04ed2360d03c7eed19f5e3a0499bfffd8e2946625f66f3592201051e17d2/"
+}
