@@ -2,8 +2,18 @@
   "meta": {
     "description": "T07-5.1 Ontology Gold Set — 跨平台/开发者/平台/上游模型/可用性映射验证",
     "principle": "candidate ≠ verified；false positive = 0；禁止 fuzzy/embedding/LLM",
-    "evidenceTypes": ["official-docs", "provider-mapping", "manual", "registry-data", "unresolved"],
-    "verificationStatusValues": ["verified", "candidate", "unresolved"],
+    "evidenceTypes": [
+      "official-docs",
+      "provider-mapping",
+      "manual",
+      "registry-data",
+      "unresolved"
+    ],
+    "verificationStatusValues": [
+      "verified",
+      "candidate",
+      "unresolved"
+    ],
     "note": "每个 relation 独立标 verification status；repo-derived candidate ≠ verified relation"
   },
   "goldSet": [
@@ -12,8 +22,10 @@
       "expectedDeveloper": "anthropic",
       "expectedUpstreamModel": "anthropic:claude-sonnet-4.5",
       "expectedPlatform": "anthropic-api",
-      "expectedAvailability": "single",
-      "expectedIdentifiers": ["claude-sonnet-4.5"],
+      "expectedAvailability": "unresolved",
+      "expectedIdentifiers": [
+        "claude-sonnet-4.5"
+      ],
       "relationStatus": {
         "developerStatus": "candidate",
         "platformStatus": "candidate",
@@ -35,7 +47,11 @@
       "expectedUpstreamModel": "alibaba-qwen:qwen3-coder-plus",
       "expectedPlatform": "alibaba-bailian",
       "expectedAvailability": "unresolved",
-      "expectedIdentifiers": ["qwen3-coder-plus", "qwen3-coder-plus-2025-07-22", "qwen3-coder-plus-2025-09-23"],
+      "expectedIdentifiers": [
+        "qwen3-coder-plus",
+        "qwen3-coder-plus-2025-07-22",
+        "qwen3-coder-plus-2025-09-23"
+      ],
       "relationStatus": {
         "developerStatus": "candidate",
         "platformStatus": "candidate",
@@ -57,7 +73,9 @@
       "expectedUpstreamModel": "bytedance-doubao:doubao-seed-1.6",
       "expectedPlatform": "volcengine-ark",
       "expectedAvailability": "unresolved",
-      "expectedIdentifiers": ["doubao-seed-1.6"],
+      "expectedIdentifiers": [
+        "doubao-seed-1.6"
+      ],
       "relationStatus": {
         "developerStatus": "candidate",
         "platformStatus": "candidate",
@@ -79,7 +97,9 @@
       "expectedUpstreamModel": "google:gemini-2.5-pro",
       "expectedPlatform": "unresolved",
       "expectedAvailability": "unresolved",
-      "expectedIdentifiers": ["gemini-2.5-pro"],
+      "expectedIdentifiers": [
+        "gemini-2.5-pro"
+      ],
       "relationStatus": {
         "developerStatus": "candidate",
         "platformStatus": "unresolved",
@@ -100,7 +120,7 @@
       "expectedDeveloper": "deepseek",
       "expectedUpstreamModel": "deepseek:deepseek-flash",
       "expectedPlatform": "unresolved",
-      "expectedAvailability": "zero",
+      "expectedAvailability": "unresolved",
       "expectedIdentifiers": [],
       "relationStatus": {
         "developerStatus": "candidate",
@@ -123,7 +143,9 @@
       "expectedUpstreamModel": "unresolved",
       "expectedPlatform": "unresolved",
       "expectedAvailability": "unresolved",
-      "expectedIdentifiers": ["qwen-plus-latest"],
+      "expectedIdentifiers": [
+        "qwen-plus-latest"
+      ],
       "relationStatus": {
         "developerStatus": "unresolved",
         "platformStatus": "unresolved",
@@ -145,7 +167,9 @@
       "expectedUpstreamModel": "unresolved",
       "expectedPlatform": "unresolved",
       "expectedAvailability": "unresolved",
-      "expectedIdentifiers": ["gemini-3-flash-preview"],
+      "expectedIdentifiers": [
+        "gemini-3-flash-preview"
+      ],
       "relationStatus": {
         "developerStatus": "candidate",
         "platformStatus": "unresolved",
@@ -167,7 +191,9 @@
       "expectedUpstreamModel": "zhipu:glm-4.7",
       "expectedPlatform": "zhipu-platform",
       "expectedAvailability": "unresolved",
-      "expectedIdentifiers": ["glm-4.7"],
+      "expectedIdentifiers": [
+        "glm-4.7"
+      ],
       "relationStatus": {
         "developerStatus": "candidate",
         "platformStatus": "candidate",
@@ -189,7 +215,9 @@
       "expectedUpstreamModel": "moonshot-kimi:kimi-k3",
       "expectedPlatform": "kimi-platform",
       "expectedAvailability": "unresolved",
-      "expectedIdentifiers": ["kimi-k3"],
+      "expectedIdentifiers": [
+        "kimi-k3"
+      ],
       "relationStatus": {
         "developerStatus": "candidate",
         "platformStatus": "candidate",
@@ -211,7 +239,9 @@
       "expectedUpstreamModel": "openai:gpt-6-astra",
       "expectedPlatform": "openai-api",
       "expectedAvailability": "unresolved",
-      "expectedIdentifiers": ["gpt-6-astra"],
+      "expectedIdentifiers": [
+        "gpt-6-astra"
+      ],
       "relationStatus": {
         "developerStatus": "candidate",
         "platformStatus": "candidate",
@@ -229,26 +259,62 @@
     }
   ],
   "coverageMatrix": {
-    "developerEqualsPlatform": ["anthropic:claude-sonnet-4.5", "openai:gpt-6-astra", "zhipu:glm-4.7", "kimi:kimi-k3", "deepseek:deepseek-v4-pro"],
-    "developerNotPlatform": ["alibaba:qwen3-coder-plus", "volcengine:doubao-seed-1.6"],
-    "multiSourceNamespace": ["google:gemini-2.5-pro"],
-    "multipleModelKeys": ["alibaba:qwen3-coder-plus"],
-    "snapshot": ["alibaba:qwen-plus"],
-    "pointer": ["alibaba:qwen-plus-latest"],
-    "preview": ["google:gemini-3-flash-preview"],
-    "unresolved": ["deepseek:deepseek-flash", "google:gemini-3-flash-preview"]
+    "developerEqualsPlatform": [
+      "anthropic:claude-sonnet-4.5",
+      "openai:gpt-6-astra",
+      "zhipu:glm-4.7",
+      "kimi:kimi-k3"
+    ],
+    "developerNotPlatform": [
+      "alibaba:qwen3-coder-plus",
+      "volcengine:doubao-seed-1.6"
+    ],
+    "multiSourceNamespace": [
+      "google:gemini-2.5-pro"
+    ],
+    "multipleModelKeys": [
+      "alibaba:qwen3-coder-plus"
+    ],
+    "snapshot": [
+      "alibaba:qwen3-coder-plus"
+    ],
+    "pointer": [
+      "alibaba:qwen-plus-latest"
+    ],
+    "preview": [
+      "google:gemini-3-flash-preview"
+    ],
+    "unresolved": [
+      "deepseek:deepseek-flash",
+      "google:gemini-3-flash-preview"
+    ]
   },
   "verificationSummary": {
-    "developerVerified": 0,
-    "developerCandidate": 8,
-    "developerUnresolved": 2,
-    "platformVerified": 0,
-    "platformCandidate": 6,
-    "platformUnresolved": 4,
-    "availabilityVerified": 0,
-    "availabilityUnresolved": 10,
-    "identifierVerified": 7,
-    "identifierUnresolved": 3,
-    "note": "repo-derived candidate ≠ verified relation；availability 全部 unresolved（source footprint != availability）"
+    "developer": {
+      "verified": 0,
+      "candidate": 9,
+      "unresolved": 1
+    },
+    "platform": {
+      "verified": 0,
+      "candidate": 6,
+      "unresolved": 4
+    },
+    "upstream": {
+      "verified": 0,
+      "candidate": 8,
+      "unresolved": 2
+    },
+    "availability": {
+      "verified": 0,
+      "candidate": 0,
+      "unresolved": 10
+    },
+    "identifier": {
+      "verified": 8,
+      "candidate": 0,
+      "unresolved": 2
+    },
+    "note": "从 goldSet 动态计算；repo-derived candidate ≠ verified relation"
   }
 }

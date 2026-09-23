@@ -191,14 +191,27 @@ python3 pipeline/scripts/ontology-inventory.py
 
 ## Gold Set verification summary
 
+从 goldSet 动态计算（脚本自动生成，不手工写死）：
+
 | relation | verified | candidate | unresolved |
 |---|---|---|---|
-| developer | 0 | 8 | 2 |
+| developer | 0 | 9 | 1 |
 | platform | 0 | 6 | 4 |
+| upstream | 0 | 8 | 2 |
 | availability | 0 | 0 | 10 |
-| identifier | 7 | 0 | 3 |
+| identifier | 8 | 0 | 2 |
 
 repo-derived candidate ≠ verified relation；availability 全部 unresolved（source footprint != availability）。
+
+## 107-model Platform verification summary
+
+| 维度 | 数量 |
+|---|---|
+| verified | 0 |
+| candidate | 0 |
+| unresolved | 107 |
+
+Platform mapping 未由 inventory 自动生成（source footprint != Platform）；全量 unresolved。Gold Set 人工 candidate 与 107-model full inventory 分开统计。
 
 ## git status
 
