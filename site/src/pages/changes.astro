@@ -120,7 +120,11 @@ const providerLabels: Record<string, string> = {
           const res=await fetch(apiBase+'/changes?'+params.toString());
           if(res.status===400){
             const body=await res.json().catch(()=>({}));
-            filterError={type:'identity',value:modelIdFilter||familyIdFilter||''};
+            // 400 按 body.code 区分错误类型（不统一当 identity error）
+            if(body.code==='invalid_model_id')filterError={type:'modelId',value:modelIdFilter||''};
+            else if(body.code==='invalid_family_id')filterError={type:'familyId',value:familyIdFilter||''};
+            else if(body.code==='invalid_q')filterError={type:'q',value:query};
+            else filterError={type:'query',value:body.detail||''};
             $('loading').hidden=false;
             renderAll();return;
           }
@@ -189,7 +193,13 @@ const providerLabels: Record<string, string> = {
         const fe=$('filter-error');
         if(!filterError){fe.hidden=true;fe.replaceChildren();return}
         fe.hidden=false;fe.replaceChildren();
-        const p=el('p','','未找到模型：'+filterError.value+'。该 ID 不在当前模型目录中。');
+        // 按 type 显示不同文案（不统一显示"未找到模型"）
+        let msg;
+        if(filterError.type==='modelId')msg='未找到模型：'+filterError.value+'。该 ID 不在当前模型目录中。';
+        else if(filterError.type==='familyId')msg='未找到模型系列：'+filterError.value+'。该 ID 不在当前模型目录中。';
+        else if(filterError.type==='q')msg='搜索条件无效：'+filterError.value+'。请输入 2 到 100 个字符。';
+        else msg='查询参数错误：'+filterError.value;
+        const p=el('p','',msg);
         const btn=el('button','','清除筛选');btn.setAttribute('type','button');
         btn.onclick=()=>{filterError=null;resetCursorStack();syncUrlState();initSelectors();renderAll()};
         const row=el('div','row');row.append(p,btn);fe.append(row);
@@ -199,7 +209,16 @@ const providerLabels: Record<string, string> = {
 
       // 事件绑定
       let qTimer;
-      $('q').oninput=e=>{query=e.target.value.trim();resetCursorStack();clearTimeout(qTimer);qTimer=setTimeout(()=>{syncUrlState();renderAll()},300)};
+      // q 长度 < 2 不发请求（后端 invalid_q 合同）；长度 >= 2 才触发搜索
+      $('q').oninput=e=>{query=e.target.value.trim();filterError=null;resetCursorStack();
+        if(query&&query.length<2){
+          // 单字符不发请求，显示提示
+          const fe=$('filter-error');fe.hidden=false;fe.replaceChildren();
+          fe.append(el('p','','请输入至少 2 个字符'));
+          $('changes-list').replaceChildren();$('empty-state').hidden=true;$('prev').disabled=true;$('next').disabled=true;$('page-label').textContent='';
+          return;
+        }
+        clearTimeout(qTimer);qTimer=setTimeout(()=>{syncUrlState();renderAll()},300)};
       $('model-filter').onchange=e=>{modelIdFilter=e.target.value||null;familyIdFilter=null;filterError=null;resetCursorStack();syncUrlState();initSelectors();renderAll()};
       $('family-filter').onchange=e=>{familyIdFilter=e.target.value||null;modelIdFilter=null;filterError=null;resetCursorStack();syncUrlState();initSelectors();renderAll()};
       $('type-filter').onchange=e=>{typeFilter=e.target.value;resetCursorStack();syncUrlState();renderAll()};
