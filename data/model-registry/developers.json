@@ -1,246 +1,246 @@
 {
   "schemaVersion": "1.0",
-  "description": "T07-5.2 Developer Registry — 模型开发方实体。providerId 是 legacy public query namespace；developerId 是 T07-5 新增的独立实体。developerId ≠ providerId ≠ platformId。",
-  "namingRule": "developerId 用 company-slug 格式；developer=platform 时用单一名（如 anthropic、openai）；developer≠platform 时用 <company>-<brand>（如 alibaba-qwen、bytedance-doubao）。company 是实际开发/拥有模型的法律实体；brand 是模型品牌名。",
+  "description": "T07-5.2 Developer Registry — 模型开发方实体。Developer 是独立 entity type，与 Platform 无 FK 关系。providerId 是 legacy public query namespace，不是 ontology relation。",
+  "namingRule": "developerId 用 organization-slug 格式。developer 与 platform 是不同 entity type；developer=platform 合一是组织层面的 firstParty 关系，不等于实体等价。organization 是开发/拥有模型的组织，不经法律实体核验。",
   "developers": [
     {
       "developerId": "anthropic",
       "displayName": "Anthropic",
-      "company": "Anthropic",
+      "organization": "Anthropic",
       "brands": ["claude"],
       "region": "overseas",
-      "platforms": ["anthropic-api"],
       "providerIds": ["anthropic"],
+      "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=anthropic；developer=platform 合一；registry 含 claude 品牌 model"
+        "verificationNote": "maas_official_sources vendor=anthropic + registry 含 claude 品牌 model；developer relation candidate（repo 无独立 developer-entity evidence）"
       }
     },
     {
       "developerId": "openai",
       "displayName": "OpenAI",
-      "company": "OpenAI",
+      "organization": "OpenAI",
       "brands": ["gpt"],
       "region": "overseas",
-      "platforms": ["openai-api"],
       "providerIds": ["openai"],
+      "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=openai；developer=platform 合一；registry 含 gpt 品牌 model"
+        "verificationNote": "maas_official_sources vendor=openai + registry 含 gpt 品牌 model；developer relation candidate"
       }
     },
     {
       "developerId": "google",
       "displayName": "Google",
-      "company": "Google",
+      "organization": "Google",
       "brands": ["gemini"],
       "region": "overseas",
-      "platforms": ["google-gemini-api", "google-vertex-ai"],
       "providerIds": ["google"],
+      "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=google；developer=platform 合一但 platform 有两个（Gemini API + Vertex AI）；registry 含 gemini 品牌 model"
+        "verificationNote": "maas_official_sources vendor=google + registry 含 gemini 品牌 model；developer relation candidate"
       }
     },
     {
       "developerId": "deepseek",
       "displayName": "DeepSeek",
-      "company": "DeepSeek",
+      "organization": "DeepSeek",
       "brands": ["deepseek"],
       "region": "china",
-      "platforms": ["deepseek-api"],
       "providerIds": ["deepseek"],
+      "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=deepseek；developer=platform 合一；registry 含 deepseek 品牌 model"
+        "verificationNote": "maas_official_sources vendor=deepseek + registry 含 deepseek 品牌 model；developer relation candidate"
       }
     },
     {
       "developerId": "moonshot-kimi",
       "displayName": "Moonshot AI",
-      "company": "Moonshot AI",
+      "organization": "Moonshot AI",
       "brands": ["kimi"],
       "region": "china",
-      "platforms": ["kimi"],
       "providerIds": ["kimi"],
+      "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=moonshot；developer=Moonshot AI，platform=Kimi（品牌名=平台名）；registry 含 kimi 品牌 model"
+        "verificationNote": "maas_official_sources vendor=moonshot + registry 含 kimi 品牌 model；developer=Moonshot AI（品牌 Kimi ≠ 组织 Moonshot AI）；candidate"
       }
     },
     {
       "developerId": "zhipu",
       "displayName": "智谱AI",
-      "company": "智谱AI",
+      "organization": "智谱AI",
       "brands": ["glm"],
       "region": "china",
-      "platforms": ["zhipu"],
       "providerIds": ["zhipu"],
+      "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=zhipu；developer=platform 合一；registry 含 glm 品牌 model"
+        "verificationNote": "maas_official_sources vendor=zhipu + registry 含 glm 品牌 model；developer relation candidate"
       }
     },
     {
       "developerId": "alibaba-qwen",
       "displayName": "阿里通义",
-      "company": "阿里巴巴",
+      "organization": "阿里巴巴",
       "brands": ["qwen", "qwen3", "qwen3.5", "qwen3.6", "qwen3.7"],
       "region": "china",
-      "platforms": ["alibaba-bailian"],
       "providerIds": ["alibaba"],
+      "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=alibaba（阿里百炼=平台）；developer=阿里通义（品牌 Qwen）；registry 含 qwen 系列品牌 model"
+        "verificationNote": "maas_official_sources vendor=alibaba（阿里百炼=平台）+ registry 含 qwen 系列品牌 model；developer=阿里通义（品牌 Qwen）candidate——platform≠developer"
       }
     },
     {
       "developerId": "bytedance-doubao",
       "displayName": "字节跳动",
-      "company": "字节跳动",
+      "organization": "字节跳动",
       "brands": ["doubao"],
       "region": "china",
-      "platforms": ["volcengine-ark"],
       "providerIds": ["volcengine"],
+      "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=volcengine（火山方舟=平台）；developer=字节跳动（品牌 Doubao）；registry 含 doubao 品牌 model"
+        "verificationNote": "maas_official_sources vendor=volcengine（火山方舟=平台）+ registry 含 doubao 品牌 model；developer=字节跳动（品牌 Doubao）candidate——platform≠developer"
       }
     },
     {
       "developerId": "baidu",
       "displayName": "百度",
-      "company": "百度",
+      "organization": "百度",
       "brands": [],
       "region": "china",
-      "platforms": ["baidu-qianfan"],
       "providerIds": ["baidu"],
+      "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=baidu；developer=platform 合一；registry 当前无 model（platform-only）"
+        "verificationNote": "maas_official_sources vendor=baidu 有 platform（百度千帆）；registry 无 model——无 model-developer evidence；unresolved（不为 platform coverage 创建 developer）"
       }
     },
     {
       "developerId": "tencent",
       "displayName": "腾讯",
-      "company": "腾讯",
+      "organization": "腾讯",
       "brands": [],
       "region": "china",
-      "platforms": ["tencent-hunyuan"],
       "providerIds": ["tencent"],
+      "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=tencent；developer=platform 合一；registry 当前无 model（platform-only）"
+        "verificationNote": "maas_official_sources vendor=tencent 有 platform（腾讯混元）；registry 无 model——无 model-developer evidence；unresolved"
       }
     },
     {
       "developerId": "minimax",
       "displayName": "MiniMax",
-      "company": "MiniMax",
+      "organization": "MiniMax",
       "brands": [],
       "region": "china",
-      "platforms": ["minimax"],
       "providerIds": ["minimax"],
+      "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=minimax；developer=platform 合一；registry 当前无 model（platform-only）"
+        "verificationNote": "maas_official_sources vendor=minimax 有 platform；registry 无 model——无 model-developer evidence；unresolved"
       }
     },
     {
       "developerId": "mistral",
       "displayName": "Mistral AI",
-      "company": "Mistral AI",
+      "organization": "Mistral AI",
       "brands": [],
       "region": "overseas",
-      "platforms": ["mistral-ai"],
       "providerIds": ["mistral"],
+      "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=mistral；developer=platform 合一；registry 当前无 model（platform-only）"
+        "verificationNote": "maas_official_sources vendor=mistral 有 platform；registry 无 model——无 model-developer evidence；unresolved"
       }
     },
     {
       "developerId": "cohere",
       "displayName": "Cohere",
-      "company": "Cohere",
+      "organization": "Cohere",
       "brands": [],
       "region": "overseas",
-      "platforms": ["cohere"],
       "providerIds": ["cohere"],
+      "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=cohere；developer=platform 合一；registry 当前无 model（platform-only）"
+        "verificationNote": "maas_official_sources vendor=cohere 有 platform；registry 无 model——无 model-developer evidence；unresolved"
       }
     },
     {
       "developerId": "siliconflow",
       "displayName": "硅基流动",
-      "company": "硅基流动",
+      "organization": "硅基流动",
       "brands": [],
       "region": "china",
-      "platforms": ["siliconflow"],
       "providerIds": ["siliconflow"],
+      "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=siliconflow；developer=platform 合一；registry 当前无 model（platform-only）"
+        "verificationNote": "maas_official_sources vendor=siliconflow 有 platform（模型广场）；registry 无 model——无 model-developer evidence；unresolved（platform≠developer）"
       }
     },
     {
       "developerId": "xai",
       "displayName": "xAI",
-      "company": "xAI",
+      "organization": "xAI",
       "brands": [],
       "region": "overseas",
-      "platforms": ["xai"],
       "providerIds": ["xai"],
+      "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=xai；developer=platform 合一；registry 当前无 model（platform-only）"
+        "verificationNote": "maas_official_sources vendor=xai 有 platform；registry 无 model——无 model-developer evidence；unresolved"
       }
     },
     {
       "developerId": "xfyun",
       "displayName": "讯飞",
-      "company": "科大讯飞",
+      "organization": "科大讯飞",
       "brands": [],
       "region": "china",
-      "platforms": ["xfyun"],
       "providerIds": ["xfyun"],
+      "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
         "sourceUrl": "pipeline/config/maas_official_sources.json",
         "verifiedAt": "2026-09-24",
-        "verificationNote": "vendor=xfyun；developer=platform 合一；registry 当前无 model（platform-only）"
+        "verificationNote": "maas_official_sources vendor=xfyun 有 platform（讯飞星辰MaaS）；registry 无 model——无 model-developer evidence；unresolved"
       }
     }
   ]
