@@ -214,7 +214,7 @@ Platform mapping 未由 inventory 自动生成（source footprint != Platform）
 
 ## git status
 
-工作区干净（待 commit + push）。
+工作区干净（已 commit + push）。
 
 ## 确认
 
