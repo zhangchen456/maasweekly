@@ -4,11 +4,13 @@
 校验：
   - developers.json developerId 唯一
   - platforms.json platformId 唯一
-  - 每个 platform 的 developerId 存在于 developers.json
-  - 每个 developer 的 platforms 存在于 platforms.json
-  - 每个 developer 的 providerIds 存在于 public_providers.json
-  - developers.json / platforms.json 的 evidence 完整
-  - registry model 的 providerId 全部有对应 developer（兼容性）
+  - Developer 与 Platform 独立（无 FK 关系）
+  - 每个 entity 的 verificationStatus ∈ {verified, candidate, unresolved}
+  - evidence 四字段（sourceType/sourceUrl/verifiedAt/verificationNote）非空
+  - verificationStatus=verified 时 evidence 必须存在
+  - providerIds 若存在，必须来自 public_providers.json
+  - Platform 不含 developerId FK
+  - Developer 不含 platforms 反向 FK
 
 用法：
   python3 pipeline/scripts/validate-developer-registry.py          # 校验
@@ -21,13 +23,14 @@ import sys
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent.parent
+VALID_STATUS = {"verified", "candidate", "unresolved"}
+EVIDENCE_FIELDS = ["sourceType", "sourceUrl", "verifiedAt", "verificationNote"]
 
 
 def main() -> int:
     devs = json.loads((BASE / "data/model-registry/developers.json").read_text("utf-8"))
     plats = json.loads((BASE / "data/model-registry/platforms.json").read_text("utf-8"))
     pub = json.loads((BASE / "pipeline/config/public_providers.json").read_text("utf-8"))
-    reg = json.loads((BASE / "data/model-registry/models.json").read_text("utf-8"))
 
     errors: list[str] = []
 
@@ -41,41 +44,47 @@ def main() -> int:
     if len(plat_ids) != len(set(plat_ids)):
         errors.append(f"platformId 不唯一: {len(plat_ids)} ids, {len(set(plat_ids))} unique")
 
-    dev_id_set = set(dev_ids)
-    plat_id_set = set(plat_ids)
     pub_provider_set = set(p["providerId"] for p in pub["providers"])
 
-    # 每个 platform 的 developerId 存在
-    for p in plats["platforms"]:
-        if p["developerId"] not in dev_id_set:
-            errors.append(f"platform {p['platformId']} 的 developerId 不存在: {p['developerId']}")
-        if not p.get("evidence", {}).get("sourceType"):
-            errors.append(f"platform {p['platformId']} 缺 evidence")
-
-    # 每个 developer 的 platforms 存在
+    # Developer 校验
     for d in devs["developers"]:
-        for pid in d.get("platforms", []):
-            if pid not in plat_id_set:
-                errors.append(f"developer {d['developerId']} 的 platform 不存在: {pid}")
+        did = d["developerId"]
+        # 不含 platforms 反向 FK
+        if "platforms" in d:
+            errors.append(f"developer {did} 含 platforms 反向 FK（Developer/Platform 应独立）")
+        # verificationStatus
+        vs = d.get("verificationStatus")
+        if vs not in VALID_STATUS:
+            errors.append(f"developer {did} verificationStatus 非法: {vs}")
+        # evidence 四字段
+        ev = d.get("evidence", {})
+        for f in EVIDENCE_FIELDS:
+            if not ev.get(f):
+                errors.append(f"developer {did} evidence.{f} 缺失")
+        # verificationStatus=verified 时 evidence 必须存在（四字段已在上面检查）
+        # providerIds 若存在，必须来自 public_providers
         for pid in d.get("providerIds", []):
             if pid not in pub_provider_set:
-                errors.append(f"developer {d['developerId']} 的 providerId 不在 public_providers: {pid}")
-        if not d.get("evidence", {}).get("sourceType"):
-            errors.append(f"developer {d['developerId']} 缺 evidence")
+                errors.append(f"developer {did} providerId 不在 public_providers: {pid}")
 
-    # 兼容性：registry model 的 providerId 全部有对应 developer
-    reg_provider_ids = set(m["providerId"] for m in reg["models"] if m.get("providerId"))
-    dev_provider_ids = set()
-    for d in devs["developers"]:
-        dev_provider_ids.update(d.get("providerIds", []))
-    for pid in reg_provider_ids:
-        if pid not in dev_provider_ids:
-            errors.append(f"registry model providerId 无对应 developer: {pid}")
-
-    # 每个 platform 的 providerId 存在于 public_providers
+    # Platform 校验
     for p in plats["platforms"]:
-        if p.get("providerId") not in pub_provider_set:
-            errors.append(f"platform {p['platformId']} 的 providerId 不在 public_providers: {p.get('providerId')}")
+        pid = p["platformId"]
+        # 不含 developerId FK
+        if "developerId" in p:
+            errors.append(f"platform {pid} 含 developerId FK（Platform/Developer 应独立）")
+        # verificationStatus
+        vs = p.get("verificationStatus")
+        if vs not in VALID_STATUS:
+            errors.append(f"platform {pid} verificationStatus 非法: {vs}")
+        # evidence 四字段
+        ev = p.get("evidence", {})
+        for f in EVIDENCE_FIELDS:
+            if not ev.get(f):
+                errors.append(f"platform {pid} evidence.{f} 缺失")
+        # providerId 若存在，必须来自 public_providers
+        if p.get("providerId") and p["providerId"] not in pub_provider_set:
+            errors.append(f"platform {pid} providerId 不在 public_providers: {p.get('providerId')}")
 
     if errors:
         print("✗ Developer/Platform registry 校验失败:", file=sys.stderr)
@@ -83,10 +92,15 @@ def main() -> int:
             print(f"  - {e}", file=sys.stderr)
         return 1
 
-    print(f"✓ Developer/Platform registry 校验通过")
-    print(f"  developers: {len(devs['developers'])}")
-    print(f"  platforms: {len(plats['platforms'])}")
-    print(f"  registry providerIds covered: {len(reg_provider_ids)}")
+    # 统计
+    dev_status = {s: sum(1 for d in devs["developers"] if d.get("verificationStatus") == s) for s in VALID_STATUS}
+    plat_status = {s: sum(1 for p in plats["platforms"] if p.get("verificationStatus") == s) for s in VALID_STATUS}
+
+    print("✓ Developer/Platform registry 校验通过")
+    print(f"  developers: {len(devs['developers'])} (verified={dev_status['verified']} candidate={dev_status['candidate']} unresolved={dev_status['unresolved']})")
+    print(f"  platforms: {len(plats['platforms'])} (verified={plat_status['verified']} candidate={plat_status['candidate']} unresolved={plat_status['unresolved']})")
+    print(f"  Platform→Developer FK: 不存在 ✓")
+    print(f"  Developer→Platform FK: 不存在 ✓")
     return 0
 
 
