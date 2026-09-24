@@ -1,0 +1,245 @@
+{
+  "schemaVersion": "1.0",
+  "description": "T07-5.2 Platform Registry — 模型调用平台实体。platformId 是 T07-5 新增的独立实体。platformId ≠ providerId。一个 developer 可对应多个 platform（如 Google → Gemini API + Vertex AI）。",
+  "namingRule": "platformId 用 <vendor>-<product> kebab-case 格式（如 google-gemini-api、google-vertex-ai、alibaba-bailian）。vendor 来自 maas_official_sources 的 vendor 字段；product 是平台产品名 slug。",
+  "platforms": [
+    {
+      "platformId": "anthropic-api",
+      "displayName": "Anthropic API",
+      "developerId": "anthropic",
+      "providerId": "anthropic",
+      "region": "overseas",
+      "officialSite": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=Anthropic, vendor=anthropic"
+      }
+    },
+    {
+      "platformId": "openai-api",
+      "displayName": "OpenAI API",
+      "developerId": "openai",
+      "providerId": "openai",
+      "region": "overseas",
+      "officialSite": "https://developers.openai.com/api/docs/pricing",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=OpenAI, vendor=openai"
+      }
+    },
+    {
+      "platformId": "google-gemini-api",
+      "displayName": "Google Gemini API",
+      "developerId": "google",
+      "providerId": "google",
+      "region": "overseas",
+      "officialSite": "https://ai.google.dev/gemini-api/docs/pricing",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=Google Gemini API, vendor=google；Google 有两个 platform"
+      }
+    },
+    {
+      "platformId": "google-vertex-ai",
+      "displayName": "Google Vertex AI",
+      "developerId": "google",
+      "providerId": "google",
+      "region": "overseas",
+      "officialSite": "https://cloud.google.com/vertex-ai/generative-ai/docs/pricing",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=Google Vertex AI, vendor=google；Google 有两个 platform"
+      }
+    },
+    {
+      "platformId": "deepseek-api",
+      "displayName": "DeepSeek API",
+      "developerId": "deepseek",
+      "providerId": "deepseek",
+      "region": "china",
+      "officialSite": "https://api-docs.deepseek.com/quick_start/pricing",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=DeepSeek, vendor=deepseek"
+      }
+    },
+    {
+      "platformId": "kimi",
+      "displayName": "Kimi",
+      "developerId": "moonshot-kimi",
+      "providerId": "kimi",
+      "region": "china",
+      "officialSite": "https://platform.kimi.com/docs/pricing/chat",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=Kimi, vendor=moonshot；developer=Moonshot AI，platform=Kimi"
+      }
+    },
+    {
+      "platformId": "zhipu",
+      "displayName": "智谱AI",
+      "developerId": "zhipu",
+      "providerId": "zhipu",
+      "region": "china",
+      "officialSite": "https://open.bigmodel.cn/pricing",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=智谱AI, vendor=zhipu"
+      }
+    },
+    {
+      "platformId": "alibaba-bailian",
+      "displayName": "阿里百炼",
+      "developerId": "alibaba-qwen",
+      "providerId": "alibaba",
+      "region": "china",
+      "officialSite": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=阿里百炼, vendor=alibaba；developer=阿里通义，platform=阿里百炼"
+      }
+    },
+    {
+      "platformId": "volcengine-ark",
+      "displayName": "火山方舟",
+      "developerId": "bytedance-doubao",
+      "providerId": "volcengine",
+      "region": "china",
+      "officialSite": "https://www.volcengine.com/docs/82379/1544106",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=火山方舟, vendor=volcengine；developer=字节跳动，platform=火山方舟"
+      }
+    },
+    {
+      "platformId": "baidu-qianfan",
+      "displayName": "百度千帆",
+      "developerId": "baidu",
+      "providerId": "baidu",
+      "region": "china",
+      "officialSite": "https://cloud.baidu.com/doc/WENXINWORK/s/index",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=百度千帆, vendor=baidu"
+      }
+    },
+    {
+      "platformId": "tencent-hunyuan",
+      "displayName": "腾讯混元",
+      "developerId": "tencent",
+      "providerId": "tencent",
+      "region": "china",
+      "officialSite": "https://cloud.tencent.com/document/product/1729/97731",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=腾讯混元/TokenHub, vendor=tencent"
+      }
+    },
+    {
+      "platformId": "minimax",
+      "displayName": "MiniMax",
+      "developerId": "minimax",
+      "providerId": "minimax",
+      "region": "china",
+      "officialSite": "https://platform.minimaxi.com/document/Announcement",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=MiniMax, vendor=minimax"
+      }
+    },
+    {
+      "platformId": "mistral-ai",
+      "displayName": "Mistral AI",
+      "developerId": "mistral",
+      "providerId": "mistral",
+      "region": "overseas",
+      "officialSite": "https://docs.mistral.ai/getting-started/models/models-overview",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=Mistral AI, vendor=mistral"
+      }
+    },
+    {
+      "platformId": "cohere",
+      "displayName": "Cohere",
+      "developerId": "cohere",
+      "providerId": "cohere",
+      "region": "overseas",
+      "officialSite": "https://docs.cohere.com/docs/pricing",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=Cohere, vendor=cohere"
+      }
+    },
+    {
+      "platformId": "siliconflow",
+      "displayName": "硅基流动",
+      "developerId": "siliconflow",
+      "providerId": "siliconflow",
+      "region": "china",
+      "officialSite": "https://siliconflow.cn/pricing",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=硅基流动, vendor=siliconflow"
+      }
+    },
+    {
+      "platformId": "xai",
+      "displayName": "xAI",
+      "developerId": "xai",
+      "providerId": "xai",
+      "region": "overseas",
+      "officialSite": "https://docs.x.ai/docs/models",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=xAI, vendor=xai"
+      }
+    },
+    {
+      "platformId": "xfyun",
+      "displayName": "讯飞星辰MaaS",
+      "developerId": "xfyun",
+      "providerId": "xfyun",
+      "region": "china",
+      "officialSite": "https://maas.xfyun.cn/",
+      "evidence": {
+        "sourceType": "maas-official-sources",
+        "sourceUrl": "pipeline/config/maas_official_sources.json",
+        "verifiedAt": "2026-09-24",
+        "verificationNote": "maas_official_sources: name=讯飞星辰MaaS, vendor=xfyun"
+      }
+    }
+  ]
+}
