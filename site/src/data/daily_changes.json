@@ -1,6 +1,677 @@
 {
-  "updated_at": "2026-09-23T23:29:37",
+  "updated_at": "2026-09-24T23:49:13",
   "days": [
+    {
+      "date": "2026-09-25",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 18,
+        "unchanged": 47
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "model_list",
+          "url": "https://help.aliyun.com/zh/model-studio/models",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "| decision-model-preview | |",
+            "面向高频业务判断的结构化决策模型，一次前向完成分类、是非判断与评分，并返回概率分布与置信度。"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| decision-model-preview | |",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_c399592a798ce2a1e7a077b2da8f811b2d8bd22bf0244ef0553acb2223560ee4",
+          "permalink": "/item/obs_c399592a798ce2a1e7a077b2da8f811b2d8bd22bf0244ef0553acb2223560ee4/",
+          "llm_summary": "新增 decision-model-preview 模型条目，描述为面向高频业务判断的结构化决策模型，支持分类、是非判断与评分，并返回概率分布与置信度，对应新模型上架。"
+        },
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "decision-model-preview |",
+            "计费规则：按输入token计费。"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "decision-model-preview |",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_7198905dfd602e224f7e69faffc08b21b01d1a92e78697f3a6889f40e570c26f",
+          "permalink": "/item/obs_7198905dfd602e224f7e69faffc08b21b01d1a92e78697f3a6889f40e570c26f/",
+          "llm_summary": "新增 decision-model-preview 的计费规则，明确按输入 token 计费，与模型列表新增条目对应。"
+        },
+        {
+          "platform": "百度千帆",
+          "source_type": "pricing",
+          "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 5,
+          "added_lines": [
+            "| DeepSeek-V4-Flash-0731（命中缓存限时价格生效日期：9月9日-10月30日）"
+          ],
+          "removed_lines": [
+            "| DeepSeek-V4-Flash-0731（8月24日生效）",
+            "| DeepSeek-V4-Flash-0731（空闲时段为限时活动，8月25日0点起生效）",
+            "| DeepSeek-V4-Pro-0813（空闲时段为限时活动，8月25日0点起生效）",
+            "| 命中缓存（空闲时段：22:00-次日8:00，9月9日起生效）",
+            "| 命中缓存（高峰时段：8:00-22:00，9月9日起生效）"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| DeepSeek-V4-Flash-0731（命中缓存限时价格生效日期：9月9日-10月30日）",
+          "raw_added_count": 2,
+          "raw_removed_count": 6,
+          "id": "obs_886d866bb29b87838b54d55bedaee0d89ffcb685702ef42b737d676ed071da3b",
+          "permalink": "/item/obs_886d866bb29b87838b54d55bedaee0d89ffcb685702ef42b737d676ed071da3b/",
+          "llm_summary": "删除多条 DeepSeek-V4-Flash-0731 与 Pro-0813 的旧定价规则（包括空闲时段限时活动、命中缓存分时段定价），新增一条命中缓存限时价格生效日期（9月9日-10月30日），表明定价策略简化为单一限时缓存价格。"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "blog",
+          "url": "https://siliconflow.cn/blog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "硅基流动 SiliconFlow - 大模型 API 与 AI 云服务平台"
+          ],
+          "removed_lines": [
+            "硅基流动 SiliconFlow - 致力于成为全球领先的 AI 能力提供商"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "硅基流动 SiliconFlow - 大模型 API 与 AI 云服务平台",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_2f4645dd0ef29a69f502f99a744e0003c69ce89a06c823d5c40fdcb9464897ed",
+          "permalink": "/item/obs_2f4645dd0ef29a69f502f99a744e0003c69ce89a06c823d5c40fdcb9464897ed/",
+          "llm_summary": "博客标题从『致力于成为全球领先的 AI 能力提供商』改为『大模型 API 与 AI 云服务平台』，反映公司定位表述的调整。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 10,
+          "added_lines": [
+            "Organization blocking",
+            "Other tools"
+          ],
+          "removed_lines": [
+            "Images and video",
+            "Prices per second.",
+            "Video generation models",
+            "| sora-2 | 720p | 720x1280 | 1280x720 | $0.05",
+            "| sora-2 | 720p | 720x1280 | 1280x720 | $0.10",
+            "| 1024p | 1024x1792 | 1792x1024 | $0.25",
+            "| 1024p | 1024x1792 | 1792x1024 | $0.50",
+            "| 1080p | 1080x1920 | 1920x1080 | $0.35",
+            "| 1080p | 1080x1920 | 1920x1080 | $0.70",
+            "| Model | Size | Portrait | Landscape | Price per second"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 12,
+          "id": "obs_b8c911267a0d2a5e065311c4f91140cc79491a85d1a879bf75d40367c4bf1c20",
+          "permalink": "/item/obs_b8c911267a0d2a5e065311c4f91140cc79491a85d1a879bf75d40367c4bf1c20/",
+          "llm_summary": "删除 sora-2 视频生成模型的全部定价行（720p/1024p 各分辨率），同时新增 Organization blocking 与 Other tools 条目，表明定价页结构变化，视频生成模型可能已下架或移至其他页面。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "Cache diagnostics is out of beta on the Claude API and no longer requires the cache-diagnosis-2026-04-07 beta header. Include the diagnostics object on a Messages request to opt in; requests that still send the header work as before. Responses from POST /v1/messages now always include the diagnostics field, which is null when the request did not include the diagnostics object.",
+            "For cache diagnostics, a response to a request that sends the cache-diagnosis-2026-04-07 beta header now always includes the diagnostics field. The field is null when the request did not include the diagnostics object. Previously the field was omitted in that case.",
+            "For cache diagnostics, the API now stores a request's fingerprint only when the request includes the diagnostics object. A request that sends only the cache-diagnosis-2026-04-07 beta header is still accepted, but no fingerprint is stored. A later turn that points previous_message_id at it reports previous_message_not_found. Include diagnostics on every turn, with \"previous_message_id\": null on the first."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Cache diagnostics is out of beta on the Claude API and no longer requires the cache-diagnosis-2026-04-07 beta header. Include the diagnostics object on a Messages request to opt in; requests that still send the header work as before. Responses from POST /v1/messages now always include the diagnostics field, which is null when the request did not include the diagnostics object.",
+          "raw_added_count": 5,
+          "raw_removed_count": 0,
+          "id": "obs_7cc176334cc36722cc1947c05eca4eaa666180b332c75a3c9c4f82c666a78e90",
+          "permalink": "/item/obs_7cc176334cc36722cc1947c05eca4eaa666180b332c75a3c9c4f82c666a78e90/",
+          "llm_summary": "新增三条关于 cache diagnostics 的变更说明：该功能在 Claude API 上结束 beta，不再需要 beta header；响应始终包含 diagnostics 字段；仅当请求包含 diagnostics 对象时才存储请求指纹。整体对应缓存诊断功能的正式 GA。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "model_list",
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 2,
+          "added_lines": [
+            "antigravity-preview-09-2026",
+            "| Fast, cost-efficient text-to-speech model built for high-throughput production workloads across 101 languages.",
+            "| Flagship creative text-to-speech model for studio-grade voice fidelity, expressive acting, and regional dialects across 130 languages.",
+            "| Legacy text-to-speech preview model. We recommend updating to Gemini 3.8 Flash TTS or Gemini 3.8 Flash-Lite TTS."
+          ],
+          "removed_lines": [
+            "antigravity-preview-05-2026",
+            "| Powerful, low-latency speech generation, with natural outputs, steerable prompts, and new expressive audio tags for precise narration control."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-23 UTC.",
+              "after": "Last updated 2026-09-24 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-23 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-24 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "antigravity-preview-09-: 2026",
+          "raw_added_count": 6,
+          "raw_removed_count": 4,
+          "id": "obs_3208572d86f769289c542a012c911e60147614bc41eb3a3eeec46b1b1cce7c7c",
+          "permalink": "/item/obs_3208572d86f769289c542a012c911e60147614bc41eb3a3eeec46b1b1cce7c7c/",
+          "llm_summary": "模型列表更新日期从 9月23日 变为 9月24日，新增 antigravity-preview-09-2026 及三个 TTS 模型描述（Gemini 3.8 Flash TTS、Flash-Lite TTS、Legacy TTS），删除 antigravity-preview-05-2026 及其描述，表明 TTS 模型换代。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 12,
+          "removed_count": 0,
+          "added_lines": [
+            "Equivalent to $0.00075 per 10s audio* through December 31, 2026.",
+            "Equivalent to $0.001125 per 10s audio* through December 31, 2026.",
+            "Equivalent to $0.0015 per 10s audio* starting January 1, 2027.",
+            "Equivalent to $0.0015 per 10s audio* through December 31, 2026.",
+            "Equivalent to $0.00225 per 10s audio* starting January 1, 2027.",
+            "Equivalent to $0.00225 per 10s audio* through December 31, 2026.",
+            "Equivalent to $0.0027 per 10s audio* through December 31, 2026.",
+            "Equivalent to $0.003 per 10s audio* starting January 1, 2027.",
+            "Equivalent to $0.00405 per 10s audio* through December 31, 2026.",
+            "Equivalent to $0.0045 per 10s audio* starting January 1, 2027.",
+            "Equivalent to $0.0054 per 10s audio* starting January 1, 2027.",
+            "Equivalent to $0.0081 per 10s audio* starting January 1, 2027."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-23 UTC.",
+              "after": "Last updated 2026-09-24 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-23 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-24 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Equivalent to $0.00075 per 10s audio* through December 31, 2026.",
+          "raw_added_count": 14,
+          "raw_removed_count": 2,
+          "id": "obs_5cd42fce680cd2492daeeeb8609b725e6c704159e5748f500afc11fd29b03781",
+          "permalink": "/item/obs_5cd42fce680cd2492daeeeb8609b725e6c704159e5748f500afc11fd29b03781/",
+          "llm_summary": "定价页更新日期同步至 9月24日，新增 12 条 TTS 音频定价（按每 10 秒音频计费），分为 2026 年底前与 2027 年起两个阶段，对应新 TTS 模型的分阶段定价策略。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Behind Project Suncatcher, our moonshot to put AI in space"
+          ],
+          "removed_lines": [
+            "Mapping global methane emissions from space with deep learning"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Behind Project Suncatcher, our moonshot to put AI in space",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_00950e50b74a503f8ea0330a1c75f6ee5de81c8234a11a33de6afee67a23945b",
+          "permalink": "/item/obs_00950e50b74a503f8ea0330a1c75f6ee5de81c8234a11a33de6afee67a23945b/",
+          "llm_summary": "博客新增『Behind Project Suncatcher, our moonshot to put AI in space』，删除『Mapping global methane emissions from space with deep learning』，表明博客主题从甲烷监测转向 AI 太空计划。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "Gemini 3.8 Live",
+            "Optimized for live interactions, with",
+            "improved voice quality, reliability, and real-time agent orchestration."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-22 UTC.",
+              "after": "Last updated 2026-09-24 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-22 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-24 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Optimized for live interactions, with",
+          "raw_added_count": 5,
+          "raw_removed_count": 2,
+          "id": "obs_81982affbdebba0814ac3482d6a8c76c816fbad959edcf67aad3bfbbc9a32a67",
+          "permalink": "/item/obs_81982affbdebba0814ac3482d6a8c76c816fbad959edcf67aad3bfbbc9a32a67/",
+          "llm_summary": "模型列表更新日期从 9月22日 变为 9月24日，新增 Gemini 3.8 Live 条目，描述为优化实时交互、语音质量、可靠性与实时智能体编排，对应新模型上线。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 21,
+          "removed_count": 0,
+          "added_lines": [
+            "** Live API Billing Details:",
+            "Audio-to-Text Transcription: charged at the standard text output rate for all text tokens generated when transcription is enabled.",
+            "Audio: 25 tokens /second of audio.",
+            "Avatar Video Output: 6,192 tokens /second of video. Video output charges only apply when the avatar is actively speaking; users are not billed for idle time (when avatar is listening).",
+            "Gemini 3.8 Live API  |",
+            "Image Input: 258 tokens per image.",
+            "Input: Audio |",
+            "Input: text |",
+            "Input: video, image |",
+            "Non-global | $0.75 | $0.75 |",
+            "Non-global | $1.00 | $1.00 |",
+            "Non-global | $12.00 | $12.00 |",
+            "Non-global | $3.00 | $3.00 |",
+            "Non-global | $4.50 | $4.50 |",
+            "Output: audio |",
+            "Output: text (response and reasoning) |",
+            "Output: video (avatar) |",
+            "Session Context Window: tokens consumption is calculated per turn (defined as one user input and the model's corresponding response). Users are charged for all tokens present in the Session Context Window during that turn.",
+            "Thinking Tokens: To audit how many thinking tokens a specific request used, review the thoughts field within the API response metadata.",
+            "Token Conversion Rates: To help users estimate costs, the following conversion metrics apply:",
+            "Tokens accumulation: The context window includes new tokens for the current turn plus all accumulated tokens from previous turns. Tokens from past turns are re-processed and billed in every new turn, up to the configured context window size limit."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "** Live API Billing Details:",
+          "raw_added_count": 21,
+          "raw_removed_count": 0,
+          "id": "obs_53d02f41659bd20aece1c3d0d5fec92b19034107948eded80740869a59aaa87f",
+          "permalink": "/item/obs_53d02f41659bd20aece1c3d0d5fec92b19034107948eded80740869a59aaa87f/",
+          "llm_summary": "新增 Gemini 3.8 Live API 的详细计费规则，包括音频按 25 tokens/秒、图片按 258 tokens/张、Avatar 视频输出按 6,192 tokens/秒计费，以及非全局区域定价 $0.75-$12.00，对应 Live API 的正式计费方案。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 7,
+          "added_lines": [
+            "By Andre Alves • 8-minute read",
+            "By Darren Mowry • 5-minute read",
+            "By Fabien Blanc-paques • 4-minute read",
+            "How growing Latin American midsize businesses are building in the AI era",
+            "Power your agents: Gemini 3.8 Live with Live Avatar is now generally available",
+            "The three things today's hottest startups are looking for in their AI stack"
+          ],
+          "removed_lines": [
+            "AI infrastructure",
+            "By Alex Barrett • 13-minute read",
+            "By Michael Gerstenhaber • 9-minute read",
+            "By Paul Lewis • 5-minute read",
+            "FinOps for the AI era: New flexible billing and cost controls for agents",
+            "Reimagining work: How Pythian’s internal AI playbook delivers customer ROI",
+            "What’s new in AI infrastructure and orchestration in August"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "By Andre Alves • 8-minute read",
+          "raw_added_count": 6,
+          "raw_removed_count": 7,
+          "id": "obs_0d22216c1e29401b66af743efc3ad7f4dea238da9c20abaf63ad163b3c428440",
+          "permalink": "/item/obs_0d22216c1e29401b66af743efc3ad7f4dea238da9c20abaf63ad163b3c428440/",
+          "llm_summary": "新增三篇博客文章（拉丁美洲中型企业 AI 应用、Gemini 3.8 Live with Live Avatar GA、初创公司 AI 技术栈），删除两篇（FinOps 与 Pythian 案例），反映内容更新。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 2,
+          "added_lines": [
+            "Agentic scientific research workflows in a terminal",
+            "DeepSeek V4.1 Flash (Non-Reasoning)",
+            "GLM-5.3 (low)",
+            "New language model evaluation · 24 Sept",
+            "Terminal-Bench-Science 0.1"
+          ],
+          "removed_lines": [
+            "Claude Opus 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)See more",
+            "Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+              "after": "Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)See more"
+            }
+          ],
+          "signal_preview": "Agentic scientific research workflows in a terminal",
+          "raw_added_count": 13,
+          "raw_removed_count": 10,
+          "id": "obs_29dc8df78e2bed822a0e6e96446bb8d265ac1f82243afb4a3b718f4be2b181ae",
+          "permalink": "/item/obs_29dc8df78e2bed822a0e6e96446bb8d265ac1f82243afb4a3b718f4be2b181ae/",
+          "llm_summary": "新增 DeepSeek V4.1 Flash (Non-Reasoning) 与 GLM-5.3 (low) 评测，以及 Terminal-Bench-Science 0.1 基准；Claude Opus 5.5 的评测配置从 Max Effort 调整为 Xhigh Effort，表明评测覆盖扩大与配置更新。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 28,
+          "removed_count": 4,
+          "added_lines": [
+            "354,260,284354,260,284Total Sessions",
+            "5.03%View all",
+            "5.73%View details",
+            "A hands-on first look at Claude Fable 5.1 in the Arena.",
+            "A hands-on first look at Claude Opus 5 in the Arena.",
+            "A hands-on first look at GPT-6 Sol in the Arena.",
+            "A hands-on first look at GPT-6-Astra in the Arena.",
+            "A hands-on first look at Kimi K3 in the Arena.",
+            "A hands-on first look at Qwen 3.8 27B in the Arena.",
+            "Agent Leaderboard Improvements: Categories & Task Cost",
+            "Announcing the First Cohort of Arena's Academic Partnerships Program",
+            "Best Agents for Work",
+            "Best Coding Agents",
+            "Best Image Generation",
+            "Best Overall",
+            "Best Overall Agents",
+            "Best Text Models",
+            "Best Video Generation",
+            "Best WebDev Models",
+            "Call for Proposals: Arena's Academic Partnerships Program, Fall 2026",
+            "Claude Fable 5 (High)$1.71/task",
+            "Claude Fable 5.1 (Max)$4.16/task",
+            "Claude Fable 5.1 | First impressions",
+            "Claude Opus 4.8 (High)$1.17/task",
+            "Claude Opus 5 (High)$2.15/task",
+            "Claude Opus 5 | First impressions",
+            "Claude Opus 5.5",
+            "Coding in Agent Mode: From Idea to Shipping with GitHub"
+          ],
+          "removed_lines": [
+            "10Anthropic",
+            "10Bytedanceseedream-5.0-pro1256±4",
+            "2Bytedancedreamina-seedance-2.5-720p1410±26",
+            "4Bytedancedreamina-seedance-2.5-720p1477±7"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "A hands-on first look at Claude Fable 5.1 in the Arena.",
+          "raw_added_count": 73,
+          "raw_removed_count": 526,
+          "id": "obs_ab63f3bd3272dbe41bcefd3601409eed7e015742f17dd06d0d2c32e84974e410",
+          "permalink": "/item/obs_ab63f3bd3272dbe41bcefd3601409eed7e015742f17dd06d0d2c32e84974e410/",
+          "llm_summary": "新增多款模型（Claude Fable 5.1、Claude Opus 5、GPT-6 Sol、GPT-6-Astra、Kimi K3、Qwen 3.8 27B）的 Arena 上手体验，以及 Agent Leaderboard 改进与学术合作伙伴计划，删除部分旧模型分数，表明榜单内容更新。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "Organization blocking",
+            "Other tools"
+          ],
+          "removed_lines": [
+            "Images and video"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_1bec280c665581c1dcc64ebab4c97ef8354086178259c0919bd1819af4c23d35",
+          "permalink": "/item/obs_1bec280c665581c1dcc64ebab4c97ef8354086178259c0919bd1819af4c23d35/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "Organization blocking",
+            "Other tools"
+          ],
+          "removed_lines": [
+            "Images and video"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_6fbfa868b79a7f38e38d532d3cec956fceef19a642fb6d1fb3fcf2268bb02fbe",
+          "permalink": "/item/obs_6fbfa868b79a7f38e38d532d3cec956fceef19a642fb6d1fb3fcf2268bb02fbe/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "Organization blocking",
+            "Other tools"
+          ],
+          "removed_lines": [
+            "Images and video"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_70b27506a6ec41bad9c998be3c1adebbf18116965c910f5259d1cc463a782431",
+          "permalink": "/item/obs_70b27506a6ec41bad9c998be3c1adebbf18116965c910f5259d1cc463a782431/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 33,
+          "raw_removed_count": 33,
+          "id": "obs_eea15f9f6d0470bf58b7e497c515953fdf6812cfbd969a8cc4c8739e0b3f484b",
+          "permalink": "/item/obs_eea15f9f6d0470bf58b7e497c515953fdf6812cfbd969a8cc4c8739e0b3f484b/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "Gemini 3.8 Live GA，Live API 计费细则公布",
+          "items": [
+            {
+              "text": "Gemini 3.8 Live 新增至模型列表，主打实时交互、语音质量提升与实时智能体编排，Live Avatar 同步 GA",
+              "type": "release"
+            },
+            {
+              "text": "Live API 计费细则公布：音频按 25 tokens/秒、图片按 258 tokens/张、Avatar 视频输出按 6,192 tokens/秒计费，非全局区域定价 $0.75-$12.00",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "TTS 模型换代，antigravity-preview 更新，定价分阶段",
+          "items": [
+            {
+              "text": "antigravity-preview-09-2026 上线，替代 05 版，新增 Gemini 3.8 Flash TTS 与 Flash-Lite TTS，覆盖 101-130 种语言",
+              "type": "release"
+            },
+            {
+              "text": "TTS 定价分阶段：2026 年底前每 10 秒音频 $0.00075-$0.0027，2027 年起上调至 $0.0015-$0.0081",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "定价页移除视频生成模型，新增组织屏蔽工具",
+          "items": [
+            {
+              "text": "定价页删除 sora-2 视频生成模型全部定价行（720p/1024p 各分辨率）",
+              "type": "sunset"
+            },
+            {
+              "text": "新增 Organization blocking 与 Other tools 定价条目",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "新增决策模型 decision-model-preview，按输入 token 计费",
+          "items": [
+            {
+              "text": "decision-model-preview 上线，面向高频业务判断的结构化决策模型，支持分类、是非判断与评分，返回概率分布与置信度",
+              "type": "release"
+            },
+            {
+              "text": "计费规则为按输入 token 计费",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "百度千帆",
+          "logo_summary": "DeepSeek-V4-Flash 缓存限时价格生效日期更新",
+          "items": [
+            {
+              "text": "DeepSeek-V4-Flash-0731 命中缓存限时价格生效日期更新为 9月9日-10月30日，删除多条旧定价规则",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Claude API 缓存诊断功能正式 GA",
+          "items": [
+            {
+              "text": "Cache diagnostics 在 Claude API 上结束 beta，不再需要 cache-diagnosis-2026-04-07 beta header，响应始终包含 diagnostics 字段",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "新增 DeepSeek V4.1 Flash 与 GLM-5.3 评测，Claude Opus 5.5 配置调整",
+          "items": [
+            {
+              "text": "新增 DeepSeek V4.1 Flash (Non-Reasoning) 与 GLM-5.3 (low) 语言模型评测",
+              "type": "release"
+            },
+            {
+              "text": "Claude Opus 5.5 评测配置从 Adaptive Reasoning Max Effort 调整为 Xhigh Effort",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "新增多款模型上手体验与 Agent 榜单改进",
+          "items": [
+            {
+              "text": "新增 Claude Fable 5.1、Claude Opus 5、GPT-6 Sol、GPT-6-Astra、Kimi K3、Qwen 3.8 27B 的 Arena 上手体验",
+              "type": "release"
+            },
+            {
+              "text": "Agent Leaderboard 改进：新增类别与任务成本，并公布首批学术合作伙伴计划",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "官网标语更新，定位调整为 AI 云服务平台",
+          "items": [
+            {
+              "text": "官网标语从『致力于成为全球领先的 AI 能力提供商』改为『大模型 API 与 AI 云服务平台』",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-09-24",
       "stats": {

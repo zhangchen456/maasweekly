@@ -4,6 +4,14 @@
     "start": "2026-09-21",
     "end": "2026-09-27",
     "days": {
+      "2026-09-25": {
+        "substantive": 14,
+        "jitter": 4,
+        "failed": 3,
+        "releases": 6,
+        "pricings": 5,
+        "sunsets": 1
+      },
       "2026-09-24": {
         "substantive": 17,
         "jitter": 1,
@@ -38,12 +46,102 @@
       }
     },
     "totals": {
-      "substantive": 52,
-      "releases": 9,
-      "pricings": 11,
-      "sunsets": 2
+      "substantive": 66,
+      "releases": 15,
+      "pricings": 16,
+      "sunsets": 3
     },
     "highlights": [
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-25",
+        "text": "Gemini 3.8 Live 新增至模型列表，主打实时交互、语音质量提升与实时智能体编排，Live Avatar 同步 GA",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-25",
+        "text": "Live API 计费细则公布：音频按 25 tokens/秒、图片按 258 tokens/张、Avatar 视频输出按 6,192 tokens/秒计费，非全局区域定价 $0.75-$12.00",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-09-25",
+        "text": "antigravity-preview-09-2026 上线，替代 05 版，新增 Gemini 3.8 Flash TTS 与 Flash-Lite TTS，覆盖 101-130 种语言",
+        "type": "release"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-09-25",
+        "text": "TTS 定价分阶段：2026 年底前每 10 秒音频 $0.00075-$0.0027，2027 年起上调至 $0.0015-$0.0081",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-25",
+        "text": "定价页删除 sora-2 视频生成模型全部定价行（720p/1024p 各分辨率）",
+        "type": "sunset"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-25",
+        "text": "新增 Organization blocking 与 Other tools 定价条目",
+        "type": "pricing"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-25",
+        "text": "decision-model-preview 上线，面向高频业务判断的结构化决策模型，支持分类、是非判断与评分，返回概率分布与置信度",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-09-25",
+        "text": "计费规则为按输入 token 计费",
+        "type": "pricing"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-09-25",
+        "text": "DeepSeek-V4-Flash-0731 命中缓存限时价格生效日期更新为 9月9日-10月30日，删除多条旧定价规则",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-25",
+        "text": "Cache diagnostics 在 Claude API 上结束 beta，不再需要 cache-diagnosis-2026-04-07 beta header，响应始终包含 diagnostics 字段",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-25",
+        "text": "新增 DeepSeek V4.1 Flash (Non-Reasoning) 与 GLM-5.3 (low) 语言模型评测",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-25",
+        "text": "Claude Opus 5.5 评测配置从 Adaptive Reasoning Max Effort 调整为 Xhigh Effort",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-25",
+        "text": "新增 Claude Fable 5.1、Claude Opus 5、GPT-6 Sol、GPT-6-Astra、Kimi K3、Qwen 3.8 27B 的 Arena 上手体验",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-25",
+        "text": "Agent Leaderboard 改进：新增类别与任务成本，并公布首批学术合作伙伴计划",
+        "type": "other"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-09-25",
+        "text": "官网标语从『致力于成为全球领先的 AI 能力提供商』改为『大模型 API 与 AI 云服务平台』",
+        "type": "other"
+      },
       {
         "platform": "Google Gemini API",
         "date": "2026-09-24",

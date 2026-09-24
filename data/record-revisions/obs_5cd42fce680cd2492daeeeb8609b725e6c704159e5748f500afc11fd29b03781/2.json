@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_5cd42fce680cd2492daeeeb8609b725e6c704159e5748f500afc11fd29b03781",
+  "sourceId": "google-gemini-pricing",
+  "date": "2026-09-25",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "pricing",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+  "title": "Google Gemini API · 定价来源更新",
+  "summary": "定价页更新日期同步至 9月24日，新增 12 条 TTS 音频定价（按每 10 秒音频计费），分为 2026 年底前与 2027 年起两个阶段，对应新 TTS 模型的分阶段定价策略。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-24T23:49:13+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-09-23 UTC.",
+        "after": "Last updated 2026-09-24 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-23 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-24 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "Equivalent to $0.00075 per 10s audio* through December 31, 2026.",
+      "Equivalent to $0.001125 per 10s audio* through December 31, 2026.",
+      "Equivalent to $0.0015 per 10s audio* starting January 1, 2027.",
+      "Equivalent to $0.0015 per 10s audio* through December 31, 2026.",
+      "Equivalent to $0.00225 per 10s audio* starting January 1, 2027.",
+      "Equivalent to $0.00225 per 10s audio* through December 31, 2026.",
+      "Equivalent to $0.0027 per 10s audio* through December 31, 2026.",
+      "Equivalent to $0.003 per 10s audio* starting January 1, 2027.",
+      "Equivalent to $0.00405 per 10s audio* through December 31, 2026.",
+      "Equivalent to $0.0045 per 10s audio* starting January 1, 2027.",
+      "Equivalent to $0.0054 per 10s audio* starting January 1, 2027.",
+      "Equivalent to $0.0081 per 10s audio* starting January 1, 2027."
+    ],
+    "removed_lines": [],
+    "added_count": 12,
+    "removed_count": 0,
+    "raw_added_count": 14,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-25.json"
+  },
+  "permalink": "/item/obs_5cd42fce680cd2492daeeeb8609b725e6c704159e5748f500afc11fd29b03781/"
+}
