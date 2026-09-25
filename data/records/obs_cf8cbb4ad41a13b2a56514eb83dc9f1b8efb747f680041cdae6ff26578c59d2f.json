@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_cf8cbb4ad41a13b2a56514eb83dc9f1b8efb747f680041cdae6ff26578c59d2f",
+  "sourceId": "openai-pricing",
+  "date": "2026-09-26",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.openai.com/docs/pricing",
+  "title": "OpenAI · 定价来源更新",
+  "summary": "新增了 GPT Image 2/2.5 缓存输入费率说明、FedRAMP 10% 附加费说明，以及迁移指南相关条目，删除『Other tools』，对应定价细节和合规政策的补充。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-25T23:53:59+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Cached input rates for GPT Image 2 and GPT Image 2.5 only apply to images",
+      "FedRAMP endpoints are charged a 10% uplift over the corresponding standard model",
+      "Migrate custom GPTs to plugins",
+      "generated with the Responses API - learn"
+    ],
+    "removed_lines": [
+      "Other tools"
+    ],
+    "added_count": 4,
+    "removed_count": 1,
+    "raw_added_count": 4,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-26.json"
+  },
+  "permalink": "/item/obs_cf8cbb4ad41a13b2a56514eb83dc9f1b8efb747f680041cdae6ff26578c59d2f/"
+}
