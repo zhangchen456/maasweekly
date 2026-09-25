@@ -29,7 +29,7 @@ INSTALLER = BASE / "site" / "scripts" / "install-skill.sh"
 # 发布包文件白名单（源目录里只允许这些；install.sh 单独从 scripts 来）
 PACKAGED_FILES = [
     "SKILL.md", "README.md", "LICENSE", "skill-version.json",
-    "references/api.md", "references/errors.md",
+    "references/api.md", "references/errors.md", "references/setup.md",
     "agents/openai.yaml",
 ]
 
