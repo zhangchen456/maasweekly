@@ -7,6 +7,19 @@ description: 查询 MaaS/大模型平台的最新变化与价格（daily.maas.cl
 
 数据源：daily.maas.click（MaaS 平台变化与价格的公开追踪）。数据是**观察快照**，每个响应都带 `datasetVersion` 与 `dataThrough`（数据截至日期），不代表实时。
 
+## 〇、前置检查（安装后必读）
+
+Skill 有两种数据入口：**MCP 工具**（`maas_get_*` 五个）或 **REST API**。两者都不可用 = Skill 无法工作。
+
+**自检方法**：新会话中问"用 maas-daily 查最近变化"。
+- 返回数据 → 可用
+- 报"没有可用的 maas_get_changes 工具" → **MCP 未配置**（见 `references/setup.md`）
+- 报"网页查询也无法访问" → **网络不可达**（见 `references/setup.md`）
+
+**两者都不可用时不许用模型训练数据补答**——训练数据有截止日期，价格早已变化。
+
+详细配置指引：[references/setup.md](references/setup.md)
+
 ## 一、能力路由（五类意图，每类唯一入口）
 
 | 用户意图 | 已配 MCP 时 | 无 MCP 时（REST，无需任何 Key） |
@@ -48,6 +61,7 @@ description: 查询 MaaS/大模型平台的最新变化与价格（daily.maas.cl
 - cursor 过期（dataset_version_expired）→ 去掉 cursor 从第一页重查。
 - 服务不可用（503/no_data_available）→ 告知用户稍后重试，**不用模型知识补答**。
 - 参数非法 → 按 errors.md 的 code 修正参数重试，不静默扩大范围。
+- **MCP 工具不可用 + REST 也不可访问** → 不要用模型训练数据补答。告知用户数据入口不可用，引导配置 MCP server 或检查网络（见 `references/setup.md`）。
 
 ## 七、翻页
 
@@ -55,4 +69,4 @@ description: 查询 MaaS/大模型平台的最新变化与价格（daily.maas.cl
 
 ---
 
-字段说明与 REST/MCP 参数全表：[references/api.md](references/api.md) · 错误码与恢复动作：[references/errors.md](references/errors.md)
+字段说明与 REST/MCP 参数全表：[references/api.md](references/api.md) · 错误码与恢复动作：[references/errors.md](references/errors.md) · 安装后可用性配置：[references/setup.md](references/setup.md)
