@@ -95,6 +95,11 @@ class TestDeveloperPlatformRegistry(unittest.TestCase):
         for d in self.devs["developers"]:
             self.assertNotIn("company", d, f"developer {d['developerId']} 含 company 字段")
 
+    def test_no_first_party_field(self):
+        """Platform 不含 firstParty（first/third-party 是 Developer/Platform 相对关系，非 Platform 属性）"""
+        for p in self.plats["platforms"]:
+            self.assertNotIn("firstParty", p, f"platform {p['platformId']} 含 firstParty")
+
     def test_validator_script(self):
         r = subprocess.run(
             ["python3", "pipeline/scripts/validate-developer-registry.py"],
