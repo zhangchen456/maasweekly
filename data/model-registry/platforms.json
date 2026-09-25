@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "description": "T07-5.2 Platform Registry — 模型调用平台实体。Platform 是独立 entity type，与 Developer 无 FK 关系。Platform 的运营方与模型 Developer 不是同一概念。providerId 是 legacy public query namespace。",
+  "description": "T07-5.2 Platform Registry — 模型调用平台实体。Platform 是独立 entity type，与 Developer 无 FK 关系。Platform 的运营方与模型 Developer 不是同一概念。providerId 是 legacy public query namespace，不得用于自动推断 Developer/Platform ontology relation。",
   "namingRule": "platformId 用 <vendor>-<product> kebab-case 格式。vendor 来自 maas_official_sources 的 vendor 字段；product 是平台产品名 slug。Platform 与 Developer 独立建模，无 FK。",
   "platforms": [
     {
@@ -9,7 +9,6 @@
       "providerId": "anthropic",
       "region": "overseas",
       "officialSite": "https://docs.anthropic.com/en/docs/about-claude/pricing",
-      "firstParty": "candidate",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -24,7 +23,6 @@
       "providerId": "openai",
       "region": "overseas",
       "officialSite": "https://developers.openai.com/api/docs/pricing",
-      "firstParty": "candidate",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -39,7 +37,6 @@
       "providerId": "google",
       "region": "overseas",
       "officialSite": "https://ai.google.dev/gemini-api/docs/pricing",
-      "firstParty": "candidate",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -54,7 +51,6 @@
       "providerId": "google",
       "region": "overseas",
       "officialSite": "https://cloud.google.com/vertex-ai/generative-ai/docs/pricing",
-      "firstParty": "candidate",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -69,7 +65,6 @@
       "providerId": "deepseek",
       "region": "china",
       "officialSite": "https://api-docs.deepseek.com/quick_start/pricing",
-      "firstParty": "candidate",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -84,7 +79,6 @@
       "providerId": "kimi",
       "region": "china",
       "officialSite": "https://platform.kimi.com/docs/pricing/chat",
-      "firstParty": "candidate",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -99,7 +93,6 @@
       "providerId": "zhipu",
       "region": "china",
       "officialSite": "https://open.bigmodel.cn/pricing",
-      "firstParty": "candidate",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -114,7 +107,6 @@
       "providerId": "alibaba",
       "region": "china",
       "officialSite": "https://help.aliyun.com/zh/model-studio/model-pricing",
-      "firstParty": "unresolved",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -129,7 +121,6 @@
       "providerId": "volcengine",
       "region": "china",
       "officialSite": "https://www.volcengine.com/docs/82379/1544106",
-      "firstParty": "unresolved",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -144,7 +135,6 @@
       "providerId": "baidu",
       "region": "china",
       "officialSite": "https://cloud.baidu.com/doc/WENXINWORK/s/index",
-      "firstParty": "unresolved",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -159,7 +149,6 @@
       "providerId": "tencent",
       "region": "china",
       "officialSite": "https://cloud.tencent.com/document/product/1729/97731",
-      "firstParty": "unresolved",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -174,7 +163,6 @@
       "providerId": "minimax",
       "region": "china",
       "officialSite": "https://platform.minimaxi.com/document/Announcement",
-      "firstParty": "unresolved",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -189,7 +177,6 @@
       "providerId": "mistral",
       "region": "overseas",
       "officialSite": "https://docs.mistral.ai/getting-started/models/models-overview",
-      "firstParty": "unresolved",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -204,7 +191,6 @@
       "providerId": "cohere",
       "region": "overseas",
       "officialSite": "https://docs.cohere.com/docs/pricing",
-      "firstParty": "unresolved",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -219,7 +205,6 @@
       "providerId": "siliconflow",
       "region": "china",
       "officialSite": "https://siliconflow.cn/pricing",
-      "firstParty": "unresolved",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -234,7 +219,6 @@
       "providerId": "xai",
       "region": "overseas",
       "officialSite": "https://docs.x.ai/docs/models",
-      "firstParty": "unresolved",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -249,7 +233,6 @@
       "providerId": "xfyun",
       "region": "china",
       "officialSite": "https://maas.xfyun.cn/",
-      "firstParty": "unresolved",
       "verificationStatus": "verified",
       "evidence": {
         "sourceType": "maas-official-sources",
