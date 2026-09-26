@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_2a2de9ed0d3277405ab50366260085c00f2b8811f9ea3b32c2e5cfd22d6988c3",
+  "sourceId": "lmarena-industry",
+  "date": "2026-09-27",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "LMArena",
+  "sourceType": "industry",
+  "sourceUrl": "https://lmarena.ai/leaderboard",
+  "title": "LMArena · 行业数据来源更新",
+  "summary": "大量模型价格变动和榜单更新：新增多个模型（如 GPT 6 Astra、GPT 6 Sol、Gemini 3.6 Flash 等），移除部分模型（如 Muse Spark 1.1、GLM 5.3 Flash），并对现有模型价格进行调整，反映市场定价动态。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-26T23:26:18+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "claude fable",
+        "before": "Claude Fable 5.1 (Max)$4.09/task",
+        "after": "Claude Fable 5.1 (Max)$3.90/task"
+      },
+      {
+        "key": "claude opus",
+        "before": "Claude Opus 5 (High)$2.16/task",
+        "after": "Claude Opus 4.8 (High)·"
+      },
+      {
+        "key": "claude opus",
+        "before": "Claude Opus 5.5",
+        "after": "Claude Opus 5 (High)$2.19/task"
+      },
+      {
+        "key": "claude sonnet",
+        "before": "Claude Sonnet 5 (High)$0.70/task",
+        "after": "Claude Sonnet 5 (High)$0.72/task"
+      },
+      {
+        "key": "deepseek v",
+        "before": "Deepseek V4.1 Flash (Max)$0.06/task",
+        "after": "Deepseek V4.1 Flash (Max)$0.07/task"
+      }
+    ],
+    "added_lines": [
+      "355,235,456355,235,456Total Sessions",
+      "GPT 6 Astra (Max)$2.69/task",
+      "GPT 6 Sol (Max)$0.80/task",
+      "Gemini 3.6 Flash (High)·",
+      "Gemini 3.7 Flash (High)·",
+      "Kimi K3 (Max)·",
+      "Mimo V2.6 Flash",
+      "Presenting the result",
+      "Qwen3.8 Max·",
+      "Running bash"
+    ],
+    "removed_lines": [
+      "Muse Spark 1.1·",
+      "354,764,276354,764,276Total Sessions",
+      "GLM 5.3 Flash·",
+      "GPT 6 Astra (Max)$2.85/task",
+      "GPT 6 Sol (Max)$0.75/task"
+    ],
+    "added_count": 10,
+    "removed_count": 5,
+    "raw_added_count": 15,
+    "raw_removed_count": 14
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-27.json"
+  },
+  "permalink": "/item/obs_2a2de9ed0d3277405ab50366260085c00f2b8811f9ea3b32c2e5cfd22d6988c3/"
+}

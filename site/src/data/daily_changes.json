@@ -1,6 +1,309 @@
 {
-  "updated_at": "2026-09-25T23:53:59",
+  "updated_at": "2026-09-26T23:26:18",
   "days": [
+    {
+      "date": "2026-09-27",
+      "stats": {
+        "total": 68,
+        "success": 66,
+        "failed": 2,
+        "changed": 7,
+        "unchanged": 59
+      },
+      "changed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 10,
+          "added_lines": [
+            "文档指南订阅 [Agent/Coding Plan]API参考资源AI 套件"
+          ],
+          "removed_lines": [
+            "0.0015 元/GB/小时​",
+            "0.45 元/CU/小时​",
+            "0.0005 元/千token​",
+            "0.0007 元/千token​",
+            "0.0018 元/千token​",
+            "0.0416 元/知识库/小时​",
+            "10.875 万 token / 次 * 0.80 元/万 token​",
+            "12.6875 万 token / 次 * 0.80 元/万 token​",
+            "13.56~30.13​",
+            "16.3125 万 token / 次 * 0.80 元/万 token​"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "文档指南订阅 [Agent/Coding Plan]API参考资源AI 套件",
+          "raw_added_count": 2,
+          "raw_removed_count": 208,
+          "id": "obs_de6e4c1912e0dac93ba48f8f9497439828805b0e018ff1bc9f25d343b1794702",
+          "permalink": "/item/obs_de6e4c1912e0dac93ba48f8f9497439828805b0e018ff1bc9f25d343b1794702/",
+          "llm_summary": "新增了文档指南订阅相关条目，同时删除了多个具体的计费项（如按小时、按CU、按token的单价），可能表示定价模型正在调整或文档结构重组，但未明确新价格。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Fixed a bug in image encoding that degraded image understanding in GPT-6 Sol and GPT-6 Luna. This update improves results on visual tasks in the API and Codex, including computer use.",
+            "If your use cases involve image inputs, we recommend rerunning your evaluations and retrying workflows affected by the issue."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Fixed a bug in image encoding that degraded image understanding in GPT-6 Sol and GPT-6 Luna. This update improves results on visual tasks in the API and Codex, including computer use.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_48a6e2d753b1604a8c21f0b3c54bfa9e227d3779be87bcf5c223cba9a16b78e7",
+          "permalink": "/item/obs_48a6e2d753b1604a8c21f0b3c54bfa9e227d3779be87bcf5c223cba9a16b78e7/",
+          "llm_summary": "新增两条内容，均关于修复图像编码 bug，影响 GPT-6 Sol 和 GPT-6 Luna，建议用户重新评估图像输入相关用例，属于技术修复公告。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Fixed a bug in image encoding that degraded image understanding in GPT-6 Sol and GPT-6 Luna. This update improves results on visual tasks in the API and Codex, including computer use.",
+            "If your use cases involve image inputs, we recommend rerunning your evaluations and retrying workflows affected by the issue."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Fixed a bug in image encoding that degraded image understanding in GPT-6 Sol and GPT-6 Luna. This update improves results on visual tasks in the API and Codex, including computer use.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_2b85b3e3c6c5183ff5574c66518f94d408c5e1c228c25010aae2ce55982d8fc7",
+          "permalink": "/item/obs_2b85b3e3c6c5183ff5574c66518f94d408c5e1c228c25010aae2ce55982d8fc7/",
+          "llm_summary": "与 changelog 内容相同，重复发布同一修复公告，可能为同步更新。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "changelog",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-18 UTC.",
+              "after": "Last updated 2026-09-24 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-18 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-24 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-24 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_178c5674afefb4a833baf0ccd2cbc9ab391f522fa796a8c7d467820d8f16ff24",
+          "permalink": "/item/obs_178c5674afefb4a833baf0ccd2cbc9ab391f522fa796a8c7d467820d8f16ff24/",
+          "llm_summary": "仅更新时间戳从 2026-09-18 变为 2026-09-24，内容无实质变化，可能为文档维护性更新。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "GoogleStepFunZ AIXiaomiMiniMaxOpenAIAnthropicMetaSpaceXAINVIDIAAlibabaDeepSeekMistralKimi"
+          ],
+          "removed_lines": [
+            "GoogleStepFunThinking MachinesZ AIXiaomiMiniMaxOpenAIAnthropicMetaSpaceXAINVIDIAAlibabaDeepSeekMistralKimi"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 3,
+          "raw_removed_count": 3,
+          "id": "obs_9e4bcc83b2b36c111aa29fc053d2ccc6eb01c24dfbeeee7229ea5b8d6d20900f",
+          "permalink": "/item/obs_9e4bcc83b2b36c111aa29fc053d2ccc6eb01c24dfbeeee7229ea5b8d6d20900f/",
+          "llm_summary": "行业列表从包含 Thinking Machines 变为不包含，其他厂商列表不变，可能表示该机构不再追踪 Thinking Machines 或将其移除。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 10,
+          "removed_count": 5,
+          "added_lines": [
+            "355,235,456355,235,456Total Sessions",
+            "GPT 6 Astra (Max)$2.69/task",
+            "GPT 6 Sol (Max)$0.80/task",
+            "Gemini 3.6 Flash (High)·",
+            "Gemini 3.7 Flash (High)·",
+            "Kimi K3 (Max)·",
+            "Mimo V2.6 Flash",
+            "Presenting the result",
+            "Qwen3.8 Max·",
+            "Running bash"
+          ],
+          "removed_lines": [
+            "Muse Spark 1.1·",
+            "354,764,276354,764,276Total Sessions",
+            "GLM 5.3 Flash·",
+            "GPT 6 Astra (Max)$2.85/task",
+            "GPT 6 Sol (Max)$0.75/task"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5.1 (Max)$4.09/task",
+              "after": "Claude Fable 5.1 (Max)$3.90/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5 (High)$2.16/task",
+              "after": "Claude Opus 4.8 (High)·"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5",
+              "after": "Claude Opus 5 (High)$2.19/task"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5 (High)$0.70/task",
+              "after": "Claude Sonnet 5 (High)$0.72/task"
+            },
+            {
+              "key": "deepseek v",
+              "before": "Deepseek V4.1 Flash (Max)$0.06/task",
+              "after": "Deepseek V4.1 Flash (Max)$0.07/task"
+            }
+          ],
+          "signal_preview": "GPT 6 Astra (Max)$2.69/task",
+          "raw_added_count": 15,
+          "raw_removed_count": 14,
+          "id": "obs_2a2de9ed0d3277405ab50366260085c00f2b8811f9ea3b32c2e5cfd22d6988c3",
+          "permalink": "/item/obs_2a2de9ed0d3277405ab50366260085c00f2b8811f9ea3b32c2e5cfd22d6988c3/",
+          "llm_summary": "大量模型价格变动和榜单更新：新增多个模型（如 GPT 6 Astra、GPT 6 Sol、Gemini 3.6 Flash 等），移除部分模型（如 Muse Spark 1.1、GLM 5.3 Flash），并对现有模型价格进行调整，反映市场定价动态。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 31,
+          "raw_removed_count": 31,
+          "id": "obs_43ee94715b143293014646f3b4a7826cdee3e1a946dea919dc361b249df864b1",
+          "permalink": "/item/obs_43ee94715b143293014646f3b4a7826cdee3e1a946dea919dc361b249df864b1/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "LMArena",
+          "logo_summary": "多模型价格调整与新增上榜",
+          "items": [
+            {
+              "text": "GPT 6 Astra (Max) 新增上榜，定价 $2.69/task，较此前删除的 $2.85/task 下调",
+              "type": "pricing"
+            },
+            {
+              "text": "GPT 6 Sol (Max) 新增上榜，定价 $0.80/task，较此前删除的 $0.75/task 上调",
+              "type": "pricing"
+            },
+            {
+              "text": "Claude Opus 5 (High) 更名为 Claude Opus 4.8 (High)，Claude Opus 5.5 更名为 Claude Opus 5 (High) 定价 $2.19/task",
+              "type": "pricing"
+            },
+            {
+              "text": "Claude Fable 5.1 (Max) 定价从 $4.09/task 下调至 $3.90/task，Claude Sonnet 5 (High) 从 $0.70/task 上调至 $0.72/task",
+              "type": "pricing"
+            },
+            {
+              "text": "Deepseek V4.1 Flash (Max) 定价从 $0.06/task 上调至 $0.07/task",
+              "type": "pricing"
+            },
+            {
+              "text": "新增 Gemini 3.6 Flash、Gemini 3.7 Flash、Kimi K3、Qwen3.8 Max 等模型上榜，移除 Muse Spark 1.1 和 GLM 5.3 Flash",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "修复图像编码 bug，提升视觉理解",
+          "items": [
+            {
+              "text": "OpenAI 修复了影响 GPT-6 Sol 和 GPT-6 Luna 图像理解的编码 bug，建议用户重新评估相关用例",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "定价文档调整，移除多项计费项",
+          "items": [
+            {
+              "text": "火山方舟 pricing 文档新增订阅指南，同时删除多项计费项（如 0.0015 元/GB/小时、0.45 元/CU/小时等），可能对应定价结构更新",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "文档更新，时间戳刷新",
+          "items": [
+            {
+              "text": "Google Vertex AI changelog 更新时间从 2026-09-18 更新至 2026-09-24，内容无实质变化",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "行业列表移除 Thinking Machines",
+          "items": [
+            {
+              "text": "Artificial Analysis 行业列表移除 Thinking Machines，其余厂商保持不变",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-09-26",
       "stats": {

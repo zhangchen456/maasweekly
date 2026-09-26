@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_48a6e2d753b1604a8c21f0b3c54bfa9e227d3779be87bcf5c223cba9a16b78e7",
+  "sourceId": "openai-changelog",
+  "date": "2026-09-27",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "changelog",
+  "sourceUrl": "https://platform.openai.com/docs/changelog",
+  "title": "OpenAI · 更新日志来源更新",
+  "summary": "新增两条内容，均关于修复图像编码 bug，影响 GPT-6 Sol 和 GPT-6 Luna，建议用户重新评估图像输入相关用例，属于技术修复公告。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-26T23:26:18+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Fixed a bug in image encoding that degraded image understanding in GPT-6 Sol and GPT-6 Luna. This update improves results on visual tasks in the API and Codex, including computer use.",
+      "If your use cases involve image inputs, we recommend rerunning your evaluations and retrying workflows affected by the issue."
+    ],
+    "removed_lines": [],
+    "added_count": 2,
+    "removed_count": 0,
+    "raw_added_count": 2,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-27.json"
+  },
+  "permalink": "/item/obs_48a6e2d753b1604a8c21f0b3c54bfa9e227d3779be87bcf5c223cba9a16b78e7/"
+}
