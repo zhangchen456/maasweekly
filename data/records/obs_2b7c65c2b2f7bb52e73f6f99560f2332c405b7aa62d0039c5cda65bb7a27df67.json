@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_2b7c65c2b2f7bb52e73f6f99560f2332c405b7aa62d0039c5cda65bb7a27df67",
+  "sourceId": "aa-industry",
+  "date": "2026-09-28",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "新增 MiMo-V2.6-Flash 模型评测和 27 Sept 语言模型评测，同时将 Claude Opus 5.5 的条目从包含 Xhigh Effort 变体改为仅保留 Low Effort 默认回退，反映评测范围调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-27T23:43:25+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "claude opus",
+        "before": "Claude Opus 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+        "after": "Claude Opus 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)See more"
+      }
+    ],
+    "added_lines": [
+      "MiMo-V2.6-Flash",
+      "New language model evaluation · 27 Sept"
+    ],
+    "removed_lines": [
+      "Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)See more"
+    ],
+    "added_count": 2,
+    "removed_count": 1,
+    "raw_added_count": 8,
+    "raw_removed_count": 7
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-28.json"
+  },
+  "permalink": "/item/obs_2b7c65c2b2f7bb52e73f6f99560f2332c405b7aa62d0039c5cda65bb7a27df67/"
+}
