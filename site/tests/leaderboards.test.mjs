@@ -20,7 +20,7 @@ const EXEMPT_VENDORS = new Set([
 assert.ok(EXEMPT_VENDORS.size <= 24, '豁免清单长度上限，防止无限膨胀');
 
 const daysAgo = (dateStr) => (Date.now() - new Date(`${dateStr}T00:00:00Z`)) / 86400000;
-const FRESHNESS_DAYS = { daily: 4, weekly: 10, monthly: 45, auto: 4, session_cost: 12 };
+const FRESHNESS_DAYS = { daily: 4, weekly: 10, monthly: 45, auto: 4, session_cost: 12, manual: 45 };
 
 function checkBoard(name, board) {
   const label = `${name}.json`;
