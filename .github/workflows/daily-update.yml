@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 # 同一时间只允许一个实例，避免并发抓取写快照
 concurrency:
@@ -108,6 +109,7 @@ jobs:
 
       # ---- 2.4 OpenRouter 榜单数据抓取（CC BY 4.0；失败不阻塞，保留旧快照）----
       - name: Fetch leaderboards data
+        id: fetch_leaderboards
         if: ${{ !inputs.skip_fetch }}
         run: python3 pipeline/scripts/fetch-leaderboards.py
         env:
@@ -126,6 +128,7 @@ jobs:
       #      gate 拒载。含 public projection + site prebuild 产物）----
       # 4a. site prebuild 产物（price-ledger.fragment/rendered.html、maas-skill/）
       - name: Prebuild site artifacts
+        id: prebuild
         run: |
           node site/scripts/build-price-fragment.mjs
           node site/scripts/render-price-ledger.mjs
@@ -169,6 +172,7 @@ jobs:
           chmod 600 ~/.ssh/known_hosts
 
       - name: Deploy release (build → incoming → activate → smoke)
+        id: deploy
         env:
           MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
           MAAS_DEPLOY_MODE: release
@@ -176,6 +180,7 @@ jobs:
           ops/deploy-release.sh --commit "$(git rev-parse HEAD)"
 
       - name: Online verify (four surfaces)
+        id: verify
         env:
           MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
         run: |
@@ -196,3 +201,34 @@ jobs:
           echo "  2. fetch_prices 输出中的 RUN-STATUS 行与各来源失败原因"
           echo "  3. 上游网站是否全部不可达（本机网络出口）"
           exit 1
+
+      # ---- 9. 失败通知：任何前置步骤失败时创建/追加 GitHub Issue（零外部依赖）----
+      - name: Notify failure via GitHub Issue
+        if: ${{ failure() && !inputs.skip_fetch }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          FAILED=""
+          [ "${{ steps.fetch_leaderboards.outcome }}" = "failure" ] && FAILED="$FAILED fetch_leaderboards"
+          [ "${{ steps.prebuild.outcome }}" = "failure" ] && FAILED="$FAILED prebuild"
+          [ "${{ steps.deploy.outcome }}" = "failure" ] && FAILED="$FAILED deploy"
+          [ "${{ steps.verify.outcome }}" = "failure" ] && FAILED="$FAILED verify"
+          EXISTING=$(gh issue list --search "CI 失败 daily-update in:title" --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          BODY="## daily-update CI 失败
+
+          **时间**: $(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          **Run**: ${RUN_URL}
+          **失败步骤**: ${FAILED:-未知}
+
+          ### 常见根因
+          1. 新 vendor 进榜但 platform-logos.json 未注册 → 需补 logo（或检查 fetch-leaderboards 的自动补全日志）
+          2. 手动榜单 snapshot_date 过期 → 需手动更新数据
+          3. fetch_prices 全部来源失败 → 检查 Playwright/网络
+
+          修复后关闭此 Issue。"
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "CI 失败: daily-update $(date +'%Y-%m-%d')" --body "$BODY"
+          fi
