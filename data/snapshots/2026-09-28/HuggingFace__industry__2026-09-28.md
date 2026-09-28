@@ -1,11 +1,11 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-28T07:41:57.324595 -->
+<!-- fetched: 2026-09-28T14:18:07.798216 -->
 
 [
   {
     "_id": "621ffdc136468d709f180294",
     "id": "sentence-transformers/all-MiniLM-L6-v2",
-    "likes": 6133,
+    "likes": 6134,
     "private": false,
     "downloads": 243964291,
     "tags": [
@@ -96,7 +96,7 @@
   {
     "_id": "64fff537d522560505ad6567",
     "id": "BAAI/bge-small-en-v1.5",
-    "likes": 593,
+    "likes": 592,
     "private": false,
     "downloads": 63243736,
     "tags": [
@@ -235,7 +235,7 @@
   {
     "_id": "621ffdc036468d709f174338",
     "id": "google-bert/bert-base-uncased",
-    "likes": 3379,
+    "likes": 3381,
     "private": false,
     "downloads": 42711978,
     "tags": [
@@ -268,7 +268,7 @@
   {
     "_id": "65b53851e602b6c2c96e78da",
     "id": "BAAI/bge-m3",
-    "likes": 3703,
+    "likes": 3704,
     "private": false,
     "downloads": 36333889,
     "tags": [
@@ -299,7 +299,7 @@
   {
     "_id": "680da718233834890aa01f51",
     "id": "Qwen/Qwen3-0.6B",
-    "likes": 1689,
+    "likes": 1691,
     "private": false,
     "downloads": 29186325,
     "tags": [
@@ -369,7 +369,7 @@
   {
     "_id": "6a6bd1dc7034404148ec9107",
     "id": "Comfy-Org/MiniMax-H3",
-    "likes": 2025,
+    "likes": 2028,
     "private": false,
     "downloads": 21857875,
     "tags": [
@@ -439,7 +439,7 @@
   {
     "_id": "621ffdc136468d709f180297",
     "id": "sentence-transformers/all-mpnet-base-v2",
-    "likes": 1379,
+    "likes": 1380,
     "private": false,
     "downloads": 20808858,
     "tags": [
@@ -722,7 +722,7 @@
   {
     "_id": "621ffdc036468d709f17434d",
     "id": "openai-community/gpt2",
-    "likes": 4178,
+    "likes": 4180,
     "private": false,
     "downloads": 15338274,
     "tags": [

@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-28T07:41:57.781140 -->
+<!-- fetched: 2026-09-28T14:18:07.936112 -->
 
 AI Model & API Providers Analysis | Artificial Analysis
 Artificial Analysis
@@ -210,7 +210,6 @@ Kubernetes incident root-cause analysis
 MMMU-Pro
 Visual reasoning
 MLCR-AA
-New
 Medical long context reasoning
 Intelligence Evaluation Relevance
 While model intelligence generally translates across use cases, specific evaluations may be more relevant for certain use cases.

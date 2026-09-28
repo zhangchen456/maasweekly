@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-09-28T07:41:58.663795 -->
+<!-- fetched: 2026-09-28T14:18:08.964836 -->
 
 Arena Leaderboard | Compare & Benchmark the Best Frontier AI Models
 New Chat
@@ -9,7 +9,7 @@ Log In
 Terms of UsePrivacy PolicyCookies
 Measuring AIin the real-world
 Our leaderboards are powered by real people doing real work on Arena from across the globe
-355,728,987355,728,987Total Sessions
+355,831,150355,831,150Total Sessions
 New Release Rankings
 Mimo V2.6 Flash
 is #71 in
@@ -63,32 +63,33 @@ Claude Sonnet 5 (High)
 4.82%View all
 Live Agent Sessions
 Best Overall
-Deepseek V4.1 Flash (Max)·
-DeepSeek
-Session complete
-GLM 5.3 (Max)·
-Z.ai
-Session complete
-Qwen 3.8 27B·
-Alibaba
-Running bash
-Gemini 3.8 Flash (High)·
-Google
-Running bash
 Kimi K3 (Max)·
 Moonshot
 Session complete
-Anthropic
-Claude Opus 5 (High)·
-Anthropic
-Searching the web
 GLM 5.3 Flash·
 Z.ai
-Searching the web
+Presenting the result
+GLM 5.2 (Max)·
+Z.ai
+Session complete
+GPT 5.6 Luna (xHigh)·
+OpenAI
+Writing a file
 Anthropic
-Claude Opus 5 (Max)·
+Claude Opus 5.5 (High)·
 Anthropic
-Searching the web
+Session complete
+Anthropic
+Claude Sonnet 5 (High)·
+Anthropic
+Session complete
+GPT 6 Sol (Max)·
+OpenAI
+Reading a web page
+Anthropic
+Claude Sonnet 5 (High)·
+Anthropic
+Reading a web page
 Start a chat
 Pareto Frontier
 Best Overall
@@ -97,15 +98,15 @@ View details
 Pareto Optimal Models
 Best Overall
 Anthropic
-Claude Fable 5.1 (Max)$3.66/task
+Claude Fable 5.1 (Max)$3.62/task
 13.84%
 Anthropic
-Claude Opus 5.5 (High)$1.28/task
+Claude Opus 5.5 (High)$1.32/task
 12.15%
-GPT 6 Sol (Max)$0.82/task
+GPT 6 Sol (Max)$0.83/task
 8.18%
 Anthropic
-Claude Sonnet 5 (High)$0.74/task
+Claude Sonnet 5 (High)$0.75/task
 4.82%
 Tencent
 Hy4 preview$0.18/task

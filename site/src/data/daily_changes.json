@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-27T23:43:25",
+  "updated_at": "2026-09-28T06:18:10",
   "days": [
     {
       "date": "2026-09-28",
@@ -7,10 +7,33 @@
         "total": 68,
         "success": 65,
         "failed": 3,
-        "changed": 4,
-        "unchanged": 61
+        "changed": 5,
+        "unchanged": 60
       },
       "changed": [
+        {
+          "platform": "Kimi",
+          "source_type": "pricing",
+          "url": "https://platform.kimi.com/docs/pricing/chat",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "模型推理接口对 input 和 output 均实行按量计费",
+              "before": "模型推理接口对 Input 和 Output 均实行按量计费。对于 K3 系列模型，缓存写入按 TTL 档位（5min / 1h）单独计费；缓存命中的输入仅按缓存命中价格计费，不再重复收取缓存写入费用。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。",
+              "after": "模型推理接口对 Input 和 Output 均实行按量计费。对于 K3 系列模型，缓存写入按 TTL（5min / 1h）单独计费；缓存命中的输入仅按缓存命中价格计费，不再重复收取缓存写入费用。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。"
+            }
+          ],
+          "signal_preview": "模型推理接口对 Input 和 Output 均实行按量计费。对于 K3 系列模型，缓存写入按 TTL（5min / 1h）单独计费；缓存命中的输入仅按缓存命中价格计费，不再重复收取缓存写入费用。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_03da19383cbf3b4e88b7eecff1a0e9e455a98e171dffc18b9c09a940c77426fe",
+          "permalink": "/item/obs_03da19383cbf3b4e88b7eecff1a0e9e455a98e171dffc18b9c09a940c77426fe/"
+        },
         {
           "platform": "MiniMax",
           "source_type": "model_list",
@@ -66,59 +89,58 @@
           "source_type": "industry",
           "url": "https://lmarena.ai/leaderboard",
           "status": "changed",
-          "added_count": 15,
+          "added_count": 14,
           "removed_count": 6,
           "added_lines": [
             "10Anthropic",
-            "355,728,987355,728,987Total Sessions",
+            "355,831,150355,831,150Total Sessions",
             "4.82%View all",
             "6.52%View details",
-            "Claude Opus 5.5 (High)",
-            "Claude Opus 5.5 (High)$1.28/task",
-            "Deepseek V4.1 Flash (Max)·",
-            "GLM 5.3 (Max)·",
+            "Claude Opus 5.5 (High)·",
+            "Claude Sonnet 5 (High)·",
             "GLM 5.3 Flash·",
             "GPT 5.6 Luna (xHigh)$0.07/task",
-            "GPT 6 Sol (Max)$0.82/task",
-            "Gemini 3.8 Flash (High)·",
+            "GPT 5.6 Luna (xHigh)·",
+            "GPT 6 Sol (Max)$0.83/task",
+            "GPT 6 Sol (Max)·",
             "Hy4 preview$0.18/task",
-            "Qwen 3.8 27B·",
-            "Searching the web"
+            "Reading a web page",
+            "Writing a file"
           ],
           "removed_lines": [
             "Claude Fable 5.1 (Max)$3.90/task",
             "355,235,456355,235,456Total Sessions",
             "4.55%View all",
             "6.45%View details",
-            "GLM 5.2 (Max)·",
-            "GPT 6 Astra (Max)$2.69/task"
+            "GPT 6 Astra (Max)$2.69/task",
+            "GPT 6 Sol (Max)$0.80/task"
           ],
           "kind": "substantive",
           "pairs": [
             {
               "key": "claude fable",
               "before": "Claude Fable 5 (High)$1.71/task",
-              "after": "Claude Fable 5.1 (Max)$3.66/task"
+              "after": "Claude Fable 5.1 (Max)$3.62/task"
             },
             {
               "key": "claude opus",
               "before": "Claude Opus 4.8 (High)·",
-              "after": "Claude Opus 5 (High)·"
+              "after": "Claude Opus 5.5 (High)"
             },
             {
               "key": "claude opus",
               "before": "Claude Opus 5 (High)$2.19/task",
-              "after": "Claude Opus 5 (Max)·"
+              "after": "Claude Opus 5.5 (High)$1.32/task"
             },
             {
               "key": "claude sonnet",
               "before": "Claude Sonnet 5 (High)$0.72/task",
-              "after": "Claude Sonnet 5 (High)$0.74/task"
+              "after": "Claude Sonnet 5 (High)$0.75/task"
             }
           ],
-          "signal_preview": "Claude Opus 5.5 (High)",
-          "raw_added_count": 19,
-          "raw_removed_count": 19,
+          "signal_preview": "Claude Opus 5.5 (High)·",
+          "raw_added_count": 18,
+          "raw_removed_count": 18,
           "id": "obs_92174a6bf2779e1114288f958c473bd2ac9e6e4ceeb15385d3130964df9fe6d1",
           "permalink": "/item/obs_92174a6bf2779e1114288f958c473bd2ac9e6e4ceeb15385d3130964df9fe6d1/",
           "llm_summary": "榜单出现多款新模型（Claude Opus 5.5、GPT 6 Sol、GPT 5.6 Luna、Deepseek V4.1 Flash、GLM 5.3 系列、Gemini 3.8 Flash），同时 Claude 系列版本更新（Fable 5→5.1、Opus 4.8→5、Opus 5 从 High 变为 Max），价格有升有降，整体反映模型迭代和定价变动。"
@@ -135,8 +157,8 @@
           "kind": "jitter",
           "pairs": [],
           "signal_preview": "",
-          "raw_added_count": 31,
-          "raw_removed_count": 31,
+          "raw_added_count": 32,
+          "raw_removed_count": 32,
           "id": "obs_6cee94960b6706ef7143ffb548d4d2a0033bba63f6406686817f975d16e19d87",
           "permalink": "/item/obs_6cee94960b6706ef7143ffb548d4d2a0033bba63f6406686817f975d16e19d87/"
         }
