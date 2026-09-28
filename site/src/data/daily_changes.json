@@ -1,6 +1,971 @@
 {
-  "updated_at": "2026-09-24T23:49:13",
+  "updated_at": "2026-09-27T23:43:25",
   "days": [
+    {
+      "date": "2026-09-28",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 4,
+        "unchanged": 61
+      },
+      "changed": [
+        {
+          "platform": "MiniMax",
+          "source_type": "model_list",
+          "url": "https://platform.minimaxi.com/docs/guides/models-intro",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "MiniMax-M3.1-Flash-Preview 暂时仅通过 Token Plan 和 MiniMax Code 提供。",
+            "| MiniMax-M3.1-Flash-Preview | 原生多模态、1M 上下文的 Frontier Coding 模型，思考深度可调"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "MiniMax-M3.1-Flash-Preview 暂时仅通过 Token Plan 和 MiniMax Code 提供。",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_41e8441daba198062937687c7ef96db09ec670ad4573e445cca97ab1c4727985",
+          "permalink": "/item/obs_41e8441daba198062937687c7ef96db09ec670ad4573e445cca97ab1c4727985/",
+          "llm_summary": "新增 MiniMax-M3.1-Flash-Preview 模型条目，标注为原生多模态、1M 上下文的 Frontier Coding 模型，且仅通过 Token Plan 和 MiniMax Code 提供，表明该模型为定向渠道的预览版。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "MiMo-V2.6-Flash",
+            "New language model evaluation · 27 Sept"
+          ],
+          "removed_lines": [
+            "Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)See more"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+              "after": "Claude Opus 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)See more"
+            }
+          ],
+          "signal_preview": "New language model evaluation · 27 Sept",
+          "raw_added_count": 8,
+          "raw_removed_count": 7,
+          "id": "obs_2b7c65c2b2f7bb52e73f6f99560f2332c405b7aa62d0039c5cda65bb7a27df67",
+          "permalink": "/item/obs_2b7c65c2b2f7bb52e73f6f99560f2332c405b7aa62d0039c5cda65bb7a27df67/",
+          "llm_summary": "新增 MiMo-V2.6-Flash 模型评测和 27 Sept 语言模型评测，同时将 Claude Opus 5.5 的条目从包含 Xhigh Effort 变体改为仅保留 Low Effort 默认回退，反映评测范围调整。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 15,
+          "removed_count": 6,
+          "added_lines": [
+            "10Anthropic",
+            "355,728,987355,728,987Total Sessions",
+            "4.82%View all",
+            "6.52%View details",
+            "Claude Opus 5.5 (High)",
+            "Claude Opus 5.5 (High)$1.28/task",
+            "Deepseek V4.1 Flash (Max)·",
+            "GLM 5.3 (Max)·",
+            "GLM 5.3 Flash·",
+            "GPT 5.6 Luna (xHigh)$0.07/task",
+            "GPT 6 Sol (Max)$0.82/task",
+            "Gemini 3.8 Flash (High)·",
+            "Hy4 preview$0.18/task",
+            "Qwen 3.8 27B·",
+            "Searching the web"
+          ],
+          "removed_lines": [
+            "Claude Fable 5.1 (Max)$3.90/task",
+            "355,235,456355,235,456Total Sessions",
+            "4.55%View all",
+            "6.45%View details",
+            "GLM 5.2 (Max)·",
+            "GPT 6 Astra (Max)$2.69/task"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5 (High)$1.71/task",
+              "after": "Claude Fable 5.1 (Max)$3.66/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 4.8 (High)·",
+              "after": "Claude Opus 5 (High)·"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5 (High)$2.19/task",
+              "after": "Claude Opus 5 (Max)·"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5 (High)$0.72/task",
+              "after": "Claude Sonnet 5 (High)$0.74/task"
+            }
+          ],
+          "signal_preview": "Claude Opus 5.5 (High)",
+          "raw_added_count": 19,
+          "raw_removed_count": 19,
+          "id": "obs_92174a6bf2779e1114288f958c473bd2ac9e6e4ceeb15385d3130964df9fe6d1",
+          "permalink": "/item/obs_92174a6bf2779e1114288f958c473bd2ac9e6e4ceeb15385d3130964df9fe6d1/",
+          "llm_summary": "榜单出现多款新模型（Claude Opus 5.5、GPT 6 Sol、GPT 5.6 Luna、Deepseek V4.1 Flash、GLM 5.3 系列、Gemini 3.8 Flash），同时 Claude 系列版本更新（Fable 5→5.1、Opus 4.8→5、Opus 5 从 High 变为 Max），价格有升有降，整体反映模型迭代和定价变动。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 31,
+          "raw_removed_count": 31,
+          "id": "obs_6cee94960b6706ef7143ffb548d4d2a0033bba63f6406686817f975d16e19d87",
+          "permalink": "/item/obs_6cee94960b6706ef7143ffb548d4d2a0033bba63f6406686817f975d16e19d87/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "LMArena",
+          "logo_summary": "多款新模型上榜，Claude 系列版本更新",
+          "items": [
+            {
+              "text": "Claude Opus 5.5 (High) 新增，定价 $1.28/task；Claude Opus 5 (High) 更新为 Claude Opus 5 (Max)",
+              "type": "release"
+            },
+            {
+              "text": "Claude Fable 5 (High) 更新为 Claude Fable 5.1 (Max)，价格从 $1.71/task 升至 $3.66/task",
+              "type": "pricing"
+            },
+            {
+              "text": "新增 GPT 6 Sol (Max) $0.82/task、GPT 5.6 Luna (xHigh) $0.07/task、Deepseek V4.1 Flash (Max)、GLM 5.3 (Max)、GLM 5.3 Flash、Gemini 3.8 Flash (High)",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "MiniMax",
+          "logo_summary": "发布新模型 MiniMax-M3.1-Flash-Preview",
+          "items": [
+            {
+              "text": "MiniMax-M3.1-Flash-Preview 新增，原生多模态、1M 上下文，仅通过 Token Plan 和 MiniMax Code 提供",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "新增 MiMo-V2.6-Flash 评测，调整 Claude 条目",
+          "items": [
+            {
+              "text": "新增 MiMo-V2.6-Flash 模型评测，并新增 27 Sept 语言模型评测",
+              "type": "release"
+            },
+            {
+              "text": "Claude Opus 5.5 条目更新，移除 Xhigh Effort 变体，保留 Low Effort 默认回退",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-27",
+      "stats": {
+        "total": 68,
+        "success": 66,
+        "failed": 2,
+        "changed": 7,
+        "unchanged": 59
+      },
+      "changed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 10,
+          "added_lines": [
+            "文档指南订阅 [Agent/Coding Plan]API参考资源AI 套件"
+          ],
+          "removed_lines": [
+            "0.0015 元/GB/小时​",
+            "0.45 元/CU/小时​",
+            "0.0005 元/千token​",
+            "0.0007 元/千token​",
+            "0.0018 元/千token​",
+            "0.0416 元/知识库/小时​",
+            "10.875 万 token / 次 * 0.80 元/万 token​",
+            "12.6875 万 token / 次 * 0.80 元/万 token​",
+            "13.56~30.13​",
+            "16.3125 万 token / 次 * 0.80 元/万 token​"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "文档指南订阅 [Agent/Coding Plan]API参考资源AI 套件",
+          "raw_added_count": 2,
+          "raw_removed_count": 208,
+          "id": "obs_de6e4c1912e0dac93ba48f8f9497439828805b0e018ff1bc9f25d343b1794702",
+          "permalink": "/item/obs_de6e4c1912e0dac93ba48f8f9497439828805b0e018ff1bc9f25d343b1794702/",
+          "llm_summary": "新增了文档指南订阅相关条目，同时删除了多个具体的计费项（如按小时、按CU、按token的单价），可能表示定价模型正在调整或文档结构重组，但未明确新价格。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Fixed a bug in image encoding that degraded image understanding in GPT-6 Sol and GPT-6 Luna. This update improves results on visual tasks in the API and Codex, including computer use.",
+            "If your use cases involve image inputs, we recommend rerunning your evaluations and retrying workflows affected by the issue."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Fixed a bug in image encoding that degraded image understanding in GPT-6 Sol and GPT-6 Luna. This update improves results on visual tasks in the API and Codex, including computer use.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_48a6e2d753b1604a8c21f0b3c54bfa9e227d3779be87bcf5c223cba9a16b78e7",
+          "permalink": "/item/obs_48a6e2d753b1604a8c21f0b3c54bfa9e227d3779be87bcf5c223cba9a16b78e7/",
+          "llm_summary": "新增两条内容，均关于修复图像编码 bug，影响 GPT-6 Sol 和 GPT-6 Luna，建议用户重新评估图像输入相关用例，属于技术修复公告。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Fixed a bug in image encoding that degraded image understanding in GPT-6 Sol and GPT-6 Luna. This update improves results on visual tasks in the API and Codex, including computer use.",
+            "If your use cases involve image inputs, we recommend rerunning your evaluations and retrying workflows affected by the issue."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Fixed a bug in image encoding that degraded image understanding in GPT-6 Sol and GPT-6 Luna. This update improves results on visual tasks in the API and Codex, including computer use.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_2b85b3e3c6c5183ff5574c66518f94d408c5e1c228c25010aae2ce55982d8fc7",
+          "permalink": "/item/obs_2b85b3e3c6c5183ff5574c66518f94d408c5e1c228c25010aae2ce55982d8fc7/",
+          "llm_summary": "与 changelog 内容相同，重复发布同一修复公告，可能为同步更新。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "changelog",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-18 UTC.",
+              "after": "Last updated 2026-09-24 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-18 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-24 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-24 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_178c5674afefb4a833baf0ccd2cbc9ab391f522fa796a8c7d467820d8f16ff24",
+          "permalink": "/item/obs_178c5674afefb4a833baf0ccd2cbc9ab391f522fa796a8c7d467820d8f16ff24/",
+          "llm_summary": "仅更新时间戳从 2026-09-18 变为 2026-09-24，内容无实质变化，可能为文档维护性更新。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "GoogleStepFunZ AIXiaomiMiniMaxOpenAIAnthropicMetaSpaceXAINVIDIAAlibabaDeepSeekMistralKimi"
+          ],
+          "removed_lines": [
+            "GoogleStepFunThinking MachinesZ AIXiaomiMiniMaxOpenAIAnthropicMetaSpaceXAINVIDIAAlibabaDeepSeekMistralKimi"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 3,
+          "raw_removed_count": 3,
+          "id": "obs_9e4bcc83b2b36c111aa29fc053d2ccc6eb01c24dfbeeee7229ea5b8d6d20900f",
+          "permalink": "/item/obs_9e4bcc83b2b36c111aa29fc053d2ccc6eb01c24dfbeeee7229ea5b8d6d20900f/",
+          "llm_summary": "行业列表从包含 Thinking Machines 变为不包含，其他厂商列表不变，可能表示该机构不再追踪 Thinking Machines 或将其移除。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 10,
+          "removed_count": 5,
+          "added_lines": [
+            "355,235,456355,235,456Total Sessions",
+            "GPT 6 Astra (Max)$2.69/task",
+            "GPT 6 Sol (Max)$0.80/task",
+            "Gemini 3.6 Flash (High)·",
+            "Gemini 3.7 Flash (High)·",
+            "Kimi K3 (Max)·",
+            "Mimo V2.6 Flash",
+            "Presenting the result",
+            "Qwen3.8 Max·",
+            "Running bash"
+          ],
+          "removed_lines": [
+            "Muse Spark 1.1·",
+            "354,764,276354,764,276Total Sessions",
+            "GLM 5.3 Flash·",
+            "GPT 6 Astra (Max)$2.85/task",
+            "GPT 6 Sol (Max)$0.75/task"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5.1 (Max)$4.09/task",
+              "after": "Claude Fable 5.1 (Max)$3.90/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5 (High)$2.16/task",
+              "after": "Claude Opus 4.8 (High)·"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5",
+              "after": "Claude Opus 5 (High)$2.19/task"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5 (High)$0.70/task",
+              "after": "Claude Sonnet 5 (High)$0.72/task"
+            },
+            {
+              "key": "deepseek v",
+              "before": "Deepseek V4.1 Flash (Max)$0.06/task",
+              "after": "Deepseek V4.1 Flash (Max)$0.07/task"
+            }
+          ],
+          "signal_preview": "GPT 6 Astra (Max)$2.69/task",
+          "raw_added_count": 15,
+          "raw_removed_count": 14,
+          "id": "obs_2a2de9ed0d3277405ab50366260085c00f2b8811f9ea3b32c2e5cfd22d6988c3",
+          "permalink": "/item/obs_2a2de9ed0d3277405ab50366260085c00f2b8811f9ea3b32c2e5cfd22d6988c3/",
+          "llm_summary": "大量模型价格变动和榜单更新：新增多个模型（如 GPT 6 Astra、GPT 6 Sol、Gemini 3.6 Flash 等），移除部分模型（如 Muse Spark 1.1、GLM 5.3 Flash），并对现有模型价格进行调整，反映市场定价动态。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 31,
+          "raw_removed_count": 31,
+          "id": "obs_43ee94715b143293014646f3b4a7826cdee3e1a946dea919dc361b249df864b1",
+          "permalink": "/item/obs_43ee94715b143293014646f3b4a7826cdee3e1a946dea919dc361b249df864b1/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "LMArena",
+          "logo_summary": "多模型价格调整与新增上榜",
+          "items": [
+            {
+              "text": "GPT 6 Astra (Max) 新增上榜，定价 $2.69/task，较此前删除的 $2.85/task 下调",
+              "type": "pricing"
+            },
+            {
+              "text": "GPT 6 Sol (Max) 新增上榜，定价 $0.80/task，较此前删除的 $0.75/task 上调",
+              "type": "pricing"
+            },
+            {
+              "text": "Claude Opus 5 (High) 更名为 Claude Opus 4.8 (High)，Claude Opus 5.5 更名为 Claude Opus 5 (High) 定价 $2.19/task",
+              "type": "pricing"
+            },
+            {
+              "text": "Claude Fable 5.1 (Max) 定价从 $4.09/task 下调至 $3.90/task，Claude Sonnet 5 (High) 从 $0.70/task 上调至 $0.72/task",
+              "type": "pricing"
+            },
+            {
+              "text": "Deepseek V4.1 Flash (Max) 定价从 $0.06/task 上调至 $0.07/task",
+              "type": "pricing"
+            },
+            {
+              "text": "新增 Gemini 3.6 Flash、Gemini 3.7 Flash、Kimi K3、Qwen3.8 Max 等模型上榜，移除 Muse Spark 1.1 和 GLM 5.3 Flash",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "修复图像编码 bug，提升视觉理解",
+          "items": [
+            {
+              "text": "OpenAI 修复了影响 GPT-6 Sol 和 GPT-6 Luna 图像理解的编码 bug，建议用户重新评估相关用例",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "定价文档调整，移除多项计费项",
+          "items": [
+            {
+              "text": "火山方舟 pricing 文档新增订阅指南，同时删除多项计费项（如 0.0015 元/GB/小时、0.45 元/CU/小时等），可能对应定价结构更新",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "文档更新，时间戳刷新",
+          "items": [
+            {
+              "text": "Google Vertex AI changelog 更新时间从 2026-09-18 更新至 2026-09-24，内容无实质变化",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "行业列表移除 Thinking Machines",
+          "items": [
+            {
+              "text": "Artificial Analysis 行业列表移除 Thinking Machines，其余厂商保持不变",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-26",
+      "stats": {
+        "total": 68,
+        "success": 66,
+        "failed": 2,
+        "changed": 12,
+        "unchanged": 54
+      },
+      "changed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 2,
+          "added_lines": [
+            "[基础] 使用 Viking 知识库检索构建知识问答 Agent"
+          ],
+          "removed_lines": [
+            "Ark CLI 使用指南",
+            "使用版权生视频模板生成 IP 视频"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "agent/coding",
+              "before": "文档指南订阅 [Agent/Coding Plan]API参考资源",
+              "after": "文档指南订阅 [Agent/Coding Plan]API参考资源AI 套件"
+            }
+          ],
+          "signal_preview": "[基础] 使用 Viking 知识库检索构建知识问答 Agent",
+          "raw_added_count": 2,
+          "raw_removed_count": 3,
+          "id": "obs_778216612c62f59deaa9b2f67eb450a6f4cce970de6602e1865cada344dbe34e",
+          "permalink": "/item/obs_778216612c62f59deaa9b2f67eb450a6f4cce970de6602e1865cada344dbe34e/",
+          "llm_summary": "新增了知识库检索构建 Agent 的教程，同时删除了 Ark CLI 使用指南和版权生视频模板相关文档，并将订阅入口从 API参考资源 扩展至 AI 套件，表明平台在强化知识库应用与简化文档导航。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Migrate custom GPTs to plugins"
+          ],
+          "removed_lines": [
+            "Other tools"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Migrate custom GPTs to plugins",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_abf59610642f22646038d26e45224d2a02619f8a0254a5171afcc1c1f310af57",
+          "permalink": "/item/obs_abf59610642f22646038d26e45224d2a02619f8a0254a5171afcc1c1f310af57/",
+          "llm_summary": "新增『Migrate custom GPTs to plugins』条目，删除『Other tools』，反映模型列表在工具迁移方面的更新。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 1,
+          "added_lines": [
+            "Cached input rates for GPT Image 2 and GPT Image 2.5 only apply to images",
+            "FedRAMP endpoints are charged a 10% uplift over the corresponding standard model",
+            "Migrate custom GPTs to plugins",
+            "generated with the Responses API - learn"
+          ],
+          "removed_lines": [
+            "Other tools"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Cached input rates for GPT Image 2 and GPT Image 2.5 only apply to images",
+          "raw_added_count": 4,
+          "raw_removed_count": 1,
+          "id": "obs_cf8cbb4ad41a13b2a56514eb83dc9f1b8efb747f680041cdae6ff26578c59d2f",
+          "permalink": "/item/obs_cf8cbb4ad41a13b2a56514eb83dc9f1b8efb747f680041cdae6ff26578c59d2f/",
+          "llm_summary": "新增了 GPT Image 2/2.5 缓存输入费率说明、FedRAMP 10% 附加费说明，以及迁移指南相关条目，删除『Other tools』，对应定价细节和合规政策的补充。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Migrate custom GPTs to plugins"
+          ],
+          "removed_lines": [
+            "Other tools"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Migrate custom GPTs to plugins",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_9c55d203394c46814a60f342feb8ad1f56f06e8978d6bf17a45f9bff02cbc354",
+          "permalink": "/item/obs_9c55d203394c46814a60f342feb8ad1f56f06e8978d6bf17a45f9bff02cbc354/",
+          "llm_summary": "新增『Migrate custom GPTs to plugins』，删除『Other tools』，表明变更日志聚焦于插件迁移指南。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Migrate custom GPTs to plugins"
+          ],
+          "removed_lines": [
+            "Other tools"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Migrate custom GPTs to plugins",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_1802dc82fc8a68d9c4749eb9ba7c4893913734afb881ed85174edbc9dbecbab6",
+          "permalink": "/item/obs_1802dc82fc8a68d9c4749eb9ba7c4893913734afb881ed85174edbc9dbecbab6/",
+          "llm_summary": "新增『Migrate custom GPTs to plugins』，删除『Other tools』，博客内容更新为插件迁移主题。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "The Compliance API Activity Feed no longer returns file names, project document names, or artifact titles. The filename and title fields on file, project document, and artifact activities are now always empty or omitted, including on activities recorded before this change. To look up a name or title by the ID on the activity, use a Compliance Access Key with the read:compliance_user_data scope. See Understand the Activity object.",
+            "The Compliance API local session endpoints are out of beta for Claude for Microsoft 365 sessions in Excel, PowerPoint, Word, and Outlook (product_surface values beginning with office_agents). See Sessions on users' machines.",
+            "We're resuming billing for refusals that arrive before any output when stop_details.category is \"bio\", \"frontier_llm\", or \"reasoning_extraction\", the categories where we measure low volumes of false positives. Mid-stream refusals were already billed. Refusals billed under this change are charged like any other request, at the rates of the model that ran it. Refusals before any output in other categories are still not billed, and fallback credit is unchanged. This change applies on all platforms. See How refusals are billed."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude-fable-5",
+              "before": "We've launched Claude Fable 5 (claude-fable-5), our most capable widely released model, alongside Claude Mythos 5 (claude-mythos-5) for Project Glasswing participants. Both models support a 1M token context window by default, 128k max output tokens, and always-on adaptive thinking. See Introducing Claude Fable 5 and Claude Mythos 5 for capabilities, API changes, and availability.",
+              "after": "We've launched Claude Fable 5 (claude-fable-5), our most capable model open to all customers, alongside Claude Mythos 5 (claude-mythos-5) for Project Glasswing participants. Both models support a 1M token context window by default, 128k max output tokens, and always-on adaptive thinking. See Introducing Claude Fable 5 and Claude Mythos 5 for capabilities, API changes, and availability."
+            },
+            {
+              "key": "we've launched claude opus",
+              "before": "We've launched Claude Opus 4.7, our most capable widely released model for complex reasoning and agentic coding, at the same $5 / $25 per MTok pricing as Opus 4.6. See What's new in Claude Opus 4.7 for capability improvements, new features, and the updated tokenizer. Opus 4.7 includes API breaking changes versus Opus 4.6; see the migration guide before upgrading.",
+              "after": "We've launched Claude Opus 4.7, our most capable model for complex reasoning and agentic coding, at the same $5 / $25 per MTok pricing as Opus 4.6. See What's new in Claude Opus 4.7 for capability improvements, new features, and the updated tokenizer. Opus 4.7 includes API breaking changes versus Opus 4.6; see the migration guide before upgrading."
+            },
+            {
+              "key": "claude-opus-4-8",
+              "before": "We've launched Claude Opus 4.8 (claude-opus-4-8), our most capable widely released model. Claude Opus 4.8 supports a 1M token context window by default on the Claude API, Amazon Bedrock, Google Cloud, and Microsoft Foundry, 128k max output tokens, and the same set of tools and platform features as Claude Opus 4.7. See the migration guide for baseline settings, features, and migration guidance.",
+              "after": "We've launched Claude Opus 4.8 (claude-opus-4-8), our most capable model. Claude Opus 4.8 supports a 1M token context window by default on the Claude API, Amazon Bedrock, Google Cloud, and Microsoft Foundry, 128k max output tokens, and the same set of tools and platform features as Claude Opus 4.7. See the migration guide for baseline settings, features, and migration guidance."
+            }
+          ],
+          "signal_preview": "The Compliance API Activity Feed no longer returns file names, project document names, or artifact titles. The filename and title fields on file, project document, and artifact activities are now always empty or omitted, including on activities recorded before this change. To look up a name or title by the ID on the activity, use a Compliance Access Key with the read:compliance_user_data scope. See Understand the Activity object.",
+          "raw_added_count": 7,
+          "raw_removed_count": 3,
+          "id": "obs_cd85a35c0057aa7ed464e1a87eb521f56b77eb7030308aeceadcf719561c3617",
+          "permalink": "/item/obs_cd85a35c0057aa7ed464e1a87eb521f56b77eb7030308aeceadcf719561c3617/",
+          "llm_summary": "多条模型描述更新：Claude Fable 5 定位从『widely released』改为『open to all customers』，Claude Opus 4.7 强调复杂推理与智能体编码，Claude Opus 4.8 强调默认 1M 上下文窗口；同时新增合规 API 功能变更（活动源元数据移除、本地会话端点 GA、恢复特定拒绝计费），整体反映模型定位与合规功能的调整。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "banana_spark"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-24 UTC.",
+              "after": "Last updated 2026-09-25 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-24 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-25 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-25 UTC.",
+          "raw_added_count": 3,
+          "raw_removed_count": 2,
+          "id": "obs_ec7dec285cbe879e0487500e6847fcfc9280a3ae8f473babd63b756069b8b57c",
+          "permalink": "/item/obs_ec7dec285cbe879e0487500e6847fcfc9280a3ae8f473babd63b756069b8b57c/",
+          "llm_summary": "模型列表更新了最后修改日期，并新增 banana_spark 模型，表明有新的模型加入。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "Best practices guide for customizing Gemini models via Reinforcement Learning (RL)",
+            "By Jiaqi Pan • 6-minute read"
+          ],
+          "removed_lines": [
+            "By Nick Galloway • 3-minute read",
+            "Getting started with Mantis, our open-source bug finding-and-fixing harness"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Best practices guide for customizing Gemini models via Reinforcement Learning (RL)",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_16dd432224e026a09fc60b69e898f72a2259364a1231e2e7f7f346d55a0f1c5d",
+          "permalink": "/item/obs_16dd432224e026a09fc60b69e898f72a2259364a1231e2e7f7f346d55a0f1c5d/",
+          "llm_summary": "新增了通过强化学习定制 Gemini 模型的最佳实践指南，删除了 Mantis 相关文章，内容重心转向模型定制。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "Compass is coming to the cloud",
+            "Gain access to our state-of-the-art search and retrieval engine, without worrying about the infrastructure",
+            "Product LaunchAI for Developers"
+          ],
+          "removed_lines": [
+            "Bringing together enterprise data, context, and secure AI to support agentic AI at scale",
+            "The total cost of AI ownership"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Compass is coming to the cloud",
+          "raw_added_count": 4,
+          "raw_removed_count": 4,
+          "id": "obs_847870a98fac112963ca8ad7611aa77cc8ad2a904535c97ca22d1f4dee18bea8",
+          "permalink": "/item/obs_847870a98fac112963ca8ad7611aa77cc8ad2a904535c97ca22d1f4dee18bea8/",
+          "llm_summary": "新增 Compass 云服务发布信息，删除企业数据与 AI 总拥有成本相关文章，表明焦点转向搜索检索引擎的云服务。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 15,
+          "removed_count": 8,
+          "added_lines": [
+            "354,764,276354,764,276Total Sessions",
+            "4.55%View all",
+            "6.45%View details",
+            "Claude Sonnet 5 (High)$0.70/task",
+            "GLM 5.2 (Max)·",
+            "GLM 5.3 Flash·",
+            "GPT 6 Astra (Max)$2.85/task",
+            "GPT 6 Sol (Max)",
+            "GPT 6 Sol (Max)$0.75/task",
+            "Kimi K3 (Max)$0.67/task",
+            "Muse Spark 1.1·",
+            "Muse Spark 1.2 (xHigh)·",
+            "Muse Spark 1.3 (Max)·",
+            "WebDev · Preview High",
+            "Writing a file"
+          ],
+          "removed_lines": [
+            "Claude Opus 5 (High)$2.15/task",
+            "Deepseek V4.1 Flash (Max)·",
+            "354,260,284354,260,284Total Sessions",
+            "5.03%View all",
+            "5.73%View details",
+            "GPT 5.5 (xHigh)",
+            "GPT 5.6 Luna (xHigh)·",
+            "GPT 5.6 Sol (xHigh)$0.92/task"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5.1 (Max)$4.16/task",
+              "after": "Claude Fable 5.1 (Max)$4.09/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 4.8 (High)$1.17/task",
+              "after": "Claude Opus 5 (High)$2.16/task"
+            }
+          ],
+          "signal_preview": "Claude Sonnet 5 (High)$0.70/task",
+          "raw_added_count": 17,
+          "raw_removed_count": 20,
+          "id": "obs_8ae450019aa6849f2d1e585b6986e61760b1e865e31a0eec3390681b83fb1db3",
+          "permalink": "/item/obs_8ae450019aa6849f2d1e585b6986e61760b1e865e31a0eec3390681b83fb1db3/",
+          "llm_summary": "榜单新增多款模型（GPT 6 Astra/Sol、Claude Sonnet 5、GLM 5.2/5.3、Muse Spark 等）并更新定价，同时 Claude Opus 4.8 被替换为 Claude Opus 5 且价格上调，总会话数等统计指标更新，反映模型排名与定价的变动。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 34,
+          "raw_removed_count": 34,
+          "id": "obs_bfe967d8323e1aed8c8ed7bf791f4ffe809db19162f6dc5ba1a3609aacb652c1",
+          "permalink": "/item/obs_bfe967d8323e1aed8c8ed7bf791f4ffe809db19162f6dc5ba1a3609aacb652c1/"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_d58f3810571b8d9fb936394d02a9961d554b25d980e97e629dfa733c244d4776",
+          "permalink": "/item/obs_d58f3810571b8d9fb936394d02a9961d554b25d980e97e629dfa733c244d4776/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Anthropic",
+          "logo_summary": "多款旗舰模型定位调整，合规API功能更新",
+          "items": [
+            {
+              "text": "Claude Fable 5 定位从『most capable widely released model』改为『most capable model open to all customers』，并继续与 Claude Mythos 5 并列发布",
+              "type": "release"
+            },
+            {
+              "text": "Claude Opus 4.7 描述更新，强调复杂推理与智能体编码能力，定价保持 $5 / $25 per MTok",
+              "type": "pricing"
+            },
+            {
+              "text": "Claude Opus 4.8 默认支持 1M token 上下文窗口，并更新为『most capable model』表述",
+              "type": "release"
+            },
+            {
+              "text": "Compliance API 活动源不再返回文件名等元数据，本地会话端点结束 beta，恢复对特定拒绝类别的计费",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "新增GPT Image定价细节与FedRAMP附加费，迁移指南更新",
+          "items": [
+            {
+              "text": "GPT Image 2 和 GPT Image 2.5 的缓存输入费率仅适用于图像，新增定价说明",
+              "type": "pricing"
+            },
+            {
+              "text": "FedRAMP 端点将按标准模型价格加收 10% 附加费",
+              "type": "pricing"
+            },
+            {
+              "text": "新增『Migrate custom GPTs to plugins』指南，替换了『Other tools』条目",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "新增Gemini RL定制指南，模型列表更新banana_spark",
+          "items": [
+            {
+              "text": "模型列表新增 banana_spark 模型",
+              "type": "release"
+            },
+            {
+              "text": "发布通过强化学习定制 Gemini 模型的最佳实践指南",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "榜单新增多款模型，价格与任务成本变动",
+          "items": [
+            {
+              "text": "新增 GPT 6 Astra (Max) 定价 $2.85/task，GPT 6 Sol (Max) 定价 $0.75/task",
+              "type": "pricing"
+            },
+            {
+              "text": "新增 Claude Sonnet 5 (High) 定价 $0.70/task，GLM 5.2 (Max)、GLM 5.3 Flash、Muse Spark 1.1/1.2 等模型上榜",
+              "type": "release"
+            },
+            {
+              "text": "Claude Opus 4.8 (High) 被替换为 Claude Opus 5 (High)，价格从 $1.17/task 升至 $2.16/task",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "发布Compass云服务，聚焦搜索检索引擎",
+          "items": [
+            {
+              "text": "发布 Compass 云服务，提供搜索与检索引擎，无需管理基础设施",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "新增知识库Agent教程，调整文档订阅入口",
+          "items": [
+            {
+              "text": "新增『使用 Viking 知识库检索构建知识问答 Agent』教程",
+              "type": "release"
+            },
+            {
+              "text": "文档指南订阅入口从 API参考资源 扩展至 AI 套件",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-09-25",
       "stats": {

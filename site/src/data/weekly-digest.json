@@ -1,9 +1,84 @@
 [
   {
+    "week": "2026-W40",
+    "start": "2026-09-28",
+    "end": "2026-10-04",
+    "days": {
+      "2026-09-28": {
+        "substantive": 3,
+        "jitter": 1,
+        "failed": 3,
+        "releases": 4,
+        "pricings": 1,
+        "sunsets": 0
+      }
+    },
+    "totals": {
+      "substantive": 3,
+      "releases": 4,
+      "pricings": 1,
+      "sunsets": 0
+    },
+    "highlights": [
+      {
+        "platform": "LMArena",
+        "date": "2026-09-28",
+        "text": "Claude Opus 5.5 (High) 新增，定价 $1.28/task；Claude Opus 5 (High) 更新为 Claude Opus 5 (Max)",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-28",
+        "text": "Claude Fable 5 (High) 更新为 Claude Fable 5.1 (Max)，价格从 $1.71/task 升至 $3.66/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-28",
+        "text": "新增 GPT 6 Sol (Max) $0.82/task、GPT 5.6 Luna (xHigh) $0.07/task、Deepseek V4.1 Flash (Max)、GLM 5.3 (Max)、GLM 5.3 Flash、Gemini 3.8 Flash (High)",
+        "type": "release"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-09-28",
+        "text": "MiniMax-M3.1-Flash-Preview 新增，原生多模态、1M 上下文，仅通过 Token Plan 和 MiniMax Code 提供",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-28",
+        "text": "新增 MiMo-V2.6-Flash 模型评测，并新增 27 Sept 语言模型评测",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-28",
+        "text": "Claude Opus 5.5 条目更新，移除 Xhigh Effort 变体，保留 Low Effort 默认回退",
+        "type": "other"
+      }
+    ]
+  },
+  {
     "week": "2026-W39",
     "start": "2026-09-21",
     "end": "2026-09-27",
     "days": {
+      "2026-09-27": {
+        "substantive": 6,
+        "jitter": 1,
+        "failed": 2,
+        "releases": 1,
+        "pricings": 6,
+        "sunsets": 0
+      },
+      "2026-09-26": {
+        "substantive": 10,
+        "jitter": 2,
+        "failed": 2,
+        "releases": 6,
+        "pricings": 5,
+        "sunsets": 0
+      },
       "2026-09-25": {
         "substantive": 14,
         "jitter": 4,
@@ -46,12 +121,162 @@
       }
     },
     "totals": {
-      "substantive": 66,
-      "releases": 15,
-      "pricings": 16,
+      "substantive": 82,
+      "releases": 22,
+      "pricings": 27,
       "sunsets": 3
     },
     "highlights": [
+      {
+        "platform": "LMArena",
+        "date": "2026-09-27",
+        "text": "GPT 6 Astra (Max) 新增上榜，定价 $2.69/task，较此前删除的 $2.85/task 下调",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-27",
+        "text": "GPT 6 Sol (Max) 新增上榜，定价 $0.80/task，较此前删除的 $0.75/task 上调",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-27",
+        "text": "Claude Opus 5 (High) 更名为 Claude Opus 4.8 (High)，Claude Opus 5.5 更名为 Claude Opus 5 (High) 定价 $2.19/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-27",
+        "text": "Claude Fable 5.1 (Max) 定价从 $4.09/task 下调至 $3.90/task，Claude Sonnet 5 (High) 从 $0.70/task 上调至 $0.72/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-27",
+        "text": "Deepseek V4.1 Flash (Max) 定价从 $0.06/task 上调至 $0.07/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-27",
+        "text": "新增 Gemini 3.6 Flash、Gemini 3.7 Flash、Kimi K3、Qwen3.8 Max 等模型上榜，移除 Muse Spark 1.1 和 GLM 5.3 Flash",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-27",
+        "text": "OpenAI 修复了影响 GPT-6 Sol 和 GPT-6 Luna 图像理解的编码 bug，建议用户重新评估相关用例",
+        "type": "other"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-09-27",
+        "text": "火山方舟 pricing 文档新增订阅指南，同时删除多项计费项（如 0.0015 元/GB/小时、0.45 元/CU/小时等），可能对应定价结构更新",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-27",
+        "text": "Google Vertex AI changelog 更新时间从 2026-09-18 更新至 2026-09-24，内容无实质变化",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-27",
+        "text": "Artificial Analysis 行业列表移除 Thinking Machines，其余厂商保持不变",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-26",
+        "text": "Claude Fable 5 定位从『most capable widely released model』改为『most capable model open to all customers』，并继续与 Claude Mythos 5 并列发布",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-26",
+        "text": "Claude Opus 4.7 描述更新，强调复杂推理与智能体编码能力，定价保持 $5 / $25 per MTok",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-26",
+        "text": "Claude Opus 4.8 默认支持 1M token 上下文窗口，并更新为『most capable model』表述",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-26",
+        "text": "Compliance API 活动源不再返回文件名等元数据，本地会话端点结束 beta，恢复对特定拒绝类别的计费",
+        "type": "other"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-26",
+        "text": "GPT Image 2 和 GPT Image 2.5 的缓存输入费率仅适用于图像，新增定价说明",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-26",
+        "text": "FedRAMP 端点将按标准模型价格加收 10% 附加费",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-26",
+        "text": "新增『Migrate custom GPTs to plugins』指南，替换了『Other tools』条目",
+        "type": "other"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-26",
+        "text": "模型列表新增 banana_spark 模型",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-09-26",
+        "text": "发布通过强化学习定制 Gemini 模型的最佳实践指南",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-26",
+        "text": "新增 GPT 6 Astra (Max) 定价 $2.85/task，GPT 6 Sol (Max) 定价 $0.75/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-26",
+        "text": "新增 Claude Sonnet 5 (High) 定价 $0.70/task，GLM 5.2 (Max)、GLM 5.3 Flash、Muse Spark 1.1/1.2 等模型上榜",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-26",
+        "text": "Claude Opus 4.8 (High) 被替换为 Claude Opus 5 (High)，价格从 $1.17/task 升至 $2.16/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-26",
+        "text": "发布 Compass 云服务，提供搜索与检索引擎，无需管理基础设施",
+        "type": "release"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-09-26",
+        "text": "新增『使用 Viking 知识库检索构建知识问答 Agent』教程",
+        "type": "release"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-09-26",
+        "text": "文档指南订阅入口从 API参考资源 扩展至 AI 套件",
+        "type": "other"
+      },
       {
         "platform": "Google Vertex AI",
         "date": "2026-09-25",

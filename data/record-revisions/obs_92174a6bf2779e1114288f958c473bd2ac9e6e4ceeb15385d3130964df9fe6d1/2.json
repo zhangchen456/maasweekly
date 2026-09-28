@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_92174a6bf2779e1114288f958c473bd2ac9e6e4ceeb15385d3130964df9fe6d1",
+  "sourceId": "lmarena-industry",
+  "date": "2026-09-28",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "LMArena",
+  "sourceType": "industry",
+  "sourceUrl": "https://lmarena.ai/leaderboard",
+  "title": "LMArena · 行业数据来源更新",
+  "summary": "榜单出现多款新模型（Claude Opus 5.5、GPT 6 Sol、GPT 5.6 Luna、Deepseek V4.1 Flash、GLM 5.3 系列、Gemini 3.8 Flash），同时 Claude 系列版本更新（Fable 5→5.1、Opus 4.8→5、Opus 5 从 High 变为 Max），价格有升有降，整体反映模型迭代和定价变动。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-27T23:43:25+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "claude fable",
+        "before": "Claude Fable 5 (High)$1.71/task",
+        "after": "Claude Fable 5.1 (Max)$3.66/task"
+      },
+      {
+        "key": "claude opus",
+        "before": "Claude Opus 4.8 (High)·",
+        "after": "Claude Opus 5 (High)·"
+      },
+      {
+        "key": "claude opus",
+        "before": "Claude Opus 5 (High)$2.19/task",
+        "after": "Claude Opus 5 (Max)·"
+      },
+      {
+        "key": "claude sonnet",
+        "before": "Claude Sonnet 5 (High)$0.72/task",
+        "after": "Claude Sonnet 5 (High)$0.74/task"
+      }
+    ],
+    "added_lines": [
+      "10Anthropic",
+      "355,728,987355,728,987Total Sessions",
+      "4.82%View all",
+      "6.52%View details",
+      "Claude Opus 5.5 (High)",
+      "Claude Opus 5.5 (High)$1.28/task",
+      "Deepseek V4.1 Flash (Max)·",
+      "GLM 5.3 (Max)·",
+      "GLM 5.3 Flash·",
+      "GPT 5.6 Luna (xHigh)$0.07/task",
+      "GPT 6 Sol (Max)$0.82/task",
+      "Gemini 3.8 Flash (High)·",
+      "Hy4 preview$0.18/task",
+      "Qwen 3.8 27B·",
+      "Searching the web"
+    ],
+    "removed_lines": [
+      "Claude Fable 5.1 (Max)$3.90/task",
+      "355,235,456355,235,456Total Sessions",
+      "4.55%View all",
+      "6.45%View details",
+      "GLM 5.2 (Max)·",
+      "GPT 6 Astra (Max)$2.69/task"
+    ],
+    "added_count": 15,
+    "removed_count": 6,
+    "raw_added_count": 19,
+    "raw_removed_count": 19
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-28.json"
+  },
+  "permalink": "/item/obs_92174a6bf2779e1114288f958c473bd2ac9e6e4ceeb15385d3130964df9fe6d1/"
+}

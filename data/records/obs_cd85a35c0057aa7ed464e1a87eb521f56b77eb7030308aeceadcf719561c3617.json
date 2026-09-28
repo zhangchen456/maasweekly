@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_cd85a35c0057aa7ed464e1a87eb521f56b77eb7030308aeceadcf719561c3617",
+  "sourceId": "anthropic-changelog",
+  "date": "2026-09-26",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.anthropic.com/en/release-notes/api",
+  "title": "Anthropic · 更新日志来源更新",
+  "summary": "多条模型描述更新：Claude Fable 5 定位从『widely released』改为『open to all customers』，Claude Opus 4.7 强调复杂推理与智能体编码，Claude Opus 4.8 强调默认 1M 上下文窗口；同时新增合规 API 功能变更（活动源元数据移除、本地会话端点 GA、恢复特定拒绝计费），整体反映模型定位与合规功能的调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-25T23:53:59+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "claude-fable-5",
+        "before": "We've launched Claude Fable 5 (claude-fable-5), our most capable widely released model, alongside Claude Mythos 5 (claude-mythos-5) for Project Glasswing participants. Both models support a 1M token context window by default, 128k max output tokens, and always-on adaptive thinking. See Introducing Claude Fable 5 and Claude Mythos 5 for capabilities, API changes, and availability.",
+        "after": "We've launched Claude Fable 5 (claude-fable-5), our most capable model open to all customers, alongside Claude Mythos 5 (claude-mythos-5) for Project Glasswing participants. Both models support a 1M token context window by default, 128k max output tokens, and always-on adaptive thinking. See Introducing Claude Fable 5 and Claude Mythos 5 for capabilities, API changes, and availability."
+      },
+      {
+        "key": "we've launched claude opus",
+        "before": "We've launched Claude Opus 4.7, our most capable widely released model for complex reasoning and agentic coding, at the same $5 / $25 per MTok pricing as Opus 4.6. See What's new in Claude Opus 4.7 for capability improvements, new features, and the updated tokenizer. Opus 4.7 includes API breaking changes versus Opus 4.6; see the migration guide before upgrading.",
+        "after": "We've launched Claude Opus 4.7, our most capable model for complex reasoning and agentic coding, at the same $5 / $25 per MTok pricing as Opus 4.6. See What's new in Claude Opus 4.7 for capability improvements, new features, and the updated tokenizer. Opus 4.7 includes API breaking changes versus Opus 4.6; see the migration guide before upgrading."
+      },
+      {
+        "key": "claude-opus-4-8",
+        "before": "We've launched Claude Opus 4.8 (claude-opus-4-8), our most capable widely released model. Claude Opus 4.8 supports a 1M token context window by default on the Claude API, Amazon Bedrock, Google Cloud, and Microsoft Foundry, 128k max output tokens, and the same set of tools and platform features as Claude Opus 4.7. See the migration guide for baseline settings, features, and migration guidance.",
+        "after": "We've launched Claude Opus 4.8 (claude-opus-4-8), our most capable model. Claude Opus 4.8 supports a 1M token context window by default on the Claude API, Amazon Bedrock, Google Cloud, and Microsoft Foundry, 128k max output tokens, and the same set of tools and platform features as Claude Opus 4.7. See the migration guide for baseline settings, features, and migration guidance."
+      }
+    ],
+    "added_lines": [
+      "The Compliance API Activity Feed no longer returns file names, project document names, or artifact titles. The filename and title fields on file, project document, and artifact activities are now always empty or omitted, including on activities recorded before this change. To look up a name or title by the ID on the activity, use a Compliance Access Key with the read:compliance_user_data scope. See Understand the Activity object.",
+      "The Compliance API local session endpoints are out of beta for Claude for Microsoft 365 sessions in Excel, PowerPoint, Word, and Outlook (product_surface values beginning with office_agents). See Sessions on users' machines.",
+      "We're resuming billing for refusals that arrive before any output when stop_details.category is \"bio\", \"frontier_llm\", or \"reasoning_extraction\", the categories where we measure low volumes of false positives. Mid-stream refusals were already billed. Refusals billed under this change are charged like any other request, at the rates of the model that ran it. Refusals before any output in other categories are still not billed, and fallback credit is unchanged. This change applies on all platforms. See How refusals are billed."
+    ],
+    "removed_lines": [],
+    "added_count": 3,
+    "removed_count": 0,
+    "raw_added_count": 7,
+    "raw_removed_count": 3
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-26.json"
+  },
+  "permalink": "/item/obs_cd85a35c0057aa7ed464e1a87eb521f56b77eb7030308aeceadcf719561c3617/"
+}
