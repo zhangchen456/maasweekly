@@ -147,10 +147,31 @@ def _image_extension(data: bytes):
         return None
 
 
-def check_vendor_logos() -> list[str]:
-    """检查 openrouter 榜单里的 vendor 是否都在 platform-logos.json 注册。返回缺失的 vendor_key 列表。"""
+def _collect_logo_fields(value, found: set, vendor_keys: set):
+    """递归遍历 JSON 树，收集 vendor/app_name/harness 字段值，以及 vendor_key。
+    与 platform-logos.test.mjs 的 visit() 遍历规则完全对齐。"""
+    if isinstance(value, list):
+        for item in value:
+            _collect_logo_fields(item, found, vendor_keys)
+        return
+    if not isinstance(value, dict):
+        return
+    for key, child in value.items():
+        if key in ("vendor", "app_name", "harness") and isinstance(child, str):
+            found.add(child)
+        elif key == "vendor_key" and isinstance(child, str):
+            vendor_keys.add(child)
+        elif isinstance(child, (dict, list)):
+            _collect_logo_fields(child, found, vendor_keys)
+
+
+def check_vendor_logos() -> tuple[list[str], list[str]]:
+    """检查所有 leaderboard JSON 里的 vendor/app_name/harness 是否都在 platform-logos.json 注册。
+    返回 (缺失 logo 的展示名列表, 可自动补全的 vendor_key 列表)。
+    遍历规则与 platform-logos.test.mjs 的 visit() 完全一致，覆盖 top/shares/popular/trending/apps/cells 等所有层级。
+    """
     if not REGISTRY_PATH.exists():
-        return []
+        return [], []
     registry = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
     registered = set()
     for row in registry:
@@ -158,21 +179,27 @@ def check_vendor_logos() -> list[str]:
             if name:
                 registered.add(_normalize_name(name))
 
-    # 收集四个 openrouter 榜单里的所有 vendor / vendor_key
-    vendors = set()
-    for name in ["openrouter", "openrouter_market_share", "openrouter_session_cost", "openrouter_apps"]:
-        path = LB_DIR / f"{name}.json"
-        if not path.exists():
-            continue
-        data = json.loads(path.read_text(encoding="utf-8"))
-        for row in data.get("top", data.get("shares", data.get("popular", data.get("apps", [])))):
-            for key in ("vendor", "vendor_key"):
-                val = row.get(key)
-                if val:
-                    vendors.add(val)
+    # 遍历所有 leaderboard JSON（与 platform-logos.test.mjs 同范围）
+    found_names = set()
+    vendor_keys = set()
+    lb_dir = LB_DIR
+    if lb_dir.exists():
+        for path in sorted(lb_dir.glob("*.json")):
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError):
+                continue
+            _collect_logo_fields(data, found_names, vendor_keys)
 
-    missing = sorted(v for v in vendors if _normalize_name(v) not in registered)
-    return missing
+    missing_names = sorted(n for n in found_names if _normalize_name(n) not in registered)
+    # 可自动补全的：缺失的展示名中，那些有对应 vendor_key 的
+    # vendor_key 通常等于 permaslug 前缀，vendor_of("{key}/x") 返回展示名
+    auto_fillable = []
+    for vk in sorted(vendor_keys):
+        display_name = vendor_of(f"{vk}/x")[0]
+        if _normalize_name(display_name) not in registered:
+            auto_fillable.append(vk)
+    return missing_names, auto_fillable
 
 
 def _discover_vendor_logo(vendor_key: str):
@@ -265,6 +292,25 @@ def register_vendor_logos(missing: list[str]) -> int:
         tmp.write_text(json.dumps(registry, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         os.replace(tmp, REGISTRY_PATH)
     return registered
+
+
+def _run_logo_check():
+    """执行一次 vendor logo 覆盖检查 + 自动补全。抓取前后各调用一次。"""
+    print("[vendor-logo-check]")
+    missing_names, auto_fillable = check_vendor_logos()
+    if not missing_names:
+        print("  所有 vendor/app/harness 均已注册 logo")
+        return
+    # 先尝试自动补全有 vendor_key 的（通常是 vendor 类）
+    registered = register_vendor_logos(auto_fillable) if auto_fillable else 0
+    # 重新检查：自动补全后哪些仍缺失
+    still_missing, _ = check_vendor_logos()
+    if still_missing:
+        print(f"  ⚠ {len(still_missing)} 个 logo 仍缺失（build-release 测试可能失败）: {still_missing}")
+        print(f"    手动操作：在 site/src/data/platform-logos.json 添加条目后运行")
+        print(f"    python3 site/scripts/refresh-logos.py --platform <name>")
+    elif registered:
+        print(f"  ✓ {registered} 个 vendor logo 已自动补全")
 
 
 def to_t(tokens) -> float:
@@ -509,15 +555,8 @@ def main():
     api_key = os.environ.get("OPENROUTER_API_KEY")
 
     # vendor logo 覆盖检查（独立于抓取——即使无 API key 也检查现有榜单）
-    print("[vendor-logo-check]")
-    missing = check_vendor_logos()
-    if missing:
-        registered = register_vendor_logos(missing)
-        if registered < len(missing):
-            still_missing = len(missing) - registered
-            print(f"  ⚠ {still_missing} 个 vendor logo 未自动补全，build-release 测试可能失败")
-    else:
-        print("  所有 vendor 均已注册 logo")
+    # 第一次检查：补上轮遗留的缺失 vendor logo
+    _run_logo_check()
 
     if not api_key:
         print("⚠ 未设置 OPENROUTER_API_KEY，跳过榜单抓取（保留现有数据）")
@@ -540,6 +579,10 @@ def main():
 
     ok = sum(results)
     print(f"== 完成：{ok}/{len(results)} 数据集成功 ==")
+
+    # 第二次检查：抓取可能引入新 vendor/app，当轮发现当轮补全
+    _run_logo_check()
+
     if results and ok == 0:
         return 1  # 全部失败才报错（CI continue-on-error 兜底）
     return 0
