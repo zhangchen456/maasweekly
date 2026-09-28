@@ -26,11 +26,15 @@ import os
 import subprocess
 import sys
 import argparse
+import hashlib
+import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent  # repo root
 LB_DIR = BASE_DIR / "site" / "src" / "data" / "leaderboards"
+REGISTRY_PATH = BASE_DIR / "site" / "src" / "data" / "platform-logos.json"
+LOGO_DIR = BASE_DIR / "site" / "public" / "logos" / "official"
 SNAPSHOT_DIR = BASE_DIR / "data" / "snapshots"
 API_BASE = "https://openrouter.ai/api/v1"
 
@@ -112,6 +116,155 @@ def vendor_of(permaslug: str) -> tuple[str, str]:
     """返回 (展示名, vendor_key)。"""
     prefix = permaslug.split("/", 1)[0] if "/" in permaslug else permaslug
     return VENDOR_MAP.get(prefix, prefix.replace("-", " ").title()), prefix
+
+
+# ---- vendor logo 覆盖检查与自动补全 ----
+# 复用 refresh-logos.py 的 image_extension 逻辑（零第三方依赖约束）
+
+def _normalize_name(name: str) -> str:
+    """与 site/src/lib/platforms.ts 的 normalize 对齐（NFKC + 小写 + 去分隔符）。"""
+    import unicodedata
+    n = unicodedata.normalize("NFKC", name).casefold()
+    return "".join(c for c in n if c.isalnum())
+
+
+def _image_extension(data: bytes):
+    """检测图片格式（png/ico/jpg/webp/svg），SVG 做 script/href 安全过滤。复制自 refresh-logos.py。"""
+    if data.startswith(b'\x89PNG\r\n\x1a\n'): return 'png'
+    if data.startswith(b'\x00\x00\x01\x00'): return 'ico'
+    if data.startswith(b'\xff\xd8\xff'): return 'jpg'
+    if data.startswith(b'RIFF') and data[8:12] == b'WEBP': return 'webp'
+    try:
+        tree = ET.fromstring(data)
+        if tree.tag.split('}')[-1] != 'svg': return None
+        for el in tree.iter():
+            if el.tag.split('}')[-1] in ('script', 'foreignObject'): return None
+            for key, val in el.attrib.items():
+                if key.lower().startswith('on'): return None
+                if key.split('}')[-1] == 'href' and not val.startswith('#'): return None
+        return 'svg'
+    except ET.ParseError:
+        return None
+
+
+def check_vendor_logos() -> list[str]:
+    """检查 openrouter 榜单里的 vendor 是否都在 platform-logos.json 注册。返回缺失的 vendor_key 列表。"""
+    if not REGISTRY_PATH.exists():
+        return []
+    registry = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    registered = set()
+    for row in registry:
+        for name in [row.get("id", ""), row.get("name", ""), *row.get("aliases", [])]:
+            if name:
+                registered.add(_normalize_name(name))
+
+    # 收集四个 openrouter 榜单里的所有 vendor / vendor_key
+    vendors = set()
+    for name in ["openrouter", "openrouter_market_share", "openrouter_session_cost", "openrouter_apps"]:
+        path = LB_DIR / f"{name}.json"
+        if not path.exists():
+            continue
+        data = json.loads(path.read_text(encoding="utf-8"))
+        for row in data.get("top", data.get("shares", data.get("popular", data.get("apps", [])))):
+            for key in ("vendor", "vendor_key"):
+                val = row.get(key)
+                if val:
+                    vendors.add(val)
+
+    missing = sorted(v for v in vendors if _normalize_name(v) not in registered)
+    return missing
+
+
+def _discover_vendor_logo(vendor_key: str):
+    """尝试通过 GitHub API 获取 vendor 的组织头像。返回 (avatar_url, page_url) 或 None。"""
+    # 尝试常见命名：{key}、{key}-ai、{key}ai
+    candidates = [vendor_key, f"{vendor_key}-ai", f"{vendor_key}ai"]
+    for name in candidates:
+        try:
+            result = subprocess.run(
+                ["curl", "-sfL", "--max-time", "10",
+                 "-H", "Accept: application/vnd.github+json",
+                 "-H", "User-Agent: maasweekly-ci",
+                 f"https://api.github.com/orgs/{name}"],
+                capture_output=True, timeout=15,
+            )
+            if result.returncode != 0:
+                continue
+            data = json.loads(result.stdout)
+            avatar = data.get("avatar_url")
+            if avatar:
+                return avatar, data.get("html_url", f"https://github.com/{name}")
+        except (subprocess.TimeoutExpired, json.JSONDecodeError):
+            continue
+    return None
+
+
+def _download_logo(url: str):
+    """下载 logo，返回 (sha256, ext, payload) 或 None。"""
+    try:
+        result = subprocess.run(
+            ["curl", "--fail", "--silent", "--show-error", "--location",
+             "--max-time", "25", "--max-filesize", "2097152",
+             "--proto", "=https", "--proto-redir", "=https",
+             "--user-agent", "Mozilla/5.0", url],
+            capture_output=True, timeout=30,
+        )
+        if result.returncode != 0:
+            return None
+        ext = _image_extension(result.stdout)
+        if not ext:
+            return None
+        sha = hashlib.sha256(result.stdout).hexdigest()
+        return sha, ext, result.stdout
+    except (subprocess.TimeoutExpired, Exception):
+        return None
+
+
+def register_vendor_logos(missing: list[str]) -> int:
+    """对缺失的 vendor_key 尝试自动获取 logo 并注册到 platform-logos.json。返回成功注册数。"""
+    if not missing:
+        return 0
+    print(f"  发现 {len(missing)} 个缺少 logo 的 vendor: {missing}")
+    LOGO_DIR.mkdir(parents=True, exist_ok=True)
+    registry = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    registered = 0
+    for vendor_key in missing:
+        info = _discover_vendor_logo(vendor_key)
+        if not info:
+            print(f"  ⚠ vendor_key='{vendor_key}' 无法自动获取 logo（GitHub 组织未找到）")
+            print(f"    手动操作：在 site/src/data/platform-logos.json 添加条目后运行")
+            print(f"    python3 site/scripts/refresh-logos.py --platform {vendor_key}")
+            continue
+        avatar_url, page_url = info
+        dl = _download_logo(avatar_url)
+        if not dl:
+            print(f"  ⚠ vendor_key='{vendor_key}' logo 下载失败（{avatar_url}）")
+            continue
+        sha, ext, payload = dl
+        display_name = vendor_of(f"{vendor_key}/x")[0]
+        filename = f"{vendor_key}-{sha[:12]}.{ext}"
+        (LOGO_DIR / filename).write_bytes(payload)
+        entry = {
+            "id": vendor_key,
+            "name": display_name,
+            "aliases": [],
+            "page": page_url,
+            "candidates": [avatar_url],
+            "kind": "official-site-icon",
+            "file": f"/logos/official/{filename}",
+            "source_url": avatar_url,
+            "sha256": sha,
+            "checked_at": datetime.now(timezone.utc).isoformat(),
+            "bytes": len(payload),
+        }
+        registry.append(entry)
+        registered += 1
+        print(f"  ✓ {vendor_key}: logo 已自动注册 ({filename})")
+    if registered:
+        tmp = REGISTRY_PATH.with_suffix(".tmp")
+        tmp.write_text(json.dumps(registry, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        os.replace(tmp, REGISTRY_PATH)
+    return registered
 
 
 def to_t(tokens) -> float:
@@ -354,6 +507,18 @@ def main():
     args = parser.parse_args()
 
     api_key = os.environ.get("OPENROUTER_API_KEY")
+
+    # vendor logo 覆盖检查（独立于抓取——即使无 API key 也检查现有榜单）
+    print("[vendor-logo-check]")
+    missing = check_vendor_logos()
+    if missing:
+        registered = register_vendor_logos(missing)
+        if registered < len(missing):
+            still_missing = len(missing) - registered
+            print(f"  ⚠ {still_missing} 个 vendor logo 未自动补全，build-release 测试可能失败")
+    else:
+        print("  所有 vendor 均已注册 logo")
+
     if not api_key:
         print("⚠ 未设置 OPENROUTER_API_KEY，跳过榜单抓取（保留现有数据）")
         return 0
