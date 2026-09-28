@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_f3b3654024812c134143307bc0b3eee24b448ecfda0e495d2369d2d040772d6a",
+  "sourceId": "anthropic-modellist",
+  "date": "2026-09-24",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "model_list",
+  "sourceUrl": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+  "title": "Anthropic · 模型列表来源更新",
+  "summary": "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5-20251001",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "claude-fable-5-1",
+        "before": "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5-20251001",
+        "after": "| Amazon Bedrock ID | anthropic.claude-fable-5-1 | anthropic.claude-opus-5-5 | anthropic.claude-sonnet-5 | anthropic.claude-haiku-4-5"
+      }
+    ],
+    "added_lines": [
+      "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5-20251001",
+      "| Claude API alias | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+      "| Claude Platform on AWS ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+      "| Comparative latency | Slower | Moderate | Fast | Fastest",
+      "| Context window | 1M tokens | 1M tokens | 1M tokens | 200K tokens",
+      "| Default effort | high | medium | high | Not supported",
+      "| Google Cloud ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5@20251001",
+      "| Max output | 128K tokens | 128K tokens | 128K tokens | 64K tokens",
+      "| Microsoft Foundry ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+      "| Model IDs |",
+      "| Pricing | $10 / input MTok$50 / output MTok | $4 / input MTok$20 / output MTok | $2 / input MTok$10 / output MTok | $1 / input MTok$5 / output MTok",
+      "| Reliable knowledge cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Feb 2025",
+      "| Retirement | Not sooner than September 1, 2027 | Not sooner than September 22, 2027 | Not sooner than June 30, 2027 | Not sooner than October 15, 2026",
+      "| Thinking | Adaptive (always on) | Adaptive (always on) | Adaptive | Extended",
+      "| Training data cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Jul 2025",
+      "Additional details |"
+    ],
+    "removed_lines": [
+      "Claude Opus 5",
+      "| Comparative latency | Slower | Moderate | Fast | Fastest",
+      "| Context window | 1M tokens | 1M tokens | 1M tokens | 200K tokens",
+      "| Default effort | high | medium | high | Not supported",
+      "| Max output | 128K tokens | 128K tokens | 128K tokens | 64K tokens",
+      "| Pricing | $10 / input MTok$50 / output MTok | $4 / input MTok$20 / output MTok | $2 / input MTok$10 / output MTok | $1 / input MTok$5 / output MTok",
+      "| Reliable knowledge cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Feb 2025",
+      "| Show all details",
+      "| Thinking | Adaptive (always on) | Adaptive (always on) | Adaptive | Extended"
+    ],
+    "added_count": 16,
+    "removed_count": 9,
+    "raw_added_count": 17,
+    "raw_removed_count": 10
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-24.json"
+  },
+  "permalink": "/item/obs_f3b3654024812c134143307bc0b3eee24b448ecfda0e495d2369d2d040772d6a/"
+}

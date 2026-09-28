@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_c14cb845ff02c10c4c126d992938831151f89b46b5ba9b054ecad0e43ccc226a",
+  "date": "2026-09-25",
+  "recordType": "price_change",
+  "fact_key": "7d9ad69ae5e167207bd02514874beb5276e4826b24876cb14ad78037552c5f6c",
+  "provider": "openai",
+  "model": "gpt-6-luna",
+  "component": "cache_read",
+  "currency": "USD",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "global",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": null,
+  "timeCondition": null,
+  "beforeVersionId": "pfv_bc2cbc345b6372b5bb0c7ebce40f98467931a8efac90851b1ec09ceebf9a1bae",
+  "afterVersionId": "pfv_c6989f1bff29236b20fec4781e31c373db85ccc90702bcf88411183aaa51e7b2",
+  "beforeEvidenceId": "ev_989ea096bdb16bb8f01412e37834a973577c8688ca8d7d0904261c2880ff577a",
+  "afterEvidenceId": "ev_183d69660834091ac9f014d032b2616b0194cfea76e8157f939e30292c4d45f0",
+  "beforeObservedAt": "2026-09-23T23:29:05+00:00",
+  "afterObservedAt": "2026-09-24T23:48:43+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "0.02",
+    "current": "0.01",
+    "direction": "down",
+    "percent": "-50.00"
+  },
+  "revision": 1,
+  "status": "active",
+  "revisedAt": null,
+  "revisionReason": null,
+  "permalink": "/item/price_c14cb845ff02c10c4c126d992938831151f89b46b5ba9b054ecad0e43ccc226a/",
+  "provenance": {}
+}

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_b8c911267a0d2a5e065311c4f91140cc79491a85d1a879bf75d40367c4bf1c20",
+  "sourceId": "openai-pricing",
+  "date": "2026-09-25",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.openai.com/docs/pricing",
+  "title": "OpenAI · 定价来源更新",
+  "summary": "删除 sora-2 视频生成模型的全部定价行（720p/1024p 各分辨率），同时新增 Organization blocking 与 Other tools 条目，表明定价页结构变化，视频生成模型可能已下架或移至其他页面。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-24T23:49:13+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Organization blocking",
+      "Other tools"
+    ],
+    "removed_lines": [
+      "Images and video",
+      "Prices per second.",
+      "Video generation models",
+      "| sora-2 | 720p | 720x1280 | 1280x720 | $0.05",
+      "| sora-2 | 720p | 720x1280 | 1280x720 | $0.10",
+      "| 1024p | 1024x1792 | 1792x1024 | $0.25",
+      "| 1024p | 1024x1792 | 1792x1024 | $0.50",
+      "| 1080p | 1080x1920 | 1920x1080 | $0.35",
+      "| 1080p | 1080x1920 | 1920x1080 | $0.70",
+      "| Model | Size | Portrait | Landscape | Price per second"
+    ],
+    "added_count": 2,
+    "removed_count": 10,
+    "raw_added_count": 2,
+    "raw_removed_count": 12
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-25.json"
+  },
+  "permalink": "/item/obs_b8c911267a0d2a5e065311c4f91140cc79491a85d1a879bf75d40367c4bf1c20/"
+}

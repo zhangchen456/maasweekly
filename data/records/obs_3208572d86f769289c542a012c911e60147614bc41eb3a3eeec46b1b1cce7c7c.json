@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_3208572d86f769289c542a012c911e60147614bc41eb3a3eeec46b1b1cce7c7c",
+  "sourceId": "google-gemini-modellist",
+  "date": "2026-09-25",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "model_list",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+  "title": "Google Gemini API · 模型列表来源更新",
+  "summary": "模型列表更新日期从 9月23日 变为 9月24日，新增 antigravity-preview-09-2026 及三个 TTS 模型描述（Gemini 3.8 Flash TTS、Flash-Lite TTS、Legacy TTS），删除 antigravity-preview-05-2026 及其描述，表明 TTS 模型换代。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-24T23:49:13+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-09-23 UTC.",
+        "after": "Last updated 2026-09-24 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-23 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-24 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "antigravity-preview-09-2026",
+      "| Fast, cost-efficient text-to-speech model built for high-throughput production workloads across 101 languages.",
+      "| Flagship creative text-to-speech model for studio-grade voice fidelity, expressive acting, and regional dialects across 130 languages.",
+      "| Legacy text-to-speech preview model. We recommend updating to Gemini 3.8 Flash TTS or Gemini 3.8 Flash-Lite TTS."
+    ],
+    "removed_lines": [
+      "antigravity-preview-05-2026",
+      "| Powerful, low-latency speech generation, with natural outputs, steerable prompts, and new expressive audio tags for precise narration control."
+    ],
+    "added_count": 4,
+    "removed_count": 2,
+    "raw_added_count": 6,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-25.json"
+  },
+  "permalink": "/item/obs_3208572d86f769289c542a012c911e60147614bc41eb3a3eeec46b1b1cce7c7c/"
+}
