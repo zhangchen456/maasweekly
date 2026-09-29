@@ -4,6 +4,14 @@
     "start": "2026-09-28",
     "end": "2026-10-04",
     "days": {
+      "2026-09-29": {
+        "substantive": 14,
+        "jitter": 2,
+        "failed": 3,
+        "releases": 4,
+        "pricings": 0,
+        "sunsets": 1
+      },
       "2026-09-28": {
         "substantive": 4,
         "jitter": 1,
@@ -14,12 +22,66 @@
       }
     },
     "totals": {
-      "substantive": 4,
-      "releases": 4,
+      "substantive": 18,
+      "releases": 8,
       "pricings": 1,
-      "sunsets": 0
+      "sunsets": 1
     },
     "highlights": [
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-29",
+        "text": "Anthropic 发布 Claude Sonnet 5.5，速度提升 30%，成本降低最多 30%，并更新了各平台 API ID 和知识截止日期。",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-09-29",
+        "text": "Claude Sonnet 5.5 在 Claude API、Amazon Bedrock、Google Cloud 等平台同步上线，并新增了 thinking 参数相关说明。",
+        "type": "release"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-09-29",
+        "text": "xAI 的 Grok 4.7 新增与 LangChain 和 Replit Agents 的集成，支持 agentic 编码工作流。",
+        "type": "release"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-09-29",
+        "text": "xAI API 新增 safety_identifier 请求字段，用于传递终端用户标识。",
+        "type": "other"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-09-29",
+        "text": "硅基流动将于 2026-09-30 下线 Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 及 ERNIE-Image-Turbo 等模型。",
+        "type": "sunset"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-09-29",
+        "text": "对话模型将忽略 repetition_penalty 参数，生图 API 下线 batch_size 字段并默认添加水印。",
+        "type": "other"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-09-29",
+        "text": "Mistral AI 在慕尼黑开设德国中心，以推进欧洲最大经济体的工业 AI 应用。",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-29",
+        "text": "Artificial Analysis 推出 Cyber Index，整合 CWE-Bench-AA、DeepsecBench-AA 和 CyberGym-E2E-AA 三项评估，并纳入 Claude Sonnet 5.5 的多种配置。",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-29",
+        "text": "LMArena 榜单新增 GPT 6 Luna、GPT 6 Sol、Deepseek V4.1 Flash、Hy4 preview、Mimo V2.5 Pro 等模型，并调整了部分模型价格。",
+        "type": "release"
+      },
       {
         "platform": "LMArena",
         "date": "2026-09-28",

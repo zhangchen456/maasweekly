@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_a36fc750343f3531b6c12148edc21358a3d8e92ede87b0bac122caadc54916c9",
+  "sourceId": "xai-changelog",
+  "date": "2026-09-29",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "xAI",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.x.ai/docs/release-notes",
+  "title": "xAI · 更新日志来源更新",
+  "summary": "新增了 LangChain 和 Replit 集成、safety_identifier 字段等条目，并将品牌从 xAI 更新为 SpaceXAI，对应生态合作和 API 功能扩展。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-29T00:53:19+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "grok-4.7.",
+        "before": "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast, the same model at twice the token rates, is available only through Cursor and Grok Build, not on the public xAI API. See the Grok 4.7 overview and the announcement.",
+        "after": "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast is the same model and costs 2x the standard token rates, or 1.5x for long-context requests. It's available only in Cursor and Grok Build, not on the public xAI API, and is billed through your plan there. See the Grok 4.7 overview and the announcement."
+      },
+      {
+        "key": "last updated",
+        "before": "Last updated: September 21, 2026",
+        "after": "Last updated: September 28, 2026"
+      }
+    ],
+    "added_lines": [
+      "LangChain & SpaceXAI",
+      "Replit & SpaceXAI",
+      "Replit Agents can now integrate with SpaceXAI! Start empowering your agents with Grok.",
+      "September 25",
+      "SpaceXAI's coding model, trained specifically for agentic coding workflows. Currently in early access.",
+      "You can now send safety_identifier, an opaque end-user identifier assigned by your application, on Chat Completions, the Responses API, deferred chat completions, the Batch API, and the gRPC GetCompletionsRequest. It lets SpaceXAI attribute a policy violation to one of your end users rather than to your API key. The legacy user field is still accepted. See the Security FAQ.",
+      "safety_identifier request field"
+    ],
+    "removed_lines": [
+      "LangChain & xAI",
+      "Replit & xAI",
+      "Replit Agents can now integrate with xAI! Start empowering your agents with Grok.",
+      "xAI's coding model, trained specifically for agentic coding workflows. Currently in early access."
+    ],
+    "added_count": 7,
+    "removed_count": 4,
+    "raw_added_count": 9,
+    "raw_removed_count": 6
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-29.json"
+  },
+  "permalink": "/item/obs_a36fc750343f3531b6c12148edc21358a3d8e92ede87b0bac122caadc54916c9/"
+}

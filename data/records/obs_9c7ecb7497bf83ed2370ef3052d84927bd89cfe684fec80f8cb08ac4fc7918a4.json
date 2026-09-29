@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_9c7ecb7497bf83ed2370ef3052d84927bd89cfe684fec80f8cb08ac4fc7918a4",
+  "sourceId": "aa-industry",
+  "date": "2026-09-29",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "新增了 Cyber Index 及其评估方法、模型配置（Claude Sonnet 5.5 多种 effort 模式），删除了旧的 AA-AnalystAgent 基准，对应新评估产品的发布。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-29T00:53:19+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Addressing an urgent need to step up cyber defense capability",
+      "Announcing the Artificial Analysis Cyber Index",
+      "Announcing the Artificial Analysis Cyber Index Alliance",
+      "Artificial Analysis Cyber Index",
+      "Artificial Analysis Cyber Index score vs. average cost per task (USD) · Lower is better · Refused tasks are estimated from other models' token use",
+      "Artificial Analysis Cyber Index v1 incorporates 3 evaluations: CWE-Bench-AA, DeepsecBench-AA, and CyberGym-E2E-AA",
+      "Artificial Analysis Cyber Index: Score vs. Cost per Task",
+      "Average cost per task in the evaluation. Costs are split by input, cache hit, cache write, reasoning, and answer token pricing where canonical token counts are available.",
+      "Claude Sonnet 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+      "Claude Sonnet 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+      "Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+      "Claude Sonnet 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+      "Claude Sonnet 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+      "Claude Sonnet 5.5 reaches #2 on the Artificial Analysis Intelligence Index",
+      "Cyber Index vs. Cost per TaskCWE-Bench-AA vs. Cost per TaskDeepsecBench-AA vs. Cost per TaskCyberGym-E2E-AA vs. Cost per Task",
+      "Cyber IndexCyber Index by Benchmark",
+      "Elo scores from blind preference votes by our recruited Prolific panel, together with public Image Arena votes cast before 1 January 2026. See the full leaderboard here.",
+      "Evaluation Cost per Task",
+      "GPT-6 Luna (low)See more",
+      "Measuring model capability on enterprise cyber defense",
+      "New article published · 25 Sept",
+      "New article published · 28 Sept"
+    ],
+    "removed_lines": [
+      "AA-AnalystAgent is a benchmark for end-to-end quantitative analysis on real-world spreadsheets and documents — the kind of work business and data analysts do every day"
+    ],
+    "added_count": 22,
+    "removed_count": 1,
+    "raw_added_count": 33,
+    "raw_removed_count": 24
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-29.json"
+  },
+  "permalink": "/item/obs_9c7ecb7497bf83ed2370ef3052d84927bd89cfe684fec80f8cb08ac4fc7918a4/"
+}

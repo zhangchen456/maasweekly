@@ -1,6 +1,625 @@
 {
-  "updated_at": "2026-09-28T06:18:10",
+  "updated_at": "2026-09-29T00:53:19",
   "days": [
+    {
+      "date": "2026-09-29",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 16,
+        "unchanged": 49
+      },
+      "changed": [
+        {
+          "platform": "硅基流动",
+          "source_type": "changelog",
+          "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 0,
+          "added_lines": [
+            "baidu/ERNIE-Image-Turbo",
+            "【模型服务调整】ERNIE-Image-Turbo 模型将下线",
+            "为进一步优化资源配置，提供更先进、优质的技术服务，平台将于 2026-09-30 对下列模型进行下线处理：",
+            "若您正在使用上述模型，建议您尽快切换到其他模型，以免服务受到影响。如需查看完整的可用模型列表，请访问模型广场。"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "user/info",
+              "before": "【接口服务调整】对话模型将忽略 repetition_penalty 参数【接口服务调整】生图 API 下线 batch_size 字段、水印默认添加【模型服务调整】Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线【模型价格调整】DeepSeek-V4-Flash 模型分时段定价调整【接口服务调整】/user/info 接口将停止服务【模型价格调整】DeepSeek-V4-Pro 缓存命中输入 tokens 价格调整【模型价格调整】Nex-N2-Pro、DeepSeek-V4-Pro、DeepSeek-V3.2、Qwen3.6 模型价格调整【模型服务调整】GLM-4.7、Kimi-K2.5 等模型将下线【模型服务调整】Kimi-K2、GLM-4.6 等多款模型停止服务【账户安全】未完成实名认证账户将限制使用平台功能【模型服务调整】KAT-Dev、PaddleOCR-VL 等多款模型停止服务【模型服务调整】Qwen3-Coder、ERNIE-4.5 等多款模型停止服务【模型服务调整】MiniMax-M2.1、Qwen2 等多款模型停止服务【价格调整】Qwen3.5-397B-A17B 模型定价调整【模型服务调整】MiniMax-M2、Kimi-Dev-72B 等多款模型停止服务【模型服务调整】GLM-4.5、Qwen3-235B 等模型停止服务【服务调整】平台赠送余额展示形式调整【模型升级】DeepSeek-V3.2-Exp 升级至 V3.2【模型服务调整】Ling-1T、Ring-1T 等模型停止服务【服务调整】DeepSeek-R1/V3 等模型速率限制调整【服务调整】关闭使用等级购买入口【模型服务调整】DeepSeek-V3.1 模型停止服务【模型更新】Kimi-K2-Instruct 升级至 0905 版本【模型服务调整】HunyuanVideo-HD 等视频模型停止服务【模型服务调整】DeepSeek-R1-0120 等模型停止服务【平台维护】6 月 10 日平台维护通知【模型更新】DeepSeek-R1 升级至 0528 版本【模型服务调整】Qwen2-1.5B 等多款模型停止服务【模型服务调整】HunyuanVideo（非 HD）模型停止服务【模型更新】DeepSeek-V3 已升级至 0324 版本【模型更新】DeepSeek-V3 将升级至 0324 版本【服务调整】api.siliconflow.com 端点将停用【服务调整】DeepSeek-R1/V3 取消 RPH 和 RPD 限制【模型服务调整】Marco-o1、FLUX.1 等多款模型停止服务【服务调整】DeepSeek-R1/V3 新增 RPH/RPD 速率限制【模型服务调整】Yi-1.5、SD-3-medium 等多款模型停止服务【价格调整】DeepSeek-V3 价格恢复原价【功能更新】推理模型 reasoning_content 字段分离【新模型上线】DeepSeek-R1 和 DeepSeek-V3 上线【服务调整】图片及视频 URL 有效期调整为 1 小时【价格调整】LTX-Video 模型开始计费【模型服务调整】DeepSeek-V2-Chat 等模型停止服务【模型服务调整】Qwen2.5-Math、Hunyuan-A52B 等模型停止服务【模型服务调整】多款模型停止服务及相关服务更新【价格调整】Vendor-A/Qwen2-72B 模型开始计费",
+              "after": "【模型服务调整】ERNIE-Image-Turbo 模型将下线【接口服务调整】对话模型将忽略 repetition_penalty 参数【接口服务调整】生图 API 下线 batch_size 字段、水印默认添加【模型服务调整】Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线【模型价格调整】DeepSeek-V4-Flash 模型分时段定价调整【接口服务调整】/user/info 接口将停止服务【模型价格调整】DeepSeek-V4-Pro 缓存命中输入 tokens 价格调整【模型价格调整】Nex-N2-Pro、DeepSeek-V4-Pro、DeepSeek-V3.2、Qwen3.6 模型价格调整【模型服务调整】GLM-4.7、Kimi-K2.5 等模型将下线【模型服务调整】Kimi-K2、GLM-4.6 等多款模型停止服务【账户安全】未完成实名认证账户将限制使用平台功能【模型服务调整】KAT-Dev、PaddleOCR-VL 等多款模型停止服务【模型服务调整】Qwen3-Coder、ERNIE-4.5 等多款模型停止服务【模型服务调整】MiniMax-M2.1、Qwen2 等多款模型停止服务【价格调整】Qwen3.5-397B-A17B 模型定价调整【模型服务调整】MiniMax-M2、Kimi-Dev-72B 等多款模型停止服务【模型服务调整】GLM-4.5、Qwen3-235B 等模型停止服务【服务调整】平台赠送余额展示形式调整【模型升级】DeepSeek-V3.2-Exp 升级至 V3.2【模型服务调整】Ling-1T、Ring-1T 等模型停止服务【服务调整】DeepSeek-R1/V3 等模型速率限制调整【服务调整】关闭使用等级购买入口【模型服务调整】DeepSeek-V3.1 模型停止服务【模型更新】Kimi-K2-Instruct 升级至 0905 版本【模型服务调整】HunyuanVideo-HD 等视频模型停止服务【模型服务调整】DeepSeek-R1-0120 等模型停止服务【平台维护】6 月 10 日平台维护通知【模型更新】DeepSeek-R1 升级至 0528 版本【模型服务调整】Qwen2-1.5B 等多款模型停止服务【模型服务调整】HunyuanVideo（非 HD）模型停止服务【模型更新】DeepSeek-V3 已升级至 0324 版本【模型更新】DeepSeek-V3 将升级至 0324 版本【服务调整】api.siliconflow.com 端点将停用【服务调整】DeepSeek-R1/V3 取消 RPH 和 RPD 限制【模型服务调整】Marco-o1、FLUX.1 等多款模型停止服务【服务调整】DeepSeek-R1/V3 新增 RPH/RPD 速率限制【模型服务调整】Yi-1.5、SD-3-medium 等多款模型停止服务【价格调整】DeepSeek-V3 价格恢复原价【功能更新】推理模型 reasoning_content 字段分离【新模型上线】DeepSeek-R1 和 DeepSeek-V3 上线【服务调整】图片及视频 URL 有效期调整为 1 小时【价格调整】LTX-Video 模型开始计费【模型服务调整】DeepSeek-V2-Chat 等模型停止服务【模型服务调整】Qwen2.5-Math、Hunyuan-A52B 等模型停止服务【模型服务调整】多款模型停止服务及相关服务更新【价格调整】Vendor-A/Qwen2-72B 模型开始计费"
+            }
+          ],
+          "signal_preview": "baidu/ERNIE-Image-Turbo",
+          "raw_added_count": 5,
+          "raw_removed_count": 1,
+          "id": "obs_552346278fcfb6c703fc76f94a72f52b29e31bce4cea8d3d688979315ca11e9e",
+          "permalink": "/item/obs_552346278fcfb6c703fc76f94a72f52b29e31bce4cea8d3d688979315ca11e9e/",
+          "llm_summary": "新增了 ERNIE-Image-Turbo 的下线公告，并详细说明了 2026-09-30 将下线的模型列表，同时更新了接口服务调整（忽略 repetition_penalty、生图 API 变更）和模型价格调整信息，整体对应模型下线和接口变更。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "model_list",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 3,
+          "added_lines": [
+            "Claude Sonnet 5.5The best combination of speed and intelligence |",
+            "| Reliable knowledge cutoff | Jun 2026 | Jun 2026 | Jun 2026 | Feb 2025",
+            "| Retirement | Not sooner than September 1, 2027 | Not sooner than September 22, 2027 | Not sooner than September 28, 2027 | Not sooner than October 15, 2026",
+            "| Training data cutoff | Jun 2026 | Jun 2026 | Jun 2026 | Jul 2025"
+          ],
+          "removed_lines": [
+            "| Reliable knowledge cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Feb 2025",
+            "| Retirement | Not sooner than September 1, 2027 | Not sooner than September 22, 2027 | Not sooner than June 30, 2027 | Not sooner than October 15, 2026",
+            "| Training data cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Jul 2025"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5The best combination of speed and intelligence |",
+              "after": "Claude Sonnet 5.5"
+            },
+            {
+              "key": "claude-fable-5-1",
+              "before": "| Amazon Bedrock ID | anthropic.claude-fable-5-1 | anthropic.claude-opus-5-5 | anthropic.claude-sonnet-5 | anthropic.claude-haiku-4-5",
+              "after": "| Amazon Bedrock ID | anthropic.claude-fable-5-1 | anthropic.claude-opus-5-5 | anthropic.claude-sonnet-5-5 | anthropic.claude-haiku-4-5"
+            },
+            {
+              "key": "claude-fable-5-1",
+              "before": "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5-20251001",
+              "after": "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5-20251001"
+            },
+            {
+              "key": "claude-fable-5-1",
+              "before": "| Claude API alias | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+              "after": "| Claude API alias | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5"
+            },
+            {
+              "key": "claude-fable-5-1",
+              "before": "| Claude Platform on AWS ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+              "after": "| Claude Platform on AWS ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5"
+            },
+            {
+              "key": "claude-fable-5-1",
+              "before": "| Google Cloud ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5@20251001",
+              "after": "| Google Cloud ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5@20251001"
+            },
+            {
+              "key": "claude-fable-5-1",
+              "before": "| Microsoft Foundry ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+              "after": "| Microsoft Foundry ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5"
+            }
+          ],
+          "signal_preview": "Claude Sonnet 5.5The best combination of speed and intelligence |",
+          "raw_added_count": 11,
+          "raw_removed_count": 10,
+          "id": "obs_f78cd8ddc0d0ab1f59a99229cdb6e77665dd5b61d69fd76f2b7229779c735833",
+          "permalink": "/item/obs_f78cd8ddc0d0ab1f59a99229cdb6e77665dd5b61d69fd76f2b7229779c735833/",
+          "llm_summary": "模型列表中 Claude Sonnet 5 被替换为 Claude Sonnet 5.5，所有平台（Bedrock、API、AWS、Google Cloud、Microsoft Foundry）的 ID 和别名均同步更新，同时新增了知识截止日期和退役日期，显示新模型上架并调整了生命周期信息。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "pricing",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Claude Sonnet 5.5",
+            "Claude Sonnet 5.5The best combination of speed and intelligence |"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5The best combination of speed and intelligence |",
+              "after": "Claude Sonnet 5 |"
+            }
+          ],
+          "signal_preview": "Claude Sonnet 5.5The best combination of speed and intelligence |",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_c58044b788ef59faec83401958734d542782eb088c8f891aa53bf432a8362bed",
+          "permalink": "/item/obs_c58044b788ef59faec83401958734d542782eb088c8f891aa53bf432a8362bed/",
+          "llm_summary": "定价页面新增了 Claude Sonnet 5.5 的条目，并保留了 Claude Sonnet 5 的说明，但描述有细微变化，对应新模型定价的引入。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "Code written for Claude Sonnet 5 can break on Claude Sonnet 5.5 in five ways. To turn off up-front thinking, send thinking: {\"type\": \"between_tools\"} instead of \"disabled\", at high effort or below. Forced tool use (tool_choice types any and tool) returns a 400 error. Thinking blocks are tied to the model and the conversation. On the Claude API and Google Cloud, the earlier computer_20251124 computer use tool isn't accepted. The advisor tool rejects Claude Opus 4.8, Claude Opus 4.7, and Claude Sonnet 5 as advisors. See What's new in Claude Sonnet 5.5 for each change and the migration guide for before-and-after requests. For model-specific prompting patterns, see Prompting Claude Sonnet 5.5.",
+            "Thinking blocks that Claude Sonnet 5.5 produces work only in the account that produced them, or in an account linked to it. When another account sends one of these blocks, the API drops the block before the model sees it, and the request succeeds. Blocks from earlier models aren't affected. See Preserved thinking.",
+            "We've launched Claude Sonnet 5.5 (claude-sonnet-5-5). It's available on the Claude API, Claude in Amazon Bedrock, Claude Platform on AWS, Claude on Google Cloud, and Claude in Microsoft Foundry. For its context window, output limits, and prices, see the Claude Sonnet 5.5 model page."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Code written for Claude Sonnet 5 can break on Claude Sonnet 5.5 in five ways. To turn off up-front thinking, send thinking: {\"type\": \"between_tools\"} instead of \"disabled\", at high effort or below. Forced tool use (tool_choice types any and tool) returns a 400 error. Thinking blocks are tied to the model and the conversation. On the Claude API and Google Cloud, the earlier computer_20251124 computer use tool isn't accepted. The advisor tool rejects Claude Opus 4.8, Claude Opus 4.7, and Claude Sonnet 5 as advisors. See What's new in Claude Sonnet 5.5 for each change and the migration guide for before-and-after requests. For model-specific prompting patterns, see Prompting Claude Sonnet 5.5.",
+          "raw_added_count": 4,
+          "raw_removed_count": 0,
+          "id": "obs_8b6acc99991635cc75062cdb7cc53727b5c73e2827723c5426f68fb9715faf13",
+          "permalink": "/item/obs_8b6acc99991635cc75062cdb7cc53727b5c73e2827723c5426f68fb9715faf13/",
+          "llm_summary": "新增了 Claude Sonnet 5.5 的发布公告，包括 API 可用性、thinking 参数行为变化以及兼容性警告，对应新模型上线的技术说明。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "A clear upgrade over Sonnet 5 that runs 30% faster and costs up to 30% less for most work.",
+            "AnnouncementsSep 28, 2026",
+            "Introducing Claude Sonnet 5.5"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "A clear upgrade over Sonnet 5 that runs 30% faster and costs up to 30% less for most work.",
+          "raw_added_count": 3,
+          "raw_removed_count": 0,
+          "id": "obs_f557ba9acbd7710261c72d042a19720ea445c6868010e7b89580fb6be036af51",
+          "permalink": "/item/obs_f557ba9acbd7710261c72d042a19720ea445c6868010e7b89580fb6be036af51/",
+          "llm_summary": "博客新增了 Claude Sonnet 5.5 的发布文章，强调其速度提升 30% 和成本降低 30%，对应新模型的宣传。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-25 UTC.",
+              "after": "Last updated 2026-09-28 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-25 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-28 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-09-28 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_e232c25b4db434132f531cb660568c7ca4ddda510a671ca29b5ca2bdbd3753cd",
+          "permalink": "/item/obs_e232c25b4db434132f531cb660568c7ca4ddda510a671ca29b5ca2bdbd3753cd/",
+          "llm_summary": "仅更新了页面最后修改日期，无实质内容变化。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "By Darren Mowry • 7-minute read",
+            "Why your startup needs open models alongside frontier APIs"
+          ],
+          "removed_lines": [
+            "By Sachin Mathapati • 5-minute read",
+            "Spanner migrations: Automating dual-write with Antigravity CLI for minimal disruption"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "By Darren Mowry • 7-minute read",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_b7ab1614dbdf71ea8a3e24b8d7db34d6dbfd42bc31c3e83beb425ef479041537",
+          "permalink": "/item/obs_b7ab1614dbdf71ea8a3e24b8d7db34d6dbfd42bc31c3e83beb425ef479041537/",
+          "llm_summary": "博客文章替换，新增了关于开源模型与前沿 API 的讨论，删除了 Spanner 迁移相关文章，内容主题变化。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "pricing",
+          "url": "https://mistral.ai/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 2,
+          "added_lines": [
+            "Hallo, Deutschland!"
+          ],
+          "removed_lines": [
+            "Modernizing complex legacy code with AI agents.",
+            "Start building"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 2,
+          "id": "obs_3cf4b6390c953b5997ffc8ae1df8b1c7bf9d96d739d1b28d96470e4e778d9e4f",
+          "permalink": "/item/obs_3cf4b6390c953b5997ffc8ae1df8b1c7bf9d96d739d1b28d96470e4e778d9e4f/",
+          "llm_summary": "定价页面新增了『Hallo, Deutschland!』和德国中心相关文案，删除了旧内容，对应公司扩张公告。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "changelog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "88 articles",
+            "Hallo, Deutschland!",
+            "Mistral Opens German Hub in Munich to Advance Industrial AI in Europe’s Largest Economy"
+          ],
+          "removed_lines": [
+            "Start building",
+            "87 articles"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Mistral Opens German Hub in Munich to Advance Industrial AI in Europe’s Largest Economy",
+          "raw_added_count": 3,
+          "raw_removed_count": 2,
+          "id": "obs_3defa4d6e0cf729a1834bd269c0c75e44b97d20704f2e13310f662975a3deadd",
+          "permalink": "/item/obs_3defa4d6e0cf729a1834bd269c0c75e44b97d20704f2e13310f662975a3deadd/",
+          "llm_summary": "新增了德国中心开幕的公告，文章数量从 87 增至 88，对应公司新闻发布。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "blog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "88 articles",
+            "Hallo, Deutschland!",
+            "Mistral Opens German Hub in Munich to Advance Industrial AI in Europe’s Largest Economy"
+          ],
+          "removed_lines": [
+            "Start building",
+            "87 articles"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Mistral Opens German Hub in Munich to Advance Industrial AI in Europe’s Largest Economy",
+          "raw_added_count": 3,
+          "raw_removed_count": 2,
+          "id": "obs_3e8dba84172fd94fbcf35908f3d433430ee40a8e229c7dac747bcea34d3c5d8f",
+          "permalink": "/item/obs_3e8dba84172fd94fbcf35908f3d433430ee40a8e229c7dac747bcea34d3c5d8f/",
+          "llm_summary": "博客新增了德国中心开幕的文章，文章数量增加，对应公司扩张新闻。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 4,
+          "added_lines": [
+            "LangChain & SpaceXAI",
+            "Replit & SpaceXAI",
+            "Replit Agents can now integrate with SpaceXAI! Start empowering your agents with Grok.",
+            "September 25",
+            "SpaceXAI's coding model, trained specifically for agentic coding workflows. Currently in early access.",
+            "You can now send safety_identifier, an opaque end-user identifier assigned by your application, on Chat Completions, the Responses API, deferred chat completions, the Batch API, and the gRPC GetCompletionsRequest. It lets SpaceXAI attribute a policy violation to one of your end users rather than to your API key. The legacy user field is still accepted. See the Security FAQ.",
+            "safety_identifier request field"
+          ],
+          "removed_lines": [
+            "LangChain & xAI",
+            "Replit & xAI",
+            "Replit Agents can now integrate with xAI! Start empowering your agents with Grok.",
+            "xAI's coding model, trained specifically for agentic coding workflows. Currently in early access."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "grok-4.7.",
+              "before": "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast, the same model at twice the token rates, is available only through Cursor and Grok Build, not on the public xAI API. See the Grok 4.7 overview and the announcement.",
+              "after": "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast is the same model and costs 2x the standard token rates, or 1.5x for long-context requests. It's available only in Cursor and Grok Build, not on the public xAI API, and is billed through your plan there. See the Grok 4.7 overview and the announcement."
+            },
+            {
+              "key": "last updated",
+              "before": "Last updated: September 21, 2026",
+              "after": "Last updated: September 28, 2026"
+            }
+          ],
+          "signal_preview": "Replit Agents can now integrate with SpaceXAI! Start empowering your agents with Grok.",
+          "raw_added_count": 9,
+          "raw_removed_count": 6,
+          "id": "obs_a36fc750343f3531b6c12148edc21358a3d8e92ede87b0bac122caadc54916c9",
+          "permalink": "/item/obs_a36fc750343f3531b6c12148edc21358a3d8e92ede87b0bac122caadc54916c9/",
+          "llm_summary": "新增了 LangChain 和 Replit 集成、safety_identifier 字段等条目，并将品牌从 xAI 更新为 SpaceXAI，对应生态合作和 API 功能扩展。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 4,
+          "added_lines": [
+            "LangChain & SpaceXAI",
+            "Replit & SpaceXAI",
+            "Replit Agents can now integrate with SpaceXAI! Start empowering your agents with Grok.",
+            "September 25",
+            "SpaceXAI's coding model, trained specifically for agentic coding workflows. Currently in early access.",
+            "You can now send safety_identifier, an opaque end-user identifier assigned by your application, on Chat Completions, the Responses API, deferred chat completions, the Batch API, and the gRPC GetCompletionsRequest. It lets SpaceXAI attribute a policy violation to one of your end users rather than to your API key. The legacy user field is still accepted. See the Security FAQ.",
+            "safety_identifier request field"
+          ],
+          "removed_lines": [
+            "LangChain & xAI",
+            "Replit & xAI",
+            "Replit Agents can now integrate with xAI! Start empowering your agents with Grok.",
+            "xAI's coding model, trained specifically for agentic coding workflows. Currently in early access."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "grok-4.7.",
+              "before": "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast, the same model at twice the token rates, is available only through Cursor and Grok Build, not on the public xAI API. See the Grok 4.7 overview and the announcement.",
+              "after": "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast is the same model and costs 2x the standard token rates, or 1.5x for long-context requests. It's available only in Cursor and Grok Build, not on the public xAI API, and is billed through your plan there. See the Grok 4.7 overview and the announcement."
+            },
+            {
+              "key": "last updated",
+              "before": "Last updated: September 21, 2026",
+              "after": "Last updated: September 28, 2026"
+            }
+          ],
+          "signal_preview": "Replit Agents can now integrate with SpaceXAI! Start empowering your agents with Grok.",
+          "raw_added_count": 9,
+          "raw_removed_count": 6,
+          "id": "obs_5e4e8deab27270e97064046c55256a454b02d8b8616c8111021cf34c1d253474",
+          "permalink": "/item/obs_5e4e8deab27270e97064046c55256a454b02d8b8616c8111021cf34c1d253474/",
+          "llm_summary": "与 changelog 同步更新，新增集成和字段说明，品牌更新为 SpaceXAI。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 22,
+          "removed_count": 1,
+          "added_lines": [
+            "Addressing an urgent need to step up cyber defense capability",
+            "Announcing the Artificial Analysis Cyber Index",
+            "Announcing the Artificial Analysis Cyber Index Alliance",
+            "Artificial Analysis Cyber Index",
+            "Artificial Analysis Cyber Index score vs. average cost per task (USD) · Lower is better · Refused tasks are estimated from other models' token use",
+            "Artificial Analysis Cyber Index v1 incorporates 3 evaluations: CWE-Bench-AA, DeepsecBench-AA, and CyberGym-E2E-AA",
+            "Artificial Analysis Cyber Index: Score vs. Cost per Task",
+            "Average cost per task in the evaluation. Costs are split by input, cache hit, cache write, reasoning, and answer token pricing where canonical token counts are available.",
+            "Claude Sonnet 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+            "Claude Sonnet 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+            "Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+            "Claude Sonnet 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+            "Claude Sonnet 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+            "Claude Sonnet 5.5 reaches #2 on the Artificial Analysis Intelligence Index",
+            "Cyber Index vs. Cost per TaskCWE-Bench-AA vs. Cost per TaskDeepsecBench-AA vs. Cost per TaskCyberGym-E2E-AA vs. Cost per Task",
+            "Cyber IndexCyber Index by Benchmark",
+            "Elo scores from blind preference votes by our recruited Prolific panel, together with public Image Arena votes cast before 1 January 2026. See the full leaderboard here.",
+            "Evaluation Cost per Task",
+            "GPT-6 Luna (low)See more",
+            "Measuring model capability on enterprise cyber defense",
+            "New article published · 25 Sept",
+            "New article published · 28 Sept"
+          ],
+          "removed_lines": [
+            "AA-AnalystAgent is a benchmark for end-to-end quantitative analysis on real-world spreadsheets and documents — the kind of work business and data analysts do every day"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Addressing an urgent need to step up cyber defense capability",
+          "raw_added_count": 33,
+          "raw_removed_count": 24,
+          "id": "obs_9c7ecb7497bf83ed2370ef3052d84927bd89cfe684fec80f8cb08ac4fc7918a4",
+          "permalink": "/item/obs_9c7ecb7497bf83ed2370ef3052d84927bd89cfe684fec80f8cb08ac4fc7918a4/",
+          "llm_summary": "新增了 Cyber Index 及其评估方法、模型配置（Claude Sonnet 5.5 多种 effort 模式），删除了旧的 AA-AnalystAgent 基准，对应新评估产品的发布。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 10,
+          "removed_count": 6,
+          "added_lines": [
+            "356,301,941356,301,941Total Sessions",
+            "4.80%View all",
+            "6.61%View details",
+            "Deepseek V4.1 Flash (Max)·",
+            "GPT 6 Luna (Max)$0.05/task",
+            "GPT 6 Luna (Max)·",
+            "GPT 6 Sol (Max)$0.81/task",
+            "Hy4 preview$0.21/task",
+            "Mimo V2.5 Pro$0.03/task",
+            "Running bash"
+          ],
+          "removed_lines": [
+            "Claude Sonnet 5 (High)·",
+            "355,831,150355,831,150Total Sessions",
+            "4.82%View all",
+            "6.52%View details",
+            "GLM 5.2 (Max)·",
+            "GPT 5.6 Luna (xHigh)$0.07/task"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5.1 (Max)$3.62/task",
+              "after": "Claude Fable 5.1 (Max)$3.50/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (High)$1.32/task",
+              "after": "Claude Opus 4.8 (High)·"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (High)·",
+              "after": "Claude Opus 5.5 (High)$1.36/task"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5 (High)$0.75/task",
+              "after": "Claude Sonnet 5 (High)$0.73/task"
+            }
+          ],
+          "signal_preview": "Deepseek V4.1 Flash (Max)·",
+          "raw_added_count": 14,
+          "raw_removed_count": 18,
+          "id": "obs_637470b40533c83e53cf4fba38daaa07202056b7b63f43eb6b2d570e6a561489",
+          "permalink": "/item/obs_637470b40533c83e53cf4fba38daaa07202056b7b63f43eb6b2d570e6a561489/",
+          "llm_summary": "新增了多个模型（GPT 6 Luna、GPT 6 Sol、Deepseek V4.1 Flash、Hy4 preview、Mimo V2.5 Pro）并调整了部分模型价格，同时更新了会话总数，对应榜单动态更新。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Sonnet 5.5 |"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_86fb8b57488f6622526728fe8c0dfa9fabec1701ad47b52b41ffdc267c5776ba",
+          "permalink": "/item/obs_86fb8b57488f6622526728fe8c0dfa9fabec1701ad47b52b41ffdc267c5776ba/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 35,
+          "raw_removed_count": 35,
+          "id": "obs_82df319d4c798147178471fa0f704c466350bf2ba8783c8637e541629936bb02",
+          "permalink": "/item/obs_82df319d4c798147178471fa0f704c466350bf2ba8783c8637e541629936bb02/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Anthropic",
+          "logo_summary": "发布 Claude Sonnet 5.5，性能提升且降价",
+          "items": [
+            {
+              "text": "Anthropic 发布 Claude Sonnet 5.5，速度提升 30%，成本降低最多 30%，并更新了各平台 API ID 和知识截止日期。",
+              "type": "release"
+            },
+            {
+              "text": "Claude Sonnet 5.5 在 Claude API、Amazon Bedrock、Google Cloud 等平台同步上线，并新增了 thinking 参数相关说明。",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "Grok 4.7 集成 LangChain 与 Replit，新增安全字段",
+          "items": [
+            {
+              "text": "xAI 的 Grok 4.7 新增与 LangChain 和 Replit Agents 的集成，支持 agentic 编码工作流。",
+              "type": "release"
+            },
+            {
+              "text": "xAI API 新增 safety_identifier 请求字段，用于传递终端用户标识。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "多模型下线与接口调整，ERNIE-Image-Turbo 将移除",
+          "items": [
+            {
+              "text": "硅基流动将于 2026-09-30 下线 Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 及 ERNIE-Image-Turbo 等模型。",
+              "type": "sunset"
+            },
+            {
+              "text": "对话模型将忽略 repetition_penalty 参数，生图 API 下线 batch_size 字段并默认添加水印。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Mistral AI",
+          "logo_summary": "在慕尼黑开设德国中心，推进工业 AI",
+          "items": [
+            {
+              "text": "Mistral AI 在慕尼黑开设德国中心，以推进欧洲最大经济体的工业 AI 应用。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "发布 Cyber Index 网络安全评估指数",
+          "items": [
+            {
+              "text": "Artificial Analysis 推出 Cyber Index，整合 CWE-Bench-AA、DeepsecBench-AA 和 CyberGym-E2E-AA 三项评估，并纳入 Claude Sonnet 5.5 的多种配置。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "榜单新增多模型，价格微调",
+          "items": [
+            {
+              "text": "LMArena 榜单新增 GPT 6 Luna、GPT 6 Sol、Deepseek V4.1 Flash、Hy4 preview、Mimo V2.5 Pro 等模型，并调整了部分模型价格。",
+              "type": "release"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-09-28",
       "stats": {

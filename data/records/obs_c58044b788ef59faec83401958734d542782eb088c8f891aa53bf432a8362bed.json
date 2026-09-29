@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_c58044b788ef59faec83401958734d542782eb088c8f891aa53bf432a8362bed",
+  "sourceId": "anthropic-pricing",
+  "date": "2026-09-29",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "pricing",
+  "sourceUrl": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+  "title": "Anthropic · 定价来源更新",
+  "summary": "定价页面新增了 Claude Sonnet 5.5 的条目，并保留了 Claude Sonnet 5 的说明，但描述有细微变化，对应新模型定价的引入。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-29T00:53:19+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "claude sonnet",
+        "before": "Claude Sonnet 5The best combination of speed and intelligence |",
+        "after": "Claude Sonnet 5 |"
+      }
+    ],
+    "added_lines": [
+      "Claude Sonnet 5.5",
+      "Claude Sonnet 5.5The best combination of speed and intelligence |"
+    ],
+    "removed_lines": [],
+    "added_count": 2,
+    "removed_count": 0,
+    "raw_added_count": 3,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-29.json"
+  },
+  "permalink": "/item/obs_c58044b788ef59faec83401958734d542782eb088c8f891aa53bf432a8362bed/"
+}

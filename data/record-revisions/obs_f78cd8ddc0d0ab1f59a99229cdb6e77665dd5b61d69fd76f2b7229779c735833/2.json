@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_f78cd8ddc0d0ab1f59a99229cdb6e77665dd5b61d69fd76f2b7229779c735833",
+  "sourceId": "anthropic-modellist",
+  "date": "2026-09-29",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "model_list",
+  "sourceUrl": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+  "title": "Anthropic · 模型列表来源更新",
+  "summary": "模型列表中 Claude Sonnet 5 被替换为 Claude Sonnet 5.5，所有平台（Bedrock、API、AWS、Google Cloud、Microsoft Foundry）的 ID 和别名均同步更新，同时新增了知识截止日期和退役日期，显示新模型上架并调整了生命周期信息。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-29T00:53:19+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "claude sonnet",
+        "before": "Claude Sonnet 5The best combination of speed and intelligence |",
+        "after": "Claude Sonnet 5.5"
+      },
+      {
+        "key": "claude-fable-5-1",
+        "before": "| Amazon Bedrock ID | anthropic.claude-fable-5-1 | anthropic.claude-opus-5-5 | anthropic.claude-sonnet-5 | anthropic.claude-haiku-4-5",
+        "after": "| Amazon Bedrock ID | anthropic.claude-fable-5-1 | anthropic.claude-opus-5-5 | anthropic.claude-sonnet-5-5 | anthropic.claude-haiku-4-5"
+      },
+      {
+        "key": "claude-fable-5-1",
+        "before": "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5-20251001",
+        "after": "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5-20251001"
+      },
+      {
+        "key": "claude-fable-5-1",
+        "before": "| Claude API alias | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+        "after": "| Claude API alias | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5"
+      },
+      {
+        "key": "claude-fable-5-1",
+        "before": "| Claude Platform on AWS ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+        "after": "| Claude Platform on AWS ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5"
+      },
+      {
+        "key": "claude-fable-5-1",
+        "before": "| Google Cloud ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5@20251001",
+        "after": "| Google Cloud ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5@20251001"
+      },
+      {
+        "key": "claude-fable-5-1",
+        "before": "| Microsoft Foundry ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+        "after": "| Microsoft Foundry ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5"
+      }
+    ],
+    "added_lines": [
+      "Claude Sonnet 5.5The best combination of speed and intelligence |",
+      "| Reliable knowledge cutoff | Jun 2026 | Jun 2026 | Jun 2026 | Feb 2025",
+      "| Retirement | Not sooner than September 1, 2027 | Not sooner than September 22, 2027 | Not sooner than September 28, 2027 | Not sooner than October 15, 2026",
+      "| Training data cutoff | Jun 2026 | Jun 2026 | Jun 2026 | Jul 2025"
+    ],
+    "removed_lines": [
+      "| Reliable knowledge cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Feb 2025",
+      "| Retirement | Not sooner than September 1, 2027 | Not sooner than September 22, 2027 | Not sooner than June 30, 2027 | Not sooner than October 15, 2026",
+      "| Training data cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Jul 2025"
+    ],
+    "added_count": 4,
+    "removed_count": 3,
+    "raw_added_count": 11,
+    "raw_removed_count": 10
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-29.json"
+  },
+  "permalink": "/item/obs_f78cd8ddc0d0ab1f59a99229cdb6e77665dd5b61d69fd76f2b7229779c735833/"
+}

@@ -1,0 +1,711 @@
+{
+  "date": "2026-09-29",
+  "fetched_at": "2026-09-29T08:51:28.990492",
+  "stats": {
+    "total": 68,
+    "success": 65,
+    "failed": 3,
+    "changed": 16,
+    "unchanged": 49
+  },
+  "changes": [
+    {
+      "platform": "火山方舟",
+      "source_type": "model_list",
+      "url": "https://www.volcengine.com/docs/82379/1330310",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11902)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "pricing",
+      "url": "https://www.volcengine.com/docs/82379/1544106",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11902)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "changelog",
+      "url": "https://www.volcengine.com/docs/82379/1159177",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11902)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "blog",
+      "url": "https://www.volcengine.com/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "model_list",
+      "url": "https://help.aliyun.com/zh/model-studio/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "pricing",
+      "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "changelog",
+      "url": "https://help.aliyun.com/zh/model-studio/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "blog",
+      "url": "https://qwenlm.github.io/blog/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "model_list",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "pricing",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "changelog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Mmh8l4qwj",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "blog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "model_list",
+      "url": "https://cloud.tencent.com/document/product/1729/104753",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "pricing",
+      "url": "https://cloud.tencent.com/document/product/1729/97731",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "changelog",
+      "url": "https://cloud.tencent.com/document/product/1729/97765",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "blog",
+      "url": "https://cloud.tencent.com/document/product/1729/132069",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "model_list",
+      "url": "https://cloud.siliconflow.cn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "pricing",
+      "url": "https://siliconflow.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "changelog",
+      "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
+      "status": "changed",
+      "added_count": 5,
+      "removed_count": 1,
+      "added_lines": [
+        "baidu/ERNIE-Image-Turbo",
+        "【模型服务调整】ERNIE-Image-Turbo 模型将下线",
+        "【模型服务调整】ERNIE-Image-Turbo 模型将下线【接口服务调整】对话模型将忽略 repetition_penalty 参数【接口服务调整】生图 API 下线 batch_size 字段、水印默认添加【模型服务调整】Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线【模型价格调整】DeepSeek-V4-Flash 模型分时段定价调整【接口服务调整】/user/info 接口将停止服务【模型价格调整】DeepSeek-V4-Pro 缓存命中输入 tokens 价格调整【模型价格调整】Nex-N2-Pro、DeepSeek-V4-Pro、DeepSeek-V3.2、Qwen3.6 模型价格调整【模型服务调整】GLM-4.7、Kimi-K2.5 等模型将下线【模型服务调整】Kimi-K2、GLM-4.6 等多款模型停止服务【账户安全】未完成实名认证账户将限制使用平台功能【模型服务调整】KAT-Dev、PaddleOCR-VL 等多款模型停止服务【模型服务调整】Qwen3-Coder、ERNIE-4.5 等多款模型停止服务【模型服务调整】MiniMax-M2.1、Qwen2 等多款模型停止服务【价格调整】Qwen3.5-397B-A17B 模型定价调整【模型服务调整】MiniMax-M2、Kimi-Dev-72B 等多款模型停止服务【模型服务调整】GLM-4.5、Qwen3-235B 等模型停止服务【服务调整】平台赠送余额展示形式调整【模型升级】DeepSeek-V3.2-Exp 升级至 V3.2【模型服务调整】Ling-1T、Ring-1T 等模型停止服务【服务调整】DeepSeek-R1/V3 等模型速率限制调整【服务调整】关闭使用等级购买入口【模型服务调整】DeepSeek-V3.1 模型停止服务【模型更新】Kimi-K2-Instruct 升级至 0905 版本【模型服务调整】HunyuanVideo-HD 等视频模型停止服务【模型服务调整】DeepSeek-R1-0120 等模型停止服务【平台维护】6 月 10 日平台维护通知【模型更新】DeepSeek-R1 升级至 0528 版本【模型服务调整】Qwen2-1.5B 等多款模型停止服务【模型服务调整】HunyuanVideo（非 HD）模型停止服务【模型更新】DeepSeek-V3 已升级至 0324 版本【模型更新】DeepSeek-V3 将升级至 0324 版本【服务调整】api.siliconflow.com 端点将停用【服务调整】DeepSeek-R1/V3 取消 RPH 和 RPD 限制【模型服务调整】Marco-o1、FLUX.1 等多款模型停止服务【服务调整】DeepSeek-R1/V3 新增 RPH/RPD 速率限制【模型服务调整】Yi-1.5、SD-3-medium 等多款模型停止服务【价格调整】DeepSeek-V3 价格恢复原价【功能更新】推理模型 reasoning_content 字段分离【新模型上线】DeepSeek-R1 和 DeepSeek-V3 上线【服务调整】图片及视频 URL 有效期调整为 1 小时【价格调整】LTX-Video 模型开始计费【模型服务调整】DeepSeek-V2-Chat 等模型停止服务【模型服务调整】Qwen2.5-Math、Hunyuan-A52B 等模型停止服务【模型服务调整】多款模型停止服务及相关服务更新【价格调整】Vendor-A/Qwen2-72B 模型开始计费",
+        "为进一步优化资源配置，提供更先进、优质的技术服务，平台将于 2026-09-30 对下列模型进行下线处理：",
+        "若您正在使用上述模型，建议您尽快切换到其他模型，以免服务受到影响。如需查看完整的可用模型列表，请访问模型广场。"
+      ],
+      "removed_lines": [
+        "【接口服务调整】对话模型将忽略 repetition_penalty 参数【接口服务调整】生图 API 下线 batch_size 字段、水印默认添加【模型服务调整】Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线【模型价格调整】DeepSeek-V4-Flash 模型分时段定价调整【接口服务调整】/user/info 接口将停止服务【模型价格调整】DeepSeek-V4-Pro 缓存命中输入 tokens 价格调整【模型价格调整】Nex-N2-Pro、DeepSeek-V4-Pro、DeepSeek-V3.2、Qwen3.6 模型价格调整【模型服务调整】GLM-4.7、Kimi-K2.5 等模型将下线【模型服务调整】Kimi-K2、GLM-4.6 等多款模型停止服务【账户安全】未完成实名认证账户将限制使用平台功能【模型服务调整】KAT-Dev、PaddleOCR-VL 等多款模型停止服务【模型服务调整】Qwen3-Coder、ERNIE-4.5 等多款模型停止服务【模型服务调整】MiniMax-M2.1、Qwen2 等多款模型停止服务【价格调整】Qwen3.5-397B-A17B 模型定价调整【模型服务调整】MiniMax-M2、Kimi-Dev-72B 等多款模型停止服务【模型服务调整】GLM-4.5、Qwen3-235B 等模型停止服务【服务调整】平台赠送余额展示形式调整【模型升级】DeepSeek-V3.2-Exp 升级至 V3.2【模型服务调整】Ling-1T、Ring-1T 等模型停止服务【服务调整】DeepSeek-R1/V3 等模型速率限制调整【服务调整】关闭使用等级购买入口【模型服务调整】DeepSeek-V3.1 模型停止服务【模型更新】Kimi-K2-Instruct 升级至 0905 版本【模型服务调整】HunyuanVideo-HD 等视频模型停止服务【模型服务调整】DeepSeek-R1-0120 等模型停止服务【平台维护】6 月 10 日平台维护通知【模型更新】DeepSeek-R1 升级至 0528 版本【模型服务调整】Qwen2-1.5B 等多款模型停止服务【模型服务调整】HunyuanVideo（非 HD）模型停止服务【模型更新】DeepSeek-V3 已升级至 0324 版本【模型更新】DeepSeek-V3 将升级至 0324 版本【服务调整】api.siliconflow.com 端点将停用【服务调整】DeepSeek-R1/V3 取消 RPH 和 RPD 限制【模型服务调整】Marco-o1、FLUX.1 等多款模型停止服务【服务调整】DeepSeek-R1/V3 新增 RPH/RPD 速率限制【模型服务调整】Yi-1.5、SD-3-medium 等多款模型停止服务【价格调整】DeepSeek-V3 价格恢复原价【功能更新】推理模型 reasoning_content 字段分离【新模型上线】DeepSeek-R1 和 DeepSeek-V3 上线【服务调整】图片及视频 URL 有效期调整为 1 小时【价格调整】LTX-Video 模型开始计费【模型服务调整】DeepSeek-V2-Chat 等模型停止服务【模型服务调整】Qwen2.5-Math、Hunyuan-A52B 等模型停止服务【模型服务调整】多款模型停止服务及相关服务更新【价格调整】Vendor-A/Qwen2-72B 模型开始计费"
+      ]
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "blog",
+      "url": "https://siliconflow.cn/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "model_list",
+      "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "pricing",
+      "url": "https://bigmodel.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "changelog",
+      "url": "https://docs.bigmodel.cn/cn/update/new-releases",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "blog",
+      "url": "https://www.bigmodel.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "model_list",
+      "url": "https://platform.kimi.com/docs/api/models-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "pricing",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "changelog",
+      "url": "https://platform.kimi.com/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "blog",
+      "url": "https://www.moonshot.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "model_list",
+      "url": "https://platform.minimaxi.com/docs/guides/models-intro",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "pricing",
+      "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "changelog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "blog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "model_list",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "pricing",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "changelog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "blog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "model_list",
+      "url": "https://platform.openai.com/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "pricing",
+      "url": "https://platform.openai.com/docs/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "changelog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "blog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "model_list",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+      "status": "changed",
+      "added_count": 11,
+      "removed_count": 10,
+      "added_lines": [
+        "Claude Sonnet 5.5",
+        "Claude Sonnet 5.5The best combination of speed and intelligence |",
+        "| Amazon Bedrock ID | anthropic.claude-fable-5-1 | anthropic.claude-opus-5-5 | anthropic.claude-sonnet-5-5 | anthropic.claude-haiku-4-5",
+        "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5-20251001",
+        "| Claude API alias | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5",
+        "| Claude Platform on AWS ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5",
+        "| Google Cloud ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5@20251001",
+        "| Microsoft Foundry ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5",
+        "| Reliable knowledge cutoff | Jun 2026 | Jun 2026 | Jun 2026 | Feb 2025",
+        "| Retirement | Not sooner than September 1, 2027 | Not sooner than September 22, 2027 | Not sooner than September 28, 2027 | Not sooner than October 15, 2026",
+        "| Training data cutoff | Jun 2026 | Jun 2026 | Jun 2026 | Jul 2025"
+      ],
+      "removed_lines": [
+        "Claude Sonnet 5The best combination of speed and intelligence |",
+        "| Amazon Bedrock ID | anthropic.claude-fable-5-1 | anthropic.claude-opus-5-5 | anthropic.claude-sonnet-5 | anthropic.claude-haiku-4-5",
+        "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5-20251001",
+        "| Claude API alias | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+        "| Claude Platform on AWS ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+        "| Google Cloud ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5@20251001",
+        "| Microsoft Foundry ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+        "| Reliable knowledge cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Feb 2025",
+        "| Retirement | Not sooner than September 1, 2027 | Not sooner than September 22, 2027 | Not sooner than June 30, 2027 | Not sooner than October 15, 2026",
+        "| Training data cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Jul 2025"
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "pricing",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 1,
+      "added_lines": [
+        "Claude Sonnet 5 |",
+        "Claude Sonnet 5.5",
+        "Claude Sonnet 5.5The best combination of speed and intelligence |"
+      ],
+      "removed_lines": [
+        "Claude Sonnet 5The best combination of speed and intelligence |"
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "changelog",
+      "url": "https://docs.anthropic.com/en/release-notes/api",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 0,
+      "added_lines": [
+        "Code written for Claude Sonnet 5 can break on Claude Sonnet 5.5 in five ways. To turn off up-front thinking, send thinking: {\"type\": \"between_tools\"} instead of \"disabled\", at high effort or below. Forced tool use (tool_choice types any and tool) returns a 400 error. Thinking blocks are tied to the model and the conversation. On the Claude API and Google Cloud, the earlier computer_20251124 computer use tool isn't accepted. The advisor tool rejects Claude Opus 4.8, Claude Opus 4.7, and Claude Sonnet 5 as advisors. See What's new in Claude Sonnet 5.5 for each change and the migration guide for before-and-after requests. For model-specific prompting patterns, see Prompting Claude Sonnet 5.5.",
+        "September 28, 2026",
+        "Thinking blocks that Claude Sonnet 5.5 produces work only in the account that produced them, or in an account linked to it. When another account sends one of these blocks, the API drops the block before the model sees it, and the request succeeds. Blocks from earlier models aren't affected. See Preserved thinking.",
+        "We've launched Claude Sonnet 5.5 (claude-sonnet-5-5). It's available on the Claude API, Claude in Amazon Bedrock, Claude Platform on AWS, Claude on Google Cloud, and Claude in Microsoft Foundry. For its context window, output limits, and prices, see the Claude Sonnet 5.5 model page."
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "blog",
+      "url": "https://www.anthropic.com/news",
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 0,
+      "added_lines": [
+        "A clear upgrade over Sonnet 5 that runs 30% faster and costs up to 30% less for most work.",
+        "AnnouncementsSep 28, 2026",
+        "Introducing Claude Sonnet 5.5"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "model_list",
+      "url": "https://ai.google.dev/gemini-api/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "changelog",
+      "url": "https://ai.google.dev/gemini-api/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "blog",
+      "url": "https://blog.google/technology/ai/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "model_list",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 2,
+      "added_lines": [
+        "Last updated 2026-09-28 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-28 UTC.\"],[],[]]"
+      ],
+      "removed_lines": [
+        "Last updated 2026-09-25 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-25 UTC.\"],[],[]]"
+      ]
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "pricing",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "Sonnet 5.5 |"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "changelog",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "blog",
+      "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 2,
+      "added_lines": [
+        "By Darren Mowry • 7-minute read",
+        "Why your startup needs open models alongside frontier APIs"
+      ],
+      "removed_lines": [
+        "By Sachin Mathapati • 5-minute read",
+        "Spanner migrations: Automating dual-write with Antigravity CLI for minimal disruption"
+      ]
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "model_list",
+      "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "pricing",
+      "url": "https://mistral.ai/pricing",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 2,
+      "added_lines": [
+        "Hallo, Deutschland!"
+      ],
+      "removed_lines": [
+        "Modernizing complex legacy code with AI agents.",
+        "Start building"
+      ]
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "changelog",
+      "url": "https://mistral.ai/news/",
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 2,
+      "added_lines": [
+        "88 articles",
+        "Hallo, Deutschland!",
+        "Mistral Opens German Hub in Munich to Advance Industrial AI in Europe’s Largest Economy"
+      ],
+      "removed_lines": [
+        "87 articles",
+        "Start building"
+      ]
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "blog",
+      "url": "https://mistral.ai/news/",
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 2,
+      "added_lines": [
+        "88 articles",
+        "Hallo, Deutschland!",
+        "Mistral Opens German Hub in Munich to Advance Industrial AI in Europe’s Largest Economy"
+      ],
+      "removed_lines": [
+        "87 articles",
+        "Start building"
+      ]
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "model_list",
+      "url": "https://docs.cohere.com/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "pricing",
+      "url": "https://cohere.com/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "changelog",
+      "url": "https://docs.cohere.com/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "blog",
+      "url": "https://txt.cohere.com/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "model_list",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "pricing",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "changelog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "changed",
+      "added_count": 9,
+      "removed_count": 6,
+      "added_lines": [
+        "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast is the same model and costs 2x the standard token rates, or 1.5x for long-context requests. It's available only in Cursor and Grok Build, not on the public xAI API, and is billed through your plan there. See the Grok 4.7 overview and the announcement.",
+        "LangChain & SpaceXAI",
+        "Last updated: September 28, 2026",
+        "Replit & SpaceXAI",
+        "Replit Agents can now integrate with SpaceXAI! Start empowering your agents with Grok.",
+        "September 25",
+        "SpaceXAI's coding model, trained specifically for agentic coding workflows. Currently in early access.",
+        "You can now send safety_identifier, an opaque end-user identifier assigned by your application, on Chat Completions, the Responses API, deferred chat completions, the Batch API, and the gRPC GetCompletionsRequest. It lets SpaceXAI attribute a policy violation to one of your end users rather than to your API key. The legacy user field is still accepted. See the Security FAQ.",
+        "safety_identifier request field"
+      ],
+      "removed_lines": [
+        "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast, the same model at twice the token rates, is available only through Cursor and Grok Build, not on the public xAI API. See the Grok 4.7 overview and the announcement.",
+        "LangChain & xAI",
+        "Last updated: September 21, 2026",
+        "Replit & xAI",
+        "Replit Agents can now integrate with xAI! Start empowering your agents with Grok.",
+        "xAI's coding model, trained specifically for agentic coding workflows. Currently in early access."
+      ]
+    },
+    {
+      "platform": "xAI",
+      "source_type": "blog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "changed",
+      "added_count": 9,
+      "removed_count": 6,
+      "added_lines": [
+        "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast is the same model and costs 2x the standard token rates, or 1.5x for long-context requests. It's available only in Cursor and Grok Build, not on the public xAI API, and is billed through your plan there. See the Grok 4.7 overview and the announcement.",
+        "LangChain & SpaceXAI",
+        "Last updated: September 28, 2026",
+        "Replit & SpaceXAI",
+        "Replit Agents can now integrate with SpaceXAI! Start empowering your agents with Grok.",
+        "September 25",
+        "SpaceXAI's coding model, trained specifically for agentic coding workflows. Currently in early access.",
+        "You can now send safety_identifier, an opaque end-user identifier assigned by your application, on Chat Completions, the Responses API, deferred chat completions, the Batch API, and the gRPC GetCompletionsRequest. It lets SpaceXAI attribute a policy violation to one of your end users rather than to your API key. The legacy user field is still accepted. See the Security FAQ.",
+        "safety_identifier request field"
+      ],
+      "removed_lines": [
+        "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast, the same model at twice the token rates, is available only through Cursor and Grok Build, not on the public xAI API. See the Grok 4.7 overview and the announcement.",
+        "LangChain & xAI",
+        "Last updated: September 21, 2026",
+        "Replit & xAI",
+        "Replit Agents can now integrate with xAI! Start empowering your agents with Grok.",
+        "xAI's coding model, trained specifically for agentic coding workflows. Currently in early access."
+      ]
+    },
+    {
+      "platform": "讯飞星辰MaaS",
+      "source_type": "changelog",
+      "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+      "status": "unchanged"
+    },
+    {
+      "platform": "HuggingFace",
+      "source_type": "industry",
+      "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+      "status": "changed",
+      "added_count": 35,
+      "removed_count": 35,
+      "added_lines": [
+        "\"downloads\": 13683221,",
+        "\"downloads\": 15368885,",
+        "\"downloads\": 16793474,",
+        "\"downloads\": 17068125,",
+        "\"downloads\": 17550100,",
+        "\"downloads\": 17892155,",
+        "\"downloads\": 20305395,",
+        "\"downloads\": 20578388,",
+        "\"downloads\": 21444350,",
+        "\"downloads\": 21696118,",
+        "\"downloads\": 21935560,",
+        "\"downloads\": 24104243,",
+        "\"downloads\": 242677197,",
+        "\"downloads\": 29308906,",
+        "\"downloads\": 36143759,",
+        "\"downloads\": 41713428,",
+        "\"downloads\": 45537597,",
+        "\"downloads\": 46262071,",
+        "\"downloads\": 63262721,",
+        "\"downloads\": 86477450,",
+        "\"likes\": 1155,",
+        "\"likes\": 1221,",
+        "\"likes\": 1381,",
+        "\"likes\": 1413,",
+        "\"likes\": 1572,",
+        "\"likes\": 1696,",
+        "\"likes\": 188,",
+        "\"likes\": 2037,",
+        "\"likes\": 3710,",
+        "\"likes\": 4183,"
+      ],
+      "removed_lines": [
+        "\"downloads\": 13798179,",
+        "\"downloads\": 15338274,",
+        "\"downloads\": 16891699,",
+        "\"downloads\": 17069529,",
+        "\"downloads\": 18014795,",
+        "\"downloads\": 18457925,",
+        "\"downloads\": 19985579,",
+        "\"downloads\": 20808858,",
+        "\"downloads\": 21498626,",
+        "\"downloads\": 21833701,"
+      ]
+    },
+    {
+      "platform": "Artificial Analysis",
+      "source_type": "industry",
+      "url": "https://artificialanalysis.ai/",
+      "status": "changed",
+      "added_count": 33,
+      "removed_count": 24,
+      "added_lines": [
+        "10 of 496 releases",
+        "15 of 164 models",
+        "15 of 25 models",
+        "15 of 94 models",
+        "27 of 204 models",
+        "27 of 261 models",
+        "27 of 554 models",
+        "28 of 679 models",
+        "Addressing an urgent need to step up cyber defense capability",
+        "Announcing the Artificial Analysis Cyber Index",
+        "Announcing the Artificial Analysis Cyber Index Alliance",
+        "Artificial Analysis Cyber Index",
+        "Artificial Analysis Cyber Index score vs. average cost per task (USD) · Lower is better · Refused tasks are estimated from other models' token use",
+        "Artificial Analysis Cyber Index v1 incorporates 3 evaluations: CWE-Bench-AA, DeepsecBench-AA, and CyberGym-E2E-AA",
+        "Artificial Analysis Cyber Index: Score vs. Cost per Task",
+        "Average cost per task in the evaluation. Costs are split by input, cache hit, cache write, reasoning, and answer token pricing where canonical token counts are available.",
+        "Claude Sonnet 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+        "Claude Sonnet 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+        "Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+        "Claude Sonnet 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+        "Claude Sonnet 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+        "Claude Sonnet 5.5 reaches #2 on the Artificial Analysis Intelligence Index",
+        "Cyber Index vs. Cost per TaskCWE-Bench-AA vs. Cost per TaskDeepsecBench-AA vs. Cost per TaskCyberGym-E2E-AA vs. Cost per Task",
+        "Cyber IndexCyber Index by Benchmark",
+        "Elo scores from blind preference votes by our recruited Prolific panel, together with public Image Arena votes cast before 1 January 2026. See the full leaderboard here.",
+        "Evaluation Cost per Task",
+        "GPT-6 Luna (low)See more",
+        "Measuring model capability on enterprise cyber defense",
+        "New article published · 25 Sept",
+        "New article published · 28 Sept"
+      ],
+      "removed_lines": [
+        "10 of 33 models",
+        "10 of 495 releases",
+        "14 of 20 models",
+        "15 of 163 models",
+        "15 of 92 models",
+        "27 of 198 models",
+        "27 of 256 models",
+        "27 of 549 models",
+        "28 of 674 models",
+        "AA-AnalystAgent is a benchmark for end-to-end quantitative analysis on real-world spreadsheets and documents — the kind of work business and data analysts do every day"
+      ]
+    },
+    {
+      "platform": "LMArena",
+      "source_type": "industry",
+      "url": "https://lmarena.ai/leaderboard",
+      "status": "changed",
+      "added_count": 14,
+      "removed_count": 18,
+      "added_lines": [
+        "356,301,941356,301,941Total Sessions",
+        "4.80%View all",
+        "6.61%View details",
+        "Claude Fable 5.1 (Max)$3.50/task",
+        "Claude Opus 4.8 (High)·",
+        "Claude Opus 5.5 (High)$1.36/task",
+        "Claude Sonnet 5 (High)$0.73/task",
+        "Deepseek V4.1 Flash (Max)·",
+        "GPT 6 Luna (Max)$0.05/task",
+        "GPT 6 Luna (Max)·",
+        "GPT 6 Sol (Max)$0.81/task",
+        "Hy4 preview$0.21/task",
+        "Mimo V2.5 Pro$0.03/task",
+        "Running bash"
+      ],
+      "removed_lines": [
+        "355,831,150355,831,150Total Sessions",
+        "4.82%View all",
+        "6.52%View details",
+        "Claude Fable 5.1 (Max)$3.62/task",
+        "Claude Opus 5.5 (High)$1.32/task",
+        "Claude Opus 5.5 (High)·",
+        "Claude Sonnet 5 (High)$0.75/task",
+        "Claude Sonnet 5 (High)·",
+        "GLM 5.2 (Max)·",
+        "GPT 5.6 Luna (xHigh)$0.07/task"
+      ]
+    }
+  ]
+}
