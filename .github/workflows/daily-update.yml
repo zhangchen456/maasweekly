@@ -147,7 +147,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ site/src/data/ site/public/maas-skill/
+          git add data/ site/src/data/ site/public/maas-skill/ site/public/logos/
           if git diff --cached --quiet; then
             echo "无数据变化，跳过提交"
           else
