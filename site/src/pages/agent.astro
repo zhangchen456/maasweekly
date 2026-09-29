@@ -1,376 +1,185 @@
 ---
-// /agent/：Agent 接入页（Task 05 §5）。七段结构：能问什么 → 四方式 →
-// 配置安装 → 验证问题 → 成功示例 → 数据范围 → 故障恢复。
-// 示例回答从当前公开 release 确定性选取（不写死模型价格）。
 import Layout from '../layouts/Layout.astro';
 import CopyBlock from '../components/CopyBlock.astro';
-import { PUBLIC_ACCESS, validatePublicAccessConfig } from '../config/public-access';
+import { PUBLIC_ACCESS as P, validatePublicAccessConfig } from '../config/public-access';
 import { loadVerifiedRelease } from '../lib/release';
-
-const violations = validatePublicAccessConfig(PUBLIC_ACCESS);
-if (violations.length > 0) {
-  throw new Error(`[agent] 公开配置校验失败（构建中止）: ${violations.join('；')}`);
-}
-
+const violations = validatePublicAccessConfig(P);
+if (violations.length) throw new Error(`[agent] ${violations.join('；')}`);
 const release = loadVerifiedRelease(undefined, { select: ['changes'] });
-const P = PUBLIC_ACCESS;
 const base = P.canonicalBaseUrl;
-
-const statusLabel = (s: typeof P.surfaces.rss) =>
-  s.status === 'available' ? '已上线' : s.status === 'pending' ? '待部署' : '不可用';
-
-// §11.1.1 首屏四状态汇总（合同版本 + 真实状态；locallyVerified 自说明）
-const summary = [
-  { name: 'Skill', s: P.surfaces.skill, anchor: 'method-skill' },
-  { name: 'MCP', s: P.surfaces.mcp, anchor: 'method-mcp' },
-  { name: 'RSS', s: P.surfaces.rss, anchor: 'method-rss' },
-  { name: 'REST API', s: P.surfaces.rest, anchor: 'method-rest' },
+const methods = [
+  { key: 'skill', name: 'Agent Skill', hint: '让 Agent 帮你安装', mark: '01' },
+  { key: 'mcp', name: 'MCP', hint: '连接你的 AI 客户端', mark: '02' },
+  { key: 'rss', name: 'RSS', hint: '在阅读器里订阅', mark: '03' },
+  { key: 'rest', name: 'REST API', hint: '接入代码与工作流', mark: '04' },
 ] as const;
-
-// §11.1.3 方式选择（一句话标准）
-const chooser = [
-  { label: '希望自然语言自动路由', target: 'Skill', anchor: 'method-skill' },
-  { label: '客户端支持远程 MCP', target: 'MCP', anchor: 'method-mcp' },
-  { label: '阅读器订阅', target: 'RSS', anchor: 'method-rss' },
-  { label: '代码集成', target: 'REST API', anchor: 'method-rest' },
-] as const;
-
-// 成功示例（确定性选取：最新日期中 summary 非空的 source_observation，id 升序第一条）
-const sample = (release.changes ?? [])
-  .filter((c) => c.recordType === 'source_observation' && c.summary)
-  .sort((a, b) => b.observationDate.localeCompare(a.observationDate)
-    || a.id.localeCompare(b.id))[0];
-const sampleSummary = sample?.summary?.slice(0, 160) ?? '';
-
-// 五个 MCP 工具（§11.3；rest 各端点同域名同数据版本）
-const mcpTools = [
-  { name: 'maas_get_changes', use: '最近变化（来源观察 + 价格事件）' },
-  { name: 'maas_get_prices', use: '当前价格事实（条件化）' },
-  { name: 'maas_get_item', use: '按 ID 取单条条目（平台/模型/记录）' },
-  { name: 'maas_get_evidence', use: '引证与证据链' },
-  { name: 'maas_get_weekly', use: '正式周报（日期型 ID）' },
-] as const;
-
-// 六类 REST 入口（§11.5；路径来自 ROUTES 与 config.paths.apiBase——/items/{id}、/evidence/{id} 是 ID 路径参数）
-const restEndpoints = [
-  { path: '/status', use: 'release 元数据与 datasetVersion' },
-  { path: '/changes', use: '最近变化流' },
-  { path: '/prices', use: '价格事实查询' },
-  { path: '/items/{id}', use: '单条目详情（ID 路径参数）' },
-  { path: '/evidence/{id}', use: '引证详情（ID 路径参数）' },
-  { path: '/weekly', use: '正式周报列表与详情' },
-] as const;
-
-// §11.2 Skill 三段操作
-const sk = P.surfaces.skill;
-const mcp = P.surfaces.mcp;
-const rest = P.surfaces.rest;
-const rss = P.surfaces.rss;
-const verified = P.verifiedClients;
-const pending = P.pendingClients;
+const statusLabel = (status: string) => status === 'available' ? '已上线' : status === 'pending' ? '待部署' : '不可用';
+const verify = '用 maas-daily 查询最近 7 天 OpenAI 的变化，最多列出 5 条中文摘要和站内详情链接。注明数据截至日期与覆盖范围；不足 5 条或没有匹配记录时如实说明。';
+const installPrompt = `请帮我安装 MaaS Daily Skill：${base}/maas-skill/README.md\n\n先阅读安装说明，确认当前客户端支持的 Skill 目录，将 maas-daily 安装到该目录下；--dir 必须指向最终的 maas-daily 目录。若已安装，请更新原目录，不创建重复副本。\n安装完成后告诉我安装位置、是否需要开启新会话，以及如何验证。\n\n新会话中的验证问题：\n${verify}`;
+const updatePrompt = `请更新我已安装的 MaaS Daily Skill：${base}/maas-skill/README.md\n先确认当前正在使用的安装目录和是否有重复副本，再使用安装器更新同一目录。若发现未知文件或安装器拒绝覆盖，请说明原因，不强行覆盖。\n更新后告诉我是否需要开启新会话，并用以下问题验证：\n${verify}`;
+const questions = [
+  { title: '追踪平台变化', text: verify },
+  { title: '核对模型价格', text: '用 maas-daily 查询 gpt-4o 当前记录的输入价格。逐项列出全部匹配候选的币种、单位、适用条件、观察时间、证据 ID 和链接，不合并不同条件的价格；没有匹配记录时如实说明。' },
+  { title: '读最新周报', text: '用 maas-daily 获取最新一期正式周报，提炼主要变化并附周报链接、期号和数据截至日期。没有正式周报时如实说明，不用滚动 7 天摘要代替。' },
+];
+const mcpConfig = JSON.stringify({ mcpServers: { 'maas-daily': { type: 'http', url: `${base}${P.paths.mcpEndpoint}` } } }, null, 2);
 ---
-<Layout title="Agent 接入 — MaaS Daily" description="Skill、MCP、RSS、REST 四种 Agent 接入方式与真实状态">
-  <!-- §11.1.1 首屏结论：能力 + 四入口真实状态 + 合同版本 -->
-  <section class="hero">
-    <div class="shell">
-      <div class="eyebrow">AGENT ACCESS</div>
-      <h1>让 Agent 查询 MaaS 平台变化与价格</h1>
-      <p class="lead">
-        无需账户或本站 API Key。数据是<b>观察快照</b>（数据截至 {release.dataThrough}），
-        不代表供应商实时官网；无结果只表示当前覆盖内未记录到匹配项。
-        <a href="/method/">数据方法说明 →</a>
-      </p>
-      <ul class="status-row">
-        {summary.map(({ name, s, anchor }) => (
-          <li>
-            <a href={`#${anchor}`} class="status-pill">
-              <span class="pill-name">{name}</span>
-              <span class={`badge ${s.status}`}>{statusLabel(s)}</span>
-              <span class="pill-ver">{s.contractVersion}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
+<Layout title="Agent 接入 — MaaS Daily" description="复制一段提示词，让 Agent 接入 MaaS Daily。查询平台变化、模型价格与正式周报，无需 API Key。">
+  <div class="agent-page">
+    <header class="agent-hero">
+      <div class="kicker">MAAS DAILY / FOR AGENTS</div>
+      <h1>把 MaaS 动态，<br />接进你的 Agent。</h1>
+      <p class="intro">平台有什么变化、模型价格是多少、这周值得关注什么。<br class="desktop-break" />让 Agent 带着来源回答你。</p>
+      <div class="hero-meta"><span>匿名只读</span><span>无需 API Key</span><span>数据截至 {release.dataThrough}</span></div>
+    </header>
+
+    <div class="access-layout">
+      <div class="access-main">
+        <nav class="method-tabs" aria-label="选择接入方式">
+          {methods.map(({key, name, hint, mark}) => <a href={`#method-${key}`} data-method={key}><span class="tab-top"><span>{name}</span><small>{mark}</small></span><span class="tab-hint">{hint}</span></a>)}
+        </nav>
+
+        <section class="method-panel" id="method-skill" data-panel="skill">
+          <div class="panel-heading"><span class="eyebrow">从这里开始</span><span class={`status ${P.surfaces.skill.status}`}>{statusLabel(P.surfaces.skill.status)}</span></div>
+          <h2>复制给 Agent，剩下的交给它</h2>
+          <p class="description">适合支持 Skills 的 Agent。安装一次，以后直接用中文问。</p>
+          <ol class="quick-steps"><li><b>01</b><span>复制下方提示词<small>发给你正在使用的 Agent</small></span></li><li><b>02</b><span>按提示开新会话<small>让客户端发现新安装的 Skill</small></span></li><li><b>03</b><span>问一句，确认接通<small>看到日期、摘要和来源链接</small></span></li></ol>
+          <div class="prompt-card"><div class="prompt-heading"><span>安装提示词</span><small>完整复制，直接发送</small></div><CopyBlock code={installPrompt} label="安装提示词" /></div>
+          <p class="after-copy">复制后粘贴到 Agent 对话框发送；本页不会自动安装。</p>
+          <div class="subsection"><h3>装好后，试着这样问</h3><div class="question-list">{questions.map(q => <details><summary>{q.title}<span>查看提问 ↗</span></summary><CopyBlock code={q.text} label="问题" /></details>)}</div></div>
+          <details class="advanced"><summary>已有 Skill？更新到最新版<span>＋</span></summary><CopyBlock code={updatePrompt} label="更新提示词" /></details>
+          <details class="advanced"><summary>手动安装与排查<span>＋</span></summary><p>在当前客户端支持的 skills 目录下安装。以下是 Claude Code 的目录示例；其他客户端请替换路径，保留末尾的 maas-daily。</p><CopyBlock code={`curl -fsSL ${base}${P.paths.skillInstaller} | bash -s -- --dir ~/.claude/skills/maas-daily`} label="安装命令" /><p>更新时使用同一 --dir 重跑命令。安装器会校验完整包；发现未知文件时拒绝覆盖。</p><ol class="help-list"><li>确认最终目录顶层存在 SKILL.md。</li><li>开启新会话，再让 Agent 列出发现的 Skills。</li><li>查询失败时检查网络与服务状态，不用模型记忆补答。</li></ol><a href="/maas-skill/README.md">阅读完整安装说明 ↗</a></details>
+        </section>
+
+        <section class="method-panel" id="method-mcp" data-panel="mcp">
+          <div class="panel-heading"><span class="eyebrow">远程工具连接</span><span class={`status ${P.surfaces.mcp.status}`}>{statusLabel(P.surfaces.mcp.status)}</span></div>
+          <h2>把 MaaS Daily 加入你的工具列表</h2><p class="description">适合支持远程 Streamable HTTP MCP 的客户端。无需填写 token。</p>
+          <div class="prompt-card"><div class="prompt-heading">服务器地址</div><CopyBlock code={`${base}${P.paths.mcpEndpoint}`} label="MCP 地址" /></div>
+          <p class="after-copy">在客户端的 MCP 设置中添加远程服务器，保存后刷新工具列表或开启新会话。</p>
+          <details class="advanced"><summary>使用 JSON 配置<span>＋</span></summary><CopyBlock code={mcpConfig} label="MCP 配置" /></details>
+          <details class="advanced"><summary>Codex 的 TOML 配置<span>＋</span></summary><CopyBlock code={`[mcp_servers.maas-daily]\nurl = "${base}${P.paths.mcpEndpoint}"`} label="TOML 配置" /><p>配置示例供参考，Codex 的真实客户端验收仍待完成。</p></details>
+          <div class="subsection"><h3>连接后，发一句验证</h3><CopyBlock code={verify} label="验证问题" /></div>
+          <div class="tool-list">{[['maas_get_changes','平台变化'],['maas_get_prices','模型价格'],['maas_get_item','条目详情'],['maas_get_evidence','证据核验'],['maas_get_weekly','正式周报']].map(([name,use]) => <div><code>{name}</code><span>{use}</span></div>)}</div>
+          <p class="after-copy">调用默认 10 条、最多 30 条；更多结果使用 cursor 翻页。遇到 429 按 Retry-After 等待，503 时稍后重试。</p>
+        </section>
+
+        <section class="method-panel" id="method-rss" data-panel="rss">
+          <div class="panel-heading"><span class="eyebrow">订阅阅读</span><span class={`status ${P.surfaces.rss.status}`}>{statusLabel(P.surfaces.rss.status)}</span></div>
+          <h2>更新来了，在阅读器里看</h2><p class="description">复制订阅地址，粘贴到阅读器的「添加订阅」中。</p>
+          <div class="subsection"><h3>平台变化</h3><p>最近的平台变化与价格事件，最多 100 条。</p><CopyBlock code={`${base}${P.paths.feedChanges}`} label="变化订阅地址" /></div>
+          <div class="subsection"><h3>正式周报</h3><p>按期阅读整理后的周报，最多 30 期。</p><CopyBlock code={`${base}${P.paths.feedWeekly}`} label="周报订阅地址" /></div>
+          <p class="after-copy">{P.surfaces.rss.reason}</p><p class="after-copy">RSS 2.0，支持 ETag / 304。自动化轮询请间隔至少 30 分钟。详情页保留最新修订与撤回状态，阅读器内的旧条目可能不会同步撤回；订阅不包含第三方全文或再分发许可。</p>
+        </section>
+
+        <section class="method-panel" id="method-rest" data-panel="rest">
+          <div class="panel-heading"><span class="eyebrow">开发者接入</span><span class={`status ${P.surfaces.rest.status}`}>{statusLabel(P.surfaces.rest.status)}</span></div>
+          <h2>接入你的脚本与工作流</h2><p class="description">匿名 GET 请求，从一次真实查询开始。</p>
+          <CopyBlock code={`curl "${base}${P.paths.apiBase}/changes?provider=openai&limit=5"`} label="查询命令" />
+          <CopyBlock code={`curl ${base}${P.paths.apiBase}/status`} label="状态查询" />
+          <div class="tool-list">{[['/status','数据版本与覆盖范围'],['/changes','平台变化'],['/prices','模型价格'],['/items/{id}','条目详情'],['/evidence/{id}','证据详情'],['/weekly','正式周报']].map(([path,use]) => <div><code>{P.paths.apiBase}{path}</code><span>{use}</span></div>)}</div>
+          <p class="after-copy">列表默认 20 条、最多 100 条；翻页原样传回 cursor，过期后从第一页重查。支持 ETag / 304，错误返回 Problem JSON；429 按 Retry-After 等待。</p><a class="doc-link" href={P.paths.openapi}>查看 OpenAPI 完整定义 ↗</a>
+        </section>
+      </div>
+
+      <aside class="access-aside">
+        <section class="aside-section"><span class="eyebrow">你能获得什么</span><h3>回答有来源，<br />判断有依据。</h3><ul class="benefits"><li><b>平台变化</b><span>模型发布、API 更新与价格事件</span></li><li><b>价格事实</b><span>币种、计费单位、适用条件与证据</span></li><li><b>正式周报</b><span>按期查阅，回到原始记录</span></li></ul></section>
+        <section class="aside-section" id="verify"><h3>怎样算接入成功？</h3><p>完成一次真实查询，回答带有数据截至日期、覆盖范围和站内链接；响应包含 datasetVersion。下载或保存配置只是第一步。</p></section>
+        <section class="aside-section"><h3>接入资源</h3><a href="/llms.txt">给 Agent 的站点说明 <span>↗</span></a><a href="/maas-skill/README.md">Skill 安装文档 <span>↗</span></a><a href={P.paths.skillManifest}>Skill 文件清单 <span>↗</span></a><a href={P.paths.openapi}>OpenAPI 定义 <span>↗</span></a><a href={P.paths.changelog}>更新记录 <span>↗</span></a></section>
+        <section class="aside-section client-status"><h3>客户端验证</h3>{P.verifiedClients.map(c => <p><strong>{c.name} · {c.surface.toUpperCase()} 已验证</strong><br />{c.version} · {c.verifiedAt}</p>)}{P.pendingClients.map(c => <p>{c.name} · 待验证</p>)}<p>服务已上线与客户端已验证是不同状态。</p></section>
+      </aside>
     </div>
-  </section>
-
-  <!-- §11.1.2 入口导航（四个锚点；复制/打开操作后仍可定位） -->
-  <nav class="shell nav-pills" aria-label="接入方式导航">
-    {summary.map(({ name, anchor }) => (
-      <a href={`#${anchor}`} class="nav-pill">{name}</a>
-    ))}
-  </nav>
-
-  <!-- §11.1.3 方式选择说明（一句话标准） -->
-  <section class="shell">
-    <h2>选哪种方式</h2>
-    <ul class="chooser-list">
-      {chooser.map(({ label, target, anchor }) => (
-        <li><span class="chooser-label">{label}</span> → <a href={`#${anchor}`}><b>{target}</b></a></li>
-      ))}
-    </ul>
-  </section>
-
-  <!-- §11.1.4 四段接入流程（每段：适用对象/真实状态/最短配置/验证/成功样子/边界/排障） -->
-
-  <!-- Skill -->
-  <section class="shell method" id="method-skill">
-    <header class="method-header">
-      <h2><a href="#method-skill" aria-label="Skill 段锚点">§</a> Skill</h2>
-      <span class={`badge ${sk.status}`}>{statusLabel(sk)}</span>
-    </header>
-    <p class="method-audience"><b>适用：</b>希望 Agent 按技能规则自动路由查询的用户（自然语言提问 → 自动选择 changes/prices/item/evidence/weekly 五类）。<b>状态：</b>{sk.reason}</p>
-
-    <h3>最短配置（三段操作 §11.2）</h3>
-    <ol class="steps">
-      <li><b>安装</b>（<code>--dir</code> 就是 maas-daily 的<b>最终 Skill 目录</b>——由你显式指定，如 <code>~/.claude/skills/maas-daily</code>；安装器不猜测、不用 sudo）：
-        <CopyBlock code={`curl -fsSL ${base}/maas-skill/install.sh | bash -s -- --dir ~/.claude/skills/maas-daily`} label="安装命令（示例目录，换成你的客户端技能目录）" />
-      </li>
-      <li><b>开新会话</b>：多数客户端在新会话才扫描 Skill——关闭并重启客户端或新建对话。</li>
-      <li><b>验证一句话</b>：在新会话中发问（见下「验证问题」）。</li>
-    </ol>
-
-    <h3>真实验证过的客户端</h3>
-    {verified.map((c) => c.surface === 'skill' && (
-      <p class="verified-client">✓ 已验证：{c.name} {c.version}（{c.verifiedAt}）</p>
-    ))}
-    {pending.map((c) => (
-      <p class="pending-client">⏳ 待验证：{c.name} —— {c.unblockCondition}</p>
-    ))}
-    <p class="muted">Codex 在 T18 通过前保持待验证，不展示代表已就绪的标志（§11.2 红线）。</p>
-
-    <h3>更新与排查</h3>
-    <p>更新 = 在<b>同一 <code>--dir</code> 重跑安装命令</b>（安装器按 manifest 已知文件集做保护性替换，目标内未知文件会被拒绝覆盖以保护用户数据）：</p>
-    <CopyBlock code={`curl -fsSL ${base}/maas-skill/install.sh | bash -s -- --dir ~/.claude/skills/maas-daily`} label="更新（同 --dir 重跑）" />
-    <ul class="trouble-list">
-      <li>Skill 没出现：先确认 <code>SKILL.md</code> 在你指定的 --dir 顶层（--dir 就是最终目录，不要多套一层）</li>
-      <li>已安装但 Agent 不调用：开新会话（多数客户端不热更新技能列表）</li>
-      <li>更新被拒绝：目标目录内出现了 manifest 未列的自建文件——按提示移走后重跑</li>
-      <li>不允许要求你提供 token 或本地文件（匿名公开）</li>
-    </ul>
-
-    <h3>能力边界</h3>
-    <ul class="common-boundary">
-      <li>技能在本地按规则路由到 MCP/REST；数据、覆盖范围、dataThrough 与站内一致</li>
-      <li>匿名只读；无结果不等于外部世界没有变化（见「共同数据边界」）</li>
-      <li>成功标准是返回真实 datasetVersion、dataThrough、coverage 和站内永久链接，不是「下载成功」</li>
-    </ul>
-
-    <h3>排障</h3>
-    <p class="muted">查询公网失败属预期：Skill 的查询路径依赖 REST/MCP 生产路由，随 Task 06 上线（当前 pending 如实呈现，不让 Agent 用模型记忆补答）。</p>
-  </section>
-
-  <!-- MCP -->
-  <section class="shell method" id="method-mcp">
-    <header class="method-header">
-      <h2><a href="#method-mcp" aria-label="MCP 段锚点">§</a> MCP</h2>
-      <span class={`badge ${mcp.status}`}>{statusLabel(mcp)}</span>
-    </header>
-    <p class="method-audience"><b>适用：</b>客户端支持远程 Streamable HTTP MCP。<b>状态：</b>{mcp.reason}</p>
-
-    <h3>最短配置（§11.3）</h3>
-    <CopyBlock code={`{\n  "mcpServers": {\n    "maas-daily": {\n      "type": "http",\n      "url": "${base}/api/mcp"\n    }\n  }\n}`} label="MCP 配置" />
-    <p class="muted">唯一生产 URL：<code>{base}/api/mcp</code>；Streamable HTTP；匿名只读、无 token。</p>
-
-    <h3>五个工具</h3>
-    <ul class="tools-list">
-      {mcpTools.map((t) => (
-        <li><code>{t.name}</code> —— {t.use}</li>
-      ))}
-    </ul>
-
-    <h3>已验证 / 待验证客户端（状态来自唯一配置 §11.3）</h3>
-    {verified.map((c) => (
-      <p class="verified-client">✓ 已验证：{c.name} {c.version}（{c.verifiedAt}，{c.transport}）</p>
-    ))}
-    {pending.map((c) => (
-      <p class="pending-client">⏳ 待验证：{c.name} —— {c.unblockCondition}</p>
-    ))}
-
-    <h3>一次真实工具调用（成功样子）</h3>
-    <CopyBlock code={`skill maas-daily / mcp maas-daily：请调用 maas_get_changes 取最近 7 天 OpenAI 的变化，最多 10 条`} label="验证调用示例" />
-    <p class="muted">成功标准：返回真实 datasetVersion、dataThrough、coverage、站内永久链接；多候选价格时返回条件与证据；空结果应如实报告，不用模型知识补答。</p>
-
-    <h3>能力边界与排障（§11.3）</h3>
-    <ul class="common-boundary">
-      <li>多候选价格：返回所有匹配条件，由你按证据选择，不替你做语义合并</li>
-      <li>单一调用默认返回 10 条、最大 30 条（<code>limit</code> 参数）；更多结果用 <code>cursor</code> 翻页（cursor 原样回传，合法 cursor 跨 release 窗口内仍有效）</li>
-      <li>429 时 Retry-After 后再试；不建议并发重试</li>
-      <li>刷新工具列表/开新会话；确认客户端支持远程 HTTP transport；Origin 校验失败返回 403</li>
-      <li>服务不可用返回 503 Problem JSON，不返回 200 空数据</li>
-    </ul>
-  </section>
-
-  <!-- RSS -->
-  <section class="shell method" id="method-rss">
-    <header class="method-header">
-      <h2><a href="#method-rss" aria-label="RSS 段锚点">§</a> RSS</h2>
-      <span class={`badge ${rss.status}`}>{statusLabel(rss)}</span>
-    </header>
-    <p class="method-audience"><b>适用：</b>阅读器与低频自动化订阅。<b>状态：</b>{rss.reason}</p>
-
-    <h3>两个 feed（§11.4）</h3>
-    <CopyBlock code={`${base}/feed.xml`} label="变化 feed（最近变化，≤100 条）" />
-    <CopyBlock code={`${base}/feed/weekly.xml`} label="周报 feed（≤30 期正式周报）" />
-
-    <h3>行为合同（§11.4）</h3>
-    <ul class="common-boundary">
-      <li>RSS 2.0；建议 <b>30 分钟或更慢</b>轮询</li>
-      <li>ETag/304 条件请求；GUID 稳定，修订保持条目身份</li>
-      <li>已撤回记录退出默认 feed；撤回无法可靠召回——<b>详情页是修订与撤回的权威状态</b></li>
-      <li>不提供第三方全文，订阅不等于获得商业再分发许可</li>
-    </ul>
-
-    <h3>真实阅读器（未完成前保持 pending）</h3>
-    <p class="muted">尚未完成真实阅读器验收（§12 第 5 项）。授权前通过的标准：两个 feed 公网订阅、重复刷新无重复 GUID、缓存头/ETag/304 符合合同。</p>
-  </section>
-
-  <!-- REST API -->
-  <section class="shell method" id="method-rest">
-    <header class="method-header">
-      <h2><a href="#method-rest" aria-label="REST API 段锚点">§</a> REST API</h2>
-      <span class={`badge ${rest.status}`}>{statusLabel(rest)}</span>
-    </header>
-    <p class="method-audience"><b>适用：</b>开发者和脚本。匿名只读；支持筛选、cursor 固定版本翻页、ETag/304、Problem JSON。<b>状态：</b>{rest.reason}</p>
-
-    <h3>六类入口（§11.5；不复制字段表，OpenAPI 是权威）</h3>
-    <ul class="tools-list">
-      {restEndpoints.map((e) => (
-        <li><code>{P.paths.apiBase}{e.path}</code> —— {e.use}</li>
-      ))}
-    </ul>
-    <p class="muted">OpenAPI：<a href="/openapi-v1.json">openapi-v1.json</a> · 合同：<a href="/method/">分页与错误说明</a></p>
-
-    <h3>两个可直接执行的 curl（§11.5）</h3>
-    <CopyBlock code={`curl ${base}/api/v1/status`} label="status（最小）" />
-    <CopyBlock code={`curl "${base}/api/v1/changes?provider=openai&limit=10"`} label="真实变化查询（provider=openai 最近 10 条）" />
-
-    <h3>能力边界（§11.5）</h3>
-    <ul class="common-boundary">
-      <li>匿名 GET；CORS 开放（相对应域名）</li>
-      <li>ETag/304 与缓存控制；限流 429 + Retry-After</li>
-      <li>列表默认 20 条、最大 100 条（<code>limit</code>）；cursor 原样回传（合法 cursor 在保留窗口内继续有效）；过期请重查</li>
-      <li>Problem JSON（RFC 9457）：不实现的字段（增量同步 / Webhook / SSE）不做承诺</li>
-    </ul>
-  </section>
-
-  <!-- §11.1.4 验证动作（共用）：成功是真实查询返回，不是配置保存 -->
-  <section class="shell" id="verify">
-    <h2>验证问题</h2>
-    <p>配置/安装成功的标准是<b>完成一次真实查询</b>（拿到 datasetVersion、dataThrough、coverage 与站内永久链接），不是文件下载或配置保存。在新会话中问：</p>
-    <ol class="verify-list">
-      <li>「用 maas-daily 查最近几天 OpenAI 有什么变化」——回答应引用数据版本与覆盖日期</li>
-      <li>「用 maas-daily 查一个模型当前记录的输入价格，列出全部候选与证据 ID」——回答应如实报告（含币种、单位、适用条件、观察时间；无结果时说明未记录到，不编造）</li>
-      <li>「最新一期周报讲了什么」——应为正式周报（日期型 ID），不是滚动摘要</li>
-    </ol>
-    <p class="muted">配置 MCP 或安装 Skill 后可能需要<b>开启新会话</b>才能发现工具。</p>
-  </section>
-
-  <!-- §11.1.5 共同数据边界（观察快照/dataThrough/coverage/无结果语义/证据核验/修订撤回/频率） -->
-  <section class="shell" id="boundary">
-    <h2>共同数据边界</h2>
-    <div class="example">
-      <p class="example-meta">
-        数据版本 {release.datasetVersion.slice(0, 12)}… · 数据截至 {release.dataThrough} ·
-        变化覆盖 {release.coverage.changes.from} 至 {release.coverage.changes.to}（{release.coverage.changes.count} 条）
-      </p>
-      {sample && (
-        <blockquote class="example-body">
-          <p><b>{sample.title}</b>（{sample.observationDate} 观察记录）</p>
-          <p>{sampleSummary}{sample.summary && sample.summary.length > 160 ? '…' : ''}</p>
-          {sample.summaryOrigin === 'llm' && <p class="muted">（摘要由 LLM 生成，可能不准确，请以证据核验。）</p>}
-          <p class="example-link">详情：<a href={sample.links.permalink}>{base}{sample.links.permalink}</a></p>
-        </blockquote>
-      )}
-    </div>
-    <ul class="boundary-list">
-      <li><b>观察快照</b>：数据是已观察到的快照（观察时间 vs 发布时间不同），不代表供应商实时官网</li>
-      <li><b>dataThrough</b>：每个回答都应引用当前数据的 dataThrough；dataThrough 之前的变化不在本数据集</li>
-      <li><b>coverage</b>：变化 {release.coverage.changes.count} 条 / 价格事实 {release.coverage.prices.facts} 条 / 证据 {release.coverage.evidence.count} 条 / 周报 {release.coverage.weekly.count} 期（最新 {release.coverage.weekly.latestId}）</li>
-      <li><b>无结果语义</b>：表示当前覆盖内未记录到匹配项，不等于外部世界没有变化</li>
-      <li><b>证据核验</b>：每条结论对应站内永久链接；LLM 摘要需以证据页为准</li>
-      <li><b>修订/撤回</b>：修订保持条目身份；撤回退出默认 feed 与查询——详情页是最新状态权威来源</li>
-      <li><b>频率</b>：REST/MCP 429 + Retry-After 退避；RSS 建议 ≥30 分钟轮询</li>
-      <li>详细语义：<a href="/method/">方法说明</a></li>
-    </ul>
-  </section>
-
-  <!-- §11.1.6 反馈与合同入口（OpenAPI/合同/Skill 源码/changelog/反馈渠道；无则不编造） -->
-  <section class="shell" id="contracts">
-    <h2>反馈与合同入口</h2>
-    <ul class="contracts-list">
-      <li>OpenAPI：<a href="/openapi-v1.json">openapi-v1.json</a>（REST 合同；rest-v1）</li>
-      <li>Skill 包：<a href="/maas-skill/manifest.json">manifest.json</a> · <a href="/maas-skill/install.sh">install.sh</a>（skill-v1 / 包版本 1.0.0）</li>
-      <li>MCP 合同：<code>{base}/api/mcp</code> Streamable HTTP（mcp-v1；官方客户端协议）</li>
-      <li>RSS 合同：两个 feed 的行为见上方 RSS 段（rss-v1）</li>
-      <li>变更记录：<a href="/changelog/">changelog</a>（破坏性变更预告；v1 内只向后兼容）</li>
-      <li>反馈渠道：<b>待提供</b>（尚无公开反馈地址；不编造邮箱）</li>
-    </ul>
-  </section>
-
-  <style>
-    .hero { background: var(--bg-2, #f6f7f9); border-bottom: 1px solid var(--line, #e3e6ea); padding: 36px 0; }
-    .eyebrow { font-size: 12px; letter-spacing: .2em; color: var(--muted-c, #6a737d); }
-    .hero h1 { margin: 8px 0 12px; }
-    .lead { max-width: 720px; margin: 0; }
-    .shell { max-width: 1180px; margin: 0 auto; padding: 20px; }
-    section.shell h2 { margin: 32px 0 12px; font-size: 22px; }
-
-    /* §11.1.1 首屏状态汇总 */
-    .status-row { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 16px 0 0; }
-    .status-pill { display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
-      border: 1px solid var(--line, #e3e6ea); border-radius: 20px; padding: 5px 12px;
-      background: var(--bg-card, #fff); color: inherit; }
-    .status-pill:focus-visible { outline: 2px solid var(--accent, #0b6bcb); outline-offset: 2px; }
-    .pill-name { font-weight: 600; font-size: 13px; }
-    .pill-ver { font-size: 11.5px; color: var(--muted-c, #6a737d); }
-
-    /* §11.1.2 入口导航（无 JS 也可用；锚点不被固定导航遮挡） */
-    .nav-pills { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 14px; padding-bottom: 4px;
-      position: sticky; top: 0; background: var(--bg, #fff); z-index: 5; }
-    .nav-pill { border: 1px solid var(--line, #e3e6ea); border-radius: 16px; padding: 3px 12px;
-      font-size: 13px; text-decoration: none; color: inherit; }
-    .nav-pill:focus-visible { outline: 2px solid var(--accent, #0b6bcb); outline-offset: 2px; }
-    .nav-pill:hover { border-color: var(--accent, #0b6bcb); }
-
-    /* 锚点偏移：避免被 sticky 导航遮挡 */
-    .method { scroll-margin-top: 68px; }
-    .method-header { display: flex; align-items: center; gap: 12px; }
-    .method-header h2 { margin: 24px 0 8px; }
-    .method-header h2 a { text-decoration: none; color: var(--muted-c, #6a737d); font-weight: 400; }
-    .method-audience { font-size: 14px; }
-    .method h3 { font-size: 15.5px; margin: 18px 0 8px; }
-
-    /* §11.1.3 方式选择 */
-    .chooser-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 14px; }
-    .chooser-list li { font-size: 14px; }
-    .chooser-label { color: var(--muted-c, #6a737d); }
-
-    .steps { padding-left: 20px; line-height: 1.9; }
-    .tools-list { padding-left: 20px; line-height: 1.9; }
-    .trouble-list { padding-left: 20px; line-height: 1.8; }
-    .boundary-list { padding-left: 20px; line-height: 1.9; }
-    .common-boundary { padding-left: 20px; line-height: 1.8; }
-    .verify-list { padding-left: 20px; line-height: 1.8; }
-    .contracts-list { padding-left: 20px; line-height: 1.9; }
-
-    .badge { padding: 2px 10px; border-radius: 10px; font-size: 12px; border: 1px solid; white-space: nowrap; }
-    .badge.available { color: var(--ok, #1a7f37); border-color: currentColor; }
-    .badge.pending { color: var(--warn, #b35900); border-color: currentColor; }
-    .badge.unavailable { color: var(--err, #cf222e); border-color: currentColor; }
-
-    .verified-client { font-size: 12.5px; color: var(--ok, #1a7f37); margin: 6px 0 0; }
-    .pending-client { font-size: 12.5px; color: var(--warn, #b35900); margin: 6px 0 0; }
-    .muted { color: var(--muted-c, #6a737d); font-size: 13px; }
-    .example { border: 1px solid var(--line, #e3e6ea); border-radius: 10px; padding: 16px; background: var(--bg-card, #fff); }
-    .example-meta { font-size: 12.5px; color: var(--muted-c, #6a737d); margin: 0 0 10px; }
-    .example-body { margin: 0; border-left: 3px solid var(--accent, #0b6bcb); padding-left: 14px; }
-    .example-link { font-size: 12.5px; }
-    .method code, .contracts-list code { font-size: 12.5px; }
-
-    @media (max-width: 480px) {
-      .status-row { gap: 8px; }
-      .method-header { flex-wrap: wrap; }
-    }
-  </style>
+    <section class="data-note" id="boundary"><span class="eyebrow">关于这些数据</span><div><h3>观察快照，每次回答都带上时间</h3><p>数据截至 {release.dataThrough}，不代表供应商实时官网。未记录到匹配项，不等于外部世界没有变化；不同条件的价格需分别核对。详情页是修订与撤回状态的权威来源。</p><p class="coverage">数据版本 {release.datasetVersion.slice(0, 12)} · 变化覆盖 {release.coverage.changes.from} 至 {release.coverage.changes.to} · {release.coverage.changes.count} 条变化 · {release.coverage.prices.facts} 条价格事实</p><a href={P.paths.method}>了解数据方法与边界 ↗</a></div></section>
+  </div>
 </Layout>
+
+<script>
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-method]'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
+  const activate = (key: string) => {
+    links.forEach(link => { const active = link.dataset.method === key; link.setAttribute('aria-selected', String(active)); link.tabIndex = active ? 0 : -1; });
+    panels.forEach(panel => { panel.hidden = panel.dataset.panel !== key; });
+  };
+  document.querySelector('.method-tabs')?.setAttribute('role', 'tablist');
+  links.forEach((link, index) => {
+    const key = link.dataset.method!;
+    link.id = `tab-${key}`;
+    link.setAttribute('role', 'tab');
+    link.setAttribute('aria-controls', `method-${key}`);
+    panels[index].setAttribute('role', 'tabpanel');
+    panels[index].setAttribute('aria-labelledby', link.id);
+    panels[index].tabIndex = 0;
+    link.addEventListener('click', event => { event.preventDefault(); activate(key); history.replaceState(null, '', `#method-${key}`); });
+    link.addEventListener('keydown', event => {
+      let next = index;
+      if (event.key === 'ArrowRight') next = (index + 1) % links.length;
+      else if (event.key === 'ArrowLeft') next = (index - 1 + links.length) % links.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = links.length - 1;
+      else return;
+      event.preventDefault(); links[next].click(); links[next].focus();
+    });
+  });
+  const syncHash = () => { const key = location.hash.replace('#method-', ''); activate(links.some(l => l.dataset.method === key) ? key : 'skill'); };
+  syncHash(); window.addEventListener('hashchange', syncHash);
+</script>
+
+<style>
+  .agent-page { padding:64px 0 0; }
+  .agent-hero { padding-bottom:42px; }
+  .kicker,.eyebrow { font-size:11px; letter-spacing:.12em; color:var(--acid); font-weight:600; }
+  h1 { font-size:clamp(36px,4.2vw,56px); line-height:1.18; letter-spacing:-.055em; margin:18px 0 20px; }
+  .intro { color:var(--paper-soft); font-size:16px; line-height:1.85; }
+  .hero-meta { display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:24px; font-size:12px; color:var(--muted); }
+  .hero-meta span::before { content:'·'; color:var(--acid); margin-right:8px; }
+  .access-layout { display:grid; grid-template-columns:minmax(0,1fr) 250px; gap:48px; align-items:start; }
+  .access-main { min-width:0; }
+  .method-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-bottom:1px solid var(--line-strong); gap:8px; }
+  .method-tabs a { padding:16px 12px; border-bottom:2px solid transparent; text-decoration:none; color:var(--muted); transition:background .2s,color .2s; }
+  .method-tabs a:hover { background:var(--acid-dim); color:var(--paper); }
+  .method-tabs a[aria-selected='true'] { border-color:var(--acid); color:var(--acid); background:var(--acid-dim); }
+  .tab-top { display:flex; align-items:center; justify-content:space-between; gap:4px; font-size:15px; font-weight:600; }
+  .tab-top small { font:10px ui-monospace,monospace; opacity:.65; }
+  .tab-hint { display:block; font-size:11px; margin-top:6px; color:var(--muted); }
+  .method-panel { padding:32px 0; scroll-margin-top:100px; }
+  .panel-heading { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+  .status { font-size:11px; color:var(--amber); }.status.available { color:var(--acid); }.status.unavailable { color:var(--red); }
+  .status::before { content:'●'; font-size:7px; margin-right:6px; }
+  h2 { font-size:27px; line-height:1.4; margin-bottom:9px; letter-spacing:-.03em; }
+  .description { color:var(--muted); font-size:14px; }
+  .quick-steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; list-style:none; padding:26px 0; }
+  .quick-steps li { display:flex; align-items:flex-start; gap:10px; font-size:12px; }
+  .quick-steps b { font:12px ui-monospace,monospace; color:var(--acid); padding-top:5px; }
+  .quick-steps small { display:block; font-size:10px; color:var(--muted); margin-top:4px; }
+  .prompt-card { border:1px solid var(--line-strong); border-radius:12px; padding:20px 22px; background:var(--panel); }
+  .prompt-heading { display:flex; justify-content:space-between; gap:10px; font-size:12px; font-weight:600; }
+  .prompt-heading small { color:var(--muted); font-weight:400; font-size:11px; }
+  .after-copy { font-size:12px; color:var(--muted); margin-top:12px; line-height:1.8; }
+  .subsection { margin:30px 0 24px; }.subsection h3 { font-size:16px; margin-bottom:12px; }.subsection p { font-size:13px; color:var(--muted); }
+  .question-list { border-top:1px solid var(--line); }
+  details { border-bottom:1px solid var(--line); }
+  summary { padding:15px 0; cursor:pointer; display:flex; justify-content:space-between; gap:15px; font-size:13px; list-style:none; }
+  summary::-webkit-details-marker { display:none; }
+  summary span { font-size:11px; color:var(--muted); }
+  summary:hover { color:var(--acid); }
+  details[open] { padding-bottom:16px; }details[open] summary { color:var(--acid); }
+  .advanced p,.advanced li { font-size:12px; color:var(--paper-soft); margin-bottom:10px; }
+  .advanced a,.doc-link { font-size:12px; color:var(--acid); }
+  .help-list { padding-left:20px; }
+  .tool-list { margin:24px 0; }.tool-list>div { display:flex; justify-content:space-between; gap:14px; padding:11px 0; border-bottom:1px solid var(--line); font-size:12px; }.tool-list span { color:var(--muted); }.tool-list code { overflow-wrap:anywhere; }
+  .access-aside { border-left:1px solid var(--line); padding-left:28px; }
+  .aside-section { margin-bottom:28px; }.aside-section h3 { font-size:15px; margin-bottom:12px; }.aside-section:first-child h3 { font-size:24px; line-height:1.45; margin-top:15px; }
+  .aside-section p { font-size:12px; color:var(--muted); line-height:1.9; }
+  .benefits { list-style:none; margin-top:22px; }.benefits li { margin-bottom:18px; }.benefits b { display:block; font-size:12px; font-weight:500; }.benefits span { color:var(--muted); font-size:11px; }
+  .aside-section>a { display:flex; justify-content:space-between; padding:7px 0; font-size:12px; text-decoration:none; color:var(--paper-soft); }.aside-section>a:hover { color:var(--acid); }
+  .client-status { border-top:1px solid var(--line); padding-top:22px; }.client-status p { margin-bottom:10px; }.client-status strong { font-weight:500; color:var(--paper-soft); }
+  .data-note { display:grid; grid-template-columns:200px 1fr; gap:30px; border-top:1px solid var(--line-strong); margin-top:24px; padding-top:30px; }.data-note h3 { font-size:15px; margin-bottom:8px; }.data-note p { font-size:12px; color:var(--muted); max-width:760px; }.data-note a { display:inline-block; margin-top:12px; font-size:12px; color:var(--acid); }.coverage { margin-top:8px; }
+  .agent-page :global(.copyblock) { margin:14px 0 0; }
+  .agent-page :global(.copyblock-code) { background:var(--ink-2); border-color:var(--line); color:var(--paper-soft); padding:16px; font-size:12px; line-height:1.9; border-radius:7px; }
+  .prompt-card :global(.copyblock-code) { background:transparent; border:0; padding:0 0 14px; font-family:inherit; font-size:13px; }
+  .agent-page :global(.copyblock-btn) { background:var(--acid); color:var(--ink); min-height:40px; padding:8px 18px; font-size:12px; font-weight:600; transition:opacity .2s; }
+  .agent-page :global(.copyblock-feedback.ok) { color:var(--acid); }.agent-page :global(.copyblock-feedback.err) { color:var(--red); }
+  @media(max-width:1000px) { .access-layout { grid-template-columns:minmax(0,1fr) 210px; gap:28px; }.access-aside { padding-left:20px; }.tab-hint { font-size:10px; }.quick-steps { gap:10px; } }
+  @media(max-width:760px) { .agent-page { padding-top:36px; }.agent-hero { padding-bottom:28px; }.access-layout { grid-template-columns:1fr; gap:16px; }.access-aside { border-left:0; border-top:1px solid var(--line); padding:28px 0 0; display:grid; grid-template-columns:1fr 1fr; gap:24px; }.aside-section { margin:0; }.client-status { border:0; padding:0; }.data-note { grid-template-columns:1fr; gap:12px; }.tab-top { font-size:13px; }.tab-top small { display:none; }.method-tabs a { padding:12px 8px; } }
+  @media(max-width:480px) { .intro { font-size:14px; }.desktop-break { display:none; }h2 { font-size:23px; }.quick-steps { grid-template-columns:1fr; gap:14px; }.quick-steps small { display:inline; margin-left:9px; }.quick-steps b { min-width:18px; }.tab-hint { display:none; }.prompt-card { padding:16px; }.prompt-heading small { font-size:10px; }.access-aside { grid-template-columns:1fr; }.tool-list>div { font-size:11px; }.hero-meta { gap:8px 14px; } }
+  @media(prefers-reduced-motion:reduce) { .method-tabs a,.agent-page :global(.copyblock-btn) { transition:none; } }
+</style>

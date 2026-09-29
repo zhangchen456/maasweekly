@@ -55,15 +55,24 @@ const { code, label = '内容', ariaLabel } = Astro.props;
     const btn = block.querySelector('[data-copy-btn]');
     const source = block.querySelector('[data-copy-source]');
     const feedback = block.querySelector('[data-copy-feedback]');
+    let resetTimer: ReturnType<typeof setTimeout>;
+    const originalLabel = btn?.textContent ?? '复制';
     btn?.addEventListener('click', async () => {
+      clearTimeout(resetTimer);
       const text = source?.textContent ?? '';
       try {
         await navigator.clipboard.writeText(text);
+        if (btn) btn.textContent = '已复制 ✓';
+        resetTimer = setTimeout(() => {
+          if (btn) btn.textContent = originalLabel;
+          if (feedback) feedback.textContent = '';
+        }, 3000);
         if (feedback) {
           feedback.textContent = '已复制';
           feedback.className = 'copyblock-feedback ok';
         }
       } catch {
+        if (btn) btn.textContent = originalLabel;
         const range = document.createRange();
         range.selectNodeContents(source!);
         const sel = window.getSelection();

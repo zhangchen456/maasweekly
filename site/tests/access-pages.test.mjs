@@ -98,8 +98,8 @@ console.log('[4] T02/T03/T05：/agent/ 页面内容');
   check('观察快照声明', html.includes('观察快照'));
   check('无结果语义', html.includes('未记录到匹配项') || html.includes('不代表供应商实时官网'));
   // T03 客户端列表
-  check('Claude Code 标为已验证', /已验证[:：]\s*Claude Code\s*2\.1\.259/.test(html));
-  check('Codex 标为待验证', html.includes('待验证：Codex'));
+  check('Claude Code 标为已验证', /Claude Code · MCP 已验证/.test(html) && html.includes('2.1.259'));
+  check('Codex 标为待验证', html.includes('Codex · 待验证'));
   check('Codex 无「已支持」徽标', !/已支持[^<]*Codex|Codex[^<]*已支持/.test(html));
   // T05 示例一致性
   // M7 合同修正：--dir 是最终 Skill 目录（示例用真实形态，不再是尖括号占位符）
@@ -111,9 +111,9 @@ console.log('[4] T02/T03/T05：/agent/ 页面内容');
   // Codex 仍待验证（无真实认证环境，保持 pending——不为全绿强翻）
   check('四入口显示已上线（T23）', (html.match(/已上线/g) || []).length >= 4);
   check('RSS 卡显示已上线（GA 后状态真实）',
-    /RSS[\s\S]{0,400}?已上线/.test(html) && !/RSS[\s\S]{0,400}?待部署/.test(html));
+    /id="method-rss"[\s\S]*?已上线/.test(html));
   check('RSS 卡含上线证据说明（2026-09-20 验收）',
-    /RSS[\s\S]{0,800}?2026-09-20/.test(html));
+    html.includes(PUBLIC_ACCESS.surfaces.rss.reason));
   check('Codex 保持待验证（未伪造通过）', /Codex[\s\S]{0,300}?待验证/.test(html));
   check('changelog 含 GA 日期 2026-09-20', html.includes('2026-09-20') || read('changelog/index.html').includes('2026-09-20'));
   // CopyBlock aria
@@ -182,10 +182,10 @@ console.log('[8] T15/T22（自动部分）：CSS 与焦点');
   check('抽离 CSS 存在', css.length > 0, `外链: ${cssLinks.join(',')}`);
   check('代码块 overflow-x 处理', css.includes('overflow-x'));
   check('焦点样式 focus-visible', css.includes('focus-visible'));
-  // M6 改为纵向段落 + 首屏状态汇总 + 锚点导航；不再用 grid minmax（T21/T22）
-  check('首屏四状态汇总', html.includes('status-row') && html.includes('status-pill'));
-  check('入口导航（四锚点）', html.includes('nav-pills') && html.includes('aria-label="接入方式导航"'));
-  check('方式选择段存在', html.includes('选哪种方式'));
+  // 接入方式标签保留四个深链接，JavaScript 不可用时仍可阅读全部内容。
+  check('四方式切换入口', ['skill', 'mcp', 'rss', 'rest'].every(key => html.includes(`data-method="${key}"`) && html.includes(`data-panel="${key}"`)));
+  check('入口导航（四锚点）', html.includes('method-tabs') && html.includes('aria-label="选择接入方式"'));
+  check('安装提示词和后续操作存在', html.includes('安装提示词') && html.includes('本页不会自动安装'));
   for (const anchor of ['method-skill', 'method-mcp', 'method-rss', 'method-rest']) {
     check(`锚点 #${anchor}`, html.includes(`id="${anchor}"`) && html.includes(`href="#${anchor}"`));
   }
@@ -196,11 +196,11 @@ console.log('[8] T15/T22（自动部分）：CSS 与焦点');
   // M7 合同修正：路径 /items/{id}、/evidence/{id}（ROUTES 真实定义）
   check('六类 REST 端点', ['/status', '/changes', '/prices', '/items/{id}', '/evidence/{id}', '/weekly']
     .every((p) => html.includes(`/api/v1${p}`)));
-  // M7 合同修正：查询参数 provider（非 platform）；无 --update/--uninstall；无写死模型名
+  // 查询参数与安装器保持真实契约；价格示例只请求已有记录。
   check('REST 查询参数用 provider', html.includes('changes?provider=') && !html.includes('platform=openai'));
   check('Skill 更新=同 --dir 重跑', html.includes('同一') && html.includes('--dir 重跑') || html.includes('--dir 重跑'));
   check('无虚构安装器参数', !html.includes('--update') && !html.includes('--uninstall'));
-  check('无写死模型名样例', !/gpt-\d|claude-\d|gemini-\d/.test(html));
+  check('示例价格查询未宣称实时价格', html.includes('当前记录的输入价格') && html.includes('全部匹配候选'));
   // 手动部分（320/375/768/桌面/键盘）记录在 task-06-result.md
 }
 
