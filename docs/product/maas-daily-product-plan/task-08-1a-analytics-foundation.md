@@ -417,3 +417,16 @@ Gate A round 1 FAIL 根因：静态契约测试 28/28 通过，但首次安装�
 python3 -m unittest discover -s tests -p 'test_analytics_foundation.py'   # 46 项
 scripts/run-all-tests.sh   # 含 test_analytics_foundation
 ```
+# 2026-09-30 compatibility 修复补充
+
+Gate B1 production probe 已确认 Ubuntu PostgreSQL server binary 不在 PATH。
+installer 现使用 `ops/lib-umami-postgres.sh`，按唯一 5432 cluster 发现版本目录，
+并在 credential 状态机前校验实际 server version、port 与 data directory。
+所有管理 SQL 显式固定 socket/port，使用 `-X` 与 `ON_ERROR_STOP=1`。
+service 的 Next CLI 显式绑定 `127.0.0.1:3000`，不依赖 HOSTNAME 环境变量。
+同时修复 fresh-install dry-run、变量后紧接中文的 Bash 展开问题，并固定 pnpm 12.3.4 检查。
+
+prerequisite 安装独立为 `ops/install-umami-prerequisites.sh`，默认 dry-run。
+具体 production authorization package 见
+`task-08-1a-authorization-prerequisites-2026-09-30.md`，尚未执行。
+这些修改不代表历史 Gate A accepted SHA 自动更新，也不代表 production PASS。

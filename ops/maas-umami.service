@@ -9,9 +9,8 @@
 #   - 只监听 127.0.0.1（HOSTNAME=127.0.0.1 in umami.env）；公网由 nginx 终结 TLS
 #   - 不依赖 /srv/maasweekly/current——Umami 独立部署，不进入 release 模型
 #
-# Umami v3.4.0 是 Next.js 应用，经 scripts/start-env.js 启动 next start。
-# start-env.js 读 PORT（默认 3000）与 HOSTNAME（默认 0.0.0.0）。
-# umami.env 必须显式设 HOSTNAME=127.0.0.1 以避免监听公网。
+# Umami v3.4.0 是 Next.js 应用。本 unit 直接调用 Next CLI，
+# 通过显式 --hostname / --port 固定 loopback，env 中同时保留相同值。
 
 [Unit]
 Description=MaaS Daily Umami Analytics
@@ -28,8 +27,8 @@ Group=maasumami
 EnvironmentFile=/srv/maasweekly/shared/umami.env
 # Umami 应用目录（git clone v3.4.0 + pnpm build 产物）
 WorkingDirectory=/srv/maasweekly/umami
-# Next.js 生产启动（start-env.js 读 PORT/HOSTNAME env）
-ExecStart=/usr/bin/node /srv/maasweekly/umami/node_modules/.bin/next start
+# 显式 CLI 参数固定地址；next start 不通过 HOSTNAME env 设监听地址。
+ExecStart=/usr/bin/node /srv/maasweekly/umami/node_modules/.bin/next start --hostname 127.0.0.1 --port 3000
 # 重启与超时
 Restart=on-failure
 RestartSec=2

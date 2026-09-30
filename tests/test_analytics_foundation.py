@@ -142,6 +142,13 @@ class TestSystemdNonRoot(unittest.TestCase):
     def test_service_exists(self):
         self.assertTrue(UMAMI_SERVICE.exists(), f"{UMAMI_SERVICE} 应存在")
 
+    def test_execstart_binds_loopback(self):
+        import shlex
+        blob = UMAMI_SERVICE.read_text(encoding="utf-8")
+        argv = shlex.split(re.search(r"^ExecStart=(.+)$", blob, re.M).group(1))
+        self.assertEqual(argv[argv.index("--hostname") + 1], "127.0.0.1")
+        self.assertEqual(argv[argv.index("--port") + 1], "3000")
+
     def test_user_not_root(self):
         blob = UMAMI_SERVICE.read_text(encoding="utf-8")
         user_lines = re.findall(r"^User=(\S+)", blob, re.M)
