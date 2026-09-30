@@ -1,11 +1,30 @@
 # T08-1A Analytics Foundation
 
-日期：2026-09-30。状态：**Gate A 实现（待验收）**。
+日期：2026-09-30。状态：**Gate A 修复后待二次验收（Gate A round 2）**。
 
 前置：T08-0 已正式 PASS 并合入 main（commit `ea5690aa5`）。
 
 本任务严格遵循三 Gate 模型：**Gate A（仓库实现）→ Gate B（生产执行授权）→ Gate C（生产验收）**。
 本文档在 Gate A 阶段编写，只描述仓库实现与待执行配置，不含任何生产执行。
+
+### Gate A 验收历史
+
+- **Gate A round 1**（commit `db4fc45b9`）：**FAIL**——install-umami.sh 首次安装执行顺序错误（build 在 env 之前，prisma 无 DATABASE_URL；database 在 role 之前，OWNER role 不存在）；role exists + env missing 时静默 ALTER USER（credential recovery 语义矛盾）；tag 未 pin commit SHA；TLS/nginx 不闭环（安装 nginx -t 已知失败的 443 ssl config）。静态契约测试 28/28 通过但未发现这些问题——测试只检查"元素存在"，没验证"关键生命周期顺序"。
+- **Gate A round 2**（本次修复）：修复 P0 + P1 问题，测试从"存在性检查"升级到"执行顺序契约"。
+
+### Gate A round 2 修复项
+
+**P0 修复：**
+1. **install-umami.sh 执行顺序重排**：preflight → service user/dirs → PostgreSQL active → role → database → umami.env → clone source → pnpm install → pnpm run build（带 DATABASE_URL）→ install systemd → nginx → validate
+2. **role 必须先于 CREATE DATABASE ... OWNER role**
+3. **credential recovery fail closed**：role exists + env missing 时 `die`（STOP），不静默 ALTER USER；正常状态（role exists + env exists）preserve password；首次安装（role absent + env absent）generate password once
+4. **新增 execution-order contract tests**：`TestExecutionOrderContract` 验证关键步骤顺序（PostgreSQL active → role → database → env → clone → build → systemd → nginx）
+
+**P1 修复：**
+5. **Umami v3.4.0 同时 pin 40-char commit SHA**（`ec0ff50388c264ed8ce46f00967e92f7e71476ae`）；clone 后验证 HEAD == pinned SHA，防 upstream tag 移动
+6. **已存在 UMAMI_DIR 时验证 HEAD + clean worktree**，不一致 `die`（fail closed）；升级走单独 upgrade path，installer 不猜版本
+7. **TLS/nginx 流程重构**：不安装 nginx -t 已知会失败的 443 ssl config；Gate B 用 `--render-nginx <cert> <key>` 渲染完整 config（从模板 sed 取消注释 + 填入真实证书路径），保证 nginx -t 闭环；不依赖生产服务器手工取消注释（避免 repo/生产漂移）
+8. **rollback 删除手工 destructive cleanup 命令提示**（dropdb/dropuser/rm -rf）；rollback contract 保持"数据永远保留"
 
 ---
 
@@ -42,6 +61,7 @@ T08-1A 完成后：
 | 项目 | 值 | 来源 |
 |---|---|---|
 | Umami 版本 | **v3.4.0** | GitHub release（2026-09-17 发布，非 prerelease） |
+| Umami commit SHA | **ec0ff50388c264ed8ce46f00967e92f7e71476ae** | GitHub git refs/tags/v3.4.0 |
 | License | MIT | GitHub LICENSE |
 | 官方源 | github.com/umami-software/umami | 官方 GitHub |
 | Node.js | 18.18+（生产用 Node 22，对齐 maasweekly） | README requirements |
@@ -51,8 +71,11 @@ T08-1A 完成后：
 ### Version Pinning
 
 - 固定 tag `v3.4.0`（`git clone --branch v3.4.0 --depth 1`）
+- **同时 pin 40-char commit SHA**（`ec0ff50388c264ed8ce46f00967e92f7e71476ae`）
+- clone 后验证 HEAD == pinned SHA，防 upstream tag 移动
 - 禁止 `latest` / `main` / `master`
-- install-umami.sh 硬编码 `UMAMI_VERSION="v3.4.0"`
+- install-umami.sh 硬编码 `UMAMI_VERSION="v3.4.0"` + `UMAMI_COMMIT="ec0ff50388c264ed8ce46f00967e92f7e71476ae"`
+- 已存在 UMAMI_DIR 时验证 HEAD + clean worktree，不一致 fail closed
 
 ---
 
@@ -120,6 +143,20 @@ next start        # 经 scripts/start-env.js，读 PORT/HOSTNAME env
 - `ops/install-umami.sh`：用 `openssl rand` 现场生成，无硬编码值
 - 测试 `test_analytics_foundation.py` 验证 env.example 无真实 secret
 
+### 6.4 Credential recovery 语义（P0 修复）
+
+install-umami.sh 对 DB credential 的三种状态有明确处理：
+
+| 状态 | role | env | 行为 |
+|---|---|---|---|
+| 正常状态 | exists | exists | preserve password，不 ALTER USER |
+| 首次安装 | absent | absent | generate password once（role 创建 + env 生成同一次完成） |
+| 异常状态 | exists | absent | **STOP（die），fail closed** |
+
+**异常状态处理：** role exists + env missing 时，install-umami.sh `die`，不静默 ALTER USER 轮换现有 credential。PostgreSQL 密码不可逆，无法从 DB 恢复。必须显式 credential recovery：
+- 方式 A（轮换密码）：显式 `--recover-env`（本任务未实现，T08-1A 不支持静默轮换）
+- 方式 B（完全重装）：先 rollback-umami.sh，手动 dropdb/dropuser 后重跑 install-umami.sh
+
 ---
 
 ## 7. systemd
@@ -166,13 +203,21 @@ next start        # 经 scripts/start-env.js，读 PORT/HOSTNAME env
 - HTTP → HTTPS 重定向
 - **不影响现有 route contract**：不含 `/api/v1/` / `/api/mcp` 等 agent-api location
 
-### 8.3 DNS + TLS（OWNER ACTION REQUIRED）
+### 8.3 DNS + TLS（OWNER ACTION REQUIRED，分阶段执行）
 
-⚠️ **Gate B prerequisite（owner 必须完成）：**
-1. DNS：`analytics.maas.click → 47.237.135.97`（A 记录）
-2. TLS：`certbot certonly -d analytics.maas.click`
-3. 取消注释 `maasweekly-umami.conf` 的 `ssl_certificate` / `ssl_certificate_key` 行
-4. `nginx -t && nginx -s reload`
+⚠️ **Gate B prerequisite（owner 必须完成，分阶段）：**
+
+installer 不安装 nginx -t 已知会失败的 443 ssl config（P1 修复）。Gate B 分阶段执行：
+
+- **Phase 1**：DNS：`analytics.maas.click → 47.237.135.97`（A 记录）
+- **Phase 2**：`certbot certonly -d analytics.maas.click`（获取证书路径）
+- **Phase 3**：`ops/install-umami.sh --render-nginx <cert-path> <key-path>`（渲染完整 config：从模板 sed 取消注释 + 填入真实证书路径 → 安装到 `/etc/nginx/conf.d/`）
+- **Phase 4**：`nginx -t`（install-umami.sh Phase 3 后自动执行，完整配置预期通过）
+- **Phase 5**：`nginx -s reload`（同上）
+- **Phase 6**：`systemctl enable --now maas-umami.service`
+- **Phase 7**：`curl http://127.0.0.1:3000/api/heartbeat`（验证 Umami 健康）
+
+**不依赖生产服务器手工取消注释**（避免 repo/生产漂移）。nginx 模板不含注释的 `ssl_certificate` 行，由 `--render-nginx` 渲染时填入。
 
 ---
 
@@ -315,10 +360,39 @@ Analytics 是 **non-critical dependency**：
 
 ## 16. Tests
 
-`tests/test_analytics_foundation.py` 覆盖 14 项契约检查（见任务书 §24）。
+`tests/test_analytics_foundation.py` 覆盖契约检查，从"存在性检查"升级到"执行顺序契约"（Gate A round 2 核心修复）：
 
-Gate A 验证：
+### 16.1 测试分类（46 项）
+
+| 测试类 | 项数 | 覆盖 |
+|---|---|---|
+| `TestUmamiVersionPinned` | 7 | 版本 pin + commit SHA pin + clone 后 HEAD 验证 + 已存在目录 HEAD 验证 |
+| `TestEnvExampleNoSecret` | 4 | env.example 无真实 secret + HOSTNAME=127.0.0.1 |
+| `TestSystemdNonRoot` | 4 | 非 root + 不用 MemoryDenyWriteExecute + AddressFamilies |
+| `TestNginxLocalhostUpstream` | 4 | localhost upstream + subdomain + 不影响 agent route contract |
+| `TestTelemetryGuard` | 4 | Layout 无 Umami script + 无 unapproved telemetry + Skill installer 仍无 telemetry |
+| `TestInstallerIdempotent` | 6 | 保留 env + credential recovery fail closed + 无硬编码 password + DB exists check |
+| `TestRollbackNonDestructive` | 6 | 不 DROP DATABASE + 不 dropdb + 保留 env/app + 不影响主站 + 无 destructive cleanup 提示 |
+| `TestExecutionOrderContract` | 8 | **P0 核心**：PostgreSQL active → role → database → env → clone → build → systemd → nginx 顺序契约 |
+| `TestTlsNginxClosedLoop` | 4 | **P1 核心**：nginx 模板无注释 ssl_certificate + --render-nginx 模式 + 不安装无效 config + nginx -t 闭环 |
+
+### 16.2 执行顺序契约测试（TestExecutionOrderContract，P0 核心修复）
+
+Gate A round 1 FAIL 根因：静态契约测试 28/28 通过，但首次安装仍会失败——因为测试只检查"元素存在"，没验证"关键生命周期顺序"。
+
+`TestExecutionOrderContract` 验证 install-umami.sh 中关键步骤的执行顺序：
+- `test_postgresql_active_before_role_creation`：PostgreSQL active 在 role 之前
+- `test_role_before_database`：role 在 CREATE DATABASE 之前（OWNER role 需已存在）
+- `test_database_before_env`：database 在 umami.env 之前（DATABASE_URL 引用 database）
+- `test_env_before_clone`：umami.env 在 clone 之前
+- `test_clone_before_build`：clone 在 pnpm install/build 之前
+- `test_env_before_build`：umami.env 在 pnpm run build 之前（prisma 自动建表需要 DATABASE_URL）
+- `test_build_before_systemd`：build 在 systemd 安装之前
+- `test_full_order_pipeline`：完整顺序 preflight → user → pg active → role → db → env → clone → build → systemd → nginx
+
+### 16.3 Gate A 验证
+
 ```bash
-python3 -m unittest discover -s tests -p 'test_analytics_foundation.py'
-scripts/run-all-tests.sh   # 含新增 test_analytics_foundation
+python3 -m unittest discover -s tests -p 'test_analytics_foundation.py'   # 46 项
+scripts/run-all-tests.sh   # 含 test_analytics_foundation
 ```
