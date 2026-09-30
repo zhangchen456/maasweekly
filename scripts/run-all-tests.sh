@@ -84,12 +84,15 @@ run "site: model-identity-ui-contract（T07-4A）" bash -c 'cd site && node test
 run "site: changes-browser-contract（T07-4A.2）" bash -c 'cd site && node tests/changes-browser-contract.test.mjs'
 run "site: changes-browser-ui（T07-4A.2）" bash -c 'cd site && node tests/changes-browser-ui.test.mjs'
 run "site: model-detail（T07-4B.2）" bash -c 'cd site && node tests/model-detail.test.mjs'
-run "site: SEO（canonical / sitemap / model content）" bash -c 'cd site && node --experimental-strip-types tests/seo.test.mjs'
 run "site: analytics（T08 lightweight）" bash -c 'cd site && node --test tests/analytics.test.mjs'
 run "site: agent-interactions（copy regression）" bash -c 'cd site && node --test tests/agent-interactions.test.mjs'
 run "site: platform-logos" bash -c 'cd site && node tests/platform-logos.test.mjs'
 run "site: leaderboards" bash -c 'cd site && node tests/leaderboards.test.mjs'
 run "site: records（含残留检测）" bash -c 'cd site && node tests/records.test.mjs'
+# records tests rebuild with temporary archive fixtures. Restore a pristine dist
+# before release assembly: restoring source files alone leaves fixture week pages.
+run "site final build（测试 fixture 清理后）" bash -c 'cd site && npm exec astro build'
+run "site: SEO（canonical / sitemap / model content）" bash -c 'cd site && node --experimental-strip-types tests/seo.test.mjs'
 
 # ---- agent-api（REST + MCP 全套）----
 run "agent-api: build" bash -c 'cd services/agent-api && npm run build'

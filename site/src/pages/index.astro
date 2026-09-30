@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ModelPriceLinks from '../components/ModelPriceLinks.astro';
+import { priceChangeLink } from '../lib/record-links';
 import '../styles/workspace.css';
 import { getCollection } from 'astro:content';
 import { logoFor } from '../lib/platforms';
@@ -163,7 +164,7 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
                   {pc.previous ? <><s>{pc.previous}</s> → </> : null}
                   <strong>{pc.current}</strong> {pc.currency}/百万tokens
                 </span>
-                {pc.id && <a class="pcx-detail" href={`/item/${pc.id}/`}>详情 ↗</a>}
+                <a class="pcx-detail" href={priceChangeLink(pc).href}>{priceChangeLink(pc).label} ↗</a>
               </li>
             ))}
           </ul>
