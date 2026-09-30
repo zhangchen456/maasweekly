@@ -242,48 +242,19 @@ class TestTelemetryGuard(unittest.TestCase):
 
 
 class TestInstallerIdempotent(unittest.TestCase):
-    """11. installer 保留已有 env（幂等）；12. 不包含硬编码生产 password；
-    P0: credential recovery fail closed"""
+    """11. installer 保留已有 env（幂等）；12. 不包含硬编码生产 password"""
 
     def test_installer_preserves_existing_env(self):
-        """幂等：umami.env 已存在时保留"""
+        """幂等：状态 B（role exists + env exists）preserve credential"""
         blob = INSTALL_UMAMI.read_text(encoding="utf-8")
-        # 检查幂等逻辑：用 UMAMI_ENV 变量检查存在性，并说明保留既有 secret
         self.assertRegex(blob, r"UMAMI_ENV=.*umami\.env",
                          "应定义 UMAMI_ENV 变量指向 umami.env")
-        self.assertRegex(blob, r'if\s+\[\s+-f\s+"\$UMAMI_ENV"\s+\]',
-                         "应检查 umami.env 是否已存在")
-        self.assertRegex(blob, r"保留既有 secret|保留",
-                         "应说明保留既有 secret")
-
-    def test_credential_recovery_fail_closed(self):
-        """P0 修复：role exists + env missing 时 STOP（fail closed），不静默 ALTER USER"""
-        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
-        # 必须有 role exists + env missing 的异常状态检测
-        self.assertRegex(blob, r"USER_EXISTS.*=.*\"1\"",
-                         "应检查 USER_EXISTS 状态")
-        self.assertRegex(blob, r"role.*已存在.*env.*不存在|异常状态",
-                         "应检测 role exists + env missing 异常状态")
-        # 必须 die（fail closed），不静默 ALTER USER
-        self.assertRegex(blob, r"die.*异常状态|die.*role.*已存在.*env.*不存在",
-                         "role exists + env missing 必须 die（fail closed）")
-
-    def test_normal_state_preserves_password(self):
-        """P0 修复：正常状态（role exists + env exists）不 ALTER USER"""
-        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
-        # 正常状态下不应有 ALTER USER（首次安装的 ALTER USER 例外，但需有条件守卫）
-        # 检查 ALTER USER 出现的位置必须有"首次安装"守卫
-        alter_lines = [l for l in blob.splitlines() if "ALTER USER" in l and "dry-run" not in l.lower()]
-        # 首次安装的 ALTER USER 必须在 env 不存在 + role 不存在的分支内
-        for line in alter_lines:
-            # ALTER USER 应在首次安装分支（env 不存在 + role 不存在）
-            # 检查上下文有"首次安装"说明
-            pass  # 具体顺序由 TestExecutionOrderContract 验证
+        self.assertRegex(blob, r"状态 B.*existing|preserve credential",
+                         "应说明状态 B preserve credential")
 
     def test_installer_no_hardcoded_production_password(self):
         """12. installer 不包含硬编码生产 password"""
         blob = INSTALL_UMAMI.read_text(encoding="utf-8")
-        # 不应包含真实的 hex 密码（openssl rand 在服务器现场生成）
         hardcoded = re.findall(r"(?:PASSWORD|password)\s*=\s*['\"][a-f0-9]{16,}['\"]", blob)
         self.assertEqual(hardcoded, [],
                          f"不应硬编码生产 password: {hardcoded}")
@@ -291,14 +262,308 @@ class TestInstallerIdempotent(unittest.TestCase):
     def test_installer_db_user_exists_check(self):
         """幂等：PostgreSQL user 已存在时跳过创建"""
         blob = INSTALL_UMAMI.read_text(encoding="utf-8")
-        self.assertRegex(blob, r"USER_EXISTS|rolname",
-                         "应检查 PostgreSQL user 是否已存在")
+        self.assertRegex(blob, r"ROLE_EXISTS|rolname",
+                         "应检查 PostgreSQL role 是否已存在")
 
     def test_installer_db_exists_check(self):
         """幂等：database 已存在时跳过创建"""
         blob = INSTALL_UMAMI.read_text(encoding="utf-8")
         self.assertRegex(blob, r"DB_EXISTS|pg_database|datname",
                          "应检查 PostgreSQL database 是否已存在")
+
+    def test_no_alter_user_in_normal_install(self):
+        """Round 3 P0 修复：fresh install 不使用 ALTER USER（DB_PASS 一次生成，CREATE ROLE 直接用）"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # 只检查实际 PostgreSQL 命令行（sudo -u postgres psql -c "ALTER USER"）
+        # 排除 echo/注释/heredoc 说明文字
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#") or stripped.startswith("echo ") or stripped.startswith('cat '):
+                continue
+            # heredoc 内容行（cat <<EOF 与 EOF 之间）不是实际命令
+            # 只检查 sudo -u postgres ... ALTER USER 这种实际命令
+            if "ALTER USER" in stripped and "psql" in stripped:
+                self.fail(f"install-umami.sh 不应使用 ALTER USER（Round 3: DB_PASS 一次生成）: {stripped}")
+
+
+class TestCredentialStateMachine(unittest.TestCase):
+    """Round 3 P0 修复：显式四态状态机。
+
+    四态（在任何 mutation 之前显式检测）：
+      A. role absent + env absent  → fresh install（generate credential once）
+      B. role exists + env exists  → existing healthy（preserve）
+      C. role exists + env absent  → fail closed（STOP，不自动 rotate）
+      D. role absent + env exists  → fail closed（STOP，inconsistent）
+
+    C/D 检测必须发生在任何 PostgreSQL/user/database/source mutation 之前。
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # 提取非注释行及其行号
+        cls.lines = []
+        for i, line in enumerate(cls.blob.splitlines(), 1):
+            stripped = line.strip()
+            if stripped.startswith("#") or not stripped:
+                continue
+            cls.lines.append((i, stripped))
+
+    def _step_index(self, pattern, start=0):
+        """返回第一个匹配 pattern 的非注释行的行号"""
+        for i, line in self.lines:
+            if i < start:
+                continue
+            if re.search(pattern, line):
+                return i
+        return -1
+
+    def test_four_state_detection(self):
+        """四态状态机：A fresh / B existing / C fail closed / D fail closed"""
+        blob = self.blob
+        # 状态 A：role absent + env absent → fresh install
+        self.assertRegex(blob, r"状态 A.*fresh|A_fresh",
+                         "应显式检测状态 A（fresh install）")
+        # 状态 B：role exists + env exists → preserve
+        self.assertRegex(blob, r"状态 B.*existing|B_existing",
+                         "应显式检测状态 B（existing healthy）")
+        # 状态 C：role exists + env absent → fail closed
+        self.assertRegex(blob, r"状态 C.*incomplete|fail closed",
+                         "应显式检测状态 C（role exists + env absent → fail closed）")
+        # 状态 D：role absent + env exists → fail closed
+        self.assertRegex(blob, r"状态 D.*inconsistent",
+                         "应显式检测状态 D（role absent + env exists → fail closed）")
+
+    def test_state_C_fail_closed(self):
+        """状态 C（role exists + env absent）die（fail closed），不自动 rotate"""
+        blob = self.blob
+        # 状态 C 必须 die
+        self.assertRegex(blob, r"die.*状态 C|die.*role.*已存在.*env.*不存在|die.*incomplete",
+                         "状态 C 必须 die（fail closed）")
+
+    def test_state_D_fail_closed(self):
+        """状态 D（role absent + env exists）die（fail closed）"""
+        blob = self.blob
+        # 状态 D 必须 die
+        self.assertRegex(blob, r"die.*状态 D|die.*role.*不存在.*env.*存在|die.*inconsistent",
+                         "状态 D 必须 die（fail closed）")
+
+    def test_state_detection_before_any_mutation(self):
+        """Round 3 P0 核心修复：C/D 状态检测必须发生在任何 mutation 之前。
+
+        mutation 包括：CREATE USER / CREATE DATABASE / useradd / mkdir / chown / git clone。
+        状态检测（ROLE_EXISTS / ENV_EXISTS）必须在所有这些之前。
+        """
+        # 状态检测的行号
+        state_check = self._step_index(r"ROLE_EXISTS|状态.*预检|credential.*状态")
+        self.assertGreater(state_check, 0, "应有 credential 状态预检")
+
+        # 各 mutation 的行号
+        mutations = [
+            (r"CREATE USER|CREATE ROLE", "CREATE USER"),
+            (r"CREATE DATABASE", "CREATE DATABASE"),
+            (r"useradd", "useradd"),
+            (r"git clone", "git clone"),
+        ]
+        for pattern, name in mutations:
+            mut_line = self._step_index(pattern)
+            if mut_line > 0:  # dry-run 分支可能不含
+                self.assertLess(state_check, mut_line,
+                                f"状态检测必须在 {name} 之前：状态检测={state_check}, {name}={mut_line}")
+
+    def test_fresh_install_credential_generated_once(self):
+        """Round 3 P0 修复：fresh install DB_PASS 一次生成，CREATE ROLE 直接用"""
+        blob = self.blob
+        # DB_PASS 生成（openssl rand）
+        self.assertRegex(blob, r"DB_PASS=.*openssl rand",
+                         "fresh install 应生成 DB_PASS")
+        # CREATE USER 直接使用 DB_PASS（不是 ALTER USER）
+        self.assertRegex(blob, r"CREATE USER.*DB_PASS|CREATE USER.*PASSWORD.*DB_PASS",
+                         "CREATE USER 应直接使用生成的 DB_PASS")
+
+    def test_fresh_install_no_alter_user(self):
+        """Round 3 P0 修复：fresh install 不 CREATE 后 ALTER（无 ALTER USER 实际命令）"""
+        blob = self.blob
+        # 整个 install-umami.sh 不应有 psql -c "ALTER USER" 实际命令
+        # （注释/echo/heredoc 说明文字除外；只检查 sudo -u postgres psql -c "ALTER USER"）
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#") or stripped.startswith("echo ") or stripped.startswith("cat "):
+                continue
+            # 实际 PostgreSQL 命令行包含 ALTER USER
+            if "ALTER USER" in stripped and "psql" in stripped:
+                self.fail(f"install-umami.sh 不应有 ALTER USER 实际命令（Round 3: DB_PASS 一次生成）: {stripped}")
+
+    def test_atomic_env_write(self):
+        """Round 3 P0 修复：env 使用 temp file + atomic rename"""
+        blob = self.blob
+        self.assertRegex(blob, r"mktemp.*umami\.env\.tmp|TMP_ENV.*mktemp",
+                         "应使用 temp file 写 env")
+        self.assertRegex(blob, r"mv\s+-f.*\$TMP_ENV.*\$UMAMI_ENV|atomic rename",
+                         "应 atomic rename temp file → umami.env")
+
+
+class TestRenderNginxIsolation(unittest.TestCase):
+    """Round 3 P1 修复：render-nginx 是真正独立的 nginx 操作。
+
+    render-nginx 不得触发 PostgreSQL/source/build/systemd mutation。
+    Production Authorization Package 才能准确标注 Phase 3 = nginx mutation。
+    """
+
+    def test_render_nginx_script_exists(self):
+        """render-umami-nginx.sh 独立脚本存在"""
+        render_script = BASE / "ops" / "render-umami-nginx.sh"
+        self.assertTrue(render_script.exists(), "ops/render-umami-nginx.sh 应存在")
+
+    def test_render_nginx_no_db_mutation(self):
+        """render-umami-nginx.sh 不触发 PostgreSQL mutation"""
+        render_script = BASE / "ops" / "render-umami-nginx.sh"
+        blob = render_script.read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r"CREATE\s+(USER|ROLE|DATABASE)",
+                                f"render-umami-nginx.sh 不应包含 PostgreSQL mutation: {stripped}")
+            self.assertNotRegex(stripped, r"ALTER\s+USER",
+                                f"render-umami-nginx.sh 不应包含 ALTER USER: {stripped}")
+
+    def test_render_nginx_no_source_build_mutation(self):
+        """render-umami-nginx.sh 不触发 source/build mutation"""
+        render_script = BASE / "ops" / "render-umami-nginx.sh"
+        blob = render_script.read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r"git clone",
+                                f"render-umami-nginx.sh 不应 git clone: {stripped}")
+            self.assertNotRegex(stripped, r"pnpm\s+(install|run build)",
+                                f"render-umami-nginx.sh 不应 pnpm install/build: {stripped}")
+
+    def test_render_nginx_no_systemd_mutation(self):
+        """render-umami-nginx.sh 不触发 systemd mutation"""
+        render_script = BASE / "ops" / "render-umami-nginx.sh"
+        blob = render_script.read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r"systemctl\s+(enable|start|daemon-reload)",
+                                f"render-umami-nginx.sh 不应 systemctl mutation: {stripped}")
+            self.assertNotRegex(stripped, r"install.*maas-umami\.service",
+                                f"render-umami-nginx.sh 不应安装 systemd service: {stripped}")
+
+    def test_render_nginx_only_nginx_operations(self):
+        """render-umami-nginx.sh 只做 nginx 操作（sed 渲染 + nginx -t + reload）"""
+        render_script = BASE / "ops" / "render-umami-nginx.sh"
+        blob = render_script.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"sed.*ssl_certificate|sed.*NGINX_SRC",
+                         "应 sed 渲染 nginx config")
+        self.assertRegex(blob, r"nginx\s+-t",
+                         "应 nginx -t")
+        self.assertRegex(blob, r"nginx\s+-s\s+reload",
+                         "应 nginx -s reload")
+
+    def test_install_umami_does_not_render_nginx(self):
+        """install-umami.sh 不渲染 nginx config（由 render-umami-nginx.sh 负责）"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"render-umami-nginx\.sh",
+                         "install-umami.sh 应引用 render-umami-nginx.sh")
+        # install-umami.sh 不应直接渲染 ssl_certificate
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r"sed.*ssl_certificate",
+                                f"install-umami.sh 不应直接渲染 ssl_certificate: {stripped}")
+
+
+class TestBuildCompletion(unittest.TestCase):
+    """Round 3 P1 修复：build 完成契约。
+
+    不以 .next exists 判断 build 成功（.next 可能是中途失败半成品）。
+    采用可证明与 pinned SHA 对应的 build strategy：每次明确 pnpm install + pnpm run build。
+    """
+
+    def test_no_next_dir_skip_build(self):
+        """不以 .next exists 判断 build 成功"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # 不应有"if [ -d .next ]; then skip build"逻辑
+        # 检查非注释行
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r'if\s+\[\s*-d.*\.next.*\].*skip',
+                                f"不应以 .next exists 判断 build 成功: {stripped}")
+
+    def test_build_always_executed(self):
+        """每次明确 pnpm run build（不靠目录存在 skip）"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"pnpm run build",
+                         "应明确执行 pnpm run build")
+
+    def test_pnpm_install_always_executed(self):
+        """每次明确 pnpm install（不靠 node_modules exists skip）"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"pnpm install",
+                         "应明确执行 pnpm install")
+
+
+class TestPartialFailureRerun(unittest.TestCase):
+    """Round 3 P0 修复：部分失败/re-run 契约。
+
+    installer 必须能从部分失败恢复（重复执行不破坏已就位状态）。
+    关键：第一次执行若在 CREATE USER 之后、env 生成之前失败，
+    第二次执行不能因 role exists + env absent 永久卡在状态 C。
+    """
+
+    def test_state_C_is_recoverable_via_explicit_path(self):
+        """状态 C（role exists + env absent）应给出人工诊断路径，而非 destructive recovery"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # 状态 C 应 die，且不提供 destructive recovery（dropdb/dropuser）
+        self.assertRegex(blob, r"die.*状态 C|die.*incomplete",
+                         "状态 C 应 die")
+        # 不应建议 dropdb/dropuser（destructive recovery）——检查实际命令行，排除 echo/注释
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#") or stripped.startswith("echo "):
+                continue
+            self.assertNotRegex(stripped, r"^\S*(dropdb|dropuser)",
+                                f"状态 C 不应建议 destructive recovery (dropdb/dropuser): {stripped}")
+
+    def test_installer_no_destructive_recovery_hints(self):
+        """installer 不提供 destructive recovery 路径（不 dropdb/dropuser）"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#") or stripped.startswith("echo "):
+                continue
+            self.assertNotRegex(stripped, r"^\S*(dropdb|dropuser)",
+                                f"installer 不应提示 dropdb/dropuser: {stripped}")
+
+    def test_state_detection_before_useradd(self):
+        """状态检测必须在 useradd 之前（useradd 是首个 mutation）"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        lines = []
+        for i, line in enumerate(blob.splitlines(), 1):
+            stripped = line.strip()
+            if stripped.startswith("#") or not stripped:
+                continue
+            lines.append((i, stripped))
+
+        state_check = -1
+        useradd_line = -1
+        for i, line in lines:
+            if state_check < 0 and re.search(r"ROLE_EXISTS|状态.*预检|credential.*状态", line):
+                state_check = i
+            if useradd_line < 0 and re.search(r"useradd", line):
+                useradd_line = i
+
+        if state_check > 0 and useradd_line > 0:
+            self.assertLess(state_check, useradd_line,
+                            f"状态检测({state_check})必须在 useradd({useradd_line})之前")
 
 
 class TestRollbackNonDestructive(unittest.TestCase):
@@ -414,24 +679,28 @@ class TestExecutionOrderContract(unittest.TestCase):
                        "role 必须先于 database（CREATE DATABASE OWNER role 需要 role 已存在）")
 
     def test_database_before_env(self):
-        """database 必须在 umami.env 生成之前（DATABASE_URL 引用 database）"""
-        db_step = self._step_index(r"CREATE DATABASE|DB_EXISTS")
-        # env 生成/检查逻辑（不是变量定义 UMAMI_ENV=...）
-        env_step = self._step_index(r'if\s+\[\s*-f\s+"\$UMAMI_ENV"')
-        self.assertGreater(db_step, 0, "应有 database 创建/检查")
-        self.assertGreater(env_step, 0, "应有 umami.env 生成/检查逻辑")
-        self.assertLess(db_step, env_step,
-                       "database 必须在 umami.env 生成之前")
+        """database 必须在 umami.env 生成之前（DATABASE_URL 引用 database）。
+
+        Round 3 四态状态机：ENV_EXISTS 状态检测（if [ -f "$UMAMI_ENV" ]）在
+        CREATE DATABASE 之前——这是状态检测，不是 env 生成。env 生成（TMP_ENV/mv）
+        必须在 CREATE DATABASE 之后。"""
+        db_step = self._step_index(r"CREATE DATABASE")
+        # env 生成逻辑（temp file + atomic rename），不是状态检测
+        env_gen_step = self._step_index(r"TMP_ENV|mktemp.*umami\.env\.tmp|写.*umami\.env")
+        self.assertGreater(db_step, 0, "应有 CREATE DATABASE")
+        self.assertGreater(env_gen_step, 0, "应有 umami.env 生成逻辑（temp file + atomic rename）")
+        self.assertLess(db_step, env_gen_step,
+                       "CREATE DATABASE 必须在 umami.env 生成之前")
 
     def test_env_before_clone(self):
         """P0 修复：umami.env 必须在 clone 之前（build 需要 DATABASE_URL）"""
-        # env 生成/检查逻辑（不是变量定义 UMAMI_ENV=...）
-        env_step = self._step_index(r'if\s+\[\s*-f\s+"\$UMAMI_ENV"')
+        # env 生成逻辑（temp file + atomic rename），不是状态检测
+        env_step = self._step_index(r"TMP_ENV|mktemp.*umami\.env\.tmp|写.*umami\.env")
         clone_step = self._step_index(r"git clone")
-        self.assertGreater(env_step, 0, "应有 umami.env 生成/检查逻辑")
+        self.assertGreater(env_step, 0, "应有 umami.env 生成逻辑")
         self.assertGreater(clone_step, 0, "应有 git clone")
         self.assertLess(env_step, clone_step,
-                       "umami.env 必须在 git clone 之前")
+                       "umami.env 生成必须在 git clone 之前")
 
     def test_clone_before_build(self):
         """clone 必须在 pnpm install/build 之前"""
@@ -444,13 +713,13 @@ class TestExecutionOrderContract(unittest.TestCase):
 
     def test_env_before_build(self):
         """P0 修复：umami.env 必须在 build 之前（prisma 需要 DATABASE_URL）"""
-        # env 生成/检查逻辑（不是变量定义 UMAMI_ENV=...）
-        env_step = self._step_index(r'if\s+\[\s*-f\s+"\$UMAMI_ENV"')
+        # env 生成逻辑（temp file + atomic rename），不是状态检测
+        env_step = self._step_index(r"TMP_ENV|mktemp.*umami\.env\.tmp|写.*umami\.env")
         build_step = self._step_index(r"pnpm run build")
-        self.assertGreater(env_step, 0, "应有 umami.env 生成/检查逻辑")
+        self.assertGreater(env_step, 0, "应有 umami.env 生成逻辑")
         self.assertGreater(build_step, 0, "应有 pnpm run build")
         self.assertLess(env_step, build_step,
-                       "umami.env 必须在 pnpm run build 之前（prisma 自动建表需要 DATABASE_URL）")
+                       "umami.env 生成必须在 pnpm run build 之前（prisma 自动建表需要 DATABASE_URL）")
 
     def test_build_before_systemd(self):
         """build 必须在 systemd service 安装之前"""
@@ -462,18 +731,22 @@ class TestExecutionOrderContract(unittest.TestCase):
                        "build 必须在 systemd service 安装之前")
 
     def test_full_order_pipeline(self):
-        """完整顺序：preflight → user → pg active → role → db → env → clone → build → systemd → nginx"""
+        """完整顺序（Round 3 四态状态机）：
+        preflight → pg active → credential state precheck → user → role → db → env → clone → build → systemd
+
+        Round 3 修复：PostgreSQL active 在 credential 状态预检之前（状态预检需查询 PG）；
+        credential 状态预检在 user/role/db mutation 之前。"""
         checks = [
             (r"preflight|检查 node", "preflight"),
-            (r"useradd|SERVICE_USER", "service user"),
             (r"systemctl.*postgresql|is-active.*postgresql", "PostgreSQL active"),
-            (r"CREATE USER|USER_EXISTS", "role"),
-            (r"CREATE DATABASE|DB_EXISTS", "database"),
-            (r'if\s+\[\s*-f\s+"\$UMAMI_ENV"', "env check"),
+            (r"ROLE_EXISTS|状态.*预检|credential.*状态", "credential state precheck"),
+            (r"useradd", "service user"),
+            (r"CREATE USER", "role"),
+            (r"CREATE DATABASE", "database"),
+            (r"TMP_ENV|mktemp.*umami\.env\.tmp|写.*umami\.env", "env generation"),
             (r"git clone", "clone"),
             (r"pnpm run build", "build"),
             (r"maas-umami\.service|systemctl daemon-reload", "systemd"),
-            (r"nginx|--render-nginx", "nginx"),
         ]
         prev_line = 0
         prev_name = "(start)"
@@ -509,28 +782,42 @@ class TestTlsNginxClosedLoop(unittest.TestCase):
             self.assertNotRegex(stripped, r"^#\s*ssl_certificate\s+/",
                                 f"nginx 模板不应有待取消注释的 ssl_certificate: {stripped}")
 
-    def test_installer_render_nginx_mode(self):
-        """P1 修复：installer 支持 --render-nginx <cert> <key> 渲染完整 config"""
+    def test_installer_render_nginx_delegated_to_separate_script(self):
+        """Round 3 P1 修复：render-nginx 拆为独立脚本 render-umami-nginx.sh"""
         blob = INSTALL_UMAMI.read_text(encoding="utf-8")
-        self.assertRegex(blob, r"--render-nginx",
-                         "installer 应支持 --render-nginx 模式")
+        self.assertRegex(blob, r"render-umami-nginx\.sh",
+                         "install-umami.sh 应引用 render-umami-nginx.sh（独立脚本）")
+        self.assertNotRegex(blob, r"--render-nginx",
+                            "install-umami.sh 不应支持 --render-nginx（已拆为独立脚本）")
 
-    def test_installer_does_not_install_invalid_nginx_by_default(self):
-        """P1 修复：默认（无 --render-nginx）不安装 nginx config 到生产"""
-        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
-        # 无 --render-nginx 时应提示不安装，不执行 install
-        self.assertRegex(blob, r"未渲染|不安装到生产|Gate B Phase 3",
-                         "无 --render-nginx 时应不安装 nginx config")
+    def test_render_nginx_script_runs_nginx_t(self):
+        """Round 3：render-umami-nginx.sh 执行 nginx -t（完整配置，预期通过）"""
+        render_script = BASE / "ops" / "render-umami-nginx.sh"
+        blob = render_script.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"nginx\s+-t",
+                         "render-umami-nginx.sh 应 nginx -t")
 
-    def test_installer_runs_nginx_t_only_after_render(self):
-        """P1 修复：nginx -t 只在 --render-nginx 后执行（不在无效配置上执行）"""
+    def test_install_umami_does_not_run_nginx_t(self):
+        """Round 3：install-umami.sh 不执行 nginx -t（由 render-umami-nginx.sh 负责）"""
         blob = INSTALL_UMAMI.read_text(encoding="utf-8")
-        # nginx -t 应在 --render-nginx 条件内
-        self.assertRegex(blob, r"NGINX_CERT.*NGINX_KEY|render-nginx",
-                         "nginx -t 应在 --render-nginx 条件内")
-        # 无证书时应 skip nginx -t
-        self.assertRegex(blob, r"skip nginx -t|无完整配置",
-                         "无完整配置时应 skip nginx -t")
+        # 只检查实际命令行（nginx -t 作为独立命令），排除 echo/注释/heredoc 文字
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#") or stripped.startswith("echo ") or stripped.startswith("cat "):
+                continue
+            # 实际 nginx -t 命令（run "..." "nginx -t" 或裸 nginx -t）
+            if re.match(r'^(nginx\s+-t|run\s+.*nginx\s+-t)', stripped):
+                self.fail(f"install-umami.sh 不应 nginx -t（由 render-umami-nginx.sh 负责）: {stripped}")
+
+    def test_install_umami_does_not_install_nginx_config(self):
+        """Round 3：install-umami.sh 不安装 nginx config 到生产（由 render-umami-nginx.sh 负责）"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r"install.*NGINX_DST|install.*maasweekly-umami\.conf.*/etc/nginx",
+                                f"install-umami.sh 不应直接安装 nginx config: {stripped}")
 
 
 if __name__ == "__main__":
