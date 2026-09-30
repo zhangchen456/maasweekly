@@ -57,7 +57,7 @@ proposed architecture 均明确标记为 **[PROPOSED]**，不描述为 existing 
 
 **理由：**
 
-1. **cookie-less 默认**：Umami 默认不设 cookie，使用随机 visitor_id（localStorage 或服务端生成），符合当前零 cookie 架构与 §4 visitor/session 策略
+1. **cookie-less 默认**：Umami 默认不设 cookie，使用 IP + User-Agent + Website ID 生成匿名 hash 识别 visitor（见 §4），符合当前零 cookie 架构与 visitor/session 策略
 2. **自托管，数据自有**：与 maasweekly "数据所有权"原则一致（现有 pipeline 全自建，数据全在仓库/服务器）
 3. **REST API 成熟**：Umami 提供 REST API 可拉取 PV/UV/Session/Referrer/Event 聚合数据，便于 T08-6 统一数据层拉取
 4. **Custom Event 免费**：Umami 免费版即支持 Custom Event 与 Custom Properties；Plausible CE 版支持 Custom Event，但部分 Custom Properties 能力属 Business plan（付费版）。Umami 在自托管免费场景下 Custom Properties 无限制
