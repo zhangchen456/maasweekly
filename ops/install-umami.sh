@@ -91,16 +91,18 @@ run "检查磁盘剩余 >1GB（GNU df，服务器 Linux）" \
 run "确认 PostgreSQL 运行" "systemctl is-active --quiet postgresql || systemctl start postgresql"
 
 # ============================================================
-# 2. CREDENTIAL 状态机预检（Round 4 P0 修复：支持 crash recovery）
+# 2. CREDENTIAL 状态机预检（Round 5 P0 修复：6 态完整状态机）
 #    必须在任何 PostgreSQL/user/database/source mutation 之前。
-#    显式状态机（含 pending state crash recovery）：
-#      A. role absent + env absent + no pending      → fresh install
-#      B. role exists + env exists                    → existing healthy（preserve）
-#      C. role exists + env absent + no pending       → fail closed（STOP）
-#      D. role absent + env exists                     → fail closed（STOP，inconsistent）
-#      E. role exists + env absent + valid pending    → resume（crash recovery）
+#    显式 6 态状态机（含 pending state crash recovery）：
+#      A. role=0 env=0 pending=0 → fresh install（generate credential）
+#      F. role=0 env=0 pending=1 → resume-before-role（reuse pending credential）
+#      E. role=1 env=0 pending=1 → resume-after-role（reuse pending credential）
+#      B. role=1 env=1            → existing healthy（preserve）
+#      C. role=1 env=0 pending=0 → fail closed（STOP）
+#      D. role=0 env=1            → fail closed（STOP，inconsistent）
+#    核心 invariant：valid pending exists → never regenerate credential
 # ============================================================
-echo "· credential 状态预检（含 pending state crash recovery）"
+echo "· credential 状态预检（6 态状态机 + pending crash recovery）"
 
 ROLE_EXISTS=0
 ENV_EXISTS=0
@@ -132,17 +134,20 @@ else
   fi
 fi
 
-echo "  · role $PG_USER exists=$ROLE_EXISTS；$UMAMI_ENV exists=$ENV_EXISTS；pending valid=$PENDING_VALID"
+echo "  · role=$ROLE_EXISTS env=$ENV_EXISTS pending=$PENDING_VALID"
 
-# 状态判定（在任何 mutation 之前）
+# 6 态判定（在任何 mutation 之前）
+# 核心 invariant：valid pending exists → never regenerate credential
+STATE=""
+
 if [ "$ROLE_EXISTS" = "1" ] && [ "$ENV_EXISTS" = "0" ]; then
   if [ "$PENDING_VALID" = "1" ]; then
-    # 状态 E：role exists + env absent + valid pending → resume（crash recovery）
+    # 状态 E：role=1 env=0 pending=1 → resume-after-role
     STATE="E_resume"
-    echo "  · 状态 E：resume from crash（role 已存在，env 缺失，valid pending state → 恢复安装）"
+    echo "  · 状态 E：resume-after-role（role 已存在，env 缺失，reuse pending credential）"
   else
-    # 状态 C：role exists + env absent + no pending → fail closed
-    die "状态 C（incomplete/recovery）：PostgreSQL role $PG_USER 已存在但 $UMAMI_ENV 不存在，且无 valid pending state。
+    # 状态 C：role=1 env=0 pending=0 → fail closed
+    die "状态 C（incomplete/no-recovery）：PostgreSQL role $PG_USER 已存在但 $UMAMI_ENV 不存在，且无 valid pending state。
       这意味着此前安装中断（role 已创建但 env 未生成）且 pending state 丢失，或 env 丢失。
       PostgreSQL 密码不可逆，无法从 DB 恢复，且无 pending state 可恢复。
       installer 不自动 rotate credential（避免静默轮换）。
@@ -153,7 +158,7 @@ if [ "$ROLE_EXISTS" = "1" ] && [ "$ENV_EXISTS" = "0" ]; then
 fi
 
 if [ "$ROLE_EXISTS" = "0" ] && [ "$ENV_EXISTS" = "1" ]; then
-  # 状态 D：role absent + env exists → fail closed（inconsistent）
+  # 状态 D：role=0 env=1 → fail closed（inconsistent）
   die "状态 D（inconsistent）：$UMAMI_ENV 存在但 PostgreSQL role $PG_USER 不存在。
     这是 inconsistent 状态（env 指向不存在的 role）。
     installer 不自动修复。需人工诊断：
@@ -161,17 +166,29 @@ if [ "$ROLE_EXISTS" = "0" ] && [ "$ENV_EXISTS" = "1" ]; then
       - 数据默认保留。installer 不提供 destructive 路径"
 fi
 
-# 状态 A（role absent + env absent + no pending）→ fresh install
-# 状态 B（role exists + env exists）→ existing healthy，preserve
-# 状态 E（role exists + env absent + valid pending）→ resume（上面已设 STATE）
-if [ -z "$STATE" ]; then
-  if [ "$ROLE_EXISTS" = "0" ] && [ "$ENV_EXISTS" = "0" ]; then
+if [ "$ROLE_EXISTS" = "0" ] && [ "$ENV_EXISTS" = "0" ]; then
+  if [ "$PENDING_VALID" = "1" ]; then
+    # 状态 F：role=0 env=0 pending=1 → resume-before-role（Round 5 P0 修复）
+    # pending state 已写入但 CREATE ROLE 前中断；reuse pending credential，不重新生成
+    STATE="F_resume_before_role"
+    echo "  · 状态 F：resume-before-role（pending credential 已存在，reuse，不重新生成）"
+  else
+    # 状态 A：role=0 env=0 pending=0 → fresh install
     STATE="A_fresh"
     echo "  · 状态 A：fresh install（将生成 credential 一次 + pending state crash recovery）"
-  elif [ "$ROLE_EXISTS" = "1" ] && [ "$ENV_EXISTS" = "1" ]; then
-    STATE="B_existing"
-    echo "  · 状态 B：existing healthy（preserve credential，不 ALTER USER）"
   fi
+fi
+
+if [ "$ROLE_EXISTS" = "1" ] && [ "$ENV_EXISTS" = "1" ]; then
+  # 状态 B：role=1 env=1 → existing healthy，preserve
+  STATE="B_existing"
+  echo "  · 状态 B：existing healthy（preserve credential，不 ALTER USER）"
+fi
+
+# invariant 校验：valid pending exists 时 STATE 不能是 A_fresh（不能重新生成 credential）
+if [ "$PENDING_VALID" = "1" ] && [ "$STATE" = "A_fresh" ]; then
+  die "状态机 invariant 违反：valid pending exists 但进入 A_fresh（会重新生成 credential）。
+    这是 bug。valid pending exists → never regenerate credential。"
 fi
 
 # ============================================================
@@ -187,9 +204,11 @@ run "创建 Umami 应用目录 ${UMAMI_DIR}" \
 run "创建 shared 目录（若不存在）" "mkdir -p $SHARED_DIR"
 
 # ============================================================
-# 5. Fresh install / Resume（Round 4 P0 修复：crash recovery via pending state）
-#    状态 A（fresh）：写 pending state → CREATE ROLE → CREATE DATABASE → env → 删 pending
-#    状态 E（resume）：从 pending state 恢复 DB_PASS → 补 CREATE DATABASE（若缺）→ env → 删 pending
+# 5. Fresh install / Resume（Round 5 P0 修复：6 态完整状态机）
+#    状态 A（fresh）：generate credential → 写 pending → CREATE ROLE → CREATE DATABASE → env → 删 pending
+#    状态 F（resume-before-role）：reuse pending credential → CREATE ROLE → CREATE DATABASE → env → 删 pending
+#    状态 E（resume-after-role）：reuse pending credential → 补 CREATE DATABASE（若缺）→ env → 删 pending
+#    核心 invariant：valid pending exists → never regenerate credential
 # ============================================================
 if [ "$STATE" = "A_fresh" ]; then
   echo "· fresh install：生成 credential 一次 + pending state crash recovery"
@@ -206,7 +225,8 @@ if [ "$STATE" = "A_fresh" ]; then
     APP_SECRET="$(openssl rand -hex 32)"
 
     # 写 pending state（0600 root:root）——在第一次 PostgreSQL mutation 之前
-    # crash recovery：若 CREATE ROLE 后中断，重跑可从 pending state 恢复 DB_PASS
+    # crash recovery：若 CREATE ROLE 前中断（状态 F）或后中断（状态 E），
+    # 重跑可从 pending state 恢复 DB_PASS
     echo "· 写 pending install state（crash recovery）"
     TMP_PENDING="$(mktemp "${PENDING_STATE}.tmp.XXXXXX")"
     cat > "$TMP_PENDING" <<EOF
@@ -243,6 +263,48 @@ EOF
     # 删除 pending state（role + database + env 全部完成）
     rm -f "$PENDING_STATE"
     echo "  ✓ pending state 已删除（安装完成）"
+  fi
+elif [ "$STATE" = "F_resume_before_role" ]; then
+  echo "· resume-before-role：reuse pending credential（不重新生成）"
+  if [ "$DRY_RUN" = "1" ]; then
+    echo "    [dry-run] 从 $PENDING_STATE 读取 DB_PASS/APP_SECRET（不输出 secret）"
+    echo "    [dry-run] CREATE USER $PG_USER WITH ENCRYPTED PASSWORD \$DB_PASS（reuse pending）"
+    echo "    [dry-run] CREATE DATABASE $PG_DB OWNER $PG_USER"
+    echo "    [dry-run] 写临时 env → atomic rename → $UMAMI_ENV"
+    echo "    [dry-run] 删除 pending state"
+  else
+    # reuse pending credential（不重新生成）——核心 invariant
+    # shellcheck disable=SC1090
+    source "$PENDING_STATE"
+    [ -n "$DB_PASS" ] || die "pending state 缺 DB_PASS"
+    [ -n "$APP_SECRET" ] || die "pending state 缺 APP_SECRET"
+
+    # CREATE ROLE 使用 pending 的 DB_PASS（role 尚未创建——状态 F）
+    echo "· CREATE ROLE $PG_USER（reuse pending DB_PASS）"
+    sudo -u postgres $PG_BIN -c "CREATE USER $PG_USER WITH ENCRYPTED PASSWORD '$DB_PASS'"
+
+    # CREATE DATABASE OWNER role
+    echo "· CREATE DATABASE $PG_DB OWNER $PG_USER"
+    sudo -u postgres $PG_BIN -c "CREATE DATABASE $PG_DB OWNER $PG_USER"
+    sudo -u postgres $PG_BIN -d "$PG_DB" -c "GRANT ALL PRIVILEGES ON DATABASE $PG_DB TO $PG_USER"
+
+    # 写 env（使用 pending 的 credential）
+    echo "· 写 $UMAMI_ENV（temp file → atomic rename；reuse pending credential）"
+    TMP_ENV="$(mktemp "${UMAMI_ENV}.tmp.XXXXXX")"
+    cat > "$TMP_ENV" <<EOF
+HOSTNAME=127.0.0.1
+PORT=3000
+DATABASE_URL=postgresql://${PG_USER}:${DB_PASS}@localhost:5432/${PG_DB}
+APP_SECRET=${APP_SECRET}
+EOF
+    chown root:"$SERVICE_USER" "$TMP_ENV"
+    chmod 0740 "$TMP_ENV"
+    mv -f "$TMP_ENV" "$UMAMI_ENV"
+    echo "  ✓ $UMAMI_ENV 生成（0740 root:$SERVICE_USER，atomic rename）"
+
+    # 删除 pending state（resume 完成）
+    rm -f "$PENDING_STATE"
+    echo "  ✓ pending state 已删除（resume-before-role 完成）"
   fi
 elif [ "$STATE" = "E_resume" ]; then
   echo "· resume from crash：从 pending state 恢复 DB_PASS"
