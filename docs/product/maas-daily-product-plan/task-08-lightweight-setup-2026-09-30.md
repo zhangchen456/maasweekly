@@ -1,6 +1,8 @@
+> 2026-09-30 22:18 更新：用户已提供 website ID，当前配置已启用并完成生产发布；下文的关闭状态描述属于初次交付。详见 [生产验收记录](./task-08-lightweight-production-2026-09-30.md)。
+
 # Task 08 轻量一期：代码交付与启用
 
-当前代码已接入 Umami Cloud 的可关闭适配器，账号由用户注册。`site/src/config/analytics.json` 保持 `enabled: false` 和空 `websiteId`。关闭时 HTML 不加载埋点脚本；本次不发布未配置的网站，也不安装 Umami 自托管服务。
+初次代码交付已接入 Umami Cloud 的可关闭适配器，账号由用户注册。`site/src/config/analytics.json` 保持 `enabled: false` 和空 `websiteId`。关闭时 HTML 不加载埋点脚本；本次不发布未配置的网站，也不安装 Umami 自托管服务。
 
 ## 注册与启用
 
@@ -28,7 +30,7 @@ Pageviews 由 Umami 原生 tracker 负责；适配器只过滤，不额外发送
 
 静态站点完整构建通过（18,599 页）。埋点与复制交互测试覆盖默认关闭、域名限制、配置校验、pageview 去重、刷新、动态模型筛选、外链、中键、成功/失败复制、属性清洗、DNT 和 provider 异常。原有 analytics foundation 94 项检查通过；埋点与 agent 复制交互 14 项通过，changes 23 项、model detail 14 项及 pricing 校验通过。默认关闭和启用 fixture 的构建均已验证，fixture 构建目录已删除，配置恢复为关闭。
 
-Cloud 账号尚未创建，因此实际 Cloud 收数、原生看板、配额及生产发布验收仍待启用后完成。当前环境获取 Cloud SDK 返回 HTTP 403；适配器行为使用模拟 provider 验证，不能替代上线后的真实 SDK 检查。具体套餐配额、保留期和导出权限以用户账号为准。
+Cloud 账号尚未创建，因此实际 Cloud 收数、原生看板、配额及生产发布验收仍待启用后完成。初次检查获取 Cloud SDK 返回 HTTP 403；上线阶段已重新获取成功，并验证真实 SDK 与生产浏览器请求，见生产验收记录。具体套餐配额、保留期和导出权限以用户账号为准。
 
 此前获批准安装的 PostgreSQL 前置依赖仍保留；没有创建 analytics 应用数据库、部署 Umami runtime 或启用其服务。本期未继续部署自托管方案；如需清理此前依赖，另行检查使用情况后处理。
 
