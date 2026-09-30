@@ -373,7 +373,12 @@ class TestT17BadTargets(InstallerFixture):
         self.assertEqual(r.returncode, 5)
         self.assertTrue((outside / "secret.txt").exists())
 
-    def test_no_sudo_no_telemetry(self):
+    def test_skill_installer_no_sudo_no_telemetry(self):
+        # T08-1A 语义对齐：本测试检查的是 Skill install.sh（INSTALLER_SRC），
+        # 不是全站通用 telemetry guard。Umami Analytics 基础设施引入
+        # （ops/install-umami.sh）不影响本测试——Skill install.sh 仍禁止
+        # sudo 与 telemetry 上报。全站通用 telemetry guard 见
+        # tests/test_analytics_foundation.py（T08-1A）。
         blob = INSTALLER_SRC.read_text(encoding="utf-8")
         # 不以 sudo 执行任何命令（注释/文档中的说明不算）
         import re

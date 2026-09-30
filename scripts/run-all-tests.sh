@@ -67,6 +67,7 @@ run "audit-model-registry-coverage（Task 07）" python3 pipeline/scripts/audit-
 run "test_workflow_release_contract（incident 2026-09）" python3 -m unittest discover -s tests -p 'test_workflow_release_contract.py'
 run "validate-developer-registry（T07-5.2）" python3 pipeline/scripts/validate-developer-registry.py
 run "test_developer_platform_registry（T07-5.2）" python3 -m unittest discover -s tests -p 'test_developer_platform_registry.py'
+run "test_analytics_foundation（T08-1A）" python3 -m unittest discover -s tests -p 'test_analytics_foundation.py'
 
 # ---- site（构建 + 六测试）----
 if ! $QUICK; then
