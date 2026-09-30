@@ -56,6 +56,10 @@ UMAMI_REPO="https://github.com/umami-software/umami.git"
 SERVICE_USER=maasumami
 SHARED_DIR=$RELEASE_ROOT/shared
 UMAMI_ENV=$SHARED_DIR/umami.env
+# Pending install state（Round 4 P0 修复：fresh install crash recovery）
+# 0600 root:root；credential 在第一次 PostgreSQL mutation 前持久化；
+# CREATE ROLE / DB / env 完成后删除。不入 git/log。
+PENDING_STATE=$SHARED_DIR/.umami-install-state
 SERVICE_SRC="$OPS_DIR/maas-umami.service"
 ENV_EXAMPLE_SRC="$OPS_DIR/maas-umami.env.example"
 
@@ -87,17 +91,22 @@ run "检查磁盘剩余 >1GB（GNU df，服务器 Linux）" \
 run "确认 PostgreSQL 运行" "systemctl is-active --quiet postgresql || systemctl start postgresql"
 
 # ============================================================
-# 2. CREDENTIAL 状态机预检（Round 3 P0 修复）
+# 2. CREDENTIAL 状态机预检（Round 4 P0 修复：支持 crash recovery）
 #    必须在任何 PostgreSQL/user/database/source mutation 之前。
-#    显式四态：A fresh / B existing / C fail closed / D fail closed
+#    显式状态机（含 pending state crash recovery）：
+#      A. role absent + env absent + no pending      → fresh install
+#      B. role exists + env exists                    → existing healthy（preserve）
+#      C. role exists + env absent + no pending       → fail closed（STOP）
+#      D. role absent + env exists                     → fail closed（STOP，inconsistent）
+#      E. role exists + env absent + valid pending    → resume（crash recovery）
 # ============================================================
-echo "· credential 状态预检（四态状态机）"
+echo "· credential 状态预检（含 pending state crash recovery）"
 
 ROLE_EXISTS=0
 ENV_EXISTS=0
+PENDING_VALID=0
 if [ "$DRY_RUN" = "1" ]; then
-  echo "    [dry-run] 检测 role $PG_USER 与 $UMAMI_ENV 状态"
-  # dry-run 假设 fresh install（状态 A）
+  echo "    [dry-run] 检测 role $PG_USER / $UMAMI_ENV / pending state 状态"
   echo "    [dry-run] 假设状态 A（fresh install）"
 else
   if sudo -u postgres $PG_BIN -tAc "SELECT 1 FROM pg_roles WHERE rolname='$PG_USER'" 2>/dev/null | grep -q 1; then
@@ -106,20 +115,41 @@ else
   if [ -f "$UMAMI_ENV" ]; then
     ENV_EXISTS=1
   fi
+  # 检测 pending install state（crash recovery）
+  # pending state 格式：DB_PASS=<hex>；APP_SECRET=<hex>；必须 0600 root:root
+  if [ -f "$PENDING_STATE" ]; then
+    # 验证 pending state 文件权限与内容完整性
+    PERM="$(stat -c '%a' "$PENDING_STATE" 2>/dev/null || echo '')"
+    OWNER="$(stat -c '%U:%G' "$PENDING_STATE" 2>/dev/null || echo '')"
+    if [ "$PERM" = "600" ] && [ "$OWNER" = "root:root" ] && grep -q "^DB_PASS=" "$PENDING_STATE" && grep -q "^APP_SECRET=" "$PENDING_STATE"; then
+      PENDING_VALID=1
+      echo "  · 检测到 valid pending install state（crash recovery 可用）"
+    else
+      die "pending state 文件 $PENDING_STATE 存在但权限/属主/内容不合法。
+        PERM=$PERM OWNER=$OWNER（期望 600 root:root）。
+        需人工诊断。installer 不自动修复 pending state。"
+    fi
+  fi
 fi
 
-echo "  · role $PG_USER exists=$ROLE_EXISTS；$UMAMI_ENV exists=$ENV_EXISTS"
+echo "  · role $PG_USER exists=$ROLE_EXISTS；$UMAMI_ENV exists=$ENV_EXISTS；pending valid=$PENDING_VALID"
 
-# 四态判定（在任何 mutation 之前）
+# 状态判定（在任何 mutation 之前）
 if [ "$ROLE_EXISTS" = "1" ] && [ "$ENV_EXISTS" = "0" ]; then
-  # 状态 C：role exists + env absent → fail closed
-  die "状态 C（incomplete/recovery）：PostgreSQL role $PG_USER 已存在但 $UMAMI_ENV 不存在。
-    这意味着此前安装中断（role 已创建但 env 未生成）或 env 丢失。
-    PostgreSQL 密码不可逆，无法从 DB 恢复。
-    installer 不自动 rotate credential（避免静默轮换）。
-    数据默认保留。需人工诊断：
-      - 若需恢复：确认 DB 数据是否需要保留，与 owner 决策 credential recovery 方案
-      - installer 不提供 destructive recovery 路径（不 dropdb/dropuser）"
+  if [ "$PENDING_VALID" = "1" ]; then
+    # 状态 E：role exists + env absent + valid pending → resume（crash recovery）
+    STATE="E_resume"
+    echo "  · 状态 E：resume from crash（role 已存在，env 缺失，valid pending state → 恢复安装）"
+  else
+    # 状态 C：role exists + env absent + no pending → fail closed
+    die "状态 C（incomplete/recovery）：PostgreSQL role $PG_USER 已存在但 $UMAMI_ENV 不存在，且无 valid pending state。
+      这意味着此前安装中断（role 已创建但 env 未生成）且 pending state 丢失，或 env 丢失。
+      PostgreSQL 密码不可逆，无法从 DB 恢复，且无 pending state 可恢复。
+      installer 不自动 rotate credential（避免静默轮换）。
+      数据默认保留。需人工诊断：
+        - 确认 DB 数据是否需要保留
+        - installer 不提供 destructive recovery 路径（不 dropdb/dropuser）"
+  fi
 fi
 
 if [ "$ROLE_EXISTS" = "0" ] && [ "$ENV_EXISTS" = "1" ]; then
@@ -131,15 +161,17 @@ if [ "$ROLE_EXISTS" = "0" ] && [ "$ENV_EXISTS" = "1" ]; then
       - 数据默认保留。installer 不提供 destructive 路径"
 fi
 
-# 状态 A（role absent + env absent）→ fresh install
+# 状态 A（role absent + env absent + no pending）→ fresh install
 # 状态 B（role exists + env exists）→ existing healthy，preserve
-STATE=""
-if [ "$ROLE_EXISTS" = "0" ] && [ "$ENV_EXISTS" = "0" ]; then
-  STATE="A_fresh"
-  echo "  · 状态 A：fresh install（将生成 credential 一次）"
-elif [ "$ROLE_EXISTS" = "1" ] && [ "$ENV_EXISTS" = "1" ]; then
-  STATE="B_existing"
-  echo "  · 状态 B：existing healthy（preserve credential，不 ALTER USER）"
+# 状态 E（role exists + env absent + valid pending）→ resume（上面已设 STATE）
+if [ -z "$STATE" ]; then
+  if [ "$ROLE_EXISTS" = "0" ] && [ "$ENV_EXISTS" = "0" ]; then
+    STATE="A_fresh"
+    echo "  · 状态 A：fresh install（将生成 credential 一次 + pending state crash recovery）"
+  elif [ "$ROLE_EXISTS" = "1" ] && [ "$ENV_EXISTS" = "1" ]; then
+    STATE="B_existing"
+    echo "  · 状态 B：existing healthy（preserve credential，不 ALTER USER）"
+  fi
 fi
 
 # ============================================================
@@ -155,21 +187,35 @@ run "创建 Umami 应用目录 ${UMAMI_DIR}" \
 run "创建 shared 目录（若不存在）" "mkdir -p $SHARED_DIR"
 
 # ============================================================
-# 5. Fresh install: 生成 credential 一次 + CREATE ROLE + CREATE DATABASE + env
-#    （Round 3 P0 修复：DB_PASS 一次生成，不 CREATE 后 ALTER）
+# 5. Fresh install / Resume（Round 4 P0 修复：crash recovery via pending state）
+#    状态 A（fresh）：写 pending state → CREATE ROLE → CREATE DATABASE → env → 删 pending
+#    状态 E（resume）：从 pending state 恢复 DB_PASS → 补 CREATE DATABASE（若缺）→ env → 删 pending
 # ============================================================
 if [ "$STATE" = "A_fresh" ]; then
-  echo "· fresh install：生成 credential 一次"
+  echo "· fresh install：生成 credential 一次 + pending state crash recovery"
   if [ "$DRY_RUN" = "1" ]; then
-    echo "    [dry-run] DB_PASS=openssl rand -hex 24（一次生成，用于 CREATE ROLE + env）"
-    echo "    [dry-run] APP_SECRET=openssl rand -hex 32"
+    echo "    [dry-run] DB_PASS=openssl rand -hex 24；APP_SECRET=openssl rand -hex 32"
+    echo "    [dry-run] 写 pending state $PENDING_STATE（0600 root:root）"
     echo "    [dry-run] CREATE USER $PG_USER WITH ENCRYPTED PASSWORD \$DB_PASS"
     echo "    [dry-run] CREATE DATABASE $PG_DB OWNER $PG_USER"
     echo "    [dry-run] 写临时 env → chmod/chown → atomic rename → $UMAMI_ENV"
+    echo "    [dry-run] 删除 pending state"
   else
     # 生成 credential 一次（DB_PASS 从这里一直活到 role + env 完成）
     DB_PASS="$(openssl rand -hex 24)"
     APP_SECRET="$(openssl rand -hex 32)"
+
+    # 写 pending state（0600 root:root）——在第一次 PostgreSQL mutation 之前
+    # crash recovery：若 CREATE ROLE 后中断，重跑可从 pending state 恢复 DB_PASS
+    echo "· 写 pending install state（crash recovery）"
+    TMP_PENDING="$(mktemp "${PENDING_STATE}.tmp.XXXXXX")"
+    cat > "$TMP_PENDING" <<EOF
+DB_PASS=${DB_PASS}
+APP_SECRET=${APP_SECRET}
+EOF
+    chown root:root "$TMP_PENDING"
+    chmod 0600 "$TMP_PENDING"
+    mv -f "$TMP_PENDING" "$PENDING_STATE"
 
     # CREATE ROLE 直接使用该 DB_PASS（不 CREATE 后 ALTER）
     echo "· CREATE ROLE $PG_USER（使用生成的 DB_PASS）"
@@ -193,11 +239,61 @@ EOF
     chmod 0740 "$TMP_ENV"
     mv -f "$TMP_ENV" "$UMAMI_ENV"
     echo "  ✓ $UMAMI_ENV 生成（0740 root:$SERVICE_USER，atomic rename）"
+
+    # 删除 pending state（role + database + env 全部完成）
+    rm -f "$PENDING_STATE"
+    echo "  ✓ pending state 已删除（安装完成）"
+  fi
+elif [ "$STATE" = "E_resume" ]; then
+  echo "· resume from crash：从 pending state 恢复 DB_PASS"
+  if [ "$DRY_RUN" = "1" ]; then
+    echo "    [dry-run] 从 $PENDING_STATE 读取 DB_PASS（不输出 secret）"
+    echo "    [dry-run] 检查 database $PG_DB 是否存在（若缺则 CREATE）"
+    echo "    [dry-run] 写临时 env → atomic rename → $UMAMI_ENV"
+    echo "    [dry-run] 删除 pending state"
+  else
+    # 从 pending state 恢复 DB_PASS（不输出到日志）
+    # shellcheck disable=SC1090
+    source "$PENDING_STATE"
+    [ -n "$DB_PASS" ] || die "pending state 缺 DB_PASS"
+    [ -n "$APP_SECRET" ] || die "pending state 缺 APP_SECRET"
+
+    # role 已存在（状态 E），检查 database 是否已创建（crash 可能发生在 CREATE DATABASE 前后）
+    DB_EXISTS="$(sudo -u postgres $PG_BIN -tAc "SELECT 1 FROM pg_database WHERE datname='$PG_DB'" 2>/dev/null || echo '')"
+    if [ "$DB_EXISTS" != "1" ]; then
+      echo "· CREATE DATABASE $PG_DB OWNER $PG_USER（resume：role 已存在，database 缺失）"
+      sudo -u postgres $PG_BIN -c "CREATE DATABASE $PG_DB OWNER $PG_USER"
+      sudo -u postgres $PG_BIN -d "$PG_DB" -c "GRANT ALL PRIVILEGES ON DATABASE $PG_DB TO $PG_USER"
+    else
+      echo "  · database $PG_DB 已存在（跳过 CREATE，保留数据）"
+    fi
+
+    # 写 env（使用恢复的 DB_PASS）
+    echo "· 写 $UMAMI_ENV（temp file → atomic rename；使用恢复的 DB_PASS）"
+    TMP_ENV="$(mktemp "${UMAMI_ENV}.tmp.XXXXXX")"
+    cat > "$TMP_ENV" <<EOF
+HOSTNAME=127.0.0.1
+PORT=3000
+DATABASE_URL=postgresql://${PG_USER}:${DB_PASS}@localhost:5432/${PG_DB}
+APP_SECRET=${APP_SECRET}
+EOF
+    chown root:"$SERVICE_USER" "$TMP_ENV"
+    chmod 0740 "$TMP_ENV"
+    mv -f "$TMP_ENV" "$UMAMI_ENV"
+    echo "  ✓ $UMAMI_ENV 生成（0740 root:$SERVICE_USER，atomic rename）"
+
+    # 删除 pending state（resume 完成）
+    rm -f "$PENDING_STATE"
+    echo "  ✓ pending state 已删除（resume 完成）"
   fi
 elif [ "$STATE" = "B_existing" ]; then
   echo "· existing healthy：preserve credential（不 ALTER USER，不重置密码）"
   echo "  · PostgreSQL role $PG_USER 已存在（跳过 CREATE）"
-  # 状态 B：role + env 都存在，只检查 database 是否存在（幂等）
+  # 状态 B：role + env 都存在，检查 database 是否存在（幂等）；清理残留 pending state
+  if [ -f "$PENDING_STATE" ] && [ "$DRY_RUN" != "1" ]; then
+    echo "  · 清理残留 pending state（状态 B healthy，pending state 是残留）"
+    rm -f "$PENDING_STATE"
+  fi
   if [ "$DRY_RUN" = "1" ]; then
     echo "    [dry-run] 检查 database $PG_DB 是否存在（幂等）"
   else
@@ -219,7 +315,7 @@ if [ -d "$UMAMI_DIR/.git" ]; then
   if [ "$ACTUAL_COMMIT" != "$UMAMI_COMMIT" ]; then
     die "Umami 源码版本不匹配：HEAD=$ACTUAL_COMMIT，期望=$UMAMI_COMMIT。
     installer 不猜版本。升级走单独 upgrade path（见 task-08-1a 文档 §10）。
-    如需强制重装：先 rm -rf $UMAMI_DIR（会丢失 build 产物，不丢失 DB 数据）"
+    如需强制重装：先 mv $UMAMI_DIR ${UMAMI_DIR}.quarantine-\$(date +%s)（quarantine 旧目录，可回溯；不丢失 DB 数据）"
   fi
   if [ -n "$(cd "$UMAMI_DIR" && git status --porcelain 2>/dev/null)" ]; then
     die "Umami 源码 worktree 脏，拒绝安装（先清理或重装）"

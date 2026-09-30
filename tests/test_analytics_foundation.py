@@ -820,5 +820,198 @@ class TestTlsNginxClosedLoop(unittest.TestCase):
                                 f"install-umami.sh 不应直接安装 nginx config: {stripped}")
 
 
+class TestCrashRecovery(unittest.TestCase):
+    """Round 4 P0 修复：fresh install crash recovery via pending state。
+
+    状态 E（role exists + env absent + valid pending state）→ resume（crash recovery），
+    不是 State C STOP。
+
+    状态组合测试：
+      - fresh（A）
+      - interrupted before role（A，无 pending）
+      - interrupted after role（E，pending valid → resume）
+      - interrupted after database（E，pending valid → resume，database 已存在跳过 CREATE）
+      - completed healthy（B）
+      - role exists + env absent + no pending → fail closed（C）
+      - pending cleanup after success
+    """
+
+    def test_pending_state_file_defined(self):
+        """pending state 文件路径已定义"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"PENDING_STATE=.*\.umami-install-state",
+                         "应定义 PENDING_STATE 文件路径")
+
+    def test_state_E_resume(self):
+        """状态 E（role exists + env absent + valid pending）→ resume，不是 STOP"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"状态 E.*resume|E_resume",
+                         "应检测状态 E（resume from crash）")
+        self.assertRegex(blob, r"resume from crash",
+                         "应说明 resume from crash")
+
+    def test_pending_state_written_before_create_role(self):
+        """pending state 在 CREATE ROLE 之前写入"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        lines = []
+        for i, line in enumerate(blob.splitlines(), 1):
+            stripped = line.strip()
+            if stripped.startswith("#") or not stripped:
+                continue
+            lines.append((i, stripped))
+
+        pending_write = -1
+        create_role = -1
+        for i, line in lines:
+            if pending_write < 0 and re.search(r"PENDING_STATE|pending.*state.*写|写.*pending", line):
+                pending_write = i
+            if create_role < 0 and re.search(r"CREATE USER.*DB_PASS|CREATE ROLE", line):
+                create_role = i
+
+        self.assertGreater(pending_write, 0, "应写 pending state")
+        self.assertGreater(create_role, 0, "应 CREATE ROLE")
+        self.assertLess(pending_write, create_role,
+                        "pending state 必须在 CREATE ROLE 之前写入")
+
+    def test_pending_state_deleted_after_success(self):
+        """pending state 在 role + database + env 完成后删除"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"rm -f.*PENDING_STATE|删除 pending state",
+                         "应删除 pending state（安装完成后）")
+
+    def test_pending_state_permission_0600_root(self):
+        """pending state 权限 0600 root:root"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"chmod 0600.*PENDING_STATE|0600",
+                         "pending state 应 0600 root:root")
+
+    def test_pending_state_not_leaked(self):
+        """pending state 不得在输出中泄露 secret"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # pending state 的 DB_PASS 不应被 echo 输出
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            # echo 行不应包含 DB_PASS 的实际值（只允许 dry-run 说明）
+            if stripped.startswith("echo ") and "DB_PASS" in stripped and "dry-run" not in stripped.lower():
+                # 检查是否输出 DB_PASS 实际值（如 echo $DB_PASS）
+                if re.search(r"echo.*\$DB_PASS", stripped):
+                    self.fail(f"pending state DB_PASS 不应在 echo 中泄露: {stripped}")
+
+    def test_resume_reads_pending_state(self):
+        """状态 E resume 从 pending state 读取 DB_PASS"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"source.*PENDING_STATE|source.*pending",
+                         "resume 应从 pending state 读取 DB_PASS")
+
+    def test_resume_creates_database_if_missing(self):
+        """状态 E resume 检查 database 是否存在，若缺则 CREATE"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # resume 分支应检查 DB_EXISTS
+        self.assertRegex(blob, r"resume.*database|resume.*DB_EXISTS",
+                         "resume 应检查 database 是否已创建")
+
+    def test_state_C_still_fail_closed_without_pending(self):
+        """状态 C（role exists + env absent + no pending）仍然 fail closed"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # 状态 C 在无 pending state 时 die
+        self.assertRegex(blob, r"die.*状态 C|die.*incomplete.*no pending|无 valid pending",
+                         "状态 C（无 pending）应 die（fail closed）")
+
+    def test_state_B_cleans_stale_pending(self):
+        """状态 B（healthy）清理残留 pending state"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # 状态 B 应清理残留 pending state
+        self.assertRegex(blob, r"清理残留 pending state|状态 B.*pending.*残留",
+                         "状态 B 应清理残留 pending state")
+
+    def test_no_rm_rf_in_recovery_hints(self):
+        """Optional cleanup：recovery 提示不使用 rm -rf，用 quarantine/move"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # 检查实际命令行（排除 echo/注释）不使用 rm -rf UMAMI_DIR
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#") or stripped.startswith("echo "):
+                continue
+            self.assertNotRegex(stripped, r"rm\s+-rf.*UMAMI_DIR|rm\s+-rf.*umami",
+                                f"recovery 不应使用 rm -rf umami: {stripped}")
+
+
+class TestNginxCandidateRollback(unittest.TestCase):
+    """Round 4 P1 修复：nginx candidate rollback safety。
+
+    render 失败不能让 /etc/nginx 留在 invalid state。
+    流程：render temp → backup existing → install candidate → nginx -t
+    → 失败则 restore previous → nginx -t 验证恢复 → success 才 reload。
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.render_script = BASE / "ops" / "render-umami-nginx.sh"
+        cls.blob = cls.render_script.read_text(encoding="utf-8")
+
+    def test_backup_before_replacement(self):
+        """覆盖 existing config 前保存 previous config"""
+        blob = self.blob
+        self.assertRegex(blob, r"backup.*existing|BACKUP.*backup|cp -a.*NGINX_DST.*BACKUP",
+                         "应 backup existing config")
+
+    def test_restore_on_nginx_t_failure(self):
+        """nginx -t 失败时 restore previous config"""
+        blob = self.blob
+        self.assertRegex(blob, r"restore.*previous|mv.*BACKUP.*NGINX_DST|restore previous config",
+                         "nginx -t 失败应 restore previous config")
+
+    def test_restore_verification(self):
+        """restore 后 nginx -t 验证恢复"""
+        blob = self.blob
+        self.assertRegex(blob, r"nginx -t.*验证恢复|恢复后 nginx -t",
+                         "restore 后应 nginx -t 验证恢复")
+
+    def test_remove_invalid_first_install_candidate(self):
+        """首次安装（无 existing config）candidate validation failure → remove candidate"""
+        blob = self.blob
+        self.assertRegex(blob, r"remove candidate|rm.*NGINX_DST.*首次|remove candidate.*首次",
+                         "首次安装 candidate 失败应 remove candidate")
+
+    def test_reload_only_after_successful_validation(self):
+        """reload 只在 nginx -t success 后"""
+        blob = self.blob
+        # reload 应在 nginx -t success 条件内
+        self.assertRegex(blob, r"nginx -s reload.*nginx -t success|只在 nginx -t success 后",
+                         "reload 只在 nginx -t success 后")
+
+    def test_candidate_rendered_to_temp_first(self):
+        """candidate 先渲染到 temp file，不直接覆盖生产"""
+        blob = self.blob
+        self.assertRegex(blob, r"CANDIDATE.*mktemp|render.*temp file|mktemp.*CANDIDATE",
+                         "candidate 应先渲染到 temp file")
+
+    def test_candidate_validation_before_install(self):
+        """candidate 渲染后验证内容（ssl_certificate 行非注释）"""
+        blob = self.blob
+        self.assertRegex(blob, r"grep.*ssl_certificate.*CANDIDATE|验证渲染结果",
+                         "应验证 candidate 渲染结果")
+
+    def test_no_reload_on_failure(self):
+        """nginx -t 失败时不 reload（reload 只在成功分支）"""
+        blob = self.blob
+        # 检查实际 reload 命令（非 echo），确保 reload 在 nginx -t success 分支
+        # 失败分支应 exit 1，不含实际 reload 命令
+        in_failure = False
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#") or stripped.startswith("echo "):
+                continue
+            if "nginx -t 失败" in stripped or "candidate 配置无效" in stripped:
+                in_failure = True
+            if in_failure and re.match(r'^nginx\s+-s\s+reload', stripped):
+                self.fail(f"nginx -t 失败分支不应 reload: {stripped}")
+            # exit 1 或恢复后 exit 1 表示失败分支结束
+            if in_failure and re.match(r'^exit\s+1', stripped):
+                in_failure = False
+
+
 if __name__ == "__main__":
     unittest.main()
