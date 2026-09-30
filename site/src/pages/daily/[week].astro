@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { priceChangeLink } from '../../lib/record-links';
 import { logoFor } from '../../lib/platforms';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -227,7 +228,7 @@ const recordDates = Object.keys(recordsByDate).sort().reverse();
                       {pc.previous ? <><s>{pc.previous}</s> → </> : null}
                       <strong>{pc.current}</strong> {pc.currency}/百万tokens
                     </span>
-                    {pc.id && <a class="pcx-detail" href={`/item/${pc.id}/`}>详情 ↗</a>}
+                    <a class="pcx-detail" href={priceChangeLink(pc).href}>{priceChangeLink(pc).label} ↗</a>
                   </li>
                 ))}
               </ul>

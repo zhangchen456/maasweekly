@@ -10,11 +10,20 @@ import { canonicalUrl } from '../src/lib/seo.ts';
 import { loadVerifiedRelease } from '../src/lib/release.ts';
 import { modelPage, featuredModels } from '../src/lib/model-pages.ts';
 import { priceCells } from '../src/lib/price-display.ts';
+import { priceChangeLink } from '../src/lib/record-links.ts';
 
 const dist = path.resolve('dist');
 const release = loadVerifiedRelease(undefined, { select: ['prices', 'changes', 'modelIdentities'] });
 const htmlFor = route => readFileSync(path.join(dist, route, 'index.html'), 'utf8');
 const docFor = route => new JSDOM(htmlFor(route)).window.document;
+
+const archivedPrice = release.prices.find(p => p.links.itemPermalink);
+assert(archivedPrice);
+assert.equal(priceChangeLink({ id: archivedPrice.links.itemPermalink.split('/')[2] }).href, archivedPrice.links.itemPermalink);
+assert.deepEqual(priceChangeLink({ id: 'price_' + '0'.repeat(64), evidence_url: 'https://example.com/pricing' }),
+  { href: 'https://example.com/pricing', label: '官方定价' });
+assert.deepEqual(priceChangeLink({ id: '../escape', evidence_url: 'javascript:alert(1)' }),
+  { href: '/pricing/', label: '价格台账' });
 
 assert.equal(canonicalUrl('/pricing?utm_source=x#prices'), 'https://daily.maas.click/pricing/');
 assert.equal(canonicalUrl('https://evil.example/model/deepseek:deepseek-v4-pro/?q=x'),
@@ -37,6 +46,9 @@ for (const url of urls) {
   const html = readFileSync(file, 'utf8');
   assert(!/<meta name="robots" content="[^\"]*noindex/.test(html), url);
   assert.equal(html.match(/<link rel="canonical" href="([^\"]+)"/)?.[1], url);
+  for (const match of html.matchAll(/href="(\/item\/[^"?#]+)"/g)) {
+    assert(existsSync(path.join(dist, match[1], 'index.html')), `dangling item link in ${url}: ${match[1]}`);
+  }
 }
 for (const route of ['', 'pricing', 'models', 'changes', 'weekly']) {
   const doc = docFor(route);
