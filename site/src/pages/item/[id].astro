@@ -311,6 +311,7 @@ const priceCondText = () => {
       const url = btn.getAttribute('data-url') || '';
       try {
         await navigator.clipboard.writeText(url);
+        document.dispatchEvent(new CustomEvent('maas:copy-success', { detail: { kind: 'url' } }));
         feedback!.textContent = '已复制到剪贴板';
         feedback!.className = 'copy-feedback ok';
       } catch {
@@ -507,6 +508,7 @@ const priceCondText = () => {
       const url = btn.getAttribute('data-url') || '';
       try {
         await navigator.clipboard.writeText(url);
+        document.dispatchEvent(new CustomEvent('maas:copy-success', { detail: { kind: 'url' } }));
         feedback!.textContent = '已复制到剪贴板';
         feedback!.className = 'copy-feedback ok';
       } catch {

@@ -1,5 +1,9 @@
 ---
 import '../styles/product.css';
+import analytics from '../config/analytics.json';
+import { validateAnalyticsConfig } from '../../public/analytics.js';
+import { SITE_CANONICAL } from '../config/public-access';
+validateAnalyticsConfig(analytics);
 interface Props {
   title: string;
   description?: string;
@@ -18,6 +22,10 @@ const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title}</title>
+    {analytics.enabled && (
+      <script is:inline type="module" src="/analytics.js" data-maas-analytics
+        data-website-id={analytics.websiteId} data-canonical-url={SITE_CANONICAL}></script>
+    )}
     <script is:inline>
       (function () {
         let saved; try { saved = localStorage.getItem('maas-theme'); } catch {}

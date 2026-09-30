@@ -158,6 +158,7 @@ const providerLabels: Record<string, string> = {
             const mtag=el('button','model-tag',c.modelName||c.modelId);
             mtag.setAttribute('aria-label','筛选模型 '+(c.modelName||c.modelId));
             mtag.setAttribute('type','button');
+            mtag.setAttribute('data-analytics-model-id',c.modelId);
             mtag.onclick=()=>{modelIdFilter=c.modelId;familyIdFilter=null;filterError=null;resetCursorStack();syncUrlState();initSelectors();renderAll()};
             tagRow.append(mtag);
             if(c.familyId&&c.familyName){
