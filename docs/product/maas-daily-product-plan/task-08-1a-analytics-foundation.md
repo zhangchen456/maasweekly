@@ -1,6 +1,6 @@
 # T08-1A Analytics Foundation
 
-日期：2026-09-30。状态：**Gate A 修复后待二次验收（Gate A round 2）**。
+日期：2026-09-30。状态：**Gate A round 3 修复后待三次验收**。
 
 前置：T08-0 已正式 PASS 并合入 main（commit `ea5690aa5`）。
 
@@ -10,21 +10,26 @@
 ### Gate A 验收历史
 
 - **Gate A round 1**（commit `db4fc45b9`）：**FAIL**——install-umami.sh 首次安装执行顺序错误（build 在 env 之前，prisma 无 DATABASE_URL；database 在 role 之前，OWNER role 不存在）；role exists + env missing 时静默 ALTER USER（credential recovery 语义矛盾）；tag 未 pin commit SHA；TLS/nginx 不闭环（安装 nginx -t 已知失败的 443 ssl config）。静态契约测试 28/28 通过但未发现这些问题——测试只检查"元素存在"，没验证"关键生命周期顺序"。
-- **Gate A round 2**（本次修复）：修复 P0 + P1 问题，测试从"存在性检查"升级到"执行顺序契约"。
+- **Gate A round 2**（commit `48ac32b0f`）：**FAIL**——修复了 round 1 的 8 项问题，但发现更根本的 P0 状态机问题：credential 状态靠过期快照变量（USER_EXISTS）推断，而非显式状态机；首次安装 CREATE USER 后 ALTER USER 制造中断窗口（CREATE USER 成功但 env 生成前失败 → 第二次执行状态 C 永久卡死）；--render-nginx 不是纯 nginx 操作（会重新运行整个 installer）；.next exists 判断 build 成功过弱。
+- **Gate A round 3**（本次修复）：显式四态状态机 + DB_PASS 一次生成 + atomic env write + render-nginx 独立脚本 + build 每次明确执行。
 
-### Gate A round 2 修复项
+### Gate A round 3 修复项
 
-**P0 修复：**
-1. **install-umami.sh 执行顺序重排**：preflight → service user/dirs → PostgreSQL active → role → database → umami.env → clone source → pnpm install → pnpm run build（带 DATABASE_URL）→ install systemd → nginx → validate
-2. **role 必须先于 CREATE DATABASE ... OWNER role**
-3. **credential recovery fail closed**：role exists + env missing 时 `die`（STOP），不静默 ALTER USER；正常状态（role exists + env exists）preserve password；首次安装（role absent + env absent）generate password once
-4. **新增 execution-order contract tests**：`TestExecutionOrderContract` 验证关键步骤顺序（PostgreSQL active → role → database → env → clone → build → systemd → nginx）
+**P0 修复（显式四态状态机）：**
+1. **credential 状态机改为显式四态**：
+   - A. role absent + env absent → fresh install（generate credential once）
+   - B. role exists + env exists → existing healthy（preserve）
+   - C. role exists + env absent → fail closed（STOP，不自动 rotate）
+   - D. role absent + env exists → fail closed（STOP，inconsistent）
+2. **C/D 状态检测发生在任何 mutation 之前**（CREATE USER / CREATE DATABASE / chown / clone 之前）
+3. **Fresh install DB_PASS 一次生成**：DB_PASS 从生成开始一直活到 role + env 完成；CREATE ROLE 直接使用该 DB_PASS；同一个 DB_PASS 写入 umami.env；不再 CREATE 后 ALTER USER
+4. **env 使用 temp file + chmod/chown + atomic rename**：避免中断留下半写文件
+5. **新增部分失败/re-run 状态测试**：`TestPartialFailureRerun` 验证状态 C/D 的人工诊断路径（不提供 destructive recovery）
 
 **P1 修复：**
-5. **Umami v3.4.0 同时 pin 40-char commit SHA**（`ec0ff50388c264ed8ce46f00967e92f7e71476ae`）；clone 后验证 HEAD == pinned SHA，防 upstream tag 移动
-6. **已存在 UMAMI_DIR 时验证 HEAD + clean worktree**，不一致 `die`（fail closed）；升级走单独 upgrade path，installer 不猜版本
-7. **TLS/nginx 流程重构**：不安装 nginx -t 已知会失败的 443 ssl config；Gate B 用 `--render-nginx <cert> <key>` 渲染完整 config（从模板 sed 取消注释 + 填入真实证书路径），保证 nginx -t 闭环；不依赖生产服务器手工取消注释（避免 repo/生产漂移）
-8. **rollback 删除手工 destructive cleanup 命令提示**（dropdb/dropuser/rm -rf）；rollback contract 保持"数据永远保留"
+6. **render-nginx 拆为独立脚本 `render-umami-nginx.sh`**：render nginx 不得触发 PostgreSQL/source/build/systemd mutation；Production Authorization Package 可准确标注 Phase 3 = nginx mutation
+7. **不以 .next exists 判断 build 成功**：采用可证明与 pinned SHA 对应的 build strategy；每次明确 pnpm install + pnpm run build（重复执行多花时间，比错误认为"已 build 完"安全）
+8. **文档删除"手动 dropdb/dropuser 完全重装"作为正常 recovery 建议**：inconsistent state 只 STOP + 人工诊断，数据默认保留
 
 ---
 
@@ -143,19 +148,27 @@ next start        # 经 scripts/start-env.js，读 PORT/HOSTNAME env
 - `ops/install-umami.sh`：用 `openssl rand` 现场生成，无硬编码值
 - 测试 `test_analytics_foundation.py` 验证 env.example 无真实 secret
 
-### 6.4 Credential recovery 语义（P0 修复）
+### 6.4 Credential 状态机（Round 3 P0 修复——显式四态）
 
-install-umami.sh 对 DB credential 的三种状态有明确处理：
+install-umami.sh 对 credential 状态采用显式四态状态机，**状态检测发生在任何 mutation 之前**：
 
 | 状态 | role | env | 行为 |
 |---|---|---|---|
-| 正常状态 | exists | exists | preserve password，不 ALTER USER |
-| 首次安装 | absent | absent | generate password once（role 创建 + env 生成同一次完成） |
-| 异常状态 | exists | absent | **STOP（die），fail closed** |
+| A. fresh install | absent | absent | generate credential once（DB_PASS 一次生成，CREATE ROLE 直接用，写入 env） |
+| B. existing healthy | exists | exists | preserve credential（不 ALTER USER，不重置密码） |
+| C. incomplete/recovery | exists | absent | **STOP（die），fail closed**（不自动 rotate） |
+| D. inconsistent | absent | exists | **STOP（die），fail closed**（inconsistent） |
 
-**异常状态处理：** role exists + env missing 时，install-umami.sh `die`，不静默 ALTER USER 轮换现有 credential。PostgreSQL 密码不可逆，无法从 DB 恢复。必须显式 credential recovery：
-- 方式 A（轮换密码）：显式 `--recover-env`（本任务未实现，T08-1A 不支持静默轮换）
-- 方式 B（完全重装）：先 rollback-umami.sh，手动 dropdb/dropuser 后重跑 install-umami.sh
+**Fresh install credential lifecycle（Round 3 修复）：**
+- DB_PASS 只生成一次（`openssl rand -hex 24`）
+- CREATE ROLE 直接使用该 DB_PASS（不 CREATE 后 ALTER USER，消除中断窗口）
+- 同一个 DB_PASS 写入 umami.env
+- env 使用 temp file + chmod/chown + atomic rename（避免中断留下半写文件）
+
+**状态 C/D 处理（Round 3 修复）：**
+- 状态 C（role exists + env absent）：此前安装中断（role 已创建但 env 未生成）或 env 丢失。PostgreSQL 密码不可逆。installer `die`，不自动 rotate，不提供 destructive recovery 路径（不 dropdb/dropuser）。需人工诊断。
+- 状态 D（role absent + env exists）：inconsistent 状态。installer `die`。需人工诊断（确认 env 是否残留文件）。
+- **数据默认保留。inconsistent state 只 STOP + 人工诊断，不提供 destructive recovery。**
 
 ---
 
@@ -207,17 +220,20 @@ install-umami.sh 对 DB credential 的三种状态有明确处理：
 
 ⚠️ **Gate B prerequisite（owner 必须完成，分阶段）：**
 
-installer 不安装 nginx -t 已知会失败的 443 ssl config（P1 修复）。Gate B 分阶段执行：
+installer 不安装 nginx config（Round 3 修复：render-nginx 拆为独立脚本）。Gate B 分阶段执行：
 
 - **Phase 1**：DNS：`analytics.maas.click → 47.237.135.97`（A 记录）
 - **Phase 2**：`certbot certonly -d analytics.maas.click`（获取证书路径）
-- **Phase 3**：`ops/install-umami.sh --render-nginx <cert-path> <key-path>`（渲染完整 config：从模板 sed 取消注释 + 填入真实证书路径 → 安装到 `/etc/nginx/conf.d/`）
-- **Phase 4**：`nginx -t`（install-umami.sh Phase 3 后自动执行，完整配置预期通过）
-- **Phase 5**：`nginx -s reload`（同上）
-- **Phase 6**：`systemctl enable --now maas-umami.service`
-- **Phase 7**：`curl http://127.0.0.1:3000/api/heartbeat`（验证 Umami 健康）
+- **Phase 3**：`ops/render-umami-nginx.sh <cert-path> <key-path>`（独立脚本，只渲染 nginx config + nginx -t + reload，不触发 PostgreSQL/source/build/systemd mutation）
+- **Phase 4**：`systemctl enable --now maas-umami.service`
+- **Phase 5**：`curl http://127.0.0.1:3000/api/heartbeat`（验证 Umami 健康）
 
-**不依赖生产服务器手工取消注释**（避免 repo/生产漂移）。nginx 模板不含注释的 `ssl_certificate` 行，由 `--render-nginx` 渲染时填入。
+**render-umami-nginx.sh 职责隔离（Round 3 P1 修复）：**
+- 只做 nginx 操作：sed 渲染 ssl_certificate → atomic rename → nginx -t → reload
+- 不触发 PostgreSQL mutation（CREATE USER/DATABASE/ALTER USER）
+- 不触发 source/build mutation（git clone/pnpm install/pnpm run build）
+- 不触发 systemd mutation（systemctl enable/start/daemon-reload）
+- Production Authorization Package 可准确标注 Phase 3 = nginx mutation
 
 ---
 
