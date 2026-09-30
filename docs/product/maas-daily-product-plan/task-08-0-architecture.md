@@ -15,9 +15,9 @@ proposed architecture 均明确标记为 **[PROPOSED]**，不描述为 existing 
 | 决策项 | 结论 | 依据 |
 |---|---|---|
 | Traffic Analytics 技术选型 | **Self-hosted Umami**（cookie-less） | §3 |
-| Visitor / Session | **provider-generated visitor_id + 30 分钟 session**，无 cookie、无 fingerprinting | §4 |
+| Visitor / Session | **Umami 匿名识别（IP+UA+Website ID hash）+ 30 分钟 session**，无 cookie | §4 |
 | Event Schema | **8 事件**：page_view / landing / content_view / scroll_depth / model_click / change_click / outbound_click / copy | §5 |
-| Page Taxonomy | **11 种 page_type**，基于真实路由 | §6 |
+| Page Taxonomy | **10 种 page_type**，基于真实路由（筛选作为 optional 字段，不影响 page_type） | §6 |
 | Traffic Attribution | **UTM > known referrer > direct**，11 个 source channel | §7 |
 | SEO Architecture | **GSC + Bing Webmaster**，GitHub Actions 周同步，凭证用 GitHub Secrets | §8 |
 | GEO Crawler Architecture | **独立 analytics log_format + AI Crawler Registry**，不依赖现有 access log | §9 |
@@ -25,6 +25,8 @@ proposed architecture 均明确标记为 **[PROPOSED]**，不描述为 existing 
 | Dashboard | **`/admin/analytics` 静态生成 + API 读取**，需 authentication | §11 |
 | Failure Strategy | **Analytics 失败不阻断核心数据服务**，降级保留 last-known-good | §12 |
 | Release 模型 | **Analytics 产物进入现有 release**，不独立部署 | Inventory §3.11 |
+| Owner Decisions | **9 项已冻结**：同服务器/PostgreSQL/Basic Auth/不公开/日级/robots→T08-4/security headers 独立/GSC→T08-4/AI referrer 候选验证 | §15 |
+| T08-1 拆分 | **T08-1A（Analytics Foundation）+ T08-1B（Browser Tracking）** | §15.2 |
 
 ---
 
@@ -41,8 +43,8 @@ proposed architecture 均明确标记为 **[PROPOSED]**，不描述为 existing 
 | Session | 是 | 是 | 需自建 |
 | Referrer | 是 | 是 | 需自建 |
 | UTM | 是 | 是 | 需自建 |
-| Custom Event | 是 | 是（需付费版） | 需自建 |
-| Custom Properties | 是 | 付费版 | 需自建 |
+| Custom Event | 是 | 是（官方支持，CE 版即包含） | 需自建 |
+| Custom Properties | 是 | 部分能力属 Business plan（付费版） | 需自建 |
 | API | 是（REST API） | 是（需付费版） | 取决于实现 |
 | 历史数据查询 | 是（自托管，全量） | 付费版有限 | 取决于实现 |
 | Self-host | 是（Docker / Node） | 是（Docker / Elixir） | 不适用 |
@@ -58,7 +60,7 @@ proposed architecture 均明确标记为 **[PROPOSED]**，不描述为 existing 
 1. **cookie-less 默认**：Umami 默认不设 cookie，使用随机 visitor_id（localStorage 或服务端生成），符合当前零 cookie 架构与 §4 visitor/session 策略
 2. **自托管，数据自有**：与 maasweekly "数据所有权"原则一致（现有 pipeline 全自建，数据全在仓库/服务器）
 3. **REST API 成熟**：Umami 提供 REST API 可拉取 PV/UV/Session/Referrer/Event 聚合数据，便于 T08-6 统一数据层拉取
-4. **Custom Event + Custom Properties 免费**：Plausible 的 Custom Event 需付费版，Umami 免费版即支持
+4. **Custom Event 免费**：Umami 免费版即支持 Custom Event 与 Custom Properties；Plausible CE 版支持 Custom Event，但部分 Custom Properties 能力属 Business plan（付费版）。Umami 在自托管免费场景下 Custom Properties 无限制
 5. **部署形态契合**：Umami 是 Node.js 服务，可与 agent-api 并行以 systemd + nginx 反向代理部署，复用现有部署模式（不进入 release，类似 agent-api 独立服务）
 6. **接入简单**：一行 `<script>` 插入 `Layout.astro` 的 `<head>`，覆盖全站 17 个路由
 
@@ -90,18 +92,24 @@ proposed architecture 均明确标记为 **[PROPOSED]**，不描述为 existing 
 
 ### 4.1 Visitor
 
-**[PROPOSED] provider-generated visitor_id，无 cookie、无 fingerprinting。**
+**[PROPOSED] Umami 匿名识别机制，无 cookie。**
 
 | 维度 | 设计 |
 |---|---|
-| visitor_id 生成 | Umami 服务端生成随机 ID（默认行为） |
-| 存储 | 不设 cookie；Umami 默认使用 localStorage 或服务端哈希 |
-| PII | 不采集 |
-| fingerprinting | 不使用 |
-| 永久跟踪 | 不永久跟踪，visitor_id 可随用户清除 localStorage 而失效 |
+| 匿名识别机制 | Umami 官方实现：基于 **client IP + User-Agent + Website ID** 生成 unique hash 作为 visitor 标识（不是随机 visitor_id，不使用 localStorage） |
+| Cookie | 不设 cookie（Umami 默认 cookie-less） |
+| PII | 不采集 PII；IP 不进入 Analytics Dataset（见 §13.3） |
+| fingerprinting | 不做 canvas/WebGL/字体等浏览器指纹；visitor hash 仅基于 IP+UA+Website ID，属于服务端聚合哈希，非客户端 fingerprinting |
+| 永久跟踪 | 不永久跟踪；visitor hash 随用户 IP/UA 变化而变化，无跨站追踪能力 |
 | Cookie Consent | 不需要（无 cookie） |
 
-**选择 Umami 默认行为**，不自建 visitor_id 机制。Umami 的 visitor_id 设计已满足"无 PII、无 fingerprinting、无永久跟踪"要求。
+**选择 Umami 默认匿名识别机制**，不自建 visitor_id 机制。
+
+**隐私影响说明：**
+- Umami 的 IP+UA+Website ID hash 是服务端生成的聚合标识，不属于浏览器指纹（fingerprinting）范畴
+- 但 IP 参与 hash 意味着 Umami 服务端在请求时可见 client IP；nginx 直接面对公网（Inventory §4.5），`$remote_addr` 即真实 IP，Umami 可直接获取
+- **Analytics Dataset 中不存储完整 IP**（见 §13.3），只存储聚合后的 visitor hash 与统计值
+- 这与"不记录完整 IP 到 Analytics Dataset"原则一致：Umami 内部用 IP 生成 hash 后即丢弃，不持久化原始 IP
 
 ### 4.2 Session
 
@@ -228,21 +236,33 @@ proposed architecture 均明确标记为 **[PROPOSED]**，不描述为 existing 
 
 ### 6.1 page_type schema
 
-**[PROPOSED] 11 种 page_type，基于真实路由（Inventory §1.7）：**
+**[PROPOSED] 10 种 page_type，基于真实路由（Inventory §1.7）。page_type 只由路径决定，不受 query parameter 影响；筛选条件作为 optional 字段：**
 
 | page_type | URL Pattern | 说明 |
 |---|---|---|
 | `home` | `/` | 首页 |
-| `model_catalog` | `/changes`（含 `?modelId=` 筛选） | 变化浏览（含模型筛选） |
 | `model_detail` | `/model/<modelId>/` | 模型详情 |
 | `item_detail` | `/item/<id>/` | 条目详情 |
 | `evidence_detail` | `/evidence/<id>/` | 证据详情 |
-| `changes` | `/changes`（无筛选） | 变化浏览 |
+| `changes` | `/changes`（含 `?modelId=` / `?familyId=` 筛选） | 变化浏览（筛选作为 optional 字段，不改 page_type） |
 | `prices` | `/pricing` | 价格台账 |
 | `leaderboard` | `/leaderboards` | 榜单 |
 | `weekly` | `/weekly/`、`/weekly/<id>/`、`/daily/<week>/` | 周报与归档 |
 | `agent` | `/agent` | 接入页 |
 | `other` | `/about`、`/method`、`/changelog`、`/sources` | 其他静态页 |
+
+**筛选条件作为 optional 字段，不影响 page_type：**
+
+| 场景 | page_type | optional 字段 |
+|---|---|---|
+| `/changes` | `changes` | 无 |
+| `/changes?modelId=alibaba:qwen3-coder-plus` | `changes` | `filter_model_id = alibaba:qwen3-coder-plus` |
+| `/changes?familyId=alibaba:qwen-coder` | `changes` | `filter_family_id = alibaba:qwen-coder` |
+
+**理由：**
+- page_type 只由路径决定，确保同一路径不会因 query parameter 不同而产生两个 page_type
+- 避免 SEO Landing Page 分析出现同一路径多个 page_type 的问题
+- 当未来存在独立的模型目录页面（如 `/models`）时，再引入 `model_catalog` page_type；当前 `/changes` 是变化浏览页，不是模型目录页
 
 ### 6.2 Model Detail 字段可获得性
 
@@ -735,29 +755,45 @@ deploy
 
 ### 14.1 原任务拆分评估
 
-任务书原拆分（T08-1 至 T08-8）总体合理，但调查后发现两处需调整：
+任务书原拆分（T08-1 至 T08-8）总体合理，但调查与 owner 验收后发现三处需调整：
 
-**调整 1：T08-1 应先建 Analytics 基础设施（Umami 部署 + script 插入）再建事件**
+**调整 1：T08-1 拆分为 T08-1A + T08-1B**（owner 验收时提出）
 
-原 T08-1 "Traffic Base" 与 T08-2 "Events" 边界模糊。建议 T08-1 明确为"Umami 部署 + script 插入 + page_view 基础采集"，T08-2 为"自定义事件（content_view/scroll_depth/click/copy）"。
+原 T08-1 "Traffic Base" 同时包含服务器基础设施（Umami 部署 + PostgreSQL + systemd + nginx）和前端采集（script 插入 + page_view）。maasweekly 第一次引入第三方 telemetry 服务，同时涉及 PostgreSQL、systemd、Nginx 和现有 `test_no_sudo_no_telemetry` 守护逻辑。拆分为 T08-1A（Analytics Foundation，服务器基础设施）+ T08-1B（Browser Tracking，前端采集），出问题时可单独定位是部署问题还是埋点问题。见 §15.2。
 
-**调整 2：T08-4 SEO Integration 应包含 robots.txt + security headers**
+**调整 2：T08-4 SEO Integration 包含 robots.txt，不含 security headers**（owner 决策）
 
-当前无 robots.txt 和 security headers，这些是 SEO 与隐私基础，应在 T08-4 一并处理。
+当前无 robots.txt 和 security headers。owner 决策：robots.txt 归入 T08-4（SEO 相关）；**security headers 不塞进 SEO 功能**，放到独立的部署/安全配置子任务处理。
+
+**调整 3：新增部署/安全配置子任务（security headers）**（owner 决策）
+
+security headers（Referrer-Policy / X-Content-Type-Options / X-Frame-Options 等）归入独立的部署/安全配置子任务，不与 T08-4 SEO 混合。具体子任务编号在 T08-4 启动前确定。
 
 ### 14.2 任务细化
 
-#### T08-1: Traffic Base
+#### T08-1A: Analytics Foundation
 
 | 维度 | 内容 |
 |---|---|
-| **Goal** | 部署 Self-hosted Umami，插入采集 script，实现 page_view 基础采集 |
-| **Scope** | Umami 服务部署（systemd + nginx 反向代理）、Umami 数据库初始化、`Layout.astro` `<head>` 插入 Umami script、page_view 事件验证 |
-| **Expected Files** | `ops/nginx/` 新增 Umami 反向代理配置、`ops/maas-umami@.service`（或类似）、`site/src/layouts/Layout.astro`（修改）、`site/src/config/public-access.ts`（新增 Umami 配置） |
-| **Tests** | Umami 服务健康检查、page_view 事件上报验证、cookie-less 验证、不破坏现有 `test_no_sudo_no_telemetry` |
-| **Acceptance Criteria** | 全站 17 路由 page_view 上报到 Umami、零 cookie、`test_no_sudo_no_telemetry` 通过 |
+| **Goal** | 部署 Self-hosted Umami 服务端基础设施（不含前端采集） |
+| **Scope** | Umami 服务部署（systemd + nginx 反向代理）、PostgreSQL 数据库初始化、config/secrets、`test_no_sudo_no_telemetry` 守护逻辑调整、Umami 服务健康检查 |
+| **Expected Files** | `ops/nginx/` 新增 Umami 反向代理配置、`ops/maas-umami@.service`（或类似）、`ops/install-production.sh`（扩展 Umami 安装）、`ops/maas-umami.env.example`（新增）、`tests/test_skill_package.py`（telemetry guard 调整） |
+| **Tests** | Umami 服务健康检查、PostgreSQL 连接验证、telemetry guard 调整后通过 |
+| **Acceptance Criteria** | Umami 服务在服务器运行且健康、PostgreSQL 数据库可写、telemetry guard 不误报、不含前端采集 |
 | **Dependencies** | 无（T08-0 已完成） |
-| **Risks** | Umami 服务可用性影响采集（但不影响站点本身）；需服务器运维 |
+| **Risks** | maasweekly 第一次引入第三方 telemetry 服务 + PostgreSQL；需服务器运维；`test_no_sudo_no_telemetry` 守护逻辑需调整以放行 Umami 但仍拦截其他遥测 |
+
+#### T08-1B: Browser Tracking
+
+| 维度 | 内容 |
+|---|---|
+| **Goal** | 前端插入 Umami 采集 script，实现 page_view 基础采集 |
+| **Scope** | `Layout.astro` `<head>` 插入 Umami script、page_view 事件验证、page_type / model_id / datasetVersion 注入 |
+| **Expected Files** | `site/src/layouts/Layout.astro`（修改）、`site/src/config/public-access.ts`（新增 Umami 配置） |
+| **Tests** | 全站 17 路由 page_view 上报验证、cookie-less 验证、page_type 正确性验证、datasetVersion 注入验证 |
+| **Acceptance Criteria** | 全站 17 路由 page_view 上报到 Umami、零 cookie、page_type 按 §6 Page Taxonomy 正确分类、datasetVersion 作为 custom property 上报 |
+| **Dependencies** | T08-1A（Umami 服务可用） |
+| **Risks** | Umami script 影响页面加载性能（需 async/defer）；datasetVersion 需构建时注入 |
 
 #### T08-2: Events
 
@@ -849,23 +885,60 @@ deploy
 
 ---
 
-## 15. Open Questions
+## 15. Owner Decisions（已冻结）
 
-1. **Umami 部署位置**：Umami 服务部署在 maasweekly 同一服务器（47.237.135.97）还是独立服务器？同服务器可复用 nginx/systemd，但增加资源占用。**建议同服务器**，待 owner 决定。
+以下决策由 owner 在 T08-0 验收时冻结，后续 T08-1 至 T08-8 按此执行：
 
-2. **Umami 数据库选择**：PostgreSQL 还是 MySQL？maasweekly 当前无数据库（agent-api 零运行时依赖、数据全 JSON 文件）。**建议 PostgreSQL**（Umami 推荐），待 owner 决定。
+| 项目 | 冻结决定 |
+|---|---|
+| Umami 部署 | **同一生产服务器**（47.237.135.97），独立服务（类似 agent-api） |
+| Database | **PostgreSQL** |
+| `/admin/analytics` authentication | **Nginx Basic Auth**，第一版先解决安全性，不做账号系统 |
+| Analytics 数据 | **不进入 public API**（不进入 `data/public/v1/`，属商业敏感数据） |
+| Dashboard 数据新鲜度 | **日级数据即可**，不追求实时 |
+| robots.txt | 归入 **T08-4** |
+| security headers | **不塞进 SEO 功能**，放到部署/安全配置子任务处理（独立于 T08-4 SEO） |
+| GSC/Bing | 到 **T08-4** 再由 owner 参与账号/站点验证 |
+| AI referrer | **候选 registry + 实际数据验证后转 verified** |
 
-3. **`/admin/analytics` authentication 方案**：nginx basic auth（方案 A）还是 agent-api API key（方案 B）？**建议方案 A**，待 owner 决定。
+### 15.1 已关闭的 Open Questions
 
-4. **GSC/Bing 账号申请**：T08-4 需要申请 Google Search Console 和 Bing Webmaster Tools 账号并验证站点所有权。这是 owner 必须参与的步骤（T08-0 不申请）。
+原 Open Questions 1-8 全部由上述冻结决定关闭：
 
-5. **AI referrer registry 验证**：AI 产品（ChatGPT/Perplexity/Claude/Gemini）的 referrer host 是否可靠？需在实际流量数据中验证后才能确定生产 registry。
+1. Umami 部署位置 → 同一生产服务器
+2. Umami 数据库 → PostgreSQL
+3. `/admin/analytics` authentication → Nginx Basic Auth
+4. GSC/Bing 账号 → T08-4 由 owner 参与
+5. AI referrer registry → 候选 + 实际验证后转 verified
+6. Analytics 数据是否进入 `data/public/v1/` → 不进入
+7. Dashboard 是否需实时 → 日级即可
+8. security headers 与 robots.txt 归属 → robots.txt 归 T08-4；security headers 放部署/安全配置子任务，不塞进 SEO
 
-6. **Analytics 数据是否进入 `data/public/v1/`**：当前建议独立 `data/analytics/`（§10.1），但是否部分聚合数据（如 Top Landing Pages）进入 `data/public/v1/` 供 API 公开查询？**建议不公开**（属商业敏感数据），待 owner 决定。
+### 15.2 T08-1 拆分调整
 
-7. **Dashboard 是否需要实时数据**：当前建议静态生成 + API 读取（§11.2），但若需实时（如 5 分钟刷新），需评估 Umami API 性能与缓存策略。
+**[PROPOSED] T08-1 拆分为 T08-1A + T08-1B**（owner 验收时提出）：
 
-8. **security headers 与 robots.txt 归属**：T08-4 SEO Integration 是否是处理 robots.txt 和 security headers 的正确位置？还是应该独立为 T08-4.5 或归入 T08-1？**建议归入 T08-4**，待 owner 决定。
+```
+T08-1A Analytics Foundation
+  - Umami deployment contract
+  - PostgreSQL
+  - systemd
+  - nginx reverse proxy
+  - config/secrets
+  - telemetry guard 调整（test_no_sudo_no_telemetry）
+  - tests
+        ↓ 验收
+T08-1B Browser Tracking
+  - Layout.astro
+  - Umami script
+  - page_view
+  - page_type
+  - model_id
+  - datasetVersion
+  - production verification
+```
+
+**拆分理由：** 这是 maasweekly 第一次正式引入第三方 telemetry 服务，同时涉及 PostgreSQL、systemd、Nginx 和现有 `test_no_sudo_no_telemetry` 守护逻辑。如果把服务器基础设施和前端采集一次提交，出问题时很难判断是部署问题还是埋点问题。拆分后 T08-1A 先确认基础设施可用，T08-1B 再做前端采集。
 
 ---
 
