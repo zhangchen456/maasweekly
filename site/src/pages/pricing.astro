@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ModelPriceLinks from '../components/ModelPriceLinks.astro';
 import '../styles/pricing.css';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -43,12 +44,12 @@ const chipGroups = Object.values((chips?.chips ?? []).reduce((groups, item) => {
 }, {}));
 ---
 
-<Layout title="价格与算力 — MaaS Daily" description="主流模型 API 定价、GPU 租赁行情与国产 AI 芯片动态">
+<Layout title="大模型 API 价格比较与 GPU 租赁行情 — MaaS Daily" description="查询大模型 API 价格与成本估算，查看模型原币种报价、计费条件和价格变化，追踪 GPU 租赁行情与国产 AI 芯片动态。">
   <div class="pricing-page">
     <header class="pricing-hero reveal">
       <div class="pricing-intro">
         <div class="pricing-kicker">COST &amp; COMPUTE / 价格观察</div>
-        <h1>把模型成本，<br />放回算力全景里。</h1>
+        <h1>大模型 API 价格，<br />与算力成本全景。</h1>
         <p>从一次 API 调用，到一张 GPU，再到国产芯片供给。三种价格尺度放在同一页，帮助你看清成本从哪里来。</p>
         <div class="pricing-status" aria-label="数据概况">
           <span><b>{providerCount}</b> 家 API 厂商</span>
@@ -62,6 +63,8 @@ const chipGroups = Object.values((chips?.chips ?? []).reduce((groups, item) => {
         <a href="#chip-supply"><span>03</span><strong>国产芯片</strong><small>出货与进展</small><i>↘</i></a>
       </nav>
     </header>
+
+    <ModelPriceLinks />
 
     <section class="section pricing-section" id="api-pricing">
       <div class="section-heading">

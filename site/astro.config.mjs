@@ -1,10 +1,12 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import { SITE_CANONICAL } from './src/config/public-access.ts';
+import seoSitemap from './scripts/seo-sitemap.mjs';
 
 // https://astro.build/config
 export default defineConfig({
   site: SITE_CANONICAL,
+  integrations: [seoSitemap(SITE_CANONICAL)],
   markdown: {
     shikiConfig: {
       theme: 'github-dark',

@@ -129,7 +129,7 @@ const priceCondText = () => {
 
 {isPrice ? (
 <Layout title={`${providerLabel} ${record.model} ${COMPONENT_LABEL[record.component] ?? record.component}价格变化 — MaaS Daily`}
-        description={`${record.date} ${providerLabel} ${record.model} 结构化价格变化`}>
+        description={`${record.date} ${providerLabel} ${record.model} 结构化价格变化`} noindex={record.status === 'withdrawn'}>
   <header class="hero">
     <div class="hero-main">
       <a href={`/daily/${weekId}/`} class="back-link">← {weekId} 周归档</a>
@@ -327,7 +327,7 @@ const priceCondText = () => {
   </script>
 </Layout>
 ) : (
-<Layout title={`${record.title} — MaaS Daily`} description={`${record.platform} ${record.date} 来源变化摘录`}>
+<Layout title={`${record.title} — MaaS Daily`} description={record.summary?.slice(0, 160) || `${record.platform} ${record.date} 来源变化摘录`} noindex={record.status === 'withdrawn'}>
   <header class="hero">
     <div class="hero-main">
       <a href={`/daily/${weekId}/`} class="back-link">← {weekId} 周归档</a>

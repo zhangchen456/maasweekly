@@ -18,7 +18,7 @@ const structured = await getCollection('weeklyStructured', (e) => e.id === repor
 const data = structured[0]?.data;
 ---
 
-<Layout title={`${report.data.title} — MaaS Daily`} description={report.data.period || report.data.date}>
+<Layout title={`${report.data.title} — MaaS Daily`} description={`${report.data.period || report.data.date} 大模型与 MaaS 平台周报：模型发布、API 定价变化、平台更新及官方来源。`}>
   <article class="report-page">
     <a href="/" class="back-link">← 返回首页</a>
 

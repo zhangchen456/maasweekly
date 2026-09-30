@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ModelPriceLinks from '../components/ModelPriceLinks.astro';
 import '../styles/workspace.css';
 import { getCollection } from 'astro:content';
 import { logoFor } from '../lib/platforms';
@@ -81,7 +82,7 @@ const priceChanges: any[] = today?.price_changes || [];
 // 周要点按平台统计（v3 展平后已存 weekly-digest 的 highlights）
 const weekHighlightCount = currentWeek?.highlights?.length || 0;
 ---
-<Layout title="MaaS Daily — 全球 MaaS 平台每日追踪" description="每天追踪全球 MaaS 平台：模型发布、定价变更、API 更新，一目了然。">
+<Layout title="MaaS Daily — 大模型 API 价格与全球 MaaS 每日动态" description="每日追踪大模型发布、API 价格变化与平台更新。查询模型报价、计费条件和官方证据，查看全球 MaaS 平台周报。">
   <header class="hero workspace-hero">
     <div class="hero-copy">
       <div class="eyebrow"><span class="live-dot"></span> YOUR DAILY INTELLIGENCE</div>
@@ -96,6 +97,8 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
       <span id="copy-status" role="status"></span>
     </aside>
   </header>
+
+  <ModelPriceLinks />
 
   <div class="explore-bar" aria-label="动态筛选">
     <label class="search-field"><span aria-hidden="true">⌕</span><input id="signal-search" type="search" placeholder="搜索平台、模型或关键词…" aria-label="搜索今日要点与信号"/><kbd>/</kbd></label>
