@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
-# maasweekly-deploy-shell：maasdeploy 的受限登录 shell（Task 06 M4）。
+# maasweekly-deploy-shell：maasdeploy 的受限登录 shell（Task 06 M4；T08-1A Gate B Preflight）。
 # 安装到 /usr/local/bin/maasweekly-deploy-shell（替换仅 rsync 的旧版）。
 #
-# 只接受四种固定句法（无任意命令面；参数过严格格式校验后 exec）：
+# 只接受五种固定句法（无任意命令面；参数过严格格式校验后 exec）：
 #   rsync --server ... <path>/incoming/<rid>/...   # 只能写 incoming
 #   activate <rid>                                  # sudo → maasweekly-activate
 #   rollback <rid> --reason "<text>"                # 同上
 #   status                                          # 同上
+#   inventory                                       # sudo → maasweekly-inventory（T08-1A 只读盘点）
 set -euo pipefail
 ACTIVATE=/usr/local/sbin/maasweekly-activate
+INVENTORY=/usr/local/sbin/maasweekly-inventory
 INCOMING_ROOT=/srv/maasweekly/incoming
 RID_RE='^rl_[0-9a-f]{10}_[0-9a-f]{12}$'
 
@@ -17,7 +19,7 @@ reject() { echo "restricted shell: $*" >&2; exit 1; }
 
 case "$cmd" in
   "" )
-    reject "需要命令（activate <rid> | rollback <rid> --reason <text> | status | rsync）"
+    reject "需要命令（activate <rid> | rollback <rid> --reason <text> | status | inventory | rsync）"
     ;;
   rsync\ --server\ *)
     # 目标路径必须在 incoming/<合法rid>/ 下
@@ -56,6 +58,11 @@ case "$cmd" in
     ;;
   status )
     exec sudo -n "$ACTIVATE" status
+    ;;
+  inventory )
+    # T08-1A Gate B Preflight：只读盘点，无参数，调用固定 inventory helper
+    # inventory 不接受任何参数（inventory xxx 被拒绝，走 * 分支）
+    exec sudo -n "$INVENTORY"
     ;;
   * )
     reject "不允许的命令: $cmd"

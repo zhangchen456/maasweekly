@@ -1,0 +1,313 @@
+#!/usr/bin/env bash
+# maasweekly-inventory：root 管理的只读 inventory helper（T08-1A Gate B Preflight）。
+#
+# 安装到 /usr/local/sbin/maasweekly-inventory（root:root 0750，
+# 由 install-production.sh / install-umami.sh 安装）。
+#
+# 由 maasweekly-deploy-shell 经 sudoers 单行 NOPASSWD 调用；
+# 也被 tests/test_inventory_capability.py 以 INVENTORY_PATH 注入临时目录测试。
+#
+# 固定动作（无任意命令面，无参数，无 eval，无 shell passthrough）：
+#   inventory    # 只读输出 Gate B 前置盘点所需的服务器环境信息
+#
+# 安全边界（严格 allowlist）：
+#   - 不接受用户传入的任何 command/argument/path/SQL
+#   - 不使用 eval / bash -c / sh -c / exec user input
+#   - SQL 硬编码在脚本中（只 SELECT 元数据，不读 credential）
+#   - 只 stat umami.env / .umami-install-state，不 cat 内容
+#   - 不输出 private key / DATABASE_URL / DB password / APP_SECRET / token
+#   - 不执行任何 mutation（不 CREATE/ALTER/DROP，不 useradd/usermod，
+#     不 mkdir/chmod/chown，不 systemctl enable/start，不 nginx reload/restart）
+#   - missing dependency → NOT_INSTALLED/UNKNOWN，不导致整体失败
+#   - permission denied → UNKNOWN_PERMISSION_DENIED，不 sudo 绕过
+set -uo pipefail
+ROOT="${MAAS_RELEASE_ROOT:-/srv/maasweekly}"
+
+# 输出 key=value 格式，便于解析
+
+echo "=== system ==="
+hostname 2>/dev/null || echo "hostname=UNKNOWN"
+uname -a 2>/dev/null || echo "uname=UNKNOWN"
+# OS distribution
+if [ -f /etc/os-release ]; then
+  . /etc/os-release 2>/dev/null
+  echo "os_id=${ID:-UNKNOWN}"
+  echo "os_version=${VERSION_ID:-UNKNOWN}"
+  echo "os_pretty=${PRETTY_NAME:-UNKNOWN}"
+else
+  echo "os_id=UNKNOWN"
+  echo "os_version=UNKNOWN"
+fi
+echo "arch=$(uname -m 2>/dev/null || echo UNKNOWN)"
+echo "timezone=$(timedatectl show -p Timezone --value 2>/dev/null || cat /etc/timezone 2>/dev/null || echo UNKNOWN)"
+
+echo "=== resources ==="
+echo "cpu_count=$(nproc 2>/dev/null || echo UNKNOWN)"
+# memory
+if [ -f /proc/meminfo ]; then
+  echo "mem_total_kb=$(grep MemTotal /proc/meminfo 2>/dev/null | awk '{print $2}' || echo UNKNOWN)"
+  echo "mem_available_kb=$(grep MemAvailable /proc/meminfo 2>/dev/null | awk '{print $2}' || echo UNKNOWN)"
+  echo "swap_total_kb=$(grep SwapTotal /proc/meminfo 2>/dev/null | awk '{print $2}' || echo UNKNOWN)"
+else
+  echo "mem_total_kb=UNKNOWN"
+  echo "mem_available_kb=UNKNOWN"
+  echo "swap_total_kb=UNKNOWN"
+fi
+# disk
+echo "root_fs=$(df -h / 2>/dev/null | awk 'NR==2{print $3"/"$2" used ("$5")"}' || echo UNKNOWN)"
+echo "root_fs_available=$(df -BG --output=avail / 2>/dev/null | tail -1 | tr -dc '0-9' || echo UNKNOWN)G"
+echo "srv_fs=$(df -h /srv 2>/dev/null | awk 'NR==2{print $3"/"$2" used ("$5")"}' || echo UNKNOWN)"
+echo "srv_fs_available=$(df -BG --output=avail /srv 2>/dev/null | tail -1 | tr -dc '0-9' || echo UNKNOWN)G"
+
+echo "=== runtime ==="
+# node
+NODE_BIN="$(command -v node 2>/dev/null || true)"
+if [ -n "$NODE_BIN" ]; then
+  echo "node_path=$NODE_BIN"
+  echo "node_version=$($NODE_BIN --version 2>/dev/null || echo UNKNOWN)"
+else
+  echo "node_path=NOT_INSTALLED"
+  echo "node_version=NOT_INSTALLED"
+fi
+# npm
+NPM_BIN="$(command -v npm 2>/dev/null || true)"
+if [ -n "$NPM_BIN" ]; then
+  echo "npm_version=$($NPM_BIN --version 2>/dev/null || echo UNKNOWN)"
+else
+  echo "npm_version=NOT_INSTALLED"
+fi
+# pnpm
+PNPM_BIN="$(command -v pnpm 2>/dev/null || true)"
+if [ -n "$PNPM_BIN" ]; then
+  echo "pnpm_path=$PNPM_BIN"
+  echo "pnpm_version=$($PNPM_BIN --version 2>/dev/null || echo UNKNOWN)"
+else
+  echo "pnpm_path=NOT_INSTALLED"
+  echo "pnpm_version=NOT_INSTALLED"
+fi
+
+echo "=== postgresql ==="
+PG_BIN="$(command -v psql 2>/dev/null || true)"
+POSTGRES_BIN="$(command -v postgres 2>/dev/null || true)"
+if [ -n "$POSTGRES_BIN" ]; then
+  echo "postgres_path=$POSTGRES_BIN"
+  echo "postgres_version=$($POSTGRES_BIN --version 2>/dev/null || echo UNKNOWN)"
+else
+  echo "postgres_path=NOT_INSTALLED"
+  echo "postgres_version=NOT_INSTALLED"
+fi
+if [ -n "$PG_BIN" ]; then
+  echo "psql_path=$PG_BIN"
+  echo "psql_version=$($PG_BIN --version 2>/dev/null || echo UNKNOWN)"
+else
+  echo "psql_path=NOT_INSTALLED"
+  echo "psql_version=NOT_INSTALLED"
+fi
+# service status
+if command -v systemctl >/dev/null 2>&1; then
+  echo "postgresql_service_active=$(systemctl is-active postgresql 2>/dev/null || echo unknown)"
+else
+  echo "postgresql_service_active=UNKNOWN_NO_SYSTEMCTL"
+fi
+# PostgreSQL listen / port / data dir / config（硬编码 SQL，不读 credential）
+if [ -n "$PG_BIN" ] && command -v sudo >/dev/null 2>&1; then
+  # 只读元数据查询（硬编码 SQL，不查询 credential 字段）
+  PG_LISTEN=$(sudo -n -u postgres $PG_BIN -tAc "SHOW listen_addresses" 2>/dev/null || echo "UNKNOWN_PERMISSION_DENIED")
+  PG_PORT=$(sudo -n -u postgres $PG_BIN -tAc "SHOW port" 2>/dev/null || echo "UNKNOWN_PERMISSION_DENIED")
+  PG_DATA=$(sudo -n -u postgres $PG_BIN -tAc "SHOW data_directory" 2>/dev/null || echo "UNKNOWN_PERMISSION_DENIED")
+  PG_CONFIG=$(sudo -n -u postgres $PG_BIN -tAc "SHOW config_file" 2>/dev/null || echo "UNKNOWN_PERMISSION_DENIED")
+  PG_HBA=$(sudo -n -u postgres $PG_BIN -tAc "SHOW hba_file" 2>/dev/null || echo "UNKNOWN_PERMISSION_DENIED")
+  echo "postgres_listen_addresses=$PG_LISTEN"
+  echo "postgres_port=$PG_PORT"
+  echo "postgres_data_dir=$PG_DATA"
+  echo "postgres_config_file=$PG_CONFIG"
+  echo "postgres_hba_file=$PG_HBA"
+  # database names（只列名，不读 credential）
+  echo "postgres_databases=$(sudo -n -u postgres $PG_BIN -tAc "SELECT string_agg(datname, ',') FROM pg_database" 2>/dev/null || echo UNKNOWN_PERMISSION_DENIED)"
+  # role names（只列名，不读 password）
+  echo "postgres_roles=$(sudo -n -u postgres $PG_BIN -tAc "SELECT string_agg(rolname, ',') FROM pg_roles" 2>/dev/null || echo UNKNOWN_PERMISSION_DENIED)"
+  # 关键存在性检查
+  echo "maas_analytics_exists=$(sudo -n -u postgres $PG_BIN -tAc "SELECT count(*) FROM pg_database WHERE datname='maas_analytics'" 2>/dev/null | tr -dc '0-9' || echo 0)"
+  echo "maas_umami_role_exists=$(sudo -n -u postgres $PG_BIN -tAc "SELECT count(*) FROM pg_roles WHERE rolname='maas_umami'" 2>/dev/null | tr -dc '0-9' || echo 0)"
+else
+  echo "postgres_listen_addresses=UNKNOWN_NO_PSQL_OR_SUDO"
+  echo "postgres_port=UNKNOWN_NO_PSQL_OR_SUDO"
+  echo "postgres_data_dir=UNKNOWN_NO_PSQL_OR_SUDO"
+  echo "postgres_config_file=UNKNOWN_NO_PSQL_OR_SUDO"
+  echo "postgres_hba_file=UNKNOWN_NO_PSQL_OR_SUDO"
+  echo "postgres_databases=UNKNOWN_NO_PSQL_OR_SUDO"
+  echo "postgres_roles=UNKNOWN_NO_PSQL_OR_SUDO"
+  echo "maas_analytics_exists=UNKNOWN_NO_PSQL_OR_SUDO"
+  echo "maas_umami_role_exists=UNKNOWN_NO_PSQL_OR_SUDO"
+fi
+
+echo "=== network_ports ==="
+# 只读检查端口监听（不 kill/change/restart 任何进程）
+if command -v ss >/dev/null 2>&1; then
+  echo "port_80_listen=$(ss -tlnp 2>/dev/null | grep -c ':80 ' || echo 0)"
+  echo "port_443_listen=$(ss -tlnp 2>/dev/null | grep -c ':443 ' || echo 0)"
+  echo "port_3000_listen=$(ss -tlnp 2>/dev/null | grep -c ':3000 ' || echo 0)"
+  echo "port_5432_listen=$(ss -tlnp 2>/dev/null | grep -c ':5432 ' || echo 0)"
+  echo "port_3000_available=$([ "$(ss -tlnp 2>/dev/null | grep -c ':3000 ')" = "0" ] && echo true || echo false)"
+  # 5432 监听地址范围
+  PG_5432_LISTEN=$(ss -tlnp 2>/dev/null | grep ':5432 ' | awk '{print $4}' | head -3 | tr '\n' ',' || echo "")
+  echo "postgres_5432_listen=${PG_5432_LISTEN:-none}"
+else
+  echo "port_80_listen=UNKNOWN_NO_SS"
+  echo "port_443_listen=UNKNOWN_NO_SS"
+  echo "port_3000_listen=UNKNOWN_NO_SS"
+  echo "port_5432_listen=UNKNOWN_NO_SS"
+  echo "port_3000_available=UNKNOWN_NO_SS"
+  echo "postgres_5432_listen=UNKNOWN_NO_SS"
+fi
+
+echo "=== nginx ==="
+NGINX_BIN="$(command -v nginx 2>/dev/null || true)"
+if [ -n "$NGINX_BIN" ]; then
+  echo "nginx_path=$NGINX_BIN"
+  echo "nginx_version=$($NGINX_BIN -v 2>&1 | sed 's/^.*\///' || echo UNKNOWN)"
+  echo "nginx_service_active=$(systemctl is-active nginx 2>/dev/null || echo unknown)"
+  # nginx -T 提取 Gate B 需要的信息（不 dump 全部 config，不输出 credential/private key）
+  NGINX_T="$($NGINX_BIN -T 2>/dev/null || echo '')"
+  if [ -n "$NGINX_T" ]; then
+    echo "nginx_config_root=$(echo "$NGINX_T" | grep -E 'configuration file' | head -1 | awk -F: '{print $1}' || echo UNKNOWN)"
+    echo "nginx_conf_d_included=$(echo "$NGINX_T" | grep -c 'include.*conf.d/\*.conf' || echo 0)"
+    echo "daily_maas_click_server_block=$(echo "$NGINX_T" | grep -c 'server_name.*daily\.maas\.click' || echo 0)"
+    echo "analytics_maas_click_server_block=$(echo "$NGINX_T" | grep -c 'server_name.*analytics\.maas\.click' || echo 0)"
+    echo "nginx_conf_d_files=$(ls /etc/nginx/conf.d/*.conf 2>/dev/null | xargs -n1 basename 2>/dev/null | tr '\n' ' ' || echo none)"
+  else
+    echo "nginx_config_root=UNKNOWN_NGINX_T_FAILED"
+    echo "nginx_conf_d_included=UNKNOWN"
+    echo "daily_maas_click_server_block=UNKNOWN"
+    echo "analytics_maas_click_server_block=UNKNOWN"
+    echo "nginx_conf_d_files=UNKNOWN"
+  fi
+else
+  echo "nginx_path=NOT_INSTALLED"
+  echo "nginx_version=NOT_INSTALLED"
+  echo "nginx_service_active=NOT_INSTALLED"
+fi
+
+echo "=== tls ==="
+CERTBOT_BIN="$(command -v certbot 2>/dev/null || true)"
+if [ -n "$CERTBOT_BIN" ]; then
+  echo "certbot_path=$CERTBOT_BIN"
+  echo "certbot_version=$($CERTBOT_BIN --version 2>&1 | awk '{print $2}' || echo UNKNOWN)"
+else
+  echo "certbot_path=NOT_INSTALLED"
+  echo "certbot_version=NOT_INSTALLED"
+fi
+# daily.maas.click 证书（只读路径 + expiry，不读 private key）
+DAILY_CERT="/etc/letsencrypt/live/daily.maas.click/fullchain.pem"
+if [ -f "$DAILY_CERT" ]; then
+  echo "daily_maas_click_cert_exists=true"
+  echo "daily_maas_click_cert_path=$DAILY_CERT"
+  echo "daily_maas_click_cert_expiry=$(openssl x509 -enddate -noout -in "$DAILY_CERT" 2>/dev/null | cut -d= -f2 || echo UNKNOWN)"
+else
+  echo "daily_maas_click_cert_exists=false"
+  echo "daily_maas_click_cert_path=NONE"
+  echo "daily_maas_click_cert_expiry=NONE"
+fi
+# analytics.maas.click 证书
+ANALYTICS_CERT="/etc/letsencrypt/live/analytics.maas.click/fullchain.pem"
+if [ -f "$ANALYTICS_CERT" ]; then
+  echo "analytics_maas_click_cert_exists=true"
+  echo "analytics_maas_click_cert_path=$ANALYTICS_CERT"
+  echo "analytics_maas_click_cert_expiry=$(openssl x509 -enddate -noout -in "$ANALYTICS_CERT" 2>/dev/null | cut -d= -f2 || echo UNKNOWN)"
+else
+  echo "analytics_maas_click_cert_exists=false"
+  echo "analytics_maas_click_cert_path=NONE"
+  echo "analytics_maas_click_cert_expiry=NONE"
+fi
+# 绝不读取/输出 private key 内容
+
+echo "=== users_systemd ==="
+echo "maasumami_user_exists=$(id maasumami >/dev/null 2>&1 && echo true || echo false)"
+echo "maasagent_user_exists=$(id maasagent >/dev/null 2>&1 && echo true || echo false)"
+echo "maas_deploy_user_exists=$(id maasdeploy >/dev/null 2>&1 && echo true || echo false)"
+echo "maas_umami_service_exists=$(systemctl list-unit-files 2>/dev/null | grep -c 'maas-umami.service' || echo 0)"
+echo "maas_umami_service_active=$(systemctl is-active maas-umami.service 2>/dev/null || echo inactive)"
+echo "nginx_service_active=$(systemctl is-active nginx 2>/dev/null || echo unknown)"
+echo "postgresql_service_active=$(systemctl is-active postgresql 2>/dev/null || echo unknown)"
+echo "maas_agent_blue_active=$(systemctl is-active maas-agent@blue.service 2>/dev/null || echo inactive)"
+echo "maas_agent_green_active=$(systemctl is-active maas-agent@green.service 2>/dev/null || echo inactive)"
+
+echo "=== maasweekly_filesystem ==="
+if [ -d "$ROOT" ]; then
+  echo "srv_root_exists=true"
+  echo "srv_root_owner=$(stat -c '%U:%G' "$ROOT" 2>/dev/null || echo UNKNOWN)"
+  echo "srv_root_mode=$(stat -c '%a' "$ROOT" 2>/dev/null || echo UNKNOWN)"
+  echo "srv_root_available=$(df -BG --output=avail "$ROOT" 2>/dev/null | tail -1 | tr -dc '0-9' || echo UNKNOWN)G"
+else
+  echo "srv_root_exists=false"
+  echo "srv_root_owner=UNKNOWN"
+  echo "srv_root_mode=UNKNOWN"
+  echo "srv_root_available=UNKNOWN"
+fi
+# shared 目录
+SHARED_DIR="$ROOT/shared"
+if [ -d "$SHARED_DIR" ]; then
+  echo "shared_exists=true"
+  echo "shared_owner=$(stat -c '%U:%G' "$SHARED_DIR" 2>/dev/null || echo UNKNOWN)"
+  echo "shared_mode=$(stat -c '%a' "$SHARED_DIR" 2>/dev/null || echo UNKNOWN)"
+else
+  echo "shared_exists=false"
+  echo "shared_owner=UNKNOWN"
+  echo "shared_mode=UNKNOWN"
+fi
+# 固定路径检查（只 stat，不 cat 内容）
+for f in "$ROOT/umami" "$SHARED_DIR/umami.env" "$SHARED_DIR/.umami-install-state"; do
+  name="$(echo "$f" | sed 's|/|_|g' | sed 's/^_//')"
+  if [ -e "$f" ]; then
+    echo "${name}_exists=true"
+    echo "${name}_owner=$(stat -c '%U:%G' "$f" 2>/dev/null || echo UNKNOWN)"
+    echo "${name}_mode=$(stat -c '%a' "$f" 2>/dev/null || echo UNKNOWN)"
+  else
+    echo "${name}_exists=false"
+    echo "${name}_owner=NONE"
+    echo "${name}_mode=NONE"
+  fi
+done
+
+echo "=== backup ==="
+PG_DUMP_BIN="$(command -v pg_dump 2>/dev/null || true)"
+if [ -n "$PG_DUMP_BIN" ]; then
+  echo "pg_dump_path=$PG_DUMP_BIN"
+  echo "pg_dump_version=$($PG_DUMP_BIN --version 2>/dev/null || echo UNKNOWN)"
+else
+  echo "pg_dump_path=NOT_INSTALLED"
+  echo "pg_dump_version=NOT_INSTALLED"
+fi
+BACKUP_DIR="$ROOT/backups"
+if [ -d "$BACKUP_DIR" ]; then
+  echo "backup_dir_exists=true"
+  echo "backup_dir_owner=$(stat -c '%U:%G' "$BACKUP_DIR" 2>/dev/null || echo UNKNOWN)"
+  echo "backup_dir_mode=$(stat -c '%a' "$BACKUP_DIR" 2>/dev/null || echo UNKNOWN)"
+  echo "backup_dir_available=$(df -BG --output=avail "$BACKUP_DIR" 2>/dev/null | tail -1 | tr -dc '0-9' || echo UNKNOWN)G"
+else
+  echo "backup_dir_exists=false"
+  echo "backup_dir_owner=NONE"
+  echo "backup_dir_mode=NONE"
+  echo "backup_dir_available=UNKNOWN"
+fi
+
+echo "=== firewall ==="
+# ufw（只读 summary，不修改）
+if command -v ufw >/dev/null 2>&1; then
+  echo "ufw_installed=true"
+  echo "ufw_status=$(ufw status 2>/dev/null | head -1 || echo UNKNOWN_PERMISSION_DENIED)"
+else
+  echo "ufw_installed=false"
+  echo "ufw_status=NOT_INSTALLED"
+fi
+# iptables/nftables（只读，可能 permission denied）
+if command -v iptables >/dev/null 2>&1; then
+  echo "iptables_installed=true"
+  echo "iptables_policy=$(iptables -S 2>/dev/null | head -3 | tr '\n' ';' || echo UNKNOWN_PERMISSION_DENIED)"
+else
+  echo "iptables_installed=false"
+  echo "iptables_policy=NOT_INSTALLED"
+fi
+# 不 sudo 绕过 restricted shell 权限边界
+
+echo "=== inventory_complete ==="
