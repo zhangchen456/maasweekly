@@ -1,6 +1,710 @@
 {
-  "updated_at": "2026-09-29T00:53:19",
+  "updated_at": "2026-09-30T00:07:43",
   "days": [
+    {
+      "date": "2026-09-30",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 11,
+        "unchanged": 54
+      },
+      "changed": [
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 28,
+          "removed_count": 7,
+          "added_lines": [
+            "Accounts and sessions",
+            "Add events to your MCP server (optional)",
+            "Agent security",
+            "Annotations Extensibility",
+            "Bedrock Managed Agents",
+            "ChatGPT Space",
+            "ChatGPT in Slack and Teams",
+            "ChatGPT plan usage",
+            "Cloud environments",
+            "Cloud security",
+            "Codex app-server",
+            "Collaboration",
+            "Collaboration and sharing",
+            "Computers and apps",
+            "Deployment and configuration",
+            "Errors and recovery",
+            "Feature setup",
+            "GPT-6.1 Sol",
+            "GPTs and sharing",
+            "Identity and access",
+            "If you're not sure where to start, use GPT-6 Astra, our flagship model for complex reasoning and coding. Choose GPT-6.1 Sol to balance intelligence and cost, or GPT-6 Luna for cost-sensitive, high-volume workloads.",
+            "In your ChatGPT plugin",
+            "Local computer access for Work Cloud and dots",
+            "Local security",
+            "Models and inference",
+            "Near-Astra performance for complex work at a lower cost.",
+            "On your website",
+            "Our most capable model for the most demanding work."
+          ],
+          "removed_lines": [
+            "Built to power complex coding and agentic workflows.",
+            "ChatGPT Work Overview",
+            "ChatGPT Work admin FAQ",
+            "ChatGPT Work cloud security",
+            "ChatGPT Work local security",
+            "ChatGPT Work: usage and cost",
+            "Cloud environment"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "codex cloud",
+              "before": "Codex cloud",
+              "after": "Codex Cloud"
+            },
+            {
+              "key": "codex security cloud",
+              "before": "Codex Security cloud",
+              "after": "Codex Security Cloud"
+            }
+          ],
+          "signal_preview": "Accounts and sessions",
+          "raw_added_count": 52,
+          "raw_removed_count": 25,
+          "id": "obs_19ec6437c83669a301f9c4d5be2203b68f11f1f4a0c801baaada950bc6b93f09",
+          "permalink": "/item/obs_19ec6437c83669a301f9c4d5be2203b68f11f1f4a0c801baaada950bc6b93f09/",
+          "llm_summary": "模型列表更新：将 Codex cloud 更名为 Codex Cloud，Codex Security cloud 更名为 Codex Security Cloud，并新增大量与 ChatGPT 企业版、Agent 安全、云环境相关的条目，同时移除 ChatGPT Work 系列旧条目，反映产品线重组。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 27,
+          "removed_count": 8,
+          "added_lines": [
+            "2026. GPT-5.6 Sol’s promotional pricing is available at least through",
+            "Accounts and sessions",
+            "Add events to your MCP server (optional)",
+            "Agent security",
+            "Annotations Extensibility",
+            "Bedrock Managed Agents",
+            "ChatGPT Space",
+            "ChatGPT in Slack and Teams",
+            "ChatGPT plan usage",
+            "Cloud environments",
+            "Cloud platforms",
+            "Cloud security",
+            "Codex app-server",
+            "Collaboration",
+            "Collaboration and sharing",
+            "Computers and apps",
+            "Deployment and configuration",
+            "Errors and recovery",
+            "Feature setup",
+            "GPTs and sharing",
+            "Identity and access",
+            "In your ChatGPT plugin",
+            "Local computer access for Work Cloud and dots",
+            "Local security",
+            "Models and inference",
+            "On your website",
+            "OpenAI models on Amazon Bedrock and Microsoft Azure are billed through those"
+          ],
+          "removed_lines": [
+            "Cached input rates for GPT Image 2 and GPT Image 2.5 only apply to images",
+            "ChatGPT Work Overview",
+            "ChatGPT Work admin FAQ",
+            "ChatGPT Work cloud security",
+            "ChatGPT Work local security",
+            "ChatGPT Work: usage and cost",
+            "Cloud environment",
+            "Deployment and model providers"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "codex cloud",
+              "before": "Codex cloud",
+              "after": "Codex Cloud"
+            },
+            {
+              "key": "codex security cloud",
+              "before": "Codex Security cloud",
+              "after": "Codex Security Cloud"
+            }
+          ],
+          "signal_preview": "2026. GPT-5.6 Sol’s promotional pricing is available at least through",
+          "raw_added_count": 61,
+          "raw_removed_count": 40,
+          "id": "obs_bfc0acc6a12cef44b5badadb6c88cf0235ae7f2c3c41ef582d90101252456d76",
+          "permalink": "/item/obs_bfc0acc6a12cef44b5badadb6c88cf0235ae7f2c3c41ef582d90101252456d76/",
+          "llm_summary": "定价页新增 GPT-5.6 Sol 促销定价说明（至少持续至 2026 年），并移除 GPT Image 2/2.5 的缓存输入定价说明，同时伴随模型列表的同步更新，显示定价策略调整。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 28,
+          "removed_count": 8,
+          "added_lines": [
+            "Accounts and sessions",
+            "Add events to your MCP server (optional)",
+            "Added Ultrafast mode for GPT-6 Astra in the Responses API. Use gpt-6-astra with service_tier: \"ultrafast\" to reduce the time between generated output tokens. It is available to API customers, subject to rate limits, with global processing and US data residency. EU and other regional inference residency aren't supported. See Ultrafast pricing.",
+            "Added computer use to the Agents API. Agents can complete tasks in an OpenAI-hosted browser, with website access approvals and sign-in handled by your application.",
+            "Agent security",
+            "Annotations Extensibility",
+            "Bedrock Managed Agents",
+            "ChatGPT Space",
+            "ChatGPT in Slack and Teams",
+            "ChatGPT plan usage",
+            "Cloud environments",
+            "Cloud security",
+            "Codex app-server",
+            "Collaboration",
+            "Collaboration and sharing",
+            "Computers and apps",
+            "Deployment and configuration",
+            "Errors and recovery",
+            "Feature setup",
+            "GPT-6.1 Sol also supports Multi-agent in beta. Let the model delegate work to subagents in a Responses API request.",
+            "GPTs and sharing",
+            "Identity and access",
+            "In your ChatGPT plugin",
+            "Local computer access for Work Cloud and dots",
+            "Local security",
+            "Models and inference",
+            "On your website",
+            "Overview Sign in with ChatGPT Plugins Workspace Agents Commerce Ads ChatGPT + Codex user docs"
+          ],
+          "removed_lines": [
+            "ChatGPT Work Overview",
+            "ChatGPT Work admin FAQ",
+            "ChatGPT Work cloud security",
+            "ChatGPT Work local security",
+            "ChatGPT Work: usage and cost",
+            "Cloud environment",
+            "Deployment and model providers",
+            "Docs Use cases"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "codex cloud",
+              "before": "Codex cloud",
+              "after": "Codex Cloud"
+            },
+            {
+              "key": "codex security cloud",
+              "before": "Codex Security cloud",
+              "after": "Codex Security Cloud"
+            }
+          ],
+          "signal_preview": "Accounts and sessions",
+          "raw_added_count": 53,
+          "raw_removed_count": 20,
+          "id": "obs_4791dfded079c1d4e0e1130d3d5165f111a462edb836bf7a65fd7ceac9038e68",
+          "permalink": "/item/obs_4791dfded079c1d4e0e1130d3d5165f111a462edb836bf7a65fd7ceac9038e68/",
+          "llm_summary": "变更日志新增 GPT-6 Astra Ultrafast 模式（通过 service_tier 参数启用）和 Agents API 的 computer use 功能，同时移除 ChatGPT Work 相关旧条目，表明功能重心从企业工作区转向 Agent 能力。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 28,
+          "removed_count": 8,
+          "added_lines": [
+            "Accounts and sessions",
+            "Add events to your MCP server (optional)",
+            "Added Ultrafast mode for GPT-6 Astra in the Responses API. Use gpt-6-astra with service_tier: \"ultrafast\" to reduce the time between generated output tokens. It is available to API customers, subject to rate limits, with global processing and US data residency. EU and other regional inference residency aren't supported. See Ultrafast pricing.",
+            "Added computer use to the Agents API. Agents can complete tasks in an OpenAI-hosted browser, with website access approvals and sign-in handled by your application.",
+            "Agent security",
+            "Annotations Extensibility",
+            "Bedrock Managed Agents",
+            "ChatGPT Space",
+            "ChatGPT in Slack and Teams",
+            "ChatGPT plan usage",
+            "Cloud environments",
+            "Cloud security",
+            "Codex app-server",
+            "Collaboration",
+            "Collaboration and sharing",
+            "Computers and apps",
+            "Deployment and configuration",
+            "Errors and recovery",
+            "Feature setup",
+            "GPT-6.1 Sol also supports Multi-agent in beta. Let the model delegate work to subagents in a Responses API request.",
+            "GPTs and sharing",
+            "Identity and access",
+            "In your ChatGPT plugin",
+            "Local computer access for Work Cloud and dots",
+            "Local security",
+            "Models and inference",
+            "On your website",
+            "Overview Sign in with ChatGPT Plugins Workspace Agents Commerce Ads ChatGPT + Codex user docs"
+          ],
+          "removed_lines": [
+            "ChatGPT Work Overview",
+            "ChatGPT Work admin FAQ",
+            "ChatGPT Work cloud security",
+            "ChatGPT Work local security",
+            "ChatGPT Work: usage and cost",
+            "Cloud environment",
+            "Deployment and model providers",
+            "Docs Use cases"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "codex cloud",
+              "before": "Codex cloud",
+              "after": "Codex Cloud"
+            },
+            {
+              "key": "codex security cloud",
+              "before": "Codex Security cloud",
+              "after": "Codex Security Cloud"
+            }
+          ],
+          "signal_preview": "Accounts and sessions",
+          "raw_added_count": 53,
+          "raw_removed_count": 20,
+          "id": "obs_8aef8050740571fe1cd7e4713e3c7924432898d461a9d6901d7b6b738aa21b18",
+          "permalink": "/item/obs_8aef8050740571fe1cd7e4713e3c7924432898d461a9d6901d7b6b738aa21b18/",
+          "llm_summary": "博客内容与 changelog 同步，新增 Ultrafast 模式和 computer use 的公告，删除 ChatGPT Work 系列文章，反映官方宣传重点的转移。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "model_list",
+          "url": "https://docs.cohere.com/docs/models",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 0,
+          "added_lines": [
+            "| embed-v5.0-fast | A faster, lighter version of embed-v5.0-pro. Allows for text and images to be classified or turned into embeddings | Text, Images, Mixed texts/images (i.e. PDFs) | One of ‘[256, 512, 768, 1024, 1536, 2048 (default)]‘ | 128k | Cosine Similarity, Dot Product Similarity, Euclidean Distance | Embed",
+            "| embed-v5.0-fast | N/A | Unique per deployment | Cohere-Embed-V5-Fast",
+            "| embed-v5.0-pro | N/A | Unique per deployment | Cohere-Embed-V5-Pro",
+            "| embed-v5.0-pro | Our most capable embedding model, for text and images. Higher quality than embed-v5.0-fast, at higher latency. | Text, Images, Mixed texts/images (i.e. PDFs) | One of ‘[256, 512, 768, 1024, 1536, 2048 (default)]‘ | 128k | Cosine Similarity, Dot Product Similarity, Euclidean Distance | Embed"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| embed-v5.0-fast | A faster, lighter version of embed-v5.0-pro. Allows for text and images to be classified or turned into embeddings | Text, Images, Mixed texts/images (i.e. PDFs) | One of ‘[256, 512, 768, 1024, 1536, 2048 (default)]‘ | 128k | Cosine Similarity, Dot Product Similarity, Euclidean Distance | Embed",
+          "raw_added_count": 4,
+          "raw_removed_count": 0,
+          "id": "obs_90efdf86ac8897563440819b750c6dc69ff98bb581a0baab6f15df7fece359a3",
+          "permalink": "/item/obs_90efdf86ac8897563440819b750c6dc69ff98bb581a0baab6f15df7fece359a3/",
+          "llm_summary": "模型列表新增 embed-v5.0-fast 和 embed-v5.0-pro 两个嵌入模型，分别标注为轻量快速版和最高质量版，支持文本、图像及混合输入，且两者共享嵌入空间。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "changelog",
+          "url": "https://docs.cohere.com/changelog",
+          "status": "changed",
+          "added_count": 12,
+          "removed_count": 7,
+          "added_lines": [
+            "Announcing Cohere's Embed 5 Models",
+            "Embed 5 delivers frontier retrieval quality on complex enterprise data, with major gains over Embed 4 on visually rich documents, financial filings, parsed PDFs, code, and multilingual retrieval.",
+            "Embed 5 is available through the Embed API, as well as Microsoft Foundry",
+            "Extended context length: 128k token context window",
+            "Flexible storage: Matryoshka embeddings in the following dimensions: [256, 512, 768, 1024, 1536, 2048], with float, int8, and binary output types",
+            "Multilingual support: Supports over 100 languages",
+            "Multimodal inputs: Embed text, images, and mixed text-and-image inputs (e.g. PDF pages) in a single vector",
+            "Shared embedding space: Pro and Fast share an embedding space, so a corpus indexed with one model can be queried with the other. We recommend indexing with Pro and querying with Fast.",
+            "We’re pleased to announce the release of Embed 5, Cohere’s most powerful embeddings family yet.",
+            "and Amazon SageMaker. For single-tenant deployment, Embed 5 is also available in Model Vault.",
+            "embed-v5.0-fast: Optimized for low latency and high throughput, particularly for interactive search, agent loops, and high-volume query traffic",
+            "embed-v5.0-pro: Optimized for the highest retrieval quality, particularly for offline indexing and quality-critical retrieval"
+          ],
+          "removed_lines": [
+            "16K token context length (8K input + 8K output) for handling longer texts",
+            "Announcing Cohere's Command A Translate Model",
+            "Command A Translate (command-a-translate-08-2025) is now available for all Cohere users through our standard API endpoints. For enterprise customers, private deployment",
+            "For more detailed information about Command A Translate, including technical specifications and implementation examples, visit our model documentation.",
+            "Getting Started",
+            "111 billion parameters for superior translation quality",
+            "23 supported languages: English, French, Spanish, Italian, German, Portuguese, Japanese, Korean, Chinese, Arabic, Russian, Polish, Turkish, Vietnamese, Dutch, Czech, Indonesian, Ukrainian, Romanian, Greek, Hindi, Hebrew, and Persian"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Announcing Cohere's Embed 5 Models",
+          "raw_added_count": 13,
+          "raw_removed_count": 19,
+          "id": "obs_2df532a4f57ab88af12d65014a2ac3b5c89e9ed0e0398efac67dd386095a8051",
+          "permalink": "/item/obs_2df532a4f57ab88af12d65014a2ac3b5c89e9ed0e0398efac67dd386095a8051/",
+          "llm_summary": "变更日志宣布发布 Embed 5 系列，强调其在复杂企业数据上的检索质量提升，支持 128k 上下文、多语言、多模态输入，并提供 Matryoshka 维度选项，同时移除 Command A Translate 的旧公告，表明产品重心从翻译转向嵌入。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 11,
+          "removed_count": 1,
+          "added_lines": [
+            "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailSambaNovaScaleway",
+            "AnthropicOpenAIAnthropic + CognitionOpenAI + CognitionSpaceXAIMetaZ.aiMoonshot AIAlibaba CloudDeepSeekGoogle",
+            "GPT-6 Luna (max)See more",
+            "GPT-6.1 Sol (high)",
+            "GPT-6.1 Sol (low)",
+            "GPT-6.1 Sol (max)",
+            "GPT-6.1 Sol (medium)",
+            "GPT-6.1 Sol (xhigh)",
+            "GPT-6.1 Sol replaces GPT-6 Sol after just 7 days, with near-Astra intelligence",
+            "New article published · 29 Sept",
+            "New language model evaluation · 29 Sept"
+          ],
+          "removed_lines": [
+            "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailSambaNovaScalewayTogether AI"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailSambaNovaScaleway",
+          "raw_added_count": 20,
+          "raw_removed_count": 18,
+          "id": "obs_3f78913eb28633414ba010d56721e924c2141e6bf9c3a2bdb29bfc5674861dc8",
+          "permalink": "/item/obs_3f78913eb28633414ba010d56721e924c2141e6bf9c3a2bdb29bfc5674861dc8/",
+          "llm_summary": "行业数据新增 GPT-6.1 Sol 的多个推理配置评测，并指出其发布仅 7 天即取代 GPT-6 Sol，同时新增 GPT-6 Luna (max) 评测，删除 Together AI 供应商列表，反映模型迭代加速。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 10,
+          "removed_count": 6,
+          "added_lines": [
+            "356,875,953356,875,953Total Sessions",
+            "Claude Sonnet 5 (High)·",
+            "Claude Sonnet 5.5",
+            "Gemini 3.7 Flash (High)·",
+            "Hy4 preview$0.24/task",
+            "Muse Spark 1.3 (Max)·",
+            "Presenting the result",
+            "Qwen3.8 Flash Next·",
+            "Reading files",
+            "WebDev · High"
+          ],
+          "removed_lines": [
+            "Recraft V4.1 Flash",
+            "Text-to-Image",
+            "356,301,941356,301,941Total Sessions",
+            "GLM 5.3 Flash·",
+            "GPT 6 Sol (Max)·",
+            "Hy4 preview$0.21/task"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5.1 (Max)$3.50/task",
+              "after": "Claude Fable 5.1 (Max)$3.54/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 4.8 (High)·",
+              "after": "Claude Opus 5 (Max)·"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (High)$1.36/task",
+              "after": "Claude Opus 5.5 (High)$1.39/task"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5 (High)$0.73/task",
+              "after": "Claude Sonnet 5 (High)$0.75/task"
+            }
+          ],
+          "signal_preview": "Claude Sonnet 5 (High)·",
+          "raw_added_count": 14,
+          "raw_removed_count": 10,
+          "id": "obs_c7080f8a8c7411c0806955a519f9497282629ca946aaa83c7b3dfb27e073d21e",
+          "permalink": "/item/obs_c7080f8a8c7411c0806955a519f9497282629ca946aaa83c7b3dfb27e073d21e/",
+          "llm_summary": "排行榜数据更新：多个 Claude 模型价格微调（上涨 0.02-0.04 USD/task），新增多个新模型（如 Claude Sonnet 5.5、Gemini 3.7 Flash 等），移除 GLM 5.3 Flash 和 GPT 6 Sol (Max)，显示榜单动态变化。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "model_list",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "Claude Sonnet 5"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 1,
+          "id": "obs_1b6436a24ba213e5205aedf2e15a7242c6550a23875d72abcc3b2aa072268003",
+          "permalink": "/item/obs_1b6436a24ba213e5205aedf2e15a7242c6550a23875d72abcc3b2aa072268003/"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "pricing",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "Claude Sonnet 5"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 1,
+          "id": "obs_8a6ab5f7e31b86486c90c590bb9cec517daf6f3e8d210f38f72274f5a08a4256",
+          "permalink": "/item/obs_8a6ab5f7e31b86486c90c590bb9cec517daf6f3e8d210f38f72274f5a08a4256/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 34,
+          "raw_removed_count": 34,
+          "id": "obs_6856daf5d699e422223c2b5793ff8cdca96d7f5de7bd3098d0043bbcffda3bcc",
+          "permalink": "/item/obs_6856daf5d699e422223c2b5793ff8cdca96d7f5de7bd3098d0043bbcffda3bcc/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "OpenAI",
+          "logo_summary": "GPT-6 Astra 涨价3倍，GPT-6.1 Sol 新定价上线",
+          "items": [
+            {
+              "text": "GPT-6 Astra 输入定价从 40 涨至 120 USD/百万tokens，输出从 150 涨至 450 USD/百万tokens，cache_read 涨至 12，cache_write 涨至 150",
+              "type": "pricing"
+            },
+            {
+              "text": "GPT-6.1 Sol 新定价公布：输入 8 USD/百万tokens，输出 30 USD/百万tokens，cache_read 0.4，cache_write 10",
+              "type": "pricing"
+            },
+            {
+              "text": "Agents API 新增 computer use 功能，支持在 OpenAI 托管浏览器中完成任务；GPT-6 Astra 新增 Ultrafast 模式",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "发布 Embed 5 系列，支持多模态与128k上下文",
+          "items": [
+            {
+              "text": "发布 Embed 5 系列（embed-v5.0-pro 与 embed-v5.0-fast），支持文本、图像及混合输入，上下文窗口 128k，支持 100+ 语言",
+              "type": "release"
+            },
+            {
+              "text": "Embed 5 提供 Matryoshka 维度（256-2048）及 float/int8/binary 输出，Pro 与 Fast 共享嵌入空间",
+              "type": "release"
+            },
+            {
+              "text": "Embed 5 可通过 Embed API、Microsoft Foundry、Amazon SageMaker 及 Model Vault 获取",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "GPT-6.1 Sol 评测上线，替代 GPT-6 Sol",
+          "items": [
+            {
+              "text": "新增 GPT-6.1 Sol 多档推理配置（low/medium/high/xhigh/max）评测，并指出其仅发布 7 天即取代 GPT-6 Sol，智能接近 Astra",
+              "type": "release"
+            },
+            {
+              "text": "新增 GPT-6 Luna (max) 评测条目",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "多模型价格微调，新模型上榜",
+          "items": [
+            {
+              "text": "Claude Fable 5.1 (Max) 价格从 3.50 涨至 3.54 USD/task，Claude Opus 5.5 (High) 从 1.36 涨至 1.39，Claude Sonnet 5 (High) 从 0.73 涨至 0.75",
+              "type": "pricing"
+            },
+            {
+              "text": "新增 Claude Sonnet 5.5、Gemini 3.7 Flash (High)、Qwen3.8 Flash Next、Muse Spark 1.3 (Max) 等模型条目",
+              "type": "release"
+            },
+            {
+              "text": "Hy4 preview 价格从 0.21 涨至 0.24 USD/task",
+              "type": "pricing"
+            }
+          ]
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_a6978b93fa0a3fc4847c483af2f93b4d28cda8c64619288f79e785c5f57028b1",
+          "provider": "openai",
+          "model": "gpt-6-astra",
+          "component": "input",
+          "previous": "40.000000",
+          "current": "120.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_83e1c2474a2a9730b645bf9f84b2304a31fdac0f1751a2b5747eee28a4c84902",
+          "provider": "openai",
+          "model": "gpt-6-astra",
+          "component": "cache_read",
+          "previous": "4.000000",
+          "current": "12.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_b2bd91487e7f73cab5692831f3c3d5f2c81e3f04ff6c859bd151689e69af25b9",
+          "provider": "openai",
+          "model": "gpt-6-astra",
+          "component": "cache_write",
+          "previous": "50.000000",
+          "current": "150.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_fe7ba055f0efc1c12052c141a11b0cf90b589fb9a3383b5e6f673aa66ff393a1",
+          "provider": "openai",
+          "model": "gpt-6-astra",
+          "component": "output",
+          "previous": "150.000000",
+          "current": "450.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_4f216468d3485e5c0b9a1800a3c6744999f735fd34455f3bb4af87d82e79082c",
+          "provider": "openai",
+          "model": "gpt-6.1-sol",
+          "component": "input",
+          "current": "8.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_010759e081a82f3fa12b46d1b18fc16e0d82cebce97630274c08791ebace7dc0",
+          "provider": "openai",
+          "model": "gpt-6.1-sol",
+          "component": "cache_read",
+          "current": "0.400000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_e9666cfc046b7c2b8ed9e58b7a5a937819e6c724492d07747093529b1a5bbeb7",
+          "provider": "openai",
+          "model": "gpt-6.1-sol",
+          "component": "cache_write",
+          "current": "10.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_29a0bdb7c628845d3bea62b82db43ed8eeba38b51f70fec5251c9d15c35a2695",
+          "provider": "openai",
+          "model": "gpt-6.1-sol",
+          "component": "output",
+          "current": "30.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        }
+      ]
+    },
     {
       "date": "2026-09-29",
       "stats": {

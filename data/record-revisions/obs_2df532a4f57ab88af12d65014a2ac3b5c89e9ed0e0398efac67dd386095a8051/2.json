@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_2df532a4f57ab88af12d65014a2ac3b5c89e9ed0e0398efac67dd386095a8051",
+  "sourceId": "cohere-changelog",
+  "date": "2026-09-30",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Cohere",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.cohere.com/changelog",
+  "title": "Cohere · 更新日志来源更新",
+  "summary": "变更日志宣布发布 Embed 5 系列，强调其在复杂企业数据上的检索质量提升，支持 128k 上下文、多语言、多模态输入，并提供 Matryoshka 维度选项，同时移除 Command A Translate 的旧公告，表明产品重心从翻译转向嵌入。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-30T00:07:43+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Announcing Cohere's Embed 5 Models",
+      "Embed 5 delivers frontier retrieval quality on complex enterprise data, with major gains over Embed 4 on visually rich documents, financial filings, parsed PDFs, code, and multilingual retrieval.",
+      "Embed 5 is available through the Embed API, as well as Microsoft Foundry",
+      "Extended context length: 128k token context window",
+      "Flexible storage: Matryoshka embeddings in the following dimensions: [256, 512, 768, 1024, 1536, 2048], with float, int8, and binary output types",
+      "Multilingual support: Supports over 100 languages",
+      "Multimodal inputs: Embed text, images, and mixed text-and-image inputs (e.g. PDF pages) in a single vector",
+      "Shared embedding space: Pro and Fast share an embedding space, so a corpus indexed with one model can be queried with the other. We recommend indexing with Pro and querying with Fast.",
+      "We’re pleased to announce the release of Embed 5, Cohere’s most powerful embeddings family yet.",
+      "and Amazon SageMaker. For single-tenant deployment, Embed 5 is also available in Model Vault.",
+      "embed-v5.0-fast: Optimized for low latency and high throughput, particularly for interactive search, agent loops, and high-volume query traffic",
+      "embed-v5.0-pro: Optimized for the highest retrieval quality, particularly for offline indexing and quality-critical retrieval"
+    ],
+    "removed_lines": [
+      "16K token context length (8K input + 8K output) for handling longer texts",
+      "Announcing Cohere's Command A Translate Model",
+      "Command A Translate (command-a-translate-08-2025) is now available for all Cohere users through our standard API endpoints. For enterprise customers, private deployment",
+      "For more detailed information about Command A Translate, including technical specifications and implementation examples, visit our model documentation.",
+      "Getting Started",
+      "111 billion parameters for superior translation quality",
+      "23 supported languages: English, French, Spanish, Italian, German, Portuguese, Japanese, Korean, Chinese, Arabic, Russian, Polish, Turkish, Vietnamese, Dutch, Czech, Indonesian, Ukrainian, Romanian, Greek, Hindi, Hebrew, and Persian"
+    ],
+    "added_count": 12,
+    "removed_count": 7,
+    "raw_added_count": 13,
+    "raw_removed_count": 19
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-30.json"
+  },
+  "permalink": "/item/obs_2df532a4f57ab88af12d65014a2ac3b5c89e9ed0e0398efac67dd386095a8051/"
+}

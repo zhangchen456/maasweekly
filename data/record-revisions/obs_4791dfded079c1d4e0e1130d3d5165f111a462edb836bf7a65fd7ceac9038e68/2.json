@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_4791dfded079c1d4e0e1130d3d5165f111a462edb836bf7a65fd7ceac9038e68",
+  "sourceId": "openai-changelog",
+  "date": "2026-09-30",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "changelog",
+  "sourceUrl": "https://platform.openai.com/docs/changelog",
+  "title": "OpenAI · 更新日志来源更新",
+  "summary": "变更日志新增 GPT-6 Astra Ultrafast 模式（通过 service_tier 参数启用）和 Agents API 的 computer use 功能，同时移除 ChatGPT Work 相关旧条目，表明功能重心从企业工作区转向 Agent 能力。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-30T00:07:43+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "codex cloud",
+        "before": "Codex cloud",
+        "after": "Codex Cloud"
+      },
+      {
+        "key": "codex security cloud",
+        "before": "Codex Security cloud",
+        "after": "Codex Security Cloud"
+      }
+    ],
+    "added_lines": [
+      "Accounts and sessions",
+      "Add events to your MCP server (optional)",
+      "Added Ultrafast mode for GPT-6 Astra in the Responses API. Use gpt-6-astra with service_tier: \"ultrafast\" to reduce the time between generated output tokens. It is available to API customers, subject to rate limits, with global processing and US data residency. EU and other regional inference residency aren't supported. See Ultrafast pricing.",
+      "Added computer use to the Agents API. Agents can complete tasks in an OpenAI-hosted browser, with website access approvals and sign-in handled by your application.",
+      "Agent security",
+      "Annotations Extensibility",
+      "Bedrock Managed Agents",
+      "ChatGPT Space",
+      "ChatGPT in Slack and Teams",
+      "ChatGPT plan usage",
+      "Cloud environments",
+      "Cloud security",
+      "Codex app-server",
+      "Collaboration",
+      "Collaboration and sharing",
+      "Computers and apps",
+      "Deployment and configuration",
+      "Errors and recovery",
+      "Feature setup",
+      "GPT-6.1 Sol also supports Multi-agent in beta. Let the model delegate work to subagents in a Responses API request.",
+      "GPTs and sharing",
+      "Identity and access",
+      "In your ChatGPT plugin",
+      "Local computer access for Work Cloud and dots",
+      "Local security",
+      "Models and inference",
+      "On your website",
+      "Overview Sign in with ChatGPT Plugins Workspace Agents Commerce Ads ChatGPT + Codex user docs"
+    ],
+    "removed_lines": [
+      "ChatGPT Work Overview",
+      "ChatGPT Work admin FAQ",
+      "ChatGPT Work cloud security",
+      "ChatGPT Work local security",
+      "ChatGPT Work: usage and cost",
+      "Cloud environment",
+      "Deployment and model providers",
+      "Docs Use cases"
+    ],
+    "added_count": 28,
+    "removed_count": 8,
+    "raw_added_count": 53,
+    "raw_removed_count": 20
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-30.json"
+  },
+  "permalink": "/item/obs_4791dfded079c1d4e0e1130d3d5165f111a462edb836bf7a65fd7ceac9038e68/"
+}

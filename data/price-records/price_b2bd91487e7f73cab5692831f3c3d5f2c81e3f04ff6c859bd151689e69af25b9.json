@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_b2bd91487e7f73cab5692831f3c3d5f2c81e3f04ff6c859bd151689e69af25b9",
+  "date": "2026-09-30",
+  "recordType": "price_change",
+  "fact_key": "f5a4b40bccffa8ddf59aaef71670ff1c42c3338975a4391f84282faa1d4b15f3",
+  "provider": "openai",
+  "model": "gpt-6-astra",
+  "component": "cache_write",
+  "currency": "USD",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "global",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": null,
+  "timeCondition": null,
+  "beforeVersionId": "pfv_2e525073e3edff30c3b669fc34e7032ed232f1708d2e9be483622dc168b9a7ee",
+  "afterVersionId": "pfv_02b0400710f0fda5969b578b1b8597f16038b762715e07fe05e667ebad10fd73",
+  "beforeEvidenceId": "ev_3a6350258eefe70528b25484a146ace10e461d78e74ea8abc6225f4fb247f4a9",
+  "afterEvidenceId": "ev_7ff5b0c580b5a066d0907260ee6edc8e2b99528ab105ff854094f923d0ff3e81",
+  "beforeObservedAt": "2026-09-29T00:52:51+00:00",
+  "afterObservedAt": "2026-09-30T00:07:14+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "50",
+    "current": "12.5",
+    "direction": "down",
+    "percent": "-75.00"
+  },
+  "revision": 1,
+  "status": "active",
+  "revisedAt": null,
+  "revisionReason": null,
+  "permalink": "/item/price_b2bd91487e7f73cab5692831f3c3d5f2c81e3f04ff6c859bd151689e69af25b9/",
+  "provenance": {}
+}

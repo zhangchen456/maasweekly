@@ -4,6 +4,14 @@
     "start": "2026-09-28",
     "end": "2026-10-04",
     "days": {
+      "2026-09-30": {
+        "substantive": 8,
+        "jitter": 3,
+        "failed": 3,
+        "releases": 6,
+        "pricings": 4,
+        "sunsets": 0
+      },
       "2026-09-29": {
         "substantive": 14,
         "jitter": 2,
@@ -22,12 +30,78 @@
       }
     },
     "totals": {
-      "substantive": 18,
-      "releases": 8,
-      "pricings": 1,
+      "substantive": 26,
+      "releases": 14,
+      "pricings": 5,
       "sunsets": 1
     },
     "highlights": [
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-30",
+        "text": "GPT-6 Astra 输入定价从 40 涨至 120 USD/百万tokens，输出从 150 涨至 450 USD/百万tokens，cache_read 涨至 12，cache_write 涨至 150",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-30",
+        "text": "GPT-6.1 Sol 新定价公布：输入 8 USD/百万tokens，输出 30 USD/百万tokens，cache_read 0.4，cache_write 10",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-09-30",
+        "text": "Agents API 新增 computer use 功能，支持在 OpenAI 托管浏览器中完成任务；GPT-6 Astra 新增 Ultrafast 模式",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-30",
+        "text": "发布 Embed 5 系列（embed-v5.0-pro 与 embed-v5.0-fast），支持文本、图像及混合输入，上下文窗口 128k，支持 100+ 语言",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-30",
+        "text": "Embed 5 提供 Matryoshka 维度（256-2048）及 float/int8/binary 输出，Pro 与 Fast 共享嵌入空间",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-09-30",
+        "text": "Embed 5 可通过 Embed API、Microsoft Foundry、Amazon SageMaker 及 Model Vault 获取",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-30",
+        "text": "新增 GPT-6.1 Sol 多档推理配置（low/medium/high/xhigh/max）评测，并指出其仅发布 7 天即取代 GPT-6 Sol，智能接近 Astra",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-09-30",
+        "text": "新增 GPT-6 Luna (max) 评测条目",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-30",
+        "text": "Claude Fable 5.1 (Max) 价格从 3.50 涨至 3.54 USD/task，Claude Opus 5.5 (High) 从 1.36 涨至 1.39，Claude Sonnet 5 (High) 从 0.73 涨至 0.75",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-30",
+        "text": "新增 Claude Sonnet 5.5、Gemini 3.7 Flash (High)、Qwen3.8 Flash Next、Muse Spark 1.3 (Max) 等模型条目",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-09-30",
+        "text": "Hy4 preview 价格从 0.21 涨至 0.24 USD/task",
+        "type": "pricing"
+      },
       {
         "platform": "Anthropic",
         "date": "2026-09-29",

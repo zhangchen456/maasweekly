@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_90efdf86ac8897563440819b750c6dc69ff98bb581a0baab6f15df7fece359a3",
+  "sourceId": "cohere-modellist",
+  "date": "2026-09-30",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Cohere",
+  "sourceType": "model_list",
+  "sourceUrl": "https://docs.cohere.com/docs/models",
+  "title": "Cohere · 模型列表来源更新",
+  "summary": "模型列表新增 embed-v5.0-fast 和 embed-v5.0-pro 两个嵌入模型，分别标注为轻量快速版和最高质量版，支持文本、图像及混合输入，且两者共享嵌入空间。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-09-30T00:07:43+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "| embed-v5.0-fast | A faster, lighter version of embed-v5.0-pro. Allows for text and images to be classified or turned into embeddings | Text, Images, Mixed texts/images (i.e. PDFs) | One of ‘[256, 512, 768, 1024, 1536, 2048 (default)]‘ | 128k | Cosine Similarity, Dot Product Similarity, Euclidean Distance | Embed",
+      "| embed-v5.0-fast | N/A | Unique per deployment | Cohere-Embed-V5-Fast",
+      "| embed-v5.0-pro | N/A | Unique per deployment | Cohere-Embed-V5-Pro",
+      "| embed-v5.0-pro | Our most capable embedding model, for text and images. Higher quality than embed-v5.0-fast, at higher latency. | Text, Images, Mixed texts/images (i.e. PDFs) | One of ‘[256, 512, 768, 1024, 1536, 2048 (default)]‘ | 128k | Cosine Similarity, Dot Product Similarity, Euclidean Distance | Embed"
+    ],
+    "removed_lines": [],
+    "added_count": 4,
+    "removed_count": 0,
+    "raw_added_count": 4,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-09-30.json"
+  },
+  "permalink": "/item/obs_90efdf86ac8897563440819b750c6dc69ff98bb581a0baab6f15df7fece359a3/"
+}
