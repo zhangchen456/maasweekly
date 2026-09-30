@@ -68,6 +68,8 @@ run "test_workflow_release_contract（incident 2026-09）" python3 -m unittest d
 run "validate-developer-registry（T07-5.2）" python3 pipeline/scripts/validate-developer-registry.py
 run "test_developer_platform_registry（T07-5.2）" python3 -m unittest discover -s tests -p 'test_developer_platform_registry.py'
 run "test_analytics_foundation（T08-1A）" python3 -m unittest discover -s tests -p 'test_analytics_foundation.py'
+run "test_umami_postgres_preflight（T08-1A）" python3 -m unittest discover -s tests -p 'test_umami_postgres_preflight.py'
+run "test_umami_prerequisites（T08-1A）" python3 -m unittest discover -s tests -p 'test_umami_prerequisites.py'
 run "test_inventory_capability（T08-1A Gate B Preflight）" python3 -m unittest discover -s tests -p 'test_inventory_capability.py'
 
 # ---- site（构建 + 六测试）----

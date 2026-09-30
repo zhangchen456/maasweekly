@@ -67,6 +67,7 @@ ENV_EXAMPLE_SRC="$OPS_DIR/maas-umami.env.example"
 PG_DB=maas_analytics
 PG_USER=maas_umami
 PG_BIN=/usr/bin/psql
+source "$OPS_DIR/lib-umami-postgres.sh"
 
 run() {  # run <desc> <cmd...>：统一输出与 dry-run
   echo "· $1"
@@ -80,8 +81,8 @@ echo "== T08-1A Umami Analytics 安装（Gate B 授权后执行；dry-run: ${DRY
 
 # ---- 0. preflight（工具检查，不 mutation）----
 run "检查 node 22" "command -v node && \$(node --version | grep -q '^v22' || { echo '需要 Node 22'; exit 1; })"
-run "检查 pnpm" "command -v pnpm || { echo '需要 pnpm（npm i -g pnpm@12.3.4）'; exit 1; }"
-run "检查 postgresql" "command -v postgres || { echo '需要 PostgreSQL v12.14+'; exit 1; }"
+run "检查 pnpm 12.3.4" "command -v pnpm && test \"\$(pnpm --version)\" = 12.3.4 || { echo '需要 pnpm@12.3.4（独立 prerequisite，不自动安装）'; exit 1; }"
+run "检查 PostgreSQL cluster 与 server binary" "umami_pg_discover"
 run "检查 psql" "command -v $PG_BIN"
 run "检查 nginx" "command -v nginx"
 run "检查磁盘剩余 >1GB（GNU df，服务器 Linux）" \
@@ -89,6 +90,7 @@ run "检查磁盘剩余 >1GB（GNU df，服务器 Linux）" \
 
 # ---- 1. PostgreSQL active（在状态检测之前）----
 run "确认 PostgreSQL 运行" "systemctl is-active --quiet postgresql || systemctl start postgresql"
+run "验证 PostgreSQL 目标连接与版本" "umami_pg_validate_connection"
 
 # ============================================================
 # 2. CREDENTIAL 状态机预检（Round 5 P0 修复：6 态完整状态机）
@@ -111,7 +113,7 @@ if [ "$DRY_RUN" = "1" ]; then
   echo "    [dry-run] 检测 role $PG_USER / $UMAMI_ENV / pending state 状态"
   echo "    [dry-run] 假设状态 A（fresh install）"
 else
-  if sudo -u postgres $PG_BIN -tAc "SELECT 1 FROM pg_roles WHERE rolname='$PG_USER'" 2>/dev/null | grep -q 1; then
+  if sudo -u postgres $PG_BIN -X -v ON_ERROR_STOP=1 -h /var/run/postgresql -p 5432 -d postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='$PG_USER'" 2>/dev/null | grep -q 1; then
     ROLE_EXISTS=1
   fi
   if [ -f "$UMAMI_ENV" ]; then
@@ -128,7 +130,7 @@ else
       echo "  · 检测到 valid pending install state（crash recovery 可用）"
     else
       die "pending state 文件 $PENDING_STATE 存在但权限/属主/内容不合法。
-        PERM=$PERM OWNER=$OWNER（期望 600 root:root）。
+        PERM=$PERM OWNER=${OWNER}（期望 600 root:root）。
         需人工诊断。installer 不自动修复 pending state。"
     fi
   fi
@@ -214,7 +216,7 @@ if [ "$STATE" = "A_fresh" ]; then
   echo "· fresh install：生成 credential 一次 + pending state crash recovery"
   if [ "$DRY_RUN" = "1" ]; then
     echo "    [dry-run] DB_PASS=openssl rand -hex 24；APP_SECRET=openssl rand -hex 32"
-    echo "    [dry-run] 写 pending state $PENDING_STATE（0600 root:root）"
+    echo "    [dry-run] 写 pending state ${PENDING_STATE}（0600 root:root）"
     echo "    [dry-run] CREATE USER $PG_USER WITH ENCRYPTED PASSWORD \$DB_PASS"
     echo "    [dry-run] CREATE DATABASE $PG_DB OWNER $PG_USER"
     echo "    [dry-run] 写临时 env → chmod/chown → atomic rename → $UMAMI_ENV"
@@ -238,16 +240,16 @@ EOF
     mv -f "$TMP_PENDING" "$PENDING_STATE"
 
     # CREATE ROLE 直接使用该 DB_PASS（不 CREATE 后 ALTER）
-    echo "· CREATE ROLE $PG_USER（使用生成的 DB_PASS）"
-    sudo -u postgres $PG_BIN -c "CREATE USER $PG_USER WITH ENCRYPTED PASSWORD '$DB_PASS'"
+    echo "· CREATE ROLE ${PG_USER}（使用生成的 DB_PASS）"
+    sudo -u postgres $PG_BIN -X -v ON_ERROR_STOP=1 -h /var/run/postgresql -p 5432 -d postgres -c "CREATE USER $PG_USER WITH ENCRYPTED PASSWORD '$DB_PASS'"
 
     # CREATE DATABASE OWNER role（role 已就绪）
     echo "· CREATE DATABASE $PG_DB OWNER $PG_USER"
-    sudo -u postgres $PG_BIN -c "CREATE DATABASE $PG_DB OWNER $PG_USER"
-    sudo -u postgres $PG_BIN -d "$PG_DB" -c "GRANT ALL PRIVILEGES ON DATABASE $PG_DB TO $PG_USER"
+    sudo -u postgres $PG_BIN -X -v ON_ERROR_STOP=1 -h /var/run/postgresql -p 5432 -d postgres -c "CREATE DATABASE $PG_DB OWNER $PG_USER"
+    sudo -u postgres $PG_BIN -X -v ON_ERROR_STOP=1 -h /var/run/postgresql -p 5432 -d postgres -d "$PG_DB" -c "GRANT ALL PRIVILEGES ON DATABASE $PG_DB TO $PG_USER"
 
     # 写临时 env → chmod/chown → atomic rename（避免中断留下半写文件）
-    echo "· 写 $UMAMI_ENV（temp file → atomic rename）"
+    echo "· 写 ${UMAMI_ENV}（temp file → atomic rename）"
     TMP_ENV="$(mktemp "${UMAMI_ENV}.tmp.XXXXXX")"
     cat > "$TMP_ENV" <<EOF
 HOSTNAME=127.0.0.1
@@ -258,7 +260,7 @@ EOF
     chown root:"$SERVICE_USER" "$TMP_ENV"
     chmod 0740 "$TMP_ENV"
     mv -f "$TMP_ENV" "$UMAMI_ENV"
-    echo "  ✓ $UMAMI_ENV 生成（0740 root:$SERVICE_USER，atomic rename）"
+    echo "  ✓ $UMAMI_ENV 生成（0740 root:${SERVICE_USER}，atomic rename）"
 
     # 删除 pending state（role + database + env 全部完成）
     rm -f "$PENDING_STATE"
@@ -268,7 +270,7 @@ elif [ "$STATE" = "F_resume_before_role" ]; then
   echo "· resume-before-role：reuse pending credential（不重新生成）"
   if [ "$DRY_RUN" = "1" ]; then
     echo "    [dry-run] 从 $PENDING_STATE 读取 DB_PASS/APP_SECRET（不输出 secret）"
-    echo "    [dry-run] CREATE USER $PG_USER WITH ENCRYPTED PASSWORD \$DB_PASS（reuse pending）"
+    echo "    [dry-run] CREATE USER $PG_USER WITH ENCRYPTED PASSWORD \${DB_PASS}（reuse pending）"
     echo "    [dry-run] CREATE DATABASE $PG_DB OWNER $PG_USER"
     echo "    [dry-run] 写临时 env → atomic rename → $UMAMI_ENV"
     echo "    [dry-run] 删除 pending state"
@@ -280,16 +282,16 @@ elif [ "$STATE" = "F_resume_before_role" ]; then
     [ -n "$APP_SECRET" ] || die "pending state 缺 APP_SECRET"
 
     # CREATE ROLE 使用 pending 的 DB_PASS（role 尚未创建——状态 F）
-    echo "· CREATE ROLE $PG_USER（reuse pending DB_PASS）"
-    sudo -u postgres $PG_BIN -c "CREATE USER $PG_USER WITH ENCRYPTED PASSWORD '$DB_PASS'"
+    echo "· CREATE ROLE ${PG_USER}（reuse pending DB_PASS）"
+    sudo -u postgres $PG_BIN -X -v ON_ERROR_STOP=1 -h /var/run/postgresql -p 5432 -d postgres -c "CREATE USER $PG_USER WITH ENCRYPTED PASSWORD '$DB_PASS'"
 
     # CREATE DATABASE OWNER role
     echo "· CREATE DATABASE $PG_DB OWNER $PG_USER"
-    sudo -u postgres $PG_BIN -c "CREATE DATABASE $PG_DB OWNER $PG_USER"
-    sudo -u postgres $PG_BIN -d "$PG_DB" -c "GRANT ALL PRIVILEGES ON DATABASE $PG_DB TO $PG_USER"
+    sudo -u postgres $PG_BIN -X -v ON_ERROR_STOP=1 -h /var/run/postgresql -p 5432 -d postgres -c "CREATE DATABASE $PG_DB OWNER $PG_USER"
+    sudo -u postgres $PG_BIN -X -v ON_ERROR_STOP=1 -h /var/run/postgresql -p 5432 -d postgres -d "$PG_DB" -c "GRANT ALL PRIVILEGES ON DATABASE $PG_DB TO $PG_USER"
 
     # 写 env（使用 pending 的 credential）
-    echo "· 写 $UMAMI_ENV（temp file → atomic rename；reuse pending credential）"
+    echo "· 写 ${UMAMI_ENV}（temp file → atomic rename；reuse pending credential）"
     TMP_ENV="$(mktemp "${UMAMI_ENV}.tmp.XXXXXX")"
     cat > "$TMP_ENV" <<EOF
 HOSTNAME=127.0.0.1
@@ -300,7 +302,7 @@ EOF
     chown root:"$SERVICE_USER" "$TMP_ENV"
     chmod 0740 "$TMP_ENV"
     mv -f "$TMP_ENV" "$UMAMI_ENV"
-    echo "  ✓ $UMAMI_ENV 生成（0740 root:$SERVICE_USER，atomic rename）"
+    echo "  ✓ $UMAMI_ENV 生成（0740 root:${SERVICE_USER}，atomic rename）"
 
     # 删除 pending state（resume 完成）
     rm -f "$PENDING_STATE"
@@ -321,17 +323,17 @@ elif [ "$STATE" = "E_resume" ]; then
     [ -n "$APP_SECRET" ] || die "pending state 缺 APP_SECRET"
 
     # role 已存在（状态 E），检查 database 是否已创建（crash 可能发生在 CREATE DATABASE 前后）
-    DB_EXISTS="$(sudo -u postgres $PG_BIN -tAc "SELECT 1 FROM pg_database WHERE datname='$PG_DB'" 2>/dev/null || echo '')"
+    DB_EXISTS="$(sudo -u postgres $PG_BIN -X -v ON_ERROR_STOP=1 -h /var/run/postgresql -p 5432 -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname='$PG_DB'" 2>/dev/null || echo '')"
     if [ "$DB_EXISTS" != "1" ]; then
-      echo "· CREATE DATABASE $PG_DB OWNER $PG_USER（resume：role 已存在，database 缺失）"
-      sudo -u postgres $PG_BIN -c "CREATE DATABASE $PG_DB OWNER $PG_USER"
-      sudo -u postgres $PG_BIN -d "$PG_DB" -c "GRANT ALL PRIVILEGES ON DATABASE $PG_DB TO $PG_USER"
+      echo "· CREATE DATABASE $PG_DB OWNER ${PG_USER}（resume：role 已存在，database 缺失）"
+      sudo -u postgres $PG_BIN -X -v ON_ERROR_STOP=1 -h /var/run/postgresql -p 5432 -d postgres -c "CREATE DATABASE $PG_DB OWNER $PG_USER"
+      sudo -u postgres $PG_BIN -X -v ON_ERROR_STOP=1 -h /var/run/postgresql -p 5432 -d postgres -d "$PG_DB" -c "GRANT ALL PRIVILEGES ON DATABASE $PG_DB TO $PG_USER"
     else
       echo "  · database $PG_DB 已存在（跳过 CREATE，保留数据）"
     fi
 
     # 写 env（使用恢复的 DB_PASS）
-    echo "· 写 $UMAMI_ENV（temp file → atomic rename；使用恢复的 DB_PASS）"
+    echo "· 写 ${UMAMI_ENV}（temp file → atomic rename；使用恢复的 DB_PASS）"
     TMP_ENV="$(mktemp "${UMAMI_ENV}.tmp.XXXXXX")"
     cat > "$TMP_ENV" <<EOF
 HOSTNAME=127.0.0.1
@@ -342,7 +344,7 @@ EOF
     chown root:"$SERVICE_USER" "$TMP_ENV"
     chmod 0740 "$TMP_ENV"
     mv -f "$TMP_ENV" "$UMAMI_ENV"
-    echo "  ✓ $UMAMI_ENV 生成（0740 root:$SERVICE_USER，atomic rename）"
+    echo "  ✓ $UMAMI_ENV 生成（0740 root:${SERVICE_USER}，atomic rename）"
 
     # 删除 pending state（resume 完成）
     rm -f "$PENDING_STATE"
@@ -359,7 +361,7 @@ elif [ "$STATE" = "B_existing" ]; then
   if [ "$DRY_RUN" = "1" ]; then
     echo "    [dry-run] 检查 database $PG_DB 是否存在（幂等）"
   else
-    DB_EXISTS="$(sudo -u postgres $PG_BIN -tAc "SELECT 1 FROM pg_database WHERE datname='$PG_DB'" 2>/dev/null || echo '')"
+    DB_EXISTS="$(sudo -u postgres $PG_BIN -X -v ON_ERROR_STOP=1 -h /var/run/postgresql -p 5432 -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname='$PG_DB'" 2>/dev/null || echo '')"
     if [ "$DB_EXISTS" != "1" ]; then
       die "状态 B 异常：role + env 存在但 database $PG_DB 不存在（inconsistent）。
         需人工诊断。installer 不自动 CREATE DATABASE（避免与现有 env 状态不一致）"
@@ -375,24 +377,28 @@ if [ -d "$UMAMI_DIR/.git" ]; then
   echo "· Umami 源码已存在，验证版本..."
   ACTUAL_COMMIT="$(cd "$UMAMI_DIR" && git rev-parse HEAD 2>/dev/null || echo '')"
   if [ "$ACTUAL_COMMIT" != "$UMAMI_COMMIT" ]; then
-    die "Umami 源码版本不匹配：HEAD=$ACTUAL_COMMIT，期望=$UMAMI_COMMIT。
+    die "Umami 源码版本不匹配：HEAD=${ACTUAL_COMMIT}，期望=${UMAMI_COMMIT}。
     installer 不猜版本。升级走单独 upgrade path（见 task-08-1a 文档 §10）。
     如需强制重装：先 mv $UMAMI_DIR ${UMAMI_DIR}.quarantine-\$(date +%s)（quarantine 旧目录，可回溯；不丢失 DB 数据）"
   fi
   if [ -n "$(cd "$UMAMI_DIR" && git status --porcelain 2>/dev/null)" ]; then
     die "Umami 源码 worktree 脏，拒绝安装（先清理或重装）"
   fi
-  echo "  ✓ Umami 源码版本正确（$UMAMI_VERSION @ $UMAMI_COMMIT），worktree clean"
+  echo "  ✓ Umami 源码版本正确（$UMAMI_VERSION @ ${UMAMI_COMMIT}），worktree clean"
 else
   run "git clone Umami ${UMAMI_VERSION} @ ${UMAMI_COMMIT:0:12}" \
     "git clone --branch $UMAMI_VERSION --depth 1 $UMAMI_REPO $UMAMI_DIR"
   # clone 后验证 HEAD == pinned SHA（防 upstream tag 移动）
-  ACTUAL_COMMIT="$(cd "$UMAMI_DIR" && git rev-parse HEAD 2>/dev/null || echo '')"
-  if [ "$ACTUAL_COMMIT" != "$UMAMI_COMMIT" ]; then
-    die "clone 后 HEAD 不匹配：actual=$ACTUAL_COMMIT，期望=$UMAMI_COMMIT。
+  if [ "$DRY_RUN" = "1" ]; then
+    echo "    [dry-run] clone 后验证 HEAD == $UMAMI_COMMIT"
+  else
+    ACTUAL_COMMIT="$(cd "$UMAMI_DIR" && git rev-parse HEAD 2>/dev/null || echo '')"
+    if [ "$ACTUAL_COMMIT" != "$UMAMI_COMMIT" ]; then
+      die "clone 后 HEAD 不匹配：actual=${ACTUAL_COMMIT}，期望=${UMAMI_COMMIT}。
     Umami upstream tag $UMAMI_VERSION 可能已被移动。拒绝安装。"
+    fi
+    echo "  ✓ clone 后 HEAD 验证通过（$UMAMI_VERSION @ ${UMAMI_COMMIT}）"
   fi
-  echo "  ✓ clone 后 HEAD 验证通过（$UMAMI_VERSION @ $UMAMI_COMMIT）"
 fi
 
 # ---- 7. pnpm install（每次明确执行，不靠 node_modules exists 判断）----
@@ -450,9 +456,9 @@ fi
 echo "== 安装清单（完成后核对） =="
 cat <<EOF
   /etc/systemd/system/maas-umami.service               (0644)
-  /srv/maasweekly/umami/                                (0755, $SERVICE_USER，git clone $UMAMI_VERSION @ ${UMAMI_COMMIT:0:12})
-  /srv/maasweekly/shared/umami.env                      (0740 root:$SERVICE_USER，含 APP_SECRET + DB password)
-  PostgreSQL: database=$PG_DB user=$PG_USER（密码在 umami.env）
+  /srv/maasweekly/umami/                                (0755, ${SERVICE_USER}，git clone $UMAMI_VERSION @ ${UMAMI_COMMIT:0:12})
+  /srv/maasweekly/shared/umami.env                      (0740 root:${SERVICE_USER}，含 APP_SECRET + DB password)
+  PostgreSQL: database=$PG_DB user=${PG_USER}（密码在 umami.env）
 
   ⚠ OWNER ACTION REQUIRED（Gate B prerequisite，分阶段执行）：
     Phase 1: DNS analytics.maas.click → 47.237.135.97
