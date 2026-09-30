@@ -1,0 +1,17 @@
+---
+import { featuredModels } from '../lib/model-pages';
+const models = featuredModels();
+---
+{models.length > 0 && <section class="model-price-links" aria-label="模型 API 价格查询">
+  <h2>查询模型 API 价格与变化</h2>
+  <p>查看原币种报价、计费条件、观察时间和官方来源。</p>
+  <div>{models.map(({ model }) => <a href={`/model/${model.modelId}/`}>{model.modelName} API 价格 ↗</a>)}</div>
+  <a class="all-models" href="/models/">浏览全部模型价格 →</a>
+</section>}
+<style>
+  .model-price-links{padding:24px 0;border-block:1px solid var(--line);margin:24px 0}
+  h2{font-size:18px;margin:0 0 8px}p{color:var(--muted);font-size:13px}
+  div{display:flex;flex-wrap:wrap;gap:10px 24px;margin:16px 0}
+  a{color:var(--cyan);font-size:13px;text-decoration:none}a:hover{text-decoration:underline}
+  .all-models{display:inline-block;margin-top:4px}
+</style>

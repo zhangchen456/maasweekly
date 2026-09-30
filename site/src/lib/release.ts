@@ -72,16 +72,39 @@ export interface PublicRelease {
   coverage: ReleaseManifest['coverage'];
   changes?: ChangeRecord[];
   weekly?: WeeklyRecord[];
+  prices?: PriceRecord[];
+  evidence?: EvidenceRecord[];
   /** T07-4A.2：model identity catalog（从 model-identities.json 经 manifest 校验加载） */
   modelIdentities?: { models: { modelId: string; modelName: string; familyId?: string; familyName?: string }[]; families: { familyId: string; familyName: string }[] };
 }
 
+/** Public prices retain original decimal strings, units and every billing condition. */
+export interface PriceRecord {
+  id: string; factKey: string; providerId: string; sourceId: string;
+  modelKey: string; modelId?: string; modelName?: string;
+  component: string; amount: string; currency: string;
+  unitQuantity: number; unitName: string; region: string;
+  billingMode: string; serviceTier: string;
+  contextBand: Record<string, unknown> | null;
+  timeCondition: Record<string, unknown> | null;
+  effectiveAt: string | null; observedAt: string;
+  evidenceId: string | null; evidenceStatus: string;
+  quality: { state: string; reason: string | null; lastSuccessAt: string | null };
+  links: { itemPermalink: string | null };
+}
+
+export interface EvidenceRecord {
+  id: string; sourceUrl: string | null; subpageUrl: string | null;
+}
+
 const DS_VERSION_RE = /^ds_[0-9a-f]{64}$/;
-const COLLECTION_FILE: Record<'changes' | 'weekly' | 'modelIdentities', string> = {
+const COLLECTION_FILE = {
   changes: 'changes.json',
   weekly: 'weekly.json',
   modelIdentities: 'model-identities.json',
-};
+  prices: 'prices.json',
+  evidence: 'evidence.json',
+} as const;
 
 export function defaultPublicReleaseDir(): string {
   return path.join(process.cwd(), '..', 'data', 'public', 'v1');
@@ -107,7 +130,7 @@ function assertManifestPath(entryPath: string, version: string): void {
  */
 export function loadVerifiedRelease(
   baseDir?: string,
-  opts?: { select?: Array<'changes' | 'weekly' | 'modelIdentities'> },
+  opts?: { select?: Array<keyof typeof COLLECTION_FILE> },
 ): PublicRelease {
   const root = baseDir ?? defaultPublicReleaseDir();
   const manifestPath = path.join(root, 'manifest.json');

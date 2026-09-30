@@ -3,14 +3,17 @@ import '../styles/product.css';
 import analytics from '../config/analytics.json';
 import { validateAnalyticsConfig } from '../../public/analytics.js';
 import { SITE_CANONICAL } from '../config/public-access';
+import { canonicalUrl } from '../lib/seo';
 validateAnalyticsConfig(analytics);
 interface Props {
   title: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const activePath = Astro.url.pathname;
-const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、定价变更、API 更新一网打尽" } = Astro.props;
+const { title, description = "全球 MaaS 平台每日追踪 — 模型发布、定价变更、API 更新", noindex = false } = Astro.props;
+const canonical = canonicalUrl(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -22,6 +25,13 @@ const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="MaaS Daily" />
     {analytics.enabled && (
       <script is:inline type="module" src="/analytics.js" data-maas-analytics
         data-website-id={analytics.websiteId} data-canonical-url={SITE_CANONICAL}></script>
@@ -66,7 +76,7 @@ const { title, description = "全球 MaaS 平台周度追踪 — 模型发布、
       <div class="shell footer-inner">
         <div><div class="footer-title">MaaS Daily Intelligence</div><div>模型 × 平台 × 价格 × 生态</div></div>
         <div class="footer-meta">
-          <a href="/about">关于</a> · <a href="/agent">接入</a> · <a href="/method">方法</a> · <a href="/changelog">变更</a> · <a href="/feed.xml">RSS</a>
+          <a href="/models/">模型价格</a> · <a href="/about">关于</a> · <a href="/agent">接入</a> · <a href="/method">方法</a> · <a href="/changelog">变更</a> · <a href="/feed.xml">RSS</a>
         </div>
       </div>
     </footer>

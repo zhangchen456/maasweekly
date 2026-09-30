@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ModelPriceLinks from '../components/ModelPriceLinks.astro';
+import { modelRelease, providerLabels } from '../lib/model-pages';
+const release = modelRelease();
+const pricedIds = new Set(release.prices!.map(p => p.modelId).filter(Boolean));
+const models = release.modelIdentities!.models.filter(m => pricedIds.has(m.modelId));
+---
+<Layout title="大模型 API 价格查询与价格变化 — MaaS Daily"
+  description="按模型查询大模型 API 价格、输入输出与缓存计费条件、原币种报价和近期变化，附观察时间、证据状态与官方来源。">
+  <header class="catalog-head">
+    <h1>大模型 API 价格查询</h1>
+    <p>数据截至 {release.dataThrough}。按模型查看报价与变化；不同地区、计费方式和上下文条件分开列示。</p>
+    <p>这是当前公开数据中有报价的模型目录，不能代表所有模型或全部平台覆盖。</p>
+  </header>
+  <ModelPriceLinks />
+  <section class="catalog-section">
+    <h2>有可观察报价的模型（{models.length}）</h2>
+    <ul>{models.map(m => <li><a href={`/model/${m.modelId}/`}>{m.modelName} API 价格</a>
+      <span>{providerLabels[m.modelId.split(':')[0]] ?? m.modelId.split(':')[0]}</span></li>)}</ul>
+  </section>
+  <p class="catalog-note"><a href="/pricing/">模型成本与 GPU 行情</a> · <a href="/method/">数据方法与覆盖说明</a></p>
+</Layout>
+<style>
+  .catalog-head{padding:36px 0 0}h1{font-size:30px}p{color:var(--muted);line-height:1.7;font-size:14px}
+  .catalog-section{padding:16px 0}h2{font-size:18px}
+  ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 28px}
+  li{padding:14px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+  a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+  span{font-size:12px;color:var(--muted)}.catalog-note{margin-bottom:36px}
+</style>
