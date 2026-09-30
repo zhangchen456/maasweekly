@@ -1,0 +1,60 @@
+# maas-umami.service：Umami Analytics systemd service（T08-1A Gate A 候选）
+#
+# 安装位置：/etc/systemd/system/maas-umami.service
+# 由 install-umami.sh 安装（Gate B 授权后在生产服务器执行）。
+#
+# 设计对齐 ops/maas-agent@.service，但非模板（Umami 无蓝绿槽位需求）：
+#   - 专用非 root 服务用户 maasumami（install-umami.sh 创建）
+#   - EnvironmentFile 由 root 管理的 umami.env（0740 root:maasumami）
+#   - 只监听 127.0.0.1（HOSTNAME=127.0.0.1 in umami.env）；公网由 nginx 终结 TLS
+#   - 不依赖 /srv/maasweekly/current——Umami 独立部署，不进入 release 模型
+#
+# Umami v3.4.0 是 Next.js 应用，经 scripts/start-env.js 启动 next start。
+# start-env.js 读 PORT（默认 3000）与 HOSTNAME（默认 0.0.0.0）。
+# umami.env 必须显式设 HOSTNAME=127.0.0.1 以避免监听公网。
+
+[Unit]
+Description=MaaS Daily Umami Analytics
+# network 就绪即可；nginx 不依赖本单元（Umami 未起时 nginx 返回 502）
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+# 专用非 root 服务用户（install-umami.sh 创建，无 login shell）
+User=maasumami
+Group=maasumami
+# 环境来自 root 管理的 umami.env（0740 root:maasumami，含 DATABASE_URL/APP_SECRET）
+EnvironmentFile=/srv/maasweekly/shared/umami.env
+# Umami 应用目录（git clone v3.4.0 + pnpm build 产物）
+WorkingDirectory=/srv/maasweekly/umami
+# Next.js 生产启动（start-env.js 读 PORT/HOSTNAME env）
+ExecStart=/usr/bin/node /srv/maasweekly/umami/node_modules/.bin/next start
+# 重启与超时
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=30
+TimeoutStopSec=15
+# 资源与硬化：只读系统、无新权限、私有临时、限写、收回能力。
+# 注：不得使用 MemoryDenyWriteExecute——Node/V8 JIT 需要把编译内存页设为
+# RWX（OS::SetPermissions），MDWE 下 V8 原生崩溃（与 maas-agent@.service 同理，
+# 见 ops/maas-agent@.service 注释）。其余硬化全部保留。
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/maasweekly/umami
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictNamespaces=true
+RestrictSUIDSGID=true
+LockPersonality=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+LimitNOFILE=8192
+# 只允许 IP/Unix socket（不允许 raw socket 等）
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target
