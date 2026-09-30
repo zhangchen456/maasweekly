@@ -174,11 +174,56 @@ else
 fi
 
 # ---- 5. update deploy-shell → /usr/local/bin/maasweekly-deploy-shell（0755）----
+# 显式处理 install 失败（不依赖 set -e 直接退出）。
+# failure 后必须恢复到 install-inventory 执行前状态，不留半安装状态。
 echo "· 更新 deploy-shell（新增 inventory 分支）→ $DEPLOY_SHELL_DST（0755）"
 if [ "$DRY_RUN" = "1" ]; then
   echo "    [dry-run] install -m 0755 $DEPLOY_SHELL_SRC $DEPLOY_SHELL_DST"
+  echo "    [dry-run] failure → rollback all（restore previous or remove newly-created）"
 else
-  install -m 0755 "$DEPLOY_SHELL_SRC" "$DEPLOY_SHELL_DST"
+  if ! install -m 0755 "$DEPLOY_SHELL_SRC" "$DEPLOY_SHELL_DST" 2>&1; then
+    echo "✗ deploy-shell install 失败——rollback all（恢复执行前状态）" >&2
+
+    # 1. restore previous deploy-shell if backup exists，否则 remove partially-created
+    if [ -f "$BACKUP_DIR/$(basename "$DEPLOY_SHELL_DST").backup" ]; then
+      echo "  · restore previous deploy-shell" >&2
+      cp -a "$BACKUP_DIR/$(basename "$DEPLOY_SHELL_DST").backup" "$DEPLOY_SHELL_DST" \
+        || rm -f "$DEPLOY_SHELL_DST"
+    else
+      echo "  · remove partially-created deploy-shell（首次安装，无 backup）" >&2
+      rm -f "$DEPLOY_SHELL_DST"
+    fi
+
+    # 2. restore previous sudoers if backup exists，否则 remove newly-created sudoers
+    if [ -f "$BACKUP_DIR/$(basename "$SUDOERS_DST").backup" ]; then
+      echo "  · restore previous sudoers" >&2
+      cp -a "$BACKUP_DIR/$(basename "$SUDOERS_DST").backup" "$SUDOERS_DST" \
+        || rm -f "$SUDOERS_DST"
+    else
+      echo "  · remove newly-created sudoers（首次安装，无 backup）" >&2
+      rm -f "$SUDOERS_DST"
+    fi
+
+    # 3. restore previous inventory helper if backup exists，否则 remove newly-created
+    if [ -f "$BACKUP_DIR/$(basename "$INVENTORY_DST").backup" ]; then
+      echo "  · restore previous inventory helper" >&2
+      cp -a "$BACKUP_DIR/$(basename "$INVENTORY_DST").backup" "$INVENTORY_DST" \
+        || rm -f "$INVENTORY_DST"
+    else
+      echo "  · remove newly-created inventory helper（首次安装，无 backup）" >&2
+      rm -f "$INVENTORY_DST"
+    fi
+
+    # 4. validate restored sudoers if present（visudo -cf）
+    if [ -f "$SUDOERS_DST" ]; then
+      echo "  · visudo -cf restored sudoers" >&2
+      if ! visudo -cf "$SUDOERS_DST" 2>&1; then
+        echo "  ⚠ restored sudoers visudo -cf 失败（人工诊断）" >&2
+      fi
+    fi
+
+    die "deploy-shell install 失败，已 rollback all（恢复执行前状态）"
+  fi
   echo "  ✓ deploy-shell 已更新"
 fi
 
