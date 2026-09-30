@@ -383,5 +383,235 @@ class TestNoRegression(unittest.TestCase):
                          "* 分支应 reject")
 
 
+class TestInstallInventoryIndependence(unittest.TestCase):
+    """P0 修复：inventory 安装独立于 install-umami.sh（消除循环依赖）"""
+
+    def test_install_inventory_script_exists(self):
+        """ops/install-inventory.sh 独立脚本存在"""
+        script = BASE / "ops" / "install-inventory.sh"
+        self.assertTrue(script.exists(), "ops/install-inventory.sh 应存在")
+
+    def test_install_umami_does_not_install_inventory(self):
+        """install-umami.sh 不再安装 inventory capability（移除循环依赖）"""
+        blob = (BASE / "ops" / "install-umami.sh").read_text(encoding="utf-8")
+        # 不应安装 maasweekly-inventory helper
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r'install.*maasweekly-inventory.*INVENTORY_DST',
+                                f"install-umami.sh 不应安装 inventory helper: {stripped}")
+        # 应说明 inventory 已移至独立脚本
+        self.assertRegex(blob, r'install-inventory\.sh',
+                         "install-umami.sh 应说明 inventory 已移至独立脚本")
+
+    def test_install_inventory_only_installs_capability(self):
+        """install-inventory.sh 只安装 inventory capability（不安装其他）"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        # 只安装 inventory helper / deploy-shell / sudoers
+        self.assertRegex(blob, r'INVENTORY_DST=/usr/local/sbin/maasweekly-inventory',
+                         "应定义 INVENTORY_DST 指向 inventory helper")
+        self.assertRegex(blob, r'DEPLOY_SHELL_DST=/usr/local/bin/maasweekly-deploy-shell',
+                         "应定义 DEPLOY_SHELL_DST 指向 deploy-shell")
+        self.assertRegex(blob, r'SUDOERS_DST=/etc/sudoers\.d/maasweekly-inventory',
+                         "应定义 SUDOERS_DST 指向 sudoers")
+
+    def test_install_inventory_no_package_install(self):
+        """install-inventory.sh 不安装 package（apt/pip/npm）"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r'\bapt(-get)?\s+install\b',
+                                f"不应 apt install: {stripped}")
+            self.assertNotRegex(stripped, r'\bpip\s+install\b',
+                                f"不应 pip install: {stripped}")
+            self.assertNotRegex(stripped, r'\bnpm\s+install\b',
+                                f"不应 npm install: {stripped}")
+
+    def test_install_inventory_no_postgresql_mutation(self):
+        """install-inventory.sh 不修改 PostgreSQL（不 CREATE/ALTER/DROP/psql）"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r'\b(CREATE|ALTER|DROP)\s+(DATABASE|USER|ROLE)\b',
+                                f"不应 PostgreSQL mutation: {stripped}")
+            self.assertNotRegex(stripped, r'\bpsql\b',
+                                f"不应执行 psql: {stripped}")
+
+    def test_install_inventory_no_linux_user_mutation(self):
+        """install-inventory.sh 不创建/修改 Linux user"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r'\b(useradd|usermod|groupadd)\b',
+                                f"不应创建/修改 user: {stripped}")
+
+    def test_install_inventory_no_umami_clone_build(self):
+        """install-inventory.sh 不 clone/build Umami"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r'\bgit\s+clone\b',
+                                f"不应 git clone: {stripped}")
+            self.assertNotRegex(stripped, r'\bpnpm\s+(install|run build)\b',
+                                f"不应 pnpm install/build: {stripped}")
+
+    def test_install_inventory_no_systemd_mutation(self):
+        """install-inventory.sh 不安装/enable/start systemd service"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#") or stripped.startswith("echo "):
+                continue
+            self.assertNotRegex(stripped, r'\bsystemctl\s+(enable|start|daemon-reload)\b',
+                                f"不应 systemctl mutation: {stripped}")
+            # 只检查实际 install 命令（install -m ... maas-umami.service）
+            self.assertNotRegex(stripped, r'^install\s+-m\b.*maas-umami\.service',
+                                f"不应安装 maas-umami.service: {stripped}")
+
+    def test_install_inventory_no_nginx_mutation(self):
+        """install-inventory.sh 不修改 nginx / 不 reload/restart"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r'\bnginx\s+-s\s+(reload|stop|reopen)\b',
+                                f"不应 nginx reload/stop: {stripped}")
+            self.assertNotRegex(stripped, r'\bnginx\s+-t\b',
+                                f"不应 nginx -t（属 render-umami-nginx.sh）: {stripped}")
+
+    def test_install_inventory_no_secret_generation(self):
+        """install-inventory.sh 不生成 secret"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r'\bopenssl\s+rand\b',
+                                f"不应生成 secret: {stripped}")
+
+    def test_install_inventory_no_dns_tls_mutation(self):
+        """install-inventory.sh 不修改 DNS / 不申请 TLS 证书"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r'\bcertbot\b',
+                                f"不应 certbot: {stripped}")
+            self.assertNotRegex(stripped, r'\bdig\b.*\|.*nsupdate',
+                                f"不应 DNS mutation: {stripped}")
+
+
+class TestInstallInventorySudoers(unittest.TestCase):
+    """P0 修复：sudoers principal = maasdeploy（不是 maasumami）"""
+
+    def test_sudoers_principal_maasdeploy(self):
+        """sudoers 授权对象 = maasdeploy（restricted SSH 登录用户）"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        self.assertRegex(blob, r'SUDOERS_USER=maasdeploy',
+                         "sudoers principal 变量应是 maasdeploy")
+        # sudoers 行使用 $SUDOERS_USER（= maasdeploy）+ $INVENTORY_DST
+        self.assertRegex(blob, r'echo.*\$SUDOERS_USER.*ALL=\(root\).*NOPASSWD.*\$INVENTORY_DST',
+                         "sudoers 行应使用 \$SUDOERS_USER (=maasdeploy) + \$INVENTORY_DST")
+
+    def test_sudoers_no_maasumami(self):
+        """sudoers 不包含 maasumami"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        # 不应授权 maasumami 调用 inventory
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r'maasumami\s+ALL=\(root\)',
+                                f"sudoers 不应授权 maasumami: {stripped}")
+        # 不应使用 $SERVICE_USER（= maasumami）作为 sudoers principal
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r'echo.*\$SERVICE_USER.*NOPASSWD',
+                                f"sudoers 不应使用 \$SERVICE_USER (=maasumami): {stripped}")
+
+    def test_sudoers_only_fixed_inventory_helper(self):
+        """sudoers 只允许固定 inventory helper 路径"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        # sudoers 应明确指定 /usr/local/sbin/maasweekly-inventory（INVENTORY_DST 变量定义）
+        self.assertRegex(blob, r'INVENTORY_DST=/usr/local/sbin/maasweekly-inventory',
+                         "应定义 INVENTORY_DST 固定路径")
+        # sudoers 行应使用 $INVENTORY_DST（固定路径变量）
+        self.assertRegex(blob, r'echo.*\$SUDOERS_USER.*NOPASSWD.*\$INVENTORY_DST',
+                         "sudoers 行应使用固定 \$INVENTORY_DST 路径")
+        # 不应用通配符扩大权限
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                continue
+            self.assertNotRegex(stripped, r'NOPASSWD.*\*',
+                                f"sudoers 不应通配符扩大: {stripped}")
+
+
+class TestInstallInventoryRollback(unittest.TestCase):
+    """install-inventory.sh backup + rollback safety"""
+
+    def test_backup_existing_deploy_shell(self):
+        """backup existing deploy-shell before replacement"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        self.assertRegex(blob, r'backup.*deploy-shell|cp.*DEPLOY_SHELL_DST.*backup',
+                         "应 backup existing deploy-shell")
+
+    def test_backup_existing_inventory_helper(self):
+        """backup existing inventory helper before replacement"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        self.assertRegex(blob, r'backup.*inventory helper|cp.*INVENTORY_DST.*backup',
+                         "应 backup existing inventory helper")
+
+    def test_backup_existing_sudoers(self):
+        """backup existing sudoers before replacement"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        self.assertRegex(blob, r'backup.*sudoers|cp.*SUDOERS_DST.*backup',
+                         "应 backup existing sudoers")
+
+    def test_visudo_validation(self):
+        """visudo -cf 必须在 capability 可用前通过"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        self.assertRegex(blob, r'visudo\s+-cf',
+                         "应执行 visudo -cf validation")
+
+    def test_sudoers_validation_failure_rollback(self):
+        """sudoers validation failure 必须 rollback"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        self.assertRegex(blob, r'visudo.*失败.*rollback|validation 失败.*rollback',
+                         "sudoers validation 失败应 rollback")
+        self.assertRegex(blob, r'rollback.*sudoers|恢复.*backup.*SUDOERS',
+                         "应 rollback sudoers（恢复 backup 或删除）")
+
+    def test_inventory_helper_rollback_on_sudoers_failure(self):
+        """sudoers validation failure 时 inventory helper 也应 rollback"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        self.assertRegex(blob, r'rollback.*inventory helper|恢复.*backup.*INVENTORY',
+                         "sudoers failure 时应 rollback inventory helper")
+
+    def test_deploy_shell_replacement_after_sudoers_validation(self):
+        """deploy-shell 更新在 sudoers validation 之后（避免 sudoers 失败后 deploy-shell 已更新）"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        lines = [(i, l.strip()) for i, l in enumerate(blob.splitlines(), 1)
+                 if l.strip() and not l.strip().startswith("#")]
+        visudo_line = next((i for i, l in lines if "visudo -cf" in l), -1)
+        deploy_shell_install = next((i for i, l in lines if "DEPLOY_SHELL_DST" in l and "install" in l.lower()), -1)
+        if visudo_line > 0 and deploy_shell_install > 0:
+            self.assertGreater(deploy_shell_install, visudo_line,
+                               "deploy-shell 更新应在 visudo validation 之后")
+
+
 if __name__ == "__main__":
     unittest.main()

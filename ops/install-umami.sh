@@ -424,22 +424,11 @@ fi
 run "安装 maas-umami.service → /etc/systemd/system" \
   "install -m 0644 '$SERVICE_SRC' /etc/systemd/system/maas-umami.service && systemctl daemon-reload"
 
-# ---- 9.5 安装 inventory helper + 更新 sudoers + 更新 deploy-shell（T08-1A Gate B Preflight）----
-# inventory helper：只读盘点，root:root 0750，经 sudoers NOPASSWD 调用
-INVENTORY_SRC="$OPS_DIR/server/maasweekly-inventory"
-DEPLOY_SHELL_SRC="$OPS_DIR/server/maasweekly-deploy-shell"
-DEPLOY_SHELL_DST=/usr/local/bin/maasweekly-deploy-shell
-INVENTORY_DST=/usr/local/sbin/maasweekly-inventory
-SUDOERS_INVENTORY=/etc/sudoers.d/maasweekly-inventory
-
-run "安装 maasweekly-inventory → /usr/local/sbin（root only）" \
-  "install -m 0750 -o root -g root '$INVENTORY_SRC' '$INVENTORY_DST'"
-# sudoers：deploy 只能 NOPASSWD 调 inventory（单行，不开放其他）
-run "sudoers：deploy 只能 NOPASSWD 调 inventory（单行）" \
-  "echo '$SERVICE_USER ALL=(root) NOPASSWD: $INVENTORY_DST' > '$SUDOERS_INVENTORY' && chmod 0440 '$SUDOERS_INVENTORY' && visudo -cf '$SUDOERS_INVENTORY'"
-# 更新 deploy-shell（新增 inventory 分支）
-run "更新 maasweekly-deploy-shell（新增 inventory 分支）→ $DEPLOY_SHELL_DST" \
-  "install -m 0755 '$DEPLOY_SHELL_SRC' '$DEPLOY_SHELL_DST'"
+# 注意：inventory capability（maasweekly-inventory + deploy-shell 更新 + sudoers）
+# 已移至独立的 ops/install-inventory.sh（Gate B0 controlled mutation）。
+# inventory 的用途是 install-umami.sh 执行前的生产环境兼容性盘点，不能依赖
+# install-umami.sh 安装（循环依赖）。install-inventory.sh 只安装 inventory
+# capability，不触碰 PostgreSQL/Umami/systemd/nginx/secret。
 
 # ---- 10. nginx config（由独立脚本 render-umami-nginx.sh 渲染；Round 3 P1 修复）----
 echo "· nginx config：由独立脚本 ops/render-umami-nginx.sh <cert> <key> 渲染"
