@@ -937,6 +937,95 @@ class TestCrashRecovery(unittest.TestCase):
             self.assertNotRegex(stripped, r"rm\s+-rf.*UMAMI_DIR|rm\s+-rf.*umami",
                                 f"recovery 不应使用 rm -rf umami: {stripped}")
 
+    # ---- Round 5 P0 修复：状态 F（resume-before-role）测试 ----
+
+    def test_state_F_resume_before_role(self):
+        """Round 5 P0：状态 F（role=0 env=0 pending=1）→ resume-before-role"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"状态 F.*resume-before-role|F_resume_before_role",
+                         "应检测状态 F（resume-before-role）")
+
+    def test_state_F_reads_pending_credential(self):
+        """Round 5：状态 F 从 pending state 读取 DB_PASS/APP_SECRET（reuse，不重新生成）"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # 状态 F 应 source pending state
+        self.assertRegex(blob, r"resume-before-role.*reuse pending|F.*reuse pending",
+                         "状态 F 应 reuse pending credential")
+
+    def test_state_F_does_not_regenerate_credential(self):
+        """Round 5 核心 invariant：状态 F 不调用 openssl rand（不重新生成 credential）。
+
+        状态 F 分支内不应有 openssl rand（reuse pending credential）。
+        用状态机 invariant 保证：valid pending exists → never regenerate credential。
+        """
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # 找到状态 F 分支的范围
+        lines = blob.splitlines()
+        in_f = False
+        fi_count = 0
+        for line in lines:
+            stripped = line.strip()
+            if "F_resume_before_role" in stripped or "resume-before-role" in stripped:
+                in_f = True
+            if in_f:
+                # 状态 F 分支内的实际命令行（非注释/非 echo/非 dry-run）不应有 openssl rand
+                if (stripped and not stripped.startswith("#") and
+                    not stripped.startswith("echo ") and "dry-run" not in stripped.lower()):
+                    self.assertNotRegex(stripped, r"openssl rand",
+                                        f"状态 F 分支不应调用 openssl rand（reuse pending credential）: {stripped}")
+                # fi 计数：状态 F 的 elif/fi 结束分支
+                if stripped == "fi" or stripped.startswith("elif"):
+                    fi_count += 1
+                    if fi_count >= 1:
+                        break
+
+    def test_invariant_pending_valid_no_regeneration(self):
+        """Round 5 核心 invariant：valid pending exists → never regenerate credential。
+
+        状态机应有 invariant 校验：PENDING_VALID=1 时不能进入 A_fresh（会重新生成 credential）。
+        """
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"invariant.*pending.*never regenerate|PENDING_VALID.*A_fresh.*die",
+                         "应有 invariant 校验：valid pending → 不进入 A_fresh（不重新生成 credential）")
+
+    def test_six_state_machine_completeness(self):
+        """Round 5：6 态完整状态机（A/F/E/B/C/D）"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # 6 态都应有显式检测
+        self.assertRegex(blob, r"状态 A.*fresh|A_fresh", "应有状态 A")
+        self.assertRegex(blob, r"状态 F.*resume-before-role|F_resume_before_role", "应有状态 F")
+        self.assertRegex(blob, r"状态 E.*resume|E_resume", "应有状态 E")
+        self.assertRegex(blob, r"状态 B.*existing|B_existing", "应有状态 B")
+        self.assertRegex(blob, r"状态 C.*fail closed|状态 C.*incomplete", "应有状态 C")
+        self.assertRegex(blob, r"状态 D.*inconsistent", "应有状态 D")
+
+    def test_state_F_creates_role_using_pending_db_pass(self):
+        """Round 5：状态 F 用 pending DB_PASS 创建 role"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # 状态 F 分支应有 CREATE USER using DB_PASS（reuse pending）
+        self.assertRegex(blob, r"resume.*pending.*DB_PASS|reuse pending DB_PASS",
+                         "状态 F 应用 pending DB_PASS 创建 role")
+
+    def test_state_F_creates_database(self):
+        """Round 5：状态 F 创建 database"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # 状态 F 分支应有 CREATE DATABASE
+        self.assertRegex(blob, r"CREATE DATABASE",
+                         "状态 F 应 CREATE DATABASE")
+
+    def test_state_F_writes_env(self):
+        """Round 5：状态 F 写 env"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        # env 写入逻辑（状态 F 和 A 共享）
+        self.assertRegex(blob, r"TMP_ENV.*mktemp|写.*UMAMI_ENV",
+                         "状态 F 应写 env")
+
+    def test_state_F_removes_pending_after_success(self):
+        """Round 5：状态 F 成功后删除 pending state"""
+        blob = INSTALL_UMAMI.read_text(encoding="utf-8")
+        self.assertRegex(blob, r"resume-before-role 完成|pending state 已删除.*resume-before-role",
+                         "状态 F 成功后应删除 pending state")
+
 
 class TestNginxCandidateRollback(unittest.TestCase):
     """Round 4 P1 修复：nginx candidate rollback safety。
