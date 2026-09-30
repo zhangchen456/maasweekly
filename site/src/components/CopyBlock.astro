@@ -62,6 +62,7 @@ const { code, label = '内容', ariaLabel } = Astro.props;
       const text = source?.textContent ?? '';
       try {
         await navigator.clipboard.writeText(text);
+        document.dispatchEvent(new CustomEvent('maas:copy-success', { detail: { kind: 'content' } }));
         if (btn) btn.textContent = '已复制 ✓';
         resetTimer = setTimeout(() => {
           if (btn) btn.textContent = originalLabel;

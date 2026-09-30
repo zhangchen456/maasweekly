@@ -215,15 +215,13 @@ class TestTelemetryGuard(unittest.TestCase):
         "hotjar", "static.hotjar.com",
     ]
 
-    def test_layout_no_umami_tracking_script(self):
-        """10. frontend 没有 Umami tracking script（T08-1A 不做前端采集）"""
+    def test_layout_approved_cloud_tracking_is_gated(self):
+        """轻量一期授权 Cloud；保留关闭开关及无其他 telemetry 的边界。"""
         self.assertTrue(LAYOUT_ASTRO.exists(), f"{LAYOUT_ASTRO} 应存在")
         blob = LAYOUT_ASTRO.read_text(encoding="utf-8")
-        # T08-1A 不应在 Layout.astro 引入 Umami tracking script
-        self.assertNotIn("umami", blob.lower(),
-                          "T08-1A 不应在 Layout.astro 引入 Umami script（属 T08-1B）")
-        self.assertNotRegex(blob, r'src=["\x27]https?://[^"\x27]*umami',
-                            "不应引入 Umami tracking script src")
+        self.assertIn("analytics.enabled &&", blob)
+        self.assertIn("validateAnalyticsConfig(analytics)", blob)
+        self.assertIn('src="/analytics.js"', blob)
 
     def test_layout_no_unapproved_telemetry(self):
         """9. frontend 仍无未经批准的 telemetry"""

@@ -1,6 +1,6 @@
 # T08-1A Production Authorization Package：prerequisites
 
-状态：READY FOR OWNER AUTHORIZATION；未执行。此包只覆盖生产 pnpm/PostgreSQL prerequisite，不等于 Umami deployment 或 Task 08 完成。
+状态：2026-09-30 用户批准后已执行，安装与健康验证通过。此包只覆盖生产 pnpm/PostgreSQL prerequisite，不等于 Umami deployment 或 Task 08 完成。执行证据与后续轻量化调整见 `task-08-lightweight-plan-2026-09-30.md`；下文保留原授权范围与命令记录。
 
 2026-09-30 owner 改为由当前 Agent 直接实现和验证，不再分发给 Code Agent。本次准备保留交接文档的明确 production authorization 边界，不将仓库测试通过称作独立 Reviewer PASS。
 
