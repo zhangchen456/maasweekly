@@ -11,25 +11,26 @@
 
 - **Gate A round 1**（commit `db4fc45b9`）：**FAIL**——install-umami.sh 首次安装执行顺序错误（build 在 env 之前，prisma 无 DATABASE_URL；database 在 role 之前，OWNER role 不存在）；role exists + env missing 时静默 ALTER USER（credential recovery 语义矛盾）；tag 未 pin commit SHA；TLS/nginx 不闭环（安装 nginx -t 已知失败的 443 ssl config）。静态契约测试 28/28 通过但未发现这些问题——测试只检查"元素存在"，没验证"关键生命周期顺序"。
 - **Gate A round 2**（commit `48ac32b0f`）：**FAIL**——修复了 round 1 的 8 项问题，但发现更根本的 P0 状态机问题：credential 状态靠过期快照变量（USER_EXISTS）推断，而非显式状态机；首次安装 CREATE USER 后 ALTER USER 制造中断窗口（CREATE USER 成功但 env 生成前失败 → 第二次执行状态 C 永久卡死）；--render-nginx 不是纯 nginx 操作（会重新运行整个 installer）；.next exists 判断 build 成功过弱。
-- **Gate A round 3**（本次修复）：显式四态状态机 + DB_PASS 一次生成 + atomic env write + render-nginx 独立脚本 + build 每次明确执行。
+- **Gate A round 3**（commit `b56121247`）：**FAIL**——修复了 round 2 的状态机问题，但 fresh install 仍不是可恢复事务（CREATE ROLE 后中断 → 状态 C 永久卡死，密码已丢失）；render-umami-nginx.sh 的 nginx -t 失败时已覆盖生产配置（invalid state）。
+- **Gate A round 4**（本次修复）：fresh install crash recovery via pending state + nginx candidate rollback safety。
 
-### Gate A round 3 修复项
+### Gate A round 4 修复项
 
-**P0 修复（显式四态状态机）：**
-1. **credential 状态机改为显式四态**：
-   - A. role absent + env absent → fresh install（generate credential once）
-   - B. role exists + env exists → existing healthy（preserve）
-   - C. role exists + env absent → fail closed（STOP，不自动 rotate）
-   - D. role absent + env exists → fail closed（STOP，inconsistent）
-2. **C/D 状态检测发生在任何 mutation 之前**（CREATE USER / CREATE DATABASE / chown / clone 之前）
-3. **Fresh install DB_PASS 一次生成**：DB_PASS 从生成开始一直活到 role + env 完成；CREATE ROLE 直接使用该 DB_PASS；同一个 DB_PASS 写入 umami.env；不再 CREATE 后 ALTER USER
-4. **env 使用 temp file + chmod/chown + atomic rename**：避免中断留下半写文件
-5. **新增部分失败/re-run 状态测试**：`TestPartialFailureRerun` 验证状态 C/D 的人工诊断路径（不提供 destructive recovery）
+**P0 修复（fresh install crash recovery）：**
+1. **引入 root-only pending install state**：`/srv/maasweekly/shared/.umami-install-state`（0600 root:root），credential 在第一次 PostgreSQL mutation 前持久化（DB_PASS + APP_SECRET），CREATE ROLE / DB / env 完成后删除
+2. **状态 E（resume）**：role exists + env absent + valid pending state → resume from crash（从 pending state 恢复 DB_PASS，补 CREATE DATABASE 若缺，写 env，删 pending），不是状态 C STOP
+3. **状态 C（fail closed）**：role exists + env absent + no pending state → 仍然 fail closed（STOP）
+4. **pending state 安全**：0600 root:root，不入 git/log，不在输出中泄露 secret；权限/属主/内容完整性校验
+5. **状态 B 清理残留 pending state**：healthy rerun 时清理残留 pending state
 
-**P1 修复：**
-6. **render-nginx 拆为独立脚本 `render-umami-nginx.sh`**：render nginx 不得触发 PostgreSQL/source/build/systemd mutation；Production Authorization Package 可准确标注 Phase 3 = nginx mutation
-7. **不以 .next exists 判断 build 成功**：采用可证明与 pinned SHA 对应的 build strategy；每次明确 pnpm install + pnpm run build（重复执行多花时间，比错误认为"已 build 完"安全）
-8. **文档删除"手动 dropdb/dropuser 完全重装"作为正常 recovery 建议**：inconsistent state 只 STOP + 人工诊断，数据默认保留
+**P1 修复（nginx candidate rollback safety）：**
+6. **render 失败不让 /etc/nginx 留在 invalid state**：candidate 先渲染到 temp file → backup existing config → install candidate → nginx -t → 失败则 restore previous config → nginx -t 验证恢复 → exit non-zero
+7. **首次安装（无 existing config）**：candidate validation failure → remove candidate → nginx -t → exit non-zero
+8. **reload 只在 nginx -t success 后**：reload 不在失败分支执行
+9. **candidate 渲染验证**：渲染后验证 ssl_certificate 行非注释
+
+**Optional cleanup：**
+10. source mismatch 的 rm -rf 恢复提示改为 quarantine/move（`mv $UMAMI_DIR ${UMAMI_DIR}.quarantine-<timestamp>`）
 
 ---
 
@@ -148,26 +149,35 @@ next start        # 经 scripts/start-env.js，读 PORT/HOSTNAME env
 - `ops/install-umami.sh`：用 `openssl rand` 现场生成，无硬编码值
 - 测试 `test_analytics_foundation.py` 验证 env.example 无真实 secret
 
-### 6.4 Credential 状态机（Round 3 P0 修复——显式四态）
+### 6.4 Credential 状态机（Round 4 P0 修复——支持 crash recovery）
 
-install-umami.sh 对 credential 状态采用显式四态状态机，**状态检测发生在任何 mutation 之前**：
+install-umami.sh 对 credential 状态采用显式状态机（含 pending state crash recovery），**状态检测发生在任何 mutation 之前**：
 
-| 状态 | role | env | 行为 |
-|---|---|---|---|
-| A. fresh install | absent | absent | generate credential once（DB_PASS 一次生成，CREATE ROLE 直接用，写入 env） |
-| B. existing healthy | exists | exists | preserve credential（不 ALTER USER，不重置密码） |
-| C. incomplete/recovery | exists | absent | **STOP（die），fail closed**（不自动 rotate） |
-| D. inconsistent | absent | exists | **STOP（die），fail closed**（inconsistent） |
+| 状态 | role | env | pending | 行为 |
+|---|---|---|---|---|
+| A. fresh install | absent | absent | absent | generate credential once + 写 pending state → CREATE ROLE → CREATE DATABASE → env → 删 pending |
+| B. existing healthy | exists | exists | - | preserve credential（不 ALTER USER，清理残留 pending state） |
+| C. incomplete (no recovery) | exists | absent | absent/no valid | **STOP（die），fail closed**（无 pending state 可恢复） |
+| D. inconsistent | absent | exists | - | **STOP（die），fail closed**（inconsistent） |
+| E. resume from crash | exists | absent | valid | resume（从 pending state 恢复 DB_PASS，补 CREATE DATABASE 若缺，写 env，删 pending） |
 
-**Fresh install credential lifecycle（Round 3 修复）：**
+**Pending install state（Round 4 P0 修复）：**
+- 路径：`/srv/maasweekly/shared/.umami-install-state`（0600 root:root）
+- 内容：`DB_PASS=<hex>` + `APP_SECRET=<hex>`
+- 时机：credential 在第一次 PostgreSQL mutation 前持久化；CREATE ROLE / DB / env 完成后删除
+- 安全：不入 git/log，不在输出中泄露 secret；权限/属主/内容完整性校验
+- crash recovery：CREATE ROLE 后中断 → 重跑检测到状态 E（role exists + env absent + valid pending）→ resume
+
+**Fresh install credential lifecycle（Round 3+4 修复）：**
 - DB_PASS 只生成一次（`openssl rand -hex 24`）
+- 写 pending state（0600 root:root）——在 CREATE ROLE 之前
 - CREATE ROLE 直接使用该 DB_PASS（不 CREATE 后 ALTER USER，消除中断窗口）
-- 同一个 DB_PASS 写入 umami.env
-- env 使用 temp file + chmod/chown + atomic rename（避免中断留下半写文件）
+- 同一个 DB_PASS 写入 umami.env（temp file + atomic rename）
+- 删除 pending state（安装完成后）
 
-**状态 C/D 处理（Round 3 修复）：**
-- 状态 C（role exists + env absent）：此前安装中断（role 已创建但 env 未生成）或 env 丢失。PostgreSQL 密码不可逆。installer `die`，不自动 rotate，不提供 destructive recovery 路径（不 dropdb/dropuser）。需人工诊断。
-- 状态 D（role absent + env exists）：inconsistent 状态。installer `die`。需人工诊断（确认 env 是否残留文件）。
+**状态 C/D 处理：**
+- 状态 C（role exists + env absent + no pending）：密码已丢失且无 pending state 可恢复。installer `die`，不自动 rotate，不提供 destructive recovery 路径。需人工诊断。
+- 状态 D（role absent + env exists）：inconsistent 状态。installer `die`。需人工诊断。
 - **数据默认保留。inconsistent state 只 STOP + 人工诊断，不提供 destructive recovery。**
 
 ---
