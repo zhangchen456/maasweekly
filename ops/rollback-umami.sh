@@ -72,5 +72,6 @@ echo "    - PostgreSQL user $PG_USER（保留）"
 # ---- 5. 完成检查 ----
 echo "== 回滚完成 =="
 echo "  ⚠ PostgreSQL 数据已保留（不删除）"
-echo "  ⚠ Umami 应用 + env 已保留（如需完全清除，手动：systemctl reset-failed $SERVICE_NAME; rm -rf $UMAMI_DIR $UMAMI_ENV; sudo -u postgres dropdb $PG_DB; sudo -u postgres dropuser $PG_USER）"
+echo "  ⚠ Umami 应用 + env 已保留（便于重新启用）"
 echo "  ⚠ daily.maas.click 主站与 agent-api 不受影响"
+echo "  ⚠ rollback contract：数据永远保留，不提供 destructive cleanup 命令"
