@@ -612,6 +612,101 @@ class TestInstallInventoryRollback(unittest.TestCase):
             self.assertGreater(deploy_shell_install, visudo_line,
                                "deploy-shell 更新应在 visudo validation 之后")
 
+    # ---- Round 2.1：deploy-shell replacement failure rollback 测试 ----
+
+    def test_deploy_shell_install_failure_enters_rollback(self):
+        """deploy-shell install 失败进入 rollback（if ! install ... then rollback）"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        # 显式 if ! install ... then（不依赖 set -e）
+        self.assertRegex(blob, r'if\s+!\s+install.*DEPLOY_SHELL_DST',
+                         "deploy-shell install 应显式 if ! install 失败检测")
+
+    def test_deploy_shell_failure_does_not_rely_on_set_e(self):
+        """deploy-shell install 失败不依赖 set -e 直接退出（显式 if ! 处理）"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        # deploy-shell install 行应在 if ! 条件内，不是裸 install 依赖 set -e
+        # 找到 deploy-shell install 的实际命令行（非 dry-run echo）
+        deploy_shell_section = False
+        found = False
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if "更新 deploy-shell" in stripped or "update deploy-shell" in stripped.lower():
+                deploy_shell_section = True
+            if deploy_shell_section and "install -m 0755" in stripped:
+                # 跳过 dry-run echo 行
+                if stripped.startswith("echo "):
+                    continue
+                # 实际 install 命令应在 if ! 条件内
+                self.assertRegex(stripped, r'^if\s+!\s+install',
+                                 f"deploy-shell install 应在 if ! 条件内（不依赖 set -e）: {stripped}")
+                found = True
+                break
+        self.assertTrue(found, "应找到 deploy-shell 实际 install 命令行")
+
+    def _extract_deploy_shell_failure_rollback(self, blob):
+        """提取 deploy-shell failure rollback 区块（从失败检测到 die 退出）"""
+        in_failure = False
+        rollback_text = []
+        for line in blob.splitlines():
+            stripped = line.strip()
+            if "deploy-shell install 失败" in stripped:
+                in_failure = True
+            if in_failure:
+                rollback_text.append(stripped)
+                if stripped.startswith("die"):
+                    break
+        return "\n".join(rollback_text)
+
+    def test_deploy_shell_failure_restores_all_3_files(self):
+        """existing install 失败时恢复全部 3 个文件（deploy-shell + sudoers + inventory helper）"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        rollback_blob = self._extract_deploy_shell_failure_rollback(blob)
+        # 应回复 deploy-shell
+        self.assertRegex(rollback_blob, r'restore.*deploy-shell|恢复.*deploy-shell|cp.*DEPLOY_SHELL_DST',
+                         "deploy-shell failure 应 restore deploy-shell")
+        # 应回复 sudoers
+        self.assertRegex(rollback_blob, r'restore.*sudoers|恢复.*sudoers|cp.*SUDOERS_DST',
+                         "deploy-shell failure 应 restore sudoers")
+        # 应回复 inventory helper
+        self.assertRegex(rollback_blob, r'restore.*inventory helper|恢复.*inventory|cp.*INVENTORY_DST',
+                         "deploy-shell failure 应 restore inventory helper")
+
+    def test_deploy_shell_failure_first_install_removes_all(self):
+        """首次安装失败时删除全部新创建文件（无 backup → remove）"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        rollback_blob = self._extract_deploy_shell_failure_rollback(blob)
+        # 首次安装无 backup 时应 remove
+        self.assertRegex(rollback_blob, r'remove.*partially-created|remove.*newly-created|rm.*DEPLOY_SHELL_DST',
+                         "首次安装失败应 remove partially-created deploy-shell")
+        self.assertRegex(rollback_blob, r'remove.*newly-created.*sudoers|rm.*SUDOERS_DST',
+                         "首次安装失败应 remove newly-created sudoers")
+        self.assertRegex(rollback_blob, r'remove.*newly-created.*inventory|rm.*INVENTORY_DST',
+                         "首次安装失败应 remove newly-created inventory helper")
+
+    def test_deploy_shell_failure_restored_sudoers_visudo(self):
+        """failure rollback 后 restored sudoers 运行 visudo -cf 验证"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        rollback_blob = self._extract_deploy_shell_failure_rollback(blob)
+        self.assertRegex(rollback_blob, r'visudo.*-cf.*restored|visudo -cf.*SUDOERS_DST',
+                         "rollback 后应 visudo -cf 验证 restored sudoers")
+
+    def test_deploy_shell_failure_exits_nonzero(self):
+        """failure rollback 后 exit non-zero"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        rollback_blob = self._extract_deploy_shell_failure_rollback(blob)
+        # die 会 exit 1（non-zero）
+        self.assertRegex(rollback_blob, r'die.*deploy-shell install 失败',
+                         "failure rollback 后应 die（exit non-zero）")
+
+    def test_deploy_shell_failure_no_half_state(self):
+        """failure 后不留半安装状态（new helper + old shell / new sudoers + old shell / partial deploy-shell）"""
+        blob = (BASE / "ops" / "install-inventory.sh").read_text(encoding="utf-8")
+        rollback_blob = self._extract_deploy_shell_failure_rollback(blob)
+        # rollback 应恢复全部 3 个文件，不只恢复 deploy-shell
+        restore_count = len(re.findall(r'restore|remove|cp.*backup|rm', rollback_blob))
+        self.assertGreaterEqual(restore_count, 3,
+                                f"failure rollback 应至少 restore/remove 3 个文件，实际 {restore_count}")
+
 
 if __name__ == "__main__":
     unittest.main()
