@@ -161,10 +161,12 @@ console.log('[7] T12：页面内链 dist 实存');
       .filter((h) => h.startsWith('/'));
     const missing = hrefs.filter((h) => {
       if (h.startsWith('/api/') || h.startsWith('/maas-skill/')) return false; // 端点/包文件
-      const p = h.replace(/\/$/, '');
+      // Queries and anchors select page state, not another output filename.
+      const pathname = decodeURIComponent(new URL(h.replaceAll('&amp;', '&'), 'https://daily.maas.click').pathname);
+      const p = pathname.replace(/\/$/, '');
       return !fs.existsSync(path.join(dist, p, 'index.html'))
         && !fs.existsSync(path.join(dist, `${p}.json`))
-        && !fs.existsSync(path.join(dist, h));
+        && !fs.existsSync(path.join(dist, pathname));
     });
     check(`${page} 内部链接实存`, missing.length === 0, `缺失 ${missing.slice(0, 3)}`);
   }
