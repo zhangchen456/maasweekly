@@ -4,6 +4,7 @@
  */
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createHash, randomUUID } from 'node:crypto';
+import { markDataset } from './observability.js';
 import type { Dataset, DatasetHolder } from './dataset.js';
 import {
   getItem, getEvidence, getWeekly, normalizeQuery, runListQueryAsync,
@@ -89,7 +90,7 @@ function notFound(res: ServerResponse, requestId: string, detail: string): void 
 function serviceUnavailable(res: ServerResponse, requestId: string, reason: string): void {
   problem(res, requestId, {
     type: '', title: 'Service unavailable', status: 503,
-    detail: `无有效数据版本可用: ${reason}`, code: 'no_data_available',
+    detail: '无有效数据版本可用', code: 'no_data_available',
     recovery: '稍后重试；数据发布后自动恢复。',
   });
 }
@@ -102,6 +103,7 @@ function sendJson(
   req: IncomingMessage, res: ServerResponse, requestId: string, status: number,
   payload: unknown,
 ): void {
+  markDataset((payload as { datasetVersion?: string | null } | null)?.datasetVersion ?? null);
   const body = JSON.stringify(payload);
   const etag = `"${createHash('sha256').update(body).digest('hex').slice(0, 32)}"`;
   const headers: Record<string, string | number> = {
@@ -262,7 +264,7 @@ export function createHandler(holder: DatasetHolder, config: ServerConfig) {
                   ...envelope(ds, {}, ds.coverage),
                   status: { ...ds.status, service: {
                     lastReloadAt: holder.lastReloadAt,
-                    lastReloadError: holder.lastReloadError,
+                    lastReloadError: holder.lastReloadError ? 'dataset_load_failed' : null,
                   } },
                 }
               : {
@@ -275,7 +277,7 @@ export function createHandler(holder: DatasetHolder, config: ServerConfig) {
                             weekly: { count: 0, latestId: null }, counts: {},
                             service: {
                               lastReloadAt: holder.lastReloadAt,
-                              lastReloadError: holder.lastReloadError ?? '无有效数据版本',
+                              lastReloadError: holder.lastReloadError ? 'dataset_load_failed' : '无有效数据版本',
                             } },
                 };
             return sendJson(req, res, requestId, 200, payload);

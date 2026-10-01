@@ -1,3 +1,4 @@
+import { markDataset } from './observability.js';
 /**
  * mcp-tools.ts：五个 MCP 工具的 schema、执行与结果渲染（Task 04 M3）。
  * 无传输依赖（不 import node:http / SDK transport）——单元测试可直接调
@@ -178,6 +179,7 @@ function ok(structuredContent: unknown, text: string): ToolOutcome {
 
 // envelope（与 REST 响应体同构，T03 一致性的基础）
 function envelopeOf(ds: Dataset, query: Record<string, unknown>): Record<string, unknown> {
+  markDataset(ds.version);
   return {
     schemaVersion: SCHEMA_VERSION,
     datasetVersion: ds.version,

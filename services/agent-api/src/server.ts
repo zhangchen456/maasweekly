@@ -6,6 +6,8 @@
  * 轮询 manifest 热重载（0=禁用），另支持 SIGHUP。
  */
 import http from 'node:http';
+import { performance, monitorEventLoopDelay } from 'node:perf_hooks';
+import { JsonlLogger, instrumentRequest, freshnessSummary } from './observability.js';
 import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -58,15 +60,23 @@ const holder = new DatasetHolder(DATA_ROOT, {
   maxRetainedVersions: parseInt(process.env.RETAINED_DATASET_MAX_VERSIONS ?? '2', 10),
   maxRetainedBytes: parseInt(process.env.RETAINED_DATASET_MAX_BYTES ?? String(128 * 1024 * 1024), 10),
 });
-if (await holder.reloadAsync() === 'changed') {
-  console.log(`[agent-api] 已加载数据版本 ${holder.current?.version}`);
-} else {
-  console.warn(`[agent-api] 无有效数据版本（${holder.lastReloadError}），数据路由将 503`);
-}
+const logger = process.env.MAAS_DIAGNOSTICS === '0' ? undefined : new JsonlLogger();
+const releaseName = path.basename(process.env.MAAS_RELEASE_DIR ?? 'local');
+const releaseId = /^rl_[a-f0-9]+_[a-f0-9]+$/.test(releaseName) ? releaseName : 'local';
+const reload = async (force = false) => {
+  const started = performance.now();
+  const result = await holder.reloadAsync({ force });
+  logger?.emit({ kind: 'dataset.load', releaseId, datasetVersion: holder.current?.version ?? null,
+    result, force, elapsedMs: performance.now() - started,
+    errorCode: result === 'failed' ? 'dataset_load_failed' : null,
+    cache: holder.cacheState, counters: { ...holder.metrics } });
+  return result;
+};
+await reload();
 
 // dispatcher：/api/mcp → MCP；其余 → REST（http.ts 行为不变）
-const restHandler = createHandler(holder, config);
-const mcpHandler = createMcpHandler(holder, mcpConfig);
+const restHandler = instrumentRequest(createHandler(holder, config), holder, releaseId, logger?.emit);
+const mcpHandler = instrumentRequest(createMcpHandler(holder, mcpConfig), holder, releaseId, logger?.emit);
 const server = http.createServer((req, res) => {
   const pathname = (req.url ?? '').split('?')[0];
   if (pathname === '/_locale/country') { countryHandler(req, res); return; }
@@ -76,36 +86,36 @@ const server = http.createServer((req, res) => {
   }
   void restHandler(req, res);
 });
+const loop = logger ? monitorEventLoopDelay({ resolution: 20 }) : undefined;
+loop?.enable();
+const sample = () => {
+  const memory = process.memoryUsage();
+  logger?.emit({ kind: 'runtime.sample', releaseId, datasetVersion: holder.current?.version ?? null,
+    rssBytes: memory.rss, heapUsedBytes: memory.heapUsed,
+    eventLoopP99Ms: loop && loop.count ? loop.percentile(99) / 1e6 : 0,
+    health: freshnessSummary(holder), cache: holder.cacheState, logger: logger.state });
+  loop?.reset();
+};
 server.listen(PORT, HOST, () => {
-  console.log(`[agent-api] http://${HOST}:${PORT}/api/v1/ （数据根: ${DATA_ROOT}）`);
-  console.log(`[agent-api] MCP: POST http://${HOST}:${PORT}/api/mcp（Origin 白名单: ${mcpConfig.originAllowlist.join(', ') || '（无）'}）`);
+  logger?.emit({ kind: 'runtime.started', releaseId, datasetVersion: holder.current?.version ?? null,
+    ready: Boolean(holder.current) });
+  sample();
 });
+const sampleTimer = logger ? setInterval(sample, 60000) : undefined;
+sampleTimer?.unref();
+const timer = RELOAD_MS > 0 ? setInterval(() => { void reload(); }, RELOAD_MS) : undefined;
+timer?.unref();
+process.on('SIGHUP', () => { void reload(true); });
 
-let timer: NodeJS.Timeout | undefined;
-if (RELOAD_MS > 0) {
-  timer = setInterval(async () => {
-    if (await holder.reloadAsync() === 'changed') {
-      console.log(`[agent-api] 热重载 → ${holder.current?.version}`);
-    }
-  }, RELOAD_MS);
-  timer.unref?.();
-}
-
-process.on('SIGHUP', async () => {
-  const result = await holder.reloadAsync({ force: true });
-  if (result === 'changed') {
-    console.log(`[agent-api] SIGHUP 重载 → ${holder.current?.version}`);
-  } else if (result === 'failed') {
-    console.warn(`[agent-api] SIGHUP 重载失败（继续服务旧版）: ${holder.lastReloadError}`);
-  }
-});
-
+let stopping = false;
 const shutdown = () => {
-  console.log('[agent-api] 关闭');
+  if (stopping) return; stopping = true;
+  logger?.emit({ kind: 'runtime.stopping', releaseId });
   if (timer) clearInterval(timer);
-  holder.close();
-  server.close(() => process.exit(0));
-  setTimeout(() => process.exit(0), 3000).unref?.();
+  if (sampleTimer) clearInterval(sampleTimer);
+  loop?.disable(); holder.close();
+  server.close(() => { void (async () => { await logger?.close(); process.exit(0); })(); });
+  setTimeout(() => process.exit(0), 3000).unref();
 };
 process.on('SIGTERM', shutdown);
 process.on('SIGINT', shutdown);
