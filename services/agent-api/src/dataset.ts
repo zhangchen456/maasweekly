@@ -8,161 +8,17 @@
  * 加载新 release，成功后单一赋值替换；失败继续服务旧版并记录错误。
  * 单次请求只持有一个 Dataset 实例——重载是引用替换，不会混版。
  */
-import { createHash } from 'node:crypto';
-import { readFileSync, lstatSync, realpathSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { loadDatasetInWorker } from './dataset-loader.js';
 import path from 'node:path';
 
-export const SCHEMA_VERSION = '1.0';
-
-export interface ModelIdentityCatalog {
-  models: { modelId: string; modelName: string; familyId?: string; familyName?: string }[];
-  families: { familyId: string; familyName: string }[];
-}
-
-export interface ManifestFileEntry {
-  path: string;
-  sha256: string;
-  bytes: number;
-}
-export interface Manifest {
-  schemaVersion: string;
-  datasetVersion: string;
-  generatedAt: string;
-  dataThrough: string;
-  coverage: Record<string, unknown>;
-  files: ManifestFileEntry[];
-  retainedVersions: { datasetVersion: string; generatedAt: string }[];
-}
-
-export interface ChangeEntity {
-  id: string;
-  revision: number;
-  status: 'active' | 'withdrawn';
-  recordType: 'source_observation' | 'price_change';
-  /** Task 07 T07-3：可选 model identity（unresolved/pointer 不写——零伪造）。
-   * price_change 透过 price.modelId 间接携带；source_observation 无。 */
-  modelId?: string | null;
-  modelName?: string | null;
-  familyId?: string | null;
-  familyName?: string | null;
-  providerId: string | null;
-  sourceId: string;
-  sourceType?: string | null;
-  observedAt: string | null;
-  observationDate: string;
-  timePrecision: 'date' | 'datetime';
-  publishedAt: string | null;
-  updatedAt: string | null;
-  title: string;
-  summary: string | null;
-  summaryOrigin: 'rule' | 'llm' | 'manual' | null;
-  changeType: string;
-  evidenceLevel: string;
-  quality: { state: string; reason: string | null; lastSuccessAt: string | null };
-  diff?: {
-    addedLines: string[]; removedLines: string[];
-    addedCount: number; removedCount: number; completeness: string | null;
-  };
-  price?: {
-    factKey: string; model: string; component: string; currency: string;
-    unitQuantity: number; unitName: string; region: string; billingMode: string;
-    serviceTier: string; contextBand: Record<string, unknown> | null;
-    timeCondition: Record<string, unknown> | null;
-    beforeAmount: string | null; afterAmount: string | null;
-    beforeVersionId: string | null; afterVersionId: string | null;
-    changedFields: string[];
-    comparison: Record<string, unknown> | null;
-  };
-  links: { permalink: string; sourceUrl: string | null };
-  evidenceIds: string[];
-}
-
-export interface ItemEntity extends ChangeEntity {
-  revisionHistory: { revision: number; revisedAt: string | null; reason: string | null }[];
-}
-
-export interface PriceEntity {
-  id: string;
-  factKey: string;
-  providerId: string;
-  sourceId: string;
-  modelKey: string;
-  /** Task 07 T07-3：可选 model identity（unresolved/pointer 不写——零伪造） */
-  modelId?: string;
-  modelName?: string;
-  familyId?: string;
-  familyName?: string;
-  component: string;
-  amount: string;
-  currency: string;
-  unitQuantity: number;
-  unitName: string;
-  region: string;
-  billingMode: string;
-  serviceTier: string;
-  contextBand: Record<string, unknown> | null;
-  timeCondition: Record<string, unknown> | null;
-  effectiveAt: string | null;
-  observedAt: string;
-  evidenceId: string | null;
-  evidenceStatus: string;
-  quality: { state: string; reason: string | null; lastSuccessAt: string | null };
-  links: { itemPermalink: string | null };
-}
-
-export interface EvidenceEntity {
-  id: string;
-  sourceId: string;
-  providerId: string | null;
-  sourceUrl: string | null;
-  subpageUrl: string | null;
-  observedAtRange: [string, string] | null;
-  locatorType: string;
-  locator: string;
-  extractorVersion: string;
-  excerptText: string;
-  excerptHash: string;
-  contentHash: string;
-  completeness: string;
-  reasons: string[];
-  relatedFactIds: string[];
-}
-
-export interface WeeklyEntity {
-  id: string;
-  title: string;
-  date: string;
-  period: string | null;
-  url: string;
-  headline: unknown[];
-  platforms: unknown[];
-  summary_table: unknown;
-  trends: unknown[];
-  watchpoints: unknown;
-  event_index: unknown;
-}
-
-export interface StatusEntity {
-  providers: { providerId: string; displayName: string; region: string }[];
-  sourceStreams: {
-    sourceId: string; providerId: string | null; state: string;
-    lastAttemptDate: string | null; lastSuccessDate: string | null; reason: string | null;
-  }[];
-  priceStreams: {
-    sourceKey: string; sourceId: string; providerId: string; state: string;
-    coverage: string; lastAttemptAt: string | null; lastSuccessAt: string | null;
-    reason: string | null;
-  }[];
-  weekly: { count: number; latestId: string | null };
-  counts: Record<string, number>;
-}
-
-export class DatasetError extends Error {}
-
-const RELEASE_PATH_RE = /^releases\/ds_[0-9a-f]{64}\/[a-z]+(?:-[a-z]+)*\.json$/;
-const DS_RE = /^ds_[0-9a-f]{64}$/;
+import { SCHEMA_VERSION, type Manifest, type ManifestFileEntry, type ModelIdentityCatalog,
+  type ChangeEntity, type ItemEntity, type PriceEntity, type EvidenceEntity, type WeeklyEntity, type StatusEntity } from './public-contract/entities.js';
+import { DatasetError, DS_RE, validateManifest, validateIdentityCatalog, validateCollections } from './public-contract/validation.js';
+import { readVerified } from './public-contract/node-reader.js';
+export * from './public-contract/entities.js';
+export { DatasetError } from './public-contract/validation.js';
 
 export class Dataset {
   readonly version: string;
@@ -275,18 +131,7 @@ export class Dataset {
     }
   }
 
-  static validateManifest(manifest: Manifest): void {
-    if (manifest?.schemaVersion !== SCHEMA_VERSION) throw new DatasetError('manifest schemaVersion 非法');
-    if (!DS_RE.test(manifest.datasetVersion ?? '') || !Array.isArray(manifest.files)) throw new DatasetError('manifest 结构非法');
-    const paths = new Set<string>();
-    for (const f of manifest.files) {
-      if (!f || !RELEASE_PATH_RE.test(f.path) || !f.path.startsWith(`releases/${manifest.datasetVersion}/`)
-        || paths.has(f.path) || !Number.isSafeInteger(f.bytes) || f.bytes < 0 || !/^[0-9a-f]{64}$/.test(f.sha256)) {
-        throw new DatasetError('manifest 文件清单非法或重复');
-      }
-      paths.add(f.path);
-    }
-  }
+  static validateManifest(manifest: Manifest): void { validateManifest(manifest); }
 
   static load(root: string, version?: string): Dataset {
     const rootAbs = path.resolve(root);
@@ -313,24 +158,7 @@ export class Dataset {
     const evidence = Dataset.readArr<EvidenceEntity[]>(rootAbs, manifest, 'evidence');
     const weekly = Dataset.readArr<WeeklyEntity[]>(rootAbs, manifest, 'weekly');
     const status = Dataset.readArr<StatusEntity>(rootAbs, manifest, 'status');
-    Dataset.spotCheck(changes, prices, evidence, weekly, status);
-    if (!Array.isArray(items)) throw new DatasetError('items 非数组');
-    const ids = (values: { id: string }[], name: string): Set<string> => {
-      const result = new Set<string>();
-      for (const value of values) {
-        if (!value || typeof value.id !== 'string' || !value.id || result.has(value.id)) throw new DatasetError(`${name} id 非法或重复`);
-        result.add(value.id);
-      }
-      return result;
-    };
-    const itemIds = ids(items, 'items'), evidenceIds = ids(evidence, 'evidence');
-    ids(changes, 'changes'); ids(prices, 'prices'); ids(weekly, 'weekly');
-    for (const c of changes) {
-      if (!itemIds.has(c.id) || !Array.isArray(c.evidenceIds) || c.evidenceIds.some(id => !evidenceIds.has(id))) {
-        throw new DatasetError('changes item/evidence 引用缺失');
-      }
-    }
-    for (const p of prices) if (p.evidenceId != null && !evidenceIds.has(p.evidenceId)) throw new DatasetError('prices evidence 引用缺失');
+    validateCollections(changes, items, prices, evidence, weekly, status);
     const known = new Set(['changes', 'items', 'prices', 'evidence', 'weekly', 'status', 'model-identities'].map(name => `releases/${manifest.datasetVersion}/${name}.json`));
     for (const file of manifest.files) if (!known.has(file.path)) Dataset.readVerified(rootAbs, file);
     return new Dataset(manifest, changes, items, prices, evidence, weekly, status, rootAbs);
@@ -372,29 +200,7 @@ export class Dataset {
     } catch (error) {
       throw new DatasetError(`identity catalog 不可读: ${(error as Error).message}`);
     }
-    const fail = (): never => { throw new DatasetError('identity catalog 结构非法'); };
-    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return fail();
-    const catalog = raw as ModelIdentityCatalog;
-    if (!Array.isArray(catalog.models) || !Array.isArray(catalog.families)) return fail();
-    const validId = (v: unknown): v is string =>
-      typeof v === 'string' && /^[a-z0-9-]+:[a-z0-9.-]+$/.test(v);
-    const validName = (v: unknown): v is string => typeof v === 'string' && v.trim().length > 0;
-    const families = new Map<string, string>();
-    for (const f of catalog.families) {
-      if (!f || !validId(f.familyId) || !validName(f.familyName) || families.has(f.familyId)) return fail();
-      families.set(f.familyId, f.familyName);
-    }
-    const models = new Set<string>();
-    for (const m of catalog.models) {
-      if (!m || !validId(m.modelId) || !validName(m.modelName) || models.has(m.modelId) || families.has(m.modelId)) return fail();
-      if (m.familyId !== undefined || m.familyName !== undefined) {
-        if (!validId(m.familyId) || !validName(m.familyName) || !families.has(m.familyId) ||
-            families.get(m.familyId) !== m.familyName ||
-            m.modelId.split(':')[0] !== m.familyId.split(':')[0]) return fail();
-      }
-      models.add(m.modelId);
-    }
-    return catalog;
+    return validateIdentityCatalog(raw);
   }
 
   private static readArr<T>(rootAbs: string, manifest: Manifest, name: string): T {
@@ -409,64 +215,9 @@ export class Dataset {
   }
 
   private static readVerified(rootAbs: string, entry: ManifestFileEntry): string {
-    if (!RELEASE_PATH_RE.test(entry.path)) {
-      throw new DatasetError(`manifest 路径非法: ${entry.path}`);
-    }
-    const p = path.resolve(rootAbs, entry.path);
-    if (!p.startsWith(rootAbs + path.sep)) {
-      throw new DatasetError(`路径越界: ${entry.path}`);
-    }
-    let raw: Buffer;
-    try {
-      const st = lstatSync(p);
-      if (!st.isFile() || st.isSymbolicLink?.()) {
-        throw new DatasetError(`非普通文件: ${entry.path}`);
-      }
-      if (!realpathSync(p).startsWith(realpathSync(rootAbs) + path.sep)) throw new DatasetError(`路径越界: ${entry.path}`);
-      raw = readFileSync(p);
-    } catch (e) {
-      if (e instanceof DatasetError) throw e;
-      throw new DatasetError(`文件不可读: ${entry.path}`);
-    }
-    if (raw.length !== entry.bytes) {
-      throw new DatasetError(`bytes 不符: ${entry.path} ${raw.length} != ${entry.bytes}`);
-    }
-    const sha = createHash('sha256').update(raw).digest('hex');
-    if (sha !== entry.sha256) {
-      throw new DatasetError(`sha256 不符: ${entry.path}`);
-    }
-    return raw.toString('utf-8');
+    return readVerified(rootAbs, entry);
   }
 
-  private static spotCheck(
-    changes: ChangeEntity[], prices: PriceEntity[],
-    evidence: EvidenceEntity[], weekly: WeeklyEntity[], status: StatusEntity,
-  ): void {
-    if (!Array.isArray(changes) || !Array.isArray(prices) || changes.length === 0 && prices.length === 0) {
-      throw new DatasetError('changes 与 prices 均为空（疑似坏 release）');
-    }
-    if (!status?.providers?.length) throw new DatasetError('status.providers 为空');
-    // Binary seek requires the entire sequence to satisfy the frozen order.
-    for (let i = 1; i < changes.length; i++) {
-      const a = changes[i - 1]!, b = changes[i]!;
-      if (a.observationDate < b.observationDate || (a.observationDate === b.observationDate && a.id >= b.id)) {
-        throw new DatasetError('changes 排序错误或重复 id');
-      }
-    }
-    for (let i = 1; i < prices.length; i++) {
-      const a = prices[i - 1]!, b = prices[i]!;
-      const left = [a.providerId, a.modelKey, a.component, a.factKey], right = [b.providerId, b.modelKey, b.component, b.factKey];
-      let cmp = 0;
-      for (let k = 0; k < left.length; k++) {
-        if (left[k]! < right[k]!) { cmp = -1; break; }
-        if (left[k]! > right[k]!) { cmp = 1; break; }
-      }
-      if (cmp >= 0) throw new DatasetError('prices 排序错误或重复 factKey');
-    }
-    if (!Array.isArray(evidence) || !Array.isArray(weekly)) {
-      throw new DatasetError('evidence/weekly 非数组');
-    }
-  }
 }
 
 export interface DatasetHolderOptions {

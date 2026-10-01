@@ -78,6 +78,7 @@ run "validate-model-registry（Task 07）" python3 pipeline/scripts/validate-mod
 run "audit-model-registry-coverage（Task 07）" python3 pipeline/scripts/audit-model-registry-coverage.py --output "$SUITE_LOG_DIR/coverage-audit.json"
 run "test_architecture_workflows（AR-05）" python3 -m unittest discover -s tests -p 'test_architecture_workflows.py'
 run "test_architecture_observability（AR-08）" python3 -m unittest discover -s tests -p 'test_architecture_observability.py'
+run "test_standard_inputs（AR-03）" python3 -m unittest discover -s tests -p 'test_standard_inputs.py'
 run "test_workflow_release_contract（incident 2026-09）" python3 -m unittest discover -s tests -p 'test_workflow_release_contract.py'
 run "validate-developer-registry（T07-5.2）" python3 pipeline/scripts/validate-developer-registry.py
 run "test_developer_platform_registry（T07-5.2）" python3 -m unittest discover -s tests -p 'test_developer_platform_registry.py'

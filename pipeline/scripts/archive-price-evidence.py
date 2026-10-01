@@ -35,10 +35,10 @@ from pricing.normalize import normalize_and_validate                 # noqa: E40
 from pricing.registry import all_entries                             # noqa: E402
 from pricing.view_data import fact_to_dict                           # noqa: E402
 
-HISTORY_DIR = BASE / "site" / "src" / "data" / "pricing" / "ledger_history"
+HISTORY_DIR = BASE / "data" / "derived" / "pricing" / "ledger_history"
 SNAPSHOT_DIR = BASE / "data" / "snapshots"
 ARCHIVE_ROOT = BASE / "data"
-SITE_INDEX_DIR = BASE / "site" / "src" / "data"
+SITE_INDEX_DIR = BASE / "data" / "derived" / "archive-indexes"
 
 
 def replay_provider(entry, html: str, fetched_at: float = 0.0):
@@ -323,7 +323,7 @@ def main() -> int:
     ap.add_argument("--snapshot-dir", type=Path, default=SNAPSHOT_DIR)
     ap.add_argument("--archive-root", type=Path, default=ARCHIVE_ROOT)
     ap.add_argument("--index-dir", type=Path, default=SITE_INDEX_DIR,
-                    help="索引输出目录（site/src/data；沙箱测试注入临时目录）")
+                    help="离线索引输出目录（data/derived/archive-indexes；站点由独立 projector 重建）")
     ap.add_argument("--check", action="store_true",
                     help="只校验现有归档，零写入")
     ap.add_argument("--dry-run", action="store_true",

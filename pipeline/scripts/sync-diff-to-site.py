@@ -40,6 +40,8 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent.parent  # repo root
 sys.path.insert(0, str(BASE / "pipeline" / "scripts"))
+sys.path.insert(0, str(BASE / 'pipeline'))
+from data_store import compose_daily, compose_weekly, save_observations, save_weekly, project_site
 from diff_clean import filter_and_pair, humanize_line  # noqa: E402
 from record_archive import (  # noqa: E402
     ArchiveError,
@@ -185,7 +187,7 @@ def main():
 
     # 保留已有 highlights 和 llm_summary（llm-digest.py 产出，按日期幂等）
     try:
-        prev = json.loads(DST_FILE.read_text(encoding="utf-8"))
+        prev = compose_daily(BASE)
         prev_days = {d["date"]: d for d in prev.get("days", [])}
     except (FileNotFoundError, json.JSONDecodeError):
         prev_days = {}
@@ -222,29 +224,21 @@ def main():
         "updated_at": datetime.now().isoformat(timespec="seconds"),
         "days": days,
     }
-    DST_FILE.parent.mkdir(parents=True, exist_ok=True)
-    DST_FILE.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    save_observations(BASE, out)
 
     # 周聚合归档
     weekly = build_weekly(days)
     # 保留已有周度串讲（llm-weekly-digest.py 产出，按周幂等）
     try:
-        prev_w = json.loads(WEEKLY_FILE.read_text(encoding="utf-8"))
+        prev_w = compose_weekly(BASE)
         prev_story = {w["week"]: w.get("story") for w in prev_w if w.get("story")}
     except (FileNotFoundError, json.JSONDecodeError):
         prev_story = {}
     for w in weekly:
         if w["week"] in prev_story:
             w["story"] = prev_story[w["week"]]
-    WEEKLY_FILE.write_text(json.dumps(weekly, ensure_ascii=False, indent=2), encoding="utf-8")
+    save_weekly(BASE, weekly)
 
-    # Task 01：record-index.json（可重建索引；持久源为 data/records 与 revisions）
-    from pathlib import Path as _P
-    RECORDS_ROOT.mkdir(parents=True, exist_ok=True)
-    index = archive_build_index(RECORDS_ROOT)
-    INDEX_FILE = BASE / "site" / "src" / "data" / "record-index.json"
-    INDEX_FILE.write_text(json.dumps(index, ensure_ascii=False, indent=2),
-                          encoding="utf-8")
     # 构建前校验：索引引用必须与归档一致
     from record_archive import validate_archive
     errors = validate_archive(RECORDS_ROOT, REVISIONS_ROOT)
@@ -253,6 +247,8 @@ def main():
         for e in errors[:10]:
             print(f"  - {e}", file=sys.stderr)
         sys.exit(1)
+
+    project_site(BASE)
 
     total_changed = sum(len(d["changed"]) for d in days)
     total_sub = sum(1 for d in days for c in d["changed"] if c["kind"] == "substantive")

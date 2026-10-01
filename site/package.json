@@ -10,7 +10,7 @@
     "build": "node scripts/build-price-fragment.mjs && node scripts/render-price-ledger.mjs && python3 scripts/build-skill-package.py && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "prebuild": "python3 ../pipeline/scripts/validate-archive.py && python3 ../pipeline/scripts/validate-price-archive.py",
+    "prebuild": "python3 ../scripts/generate-public-contract.py --check && python3 ../pipeline/scripts/project-site-data.py && python3 ../pipeline/scripts/validate-archive.py && python3 ../pipeline/scripts/validate-price-archive.py",
     "build:skill": "python3 scripts/build-skill-package.py"
   },
   "dependencies": {

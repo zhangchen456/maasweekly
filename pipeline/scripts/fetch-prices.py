@@ -35,6 +35,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent.parent  # repo root
 sys.path.insert(0, str(BASE_DIR / "pipeline"))
 
+from data_store import PRICING, PRICE_EVENTS, read as read_standard, write as write_standard, project_site
 from pricing import archive as pa                                  # noqa: E402
 from pricing.base import SourceSpec                      # noqa: E402
 from pricing.extractors import get_extractor             # noqa: E402
@@ -46,18 +47,17 @@ from pricing.view_data import DEFAULT_FX, build_view_dataset, fact_to_dict  # no
 from model_identity.projector import ModelIdentityProjector  # noqa: E402
 from model_identity.provider_map import canonicalize_provider_id, UnknownProviderError  # noqa: E402
 
-PRICING_DIR = BASE_DIR / "site" / "src" / "data" / "pricing"
+PRICING_DIR = BASE_DIR / PRICING
 LEDGER_FILE = PRICING_DIR / "ledger.json"
 HISTORY_DIR = PRICING_DIR / "ledger_history"
 SNAPSHOT_DIR = BASE_DIR / "data" / "snapshots"
-DAILY_FILE = BASE_DIR / "site" / "src" / "data" / "daily_changes.json"
 ARCHIVE_ROOT = BASE_DIR / "data"
-SITE_INDEX_DIR = BASE_DIR / "site" / "src" / "data"
 
 DEFAULT_CURRENCY = "CNY"
 
 
 def atomic_write(path: Path, payload: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     os.replace(tmp, path)
@@ -87,14 +87,10 @@ def write_price_changes(today: str, changes: list[dict]) -> None:
     """价格变化事件写入 daily_changes.json 当日 price_changes 数组。"""
     if not changes:
         return
-    data = json.loads(DAILY_FILE.read_text(encoding="utf-8")) if DAILY_FILE.exists() else {"days": []}
-    day = next((d for d in data.get("days", []) if d.get("date") == today), None)
-    if day is None:
-        day = {"date": today, "stats": {}, "changed": [], "first_fetch": False, "failed": []}
-        data["days"].append(day)
-        data["days"].sort(key=lambda d: d.get("date", ""))
-    day["price_changes"] = changes
-    atomic_write(DAILY_FILE, data)
+    events = read_standard(BASE_DIR, PRICE_EVENTS, {})
+    events[today] = changes
+    write_standard(BASE_DIR, PRICE_EVENTS, events)
+
 
 
 def events_from_diff(diff, registry_urls: dict[str, str]) -> tuple[list[dict], list[dict]]:
@@ -359,13 +355,7 @@ async def run(only: list[str] | None, dry_run: bool) -> int:
     current = pa.load_current(current_file)
     _update_current(current, accepted_versions, versions_root, source_states)
     pa.save_current(current_file, current)
-    SITE_INDEX_DIR.mkdir(parents=True, exist_ok=True)
-    (SITE_INDEX_DIR / pa.INDEX_PRICE).write_text(
-        json.dumps(pa.build_price_index(records_root), ensure_ascii=False, indent=2),
-        encoding="utf-8")
-    (SITE_INDEX_DIR / pa.INDEX_EVIDENCE).write_text(
-        json.dumps(pa.build_evidence_index(evidence_root), ensure_ascii=False, indent=2),
-        encoding="utf-8")
+    project_site(BASE_DIR)
 
     print(f"ledger.json 已更新：{len(dataset['prices'])} 条价格 · "
           f"{dataset['providers']} 家" + ("（partial）" if failed else ""))

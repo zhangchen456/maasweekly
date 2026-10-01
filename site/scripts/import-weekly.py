@@ -3,12 +3,15 @@
 import os
 import re
 import shutil
+import sys
 from pathlib import Path
 
 # 以仓库结构为基准，脚本可从任意位置运行
 SITE_DIR = Path(__file__).resolve().parent.parent
 SRC_DIR = SITE_DIR.parent / "data" / "weekly"
-DST_DIR = SITE_DIR / "src" / "content" / "weekly"
+sys.path.insert(0, str(SITE_DIR.parent / 'pipeline'))
+from data_store import EDITORIAL, project_site
+DST_DIR = SITE_DIR.parent / EDITORIAL
 
 DST_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -45,3 +48,5 @@ period: "{period}"
     print(f"  {md_file.name} -> OK")
 
 print(f"\nDone: {count} reports copied to {DST_DIR}")
+
+project_site(SITE_DIR.parent)

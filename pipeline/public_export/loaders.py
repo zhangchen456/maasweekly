@@ -73,7 +73,7 @@ class LoadedInputs:
         self.evidence: dict[str, dict] = {}       # ev_id → ev
         self.current: dict = {}                   # price-facts/current.json
         self.weekly: list[dict] = []              # {id, frontmatter, structured}
-        self.daily_changes: dict = {}             # site/src/data/daily_changes.json
+        self.daily_changes: dict = {}             # standard source streams + independent summaries
         self.source_registry: list[dict] = []
         self.provider_map: dict = {}
 
@@ -139,8 +139,8 @@ def load_all(input_root: Path, provider_map_path: Path) -> LoadedInputs:
     li.current = read_json(_safe_path(root, "data/price-facts/current.json"))
 
     # 正式周报：md frontmatter + structured json 一一对应（门禁）
-    weekly_md_dir = _safe_path(root, "site/src/content/weekly")
-    structured_dir = _safe_path(root, "site/src/content/weekly-structured")
+    weekly_md_dir = _safe_path(root, "data/editorial/weekly")
+    structured_dir = _safe_path(root, "data/derived/weekly-structured")
     for mf in sorted(weekly_md_dir.glob("*.md")):
         wid = mf.stem
         sf = structured_dir / f"{wid}.json"
@@ -156,8 +156,8 @@ def load_all(input_root: Path, provider_map_path: Path) -> LoadedInputs:
         })
 
     # 来源状态流（滚动窗口；窗口外推导为 unknown）
-    li.daily_changes = read_json(
-        _safe_path(root, "site/src/data/daily_changes.json"))
+    from data_store import compose_daily
+    li.daily_changes = compose_daily(root)
     return li
 
 
