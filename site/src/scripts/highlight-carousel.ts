@@ -41,6 +41,8 @@ if (carousel) {
         ], { duration: 620, delay: 120 + i * 75, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'both' });
       });
       const mark = document.querySelector('.opening-mark');
+      const ring = mark?.querySelector('.mark-ring');
+      ring?.animate([{ strokeWidth: 1.2, opacity: .3 }, { strokeWidth: 2.4, opacity: .8, offset: .35 }, { strokeWidth: 1.2, opacity: .3 }], { duration: 850, easing: 'ease-out' });
       mark?.animate([
         { transform: 'translateY(0) scale(1)' },
         { transform: 'translateY(-4px) scale(1.025)', offset: .4 },

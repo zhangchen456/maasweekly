@@ -85,7 +85,7 @@ const priceChanges: any[] = today?.price_changes || [];
 const weekHighlightCount = currentWeek?.highlights?.length || 0;
 ---
 <Layout title="MaaS Daily — 大模型 API 价格与全球 MaaS 每日动态" description="每日追踪大模型发布、API 价格变化与平台更新。查询模型报价、计费条件和官方证据，查看全球 MaaS 平台周报。">
-  <HomeOverview highlights={highlights} platformOrder={platformOrder} date={today?.date} />
+  <HomeOverview highlights={highlights} platformOrder={platformOrder} date={today?.date} updatedAt={data.updated_at} />
   <div class="more-heading"><div><p class="home-kicker">继续了解</p><h2>更多平台动态</h2></div><div class="edition"><time datetime={today?.date}>{dateLong || '等待更新'}</time><button id="copy-brief" type="button">复制简报 ↗</button><span id="copy-status" role="status"></span></div></div>
   <div class="explore-bar" aria-label="动态筛选">
     <label class="search-field"><span aria-hidden="true">⌕</span><input id="signal-search" type="search" placeholder="搜索平台、模型或关键词…" aria-label="搜索今日要点与信号"/><kbd>/</kbd></label>

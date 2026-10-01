@@ -5,7 +5,8 @@ import BrandMark from './BrandMark.astro';
 import ledger from '../data/pricing/ledger.json';
 const fxRate = Number(ledger.fx_snapshot.rates.CNY);
 const displayAmount = (p:any) => p && ['USD','CNY'].includes(p.currency) ? new Intl.NumberFormat('zh-CN',{maximumSignificantDigits:6}).format(Number(p.amount) * (p.currency === 'USD' ? fxRate : 1)) : p?.amount ?? '—';
-const { highlights, platformOrder, date } = Astro.props;
+const { highlights, platformOrder, date, updatedAt } = Astro.props;
+const updateLabel = updatedAt?.replace('T', ' ').slice(0, 16);
 const labels: Record<string,string> = {sunset:'服务下线',pricing:'价格变化',release:'新模型发布',other:'平台更新'};
 const all = highlights.flatMap((h:any) => h.items.map((item:any) => ({...item,platform:h.platform,headline:h.logo_summary})));
 const picks:any[] = [];
@@ -36,7 +37,7 @@ const release=modelRelease();
     {picks.length > 1 && <div class="carousel-controls"><button type="button" data-carousel-prev aria-label="上一条重点">←</button><div class="carousel-pages" role="group" aria-label="选择重点">{picks.map((item:any,index:number)=><button type="button" data-carousel-page={index} aria-pressed={index === 0 ? 'true' : 'false'} aria-label={`第 ${index+1} 条：${item.headline}`}>{String(index+1).padStart(2,'0')}</button>)}</div><button type="button" data-carousel-next aria-label="下一条重点">→</button><span class="carousel-status" aria-live="polite">1 / {picks.length}</span></div>}
     <div class="opening-meta"><time datetime={date}>{date?.replaceAll('-','.') ?? '等待更新'}</time><span>官方来源追踪 · AI 摘要</span><a href="#digest">全部动态 ↗</a></div>
   </div>
-  <div class="opening-brand"><div class="opening-mark"><BrandMark /></div><span class="opening-wordmark">MaaS Daily</span><span class="opening-brand-caption">模型 × 平台 × 价格</span></div>
+  <div class="opening-brand"><div class="opening-mark"><BrandMark /></div><span class="opening-wordmark">MaaS Daily</span>{updatedAt && <div class="brand-update"><span>最近更新</span><time datetime={updatedAt}>{updateLabel}</time></div>}</div>
 </header>
 <section class="market-section" aria-labelledby="market-title">
   <div class="market-heading"><div><p class="home-kicker">当前价格一览</p><h2 id="market-title">几个重点模型，现在怎么收费？</h2></div><a href="/models/">全部模型 ↗</a></div>
