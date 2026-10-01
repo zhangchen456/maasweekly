@@ -21,10 +21,15 @@ const PORT = parseInt(process.env.PORT ?? '8787', 10);
 const HOST = process.env.HOST ?? '127.0.0.1';
 const DATA_ROOT = process.env.PUBLIC_DATA_ROOT
   ?? path.join(repoRoot, 'data', 'public', 'v1');
-const RELOAD_MS = parseInt(process.env.RELOAD_INTERVAL_MS ?? '30000', 10);
+const RELOAD_MS = parseInt(process.env.RELOAD_INTERVAL_MS ?? (process.env.MAAS_RELEASE_DIR ? '0' : '30000'), 10);
+if (!Number.isSafeInteger(RELOAD_MS) || RELOAD_MS < 0) throw new Error('invalid RELOAD_INTERVAL_MS');
+const TRUST_PROXY = process.env.MAAS_TRUST_LOOPBACK_PROXY === '1';
 
 const config: ServerConfig = {
   rateLimit: {
+    trustLoopbackProxy: TRUST_PROXY,
+    globalCapacity: parseInt(process.env.RATE_GLOBAL_CAPACITY ?? '6000', 10),
+    globalRefillPerMinute: parseInt(process.env.RATE_GLOBAL_REFILL_PER_MIN ?? '3000', 10),
     capacity: parseInt(process.env.RATE_CAPACITY ?? '60', 10),
     refillPerMinute: parseInt(process.env.RATE_REFILL_PER_MIN ?? '30', 10),
   },
@@ -36,6 +41,9 @@ const mcpConfig = {
     ?? DEFAULT_MCP_CONFIG.originAllowlist.join(',')).split(',').map((s) => s.trim()).filter(Boolean),
   maxBodyBytes: parseInt(process.env.MCP_MAX_BODY_BYTES ?? String(DEFAULT_MCP_CONFIG.maxBodyBytes), 10),
   rateLimit: {
+    trustLoopbackProxy: TRUST_PROXY,
+    globalCapacity: parseInt(process.env.MCP_RATE_GLOBAL_CAPACITY ?? '3000', 10),
+    globalRefillPerMinute: parseInt(process.env.MCP_RATE_GLOBAL_REFILL_PER_MIN ?? '3000', 10),
     capacity: parseInt(process.env.MCP_RATE_CAPACITY ?? '30', 10),
     refillPerMinute: parseInt(process.env.MCP_RATE_REFILL_PER_MIN ?? '30', 10),
   },
@@ -46,8 +54,11 @@ const mcpConfig = {
 import { setCursorSecret } from './query.js';
 setCursorSecret(process.env.CURSOR_SECRET ?? randomUUID());
 
-const holder = new DatasetHolder(DATA_ROOT);
-if (holder.reload()) {
+const holder = new DatasetHolder(DATA_ROOT, {
+  maxRetainedVersions: parseInt(process.env.RETAINED_DATASET_MAX_VERSIONS ?? '2', 10),
+  maxRetainedBytes: parseInt(process.env.RETAINED_DATASET_MAX_BYTES ?? String(128 * 1024 * 1024), 10),
+});
+if (await holder.reloadAsync() === 'changed') {
   console.log(`[agent-api] 已加载数据版本 ${holder.current?.version}`);
 } else {
   console.warn(`[agent-api] 无有效数据版本（${holder.lastReloadError}），数据路由将 503`);
@@ -67,30 +78,32 @@ const server = http.createServer((req, res) => {
 });
 server.listen(PORT, HOST, () => {
   console.log(`[agent-api] http://${HOST}:${PORT}/api/v1/ （数据根: ${DATA_ROOT}）`);
-console.log(`[agent-api] MCP: POST http://${HOST}:${PORT}/api/mcp（Origin 白名单: ${mcpConfig.originAllowlist.join(', ') || '（无）'}）`);
+  console.log(`[agent-api] MCP: POST http://${HOST}:${PORT}/api/mcp（Origin 白名单: ${mcpConfig.originAllowlist.join(', ') || '（无）'}）`);
 });
 
 let timer: NodeJS.Timeout | undefined;
 if (RELOAD_MS > 0) {
-  timer = setInterval(() => {
-    if (holder.reload()) {
+  timer = setInterval(async () => {
+    if (await holder.reloadAsync() === 'changed') {
       console.log(`[agent-api] 热重载 → ${holder.current?.version}`);
     }
   }, RELOAD_MS);
   timer.unref?.();
 }
 
-process.on('SIGHUP', () => {
-  if (holder.reload()) {
+process.on('SIGHUP', async () => {
+  const result = await holder.reloadAsync({ force: true });
+  if (result === 'changed') {
     console.log(`[agent-api] SIGHUP 重载 → ${holder.current?.version}`);
-  } else {
+  } else if (result === 'failed') {
     console.warn(`[agent-api] SIGHUP 重载失败（继续服务旧版）: ${holder.lastReloadError}`);
   }
 });
 
 const shutdown = () => {
   console.log('[agent-api] 关闭');
-  timer?.unref?.();
+  if (timer) clearInterval(timer);
+  holder.close();
   server.close(() => process.exit(0));
   setTimeout(() => process.exit(0), 3000).unref?.();
 };

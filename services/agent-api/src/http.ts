@@ -6,13 +6,15 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createHash, randomUUID } from 'node:crypto';
 import type { Dataset, DatasetHolder } from './dataset.js';
 import {
-  getItem, getEvidence, getWeekly, normalizeQuery, runListQuery,
+  getItem, getEvidence, getWeekly, normalizeQuery, runListQueryAsync,
   type Endpoint, Problem,
 } from './query.js';
 
 export interface ServerConfig {
-  rateLimit: { capacity: number; refillPerMinute: number };
+  rateLimit: RateLimitConfig;
 }
+
+import { ClientRateLimiter, type RateLimitConfig } from './rate-limit.js';
 
 import { PUBLIC_BASE_URL } from './public-consts.js';
 const BASE_URL = PUBLIC_BASE_URL;
@@ -52,29 +54,7 @@ export const ROUTES: RouteMeta[] = [
 // 限流（进程内令牌桶，匿名共享；Task 06 再决定 nginx 层）
 // ---------------------------------------------------------------------------
 
-export class TokenBucket {
-  #tokens: number;
-  #last = Date.now();
-  constructor(private capacity: number, private refillPerMin: number) {
-    this.#tokens = capacity;
-  }
-  take(): boolean {
-    const now = Date.now();
-    this.#tokens = Math.min(
-      this.capacity,
-      this.#tokens + ((now - this.#last) / 60000) * this.refillPerMin,
-    );
-    this.#last = now;
-    if (this.#tokens >= 1) {
-      this.#tokens -= 1;
-      return true;
-    }
-    return false;
-  }
-  retryAfterSeconds(): number {
-    return Math.ceil((1 - this.#tokens) / (this.refillPerMin / 60));
-  }
-}
+export { TokenBucket } from './rate-limit.js';
 
 // ---------------------------------------------------------------------------
 // Problem JSON
@@ -165,7 +145,7 @@ function envelope(ds: Dataset, query: Record<string, unknown>, coverage: Record<
 // ---------------------------------------------------------------------------
 
 export function createHandler(holder: DatasetHolder, config: ServerConfig) {
-  const bucket = new TokenBucket(config.rateLimit.capacity, config.rateLimit.refillPerMinute);
+  const limiter = new ClientRateLimiter(config.rateLimit);
   return async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> {
     const requestId = randomUUID();
     // CORS（匿名，无 credentials）
@@ -196,8 +176,9 @@ export function createHandler(holder: DatasetHolder, config: ServerConfig) {
     }
 
     // 限流（OPTIONS 外的所有请求）
-    if (!bucket.take()) {
-      const retry = bucket.retryAfterSeconds();
+    const allowance = limiter.take(req);
+    if (!allowance.allowed) {
+      const retry = allowance.retryAfterSeconds;
       res.setHeader('Retry-After', String(Math.max(retry, 1)));
       problem(res, requestId, {
         type: '', title: 'Too many requests', status: 429,
@@ -244,12 +225,12 @@ export function createHandler(holder: DatasetHolder, config: ServerConfig) {
         }
         switch (rest[0]) {
           case 'changes':
-            return handleList(req, res, requestId, ds!, 'changes', url, holder);
+            return await handleList(req, res, requestId, ds!, 'changes', url, holder);
           case 'prices':
-            return handleList(req, res, requestId, ds!, 'prices', url, holder);
+            return await handleList(req, res, requestId, ds!, 'prices', url, holder);
           case 'weekly':
             if (rest.length === 1) {
-              return handleList(req, res, requestId, ds!, 'weekly', url, holder);
+              return await handleList(req, res, requestId, ds!, 'weekly', url, holder);
             }
             if (rest.length === 2) {
               const w = getWeekly(ds!, rest[1]!);
@@ -327,13 +308,13 @@ export function createHandler(holder: DatasetHolder, config: ServerConfig) {
   };
 }
 
-function handleList(
+async function handleList(
   req: IncomingMessage, res: ServerResponse, requestId: string,
   ds: Dataset, endpoint: Endpoint, url: URL, holder: DatasetHolder,
-): void {
+): Promise<void> {
   // 统一列表查询入口（Task 04 D2：与 MCP 共用 runListQuery——
   // normalizeQuery → cursor 解码/版本固定/恢复重验 → list 全流程单点）
-  const { result, problem: p } = runListQuery(holder, endpoint, url.searchParams);
+  const { result, problem: p } = await runListQueryAsync(holder, endpoint, url.searchParams);
   if (p) { problem(res, requestId, p); return; }
   const { ds: activeDs, nq: query, page } = result!;
   sendJson(req, res, requestId, 200, {

@@ -121,7 +121,7 @@ Decimal 字符串（如 `"1.500000"`），禁止浮点。原币种（USD/CNY）�
   - 404 not_found（未知实体/路径；无通配读取）
   - 409 dataset_version_expired
   - 413 request_too_large（URL/超长 cursor）
-  - 429 rate_limited（带 Retry-After；进程内令牌桶，匿名共享）
+  - 429 rate_limited（带 Retry-After；进程内每 IP 令牌桶 + 独立全局保护；生产代理配置需同步启用）
   - 503 no_data_available（无有效 release；status 端点仍可用）
 - 错误响应 `Cache-Control: no-store`。
 
@@ -162,3 +162,12 @@ python3 pipeline/scripts/export-public-data.py --check  # 校验
 cd services/agent-api && npm run build && npm start     # 127.0.0.1:8787
 curl http://127.0.0.1:8787/api/v1/status
 ```
+
+
+### AR-02 运行时候选（尚未发布）
+
+REST 每 IP 突发 60、每分钟补充 30；MCP 独立为 30/30。全局保护分别为 6000/3000 和 3000/3000。NAT 用户共用公网 IP。每类服务最多 10000 个客户端桶，闲置 5 分钟淘汰；达到上限的新客户端使用有界共享溢出桶。配额是单进程保护，多实例不承诺跨实例精确额度。
+
+默认只使用 socket peer。只有显式 `MAAS_TRUST_LOOPBACK_PROXY=1` 且来源为 loopback，才使用合法单个 `X-Maas-Client-IP`。必须先审核安装覆盖该头的 Nginx 配置生成器；所有其他转发头不作为身份。Nginx 自身 429 返回 Problem JSON、Retry-After: 2、CORS 和 no-store；应用的 429 保留自身准确等待时间。现网代理链验证待发布窗口执行。
+
+不可变 release 槽位关闭周期轮询；本地可变数据根默认 30 秒，未变版本只读 manifest。SIGHUP 强制校验全部业务文件，失败保留 current。历史缓存默认 2 个版本/128 MiB 原始文件字节预算（不是 RSS 上限），淘汰后保留期内游标仍可从磁盘验证加载。当前版不参与淘汰。

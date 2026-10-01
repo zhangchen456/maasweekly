@@ -1,0 +1,628 @@
+{
+  "measuredAt": "2026-10-01T16:02:50.905Z",
+  "sourceSha256": {
+    "scripts/architecture-benchmark.mjs": "066087b09cfa6c924d0058a8045c11ce09cf2613b40f1800a0c5374b8d6e9913",
+    "services/agent-api/src/country.ts": "d81ee488ae8ac899f9265349c3365e9fa1b8646291207c46fa737da968156a3a",
+    "services/agent-api/src/dataset-loader.ts": "81c25dd35117cd89b4fdead32d06afe595afe0175794ef028506a4ab97c69b79",
+    "services/agent-api/src/dataset-worker.ts": "ab4ec2a9c18e146045f3a070259ea783261730a5b13a5355a6f989a1eb8aa574",
+    "services/agent-api/src/dataset.ts": "11be0d79144c6106c0edf27dffcfe4e5c482fa4eb232e860688f6194c42b03a6",
+    "services/agent-api/src/http.ts": "eeb2a500231d3d88b443ef8363be08ac88e50ea9de386370c6543ca7cfa98dfd",
+    "services/agent-api/src/mcp-tools.ts": "bc4fce53a666f3825b3b7edc4ec67a3934a69ec6f753de5eb59638d9b4e51e55",
+    "services/agent-api/src/mcp.ts": "85bdad01b9ab8d2e9eb7b8508a6a319ae2ef9b298b51d6585f4e38b3de555cd1",
+    "services/agent-api/src/public-consts.ts": "aa227fa136d62de6b486417a9af27e51a8e7641517aa94b068d32d2ccf3ea79e",
+    "services/agent-api/src/query.ts": "3962c9656dd1d6150e082e1820a9699c43452c18be53f2926e74d35f5cea4652",
+    "services/agent-api/src/rate-limit.ts": "e7d48db06ddfdf055c4726a0cc2777fca9fc4cefb93ead8f26a6bc859f4d2781",
+    "services/agent-api/src/server.ts": "ae6deb122c47813c4625a2980a716bf81d561aeed65fe48bc535720bb84d24ff"
+  },
+  "commit": "431a8f0f2616b8c3bdb8516d8d02d23be556a45b",
+  "environment": {
+    "node": "v22.22.3",
+    "os": "darwin 27.0.0",
+    "arch": "arm64",
+    "cpus": 10,
+    "cpu": "Apple M1 Max",
+    "totalMemory": 34359738368
+  },
+  "method": {
+    "rounds": 3,
+    "requestsPerRound": 60,
+    "syntheticSeed": "ar-capacity-v1",
+    "scope": "local HTTP; 5x/10x unique remapped IDs; unchanged model catalog; no production traffic"
+  },
+  "budgets": {
+    "concurrency": 10,
+    "queryP95Ms": 200,
+    "eventLoopP99Ms": 50,
+    "sameVersionBusinessParses": 0
+  },
+  "results": [
+    {
+      "factor": 1,
+      "synthetic": false,
+      "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+      "dataThrough": "2026-10-01",
+      "counts": {
+        "changes": 7459,
+        "prices": 1435,
+        "evidence": 11651
+      },
+      "loader": "worker-stream-200",
+      "holderMetrics": {
+        "businessLoads": 3,
+        "unchangedPolls": 1,
+        "cacheHits": 0,
+        "cacheMisses": 1
+      },
+      "cacheState": {
+        "entries": 1,
+        "bytes": 49580880,
+        "inFlight": 0
+      },
+      "load": {
+        "medianMs": 414.622667,
+        "minMs": 383.000083,
+        "maxMs": 538.76975
+      },
+      "sameVersionReload": {
+        "medianMs": 0.16720900000001393,
+        "minMs": 0.14091700000005858,
+        "maxMs": 0.34162500000002183
+      },
+      "reloadEventLoop": {
+        "elapsedMs": 400.02204200000006,
+        "maxMs": 12.500991
+      },
+      "reloadTraffic": {
+        "requests": 33,
+        "p95Ms": 2.0197910000001684,
+        "p99Ms": 3.3318340000000717,
+        "allSuccessful": true
+      },
+      "historicalLoad": {
+        "version": "ds_1925cbc6adaf0abb87106064c314e7b3d3bc513de2635b5e0aa2cf5bb5147207",
+        "elapsedMs": 387.7941249999999
+      },
+      "throughput": [
+        {
+          "concurrency": 1,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 72.85195799999997,
+              "p50Ms": 0.6908750000000055,
+              "p95Ms": 1.7492500000000746,
+              "p99Ms": 2.8262919999999667,
+              "eventLoopP99Ms": 12.206079
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 62.666375000000016,
+              "p50Ms": 0.6167500000001382,
+              "p95Ms": 1.2352500000001783,
+              "p99Ms": 2.2789999999999964,
+              "eventLoopP99Ms": 12.304383
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 60.22062499999993,
+              "p50Ms": 0.5614169999998921,
+              "p95Ms": 1.2641249999999218,
+              "p99Ms": 1.7374579999998332,
+              "eventLoopP99Ms": 11.755519
+            }
+          ]
+        },
+        {
+          "concurrency": 10,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 62.4744589999998,
+              "p50Ms": 5.72241699999995,
+              "p95Ms": 15.483417000000145,
+              "p99Ms": 19.170791999999892,
+              "eventLoopP99Ms": 12.926975
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 52.97204099999999,
+              "p50Ms": 4.920374999999922,
+              "p95Ms": 6.831792000000178,
+              "p99Ms": 12.18054200000006,
+              "eventLoopP99Ms": 12.025855
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 54.18208400000003,
+              "p50Ms": 5.119374999999991,
+              "p95Ms": 6.337958999999955,
+              "p99Ms": 6.838457999999946,
+              "eventLoopP99Ms": 12.328959
+            }
+          ]
+        },
+        {
+          "concurrency": 30,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 57.36679200000003,
+              "p50Ms": 13.394958999999972,
+              "p95Ms": 23.904207999999926,
+              "p99Ms": 25.196166999999832,
+              "eventLoopP99Ms": 12.230655
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 56.59416699999997,
+              "p50Ms": 14.18466699999999,
+              "p95Ms": 17.587749999999915,
+              "p99Ms": 18.18745799999988,
+              "eventLoopP99Ms": 14.499839
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 53.29662499999995,
+              "p50Ms": 15.407625000000053,
+              "p95Ms": 16.37854100000004,
+              "p99Ms": 16.543542000000116,
+              "eventLoopP99Ms": 16.179199
+            }
+          ]
+        }
+      ],
+      "paging": {
+        "changes": {
+          "pages": 75,
+          "items": 7459,
+          "elapsedMs": 14.204499999999825,
+          "duplicateOrMissing": false
+        },
+        "prices": {
+          "pages": 15,
+          "items": 1435,
+          "elapsedMs": 1.3597920000001977,
+          "duplicateOrMissing": false
+        }
+      },
+      "limiterStatuses": [
+        200,
+        200,
+        429
+      ],
+      "steadyMemory": {
+        "rss": 270286848,
+        "heapTotal": 120930304,
+        "heapUsed": 67584592,
+        "external": 3683949,
+        "arrayBuffers": 67958
+      },
+      "finalMemory": {
+        "rss": 433586176,
+        "heapTotal": 279248896,
+        "heapUsed": 252935720,
+        "external": 3924944,
+        "arrayBuffers": 218285
+      }
+    },
+    {
+      "sourceVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+      "seed": "ar-capacity-v1",
+      "factor": 5,
+      "synthetic": true,
+      "identityCatalogExpanded": false,
+      "datasetVersion": "ds_85497c4e19fe1573b0f253f0985acdaa6203bd7189192a38a36904e005be2bd6",
+      "dataThrough": "2026-10-01",
+      "counts": {
+        "changes": 37295,
+        "prices": 7175,
+        "evidence": 58255
+      },
+      "loader": "worker-stream-200",
+      "holderMetrics": {
+        "businessLoads": 2,
+        "unchangedPolls": 1,
+        "cacheHits": 0,
+        "cacheMisses": 0
+      },
+      "cacheState": {
+        "entries": 0,
+        "bytes": 0,
+        "inFlight": 0
+      },
+      "load": {
+        "medianMs": 1775.3876669999995,
+        "minMs": 1767.6726659999995,
+        "maxMs": 1780.758084
+      },
+      "sameVersionReload": {
+        "medianMs": 0.15174999999999272,
+        "minMs": 0.1272079999998823,
+        "maxMs": 0.30495799999880546
+      },
+      "reloadEventLoop": {
+        "elapsedMs": 1843.2642500000002,
+        "maxMs": 15.351807
+      },
+      "reloadTraffic": {
+        "requests": 153,
+        "p95Ms": 2.076166999999259,
+        "p99Ms": 3.809584000000541,
+        "allSuccessful": true
+      },
+      "historicalLoad": null,
+      "throughput": [
+        {
+          "concurrency": 1,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 87.33745799999997,
+              "p50Ms": 0.9247919999997976,
+              "p95Ms": 3.3248750000002474,
+              "p99Ms": 3.582624999999098,
+              "eventLoopP99Ms": 12.025855
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 80.43912500000079,
+              "p50Ms": 0.9074169999985315,
+              "p95Ms": 2.1872910000001866,
+              "p99Ms": 3.3840000000000146,
+              "eventLoopP99Ms": 11.116543
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 77.62333300000137,
+              "p50Ms": 0.9168749999989814,
+              "p95Ms": 2.278250000001208,
+              "p99Ms": 3.373666999999841,
+              "eventLoopP99Ms": 12.025855
+            }
+          ]
+        },
+        {
+          "concurrency": 10,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 76.18058299999939,
+              "p50Ms": 7.835499999999229,
+              "p95Ms": 18.763833000000886,
+              "p99Ms": 23.99474999999984,
+              "eventLoopP99Ms": 15.048703
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 71.12933399999929,
+              "p50Ms": 7.590916999999536,
+              "p95Ms": 9.452542000000903,
+              "p99Ms": 14.973207999999431,
+              "eventLoopP99Ms": 13.574143
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 71.39520900000025,
+              "p50Ms": 7.387000000000626,
+              "p95Ms": 8.823458000000755,
+              "p99Ms": 16.811040999999022,
+              "eventLoopP99Ms": 12.181503
+            }
+          ]
+        },
+        {
+          "concurrency": 30,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 76.15191700000105,
+              "p50Ms": 16.504499999999098,
+              "p95Ms": 36.381500000001324,
+              "p99Ms": 36.83137499999975,
+              "eventLoopP99Ms": 12.173311
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 69.81679200000144,
+              "p50Ms": 20.053750000000946,
+              "p95Ms": 23.80225000000064,
+              "p99Ms": 24.118749999999636,
+              "eventLoopP99Ms": 17.629183
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 68.7807499999999,
+              "p50Ms": 22.550708999999188,
+              "p95Ms": 23.612542000000758,
+              "p99Ms": 23.7679590000007,
+              "eventLoopP99Ms": 23.805951
+            }
+          ]
+        }
+      ],
+      "paging": {
+        "changes": {
+          "pages": 373,
+          "items": 37295,
+          "elapsedMs": 70.4085840000007,
+          "duplicateOrMissing": false
+        },
+        "prices": {
+          "pages": 72,
+          "items": 7175,
+          "elapsedMs": 5.1439160000009,
+          "duplicateOrMissing": false
+        }
+      },
+      "limiterStatuses": [
+        200,
+        200,
+        429
+      ],
+      "steadyMemory": {
+        "rss": 1245200384,
+        "heapTotal": 408272896,
+        "heapUsed": 305854904,
+        "external": 3684460,
+        "arrayBuffers": 76150
+      },
+      "finalMemory": {
+        "rss": 1911504896,
+        "heapTotal": 974848000,
+        "heapUsed": 934952704,
+        "external": 8892681,
+        "arrayBuffers": 5190441
+      }
+    },
+    {
+      "sourceVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+      "seed": "ar-capacity-v1",
+      "factor": 10,
+      "synthetic": true,
+      "identityCatalogExpanded": false,
+      "datasetVersion": "ds_2c9ab9917b0790dd58b036d99283e75180e6ace63a427ae7bb6c5c4febe71918",
+      "dataThrough": "2026-10-01",
+      "counts": {
+        "changes": 74590,
+        "prices": 14350,
+        "evidence": 116510
+      },
+      "loader": "worker-stream-200",
+      "holderMetrics": {
+        "businessLoads": 2,
+        "unchangedPolls": 1,
+        "cacheHits": 0,
+        "cacheMisses": 0
+      },
+      "cacheState": {
+        "entries": 0,
+        "bytes": 0,
+        "inFlight": 0
+      },
+      "load": {
+        "medianMs": 3911.1658750000006,
+        "minMs": 3764.0834170000016,
+        "maxMs": 3961.298333999999
+      },
+      "sameVersionReload": {
+        "medianMs": 0.14566600000034668,
+        "minMs": 0.13016699999934644,
+        "maxMs": 0.30525000000125146
+      },
+      "reloadEventLoop": {
+        "elapsedMs": 4009.7287499999984,
+        "maxMs": 14.655487
+      },
+      "reloadTraffic": {
+        "requests": 332,
+        "p95Ms": 2.043707999997423,
+        "p99Ms": 4.566957999999431,
+        "allSuccessful": true
+      },
+      "historicalLoad": null,
+      "throughput": [
+        {
+          "concurrency": 1,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 97.16970899999797,
+              "p50Ms": 0.7003750000003492,
+              "p95Ms": 4.300041999998939,
+              "p99Ms": 5.985166000002209,
+              "eventLoopP99Ms": 12.034047
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 90.43504100000064,
+              "p50Ms": 0.6126249999979336,
+              "p95Ms": 3.9596659999988333,
+              "p99Ms": 5.745416000001569,
+              "eventLoopP99Ms": 14.196735
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 89.79429200000232,
+              "p50Ms": 0.6428749999977299,
+              "p95Ms": 4.004250000001775,
+              "p99Ms": 5.5960419999973965,
+              "eventLoopP99Ms": 13.623295
+            }
+          ]
+        },
+        {
+          "concurrency": 10,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 88.78616699999839,
+              "p50Ms": 9.061582999998791,
+              "p95Ms": 24.058208999998897,
+              "p99Ms": 30.31304199999795,
+              "eventLoopP99Ms": 16.318463
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 85.0812079999996,
+              "p50Ms": 10.37554199999795,
+              "p95Ms": 11.75433300000077,
+              "p99Ms": 21.91820799999914,
+              "eventLoopP99Ms": 14.983167
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 83.82212500000242,
+              "p50Ms": 9.653791000000638,
+              "p95Ms": 13.232749999999214,
+              "p99Ms": 13.30858299999818,
+              "eventLoopP99Ms": 15.982591
+            }
+          ]
+        },
+        {
+          "concurrency": 30,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 86.19591700000092,
+              "p50Ms": 20.396249999997963,
+              "p95Ms": 44.37133299999914,
+              "p99Ms": 47.32283400000233,
+              "eventLoopP99Ms": 12.025855
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 84.01641600000221,
+              "p50Ms": 26.254500000002736,
+              "p95Ms": 29.31120799999917,
+              "p99Ms": 31.42029200000252,
+              "eventLoopP99Ms": 19.922943
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 80.38279200000034,
+              "p50Ms": 28.79570899999817,
+              "p95Ms": 29.733500000002095,
+              "p99Ms": 30.025249999998778,
+              "eventLoopP99Ms": 29.753343
+            }
+          ]
+        }
+      ],
+      "paging": {
+        "changes": {
+          "pages": 746,
+          "items": 74590,
+          "elapsedMs": 138.9138329999987,
+          "duplicateOrMissing": false
+        },
+        "prices": {
+          "pages": 144,
+          "items": 14350,
+          "elapsedMs": 10.448374999999942,
+          "duplicateOrMissing": false
+        }
+      },
+      "limiterStatuses": [
+        200,
+        200,
+        429
+      ],
+      "steadyMemory": {
+        "rss": 1792802816,
+        "heapTotal": 651034624,
+        "heapUsed": 604880712,
+        "external": 3684468,
+        "arrayBuffers": 76150
+      },
+      "finalMemory": {
+        "rss": 3010084864,
+        "heapTotal": 1909440512,
+        "heapUsed": 1849968904,
+        "external": 19182317,
+        "arrayBuffers": 15480077
+      }
+    }
+  ]
+}

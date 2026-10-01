@@ -81,3 +81,5 @@ Skill 包 references/errors.md）。服务无有效数据时返回工具错误�
 `MCP_ALLOWED_ORIGINS`（逗号分隔）、`MCP_MAX_BODY_BYTES`（默认 262144）、
 `MCP_RATE_CAPACITY`/`MCP_RATE_REFILL_PER_MIN`（默认 30/30）、
 `CURSOR_SECRET`（多实例共享；默认进程内随机）。
+
+AR-02 运行时候选（未发布）：MCP 每 IP 30 次突发、每分钟补充 30，与 REST 桶和全局保护分离。受控代理、桶上限/TTL、溢出桶与发布前提见 [公开 API 合同](public-api-v1.md#ar-02-运行时候选尚未发布)。工具通过同一异步查询入口固定历史版本。

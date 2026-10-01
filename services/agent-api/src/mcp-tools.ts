@@ -15,7 +15,7 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { Dataset, DatasetHolder } from './dataset.js';
 import { SCHEMA_VERSION } from './dataset.js';
 import {
-  MCP_LIMITS, getItem, getEvidence, getWeekly, runListQuery,
+  MCP_LIMITS, getItem, getEvidence, getWeekly, runListQueryAsync,
   type Endpoint, type Page,
 } from './query.js';
 import { PUBLIC_BASE_URL } from './public-consts.js';
@@ -145,11 +145,11 @@ export async function callMaasTool(
   try {
     switch (name) {
       case 'maas_get_changes':
-        return listOutcome(holder, 'changes', args);
+        return await listOutcome(holder, 'changes', args);
       case 'maas_get_prices':
-        return listOutcome(holder, 'prices', args);
+        return await listOutcome(holder, 'prices', args);
       case 'maas_get_weekly':
-        return weeklyOutcome(holder, args);
+        return await weeklyOutcome(holder, args);
       case 'maas_get_item': {
         const item = getItem(ds, String(args.id ?? ''));
         if (!item) return notFoundOutcome('条目', String(args.id ?? ''));
@@ -191,11 +191,11 @@ function itemEnvelope(ds: Dataset, item: unknown): Record<string, unknown> {
   return { ...envelopeOf(ds, { id: (item as { id: string }).id }), item };
 }
 
-function listOutcome(
+async function listOutcome(
   holder: DatasetHolder, endpoint: Exclude<Endpoint, 'weekly'>,
   args: Record<string, unknown>,
-): ToolOutcome {
-  const { result, problem } = runListQuery(holder, endpoint, argsToParams(args), MCP_LIMITS);
+): Promise<ToolOutcome> {
+  const { result, problem } = await runListQueryAsync(holder, endpoint, argsToParams(args), MCP_LIMITS);
   if (problem) return errorOutcome(problem.code, problem.detail, problem.recovery);
   const { ds, nq, page } = result!;
   const structured = {
@@ -209,7 +209,7 @@ function listOutcome(
   return ok(structured, text);
 }
 
-function weeklyOutcome(holder: DatasetHolder, args: Record<string, unknown>): ToolOutcome {
+async function weeklyOutcome(holder: DatasetHolder, args: Record<string, unknown>): Promise<ToolOutcome> {
   const ds = holder.current!;
   if (args.id !== undefined && args.id !== null && String(args.id)) {
     const w = getWeekly(ds, String(args.id));
@@ -217,7 +217,7 @@ function weeklyOutcome(holder: DatasetHolder, args: Record<string, unknown>): To
     return ok(itemEnvelope(ds, w), `${header(ds)}\n${renderCoverage(ds)}\n${renderWeeklyItem(w)}`);
   }
   if (args.limit !== undefined || args.cursor !== undefined) {
-    const { result, problem } = runListQuery(holder, 'weekly', argsToParams(args), MCP_LIMITS);
+    const { result, problem } = await runListQueryAsync(holder, 'weekly', argsToParams(args), MCP_LIMITS);
     if (problem) return errorOutcome(problem.code, problem.detail, problem.recovery);
     const { ds: wds, nq, page } = result!;
     const structured = {
