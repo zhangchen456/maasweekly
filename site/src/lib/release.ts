@@ -14,44 +14,16 @@
  * 4. 文件存在 + bytes + SHA-256 与清单一致后才能 JSON.parse。
  * 错误信息只含相对路径与规则名，不泄露本机绝对路径或恶意原文。
  */
-import { createHash } from 'node:crypto';
 import { readFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 
-export interface ChangeRecord {
-  id: string;
-  revision: number;
-  status: 'active' | 'withdrawn';
-  recordType: 'source_observation' | 'price_change';
-  providerId: string | null;
-  observedAt: string | null;
-  observationDate: string;
-  timePrecision: 'date' | 'datetime';
-  title: string;
-  summary: string | null;
-  summaryOrigin: 'rule' | 'llm' | 'manual' | null;
-  changeType: string;
-  /** T07-3：可选 model identity（unresolved/pointer/source_observation 不写——零伪造） */
-  modelId?: string;
-  modelName?: string;
-  familyId?: string;
-  familyName?: string;
-  price?: {
-    model: string; component: string; currency: string;
-    beforeAmount: string | null; afterAmount: string | null;
-    unitQuantity: number; unitName: string;
-  } | null;
-  links: { permalink: string };
-}
-
-export interface WeeklyRecord {
-  id: string;
-  title: string;
-  date: string;
-  period: string | null;
-  url: string;
-  headline: unknown[];
-}
+import { validateManifest, validateIdentityCatalog, validateCollections } from './public-contract/validation.ts';
+import { readVerified } from './public-contract/node-reader.ts';
+import type { Manifest, ChangeEntity, ItemEntity, PriceEntity, EvidenceEntity, WeeklyEntity, StatusEntity } from './public-contract/entities.ts';
+export type ChangeRecord = ChangeEntity;
+export type WeeklyRecord = WeeklyEntity;
+export type PriceRecord = PriceEntity;
+export type EvidenceRecord = EvidenceEntity;
 
 export interface ReleaseManifest {
   schemaVersion: string;
@@ -78,26 +50,6 @@ export interface PublicRelease {
   modelIdentities?: { models: { modelId: string; modelName: string; familyId?: string; familyName?: string }[]; families: { familyId: string; familyName: string }[] };
 }
 
-/** Public prices retain original decimal strings, units and every billing condition. */
-export interface PriceRecord {
-  id: string; factKey: string; providerId: string; sourceId: string;
-  modelKey: string; modelId?: string; modelName?: string;
-  component: string; amount: string; currency: string;
-  unitQuantity: number; unitName: string; region: string;
-  billingMode: string; serviceTier: string;
-  contextBand: Record<string, unknown> | null;
-  timeCondition: Record<string, unknown> | null;
-  effectiveAt: string | null; observedAt: string;
-  evidenceId: string | null; evidenceStatus: string;
-  quality: { state: string; reason: string | null; lastSuccessAt: string | null };
-  links: { itemPermalink: string | null };
-}
-
-export interface EvidenceRecord {
-  id: string; sourceUrl: string | null; subpageUrl: string | null;
-}
-
-const DS_VERSION_RE = /^ds_[0-9a-f]{64}$/;
 const COLLECTION_FILE = {
   changes: 'changes.json',
   weekly: 'weekly.json',
@@ -108,19 +60,6 @@ const COLLECTION_FILE = {
 
 export function defaultPublicReleaseDir(): string {
   return path.join(process.cwd(), '..', 'data', 'public', 'v1');
-}
-
-/** manifest 条目路径合法性：必须在 releases/{version}/ 下且无逃逸。 */
-function assertManifestPath(entryPath: string, version: string): void {
-  const prefix = `releases/${version}/`;
-  if (!entryPath.startsWith(prefix) || entryPath.length <= prefix.length) {
-    throw new Error(
-      `[release] manifest 文件路径越界（构建中止）: 期望前缀 ${prefix}`);
-  }
-  const rel = entryPath.slice(prefix.length);
-  if (path.isAbsolute(rel) || rel.split('/').includes('..') || rel.startsWith('/')) {
-    throw new Error('[release] manifest 文件路径含目录逃逸（构建中止）');
-  }
 }
 
 /**
@@ -143,78 +82,20 @@ export function loadVerifiedRelease(
   } catch (e) {
     throw new Error(`[release] manifest 损坏（构建中止）: ${(e as Error).message}`);
   }
-  const version = manifest.datasetVersion;
-  if (typeof version !== 'string' || !DS_VERSION_RE.test(version)) {
-    throw new Error('[release] manifest datasetVersion 格式非法（构建中止）');
+  const fullManifest = manifest as unknown as Manifest;
+  validateManifest(fullManifest);
+  const version = fullManifest.datasetVersion;
+  const parsed: Record<string, unknown> = {};
+  // The same complete hash/path/reference/order checks as the API, including unselected files.
+  for (const entry of fullManifest.files) {
+    parsed[path.basename(entry.path, '.json')] = JSON.parse(readVerified(path.resolve(root), entry));
   }
-
-  // 全部清单条目先做路径合法性检查（含未 select 的——清单本身要干净）
-  for (const f of manifest.files ?? []) {
-    if (typeof f.path !== 'string' || typeof f.sha256 !== 'string'
-        || typeof f.bytes !== 'number') {
-      throw new Error('[release] manifest files 条目字段非法（构建中止）');
-    }
-    assertManifestPath(f.path, version);
-  }
-
-  // select 的文件必须在清单中恰好出现一次（复验 P1-1：防清单删除后
-  // 直接读目录里的未签名文件）
-  const select = opts?.select ?? [];
-  const fileList = manifest.files ?? [];
-  const seen = new Set<string>();
-  for (const f of fileList) {
-    if (seen.has(f.path)) {
-      throw new Error(`[release] manifest 文件路径重复（构建中止）: ${f.path}`);
-    }
-    seen.add(f.path);
-  }
-  for (const key of select) {
-    const want = `releases/${version}/${COLLECTION_FILE[key]}`;
-    const hits = fileList.filter((f) => f.path === want);
-    if (hits.length === 0) {
-      throw new Error(
-        `[release] 请求加载的文件不在 manifest 清单（构建中止）: ${COLLECTION_FILE[key]}`);
-    }
-    if (hits.length > 1) {
-      throw new Error(
-        `[release] manifest 清单条目重复（构建中止）: ${COLLECTION_FILE[key]}`);
-    }
-  }
-
-  // 逐文件校验函数：bytes + sha256 全通过才返回内容
-  const verifyAndRead = (rel: string): string => {
-    const entry = fileList.find((f) => f.path === rel)!;
-    const p = path.join(root, rel);
-    if (!existsSync(p)) {
-      throw new Error(`[release] manifest 文件缺失（构建中止）: ${rel}`);
-    }
-    const data = readFileSync(p);
-    if (data.length !== entry.bytes) {
-      throw new Error(`[release] 文件 bytes 不符（构建中止）: ${rel}`);
-    }
-    const sha = createHash('sha256').update(data).digest('hex');
-    if (sha !== entry.sha256) {
-      throw new Error(`[release] 文件 sha256 不符（构建中止）: ${rel}`);
-    }
-    return data.toString('utf-8');
-  };
-
-  const out: PublicRelease = {
-    datasetVersion: version,
-    dataThrough: manifest.dataThrough,
-    coverage: manifest.coverage,
-  };
-  // 校验全通过后才解析（绝不解析未校验内容）
-  for (const key of select) {
-    const rel = `releases/${version}/${COLLECTION_FILE[key]}`;
-    let parsed: unknown;
-    try {
-      parsed = JSON.parse(verifyAndRead(rel));
-    } catch (e) {
-      if (e instanceof Error && e.message.startsWith('[release]')) throw e;
-      throw new Error(`[release] release 文件损坏（构建中止）: ${COLLECTION_FILE[key]}`);
-    }
-    (out as Record<string, unknown>)[key] = parsed;
+  validateIdentityCatalog(parsed['model-identities']);
+  validateCollections(parsed.changes as ChangeEntity[], parsed.items as ItemEntity[], parsed.prices as PriceEntity[],
+    parsed.evidence as EvidenceEntity[], parsed.weekly as WeeklyEntity[], parsed.status as StatusEntity);
+  const out: PublicRelease = { datasetVersion: version, dataThrough: manifest.dataThrough, coverage: manifest.coverage };
+  for (const key of opts?.select ?? []) {
+    (out as Record<string, unknown>)[key] = parsed[COLLECTION_FILE[key].replace('.json', '')];
   }
   return out;
 }

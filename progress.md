@@ -26,3 +26,5 @@ AR-05标准构建完成：候选commit cb03a05b826692546e7e5f1835565bca28ff7c01�
 AR-05收尾：阶段profile归档，Astro4→2次、API编译5→1次（含生产包）；完整47/47+标准build322.73s，待真实GitHub调度/线上代理验证。AR05-result已写，删除临时clone/release，仅保留venv给后续回归；下一AR08基础。
 
 AR-08基础完成：48/48回归293.996s、真实API启停/未就绪、5项TS诊断与3项离线告警测试通过；1x开关对比并发10 P95 off15.973/on15.324ms，discard Writable未测journal。修复无变化轮询取消强制audit竞态。证据与result归档，整项AR08仍待后续管线发布事件和最终容量复核。下一AR03，已核对23份data/weekly经现有frontmatter渲染与已发布周报字节全部相同；不是直接比较原稿与带frontmatter发布稿。
+
+AR-03实现候选：标准source-streams/独立price-events/day/week summaries/editorial/derived pricing已迁入；采集/LLM/exporter无site权威读取；统一projector兼容写入及site prebuild。23周报渲染相等，冻结legacy loader与new loader临时生成七集合字节及当前发布字节全部一致，ds_6fd3cc不变；标准输入6tests、API68tests、source31/public16/RSS/SEO通过。canonical公共DTO生成+purevalidator+node-reader、自包含API/site bridges，schema补齐既有identity与hyphen path。下一提交候选/干净clone标准release完整回归，证据不能提前标完成。

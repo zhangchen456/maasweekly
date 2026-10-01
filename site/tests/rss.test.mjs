@@ -1,3 +1,4 @@
+import { writePublicFixture } from './public-release-fixture.mjs';
 // Task 05 RSS 测试（T06–T12、T16；T08 单元级）。
 // 运行：node --experimental-strip-types tests/rss.test.mjs（需先 npm run build）
 // fixture 全部 os.tmpdir()+mkdtemp，绝不写真实 data/。
@@ -181,14 +182,7 @@ console.log('[8] T16 + 复验 P1-1：release 校验链（6 类反例）');
     const dir = fs.mkdtempSync(path.join(tmp, 'rel-'));
     const rel = path.join(dir, 'releases', VER);
     fs.mkdirSync(rel, { recursive: true });
-    const changes = JSON.stringify([]);
-    fs.writeFileSync(path.join(rel, 'changes.json'), changes);
-    const sha = createHash('sha256').update(changes).digest('hex');
-    const manifest = {
-      schemaVersion: '1.0', datasetVersion: VER,
-      dataThrough: '2026-09-16', coverage: {},
-      files: [{ path: `releases/${VER}/changes.json`, sha256: sha, bytes: changes.length }],
-    };
+    const manifest = writePublicFixture(dir, VER, { changes: [] });
     mutate?.(manifest, rel, dir);
     fs.writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify(manifest));
     return dir;
@@ -239,6 +233,7 @@ console.log('[8] T16 + 复验 P1-1：release 校验链（6 类反例）');
     const weekly = JSON.stringify([]);
     fs.writeFileSync(path.join(rel, 'weekly.json'), weekly);
     const m = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf-8'));
+    m.files = m.files.filter(f => !f.path.endsWith("weekly.json"));
     m.files.push({ path: `releases/${VER}/weekly.json`,
       sha256: createHash('sha256').update(weekly).digest('hex'), bytes: weekly.length });
     fs.writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify(m));

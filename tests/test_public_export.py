@@ -145,17 +145,17 @@ class FixtureRepo:
         return p
 
     def _write_weekly(self):
-        (self._p("site/src/content/weekly/2026-09-01.md")).write_text(
+        (self._p("data/editorial/weekly/2026-09-01.md")).write_text(
             "---\ntitle: \"周报 2026-09-01\"\ndate: \"2026-09-01\"\n"
             "period: \"2026-08-25 ~ 2026-09-01\"\n---\n\n正文\n", encoding="utf-8")
-        (self._p("site/src/content/weekly-structured/2026-09-01.json")).write_text(
+        (self._p("data/derived/weekly-structured/2026-09-01.json")).write_text(
             json.dumps({"date": "2026-09-01", "period": "2026-08-25 ~ 2026-09-01",
                         "headline": [], "platforms": [], "summary_table": None,
                         "trends": [], "watchpoints": None, "event_index": None},
                        ensure_ascii=False), encoding="utf-8")
 
     def _write_daily_changes(self, days=None):
-        (self._p("site/src/data/daily_changes.json")).write_text(
+        (self._p("data/normalized/source-streams.json")).write_text(
             json.dumps({"days": days or []}, ensure_ascii=False), encoding="utf-8")
 
     def _write_current(self, sources):

@@ -1,3 +1,4 @@
+import { writePublicFixture } from './public-release-fixture.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync, mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -146,7 +147,7 @@ try {
     const data = Buffer.from('[{"id":"fixture"}]');
     const entry = { path: relative, bytes: data.length, sha256: createHash('sha256').update(data).digest('hex') };
     writeFileSync(path.join(fixture, relative), data);
-    const manifest = { datasetVersion: version, dataThrough: '2026-09-30', coverage: {}, files: [entry] };
+    const manifest = writePublicFixture(fixture, version, { [collection]: [{ id: 'fixture' }] });
     writeFileSync(path.join(fixture, 'manifest.json'), JSON.stringify(manifest));
     assert.equal(loadVerifiedRelease(fixture, { select: [collection] })[collection][0].id, 'fixture');
     writeFileSync(path.join(fixture, relative), '[{"id":"tamper!"}]');

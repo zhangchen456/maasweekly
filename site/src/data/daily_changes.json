@@ -1332,76 +1332,6 @@
           "error": "提取后内容过短 (raw_len=11902)"
         }
       ],
-      "highlights": [
-        {
-          "platform": "OpenAI",
-          "logo_summary": "GPT-6 Astra 涨价3倍，GPT-6.1 Sol 新定价上线",
-          "items": [
-            {
-              "text": "GPT-6 Astra 输入定价从 40 涨至 120 USD/百万tokens，输出从 150 涨至 450 USD/百万tokens，cache_read 涨至 12，cache_write 涨至 150",
-              "type": "pricing"
-            },
-            {
-              "text": "GPT-6.1 Sol 新定价公布：输入 8 USD/百万tokens，输出 30 USD/百万tokens，cache_read 0.4，cache_write 10",
-              "type": "pricing"
-            },
-            {
-              "text": "Agents API 新增 computer use 功能，支持在 OpenAI 托管浏览器中完成任务；GPT-6 Astra 新增 Ultrafast 模式",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "Cohere",
-          "logo_summary": "发布 Embed 5 系列，支持多模态与128k上下文",
-          "items": [
-            {
-              "text": "发布 Embed 5 系列（embed-v5.0-pro 与 embed-v5.0-fast），支持文本、图像及混合输入，上下文窗口 128k，支持 100+ 语言",
-              "type": "release"
-            },
-            {
-              "text": "Embed 5 提供 Matryoshka 维度（256-2048）及 float/int8/binary 输出，Pro 与 Fast 共享嵌入空间",
-              "type": "release"
-            },
-            {
-              "text": "Embed 5 可通过 Embed API、Microsoft Foundry、Amazon SageMaker 及 Model Vault 获取",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "Artificial Analysis",
-          "logo_summary": "GPT-6.1 Sol 评测上线，替代 GPT-6 Sol",
-          "items": [
-            {
-              "text": "新增 GPT-6.1 Sol 多档推理配置（low/medium/high/xhigh/max）评测，并指出其仅发布 7 天即取代 GPT-6 Sol，智能接近 Astra",
-              "type": "release"
-            },
-            {
-              "text": "新增 GPT-6 Luna (max) 评测条目",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "LMArena",
-          "logo_summary": "多模型价格微调，新模型上榜",
-          "items": [
-            {
-              "text": "Claude Fable 5.1 (Max) 价格从 3.50 涨至 3.54 USD/task，Claude Opus 5.5 (High) 从 1.36 涨至 1.39，Claude Sonnet 5 (High) 从 0.73 涨至 0.75",
-              "type": "pricing"
-            },
-            {
-              "text": "新增 Claude Sonnet 5.5、Gemini 3.7 Flash (High)、Qwen3.8 Flash Next、Muse Spark 1.3 (Max) 等模型条目",
-              "type": "release"
-            },
-            {
-              "text": "Hy4 preview 价格从 0.21 涨至 0.24 USD/task",
-              "type": "pricing"
-            }
-          ]
-        }
-      ],
       "price_changes": [
         {
           "id": "price_a6978b93fa0a3fc4847c483af2f93b4d28cda8c64619288f79e785c5f57028b1",
@@ -1526,6 +1456,76 @@
             "amount"
           ],
           "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "OpenAI",
+          "logo_summary": "GPT-6 Astra 涨价3倍，GPT-6.1 Sol 新定价上线",
+          "items": [
+            {
+              "text": "GPT-6 Astra 输入定价从 40 涨至 120 USD/百万tokens，输出从 150 涨至 450 USD/百万tokens，cache_read 涨至 12，cache_write 涨至 150",
+              "type": "pricing"
+            },
+            {
+              "text": "GPT-6.1 Sol 新定价公布：输入 8 USD/百万tokens，输出 30 USD/百万tokens，cache_read 0.4，cache_write 10",
+              "type": "pricing"
+            },
+            {
+              "text": "Agents API 新增 computer use 功能，支持在 OpenAI 托管浏览器中完成任务；GPT-6 Astra 新增 Ultrafast 模式",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "发布 Embed 5 系列，支持多模态与128k上下文",
+          "items": [
+            {
+              "text": "发布 Embed 5 系列（embed-v5.0-pro 与 embed-v5.0-fast），支持文本、图像及混合输入，上下文窗口 128k，支持 100+ 语言",
+              "type": "release"
+            },
+            {
+              "text": "Embed 5 提供 Matryoshka 维度（256-2048）及 float/int8/binary 输出，Pro 与 Fast 共享嵌入空间",
+              "type": "release"
+            },
+            {
+              "text": "Embed 5 可通过 Embed API、Microsoft Foundry、Amazon SageMaker 及 Model Vault 获取",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "GPT-6.1 Sol 评测上线，替代 GPT-6 Sol",
+          "items": [
+            {
+              "text": "新增 GPT-6.1 Sol 多档推理配置（low/medium/high/xhigh/max）评测，并指出其仅发布 7 天即取代 GPT-6 Sol，智能接近 Astra",
+              "type": "release"
+            },
+            {
+              "text": "新增 GPT-6 Luna (max) 评测条目",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "多模型价格微调，新模型上榜",
+          "items": [
+            {
+              "text": "Claude Fable 5.1 (Max) 价格从 3.50 涨至 3.54 USD/task，Claude Opus 5.5 (High) 从 1.36 涨至 1.39，Claude Sonnet 5 (High) 从 0.73 涨至 0.75",
+              "type": "pricing"
+            },
+            {
+              "text": "新增 Claude Sonnet 5.5、Gemini 3.7 Flash (High)、Qwen3.8 Flash Next、Muse Spark 1.3 (Max) 等模型条目",
+              "type": "release"
+            },
+            {
+              "text": "Hy4 preview 价格从 0.21 涨至 0.24 USD/task",
+              "type": "pricing"
+            }
+          ]
         }
       ]
     },
@@ -4468,90 +4468,6 @@
         }
       ],
       "failed": [],
-      "highlights": [
-        {
-          "platform": "Google Gemini API",
-          "logo_summary": "发布两款新一代TTS模型并公布定价",
-          "items": [
-            {
-              "text": "Gemini 3.8 Flash TTS 与 Gemini 3.8 Flash-Lite TTS 正式GA，分别定位旗舰创意与高性价比语音合成",
-              "type": "release"
-            },
-            {
-              "text": "Gemini 3.8 Flash TTS 定价 $0.5/百万tokens输入、$9/百万tokens输出；Flash-Lite TTS 定价 $0.5/百万tokens输入、$6/百万tokens输出",
-              "type": "pricing"
-            },
-            {
-              "text": "2027年1月1日起将启用输入缓存新价格，涉及文本与音频计费调整",
-              "type": "pricing"
-            }
-          ]
-        },
-        {
-          "platform": "Anthropic",
-          "logo_summary": "模型列表更新，新增Claude Fable 5.1等ID与定价",
-          "items": [
-            {
-              "text": "Claude 模型家族新增 claude-fable-5-1，与 claude-opus-5-5、claude-sonnet-5、claude-haiku-4-5 并列，定价 $10/$50 至 $1/$5 每百万tokens",
-              "type": "release"
-            },
-            {
-              "text": "模型列表新增各云平台ID（AWS、Google Cloud、Microsoft Foundry）及上下文窗口、输出长度等规格",
-              "type": "other"
-            },
-            {
-              "text": "pricing 页面新增多档缓存价格（$0.08-$1.50/MTok），并移除旧版Claude Consumption Units说明",
-              "type": "pricing"
-            }
-          ]
-        },
-        {
-          "platform": "火山方舟",
-          "logo_summary": "Agent/Coding Plan 多项能力上线，Kimi K3 加入",
-          "items": [
-            {
-              "text": "Agent Plan Medium 及以上档位上线 Kimi K3 模型，并支持 Doubao-Seedream-5.0 与 Doubao-Seedance-2.0",
-              "type": "release"
-            },
-            {
-              "text": "Agent Plan 新增『Agent 进化』Harness 能力，API Key 管理功能上线",
-              "type": "other"
-            },
-            {
-              "text": "Chat API 按 token 付费新增低延迟模式，支持 doubao-seed-2.0-pro 与 doubao-seed-2.0-lite",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "百度千帆",
-          "logo_summary": "多款模型价格调整，DeepSeek 系列变动显著",
-          "items": [
-            {
-              "text": "DeepSeek-V4.1-Flash 与 DeepSeek-V4-Pro-0813 新增定价，GLM-5.3 同步调整",
-              "type": "pricing"
-            },
-            {
-              "text": "DeepSeek-V3.2 与 DeepSeek-V4-Flash 标记为即将下线",
-              "type": "sunset"
-            },
-            {
-              "text": "DeepSeek-V4-Flash-0731 推出空闲时段限时活动（8月25日0点起生效）",
-              "type": "pricing"
-            }
-          ]
-        },
-        {
-          "platform": "OpenAI",
-          "logo_summary": "博客文章更新，展示GPT-Live-1与Codex应用",
-          "items": [
-            {
-              "text": "OpenAI 博客新增文章『Bringing my LED display to life with GPT-Live-1 and Codex』，替换旧文",
-              "type": "other"
-            }
-          ]
-        }
-      ],
       "price_changes": [
         {
           "id": "price_181313b2be6ce496be56b0e02ad68c5124d30f2414990a45b2125678f37c99aa",
@@ -4642,6 +4558,90 @@
             "amount"
           ],
           "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "发布两款新一代TTS模型并公布定价",
+          "items": [
+            {
+              "text": "Gemini 3.8 Flash TTS 与 Gemini 3.8 Flash-Lite TTS 正式GA，分别定位旗舰创意与高性价比语音合成",
+              "type": "release"
+            },
+            {
+              "text": "Gemini 3.8 Flash TTS 定价 $0.5/百万tokens输入、$9/百万tokens输出；Flash-Lite TTS 定价 $0.5/百万tokens输入、$6/百万tokens输出",
+              "type": "pricing"
+            },
+            {
+              "text": "2027年1月1日起将启用输入缓存新价格，涉及文本与音频计费调整",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "模型列表更新，新增Claude Fable 5.1等ID与定价",
+          "items": [
+            {
+              "text": "Claude 模型家族新增 claude-fable-5-1，与 claude-opus-5-5、claude-sonnet-5、claude-haiku-4-5 并列，定价 $10/$50 至 $1/$5 每百万tokens",
+              "type": "release"
+            },
+            {
+              "text": "模型列表新增各云平台ID（AWS、Google Cloud、Microsoft Foundry）及上下文窗口、输出长度等规格",
+              "type": "other"
+            },
+            {
+              "text": "pricing 页面新增多档缓存价格（$0.08-$1.50/MTok），并移除旧版Claude Consumption Units说明",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "Agent/Coding Plan 多项能力上线，Kimi K3 加入",
+          "items": [
+            {
+              "text": "Agent Plan Medium 及以上档位上线 Kimi K3 模型，并支持 Doubao-Seedream-5.0 与 Doubao-Seedance-2.0",
+              "type": "release"
+            },
+            {
+              "text": "Agent Plan 新增『Agent 进化』Harness 能力，API Key 管理功能上线",
+              "type": "other"
+            },
+            {
+              "text": "Chat API 按 token 付费新增低延迟模式，支持 doubao-seed-2.0-pro 与 doubao-seed-2.0-lite",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "百度千帆",
+          "logo_summary": "多款模型价格调整，DeepSeek 系列变动显著",
+          "items": [
+            {
+              "text": "DeepSeek-V4.1-Flash 与 DeepSeek-V4-Pro-0813 新增定价，GLM-5.3 同步调整",
+              "type": "pricing"
+            },
+            {
+              "text": "DeepSeek-V3.2 与 DeepSeek-V4-Flash 标记为即将下线",
+              "type": "sunset"
+            },
+            {
+              "text": "DeepSeek-V4-Flash-0731 推出空闲时段限时活动（8月25日0点起生效）",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "博客文章更新，展示GPT-Live-1与Codex应用",
+          "items": [
+            {
+              "text": "OpenAI 博客新增文章『Bringing my LED display to life with GPT-Live-1 and Codex』，替换旧文",
+              "type": "other"
+            }
+          ]
         }
       ]
     },
@@ -5359,82 +5359,6 @@
           "error": "提取后内容过短 (raw_len=11071)"
         }
       ],
-      "highlights": [
-        {
-          "platform": "OpenAI",
-          "logo_summary": "发布GPT-6 Sol与Luna，定价分层明确",
-          "items": [
-            {
-              "text": "OpenAI 发布 GPT-6 Sol (gpt-6-sol) 与 GPT-6 Luna (gpt-6-luna)，支持文本与图像输入，通过 Responses 和 Chat Completions API 提供。",
-              "type": "release"
-            },
-            {
-              "text": "GPT-6 Sol 定价 $2/MTok 输入、$0.2 缓存输入、$10/MTok 输出；GPT-6 Luna 定价 $0.1/MTok 输入、$0.01 缓存输入、$0.5/MTok 输出。",
-              "type": "pricing"
-            },
-            {
-              "text": "新增 API Partner Setup 与 Private Safety Processing 功能，并更新模型选择指南为『Using GPT-6』。",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "Anthropic",
-          "logo_summary": "推出Claude Opus 5.5，性能提升且降价",
-          "items": [
-            {
-              "text": "Anthropic 发布 Claude Opus 5.5 (claude-opus-5-5)，面向长时 agentic 编码与知识工作，默认 1M token 上下文窗口，支持 128k 输出。",
-              "type": "release"
-            },
-            {
-              "text": "Claude Opus 5.5 定价 $4/MTok 输入、$20/MTok 输出，较 Opus 5 降低 40% 成本；缓存读取折扣为 0.05x 基础输入价。",
-              "type": "pricing"
-            },
-            {
-              "text": "Claude Opus 5.5 支持 Fast mode（研究预览），且 thinking 不可禁用；新增 inline-tools beta 功能。",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "Google Gemini API",
-          "logo_summary": "限制Gemini 2.5访问，引导新项目用新模型",
-          "items": [
-            {
-              "text": "Gemini API 宣布限制 Gemini 2.5 模型访问，仅对活跃用户开放，但模型未弃用，将继续服务至另行通知。",
-              "type": "other"
-            },
-            {
-              "text": "新项目建议使用最新模型：3.5 Flash-Lite 或 3.8 Flash，以保障容量与性能。",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "火山方舟",
-          "logo_summary": "Seedream 5.0系列文档更新，新增代码补丁工具",
-          "items": [
-            {
-              "text": "火山方舟更新 Doubao Seedream 5.0 pro / flash 的交互编辑指南与教程，覆盖范围扩大。",
-              "type": "other"
-            },
-            {
-              "text": "新增 Apply Patch（代码补丁工具），并发布平台客户行为准则及违约处理规则。",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "百度千帆",
-          "logo_summary": "GLM-5.2限时活动结束，恢复原价",
-          "items": [
-            {
-              "text": "百度千帆移除 GLM-5.2 空闲时段限时活动定价，9月21日20点起恢复原价，涉及输入、输出及缓存计费。",
-              "type": "pricing"
-            }
-          ]
-        }
-      ],
       "price_changes": [
         {
           "id": "price_a92c9f1da5aac00a1ff0d7b4b121f72873e5bfa28890ff0cd25ab2631c578ed5",
@@ -5707,6 +5631,82 @@
             "amount"
           ],
           "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "OpenAI",
+          "logo_summary": "发布GPT-6 Sol与Luna，定价分层明确",
+          "items": [
+            {
+              "text": "OpenAI 发布 GPT-6 Sol (gpt-6-sol) 与 GPT-6 Luna (gpt-6-luna)，支持文本与图像输入，通过 Responses 和 Chat Completions API 提供。",
+              "type": "release"
+            },
+            {
+              "text": "GPT-6 Sol 定价 $2/MTok 输入、$0.2 缓存输入、$10/MTok 输出；GPT-6 Luna 定价 $0.1/MTok 输入、$0.01 缓存输入、$0.5/MTok 输出。",
+              "type": "pricing"
+            },
+            {
+              "text": "新增 API Partner Setup 与 Private Safety Processing 功能，并更新模型选择指南为『Using GPT-6』。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "推出Claude Opus 5.5，性能提升且降价",
+          "items": [
+            {
+              "text": "Anthropic 发布 Claude Opus 5.5 (claude-opus-5-5)，面向长时 agentic 编码与知识工作，默认 1M token 上下文窗口，支持 128k 输出。",
+              "type": "release"
+            },
+            {
+              "text": "Claude Opus 5.5 定价 $4/MTok 输入、$20/MTok 输出，较 Opus 5 降低 40% 成本；缓存读取折扣为 0.05x 基础输入价。",
+              "type": "pricing"
+            },
+            {
+              "text": "Claude Opus 5.5 支持 Fast mode（研究预览），且 thinking 不可禁用；新增 inline-tools beta 功能。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "限制Gemini 2.5访问，引导新项目用新模型",
+          "items": [
+            {
+              "text": "Gemini API 宣布限制 Gemini 2.5 模型访问，仅对活跃用户开放，但模型未弃用，将继续服务至另行通知。",
+              "type": "other"
+            },
+            {
+              "text": "新项目建议使用最新模型：3.5 Flash-Lite 或 3.8 Flash，以保障容量与性能。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "Seedream 5.0系列文档更新，新增代码补丁工具",
+          "items": [
+            {
+              "text": "火山方舟更新 Doubao Seedream 5.0 pro / flash 的交互编辑指南与教程，覆盖范围扩大。",
+              "type": "other"
+            },
+            {
+              "text": "新增 Apply Patch（代码补丁工具），并发布平台客户行为准则及违约处理规则。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "百度千帆",
+          "logo_summary": "GLM-5.2限时活动结束，恢复原价",
+          "items": [
+            {
+              "text": "百度千帆移除 GLM-5.2 空闲时段限时活动定价，9月21日20点起恢复原价，涉及输入、输出及缓存计费。",
+              "type": "pricing"
+            }
+          ]
         }
       ]
     },
@@ -6272,80 +6272,6 @@
           "error": "提取后内容过短 (raw_len=11071)"
         }
       ],
-      "highlights": [
-        {
-          "platform": "xAI",
-          "logo_summary": "Grok 4.7 发布，支持加密推理",
-          "items": [
-            {
-              "text": "xAI 发布 Grok 4.7，知识截止至 2026 年 5 月，支持 500k 上下文窗口，并新增 Encrypted reasoning 功能。",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "阿里百炼",
-          "logo_summary": "Qwen3.8-Omni 系列上线，ASR 定价调整",
-          "items": [
-            {
-              "text": "阿里百炼新增 qwen3.8-omni-flash-realtime 模型，并替换 qwen3.5-omni-plus-realtime。",
-              "type": "release"
-            },
-            {
-              "text": "Qwen-Audio-3.1-ASR-Flash 系列定价更新，按输入输出 Token 计费，并新增 Qwen-Audio-3.x-ASR-Flash-Streaming。",
-              "type": "pricing"
-            },
-            {
-              "text": "qwen-audio-3.1-tts-flash 输入价格上调至 1.5 元/百万 Token，输出 12 元/百万 Token。",
-              "type": "pricing"
-            }
-          ]
-        },
-        {
-          "platform": "火山方舟",
-          "logo_summary": "文档更新，新增版权合作审核",
-          "items": [
-            {
-              "text": "火山方舟新增『审核版权合作与生成视频』功能，并移除 PromptPilot 相关文档。",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "Google Vertex AI",
-          "logo_summary": "支持模型列表更新，新增 FinOps 功能",
-          "items": [
-            {
-              "text": "Google Vertex AI 更新支持模型列表，移除 Claude Opus 4.1，新增 Claude Opus 4.6 等。",
-              "type": "release"
-            },
-            {
-              "text": "Google Vertex AI 发布博客，介绍面向 AI 时代的 FinOps 灵活计费与成本控制。",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "硅基流动",
-          "logo_summary": "API 文档更新，新增 TypeSafe 请求",
-          "items": [
-            {
-              "text": "硅基流动新增创建对话请求（Anthropic/OpenAI）和创建快速决策请求（TypeSafe）的 API 文档。",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "Artificial Analysis",
-          "logo_summary": "发布 Grok 4.7 评测，更新智能指数",
-          "items": [
-            {
-              "text": "Artificial Analysis 发布 Grok 4.7 基准测试，并更新 Intelligence Index v4.3。",
-              "type": "other"
-            }
-          ]
-        }
-      ],
       "price_changes": [
         {
           "id": "price_a68801ccf83d404022fd4d1f451a791fc19ac29833103b6902fc77146b0ed5c5",
@@ -6727,6 +6653,80 @@
           ],
           "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
         }
+      ],
+      "highlights": [
+        {
+          "platform": "xAI",
+          "logo_summary": "Grok 4.7 发布，支持加密推理",
+          "items": [
+            {
+              "text": "xAI 发布 Grok 4.7，知识截止至 2026 年 5 月，支持 500k 上下文窗口，并新增 Encrypted reasoning 功能。",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "Qwen3.8-Omni 系列上线，ASR 定价调整",
+          "items": [
+            {
+              "text": "阿里百炼新增 qwen3.8-omni-flash-realtime 模型，并替换 qwen3.5-omni-plus-realtime。",
+              "type": "release"
+            },
+            {
+              "text": "Qwen-Audio-3.1-ASR-Flash 系列定价更新，按输入输出 Token 计费，并新增 Qwen-Audio-3.x-ASR-Flash-Streaming。",
+              "type": "pricing"
+            },
+            {
+              "text": "qwen-audio-3.1-tts-flash 输入价格上调至 1.5 元/百万 Token，输出 12 元/百万 Token。",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "文档更新，新增版权合作审核",
+          "items": [
+            {
+              "text": "火山方舟新增『审核版权合作与生成视频』功能，并移除 PromptPilot 相关文档。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "支持模型列表更新，新增 FinOps 功能",
+          "items": [
+            {
+              "text": "Google Vertex AI 更新支持模型列表，移除 Claude Opus 4.1，新增 Claude Opus 4.6 等。",
+              "type": "release"
+            },
+            {
+              "text": "Google Vertex AI 发布博客，介绍面向 AI 时代的 FinOps 灵活计费与成本控制。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "API 文档更新，新增 TypeSafe 请求",
+          "items": [
+            {
+              "text": "硅基流动新增创建对话请求（Anthropic/OpenAI）和创建快速决策请求（TypeSafe）的 API 文档。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "发布 Grok 4.7 评测，更新智能指数",
+          "items": [
+            {
+              "text": "Artificial Analysis 发布 Grok 4.7 基准测试，并更新 Intelligence Index v4.3。",
+              "type": "other"
+            }
+          ]
+        }
       ]
     },
     {
@@ -6878,26 +6878,6 @@
           "error": "提取后内容过短 (raw_len=11071)"
         }
       ],
-      "highlights": [
-        {
-          "platform": "阿里百炼",
-          "logo_summary": "音频实时模型升级，新版本定价公布",
-          "items": [
-            {
-              "text": "qwen-audio-3.1-realtime-plus 上线，替代 qwen-audio-3.0-realtime-plus",
-              "type": "release"
-            },
-            {
-              "text": "qwen-audio-3.1-realtime-plus 定价公布：输入 40 CNY/百万tokens，输出 150 CNY/百万tokens",
-              "type": "pricing"
-            },
-            {
-              "text": "qwen3.5-omni-plus 从模型列表移除，但定价页仍保留",
-              "type": "sunset"
-            }
-          ]
-        }
-      ],
       "price_changes": [
         {
           "id": "price_77d18b33ead7d35ddfef2e134f1bf81100e19f8a916b37d192e9182a09ff6153",
@@ -6958,6 +6938,26 @@
             "amount"
           ],
           "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "音频实时模型升级，新版本定价公布",
+          "items": [
+            {
+              "text": "qwen-audio-3.1-realtime-plus 上线，替代 qwen-audio-3.0-realtime-plus",
+              "type": "release"
+            },
+            {
+              "text": "qwen-audio-3.1-realtime-plus 定价公布：输入 40 CNY/百万tokens，输出 150 CNY/百万tokens",
+              "type": "pricing"
+            },
+            {
+              "text": "qwen3.5-omni-plus 从模型列表移除，但定价页仍保留",
+              "type": "sunset"
+            }
+          ]
         }
       ]
     },
@@ -7225,54 +7225,6 @@
           "error": "提取后内容过短 (raw_len=11071)"
         }
       ],
-      "highlights": [
-        {
-          "platform": "Kimi",
-          "logo_summary": "K3 系列缓存计费规则细化，价格调整",
-          "items": [
-            {
-              "text": "Kimi K3 模型 input 价格从 20 上调至 40 CNY/百万tokens，output 从 100 下调至 2 CNY/百万tokens，cache_read 从 2 上调至 20 CNY/百万tokens",
-              "type": "pricing"
-            },
-            {
-              "text": "Kimi API 新增缓存写入按 TTL 档位（5min/1h）单独计费，缓存命中输入仅按命中价格计费",
-              "type": "pricing"
-            }
-          ]
-        },
-        {
-          "platform": "DeepSeek",
-          "logo_summary": "V4 Pro 定价与并发限制更新，移除延期公告",
-          "items": [
-            {
-              "text": "DeepSeek V4 Pro 新增定价：input 0.66/1.32 USD，output 1.98/3.96 USD，cache_read 0.022/0.044 USD（高峰/空闲）",
-              "type": "pricing"
-            },
-            {
-              "text": "DeepSeek 移除 V4 Pro 在 2026-09-14 后继续服务的公告，改为正式定价与并发限制说明",
-              "type": "other"
-            },
-            {
-              "text": "DeepSeek 明确空闲时段为周一至周五 9:00-12:00、14:00-18:00 之外（含法定节假日）",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "Artificial Analysis",
-          "logo_summary": "发布 AA-Briefcase v1.1 与 Intelligence Index v4.3.2",
-          "items": [
-            {
-              "text": "Artificial Analysis 发布 AA-Briefcase v1.1 基准，用于评估 agentic 知识工作表现，Elo 锚定 DeepSeek V4.1 Flash 为 1600",
-              "type": "release"
-            },
-            {
-              "text": "Intelligence Index v4.3.2 整合 10 项评估，包括 AA-Briefcase v1.1、GDPval-AA v2.1 等",
-              "type": "release"
-            }
-          ]
-        }
-      ],
       "price_changes": [
         {
           "id": "price_1c181425cf150d4797b5846787f8d6f0f890abd64f00c5211216935218a8fd34",
@@ -7411,6 +7363,54 @@
             "amount"
           ],
           "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Kimi",
+          "logo_summary": "K3 系列缓存计费规则细化，价格调整",
+          "items": [
+            {
+              "text": "Kimi K3 模型 input 价格从 20 上调至 40 CNY/百万tokens，output 从 100 下调至 2 CNY/百万tokens，cache_read 从 2 上调至 20 CNY/百万tokens",
+              "type": "pricing"
+            },
+            {
+              "text": "Kimi API 新增缓存写入按 TTL 档位（5min/1h）单独计费，缓存命中输入仅按命中价格计费",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "DeepSeek",
+          "logo_summary": "V4 Pro 定价与并发限制更新，移除延期公告",
+          "items": [
+            {
+              "text": "DeepSeek V4 Pro 新增定价：input 0.66/1.32 USD，output 1.98/3.96 USD，cache_read 0.022/0.044 USD（高峰/空闲）",
+              "type": "pricing"
+            },
+            {
+              "text": "DeepSeek 移除 V4 Pro 在 2026-09-14 后继续服务的公告，改为正式定价与并发限制说明",
+              "type": "other"
+            },
+            {
+              "text": "DeepSeek 明确空闲时段为周一至周五 9:00-12:00、14:00-18:00 之外（含法定节假日）",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "发布 AA-Briefcase v1.1 与 Intelligence Index v4.3.2",
+          "items": [
+            {
+              "text": "Artificial Analysis 发布 AA-Briefcase v1.1 基准，用于评估 agentic 知识工作表现，Elo 锚定 DeepSeek V4.1 Flash 为 1600",
+              "type": "release"
+            },
+            {
+              "text": "Intelligence Index v4.3.2 整合 10 项评估，包括 AA-Briefcase v1.1、GDPval-AA v2.1 等",
+              "type": "release"
+            }
+          ]
         }
       ]
     },
@@ -7906,66 +7906,6 @@
           "error": "提取后内容过短 (raw_len=11071)"
         }
       ],
-      "highlights": [
-        {
-          "platform": "阿里百炼",
-          "logo_summary": "发布HappyOyster开放式世界模型及Qwen-MT-Uni定价",
-          "items": [
-            {
-              "text": "阿里百炼新增 happyoyster-1.0-adventure/directing/acting 三款邀测模型，覆盖世界探索、实时导演、角色演绎三种模式",
-              "type": "release"
-            },
-            {
-              "text": "新增 Qwen-MT-Uni 定价，输入 400 元/百万 tokens",
-              "type": "pricing"
-            },
-            {
-              "text": "HappyOyster 系列按次/按秒计费，价格区间 0.056 至 2.27 元",
-              "type": "pricing"
-            }
-          ]
-        },
-        {
-          "platform": "硅基流动",
-          "logo_summary": "上架中国电信Xing4.0-29B语义大模型",
-          "items": [
-            {
-              "text": "硅基流动新增 Xing4.0-29B 语义大模型，主打全栈国产化、轻量 Agent、低算力高收益",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "智谱AI",
-          "logo_summary": "推出GLM-5.3-FlashX，推理速度提升至200 tokens/s",
-          "items": [
-            {
-              "text": "智谱AI 新增 GLM-5.3-FlashX，推理速度达 200 tokens/s，上下文 1M，输出 128K",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "Google Vertex AI",
-          "logo_summary": "博客更新：聚焦Agentic AI安全，移除FinOps文章",
-          "items": [
-            {
-              "text": "Google Vertex AI 博客新增『Using agentic AI to secure infrastructure code』，删除 FinOps 成本控制文章",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "xAI",
-          "logo_summary": "发布Grok Voice Transcribe 2.0语音转写模型",
-          "items": [
-            {
-              "text": "xAI 发布 grok-voice-transcribe-2.0，默认仍为 1.0，用户可指定版本",
-              "type": "release"
-            }
-          ]
-        }
-      ],
       "price_changes": [
         {
           "id": "price_b485143eaa94bb52c81e6cfb80d5edf11625f96fb9d3a522073a8aa2d702c6be",
@@ -8026,6 +7966,66 @@
             "amount"
           ],
           "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "发布HappyOyster开放式世界模型及Qwen-MT-Uni定价",
+          "items": [
+            {
+              "text": "阿里百炼新增 happyoyster-1.0-adventure/directing/acting 三款邀测模型，覆盖世界探索、实时导演、角色演绎三种模式",
+              "type": "release"
+            },
+            {
+              "text": "新增 Qwen-MT-Uni 定价，输入 400 元/百万 tokens",
+              "type": "pricing"
+            },
+            {
+              "text": "HappyOyster 系列按次/按秒计费，价格区间 0.056 至 2.27 元",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "上架中国电信Xing4.0-29B语义大模型",
+          "items": [
+            {
+              "text": "硅基流动新增 Xing4.0-29B 语义大模型，主打全栈国产化、轻量 Agent、低算力高收益",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "智谱AI",
+          "logo_summary": "推出GLM-5.3-FlashX，推理速度提升至200 tokens/s",
+          "items": [
+            {
+              "text": "智谱AI 新增 GLM-5.3-FlashX，推理速度达 200 tokens/s，上下文 1M，输出 128K",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "博客更新：聚焦Agentic AI安全，移除FinOps文章",
+          "items": [
+            {
+              "text": "Google Vertex AI 博客新增『Using agentic AI to secure infrastructure code』，删除 FinOps 成本控制文章",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "发布Grok Voice Transcribe 2.0语音转写模型",
+          "items": [
+            {
+              "text": "xAI 发布 grok-voice-transcribe-2.0，默认仍为 1.0，用户可指定版本",
+              "type": "release"
+            }
+          ]
         }
       ]
     },
@@ -8535,106 +8535,6 @@
         }
       ],
       "failed": [],
-      "highlights": [
-        {
-          "platform": "阿里百炼",
-          "logo_summary": "新模型上线与定价调整并行",
-          "items": [
-            {
-              "text": "qwen3.8-omni-flash 上线，支持多模态理解与生成，定价输入0.8元/百万Token、输出2.7元/百万Token（中国内地及全球）",
-              "type": "release"
-            },
-            {
-              "text": "qwen3.8-max、qwen3.7-plus 新增至模型列表，同时 qwen3.5-omni-plus 被移除",
-              "type": "release"
-            },
-            {
-              "text": "qwen3.7-max 输入定价18.736元/百万Token、输出56.207元/百万Token，qwen3.7-plus 输入2.998元、输出11.991元（新定价）",
-              "type": "pricing"
-            }
-          ]
-        },
-        {
-          "platform": "OpenAI",
-          "logo_summary": "Responses API 扩展文件类型支持，新增 MCP 服务器",
-          "items": [
-            {
-              "text": "Responses API 的 input_file 支持扩展至更多文档、演示文稿、表格、代码和文本文件类型",
-              "type": "other"
-            },
-            {
-              "text": "新增 MCP servers 支持",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "Anthropic",
-          "logo_summary": "Compliance API 扩展，博客提出前沿AI发展度量指标",
-          "items": [
-            {
-              "text": "Compliance API 本地会话端点新增返回 Claude 在 Chrome 会话中的转录（beta）",
-              "type": "other"
-            },
-            {
-              "text": "Anthropic 博客提出新指标以衡量前沿AI实验室内部发展速度",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "Google Gemini API",
-          "logo_summary": "Imagen 4 关闭，Antigravity Agent 新预览版发布",
-          "items": [
-            {
-              "text": "Imagen 4 状态从 Deprecated 变为 Shut down，正式关闭",
-              "type": "sunset"
-            },
-            {
-              "text": "Antigravity Agent 发布 antigravity-preview-09-2026，取代并弃用 antigravity-preview-05-2026（2026-10-05 关闭）",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "Cohere",
-          "logo_summary": "新增技术报告，定价页更新",
-          "items": [
-            {
-              "text": "新增 Command A Translate 和 North Small Translate 技术报告",
-              "type": "other"
-            },
-            {
-              "text": "定价页更新，移除 $4,300 相关价格信息",
-              "type": "pricing"
-            }
-          ]
-        },
-        {
-          "platform": "Artificial Analysis",
-          "logo_summary": "发布能力指数 v1.1，更新模型列表",
-          "items": [
-            {
-              "text": "发布 Artificial Analysis Capability Indices v1.1",
-              "type": "other"
-            },
-            {
-              "text": "模型列表更新，新增 Z AI、Kimi、DeepSeek 等，移除部分旧条目",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "LMArena",
-          "logo_summary": "新模型 claude-fable-5-high 上榜",
-          "items": [
-            {
-              "text": "claude-fable-5-high 新增至榜单，Elo 分数 1623 (+11/-11) 等",
-              "type": "release"
-            }
-          ]
-        }
-      ],
       "price_changes": [
         {
           "id": "price_ae7ab00d9caacb9bff85434134d92e8377e54e8f2f56dbbf9ed5aba15991e63d",
@@ -9355,6 +9255,106 @@
             "amount"
           ],
           "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "新模型上线与定价调整并行",
+          "items": [
+            {
+              "text": "qwen3.8-omni-flash 上线，支持多模态理解与生成，定价输入0.8元/百万Token、输出2.7元/百万Token（中国内地及全球）",
+              "type": "release"
+            },
+            {
+              "text": "qwen3.8-max、qwen3.7-plus 新增至模型列表，同时 qwen3.5-omni-plus 被移除",
+              "type": "release"
+            },
+            {
+              "text": "qwen3.7-max 输入定价18.736元/百万Token、输出56.207元/百万Token，qwen3.7-plus 输入2.998元、输出11.991元（新定价）",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "Responses API 扩展文件类型支持，新增 MCP 服务器",
+          "items": [
+            {
+              "text": "Responses API 的 input_file 支持扩展至更多文档、演示文稿、表格、代码和文本文件类型",
+              "type": "other"
+            },
+            {
+              "text": "新增 MCP servers 支持",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Compliance API 扩展，博客提出前沿AI发展度量指标",
+          "items": [
+            {
+              "text": "Compliance API 本地会话端点新增返回 Claude 在 Chrome 会话中的转录（beta）",
+              "type": "other"
+            },
+            {
+              "text": "Anthropic 博客提出新指标以衡量前沿AI实验室内部发展速度",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "Imagen 4 关闭，Antigravity Agent 新预览版发布",
+          "items": [
+            {
+              "text": "Imagen 4 状态从 Deprecated 变为 Shut down，正式关闭",
+              "type": "sunset"
+            },
+            {
+              "text": "Antigravity Agent 发布 antigravity-preview-09-2026，取代并弃用 antigravity-preview-05-2026（2026-10-05 关闭）",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "新增技术报告，定价页更新",
+          "items": [
+            {
+              "text": "新增 Command A Translate 和 North Small Translate 技术报告",
+              "type": "other"
+            },
+            {
+              "text": "定价页更新，移除 $4,300 相关价格信息",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "发布能力指数 v1.1，更新模型列表",
+          "items": [
+            {
+              "text": "发布 Artificial Analysis Capability Indices v1.1",
+              "type": "other"
+            },
+            {
+              "text": "模型列表更新，新增 Z AI、Kimi、DeepSeek 等，移除部分旧条目",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "新模型 claude-fable-5-high 上榜",
+          "items": [
+            {
+              "text": "claude-fable-5-high 新增至榜单，Elo 分数 1623 (+11/-11) 等",
+              "type": "release"
+            }
+          ]
         }
       ]
     },
@@ -10662,102 +10662,6 @@
           "error": "提取后内容过短 (raw_len=15373)"
         }
       ],
-      "highlights": [
-        {
-          "platform": "Google Gemini API",
-          "logo_summary": "Gemini 3.8 Live 系列 GA，语音模型换代",
-          "items": [
-            {
-              "text": "Gemini 3.8 Live 与 Gemini 3.8 Live Extended Thinking 正式 GA，新增两个 audio-to-audio 实时语音模型",
-              "type": "release"
-            },
-            {
-              "text": "Gemini 3.8 Live 成为默认低延迟语音模型，Extended Thinking 支持高推理需求场景",
-              "type": "release"
-            },
-            {
-              "text": "定价页更新，Gemini 3.8 Live 系列与 3.1 Flash Live Preview 并列，旧 Live 预览模型标记为 Legacy",
-              "type": "pricing"
-            }
-          ]
-        },
-        {
-          "platform": "百度千帆",
-          "logo_summary": "DeepSeek-V4.1-Flash 上架，GLM-5.2 限时优惠",
-          "items": [
-            {
-              "text": "DeepSeek-V4.1-Flash 新增至模型列表，552B 总参数 MoE 轻量旗舰，支持原生多模态视觉",
-              "type": "release"
-            },
-            {
-              "text": "GLM-5.2 空闲时段限时活动，9月21日20点恢复原价",
-              "type": "pricing"
-            }
-          ]
-        },
-        {
-          "platform": "Kimi",
-          "logo_summary": "Batch API 全量开放，K2.6 发布，多项功能更新",
-          "items": [
-            {
-              "text": "Batch API 面向全量用户开放，大批量异步推理成本更低",
-              "type": "release"
-            },
-            {
-              "text": "Kimi K2.6 发布并通过开放平台 API 提供",
-              "type": "release"
-            },
-            {
-              "text": "Context Caching 全量放开，Cache 续期不再收取创建费用",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "Anthropic",
-          "logo_summary": "Messages API 新增对话压缩功能（beta）",
-          "items": [
-            {
-              "text": "Messages API 支持按需压缩对话，需使用 compact-2026-09-04 beta header",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "Google Vertex AI",
-          "logo_summary": "模型列表页更新，无实质模型变化",
-          "items": [
-            {
-              "text": "Vertex AI 模型列表页更新时间更新至 2026-09-15，无新增或下线模型",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "Artificial Analysis",
-          "logo_summary": "智能指数更新，新增 K2 Horizon 与 Qwen3.8 Max 评测",
-          "items": [
-            {
-              "text": "Intelligence Index v4.3 更新，Terminal-Bench 升级至 4.0，新增 AutomationBench-AA",
-              "type": "other"
-            },
-            {
-              "text": "新增 K2 Horizon 375B A23B 与 Qwen3.8 Max (0902) 模型评测",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "LMArena",
-          "logo_summary": "hidream-o1-video 模型版本更新",
-          "items": [
-            {
-              "text": "hidream-o1-video-1.0 替代 hidream-o1-video 进入榜单，得分 1452",
-              "type": "release"
-            }
-          ]
-        }
-      ],
       "price_changes": [
         {
           "id": "price_358d3ea6a3d3efe5eeb824e2a47d01c559942cd7015165ad73d7700f660f81ce",
@@ -11343,6 +11247,102 @@
             "amount"
           ],
           "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "Gemini 3.8 Live 系列 GA，语音模型换代",
+          "items": [
+            {
+              "text": "Gemini 3.8 Live 与 Gemini 3.8 Live Extended Thinking 正式 GA，新增两个 audio-to-audio 实时语音模型",
+              "type": "release"
+            },
+            {
+              "text": "Gemini 3.8 Live 成为默认低延迟语音模型，Extended Thinking 支持高推理需求场景",
+              "type": "release"
+            },
+            {
+              "text": "定价页更新，Gemini 3.8 Live 系列与 3.1 Flash Live Preview 并列，旧 Live 预览模型标记为 Legacy",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "百度千帆",
+          "logo_summary": "DeepSeek-V4.1-Flash 上架，GLM-5.2 限时优惠",
+          "items": [
+            {
+              "text": "DeepSeek-V4.1-Flash 新增至模型列表，552B 总参数 MoE 轻量旗舰，支持原生多模态视觉",
+              "type": "release"
+            },
+            {
+              "text": "GLM-5.2 空闲时段限时活动，9月21日20点恢复原价",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Kimi",
+          "logo_summary": "Batch API 全量开放，K2.6 发布，多项功能更新",
+          "items": [
+            {
+              "text": "Batch API 面向全量用户开放，大批量异步推理成本更低",
+              "type": "release"
+            },
+            {
+              "text": "Kimi K2.6 发布并通过开放平台 API 提供",
+              "type": "release"
+            },
+            {
+              "text": "Context Caching 全量放开，Cache 续期不再收取创建费用",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Messages API 新增对话压缩功能（beta）",
+          "items": [
+            {
+              "text": "Messages API 支持按需压缩对话，需使用 compact-2026-09-04 beta header",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "模型列表页更新，无实质模型变化",
+          "items": [
+            {
+              "text": "Vertex AI 模型列表页更新时间更新至 2026-09-15，无新增或下线模型",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "智能指数更新，新增 K2 Horizon 与 Qwen3.8 Max 评测",
+          "items": [
+            {
+              "text": "Intelligence Index v4.3 更新，Terminal-Bench 升级至 4.0，新增 AutomationBench-AA",
+              "type": "other"
+            },
+            {
+              "text": "新增 K2 Horizon 375B A23B 与 Qwen3.8 Max (0902) 模型评测",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "hidream-o1-video 模型版本更新",
+          "items": [
+            {
+              "text": "hidream-o1-video-1.0 替代 hidream-o1-video 进入榜单，得分 1452",
+              "type": "release"
+            }
+          ]
         }
       ]
     },
@@ -12667,6 +12667,34 @@
           "error": "提取后内容过短 (raw_len=11071)"
         }
       ],
+      "price_changes": [
+        {
+          "provider": "google",
+          "model": "gemini-2.5-computer-use-preview",
+          "component": "input",
+          "previous": "1.250000",
+          "current": "1.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "provider": "google",
+          "model": "gemini-2.5-computer-use-preview",
+          "component": "output",
+          "previous": "10.000000",
+          "current": "5.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        }
+      ],
       "highlights": [
         {
           "platform": "OpenAI",
@@ -12771,34 +12799,6 @@
               "type": "other"
             }
           ]
-        }
-      ],
-      "price_changes": [
-        {
-          "provider": "google",
-          "model": "gemini-2.5-computer-use-preview",
-          "component": "input",
-          "previous": "1.250000",
-          "current": "1.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
-        },
-        {
-          "provider": "google",
-          "model": "gemini-2.5-computer-use-preview",
-          "component": "output",
-          "previous": "10.000000",
-          "current": "5.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
         }
       ]
     },
@@ -13818,130 +13818,6 @@
       ],
       "first_fetch": [],
       "failed": [],
-      "highlights": [
-        {
-          "platform": "DeepSeek",
-          "logo_summary": "V4.1 Flash全面接管，V4 Pro有序下线",
-          "items": [
-            {
-              "text": "DeepSeek 发布 DeepSeek-V4.1-Flash，旧模型名 deepseek-v4-flash、deepseek-v4-flash-vision-exp 仍可调用但已下线，请求由 V4.1-Flash 按 Flash 价格计费",
-              "type": "release"
-            },
-            {
-              "text": "2026-09-14 12:00 起 deepseek-v4-pro 请求将全部路由到 V4.1-Flash，V4 Pro 有序下线",
-              "type": "sunset"
-            },
-            {
-              "text": "DeepSeek 定价更新：deepseek-flash 输入 0.15-0.30 USD/百万tokens，输出 0.60-1.20 USD/百万tokens；deepseek-v4-pro 输入 0.66-1.32 USD/百万tokens，输出 1.98-3.96 USD/百万tokens",
-              "type": "pricing"
-            }
-          ]
-        },
-        {
-          "platform": "OpenAI",
-          "logo_summary": "GPT-Live 1 正式可用，语音功能全面铺开",
-          "items": [
-            {
-              "text": "GPT-Live 1 在 API 中正式可用（GA），支持全双工语音对话，可边推理边对话",
-              "type": "release"
-            },
-            {
-              "text": "新增 Audio in Chat Completions、Audio processing、Custom voices、Live transcription 等语音相关功能与文档",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "硅基流动",
-          "logo_summary": "Qwen3.8-27B 上架，生图API多项调整",
-          "items": [
-            {
-              "text": "Qwen3.5-27B 升级为 Qwen3.8-27B，定价随之更新",
-              "type": "release"
-            },
-            {
-              "text": "2026-09-15 起对话模型忽略 repetition_penalty 参数，固定按 1 处理",
-              "type": "other"
-            },
-            {
-              "text": "2026-09-30 生图 API 下线 batch_size 字段，默认添加『AI 生成』水印",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "Cohere",
-          "logo_summary": "North 系列新增代码与翻译模型",
-          "items": [
-            {
-              "text": "Cohere 新增 North Mini Code（30B 总参/3B 激活 MoE，面向 agentic coding）和 North Small Translate（218B 总参/25B 激活 MoE，面向机器翻译）",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "Anthropic",
-          "logo_summary": "Claude 安全与治理更新，Managed Agents 增强",
-          "items": [
-            {
-              "text": "Claude Managed Agents 权限策略新增 auto 模式，可自动执行或暂停等待审批",
-              "type": "other"
-            },
-            {
-              "text": "ant CLI 新增 beta:sessions connect，可实时连接并操作 Managed Agents 会话",
-              "type": "other"
-            },
-            {
-              "text": "Anthropic 发布 9 月安全报告，披露检测和反制 AI 滥用的最新进展",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "百度千帆",
-          "logo_summary": "新增百度AI助手与智能搜索生成产品",
-          "items": [
-            {
-              "text": "百度千帆新增『产品简介-百度AI助手与智能搜索生成』，覆盖模型列表、定价、更新日志与博客",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "Mistral AI",
-          "logo_summary": "与Cloudera合作，发布Spaces CLI",
-          "items": [
-            {
-              "text": "Mistral 与 Cloudera 达成合作，为企业数据提供主权 AI 方案",
-              "type": "other"
-            },
-            {
-              "text": "发布 Spaces：面向人类与 Agent 的 CLI 工具",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "Google Gemini API",
-          "logo_summary": "Gemini 应用登陆 Windows",
-          "items": [
-            {
-              "text": "Gemini 应用现可在 Windows 上使用",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "火山方舟",
-          "logo_summary": "下架联网内容插件",
-          "items": [
-            {
-              "text": "火山方舟移除 Web Search（联网内容插件）",
-              "type": "sunset"
-            }
-          ]
-        }
-      ],
       "price_changes": [
         {
           "provider": "deepseek",
@@ -14086,6 +13962,130 @@
             "amount"
           ],
           "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "DeepSeek",
+          "logo_summary": "V4.1 Flash全面接管，V4 Pro有序下线",
+          "items": [
+            {
+              "text": "DeepSeek 发布 DeepSeek-V4.1-Flash，旧模型名 deepseek-v4-flash、deepseek-v4-flash-vision-exp 仍可调用但已下线，请求由 V4.1-Flash 按 Flash 价格计费",
+              "type": "release"
+            },
+            {
+              "text": "2026-09-14 12:00 起 deepseek-v4-pro 请求将全部路由到 V4.1-Flash，V4 Pro 有序下线",
+              "type": "sunset"
+            },
+            {
+              "text": "DeepSeek 定价更新：deepseek-flash 输入 0.15-0.30 USD/百万tokens，输出 0.60-1.20 USD/百万tokens；deepseek-v4-pro 输入 0.66-1.32 USD/百万tokens，输出 1.98-3.96 USD/百万tokens",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "GPT-Live 1 正式可用，语音功能全面铺开",
+          "items": [
+            {
+              "text": "GPT-Live 1 在 API 中正式可用（GA），支持全双工语音对话，可边推理边对话",
+              "type": "release"
+            },
+            {
+              "text": "新增 Audio in Chat Completions、Audio processing、Custom voices、Live transcription 等语音相关功能与文档",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "Qwen3.8-27B 上架，生图API多项调整",
+          "items": [
+            {
+              "text": "Qwen3.5-27B 升级为 Qwen3.8-27B，定价随之更新",
+              "type": "release"
+            },
+            {
+              "text": "2026-09-15 起对话模型忽略 repetition_penalty 参数，固定按 1 处理",
+              "type": "other"
+            },
+            {
+              "text": "2026-09-30 生图 API 下线 batch_size 字段，默认添加『AI 生成』水印",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "North 系列新增代码与翻译模型",
+          "items": [
+            {
+              "text": "Cohere 新增 North Mini Code（30B 总参/3B 激活 MoE，面向 agentic coding）和 North Small Translate（218B 总参/25B 激活 MoE，面向机器翻译）",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Claude 安全与治理更新，Managed Agents 增强",
+          "items": [
+            {
+              "text": "Claude Managed Agents 权限策略新增 auto 模式，可自动执行或暂停等待审批",
+              "type": "other"
+            },
+            {
+              "text": "ant CLI 新增 beta:sessions connect，可实时连接并操作 Managed Agents 会话",
+              "type": "other"
+            },
+            {
+              "text": "Anthropic 发布 9 月安全报告，披露检测和反制 AI 滥用的最新进展",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "百度千帆",
+          "logo_summary": "新增百度AI助手与智能搜索生成产品",
+          "items": [
+            {
+              "text": "百度千帆新增『产品简介-百度AI助手与智能搜索生成』，覆盖模型列表、定价、更新日志与博客",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Mistral AI",
+          "logo_summary": "与Cloudera合作，发布Spaces CLI",
+          "items": [
+            {
+              "text": "Mistral 与 Cloudera 达成合作，为企业数据提供主权 AI 方案",
+              "type": "other"
+            },
+            {
+              "text": "发布 Spaces：面向人类与 Agent 的 CLI 工具",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "Gemini 应用登陆 Windows",
+          "items": [
+            {
+              "text": "Gemini 应用现可在 Windows 上使用",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "下架联网内容插件",
+          "items": [
+            {
+              "text": "火山方舟移除 Web Search（联网内容插件）",
+              "type": "sunset"
+            }
+          ]
         }
       ]
     },
@@ -14550,6 +14550,47 @@
           "error": "提取后内容过短 (raw_len=11071)"
         }
       ],
+      "price_changes": [
+        {
+          "provider": "glm",
+          "model": "glm-5.3-flash",
+          "component": "input",
+          "previous": "0.400000",
+          "current": "0.800000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-5.3-flash",
+          "component": "output",
+          "previous": "1.400000",
+          "current": "2.800000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        },
+        {
+          "provider": "glm",
+          "model": "glm-5.3-flash",
+          "component": "cache_read",
+          "previous": "0.115000",
+          "current": "0.230000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://open.bigmodel.cn/pricing"
+        }
+      ],
       "highlights": [
         {
           "platform": "百度千帆",
@@ -14642,47 +14683,6 @@
               "type": "other"
             }
           ]
-        }
-      ],
-      "price_changes": [
-        {
-          "provider": "glm",
-          "model": "glm-5.3-flash",
-          "component": "input",
-          "previous": "0.400000",
-          "current": "0.800000",
-          "currency": "CNY",
-          "unit": "per_1m_tokens",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://open.bigmodel.cn/pricing"
-        },
-        {
-          "provider": "glm",
-          "model": "glm-5.3-flash",
-          "component": "output",
-          "previous": "1.400000",
-          "current": "2.800000",
-          "currency": "CNY",
-          "unit": "per_1m_tokens",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://open.bigmodel.cn/pricing"
-        },
-        {
-          "provider": "glm",
-          "model": "glm-5.3-flash",
-          "component": "cache_read",
-          "previous": "0.115000",
-          "current": "0.230000",
-          "currency": "CNY",
-          "unit": "per_1m_tokens",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://open.bigmodel.cn/pricing"
         }
       ]
     },
@@ -15033,6 +15033,73 @@
           "error": "提取后内容过短 (raw_len=11071)"
         }
       ],
+      "price_changes": [
+        {
+          "provider": "google",
+          "model": "gemini-robotics-er-2-preview",
+          "component": "input",
+          "previous": "2.000000",
+          "current": "1.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "provider": "google",
+          "model": "gemini-robotics-er-2-preview",
+          "component": "output",
+          "previous": "10.000000",
+          "current": "5.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "provider": "google",
+          "model": "gemini-robotics-er-2-preview",
+          "component": "cache_read",
+          "previous": "1.000000",
+          "current": "0.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "provider": "google",
+          "model": "gemini-robotics-er-2-streaming-preview",
+          "component": "input",
+          "previous": "2.000000",
+          "current": "1.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "provider": "google",
+          "model": "gemini-robotics-er-2-streaming-preview",
+          "component": "output",
+          "previous": "10.000000",
+          "current": "5.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        }
+      ],
       "highlights": [
         {
           "platform": "OpenAI",
@@ -15105,73 +15172,6 @@
               "type": "other"
             }
           ]
-        }
-      ],
-      "price_changes": [
-        {
-          "provider": "google",
-          "model": "gemini-robotics-er-2-preview",
-          "component": "input",
-          "previous": "2.000000",
-          "current": "1.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
-        },
-        {
-          "provider": "google",
-          "model": "gemini-robotics-er-2-preview",
-          "component": "output",
-          "previous": "10.000000",
-          "current": "5.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
-        },
-        {
-          "provider": "google",
-          "model": "gemini-robotics-er-2-preview",
-          "component": "cache_read",
-          "previous": "1.000000",
-          "current": "0.500000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
-        },
-        {
-          "provider": "google",
-          "model": "gemini-robotics-er-2-streaming-preview",
-          "component": "input",
-          "previous": "2.000000",
-          "current": "1.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
-        },
-        {
-          "provider": "google",
-          "model": "gemini-robotics-er-2-streaming-preview",
-          "component": "output",
-          "previous": "10.000000",
-          "current": "5.000000",
-          "currency": "USD",
-          "unit": "per_1m_tokens",
-          "changed_fields": [
-            "amount"
-          ],
-          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
         }
       ]
     },
@@ -15733,74 +15733,6 @@
           "error": "提取后内容过短 (raw_len=4606)"
         }
       ],
-      "highlights": [
-        {
-          "platform": "Mistral AI",
-          "logo_summary": "完成30亿欧元融资，估值超210亿欧元",
-          "items": [
-            {
-              "text": "Mistral 宣布完成 30 亿欧元 D 轮融资，投后估值超 210 亿欧元，用于推动开源权重 AI 技术发展。",
-              "type": "other"
-            }
-          ]
-        },
-        {
-          "platform": "MiniMax",
-          "logo_summary": "语音模型定价文档全面更新",
-          "items": [
-            {
-              "text": "MiniMax 语音合成 T2A 系列（speech-2.8-hd/turbo）定价保持 3.50/2.00 元每万字符，但文档描述大幅精简。",
-              "type": "pricing"
-            },
-            {
-              "text": "新增语音识别 Speech-to-Text 计费项，定价 2.50 元每万字符，支持流式返回、说话人分离与字幕导出。",
-              "type": "release"
-            },
-            {
-              "text": "Voice Cloning 与 Voice Design 明确计费规则：生成音色不立即收费，首次合成时按 9.90 元/音色计费。",
-              "type": "pricing"
-            }
-          ]
-        },
-        {
-          "platform": "智谱AI",
-          "logo_summary": "下架两款对话/情感模型",
-          "items": [
-            {
-              "text": "智谱AI 从模型列表中移除 CharGLM-4 拟人对话模型与 Emohaa 心理情感支持模型。",
-              "type": "sunset"
-            }
-          ]
-        },
-        {
-          "platform": "xAI",
-          "logo_summary": "API 文档大规模重构，新增多项功能",
-          "items": [
-            {
-              "text": "xAI API 文档新增 Chat Completions (Legacy)、Generated Media、Image Understanding 等章节，并预告 Imagine Image Quality 将于 2026 年 11 月 2 日退役。",
-              "type": "other"
-            },
-            {
-              "text": "xAI 发布 Batch API，支持 JSONL 文件上传及图像/视频生成，并对所有客户开放。",
-              "type": "release"
-            },
-            {
-              "text": "xAI 新增 Adjustable VAD threshold for Speech to Text 功能，Agent 工具适配 Grok 4.1 Fast 模型且工具价格下调。",
-              "type": "release"
-            }
-          ]
-        },
-        {
-          "platform": "Artificial Analysis",
-          "logo_summary": "发布 Intelligence Index v4.3 基准",
-          "items": [
-            {
-              "text": "Artificial Analysis 发布 Intelligence Index v4.3，用 AutomationBench-AA 替换 𝜏³-Banking，并升级 Terminal-Bench 至 v4.0。",
-              "type": "other"
-            }
-          ]
-        }
-      ],
       "price_changes": [
         {
           "provider": "glm",
@@ -16065,6 +15997,74 @@
             "amount"
           ],
           "evidence_url": "https://open.bigmodel.cn/pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Mistral AI",
+          "logo_summary": "完成30亿欧元融资，估值超210亿欧元",
+          "items": [
+            {
+              "text": "Mistral 宣布完成 30 亿欧元 D 轮融资，投后估值超 210 亿欧元，用于推动开源权重 AI 技术发展。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "MiniMax",
+          "logo_summary": "语音模型定价文档全面更新",
+          "items": [
+            {
+              "text": "MiniMax 语音合成 T2A 系列（speech-2.8-hd/turbo）定价保持 3.50/2.00 元每万字符，但文档描述大幅精简。",
+              "type": "pricing"
+            },
+            {
+              "text": "新增语音识别 Speech-to-Text 计费项，定价 2.50 元每万字符，支持流式返回、说话人分离与字幕导出。",
+              "type": "release"
+            },
+            {
+              "text": "Voice Cloning 与 Voice Design 明确计费规则：生成音色不立即收费，首次合成时按 9.90 元/音色计费。",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "智谱AI",
+          "logo_summary": "下架两款对话/情感模型",
+          "items": [
+            {
+              "text": "智谱AI 从模型列表中移除 CharGLM-4 拟人对话模型与 Emohaa 心理情感支持模型。",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "API 文档大规模重构，新增多项功能",
+          "items": [
+            {
+              "text": "xAI API 文档新增 Chat Completions (Legacy)、Generated Media、Image Understanding 等章节，并预告 Imagine Image Quality 将于 2026 年 11 月 2 日退役。",
+              "type": "other"
+            },
+            {
+              "text": "xAI 发布 Batch API，支持 JSONL 文件上传及图像/视频生成，并对所有客户开放。",
+              "type": "release"
+            },
+            {
+              "text": "xAI 新增 Adjustable VAD threshold for Speech to Text 功能，Agent 工具适配 Grok 4.1 Fast 模型且工具价格下调。",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "发布 Intelligence Index v4.3 基准",
+          "items": [
+            {
+              "text": "Artificial Analysis 发布 Intelligence Index v4.3，用 AutomationBench-AA 替换 𝜏³-Banking，并升级 Terminal-Bench 至 v4.0。",
+              "type": "other"
+            }
+          ]
         }
       ]
     },

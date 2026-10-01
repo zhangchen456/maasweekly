@@ -37,11 +37,13 @@ from datetime import datetime
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(BASE / 'pipeline'))
+from data_store import DAILY, WEEKLY, compose_daily, compose_weekly, save_day_summaries, save_weekly, project_site, provenance, record_summary_failure, SUMMARIES
 sys.path.insert(0, str(BASE / "pipeline" / "scripts"))
 from diff_clean import filter_and_pair, humanize_line  # noqa: E402
 
 DIFF_DIR = BASE / "data" / "diff"
-DST_FILE = BASE / "site" / "src" / "data" / "daily_changes.json"
+DST_FILE = BASE / DAILY
 
 DEFAULT_BASE_URL = "https://maas-api.cn-huabei-1.xf-yun.com/v2"
 DEFAULT_MODEL = "xopdeepseekv4flash0731"
@@ -229,7 +231,7 @@ def main():
         print("daily_changes.json 不存在，请先跑 sync-diff-to-site.py")
         return
 
-    data = json.loads(DST_FILE.read_text(encoding="utf-8"))
+    data = compose_daily(BASE)
     days = data.get("days", [])
 
     # 参数：指定日期 or --all or 默认最新一天
@@ -248,7 +250,7 @@ def main():
         # 最新一天在 CI（GITHUB_ACTIONS）默认重跑：每日 run 中 price_changes 可能在
         # 早间 highlights 之后写入（如手动重跑 fetch-prices），刷新以纳入价格事件；
         # 本地行为不变（已有 highlights 跳过，避免误覆盖人工修正）
-        rerun_latest = (not latest.get("highlights")) or force or bool(os.environ.get("GITHUB_ACTIONS"))
+        rerun_latest = (not latest or not latest.get("highlights")) or force or bool(os.environ.get("GITHUB_ACTIONS"))
         targets = [latest] if latest and rerun_latest else []
 
     if not targets:
@@ -256,11 +258,15 @@ def main():
         return
 
     print(f"待处理 {len(targets)} 天: {[d['date'] for d in targets]}")
+    metadata = {}
     for day in targets:
         print(f"\n[{day['date']}]")
         result = process_day(day, api_key, base_url, model)
         if result is None:
+            record_summary_failure(BASE, SUMMARIES, day["date"], model)
             continue  # 失败降级：不写 highlights，前端用规则版预览
+        inputs = {"changed": [c for c in day.get("changed", []) if c.get("kind") == "substantive"][:MAX_SOURCES], "price_changes": day.get("price_changes", [])[:20]}
+        metadata[day["date"]] = provenance(inputs, PROMPT, model, build_day_prompt(day["date"], inputs["changed"], inputs["price_changes"]))
         day["highlights"] = result["highlights"]
         # 信源级解读挂到对应 changed 条目上（按 platform|source_type 匹配）
         summaries = result["source_summaries"]
@@ -274,7 +280,8 @@ def main():
                 print(f"  • [{item['type']}] {h['platform']}: {item['text'][:60]}")
 
     data["updated_at"] = datetime.now().isoformat(timespec="seconds")
-    DST_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    save_day_summaries(BASE, days, metadata)
+    project_site(BASE)
     print(f"\ndaily_changes.json 已更新 -> {DST_FILE}")
 
 

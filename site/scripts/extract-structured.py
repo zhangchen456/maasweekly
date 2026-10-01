@@ -13,12 +13,15 @@
   六、已报道事件索引 -> event_index (- [date] ... 列表)
 """
 import json
+import sys
 import re
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent
-SRC_DIR = BASE / "src" / "content" / "weekly"
-DST_DIR = BASE / "src" / "content" / "weekly-structured"
+sys.path.insert(0, str(BASE.parent / 'pipeline'))
+from data_store import EDITORIAL, STRUCTURED, project_site
+SRC_DIR = BASE.parent / EDITORIAL
+DST_DIR = BASE.parent / STRUCTURED
 DST_DIR.mkdir(parents=True, exist_ok=True)
 
 # 状态 emoji -> 语义
@@ -391,6 +394,7 @@ def main():
     print(f"\nDone: {count} reports extracted to {DST_DIR}")
 
     build_timeline()
+    project_site(BASE.parent)
 
 
 def parse_event_date(text, report_date):
@@ -488,7 +492,7 @@ def build_timeline():
             "events": by_date[date],
         })
 
-    out_path = BASE / "src" / "content" / "timeline.json"
+    out_path = BASE.parent / "data" / "derived" / "timeline.json"
     out_path.write_text(
         json.dumps(timeline, ensure_ascii=False, indent=2), encoding="utf-8"
     )

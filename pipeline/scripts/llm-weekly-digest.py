@@ -28,6 +28,8 @@ from pathlib import Path
 import importlib.util
 
 BASE = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(BASE / 'pipeline'))
+from data_store import DAILY, WEEKLY, compose_daily, compose_weekly, save_day_summaries, save_week_summaries, project_site, provenance, record_summary_failure, WEEK_SUMMARIES
 # llm-digest.py 文件名带连字符，不能直接 import，用 importlib 挂载复用 llm_call
 _spec = importlib.util.spec_from_file_location(
     "llm_digest", BASE / "pipeline" / "scripts" / "llm-digest.py")
@@ -36,8 +38,8 @@ sys.modules["llm_digest"] = _mod
 _spec.loader.exec_module(_mod)
 llm_call = _mod.llm_call
 
-WEEKLY_FILE = BASE / "site" / "src" / "data" / "weekly-digest.json"
-DAILY_FILE = BASE / "site" / "src" / "data" / "daily_changes.json"
+WEEKLY_FILE = BASE / WEEKLY
+DAILY_FILE = BASE / DAILY
 REQUEST_TIMEOUT = 180
 
 MAX_DAYS = 7                  # 一周最多 7 天
@@ -113,10 +115,10 @@ def main():
         print("weekly-digest.json 不存在，请先跑 sync-diff-to-site.py")
         return
 
-    weekly = json.loads(WEEKLY_FILE.read_text(encoding="utf-8"))
+    weekly = compose_weekly(BASE)
     days_by_date = {}
     if DAILY_FILE.exists():
-        for d in json.loads(DAILY_FILE.read_text(encoding="utf-8")).get("days", []):
+        for d in compose_daily(BASE).get("days", []):
             days_by_date[d["date"]] = d
 
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -144,6 +146,7 @@ def main():
         return
 
     print(f"待处理 {len(targets)} 周: {[w['week'] for w in targets]}")
+    metadata = {}
     changed = False
     for week in targets:
         print(f"\n[{week['week']}]")
@@ -156,8 +159,11 @@ def main():
                            prompt)
             story = parse_story(raw)
         except Exception as e:  # noqa: BLE001
-            print(f"  ✗ LLM 调用/解析失败，跳过: {e}")
+            record_summary_failure(BASE, WEEK_SUMMARIES, week["week"], os.environ.get("LLM_MODEL", "xopdeepseekv4flash0731"))
+            print("  ✗ LLM 调用/解析失败，跳过；详情保留在本地运行日志")
             continue
+        refs = [c for date in sorted(week["days"])[:MAX_DAYS] for c in [x for x in days_by_date.get(date, {}).get("changed", []) if x.get("kind") == "substantive"][:MAX_PREVIEW_PER_DAY]]
+        metadata[week["week"]] = provenance({"changed": refs}, PROMPT, os.environ.get("LLM_MODEL", "xopdeepseekv4flash0731"), prompt)
         week["story"] = story
         changed = True
         print(f"  主题: {story['theme']}")
@@ -165,7 +171,8 @@ def main():
         print(f"  {preview[0].get('title', '')} {preview[0].get('body', '')[:100]}...")
 
     if changed:
-        WEEKLY_FILE.write_text(json.dumps(weekly, ensure_ascii=False, indent=2), encoding="utf-8")
+        save_week_summaries(BASE, weekly, metadata)
+        project_site(BASE)
         print(f"\nweekly-digest.json 已更新 -> {WEEKLY_FILE}")
     else:
         print("\n无更新")

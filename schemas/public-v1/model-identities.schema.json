@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daily.maas.click/schemas/public-v1/model-identities.schema.json",
+  "title": "Release-frozen public model identity catalog",
+  "type": "object",
+  "required": ["models", "families"],
+  "properties": {
+    "models": {"type": "array", "items": {"type": "object", "required": ["modelId", "modelName"], "properties": {
+      "modelId": {"type": "string", "pattern": "^[a-z0-9-]+:[a-z0-9.-]+$"}, "modelName": {"type": "string"},
+      "familyId": {"type": "string"}, "familyName": {"type": "string"}
+    }, "additionalProperties": false}},
+    "families": {"type": "array", "items": {"type": "object", "required": ["familyId", "familyName"], "properties": {
+      "familyId": {"type": "string", "pattern": "^[a-z0-9-]+:[a-z0-9.-]+$"}, "familyName": {"type": "string"}
+    }, "additionalProperties": false}}
+  },
+  "additionalProperties": false
+}
