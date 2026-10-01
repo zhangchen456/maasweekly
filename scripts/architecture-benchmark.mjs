@@ -3,6 +3,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
+import { Writable } from 'node:stream';
+import { JsonlLogger, instrumentRequest } from '../services/agent-api/dist/observability.js';
 import http from 'node:http';
 import { createHash } from 'node:crypto';
 import { performance, monitorEventLoopDelay } from 'node:perf_hooks';
@@ -65,7 +67,7 @@ function makeSample(source, target, factor) {
 async function sample(factor) {
   const source = path.join(repo, 'data/public/v1');
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'maas-capacity-'));
-  let server;
+  let server, logger;
   try {
     const sampleMeta = factor === 1 ? { factor, synthetic: false } : makeSample(source, temp, factor);
     const root = factor === 1 ? source : temp;
@@ -93,7 +95,8 @@ async function sample(factor) {
       '/api/v1/prices?limit=100', `/api/v1/prices?provider=${provider}&component=input&limit=100`,
       `/api/v1/prices?modelId=${encodeURIComponent(model)}&limit=100`, '/api/v1/prices?q=pro&limit=100',
     ];
-    server = http.createServer(createHandler(holder, { rateLimit: { capacity: 1000000, refillPerMinute: 1000000 } }));
+    logger = args.includes('--diagnostics') ? new JsonlLogger(new Writable({ write(_chunk, _enc, done) { done(); } })) : undefined;
+    server = http.createServer(instrumentRequest(createHandler(holder, { rateLimit: { capacity: 1000000, refillPerMinute: 1000000 } }), holder, 'local', logger?.emit));
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
     const base = `http://127.0.0.1:${server.address().port}`;
     for (const query of queries) await (await fetch(base + query)).arrayBuffer();
@@ -173,9 +176,10 @@ async function sample(factor) {
       counts: { changes: ds.changes.length, prices: ds.prices.length, evidence: ds.evidenceById.size },
       loader: 'worker-stream-200', holderMetrics: holder.metrics, cacheState: holder.cacheState, load: stats(loads), sameVersionReload: stats(reloads), reloadEventLoop: { elapsedMs: reloadMs, maxMs: delay.max / 1e6 },
       reloadTraffic: { requests: reloadTraffic.length, p95Ms: percentile(reloadTraffic, .95), p99Ms: percentile(reloadTraffic, .99), allSuccessful: true },
-      historicalLoad, throughput, paging, limiterStatuses: rateStatuses, steadyMemory, finalMemory: process.memoryUsage() };
+      diagnostics: { enabled: Boolean(logger), output: 'discard writable; serialization and queue active', logger: logger?.state ?? null }, historicalLoad, throughput, paging, limiterStatuses: rateStatuses, steadyMemory, finalMemory: process.memoryUsage() };
   } finally {
     if (server) { server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); }
+    await logger?.close();
     fs.rmSync(temp, { recursive: true, force: true });
   }
 }

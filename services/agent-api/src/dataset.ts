@@ -481,6 +481,8 @@ export class DatasetHolder {
   #retained = new Map<string, Dataset>();
   #root: string;
   #generation = 0;
+  #requestSequence = 0;
+  #latestCandidateRequest = 0;
   #closed = false;
   #abort = new AbortController();
   #jobs = new Map<string, Promise<Dataset>>();
@@ -531,6 +533,7 @@ export class DatasetHolder {
 
   /** Explicit synchronous verification remains available for offline callers/tests. */
   reload(): boolean {
+    this.#latestCandidateRequest = ++this.#requestSequence;
     this.#generation++;
     try {
       if (this.#closed) throw new DatasetError('holder closed');
@@ -566,13 +569,17 @@ export class DatasetHolder {
 
   /** Poll only metadata; SIGHUP passes force=true to reverify an immutable version. */
   async reloadAsync({ force = false }: { force?: boolean } = {}): Promise<ReloadResult> {
-    const generation = ++this.#generation;
+    const request = ++this.#requestSequence;
+    let generation = this.#generation;
     try {
       if (this.#closed) throw new DatasetError('holder closed');
       const manifest = await this.manifest();
+      if (this.#closed) return 'superseded';
       if (manifest.datasetVersion === this.#current?.version && !force) {
         this.metrics.unchangedPolls++; return 'unchanged';
       }
+      if (this.#closed || request < this.#latestCandidateRequest) return 'superseded';
+      this.#latestCandidateRequest = request; generation = ++this.#generation;
       const ds = await this.load(manifest);
       const latest = await this.manifest();
       if (generation !== this.#generation || this.#closed || latest.datasetVersion !== ds.version) return 'superseded';

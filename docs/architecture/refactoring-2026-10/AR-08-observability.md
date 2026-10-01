@@ -1,6 +1,6 @@
 # AR-08：运行指标与容量决策
 
-状态：TODO。优先级：P1 基础、P2 完善。依赖：AR-01；随 AR-02/04/05 接入。
+状态：IN_PROGRESS；基础指标 LOCAL_VERIFIED（见 AR-08-foundation-result.md），后续来源/发布集成和容量复核待完成。优先级：P1 基础、P2 完善。依赖：AR-01；随 AR-02/04/05 接入。
 
 ## 目标与边界
 

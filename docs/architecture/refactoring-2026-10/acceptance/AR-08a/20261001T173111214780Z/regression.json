@@ -1,0 +1,20 @@
+{
+  "task": "AR-08a",
+  "startedAt": "2026-10-01T17:31:11.215157+00:00",
+  "completedAt": "2026-10-01T17:36:05.584781+00:00",
+  "commit": "b99b5c7c20109d6034b2ffd75b90225407b317de",
+  "python": "Python 3.12.1",
+  "node": "v22.22.3",
+  "command": [
+    "bash",
+    "scripts/run-all-tests.sh"
+  ],
+  "workingDirectory": "/Users/zhangchen/Work/maasweekly",
+  "retainedStageLogs": [],
+  "exitCode": 0,
+  "elapsedSeconds": 293.9955192500056,
+  "log": "docs/architecture/refactoring-2026-10/acceptance/AR-08a/20261001T173111214780Z/regression.txt",
+  "logSha256": "37247e701d3097eef16832ccc87e94f0094568b48b33f6007d4abf60705bdd22",
+  "initialWorktree": " M ops/maas-agent.env.example\n M scripts/run-all-tests.sh\n M services/agent-api/package.json\n M services/agent-api/src/dataset.ts\n M services/agent-api/src/http.ts\n M services/agent-api/src/mcp-tools.ts\n M services/agent-api/src/server.ts\n M task_plan.md\n?? scripts/architecture-observability.py\n?? services/agent-api/src/observability.ts\n?? services/agent-api/src/tests/observability.test.ts\n?? tests/test_architecture_observability.py\n",
+  "finalWorktree": " M ops/maas-agent.env.example\n M scripts/architecture-benchmark.mjs\n M scripts/run-all-tests.sh\n M services/agent-api/package.json\n M services/agent-api/src/dataset.ts\n M services/agent-api/src/http.ts\n M services/agent-api/src/mcp-tools.ts\n M services/agent-api/src/server.ts\n M task_plan.md\n?? docs/architecture/refactoring-2026-10/acceptance/AR-08a/\n?? docs/architecture/refactoring-2026-10/observability-operations.md\n?? scripts/architecture-diagnostics-smoke.mjs\n?? scripts/architecture-observability.py\n?? services/agent-api/src/observability.ts\n?? services/agent-api/src/tests/observability.test.ts\n?? tests/test_architecture_observability.py\n"
+}

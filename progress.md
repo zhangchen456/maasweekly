@@ -24,3 +24,5 @@ AR-05 干净Python3.12 venv创建和完整锁定依赖安装成功（/tmp/maas-a
 AR-05标准构建完成：候选commit cb03a05b826692546e7e5f1835565bca28ff7c01，fresh Python/clean checkout，完整suite47组通过（322.73s含标准打包），release rl_cb03a05b82_6fd3cc403bf9，24355文件/703621161字节，正式tracked diff gate通过。仓库外实际生产依赖API进程REST/MCP/静态RSS与Skill8文件hash检查通过，无fixture；release-smoke.json及release-build.json归档。源码没有发布，GitHub真实调度/NginxCDN仍待上线窗口。现在build profile session待poll，完成后写AR05result、归档commit并清理本次临时clone/venv（先保留profile所需venv）。之后AR08基础。
 
 AR-05收尾：阶段profile归档，Astro4→2次、API编译5→1次（含生产包）；完整47/47+标准build322.73s，待真实GitHub调度/线上代理验证。AR05-result已写，删除临时clone/release，仅保留venv给后续回归；下一AR08基础。
+
+AR-08基础完成：48/48回归293.996s、真实API启停/未就绪、5项TS诊断与3项离线告警测试通过；1x开关对比并发10 P95 off15.973/on15.324ms，discard Writable未测journal。修复无变化轮询取消强制audit竞态。证据与result归档，整项AR08仍待后续管线发布事件和最终容量复核。下一AR03，已核对23份data/weekly经现有frontmatter渲染与已发布周报字节全部相同；不是直接比较原稿与带frontmatter发布稿。

@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: fixed routes never retain private query, entity or arbitrary path
+ok 1 - fixed routes never retain private query, entity or arbitrary path
+  ---
+  duration_ms: 0.894917
+  type: 'test'
+  ...
+# Subtest: concurrent request contexts report their actual dataset; disabled instrumentation preserves handler
+ok 2 - concurrent request contexts report their actual dataset; disabled instrumentation preserves handler
+  ---
+  duration_ms: 2.884208
+  type: 'test'
+  ...
+# Subtest: logger bounds queued bytes, rejects oversized/cyclic events and tolerates broken streams
+ok 3 - logger bounds queued bytes, rejects oversized/cyclic events and tolerates broken streams
+  ---
+  duration_ms: 1010.921375
+  type: 'test'
+  ...
+# Subtest: readiness is independent of stale freshness
+ok 4 - readiness is independent of stale freshness
+  ---
+  duration_ms: 0.274042
+  type: 'test'
+  ...
+# Subtest: an unchanged poll cannot invalidate an in-flight forced audit
+ok 5 - an unchanged poll cannot invalidate an in-flight forced audit
+  ---
+  duration_ms: 7.759584
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1074.298625

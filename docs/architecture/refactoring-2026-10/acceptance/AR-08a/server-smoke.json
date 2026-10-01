@@ -1,0 +1,178 @@
+{
+  "measuredAt": "2026-10-01T17:35:00.764Z",
+  "reports": [
+    {
+      "mode": "enabled",
+      "statusCode": 200,
+      "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+      "events": [
+        {
+          "timestamp": "2026-10-01T17:34:59.494Z",
+          "kind": "dataset.load",
+          "releaseId": "local",
+          "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+          "result": "changed",
+          "force": false,
+          "elapsedMs": 403.253291,
+          "errorCode": null,
+          "cache": {
+            "entries": 0,
+            "bytes": 0,
+            "inFlight": 0
+          },
+          "counters": {
+            "businessLoads": 1,
+            "unchangedPolls": 0,
+            "cacheHits": 0,
+            "cacheMisses": 0
+          }
+        },
+        {
+          "timestamp": "2026-10-01T17:34:59.498Z",
+          "kind": "runtime.started",
+          "releaseId": "local",
+          "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+          "ready": true
+        },
+        {
+          "timestamp": "2026-10-01T17:34:59.498Z",
+          "kind": "runtime.sample",
+          "releaseId": "local",
+          "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+          "rssBytes": 208060416,
+          "heapUsedBytes": 77770376,
+          "eventLoopP99Ms": 0,
+          "health": {
+            "alive": true,
+            "ready": true,
+            "freshness": "stale",
+            "fresh": 31,
+            "stale": 26,
+            "unknown": 19
+          },
+          "cache": {
+            "entries": 0,
+            "bytes": 0,
+            "inFlight": 0
+          },
+          "logger": {
+            "queuedBytes": 554,
+            "dropped": 0,
+            "failedWrites": 0
+          }
+        },
+        {
+          "timestamp": "2026-10-01T17:34:59.503Z",
+          "kind": "api.request",
+          "requestId": "157c790e-bf6a-45a0-868b-f5e4f0a29e2f",
+          "route": "/api/v1/status",
+          "method": "GET",
+          "releaseId": "local",
+          "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+          "statusCode": 200,
+          "elapsedMs": 1.935
+        },
+        {
+          "timestamp": "2026-10-01T17:34:59.557Z",
+          "kind": "runtime.stopping",
+          "releaseId": "local"
+        }
+      ]
+    },
+    {
+      "mode": "disabled",
+      "statusCode": 200,
+      "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+      "events": []
+    },
+    {
+      "mode": "unready",
+      "statusCode": 200,
+      "datasetVersion": null,
+      "events": [
+        {
+          "timestamp": "2026-10-01T17:35:00.673Z",
+          "kind": "dataset.load",
+          "releaseId": "local",
+          "datasetVersion": null,
+          "result": "failed",
+          "force": false,
+          "elapsedMs": 7.450957999999957,
+          "errorCode": "dataset_load_failed",
+          "cache": {
+            "entries": 0,
+            "bytes": 0,
+            "inFlight": 0
+          },
+          "counters": {
+            "businessLoads": 0,
+            "unchangedPolls": 0,
+            "cacheHits": 0,
+            "cacheMisses": 0
+          }
+        },
+        {
+          "timestamp": "2026-10-01T17:35:00.677Z",
+          "kind": "runtime.started",
+          "releaseId": "local",
+          "datasetVersion": null,
+          "ready": false
+        },
+        {
+          "timestamp": "2026-10-01T17:35:00.678Z",
+          "kind": "runtime.sample",
+          "releaseId": "local",
+          "datasetVersion": null,
+          "rssBytes": 94191616,
+          "heapUsedBytes": 20541520,
+          "eventLoopP99Ms": 0,
+          "health": {
+            "alive": true,
+            "ready": false,
+            "freshness": "unknown",
+            "fresh": 0,
+            "stale": 0,
+            "unknown": 0
+          },
+          "cache": {
+            "entries": 0,
+            "bytes": 0,
+            "inFlight": 0
+          },
+          "logger": {
+            "queuedBytes": 448,
+            "dropped": 0,
+            "failedWrites": 0
+          }
+        },
+        {
+          "timestamp": "2026-10-01T17:35:00.702Z",
+          "kind": "api.request",
+          "requestId": "31367fe8-2c72-467c-b306-61d2ea6b99e9",
+          "route": "/api/v1/status",
+          "method": "GET",
+          "releaseId": "local",
+          "datasetVersion": null,
+          "statusCode": 200,
+          "elapsedMs": 2.038
+        },
+        {
+          "timestamp": "2026-10-01T17:35:00.703Z",
+          "kind": "api.request",
+          "requestId": "3c464eef-5fe5-4fa7-adc4-97258f1e5b54",
+          "route": "/api/v1/prices",
+          "method": "GET",
+          "releaseId": "local",
+          "datasetVersion": null,
+          "statusCode": 503,
+          "elapsedMs": 0.268
+        },
+        {
+          "timestamp": "2026-10-01T17:35:00.755Z",
+          "kind": "runtime.stopping",
+          "releaseId": "local"
+        }
+      ]
+    }
+  ]
+}
