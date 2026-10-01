@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_e77ab1eba4e79d8ca731837dcddf838120bf2601586ebe40c63adad25a596795",
+  "sourceId": "google-gemini-modellist",
+  "date": "2026-10-01",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "model_list",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+  "title": "Google Gemini API · 模型列表来源更新",
+  "summary": "模型列表更新日期从 2026-09-24 变为 2026-10-01，并将 Computer Use 条目改为 Computer Use (Shut down)，表示该功能已关闭。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-01T00:26:28+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-09-24 UTC.",
+        "after": "Last updated 2026-10-01 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-24 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-01 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "| Computer Use (Shut down)"
+    ],
+    "removed_lines": [
+      "| Computer Use"
+    ],
+    "added_count": 1,
+    "removed_count": 1,
+    "raw_added_count": 3,
+    "raw_removed_count": 3
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-01.json"
+  },
+  "permalink": "/item/obs_e77ab1eba4e79d8ca731837dcddf838120bf2601586ebe40c63adad25a596795/"
+}

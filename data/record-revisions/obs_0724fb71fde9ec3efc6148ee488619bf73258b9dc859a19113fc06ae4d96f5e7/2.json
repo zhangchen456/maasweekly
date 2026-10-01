@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_0724fb71fde9ec3efc6148ee488619bf73258b9dc859a19113fc06ae4d96f5e7",
+  "sourceId": "openai-pricing",
+  "date": "2026-10-01",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.openai.com/docs/pricing",
+  "title": "OpenAI · 定价来源更新",
+  "summary": "新增 gpt-image-2.5-flare 和 gpt-image-2.5-sunburst 两款图像模型的定价，同时新增网关相关文档条目。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-01T00:26:28+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "API reference",
+      "Bedrock through LiteLLM",
+      "Connect to a gateway",
+      "Deploy Codex through a gateway",
+      "Gateway compatibility",
+      "| gpt-image-2.5-flare | Image | $4.00 | $1.00 | $15.00",
+      "| gpt-image-2.5-sunburst | Image | $4.00 | $1.00 | $15.00"
+    ],
+    "removed_lines": [],
+    "added_count": 7,
+    "removed_count": 0,
+    "raw_added_count": 7,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-01.json"
+  },
+  "permalink": "/item/obs_0724fb71fde9ec3efc6148ee488619bf73258b9dc859a19113fc06ae4d96f5e7/"
+}

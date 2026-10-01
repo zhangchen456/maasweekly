@@ -1,6 +1,830 @@
 {
-  "updated_at": "2026-09-30T00:07:43",
+  "updated_at": "2026-10-01T00:26:28",
   "days": [
+    {
+      "date": "2026-10-01",
+      "stats": {
+        "total": 68,
+        "success": 64,
+        "failed": 4,
+        "changed": 22,
+        "unchanged": 42
+      },
+      "changed": [
+        {
+          "platform": "硅基流动",
+          "source_type": "pricing",
+          "url": "https://siliconflow.cn/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "ERNIE-Image-Turbo",
+            "baidu/ERNIE-Image-Turbo"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 2,
+          "id": "obs_a3483a10ecc2f5ea414ce2e994bd7c92a2edce25cbb6df22594b2e3f60225165",
+          "permalink": "/item/obs_a3483a10ecc2f5ea414ce2e994bd7c92a2edce25cbb6df22594b2e3f60225165/",
+          "llm_summary": "pricing 页面删除了 ERNIE-Image-Turbo 及 baidu/ERNIE-Image-Turbo 条目，可能表示该模型已从硅基流动平台下架或不再提供定价。"
+        },
+        {
+          "platform": "Kimi",
+          "source_type": "pricing",
+          "url": "https://platform.kimi.com/docs/pricing/chat",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 9,
+          "added_lines": [],
+          "removed_lines": [
+            "Kimi API 开放平台 home page",
+            "Kimi K2.6 模型介绍",
+            "Kimi K2.7 Code 模型介绍",
+            "Kimi K3 模型介绍",
+            "Skip to main content",
+            "Token：代表常见的字符序列，每个汉字使用的 Token 数目可能是不同的。例如，单个汉字”夔”可能会被分解为若干 Token 的组合，而像”中国”这样短且常见的短语则可能会使用单个 Token。大致来说，对于一段通常的中文文本，1 个 Token 大约相当于 1.5-2 个汉字。具体每次调用实际产生的 Tokens 数量可以通过调用计算 Token API 来获得。",
+            "了解 Kimi 模型推理的 token 计费单位、输入输出计费方式、缓存优惠和各模型价格入口。",
+            "各模型的能力介绍与适用场景见对应的模型指南：",
+            "模型推理接口对 Input 和 Output 均实行按量计费。对于 K3 系列模型，缓存写入按 TTL（5min / 1h）单独计费；缓存命中的输入仅按缓存命中价格计费，不再重复收取缓存写入费用。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "use this file to discover all available pages before exploring further",
+              "before": "Use this file to discover all available pages before exploring further.",
+              "after": "Use this file to discover all available pages before exploring further.(function i(a,b,c,d,e){try{let f,g,h=[];try{h=window.location.pathname.split(\"/\").filter(a=>\"\"!==a&&\"global\"!==a).slice(0,2)}catch{h=[]}let i=h.find(a=>c.includes(a)),j=[];for(let c of(i?j.push(i):j.push(b),j.push(\"global\"),j)){if(!c)continue;let b=a[c];if(b?.content){f=b.content,g=c;break}}if(!f)return void document.do"
+            }
+          ],
+          "signal_preview": "Use this file to discover all available pages before exploring further.(function i(a,b,c,d,e){try{let f,g,h=[];try{h=window.location.pathname.split(\"/\").filter(a=>\"\"!==a&&\"global\"!==a).slice(0,2)}catch{h=[]}let i=h.find(a=>c.includes(a)),j=[];for(let c of(i?j.push(i):j.push(b),j.push(\"global\"),j)){if(!c)continue;let b=a[c];if(b?.content){f=b.content,g=c;break}}if(!f)return void document.do",
+          "raw_added_count": 1,
+          "raw_removed_count": 13,
+          "id": "obs_11239c957788b14e024fc82398807799b00481ccebf68ef29f9c3ec53f1d34bc",
+          "permalink": "/item/obs_11239c957788b14e024fc82398807799b00481ccebf68ef29f9c3ec53f1d34bc/",
+          "llm_summary": "页面内容出现大量删除，包括模型介绍（K2.6、K2.7 Code、K3）和 Token 说明，同时新增一段脚本代码，疑似页面结构变动或内容被脚本替换，需进一步确认实际影响。"
+        },
+        {
+          "platform": "MiniMax",
+          "source_type": "model_list",
+          "url": "https://platform.minimaxi.com/docs/guides/models-intro",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "minimax-m",
+              "before": "MiniMax-M3.1-Flash-Preview 暂时仅通过 Token Plan 和 MiniMax Code 提供。",
+              "after": "MiniMax-M3.1-Flash-Preview 暂时仅通过 M Plan 和 MiniMax Code 提供。"
+            }
+          ],
+          "signal_preview": "MiniMax-M3.1-Flash-Preview 暂时仅通过 M Plan 和 MiniMax Code 提供。",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_3fd225ab04f787bd68efb780ae24091aceccf3ba8f83ea92078da82a1ca7f87b",
+          "permalink": "/item/obs_3fd225ab04f787bd68efb780ae24091aceccf3ba8f83ea92078da82a1ca7f87b/",
+          "llm_summary": "MiniMax-M3.1-Flash-Preview 的提供方式从 Token Plan 改为 M Plan，对应套餐名称变更。"
+        },
+        {
+          "platform": "MiniMax",
+          "source_type": "pricing",
+          "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "| API-vlm | 通过 M Plan MCP 插件或工具自带的视觉接口调用 | 0.025",
+            "通过 M Plan 调用 API-vlm 时，会按其按量计费价格扣减套餐内 M Plan 额度；套餐内额度耗尽且已购积分可用时，超出部分可由已购积分自动补充支付。"
+          ],
+          "removed_lines": [
+            "通过 Token Plan 调用 API-vlm 时，会按其按量计费价格扣减套餐内 Token Plan 额度；套餐内额度耗尽且已购积分可用时，超出部分可由已购积分自动补充支付。",
+            "| API-vlm | 通过 Token Plan MCP 插件或工具自带的视觉接口调用 | 0.025"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "🔔 定价调整预告",
+              "before": "🔔 定价调整预告：自2026年7月22日起，API-vlm 按量价格调整为 ¥0.025 元/次。Token Plan 套餐内单次 API-vlm 调用扣减的 token 额度将同步减少，同等套餐可支持更多次调用。接口与能力保持不变，无需任何代码调整。",
+              "after": "🔔 定价调整预告：自2026年7月22日起，API-vlm 按量价格调整为 ¥0.025 元/次。M Plan 套餐内单次 API-vlm 调用扣减的 token 额度将同步减少，同等套餐可支持更多次调用。接口与能力保持不变，无需任何代码调整。"
+            }
+          ],
+          "signal_preview": "| API-vlm | 通过 M Plan MCP 插件或工具自带的视觉接口调用 | 0.025",
+          "raw_added_count": 3,
+          "raw_removed_count": 3,
+          "id": "obs_af07977ef537f55455c34e58c787815093ae31148c329d02075fba8c3056b9eb",
+          "permalink": "/item/obs_af07977ef537f55455c34e58c787815093ae31148c329d02075fba8c3056b9eb/",
+          "llm_summary": "Token Plan 更名为 M Plan，API-vlm 定价条目更新为通过 M Plan 调用，并新增按量计费价格 ¥0.025 元/次，同时删除旧的 Token Plan 相关说明。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 0,
+          "added_lines": [
+            "API reference",
+            "Bedrock through LiteLLM",
+            "Connect to a gateway",
+            "Deploy Codex through a gateway",
+            "Gateway compatibility"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bedrock through LiteLLM",
+          "raw_added_count": 5,
+          "raw_removed_count": 0,
+          "id": "obs_453d2d0b3064959493b01d467a0872f417fbe1f137e5e833b35f77b3ae015484",
+          "permalink": "/item/obs_453d2d0b3064959493b01d467a0872f417fbe1f137e5e833b35f77b3ae015484/",
+          "llm_summary": "新增 API reference、Bedrock through LiteLLM、Connect to a gateway、Deploy Codex through a gateway 等网关相关文档条目，可能为新增部署指南。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 0,
+          "added_lines": [
+            "API reference",
+            "Bedrock through LiteLLM",
+            "Connect to a gateway",
+            "Deploy Codex through a gateway",
+            "Gateway compatibility",
+            "| gpt-image-2.5-flare | Image | $4.00 | $1.00 | $15.00",
+            "| gpt-image-2.5-sunburst | Image | $4.00 | $1.00 | $15.00"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bedrock through LiteLLM",
+          "raw_added_count": 7,
+          "raw_removed_count": 0,
+          "id": "obs_0724fb71fde9ec3efc6148ee488619bf73258b9dc859a19113fc06ae4d96f5e7",
+          "permalink": "/item/obs_0724fb71fde9ec3efc6148ee488619bf73258b9dc859a19113fc06ae4d96f5e7/",
+          "llm_summary": "新增 gpt-image-2.5-flare 和 gpt-image-2.5-sunburst 两款图像模型的定价，同时新增网关相关文档条目。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 0,
+          "added_lines": [
+            "API reference",
+            "Bedrock through LiteLLM",
+            "Connect to a gateway",
+            "Deploy Codex through a gateway",
+            "Gateway compatibility"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bedrock through LiteLLM",
+          "raw_added_count": 5,
+          "raw_removed_count": 0,
+          "id": "obs_37c893eea568de376b88b0f55526c6db7aca84ae20e27e4b84700dac1e5100dd",
+          "permalink": "/item/obs_37c893eea568de376b88b0f55526c6db7aca84ae20e27e4b84700dac1e5100dd/",
+          "llm_summary": "新增 API reference、Bedrock through LiteLLM、Connect to a gateway、Deploy Codex through a gateway 等条目，可能为新增网关部署功能或文档。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 0,
+          "added_lines": [
+            "API reference",
+            "Bedrock through LiteLLM",
+            "Connect to a gateway",
+            "Deploy Codex through a gateway",
+            "Gateway compatibility"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bedrock through LiteLLM",
+          "raw_added_count": 5,
+          "raw_removed_count": 0,
+          "id": "obs_268849a9d487952ddde485564e5850c81537ac3a07b9469007330a98fd8889fc",
+          "permalink": "/item/obs_268849a9d487952ddde485564e5850c81537ac3a07b9469007330a98fd8889fc/",
+          "llm_summary": "新增 API reference、Bedrock through LiteLLM、Connect to a gateway、Deploy Codex through a gateway 等条目，可能为博客文章或文档链接。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "We announced the deprecation of the Claude Sonnet 4.5 model (claude-sonnet-4-5-20250929), with retirement on the Claude API scheduled for November 30, 2026. We recommend migrating to Claude Sonnet 5.5. Read more in Model deprecations."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "We announced the deprecation of the Claude Sonnet 4.5 model (claude-sonnet-4-5-20250929), with retirement on the Claude API scheduled for November 30, 2026. We recommend migrating to Claude Sonnet 5.5. Read more in Model deprecations.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_b430bb7e93094c95e3dcbaa684cab49865b04b24715f4529e84542f0661fa5d8",
+          "permalink": "/item/obs_b430bb7e93094c95e3dcbaa684cab49865b04b24715f4529e84542f0661fa5d8/",
+          "llm_summary": "新增 Claude Sonnet 4.5 模型弃用公告，明确退役日期为 2026-11-30，对使用该模型的用户有重要影响。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "model_list",
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "| Computer Use (Shut down)"
+          ],
+          "removed_lines": [
+            "| Computer Use"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-24 UTC.",
+              "after": "Last updated 2026-10-01 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-24 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-01 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "| Computer Use (Shut down)",
+          "raw_added_count": 3,
+          "raw_removed_count": 3,
+          "id": "obs_e77ab1eba4e79d8ca731837dcddf838120bf2601586ebe40c63adad25a596795",
+          "permalink": "/item/obs_e77ab1eba4e79d8ca731837dcddf838120bf2601586ebe40c63adad25a596795/",
+          "llm_summary": "模型列表更新日期从 2026-09-24 变为 2026-10-01，并将 Computer Use 条目改为 Computer Use (Shut down)，表示该功能已关闭。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 6,
+          "added_lines": [
+            "| Charged as regular tokens per model pricing (e.g., standard Gemini 3.8 Flash pricing)."
+          ],
+          "removed_lines": [
+            "Gemini 2.5 Computer Use Preview",
+            "Our Computer Use model optimized for building browser control agents that",
+            "automate tasks.",
+            "gemini-2.5-computer-use-preview-10-2025",
+            "| $1.25, prompts 200k token",
+            "| Charged as regular tokens per model pricing (e.g., standard Gemini 3.5 Flash pricing). See the Gemini 2.5 Computer Use Preview pricing table for legacy model rates."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-24 UTC.",
+              "after": "Last updated 2026-10-01 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-24 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-01 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "| Charged as regular tokens per model pricing (e.g., standard Gemini 3.8 Flash pricing).",
+          "raw_added_count": 3,
+          "raw_removed_count": 8,
+          "id": "obs_d75c9fec5f1291d2621ae2b827c322b3ac07b758861a77aadefa3af879784af3",
+          "permalink": "/item/obs_d75c9fec5f1291d2621ae2b827c322b3ac07b758861a77aadefa3af879784af3/",
+          "llm_summary": "移除 Gemini 2.5 Computer Use Preview 的定价条目，新增按常规 token 计费的说明，表明该预览模型已下线。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Google's AI ranks #1 for predicting flu hospitalizations."
+          ],
+          "removed_lines": [
+            "Ask a Scientist: How can researchers use AI to spot a wildfire?"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Google's AI ranks #1 for predicting flu hospitalizations.",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_44ba7c445d36d23cfdf249cde53fe0c4a9093db6557388f7ec77715661d200c0",
+          "permalink": "/item/obs_44ba7c445d36d23cfdf249cde53fe0c4a9093db6557388f7ec77715661d200c0/",
+          "llm_summary": "新增关于 AI 预测流感住院率的博客，删除关于野火检测的博客，内容主题变化。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-28 UTC.",
+              "after": "Last updated 2026-10-01 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-28 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-01 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-10-01 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_39beb5a6a63f68cbd9884885745e50c3e6a8a79461aab8d38a463303801e2b8c",
+          "permalink": "/item/obs_39beb5a6a63f68cbd9884885745e50c3e6a8a79461aab8d38a463303801e2b8c/",
+          "llm_summary": "模型列表更新日期从 2026-09-28 变为 2026-10-01，其他内容无实质变化。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 20,
+          "removed_count": 0,
+          "added_lines": [
+            "$0.50 / 1M tokens",
+            "$1.00 / 1M tokens",
+            "$12.00 / 1M tokens",
+            "$18.00 / 1M tokens",
+            "$6.00 / 1M tokens",
+            "$9.00 / 1M  tokens",
+            "* Promotional pricing provided through 50% credits back on net spend on the same model within a given period.",
+            "Audio Output |",
+            "Controllable single- and multi-speaker speech for real-time and high-volume workloads. Unary and streaming synthesis, along with voice replication capability. |",
+            "Expressive speech generation |",
+            "Gemini 3.8 Flash TTS (Preview)",
+            "Gemini 3.8 Flash TTS (Preview)*",
+            "Gemini 3.8 Flash TTS and Gemini 3.8 Flash-Lite TTS",
+            "Gemini 3.8 Flash-Lite TTS (Preview)",
+            "Gemini 3.8 Flash-Lite TTS (Preview)*",
+            "Low-latency speech generation |",
+            "Starting January 1, 2027 | | |",
+            "Studio-quality single- and multi-speaker speech with line-by-line style direction, for media and creative workloads. Unary and streaming synthesis. Voice design and voice replication capabilities. |",
+            "Text Input |",
+            "Through December 31, 2026 |"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "$0.50 / 1M tokens",
+          "raw_added_count": 20,
+          "raw_removed_count": 0,
+          "id": "obs_0ad378136be4bef221e1b509753373e81e329d70157bfe781fef89e8133a756c",
+          "permalink": "/item/obs_0ad378136be4bef221e1b509753373e81e329d70157bfe781fef89e8133a756c/",
+          "llm_summary": "新增 Gemini 3.8 Flash TTS (Preview) 模型定价，包含多个 token 价格档位，并注明促销定价通过 50% 返点提供。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 4,
+          "added_lines": [
+            "AI infrastructure",
+            "By Alex Barrett • 19-minute read",
+            "By Prosper Nwankpa • 6-minute read",
+            "Empower your agents with the Google Cloud CLI remote MCP server",
+            "What’s new in AI infrastructure and orchestration in September"
+          ],
+          "removed_lines": [
+            "By Junichi Kashino • 4-minute read",
+            "By Peder Ulander • 5-minute read",
+            "Google is a Leader in the 2026 Gartner® Magic Quadrant™ for Enterprise AI Assistants",
+            "How KDDI built Buffmee, a faster, reliable consumer RAG app"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "By Alex Barrett • 19-minute read",
+          "raw_added_count": 5,
+          "raw_removed_count": 4,
+          "id": "obs_475614fc5c1f4a0c02bd6aa869e71292d7c5bbaa4ba06385d3ec3968f12f0a77",
+          "permalink": "/item/obs_475614fc5c1f4a0c02bd6aa869e71292d7c5bbaa4ba06385d3ec3968f12f0a77/",
+          "llm_summary": "新增关于 AI 基础设施和 CLI 远程 MCP 服务器的博客，删除 Gartner 报告和 KDDI 案例等旧内容。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "model_list",
+          "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 8,
+          "added_lines": [
+            "| Leanstral 1.5 ↗ | 1.5 | labs-leanstral-1-5 |",
+            "| OCR 4.0 ↗ | 4.0 | mistral-ocr-4-0 |",
+            "| Z.ai GLM 5.2 ↗ | 5.2 | zai-glm-5-2 |"
+          ],
+          "removed_lines": [
+            "Leanstral 1.5Apache 2.0",
+            "Other specialist models",
+            "Other specialist modelsCopy section link",
+            "Our latest OCR service with paragraph-level bounding boxes and structural block labels.",
+            "Specialized models for focused domains and task-specific workloads.",
+            "Updated code agent for Lean 4 formal proof engineering and automated theorem proving.",
+            "OCR 4.0Premier",
+            "Z.ai GLM 5.2Open"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| Leanstral 1.5 ↗ | 1.5 | labs-leanstral-1-5 |",
+          "raw_added_count": 6,
+          "raw_removed_count": 8,
+          "id": "obs_a4e27b6f9c0a5f49d1f30aa80f2eaf95481bb2790d47590eeef0ba701f861465",
+          "permalink": "/item/obs_a4e27b6f9c0a5f49d1f30aa80f2eaf95481bb2790d47590eeef0ba701f861465/",
+          "llm_summary": "模型列表新增 Leanstral 1.5、OCR 4.0 和 Z.ai GLM 5.2，同时删除旧版 Leanstral 1.5 描述和部分分类说明，可能为模型更新或新增。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "pricing",
+          "url": "https://cohere.com/pricing",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 2,
+          "added_lines": [
+            "Embed 5 Fast",
+            "Embed 5 Pro",
+            "Embed 5 is here: state-of-the-art retrieval - now available in Pro and Fast tiers.Learn more",
+            "Introducing Embed 5—A New Family of Frontier Embedding Models"
+          ],
+          "removed_lines": [
+            "AI for Empowerment: Your freedom. Your focus. See how AI gives you more time for what truly moves you.Explore now",
+            "The state of sovereign AI adoption in 2026"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Embed 5 is here: state-of-the-art retrieval - now available in Pro and Fast tiers.Learn more",
+          "raw_added_count": 4,
+          "raw_removed_count": 2,
+          "id": "obs_f78bdb7a75d9a149c622d698cd855ddcb9b399afcfbd75e5f01e543ded6f9d33",
+          "permalink": "/item/obs_f78bdb7a75d9a149c622d698cd855ddcb9b399afcfbd75e5f01e543ded6f9d33/",
+          "llm_summary": "新增 Embed 5 Fast 和 Embed 5 Pro 定价，并新增相关博客链接，删除旧广告内容。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "changelog",
+          "url": "https://docs.cohere.com/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            ") and Amazon SageMaker"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "single-tenant",
+              "before": "and Amazon SageMaker. For single-tenant deployment, Embed 5 is also available in Model Vault.",
+              "after": "For single-tenant deployment, Embed 5 is also available in Cohere’s Model Vault."
+            }
+          ],
+          "signal_preview": ") and Amazon SageMaker",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_0c12bccc74e60890a10dff4b22a5de64d03fa1c185da63fa96a8b9f28d0d2637",
+          "permalink": "/item/obs_0c12bccc74e60890a10dff4b22a5de64d03fa1c185da63fa96a8b9f28d0d2637/",
+          "llm_summary": "更新 Embed 5 部署说明，将 Model Vault 表述改为 Cohere's Model Vault，并新增 Amazon SageMaker 支持。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 5,
+          "added_lines": [
+            "Embed 5 is here: state-of-the-art retrieval - now available in Pro and Fast tiers.Learn more",
+            "Introducing Embed 5—A New Family of Frontier Embedding Models",
+            "Our most powerful embedding models yet, now available in Pro and Fast tiers.",
+            "Our new standard for measuring enterprise retrieval quality, validated against human judgment.",
+            "RCP-nDCG@10: A more complete way to measure retrieval relevance",
+            "TechnologyAI for DevelopersResearch"
+          ],
+          "removed_lines": [
+            "AI for Empowerment: Your freedom. Your focus. See how AI gives you more time for what truly moves you.Explore now",
+            "Cohere and the University of Toronto partner to advance responsible AI adoption at scale",
+            "Introducing North Automations: Intelligent workflow orchestration",
+            "Product LaunchEnterprise AI",
+            "The company, operating globally as Cohere, will remain deeply rooted in both countries with headquarters, R&D centers, and leadership roles in Canada and Germany"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Embed 5 is here: state-of-the-art retrieval - now available in Pro and Fast tiers.Learn more",
+          "raw_added_count": 7,
+          "raw_removed_count": 6,
+          "id": "obs_dc9dcb507bde3eb55befbdd619babe1475fdf4b4008751430e4bf9f4a3098f8d",
+          "permalink": "/item/obs_dc9dcb507bde3eb55befbdd619babe1475fdf4b4008751430e4bf9f4a3098f8d/",
+          "llm_summary": "新增 Embed 5 发布博客和 RCP-nDCG@10 衡量标准文章，删除旧内容如 North Automations 和合作伙伴新闻。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 22,
+          "removed_count": 2,
+          "added_lines": [
+            "AA-AgentPerf-Local: Benchmarking local AI agents on laptops and workstations",
+            "Announcing the Artificial Analysis Cyber Index AllianceSee more",
+            "AnthropicGoogleOpenAIAnthropic + CognitionOpenAI + CognitionSpaceXAIMetaZ.aiMoonshot AIAlibaba CloudDeepSeek",
+            "AnthropicOpenAIGoogleMetaSpaceXAIXiaomiAlibabaZ AIStepFunKimiDeepSeekInstitute of Foundation ModelsMiniMaxThinking MachinesMistral",
+            "AnthropicOpenAIGoogleMetaSpaceXAIXiaomiZ AIDeepSeekOther Models",
+            "DeepSeek V4 Pro 0813 (Non-reasoning)",
+            "Elo rating for performance on real-world work tasks · Anchored to DeepSeek V4.1 Flash (max) at 1600 · Higher is better",
+            "Elo scores from blind preference votes by our recruited human panel, together with public Image Arena votes cast before 1 January 2026. See the full leaderboard here.",
+            "Endpoint Accuracy Index: gpt-oss-120b (High)",
+            "GPT-6.1 Sol (High)",
+            "GPT-6.1 Sol (Low)",
+            "GPT-6.1 Sol (Max)",
+            "GPT-6.1 Sol (Medium)",
+            "GPT-6.1 Sol (Xhigh)",
+            "Gemini 4 Argon (High)",
+            "Gemini 4 Argon: Google is back as one of the top three labs in intelligence achieved",
+            "JT-4.1 Flash 236B A21B",
+            "New article published · 30 Sept",
+            "New language model evaluation · 30 Sept",
+            "Not publicly available",
+            "Output Speed vs. Price: gpt-oss-120b (High)",
+            "Output Speed: gpt-oss-120b (High)"
+          ],
+          "removed_lines": [
+            "Agentic tool use",
+            "Announcing the Artificial Analysis Cyber Index Alliance"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AA-AgentPerf-Local: Benchmarking local AI agents on laptops and workstations",
+          "raw_added_count": 33,
+          "raw_removed_count": 35,
+          "id": "obs_7b45dd3247a61534ecaa00a45403bbc82dba1654d8cdc764ed1d144a8daf06cb",
+          "permalink": "/item/obs_7b45dd3247a61534ecaa00a45403bbc82dba1654d8cdc764ed1d144a8daf06cb/",
+          "llm_summary": "新增 AA-AgentPerf-Local 基准和 DeepSeek V4 Pro 模型，以及 GPT-6.1 Sol 端点，同时删除部分旧内容如 Agentic tool use。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 20,
+          "removed_count": 6,
+          "added_lines": [
+            "357,496,153357,496,153Total Sessions",
+            "6.92%View all",
+            "7.23%View details",
+            "A hands-on first look at Sonnet 5.5 vs GPT-6.1 Sol in the Arena.",
+            "Claude Opus 5.5 (High)$1.57/task",
+            "GPT 6 Luna (Max)$0.07/task",
+            "GPT 6 Sol (Max)$0.91/task",
+            "GPT 6.1 Sol",
+            "Gemini 4 Argon",
+            "Gemini 4 Argon (High)",
+            "Gemini 4 Argon (High)$0.63/task",
+            "Gemini 4 Argon | First Impressions",
+            "Hy4 preview$0.29/task",
+            "Hy4 preview·",
+            "Mimo V2.5 Pro$0.04/task",
+            "Private Model·",
+            "Searching the web",
+            "Sonnet 5.5 vs GPT-6.1 Sol | First Impressions",
+            "Text · High",
+            "WebDev · Max"
+          ],
+          "removed_lines": [
+            "Claude Sonnet 5 (High)",
+            "Claude Sonnet 5 (High)$0.75/task",
+            "Claude Sonnet 5 (High)·",
+            "356,875,953356,875,953Total Sessions",
+            "4.80%View all",
+            "6.61%View details"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "hands-on",
+              "before": "A hands-on first look at Kimi K3 in the Arena.",
+              "after": "A hands-on first look at Gemini 4 Argon in the Arena."
+            },
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5.1 (Max)$3.54/task",
+              "after": "Claude Fable 5.1 (Max)$4.17/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (High)$1.39/task",
+              "after": "Claude Opus 5 (High)·"
+            },
+            {
+              "key": "deepseek v",
+              "before": "Deepseek V4.1 Flash (Max)$0.07/task",
+              "after": "Deepseek V4.1 Flash (Max)$0.09/task"
+            }
+          ],
+          "signal_preview": "A hands-on first look at Sonnet 5.5 vs GPT-6.1 Sol in the Arena.",
+          "raw_added_count": 24,
+          "raw_removed_count": 23,
+          "id": "obs_7c3638add998dd8d7121500f56a91f1b7974471e1e7d542eb9d7876e46c23241",
+          "permalink": "/item/obs_7c3638add998dd8d7121500f56a91f1b7974471e1e7d542eb9d7876e46c23241/",
+          "llm_summary": "榜单新增 Gemini 4 Argon、GPT-6.1 Sol 等模型，更新任务价格，并移除 Claude Sonnet 5 相关条目，反映模型更替和价格变动。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 31,
+          "raw_removed_count": 31,
+          "id": "obs_931657f71884868014284011ba602470e42d8a562a4f95ce1f8e230b639a5183",
+          "permalink": "/item/obs_931657f71884868014284011ba602470e42d8a562a4f95ce1f8e230b639a5183/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "Kimi",
+          "source_type": "model_list",
+          "url": "https://platform.kimi.com/docs/api/models-overview",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=14431)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "OpenAI",
+          "logo_summary": "新增两款图像模型，并扩展网关部署文档",
+          "items": [
+            {
+              "text": "OpenAI 新增 gpt-image-2.5-flare 与 gpt-image-2.5-sunburst 图像模型，定价均为 $4.00 输入 / $1.00 输出 / $15.00 缓存输入。",
+              "type": "release"
+            },
+            {
+              "text": "OpenAI 新增 API reference、Bedrock through LiteLLM、Connect to a gateway、Deploy Codex through a gateway 等网关部署文档。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "新增 Gemini 3.8 Flash TTS 预览版及多项定价",
+          "items": [
+            {
+              "text": "Google Vertex AI 新增 Gemini 3.8 Flash TTS (Preview) 语音合成模型，支持可控单/多说话人实时合成。",
+              "type": "release"
+            },
+            {
+              "text": "Vertex AI 新增多项 token 定价：$0.50、$1.00、$6.00、$9.00、$12.00、$18.00 / 1M tokens，并注明促销定价通过 50% 返点提供。",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "发布 Embed 5 系列嵌入模型，分 Pro 和 Fast 两档",
+          "items": [
+            {
+              "text": "Cohere 发布 Embed 5 嵌入模型系列，提供 Embed 5 Fast 和 Embed 5 Pro 两档，主打检索质量提升。",
+              "type": "release"
+            },
+            {
+              "text": "Cohere 新增博客文章介绍 Embed 5 及新的检索质量衡量标准 RCP-nDCG@10。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Mistral AI",
+          "logo_summary": "模型列表新增 Leanstral 1.5、OCR 4.0 及 Z.ai GLM 5.2",
+          "items": [
+            {
+              "text": "Mistral AI 模型列表新增 Leanstral 1.5（代码代理）、OCR 4.0（OCR 服务）和 Z.ai GLM 5.2 三个模型。",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "宣布 Claude Sonnet 4.5 弃用，定于 2026-11-30 退役",
+          "items": [
+            {
+              "text": "Anthropic 宣布弃用 Claude Sonnet 4.5 模型（claude-sonnet-4-5-20250929），Claude API 退役日期为 2026 年 11 月 30 日。",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "Computer Use 模型下线，定价改为按常规 token 计费",
+          "items": [
+            {
+              "text": "Google Gemini API 移除 Computer Use 预览模型（gemini-2.5-computer-use-preview），新增说明按常规 token 计费。",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "MiniMax",
+          "logo_summary": "Token Plan 更名为 M Plan，API-vlm 定价调整预告",
+          "items": [
+            {
+              "text": "MiniMax 将 Token Plan 更名为 M Plan，涉及 MiniMax-M3.1-Flash-Preview 的提供方式及 API-vlm 定价说明。",
+              "type": "other"
+            },
+            {
+              "text": "MiniMax 预告自 2026-07-22 起 API-vlm 按量价格调整为 ¥0.025 元/次，M Plan 套餐内扣减额度同步减少。",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "移除 ERNIE-Image-Turbo 模型定价条目",
+          "items": [
+            {
+              "text": "硅基流动 pricing 页面删除 ERNIE-Image-Turbo 及 baidu/ERNIE-Image-Turbo 条目。",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "榜单新增 Gemini 4 Argon、GPT-6.1 Sol 等模型，任务价格变动",
+          "items": [
+            {
+              "text": "LMArena 新增 Gemini 4 Argon、GPT-6.1 Sol 等模型，并更新 Claude Fable 5.1、Deepseek V4.1 Flash 等任务价格。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "新增本地 Agent 基准及 DeepSeek V4 Pro 等模型",
+          "items": [
+            {
+              "text": "Artificial Analysis 新增 AA-AgentPerf-Local 基准，用于评测本地 AI Agent。",
+              "type": "other"
+            },
+            {
+              "text": "Artificial Analysis 新增 DeepSeek V4 Pro 0813 (Non-reasoning) 模型及 GPT-6.1 Sol 等端点。",
+              "type": "release"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-09-30",
       "stats": {
