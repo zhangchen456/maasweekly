@@ -220,6 +220,10 @@ location /api/v1/ {
     proxy_http_version 1.1;
     proxy_set_header Host $host;
     proxy_set_header X-Request-Id $request_id;
+    proxy_set_header X-Maas-Client-IP $remote_addr;
+    proxy_set_header X-Forwarded-For "";
+    proxy_set_header CF-IPCountry "";
+    error_page 429 = @maas_rate_limited;
     proxy_connect_timeout 5s;
     proxy_read_timeout 30s;
     proxy_cache off;
@@ -234,11 +238,25 @@ location = /api/mcp {
     proxy_http_version 1.1;
     proxy_set_header Host $host;
     proxy_set_header X-Request-Id $request_id;
+    proxy_set_header X-Maas-Client-IP $remote_addr;
+    proxy_set_header X-Forwarded-For "";
+    proxy_set_header CF-IPCountry "";
+    error_page 429 = @maas_rate_limited;
     proxy_connect_timeout 5s;
     proxy_read_timeout 60s;
     proxy_cache off;
     add_header Cache-Control "no-store" always;
     limit_except POST GET HEAD DELETE PUT { deny all; }
+}
+# Local nginx quota errors keep the public Problem JSON / retry / CORS contract.
+# Upstream errors pass through unchanged (proxy_intercept_errors remains off).
+location @maas_rate_limited {
+    default_type application/problem+json;
+    add_header Retry-After "2" always;
+    add_header Access-Control-Allow-Origin "*" always;
+    add_header Access-Control-Expose-Headers "Retry-After" always;
+    add_header Cache-Control "no-store" always;
+    return 429 '{"type":"https://daily.maas.click/problems/rate-limited","title":"Too many requests","status":429,"detail":"Proxy request quota exceeded","code":"rate_limited","recovery":"Retry after the Retry-After interval"}';
 }
 # RSS：content type（局部清空 types——mime.types 把 .xml 映射为 text/xml，
 # default_type 仅在 types 表无匹配时生效；精确 location 内清空才是正解，

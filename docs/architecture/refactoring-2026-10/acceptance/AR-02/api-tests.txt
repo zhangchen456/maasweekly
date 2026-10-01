@@ -1,0 +1,390 @@
+
+> @maasweekly/agent-api@1.0.0 test
+> npm run build && node --test --test-force-exit "dist/tests/http.test.js" "dist/tests/versioning.test.js" "dist/tests/openapi.test.js" "dist/tests/p1-fixes.test.js" "dist/tests/model-identity.test.js" "dist/tests/runtime.test.js"
+
+
+> @maasweekly/agent-api@1.0.0 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: T06 changes 默认查询（dataThrough 锚定 7 天窗口）
+ok 1 - T06 changes 默认查询（dataThrough 锚定 7 天窗口）
+  ---
+  duration_ms: 16.856375
+  type: 'test'
+  ...
+# Subtest: T06 provider/type/q/from/to 组合
+ok 2 - T06 provider/type/q/from/to 组合
+  ---
+  duration_ms: 8.710375
+  type: 'test'
+  ...
+# Subtest: T07 prices 条件完整（contextBand/timeCondition/原币种/Decimal 字符串）
+ok 3 - T07 prices 条件完整（contextBand/timeCondition/原币种/Decimal 字符串）
+  ---
+  duration_ms: 5.042958
+  type: 'test'
+  ...
+# Subtest: T08a withdrawn 默认隐藏
+ok 4 - T08a withdrawn 默认隐藏
+  ---
+  duration_ms: 4.352458
+  type: 'test'
+  ...
+# Subtest: T08b includeWithdrawn=true 返回 withdrawn
+ok 5 - T08b includeWithdrawn=true 返回 withdrawn
+  ---
+  duration_ms: 2.121667
+  type: 'test'
+  ...
+# Subtest: T09 item/evidence/weekly 实体与未知 404
+ok 6 - T09 item/evidence/weekly 实体与未知 404
+  ---
+  duration_ms: 4.595709
+  type: 'test'
+  ...
+# Subtest: T10 参数校验 400 Problem JSON
+ok 7 - T10 参数校验 400 Problem JSON
+  ---
+  duration_ms: 9.959667
+  type: 'test'
+  ...
+# Subtest: T11 同版本翻完全部页（limit=1，无重复无遗漏）
+ok 8 - T11 同版本翻完全部页（limit=1，无重复无遗漏）
+  ---
+  duration_ms: 4.885625
+  type: 'test'
+  ...
+# Subtest: T11b cursor 与其他参数冲突 → 400
+ok 9 - T11b cursor 与其他参数冲突 → 400
+  ---
+  duration_ms: 1.539458
+  type: 'test'
+  ...
+# Subtest: T13 ETag / 304
+ok 10 - T13 ETag / 304
+  ---
+  duration_ms: 1.48925
+  type: 'test'
+  ...
+# Subtest: T14 HEAD/OPTIONS/CORS/超长 cursor 413
+ok 11 - T14 HEAD/OPTIONS/CORS/超长 cursor 413
+  ---
+  duration_ms: 6.596541
+  type: 'test'
+  ...
+# Subtest: T16 恶意 excerpt 原样返回 / 路径编码不越界
+ok 12 - T16 恶意 excerpt 原样返回 / 路径编码不越界
+  ---
+  duration_ms: 2.435458
+  type: 'test'
+  ...
+# Subtest: T16b 未知路径 404（无通配）
+ok 13 - T16b 未知路径 404（无通配）
+  ---
+  duration_ms: 1.470083
+  type: 'test'
+  ...
+# Subtest: T14b 无数据版本 503
+ok 14 - T14b 无数据版本 503
+  ---
+  duration_ms: 3.715583
+  type: 'test'
+  ...
+# Subtest: T08: modelId 精确过滤
+ok 15 - T08: modelId 精确过滤
+  ---
+  duration_ms: 15.853709
+  type: 'test'
+  ...
+# Subtest: T09: familyId 返回明确成员集合
+ok 16 - T09: familyId 返回明确成员集合
+  ---
+  duration_ms: 4.994167
+  type: 'test'
+  ...
+# Subtest: T10: model 与 modelId 语义不同
+ok 17 - T10: model 与 modelId 语义不同
+  ---
+  duration_ms: 3.664083
+  type: 'test'
+  ...
+# Subtest: T11: unknown modelId → 400
+ok 18 - T11: unknown modelId → 400
+  ---
+  duration_ms: 1.196125
+  type: 'test'
+  ...
+# Subtest: T12: unknown familyId → 400
+ok 19 - T12: unknown familyId → 400
+  ---
+  duration_ms: 0.962042
+  type: 'test'
+  ...
+# Subtest: T23: 无 modelId 客户端不回归（旧字段照常）
+ok 20 - T23: 无 modelId 客户端不回归（旧字段照常）
+  ---
+  duration_ms: 1.006041
+  type: 'test'
+  ...
+# Subtest: T11a: malformed modelId → 400
+ok 21 - T11a: malformed modelId → 400
+  ---
+  duration_ms: 2.522375
+  type: 'test'
+  ...
+# Subtest: T11b: well-formed unknown modelId → 400
+ok 22 - T11b: well-formed unknown modelId → 400
+  ---
+  duration_ms: 1.707375
+  type: 'test'
+  ...
+# Subtest: T11c: known modelId but no records → 200 empty
+ok 23 - T11c: known modelId but no records → 200 empty
+  ---
+  duration_ms: 1.151
+  type: 'test'
+  ...
+# Subtest: T12a: malformed familyId → 400
+ok 24 - T12a: malformed familyId → 400
+  ---
+  duration_ms: 0.740958
+  type: 'test'
+  ...
+# Subtest: T12b: well-formed unknown familyId → 400
+ok 25 - T12b: well-formed unknown familyId → 400
+  ---
+  duration_ms: 0.564541
+  type: 'test'
+  ...
+# Subtest: T12c: known familyId but no records → 200 empty
+ok 26 - T12c: known familyId but no records → 200 empty
+  ---
+  duration_ms: 0.678583
+  type: 'test'
+  ...
+# Subtest: T11d: changes endpoint known-but-zero-record → 200 empty
+ok 27 - T11d: changes endpoint known-but-zero-record → 200 empty
+  ---
+  duration_ms: 0.922209
+  type: 'test'
+  ...
+# Subtest: T11e: changes endpoint modelId 正向过滤生效（顶层 modelId，非 price.modelId）
+ok 28 - T11e: changes endpoint modelId 正向过滤生效（顶层 modelId，非 price.modelId）
+  ---
+  duration_ms: 1.709375
+  type: 'test'
+  ...
+# Subtest: T12d: changes endpoint known familyId → 200
+ok 29 - T12d: changes endpoint known familyId → 200
+  ---
+  duration_ms: 0.678833
+  type: 'test'
+  ...
+# Subtest: T13: old cursor 从磁盘加载历史 catalog，current 删除 identity 不影响续页
+ok 30 - T13: old cursor 从磁盘加载历史 catalog，current 删除 identity 不影响续页
+  ---
+  duration_ms: 13.887916
+  type: 'test'
+  ...
+# Subtest: T14: current 新增 identity 不污染旧 cursor 的 query 校验
+ok 31 - T14: current 新增 identity 不污染旧 cursor 的 query 校验
+  ---
+  duration_ms: 6.597167
+  type: 'test'
+  ...
+# Subtest: T15: catalog missing-file → current/history load fail，reload 保留旧数据
+ok 32 - T15: catalog missing-file → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 6.843542
+  type: 'test'
+  ...
+# Subtest: T15: catalog missing-entry → current/history load fail，reload 保留旧数据
+ok 33 - T15: catalog missing-entry → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 7.049083
+  type: 'test'
+  ...
+# Subtest: T15: catalog bytes → current/history load fail，reload 保留旧数据
+ok 34 - T15: catalog bytes → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 6.05675
+  type: 'test'
+  ...
+# Subtest: T15: catalog hash → current/history load fail，reload 保留旧数据
+ok 35 - T15: catalog hash → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 5.938792
+  type: 'test'
+  ...
+# Subtest: T15: catalog malformed → current/history load fail，reload 保留旧数据
+ok 36 - T15: catalog malformed → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 6.096417
+  type: 'test'
+  ...
+# Subtest: T15: catalog shape → current/history load fail，reload 保留旧数据
+ok 37 - T15: catalog shape → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 7.419958
+  type: 'test'
+  ...
+# Subtest: T15: catalog dangling-family → current/history load fail，reload 保留旧数据
+ok 38 - T15: catalog dangling-family → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 6.081666
+  type: 'test'
+  ...
+# Subtest: T18/T19: MCP unknown identity 与 REST 一致 / known-but-empty 一致
+ok 39 - T18/T19: MCP unknown identity 与 REST 一致 / known-but-empty 一致
+  ---
+  duration_ms: 36.012583
+  type: 'test'
+  ...
+# Subtest: T20: GET /api/v1/models → 200，返回 catalog + datasetVersion
+ok 40 - T20: GET /api/v1/models → 200，返回 catalog + datasetVersion
+  ---
+  duration_ms: 2.89775
+  type: 'test'
+  ...
+# Subtest: T20a: GET /api/v1/models 与 release catalog 逐项一致
+ok 41 - T20a: GET /api/v1/models 与 release catalog 逐项一致
+  ---
+  duration_ms: 0.6985
+  type: 'test'
+  ...
+# Subtest: T20b: GET /api/v1/models 走 verified release loader（catalog 与 fixture 一致）
+ok 42 - T20b: GET /api/v1/models 走 verified release loader（catalog 与 fixture 一致）
+  ---
+  duration_ms: 0.6135
+  type: 'test'
+  ...
+# Subtest: T17 OpenAPI 路径与真实路由一致
+ok 43 - T17 OpenAPI 路径与真实路由一致
+  ---
+  duration_ms: 1.598083
+  type: 'test'
+  ...
+# Subtest: P1-1 篡改历史 release 文件 → cursor 读取被拒（409）
+ok 44 - P1-1 篡改历史 release 文件 → cursor 读取被拒（409）
+  ---
+  duration_ms: 17.545459
+  type: 'test'
+  ...
+# Subtest: P1-1 历史版本保留原版元数据（generatedAt/dataThrough/coverage）
+ok 45 - P1-1 历史版本保留原版元数据（generatedAt/dataThrough/coverage）
+  ---
+  duration_ms: 0.503916
+  type: 'test'
+  ...
+# Subtest: P1-2 伪造 cursor（改 limit 后重算 qh，无密钥）→ 400
+ok 46 - P1-2 伪造 cursor（改 limit 后重算 qh，无密钥）→ 400
+  ---
+  duration_ms: 4.8465
+  type: 'test'
+  ...
+# Subtest: P1-2b 若 MAC 被绕过（密钥泄露），恢复校验仍拦截非法参数
+ok 47 - P1-2b 若 MAC 被绕过（密钥泄露），恢复校验仍拦截非法参数
+  ---
+  duration_ms: 3.285083
+  type: 'test'
+  ...
+# Subtest: P1-2c 合法翻页不受影响
+ok 48 - P1-2c 合法翻页不受影响
+  ---
+  duration_ms: 3.563208
+  type: 'test'
+  ...
+# Subtest: worker verifies candidates; ten unchanged polls parse zero business files; force failure retains current
+ok 49 - worker verifies candidates; ten unchanged polls parse zero business files; force failure retains current
+  ---
+  duration_ms: 111.489333
+  type: 'test'
+  ...
+# Subtest: historical first reads single-flight; zero cache budget reloads retained cursor and genuine deletion returns 409
+ok 50 - historical first reads single-flight; zero cache budget reloads retained cursor and genuine deletion returns 409
+  ---
+  duration_ms: 111.541958
+  type: 'test'
+  ...
+# Subtest: a superseded candidate never replaces current and closed loader cannot publish
+ok 51 - a superseded candidate never replaces current and closed loader cannot publish
+  ---
+  duration_ms: 11.061084
+  type: 'test'
+  ...
+# Subtest: no valid startup yields 503; aborted worker settles without publishing
+ok 52 - no valid startup yields 503; aborted worker settles without publishing
+  ---
+  duration_ms: 4.411166
+  type: 'test'
+  ...
+# Subtest: valid hashes cannot conceal broken references; historical LRU obeys its version budget
+ok 53 - valid hashes cannot conceal broken references; historical LRU obeys its version budget
+  ---
+  duration_ms: 202.407541
+  type: 'test'
+  ...
+# Subtest: indexed queries match reference scans through all pages, filters and date boundaries
+ok 54 - indexed queries match reference scans through all pages, filters and date boundaries
+  ---
+  duration_ms: 11.065042
+  type: 'test'
+  ...
+# Subtest: client normalization and proxy trust reject spoofing and scoped/multiple IP headers
+ok 55 - client normalization and proxy trust reject spoofing and scoped/multiple IP headers
+  ---
+  duration_ms: 3.471833
+  type: 'test'
+  ...
+# Subtest: per-client quotas, bounded TTL state and independent global guards
+ok 56 - per-client quotas, bounded TTL state and independent global guards
+  ---
+  duration_ms: 0.509292
+  type: 'test'
+  ...
+# Subtest: T12 翻页期间发布新版本：旧 cursor 继续读旧 release
+ok 57 - T12 翻页期间发布新版本：旧 cursor 继续读旧 release
+  ---
+  duration_ms: 59.5915
+  type: 'test'
+  ...
+# Subtest: T12b 篡改 cursor（含 ds 字段）→ 400 invalid_cursor（MAC 拦截）
+ok 58 - T12b 篡改 cursor（含 ds 字段）→ 400 invalid_cursor（MAC 拦截）
+  ---
+  duration_ms: 6.815666
+  type: 'test'
+  ...
+# Subtest: T12b2 真实清理后的版本 → 409 dataset_version_expired
+ok 59 - T12b2 真实清理后的版本 → 409 dataset_version_expired
+  ---
+  duration_ms: 7.792667
+  type: 'test'
+  ...
+# Subtest: T12c 篡改 cursor → 400 invalid_cursor
+ok 60 - T12c 篡改 cursor → 400 invalid_cursor
+  ---
+  duration_ms: 7.106625
+  type: 'test'
+  ...
+# Subtest: T15 热重载：成功原子切换 / 损坏版本续服旧版 / 单请求不混版
+ok 61 - T15 热重载：成功原子切换 / 损坏版本续服旧版 / 单请求不混版
+  ---
+  duration_ms: 6.744416
+  type: 'test'
+  ...
+# Subtest: T15b manifest 损坏 → 不加载半成品
+ok 62 - T15b manifest 损坏 → 不加载半成品
+  ---
+  duration_ms: 3.627167
+  type: 'test'
+  ...
+1..62
+# tests 62
+# suites 0
+# pass 62
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 513.955167

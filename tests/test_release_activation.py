@@ -531,6 +531,22 @@ class TestNginxThreeIncludeTx(ActivateFixture):
         # 三 include 同时绑定新 release（不再依赖"文件不存在"的特殊态）
         self.assert_incs_bound(rid, "8788")
 
+    def test_ar02_proxy_headers_and_problem_response(self):
+        self._setup_current()
+        routes = (self.root / "shared/nginx/agent-routes.inc").read_text()
+        for marker in ("location /api/v1/ {", "location = /api/mcp {"):
+            block = routes.split(marker, 1)[1].split("\n}", 1)[0]
+            self.assertIn("proxy_set_header X-Maas-Client-IP $remote_addr;", block)
+            self.assertIn('proxy_set_header X-Forwarded-For "";', block)
+            self.assertIn("error_page 429 = @maas_rate_limited;", block)
+        block = routes.split("location @maas_rate_limited {", 1)[1].split("\n}", 1)[0]
+        self.assertIn("default_type application/problem+json;", block)
+        self.assertIn('add_header Retry-After "2" always;', block)
+        self.assertIn('add_header Access-Control-Allow-Origin "*" always;', block)
+        body = block.split("return 429 '", 1)[1].split("';", 1)[0]
+        self.assertEqual(json.loads(body)["code"], "rate_limited")
+        self.assertEqual(json.loads(body)["status"], 429)
+
     def test_fail_nginx_test_restores_all_three(self):
         """nginx -t 失败：三个 include 全部恢复兼容态（不允许部分恢复）。"""
         self._first_activation_compatible_state()

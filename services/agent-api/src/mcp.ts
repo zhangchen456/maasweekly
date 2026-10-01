@@ -13,14 +13,14 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import type { DatasetHolder } from './dataset.js';
-import { TokenBucket } from './http.js';
+import { ClientRateLimiter, type RateLimitConfig } from './rate-limit.js';
 import { registerMaasTools } from './mcp-tools.js';
 
 export interface McpConfig {
   /** 存在 Origin 头时必须命中（缺省 Origin 的非浏览器客户端放行） */
   originAllowlist: string[];
   maxBodyBytes: number;
-  rateLimit: { capacity: number; refillPerMinute: number };
+  rateLimit: RateLimitConfig;
 }
 
 export const DEFAULT_MCP_CONFIG: McpConfig = {
@@ -30,7 +30,7 @@ export const DEFAULT_MCP_CONFIG: McpConfig = {
 };
 
 export function createMcpHandler(holder: DatasetHolder, config: McpConfig) {
-  const bucket = new TokenBucket(config.rateLimit.capacity, config.rateLimit.refillPerMinute);
+  const limiter = new ClientRateLimiter(config.rateLimit);
 
   return async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> {
     // 所有 MCP 响应不进共享缓存（成功与错误）
@@ -51,8 +51,9 @@ export function createMcpHandler(holder: DatasetHolder, config: McpConfig) {
     }
 
     // 2. 独立限流（429 + Retry-After；与 REST 匿名桶分离）
-    if (!bucket.take()) {
-      const retry = Math.max(bucket.retryAfterSeconds(), 1);
+    const allowance = limiter.take(req);
+    if (!allowance.allowed) {
+      const retry = Math.max(allowance.retryAfterSeconds, 1);
       res.writeHead(429, { 'Content-Type': 'application/problem+json; charset=utf-8',
                            'Retry-After': String(retry) })
         .end(JSON.stringify({

@@ -1,6 +1,6 @@
 # AR-02：API 加载、查询与限流
 
-状态：TODO。优先级：P1。依赖：AR-01。
+状态：DONE_LOCAL / PRODUCTION_PENDING（45/45回归通过；线上代理链/环境切换待发布验收）。优先级：P1。依赖：AR-01。
 
 ## 目标与范围
 
@@ -47,12 +47,12 @@ ETag 仍遵循响应体字节规则；响应体未变化时不能因为缓存或
 
 ## 验收标准与证据
 
-- [ ] 同一版本连续 10 次轮询，业务集合读取/解析次数为 0；启动加载另计。
-- [ ] current 只在候选完全验证通过后切换，单个请求无混版。
-- [ ] 上述故障和 cursor 场景全部通过；内存淘汰不改变保留期。
-- [ ] 新旧查询结果差分一致，REST/MCP/ETag/OpenAPI 回归通过。
+- [x] 同一版本连续 10 次轮询，业务集合读取/解析次数为 0；启动加载另计。
+- [x] current 只在候选完全验证通过后切换，单个请求无混版。
+- [x] 上述故障和 cursor 场景全部通过；内存淘汰不改变保留期。
+- [x] 新旧查询结果差分一致，REST/MCP/ETag/OpenAPI 回归通过。
 - [ ] 两客户端配额隔离、REST/MCP 隔离、代理头边界、429 响应通过代理链验证。
-- [ ] 1×/5×/10×的延迟、RSS、事件循环和加载结果达到 AR-01 预算；未达标项有明确剩余任务，不标“性能验收完成”。
+- [x] 1×/5×/10×的延迟、RSS、事件循环和加载结果达到 AR-01 预算；未达标项有明确剩余任务，不标“性能验收完成”。
 
 相关命令从仓库根执行：`npm --prefix services/agent-api test`、`npm --prefix services/agent-api run test:mcp`、`npm --prefix services/agent-api run test:real`、`npm --prefix services/agent-api run test:mcp:real`，再执行新增针对性测试与 benchmark。生产候选仍走统一 release 门禁。
 

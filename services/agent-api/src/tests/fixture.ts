@@ -129,6 +129,14 @@ export class ReleaseFixture {
       quality: { state: 'fresh', reason: null, lastSuccessAt: null },
       links: { itemPermalink: null },
     }));
+    prices.sort((a, b) => {
+      const left = [a.providerId, a.modelKey, a.component, a.factKey], right = [b.providerId, b.modelKey, b.component, b.factKey];
+      for (let i = 0; i < left.length; i++) {
+        if (left[i]! < right[i]!) return -1;
+        if (left[i]! > right[i]!) return 1;
+      }
+      return 0;
+    });
     const evidenceIds = new Set(changes.flatMap((c) => (c as { evidenceIds?: string[] }).evidenceIds ?? []));
     const evidence = [...evidenceIds].map((eid) => ({
       id: eid,

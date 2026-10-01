@@ -403,78 +403,75 @@ function cmpSortKey(a: (string | number)[], b: (string | number)[]): number {
   return 0;
 }
 
-export function listChanges(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPayload): Page<ChangeEntity> {
-  const p = nq.params;
-  const includeWithdrawn = p.includeWithdrawn === true;
-  const from = p.from as string;
-  const to = p.to as string; // 窗口 [from, to)（to 为默认窗口末日的次日语义见合同；实现上 to 为闭端）
-  let out = ds.changes.filter((c) => {
-    if (!includeWithdrawn && c.status === 'withdrawn') return false;
-    // 窗口 [from, to)：to 当日不含（任务书 §6.2 绝对窗口语义）
-    if (c.observationDate < from || c.observationDate >= to) return false;
-    if (p.provider !== undefined && c.providerId !== p.provider) return false;
-    if (p.type !== undefined && c.recordType !== p.type) return false;
-    // Task 07 T07-3：modelId/familyId 精确过滤（identity 在 price_change 顶层；
-    // source_observation 无结构化 model——自然过滤，不伪造）
-    if (p.modelId !== undefined && c.modelId !== p.modelId) return false;
-    if (p.familyId !== undefined && c.familyId !== p.familyId) return false;
-    if (p.q !== undefined) {
-      const q = p.q as string;
-      const hay = `${c.title} ${c.summary ?? ''}`.toLowerCase();
-      if (!hay.includes(q)) return false;
+function smallest<T>(all: T[], params: Record<string, unknown>, indexes: [string, Map<string, T[]>][]): T[] {
+  let result = all;
+  for (const [key, index] of indexes) {
+    if (params[key] !== undefined) {
+      const candidates = index.get(params[key] as string) ?? [];
+      if (candidates.length < result.length) result = candidates;
     }
-    return true;
-  });
-  // 排序键：[日期取反序 → 用倒序比较]，实现：日期 desc、id asc
-  // keyset：cursor.k = [date, id]；定位 = 日期 < k.date || (== 且 id > k.id)
-  if (cursor) {
-    const [kd, ki] = cursor.k as [string, string];
-    out = out.filter((c) => c.observationDate < kd || (c.observationDate === kd && c.id > ki));
   }
-  const limit = p.limit as number;
-  const page = out.slice(0, limit);
-  const last = page.at(-1);
+  return result;
+}
+function lowerBound<T>(values: T[], skip: (value: T) => boolean): number {
+  let lo = 0, hi = values.length;
+  while (lo < hi) { const mid = (lo + hi) >>> 1; if (skip(values[mid]!)) lo = mid + 1; else hi = mid; }
+  return lo;
+}
+
+export function listChanges(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPayload): Page<ChangeEntity> {
+  const p = nq.params, limit = p.limit as number;
+  const candidates = smallest(ds.changes, p, [['provider', ds.changesByProvider], ['modelId', ds.changesByModel], ['familyId', ds.changesByFamily]]);
+  let start = lowerBound(candidates, c => c.observationDate >= (p.to as string));
+  const end = lowerBound(candidates, c => c.observationDate >= (p.from as string));
+  if (cursor) {
+    const [date, id] = cursor.k as [string, string];
+    start = Math.max(start, lowerBound(candidates, c => c.observationDate > date || (c.observationDate === date && c.id <= id)));
+  }
+  const out: ChangeEntity[] = [];
+  for (let i = start; i < end; i++) {
+    const c = candidates[i]!;
+    if (p.includeWithdrawn !== true && c.status === 'withdrawn') continue;
+    if (p.provider !== undefined && c.providerId !== p.provider) continue;
+    if (p.type !== undefined && c.recordType !== p.type) continue;
+    if (p.modelId !== undefined && c.modelId !== p.modelId) continue;
+    if (p.familyId !== undefined && c.familyId !== p.familyId) continue;
+    if (p.q !== undefined && !`${c.title}\u0000${c.summary ?? ''}`.toLowerCase().includes(p.q as string)) continue;
+    out.push(c); if (out.length > limit) break;
+  }
+  const page = out.slice(0, limit), last = page.at(-1);
   const nextCursor = out.length > limit && last
-    ? encodeCursor({ v: 1, sv: '1.0', ds: ds.version, ep: 'changes', qh: nq.qh,
-                     qp: nq.params, k: [last.observationDate, last.id] })
-    : null;
+    ? encodeCursor({ v: 1, sv: '1.0', ds: ds.version, ep: 'changes', qh: nq.qh, qp: nq.params, k: [last.observationDate, last.id] }) : null;
   return { items: page, limit, nextCursor };
 }
 
 export function listPrices(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPayload): Page<PriceEntity> {
-  const p = nq.params;
-  let out = ds.prices.filter((e) => {
-    if (p.provider !== undefined && e.providerId !== p.provider) return false;
-    if (p.model !== undefined && e.modelKey.toLowerCase() !== p.model) return false;
-    if (p.modelId !== undefined && e.modelId !== p.modelId) return false;
-    if (p.familyId !== undefined && e.familyId !== p.familyId) return false;
-    if (p.component !== undefined && e.component !== p.component) return false;
-    if (p.region !== undefined && e.region !== p.region) return false;
-    if (p.billingMode !== undefined && e.billingMode !== p.billingMode) return false;
-    if (p.q !== undefined) {
-      const q = p.q as string;
-      if (!e.modelKey.toLowerCase().includes(q)) return false;
-    }
-    return true;
-  });
-  if (cursor) {
-    const key = cursor.k.map(String);
-    out = out.filter((e) =>
-      cmpSortKey([e.providerId, e.modelKey, e.component, e.factKey], key) > 0);
+  const p = nq.params, limit = p.limit as number;
+  const candidates = smallest(ds.prices, p, [['provider', ds.pricesByProvider], ['modelId', ds.pricesByModel], ['familyId', ds.pricesByFamily]]);
+  const key = cursor?.k.map(String);
+  const start = key ? lowerBound(candidates, e => cmpSortKey([e.providerId, e.modelKey, e.component, e.factKey], key) <= 0) : 0;
+  const out: PriceEntity[] = [];
+  for (let i = start; i < candidates.length; i++) {
+    const e = candidates[i]!;
+    if (p.provider !== undefined && e.providerId !== p.provider) continue;
+    if (p.model !== undefined && e.modelKey.toLowerCase() !== p.model) continue;
+    if (p.modelId !== undefined && e.modelId !== p.modelId) continue;
+    if (p.familyId !== undefined && e.familyId !== p.familyId) continue;
+    if (p.component !== undefined && e.component !== p.component) continue;
+    if (p.region !== undefined && e.region !== p.region) continue;
+    if (p.billingMode !== undefined && e.billingMode !== p.billingMode) continue;
+    if (p.q !== undefined && !e.modelKey.toLowerCase().includes(p.q as string)) continue;
+    out.push(e); if (out.length > limit) break;
   }
-  const limit = p.limit as number;
-  const page = out.slice(0, limit);
-  const last = page.at(-1);
+  const page = out.slice(0, limit), last = page.at(-1);
   const nextCursor = out.length > limit && last
-    ? encodeCursor({ v: 1, sv: '1.0', ds: ds.version, ep: 'prices', qh: nq.qh,
-                     qp: nq.params, k: [last.providerId, last.modelKey, last.component, last.factKey] })
-    : null;
+    ? encodeCursor({ v: 1, sv: '1.0', ds: ds.version, ep: 'prices', qh: nq.qh, qp: nq.params, k: [last.providerId, last.modelKey, last.component, last.factKey] }) : null;
   return { items: page, limit, nextCursor };
 }
 
 export function listWeekly(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPayload): Page<WeeklyEntity> {
   // 最新在前
-  const sorted = [...ds.weekly].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  const sorted = ds.weeklyDescending;
   let out = sorted;
   if (cursor) {
     const [kd] = cursor.k as [string];
@@ -524,8 +521,9 @@ export interface ListResult {
 export function runListQuery(
   holder: DatasetHolder, endpoint: Endpoint, raw: URLSearchParams,
   limits: LimitPolicy = REST_LIMITS,
+  prepared?: { current: Dataset; versioned?: Dataset | null },
 ): { result?: ListResult; problem?: Problem } {
-  const current = holder.current;
+  const current = prepared?.current ?? holder.current;
   if (!current) {
     return { problem: {
       type: 'https://daily.maas.click/problems/no-data',
@@ -546,7 +544,7 @@ export function runListQuery(
     const dec = decodeCursor(cursorRaw, endpoint, '1.0');
     if (dec.problem) return { problem: dec.problem };
     const payload = dec.payload!;
-    const versioned = holder.getOrLoad(payload.ds);
+    const versioned = prepared?.versioned !== undefined ? prepared.versioned : holder.getOrLoad(payload.ds);
     if (!versioned) {
       return { problem: {
         type: 'https://daily.maas.click/problems/dataset-version-expired',
@@ -580,4 +578,19 @@ export function runListQuery(
     : endpoint === 'prices' ? listPrices(activeDs, query, cursor)
     : listWeekly(activeDs, query, cursor);
   return { result: { ds: activeDs, nq: query, page } };
+}
+
+/** Online callers preload historical versions without synchronous disk work. */
+export async function runListQueryAsync(holder: DatasetHolder, endpoint: Endpoint, raw: URLSearchParams,
+  limits: LimitPolicy = REST_LIMITS): Promise<{ result?: ListResult; problem?: Problem }> {
+  const current = holder.current;
+  if (!current) return runListQuery(holder, endpoint, raw, limits);
+  const validated = normalizeQuery(endpoint, raw, current, limits);
+  if (validated.problems.length) return { problem: validated.problems[0]! };
+  const token = raw.get('cursor');
+  if (!token) return runListQuery(holder, endpoint, raw, limits, { current });
+  const decoded = decodeCursor(token, endpoint, '1.0');
+  if (decoded.problem) return { problem: decoded.problem };
+  const versioned = await holder.getOrLoadAsync(decoded.payload!.ds);
+  return runListQuery(holder, endpoint, raw, limits, { current, versioned });
 }

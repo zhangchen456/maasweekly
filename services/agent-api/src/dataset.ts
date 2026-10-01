@@ -9,7 +9,9 @@
  * 单次请求只持有一个 Dataset 实例——重载是引用替换，不会混版。
  */
 import { createHash } from 'node:crypto';
-import { readFileSync, statSync } from 'node:fs';
+import { readFileSync, lstatSync, realpathSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
+import { loadDatasetInWorker } from './dataset-loader.js';
 import path from 'node:path';
 
 export const SCHEMA_VERSION = '1.0';
@@ -174,10 +176,17 @@ export class Dataset {
   readonly prices: PriceEntity[];          // 排序：provider/model/component/factKey
   readonly evidenceById: Map<string, EvidenceEntity>;
   readonly weekly: WeeklyEntity[];         // 排序：date 升序
+  readonly weeklyDescending: WeeklyEntity[];
   readonly status: StatusEntity;
 
   /** Task 07 T07-3：identity catalog（from release 的 model-identities.json） */
   readonly modelIdentities: ModelIdentityCatalog;
+  readonly changesByProvider = new Map<string, ChangeEntity[]>();
+  readonly changesByModel = new Map<string, ChangeEntity[]>();
+  readonly changesByFamily = new Map<string, ChangeEntity[]>();
+  readonly pricesByProvider = new Map<string, PriceEntity[]>();
+  readonly pricesByModel = new Map<string, PriceEntity[]>();
+  readonly pricesByFamily = new Map<string, PriceEntity[]>();
 
   readonly enums: {
     providers: Set<string>;
@@ -200,7 +209,7 @@ export class Dataset {
     evidence: EvidenceEntity[],
     weekly: WeeklyEntity[],
     status: StatusEntity,
-    root: string,
+    root: string | ModelIdentityCatalog,
   ) {
     this.manifest = manifest;
     this.version = manifest.datasetVersion;
@@ -212,8 +221,9 @@ export class Dataset {
     this.prices = prices;
     this.evidenceById = new Map(evidence.map((e) => [e.id, e]));
     this.weekly = weekly;
+    this.weeklyDescending = [...weekly].sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
     this.status = status;
-    this.modelIdentities = Dataset.readIdentityCatalog(root, manifest);
+    this.modelIdentities = typeof root === 'string' ? Dataset.readIdentityCatalog(root, manifest) : root;
     this.enums = {
       providers: new Set(status.providers.map((p) => p.providerId)),
       changeTypes: new Set(changes.map((c) => c.changeType)),
@@ -225,6 +235,57 @@ export class Dataset {
       validFamilyIds: new Set(
         this.modelIdentities.families.map((f) => f.familyId)),
     };
+    for (const c of changes) this.indexChange(c);
+    for (const p of prices) this.indexPrice(p);
+  }
+
+  private group<T>(index: Map<string, T[]>, key: string | null | undefined, value: T): void {
+    if (!key) return;
+    const values = index.get(key);
+    if (values) values.push(value); else index.set(key, [value]);
+  }
+
+  private indexChange(c: ChangeEntity): void {
+    this.group(this.changesByProvider, c.providerId, c);
+    this.group(this.changesByModel, c.modelId, c);
+    this.group(this.changesByFamily, c.familyId, c);
+    this.enums.changeTypes.add(c.changeType);
+  }
+
+  private indexPrice(p: PriceEntity): void {
+    this.group(this.pricesByProvider, p.providerId, p);
+    this.group(this.pricesByModel, p.modelId, p);
+    this.group(this.pricesByFamily, p.familyId, p);
+    this.enums.components.add(p.component);
+    this.enums.billingModes.add(p.billingMode);
+    this.enums.regions.add(p.region);
+  }
+
+  /** Only used for the private, validated worker stream; never published partially. */
+  static beginStream(manifest: Manifest, catalog: ModelIdentityCatalog, status: StatusEntity, weekly: WeeklyEntity[]): Dataset {
+    return new Dataset(manifest, [], [], [], [], weekly, status, catalog);
+  }
+
+  appendStream(part: 'changes' | 'items' | 'prices' | 'evidence', values: unknown[]): void {
+    switch (part) {
+      case 'changes': for (const c of values as ChangeEntity[]) { this.changes.push(c); this.indexChange(c); } break;
+      case 'prices': for (const p of values as PriceEntity[]) { this.prices.push(p); this.indexPrice(p); } break;
+      case 'items': for (const i of values as ItemEntity[]) this.itemsById.set(i.id, i); break;
+      case 'evidence': for (const e of values as EvidenceEntity[]) this.evidenceById.set(e.id, e); break;
+    }
+  }
+
+  static validateManifest(manifest: Manifest): void {
+    if (manifest?.schemaVersion !== SCHEMA_VERSION) throw new DatasetError('manifest schemaVersion 非法');
+    if (!DS_RE.test(manifest.datasetVersion ?? '') || !Array.isArray(manifest.files)) throw new DatasetError('manifest 结构非法');
+    const paths = new Set<string>();
+    for (const f of manifest.files) {
+      if (!f || !RELEASE_PATH_RE.test(f.path) || !f.path.startsWith(`releases/${manifest.datasetVersion}/`)
+        || paths.has(f.path) || !Number.isSafeInteger(f.bytes) || f.bytes < 0 || !/^[0-9a-f]{64}$/.test(f.sha256)) {
+        throw new DatasetError('manifest 文件清单非法或重复');
+      }
+      paths.add(f.path);
+    }
   }
 
   static load(root: string, version?: string): Dataset {
@@ -236,16 +297,16 @@ export class Dataset {
     } catch (e) {
       throw new DatasetError(`manifest 不可读: ${manifestPath}: ${(e as Error).message}`);
     }
-    if (manifest.schemaVersion !== SCHEMA_VERSION) {
-      throw new DatasetError(`manifest schemaVersion 非法: ${manifest.schemaVersion}`);
-    }
-    if (!DS_RE.test(manifest.datasetVersion ?? '')) {
-      throw new DatasetError('manifest datasetVersion 非法');
-    }
+    Dataset.validateManifest(manifest);
     if (version !== undefined && manifest.datasetVersion !== version) {
       // manifest 已切换：尝试直接读旧 release 目录（cursor 固定版本）
       return Dataset.loadDirect(rootAbs, version);
     }
+    return Dataset.loadManifest(rootAbs, manifest);
+  }
+
+  static loadManifest(rootAbs: string, manifest: Manifest): Dataset {
+    Dataset.validateManifest(manifest);
     const changes = Dataset.readArr<ChangeEntity[]>(rootAbs, manifest, 'changes');
     const items = Dataset.readArr<ItemEntity[]>(rootAbs, manifest, 'items');
     const prices = Dataset.readArr<PriceEntity[]>(rootAbs, manifest, 'prices');
@@ -253,6 +314,25 @@ export class Dataset {
     const weekly = Dataset.readArr<WeeklyEntity[]>(rootAbs, manifest, 'weekly');
     const status = Dataset.readArr<StatusEntity>(rootAbs, manifest, 'status');
     Dataset.spotCheck(changes, prices, evidence, weekly, status);
+    if (!Array.isArray(items)) throw new DatasetError('items 非数组');
+    const ids = (values: { id: string }[], name: string): Set<string> => {
+      const result = new Set<string>();
+      for (const value of values) {
+        if (!value || typeof value.id !== 'string' || !value.id || result.has(value.id)) throw new DatasetError(`${name} id 非法或重复`);
+        result.add(value.id);
+      }
+      return result;
+    };
+    const itemIds = ids(items, 'items'), evidenceIds = ids(evidence, 'evidence');
+    ids(changes, 'changes'); ids(prices, 'prices'); ids(weekly, 'weekly');
+    for (const c of changes) {
+      if (!itemIds.has(c.id) || !Array.isArray(c.evidenceIds) || c.evidenceIds.some(id => !evidenceIds.has(id))) {
+        throw new DatasetError('changes item/evidence 引用缺失');
+      }
+    }
+    for (const p of prices) if (p.evidenceId != null && !evidenceIds.has(p.evidenceId)) throw new DatasetError('prices evidence 引用缺失');
+    const known = new Set(['changes', 'items', 'prices', 'evidence', 'weekly', 'status', 'model-identities'].map(name => `releases/${manifest.datasetVersion}/${name}.json`));
+    for (const file of manifest.files) if (!known.has(file.path)) Dataset.readVerified(rootAbs, file);
     return new Dataset(manifest, changes, items, prices, evidence, weekly, status, rootAbs);
   }
 
@@ -281,31 +361,8 @@ export class Dataset {
     if (manifest.datasetVersion !== version) {
       throw new DatasetError(`release manifest 版本不一致: ${version}`);
     }
-    const names = ['changes', 'items', 'prices', 'evidence', 'weekly', 'status'] as const;
-    const data: Record<string, unknown> = {};
-    for (const n of names) {
-      const entry = manifest.files.find(
-        (f) => f.path === `releases/${version}/${n}.json`,
-      );
-      if (!entry) throw new DatasetError(`release manifest 缺文件: ${n}.json`);
-      const raw = Dataset.readVerified(rootAbs, entry);
-      data[n] = JSON.parse(raw);
-    }
-    Dataset.spotCheck(
-      data['changes'] as ChangeEntity[], data['prices'] as PriceEntity[],
-      data['evidence'] as EvidenceEntity[], data['weekly'] as WeeklyEntity[],
-      data['status'] as StatusEntity,
-    );
-    return new Dataset(
-      manifest,
-      data['changes'] as ChangeEntity[],
-      data['items'] as ItemEntity[],
-      data['prices'] as PriceEntity[],
-      data['evidence'] as EvidenceEntity[],
-      data['weekly'] as WeeklyEntity[],
-      data['status'] as StatusEntity,
-      rootAbs,
-    );
+    Dataset.validateManifest(manifest);
+    return Dataset.loadManifest(rootAbs, manifest);
   }
 
   private static readIdentityCatalog(root: string, manifest: Manifest): ModelIdentityCatalog {
@@ -361,10 +418,11 @@ export class Dataset {
     }
     let raw: Buffer;
     try {
-      const st = statSync(p);
+      const st = lstatSync(p);
       if (!st.isFile() || st.isSymbolicLink?.()) {
         throw new DatasetError(`非普通文件: ${entry.path}`);
       }
+      if (!realpathSync(p).startsWith(realpathSync(rootAbs) + path.sep)) throw new DatasetError(`路径越界: ${entry.path}`);
       raw = readFileSync(p);
     } catch (e) {
       if (e instanceof DatasetError) throw e;
@@ -384,17 +442,26 @@ export class Dataset {
     changes: ChangeEntity[], prices: PriceEntity[],
     evidence: EvidenceEntity[], weekly: WeeklyEntity[], status: StatusEntity,
   ): void {
-    if (!Array.isArray(changes) || changes.length === 0 && prices.length === 0) {
+    if (!Array.isArray(changes) || !Array.isArray(prices) || changes.length === 0 && prices.length === 0) {
       throw new DatasetError('changes 与 prices 均为空（疑似坏 release）');
     }
     if (!status?.providers?.length) throw new DatasetError('status.providers 为空');
-    // 排序 spot-check（首尾）
-    if (changes.length >= 2) {
-      const a = changes[0]!;
-      const b = changes[1]!;
-      if (a.observationDate < b.observationDate) {
-        throw new DatasetError('changes 排序错误（非日期倒序）');
+    // Binary seek requires the entire sequence to satisfy the frozen order.
+    for (let i = 1; i < changes.length; i++) {
+      const a = changes[i - 1]!, b = changes[i]!;
+      if (a.observationDate < b.observationDate || (a.observationDate === b.observationDate && a.id >= b.id)) {
+        throw new DatasetError('changes 排序错误或重复 id');
       }
+    }
+    for (let i = 1; i < prices.length; i++) {
+      const a = prices[i - 1]!, b = prices[i]!;
+      const left = [a.providerId, a.modelKey, a.component, a.factKey], right = [b.providerId, b.modelKey, b.component, b.factKey];
+      let cmp = 0;
+      for (let k = 0; k < left.length; k++) {
+        if (left[k]! < right[k]!) { cmp = -1; break; }
+        if (left[k]! > right[k]!) { cmp = 1; break; }
+      }
+      if (cmp >= 0) throw new DatasetError('prices 排序错误或重复 factKey');
     }
     if (!Array.isArray(evidence) || !Array.isArray(weekly)) {
       throw new DatasetError('evidence/weekly 非数组');
@@ -402,54 +469,138 @@ export class Dataset {
   }
 }
 
+export interface DatasetHolderOptions {
+  maxRetainedVersions?: number;
+  maxRetainedBytes?: number;
+  loader?: (root: string, manifest: Manifest, signal: AbortSignal) => Promise<Dataset>;
+}
+export type ReloadResult = 'changed' | 'unchanged' | 'superseded' | 'failed';
+
 export class DatasetHolder {
   #current: Dataset | null = null;
-  #retained: Map<string, Dataset> = new Map();
+  #retained = new Map<string, Dataset>();
   #root: string;
+  #generation = 0;
+  #closed = false;
+  #abort = new AbortController();
+  #jobs = new Map<string, Promise<Dataset>>();
+  #queue: Promise<void> = Promise.resolve();
+  #options: Required<DatasetHolderOptions>;
   lastReloadError: string | null = null;
   lastReloadAt: string | null = null;
+  readonly metrics = { businessLoads: 0, unchangedPolls: 0, cacheHits: 0, cacheMisses: 0 };
 
-  constructor(root: string) {
-    this.#root = root;
-  }
-
-  get current(): Dataset | null {
-    return this.#current;
-  }
-
-  /** 启动/重载：加载成功原子替换；失败保留旧版并记录。 */
-  reload(): boolean {
-    try {
-      const ds = Dataset.load(this.#root);
-      this.#current = ds;
-      this.lastReloadError = null;
-      this.lastReloadAt = new Date().toISOString();
-      // 清理 retained 中不在保留集的版本（此后其 cursor → 409）
-      const keep = new Set<string>(
-        [ds.version, ...(ds.manifest.retainedVersions ?? []).map((r) => r.datasetVersion)],
-      );
-      for (const v of [...this.#retained.keys()]) {
-        if (!keep.has(v)) this.#retained.delete(v);
-      }
-      return true;
-    } catch (e) {
-      this.lastReloadError = (e as Error).message;
-      this.lastReloadAt = new Date().toISOString();
-      return false;
+  constructor(root: string, options: DatasetHolderOptions = {}) {
+    this.#root = path.resolve(root);
+    this.#options = { maxRetainedVersions: 2, maxRetainedBytes: 128 * 1024 * 1024,
+      loader: loadDatasetInWorker, ...options };
+    if (!Number.isSafeInteger(this.#options.maxRetainedVersions) || this.#options.maxRetainedVersions < 0
+      || !Number.isSafeInteger(this.#options.maxRetainedBytes) || this.#options.maxRetainedBytes < 0) {
+      throw new DatasetError('invalid retained cache budget');
     }
   }
 
-  /** cursor 固定版本：优先 retained，其次磁盘直读；不可得 → null（409）。 */
-  getOrLoad(version: string): Dataset | null {
+  get current(): Dataset | null { return this.#current; }
+  get cacheState() { return { entries: this.#retained.size, bytes: [...this.#retained.values()].reduce((sum, ds) => sum + this.bytes(ds), 0), inFlight: this.#jobs.size }; }
+  private bytes(ds: Dataset): number { return ds.manifest.files.reduce((n, f) => n + f.bytes, 0); }
+
+  private retain(ds: Dataset): void {
+    if (ds.version === this.#current?.version) return;
+    this.#retained.delete(ds.version);
+    this.#retained.set(ds.version, ds);
+    while (this.#retained.size > this.#options.maxRetainedVersions || this.cacheState.bytes > this.#options.maxRetainedBytes) {
+      this.#retained.delete(this.#retained.keys().next().value!);
+    }
+  }
+
+  private cached(version: string): Dataset | null {
     if (this.#current?.version === version) return this.#current;
-    const cached = this.#retained.get(version);
-    if (cached) return cached;
+    const ds = this.#retained.get(version);
+    if (!ds) return null;
+    this.metrics.cacheHits++; this.#retained.delete(version); this.#retained.set(version, ds);
+    return ds;
+  }
+
+  private accept(ds: Dataset): void {
+    this.#current = ds;
+    this.#retained.delete(ds.version);
+    const keep = new Set([ds.version, ...(ds.manifest.retainedVersions ?? []).map(r => r.datasetVersion)]);
+    for (const v of this.#retained.keys()) if (!keep.has(v)) this.#retained.delete(v);
+    this.lastReloadError = null; this.lastReloadAt = new Date().toISOString();
+  }
+
+  /** Explicit synchronous verification remains available for offline callers/tests. */
+  reload(): boolean {
+    this.#generation++;
     try {
-      const ds = Dataset.loadDirect(path.resolve(this.#root), version);
-      this.#retained.set(version, ds);
-      return ds;
-    } catch {
-      return null;
+      if (this.#closed) throw new DatasetError('holder closed');
+      this.metrics.businessLoads++;
+      this.accept(Dataset.load(this.#root)); return true;
+    } catch (error) {
+      this.lastReloadError = (error as Error).message; this.lastReloadAt = new Date().toISOString(); return false;
     }
   }
+
+  private async manifest(version?: string): Promise<Manifest> {
+    const file = version ? path.join(this.#root, 'releases', version, 'manifest.json') : path.join(this.#root, 'manifest.json');
+    const manifest = JSON.parse(await readFile(file, 'utf8')) as Manifest;
+    Dataset.validateManifest(manifest);
+    if (version && manifest.datasetVersion !== version) throw new DatasetError('release manifest version mismatch');
+    return manifest;
+  }
+
+  private load(manifest: Manifest): Promise<Dataset> {
+    const existing = this.#jobs.get(manifest.datasetVersion);
+    if (existing) return existing;
+    const job = this.#queue.then(async () => {
+      if (this.#closed) throw new DatasetError('holder closed');
+      this.metrics.businessLoads++;
+      return this.#options.loader(this.#root, manifest, this.#abort.signal);
+    });
+    this.#jobs.set(manifest.datasetVersion, job);
+    const clear = () => { if (this.#jobs.get(manifest.datasetVersion) === job) this.#jobs.delete(manifest.datasetVersion); };
+    void job.then(clear, clear);
+    this.#queue = job.then(() => undefined, () => undefined);
+    return job;
+  }
+
+  /** Poll only metadata; SIGHUP passes force=true to reverify an immutable version. */
+  async reloadAsync({ force = false }: { force?: boolean } = {}): Promise<ReloadResult> {
+    const generation = ++this.#generation;
+    try {
+      if (this.#closed) throw new DatasetError('holder closed');
+      const manifest = await this.manifest();
+      if (manifest.datasetVersion === this.#current?.version && !force) {
+        this.metrics.unchangedPolls++; return 'unchanged';
+      }
+      const ds = await this.load(manifest);
+      const latest = await this.manifest();
+      if (generation !== this.#generation || this.#closed || latest.datasetVersion !== ds.version) return 'superseded';
+      this.accept(ds); return 'changed';
+    } catch (error) {
+      if (generation !== this.#generation) return 'superseded';
+      this.lastReloadError = (error as Error).message; this.lastReloadAt = new Date().toISOString(); return 'failed';
+    }
+  }
+
+  getOrLoad(version: string): Dataset | null {
+    const cached = this.cached(version); if (cached) return cached;
+    if (!DS_RE.test(version) || this.#closed) return null;
+    this.metrics.cacheMisses++;
+    try {
+      this.metrics.businessLoads++;
+      const ds = Dataset.loadDirect(this.#root, version); this.retain(ds); return ds;
+    } catch { return null; }
+  }
+
+  async getOrLoadAsync(version: string): Promise<Dataset | null> {
+    const cached = this.cached(version); if (cached) return cached;
+    if (!DS_RE.test(version) || this.#closed) return null;
+    this.metrics.cacheMisses++;
+    try {
+      const ds = await this.load(await this.manifest(version)); this.retain(ds); return ds;
+    } catch { return null; }
+  }
+
+  close(): void { this.#closed = true; this.#generation++; this.#abort.abort(); }
 }

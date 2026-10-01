@@ -10,7 +10,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Dataset, DatasetHolder } from '../services/agent-api/dist/dataset.js';
 import { createHandler } from '../services/agent-api/dist/http.js';
-import { runListQuery, setCursorSecret } from '../services/agent-api/dist/query.js';
+import { runListQueryAsync, setCursorSecret } from '../services/agent-api/dist/query.js';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -75,10 +75,10 @@ async function sample(factor) {
     for (let round = 0; round < 3; round++) {
       holder = new DatasetHolder(root);
       const start = performance.now();
-      if (!holder.reload()) throw new Error(holder.lastReloadError);
+      if (await holder.reloadAsync() !== 'changed') throw new Error(holder.lastReloadError);
       loads.push(performance.now() - start);
       const again = performance.now();
-      holder.reload();
+      await holder.reloadAsync();
       reloads.push(performance.now() - again);
       global.gc?.();
     }
@@ -120,7 +120,20 @@ async function sample(factor) {
       throughput.push({ concurrency, rounds });
     }
     const delay = monitorEventLoopDelay({ resolution: 10 }); delay.enable(); await pause(30);
-    const beforeReload = performance.now(); holder.reload(); const reloadMs = performance.now() - beforeReload;
+    const reloadTraffic = [];
+    let loading = true;
+    const beforeReload = performance.now();
+    const reloading = holder.reloadAsync({ force: true }).finally(() => { loading = false; });
+    const traffic = (async () => {
+      while (loading) {
+        const start = performance.now(), response = await fetch(base + queries[0]);
+        await response.arrayBuffer();
+        if (response.status !== 200) throw new Error(`reload traffic status ${response.status}`);
+        reloadTraffic.push(performance.now() - start);
+        await pause(10);
+      }
+    })();
+    await reloading; const reloadMs = performance.now() - beforeReload; await traffic;
     await pause(30); delay.disable();
     const paging = {};
     for (const endpoint of ['changes', 'prices']) {
@@ -132,7 +145,7 @@ async function sample(factor) {
       }
       const started = performance.now();
       do {
-        const { result, problem } = runListQuery(holder, endpoint, raw);
+        const { result, problem } = await runListQueryAsync(holder, endpoint, raw);
         if (problem) throw new Error(JSON.stringify(problem));
         pages++;
         for (const item of result.page.items) { if (seen.has(item.id)) throw new Error('duplicate cursor item'); seen.add(item.id); }
@@ -149,16 +162,17 @@ async function sample(factor) {
     }
     const historical = JSON.parse(fs.readFileSync(path.join(source, 'manifest.json'))).retainedVersions.find(v => v.datasetVersion !== ds.version);
     let historicalLoad = null;
-    if (factor === 1 && historical) { const t = performance.now(); const old = Dataset.loadDirect(source, historical.datasetVersion); historicalLoad = { version: old.version, elapsedMs: performance.now() - t }; }
-    const low = new DatasetHolder(root); low.reload();
+    if (factor === 1 && historical) { const t = performance.now(); const old = await holder.getOrLoadAsync(historical.datasetVersion); historicalLoad = { version: old.version, elapsedMs: performance.now() - t }; }
+    const low = new DatasetHolder(root); await low.reloadAsync();
     const limiter = http.createServer(createHandler(low, { rateLimit: { capacity: 2, refillPerMinute: 1 } }));
     await new Promise(resolve => limiter.listen(0, '127.0.0.1', resolve));
     const rateStatuses = [];
     try { for (let i = 0; i < 3; i++) { const response = await fetch(`http://127.0.0.1:${limiter.address().port}/api/v1/prices`); rateStatuses.push(response.status); await response.arrayBuffer(); } }
-    finally { limiter.closeAllConnections(); await new Promise(resolve => limiter.close(resolve)); }
+    finally { low.close(); limiter.closeAllConnections(); await new Promise(resolve => limiter.close(resolve)); }
     return { ...sampleMeta, datasetVersion: ds.version, dataThrough: ds.dataThrough,
       counts: { changes: ds.changes.length, prices: ds.prices.length, evidence: ds.evidenceById.size },
-      load: stats(loads), sameVersionReload: stats(reloads), reloadEventLoop: { elapsedMs: reloadMs, maxMs: delay.max / 1e6 },
+      loader: 'worker-stream-200', holderMetrics: holder.metrics, cacheState: holder.cacheState, load: stats(loads), sameVersionReload: stats(reloads), reloadEventLoop: { elapsedMs: reloadMs, maxMs: delay.max / 1e6 },
+      reloadTraffic: { requests: reloadTraffic.length, p95Ms: percentile(reloadTraffic, .95), p99Ms: percentile(reloadTraffic, .99), allSuccessful: true },
       historicalLoad, throughput, paging, limiterStatuses: rateStatuses, steadyMemory, finalMemory: process.memoryUsage() };
   } finally {
     if (server) { server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); }
@@ -171,7 +185,9 @@ if (args.includes('--factor')) {
 } else {
   const output = path.resolve(arg('--output', 'docs/architecture/refactoring-2026-10/baseline.json'));
   const results = [1, 5, 10].map(factor => JSON.parse(execFileSync(process.execPath, ['--expose-gc', fileURLToPath(import.meta.url), '--factor', String(factor)], { maxBuffer: 8 * 1024 * 1024 })));
-  const report = { measuredAt: new Date().toISOString(), commit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim(),
+  const sourceFiles = ['scripts/architecture-benchmark.mjs', ...fs.readdirSync(path.join(repo, 'services/agent-api/src')).filter(name => name.endsWith('.ts')).map(name => `services/agent-api/src/${name}`)];
+  const sourceSha256 = Object.fromEntries(sourceFiles.map(file => [file, hash(fs.readFileSync(path.join(repo, file)))]));
+  const report = { measuredAt: new Date().toISOString(), sourceSha256, commit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim(),
     environment: { node: process.version, os: `${os.platform()} ${os.release()}`, arch: os.arch(), cpus: os.cpus().length, cpu: os.cpus()[0].model, totalMemory: os.totalmem() },
     method: { rounds: 3, requestsPerRound: 60, syntheticSeed: 'ar-capacity-v1', scope: 'local HTTP; 5x/10x unique remapped IDs; unchanged model catalog; no production traffic' },
     budgets: { concurrency: 10, queryP95Ms: 200, eventLoopP99Ms: 50, sameVersionBusinessParses: 0 }, results };
