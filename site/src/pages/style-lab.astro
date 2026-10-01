@@ -1,0 +1,30 @@
+---
+import '../styles/style-lab.css';
+import daily from '../data/daily_changes.json';
+import { priceUnit } from '../lib/price-display';
+import { featuredModels, modelRelease, providerLabels } from '../lib/model-pages';
+import { logoFor } from '../lib/platforms';
+const today = daily.days[0];
+const events = today.highlights.map((h:any, i:number) => ({id:i, platform:h.platform, title:h.logo_summary, items:h.items, type:h.items.some((x:any)=>x.type==='sunset')?'sunset':h.items.some((x:any)=>x.type==='pricing')?'pricing':h.items[0]?.type??'other', logo:logoFor(h.platform)}));
+const models = featuredModels().map(page => {
+  const input=page.prices.find(p=>p.component==='input'&&p.billingMode==='realtime'&&p.serviceTier==='standard')??page.prices.find(p=>p.component==='input');
+  const key=(p:any)=>JSON.stringify([p.providerId,p.sourceId,p.modelKey,p.currency,p.unitName,p.unitQuantity,p.region,p.billingMode,p.serviceTier,p.contextBand,p.timeCondition]);
+  const same=input?page.prices.filter(p=>key(p)===key(input)):[];
+  const quote=(p:any)=>p?`${p.amount} ${p.currency}`:'未单列';
+  return {id:page.model.modelId,name:page.model.modelName,provider:input?providerLabels[input.providerId]??input.providerId:'',input:quote(input),output:quote(same.find(p=>p.component==='output')),cache:quote(same.find(p=>p.component==='cache_read')),unit:input?`每 ${priceUnit(input.unitQuantity, input.unitName)}`:'暂无报价',condition:input?[({'cn':'中国区','global':'全球'}[input.region]??input.region),input.billingMode==='realtime'?'实时':input.billingMode,input.serviceTier==='standard'?'标准档':input.serviceTier,input.contextBand?`上下文 ${input.contextBand.min??0}–${input.contextBand.max??'不限'}`:null,input.timeCondition?`${input.timeCondition.period==='peak'?'高峰':input.timeCondition.period==='off_peak'?'非高峰':input.timeCondition.period??'限定时段'}（${input.timeCondition.tz??'来源时区'}）`:null].filter(Boolean).join(' · '):'',date:input?.observedAt.slice(0,10),sources:page.sources};
+});
+const payload=JSON.stringify({events,models,date:today.date,through:modelRelease().dataThrough}).replaceAll('<','\\u003c');
+---
+<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="robots" content="noindex,nofollow"/><title>MaaS Daily · 风格实验室</title></head>
+<body>
+  <aside class="lab-bar" aria-label="风格实验室"><div class="lab-label"><strong>风格实验室</strong><span>DESIGN LAB / 06</span></div><div class="style-switcher" role="group" aria-label="选择视觉风格"></div><button class="favorite" type="button">☆ 收藏风格</button></aside>
+  <div class="lab-note"><span id="style-note"></span><span>同一组真实内容 · <a href="https://design-lab-yanliu.vercel.app/" target="_blank" rel="noreferrer">Design Lab ↗</a></span></div>
+  <div class="product" data-style="swiss">
+    <header class="product-header"><a class="brand" href="#"><span class="brand-symbol">M<span>↗</span></span><strong>MaaS Daily<span>模型世界，每日变化。</span></strong></a><nav aria-label="页面预览"><button data-route="daily" aria-pressed="true">每日动态</button><button data-route="prices" aria-pressed="false">模型价格</button><button data-route="saved" aria-pressed="false">我的关注 <span id="saved-count">0</span></button></nav><span class="header-date">{today.date.replaceAll('-','.')}</span></header>
+    <main id="app"></main><footer class="product-footer"><span>MaaS Daily / 全球大模型 API 观察</span><span>官方来源追踪 · AI 摘要 · 数据截至 {today.date}</span></footer>
+    <div class="compare-tray" hidden><span id="compare-count"></span><button id="clear-compare">清空</button><button id="open-compare" class="primary">查看比较 →</button></div>
+    <dialog id="detail"><div class="dialog-inner"></div></dialog><div class="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script type="application/json" id="lab-data" set:html={payload}></script>
+  <script>import '../scripts/style-lab';</script>
+</body></html>

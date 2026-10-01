@@ -1,5 +1,6 @@
 ---
 import '../styles/product.css';
+import '../styles/spec-sheet.css';
 import BrandLogo from '../components/BrandLogo.astro';
 import analytics from '../config/analytics.json';
 import { validateAnalyticsConfig } from '../../public/analytics.js';
@@ -63,7 +64,7 @@ const canonical = canonicalUrl(Astro.url.pathname);
     <script is:inline>
       (function () {
         let saved; try { saved = localStorage.getItem('maas-theme'); } catch {}
-        if (saved === 'light') {
+        if (saved !== 'dark') {
           document.documentElement.setAttribute('data-theme', 'light');
         } else {
           document.documentElement.setAttribute('data-theme', 'dark');
@@ -71,7 +72,7 @@ const canonical = canonicalUrl(Astro.url.pathname);
       })();
     </script>
   </head>
-  <body>
+  <body class="spec-sheet">
     <a class="skip-link" href="#main-content">{t("跳到内容", "Skip to content")}</a>
     <header class="topbar">
       <div class="shell topbar-inner">

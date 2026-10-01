@@ -1,4 +1,4 @@
-import { priceCells, priceHeaders, englishPriceCells, englishPriceHeaders } from '../lib/price-display';
+import { priceUnit, priceCells, priceHeaders, englishPriceCells, englishPriceHeaders } from '../lib/price-display';
 import type { PriceRecord, ChangeRecord } from '../lib/release';
 
 const root = document.querySelector<HTMLElement>('.model-detail');
@@ -36,14 +36,34 @@ if (root && button && status) {
       const changes: ChangeRecord[] = data.items;
       const table = document.createElement('table'); table.className = 'price-table';
       const head = table.createTHead().insertRow();
-      for (const label of [...headers, t('证据 / 变化', 'Evidence / record')]) {
+      for (const label of (en ? [...headers, 'Evidence / record'] : ['平台 / API 模型', '计费项', '价格 / 原始单位', '条件与依据'])) {
         const th = document.createElement('th'); th.scope = 'col'; th.textContent = label; head.append(th);
       }
       const body = table.createTBody();
       for (const price of prices) {
         const row = body.insertRow(); row.dataset.priceId = price.id;
-        for (const value of cells(price)) row.insertCell().textContent = value;
+        const values = cells(price);
+        if (en) {
+          for (const value of values) row.insertCell().textContent = value;
+        } else {
+          const identity = row.insertCell();
+          const name = document.createElement('strong'); name.textContent = values[0];
+          const key = document.createElement('small'); key.className = 'price-subline'; key.textContent = price.modelKey; identity.append(name, key);
+          const badge = document.createElement('span'); badge.className = 'billing-badge'; badge.textContent = values[2]; row.insertCell().append(badge);
+          const amount = document.createElement('strong'); amount.className = 'detail-amount'; amount.textContent = `${price.amount} ${price.currency}`;
+          const unit = document.createElement('small'); unit.className = 'price-subline'; unit.textContent = `每 ${priceUnit(price.unitQuantity, price.unitName)}`; row.insertCell().append(amount, unit);
+        }
         const cell = row.insertCell();
+        if (!en) {
+          const details = document.createElement('details'); details.className = 'quote-details';
+          const summary = document.createElement('summary'); summary.textContent = '查看报价条件';
+          const facts = document.createElement('dl'); facts.className = 'price-facts';
+          values.slice(4).forEach((value, index) => {
+            const pair = document.createElement('div'); const dt = document.createElement('dt'); dt.textContent = headers[index + 4];
+            const dd = document.createElement('dd'); dd.textContent = value; pair.append(dt, dd); facts.append(pair);
+          });
+          details.append(summary, facts); cell.append(details);
+        }
         if (price.evidenceId) {
           const a = document.createElement('a'); a.href = `/evidence/${price.evidenceId}/`; a.textContent = t('价格证据', 'Evidence (Chinese)'); cell.append(a);
         }
