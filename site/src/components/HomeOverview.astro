@@ -28,8 +28,9 @@ const release=modelRelease();
 <header class="home-opening">
   <div class="opening-copy" data-highlight-carousel role="region" aria-roledescription="轮播" aria-label="今日重点">
     <div class="opening-kicker-row"><p class="home-kicker">MAAS DAILY / 今日重点</p>{picks.length > 1 && <button class="carousel-play" type="button" aria-label="暂停自动轮播">暂停</button>}</div>
+    {picks.length > 0 && <h1 class="sr-only">MaaS Daily · 今日模型重点与价格</h1>}
     <div class="highlight-slides">{picks.map((item:any,index:number)=><article class="highlight-slide" data-highlight-slide hidden={index !== 0} role="group" aria-roledescription="幻灯片" aria-label={`${index+1} / ${picks.length}`}>
-      <h1 id={index === 0 ? 'opening-title' : undefined}>{item.headline}</h1><p class="opening-deck">{item.platform} · {labels[item.type] ?? labels.other}</p><p class="highlight-summary">{item.text}</p><div class="opening-links"><a href={`#signal-${platformOrder.indexOf(item.platform)}`}>查看记录与依据 ↗</a><a href="#market-title">比较模型价格 ↓</a></div>
+      <h2 class="highlight-title">{item.headline}</h2><p class="opening-deck">{item.platform} · {labels[item.type] ?? labels.other}</p><p class="highlight-summary">{item.text}</p><div class="opening-links"><a href={`#signal-${platformOrder.indexOf(item.platform)}`}>查看记录与依据 ↗</a><a href="#market-title">比较模型价格 ↓</a></div>
     </article>)}</div>
     {!picks.length && <h1 id="opening-title">模型与平台，今日观察。</h1>}
     {picks.length > 1 && <div class="carousel-controls"><button type="button" data-carousel-prev aria-label="上一条重点">←</button><div class="carousel-pages" role="group" aria-label="选择重点">{picks.map((item:any,index:number)=><button type="button" data-carousel-page={index} aria-pressed={index === 0 ? 'true' : 'false'} aria-label={`第 ${index+1} 条：${item.headline}`}>{String(index+1).padStart(2,'0')}</button>)}</div><button type="button" data-carousel-next aria-label="下一条重点">→</button><span class="carousel-status" aria-live="polite">1 / {picks.length}</span></div>}
