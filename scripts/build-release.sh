@@ -54,7 +54,9 @@ if ! $SKIP_TESTS; then
 else
   echo "[2/6] ⚠ 跳过测试（--skip-tests）——release 将标记为不可激活"
   TESTS_FLAG="--skip-tests-marked"
-  (cd site && npm ci --silent && npm run build >/dev/null 2>&1) || die "site 构建失败"
+  node scripts/ensure-node-deps.mjs services/agent-api
+  npm --prefix services/agent-api run build --silent
+  (node scripts/ensure-node-deps.mjs site && cd site && npm run build >/dev/null 2>&1) || die "site 构建失败"
 fi
 
 # ---- 步骤 3：构建后 tracked diff 复查（数据未提交的信号）----
@@ -63,19 +65,16 @@ echo "[3/6] tracked diff 复查"
   || { git status --short >&2; die "构建产生未解释的 tracked 改动（数据未提交？）"; }
 
 # ---- 步骤 4：agent-api 生产运行包 ----
-# 完整依赖环境编译 TS（devDeps 含 typescript）→ 保留 dist → 裁剪为生产依赖
-echo "[4/6] agent-api 生产包（完整编译 → omit=dev 裁剪）"
+# The complete suite already compiled/tested the exact checkout. Reuse dist,
+# then install only production dependencies into an isolated runtime package.
+echo "[4/6] agent-api 生产包（已验编译产物 + omit=dev 安装）"
+[ -f services/agent-api/dist/server.js ] || die "agent-api 编译产物缺失"
 PKG_TMP="$(mktemp -d "${TMPDIR:-/tmp}/maas-release-pkg.XXXXXX")"
 trap 'rm -rf "$PKG_TMP"' EXIT
 PKG="$PKG_TMP/agent-api"
-cp -R services/agent-api "$PKG"
-rm -rf "$PKG/node_modules"
-# 完整依赖编译（typescript 在 devDeps）
-(cd "$PKG" && npm ci --silent && npm run build --silent)
-[ -f "$PKG/dist/server.js" ] || die "agent-api 编译失败：dist/server.js 不存在"
-# 裁剪为生产运行依赖（重装仅生产依赖；dist 已存在不受影响）
-rm -rf "$PKG/node_modules"
-(cd "$PKG" && npm ci --omit=dev --silent)
+mkdir -p "$PKG"
+cp -R services/agent-api/dist services/agent-api/package.json services/agent-api/package-lock.json "$PKG/"
+(cd "$PKG" && npm ci --omit=dev --prefer-offline --silent)
 [ -f "$PKG/node_modules/@modelcontextprotocol/sdk/package.json" ] \
   || die "agent-api 生产依赖缺失：@modelcontextprotocol/sdk"
 [ -f "$PKG/node_modules/zod/package.json" ] || die "agent-api 生产依赖缺失：zod"

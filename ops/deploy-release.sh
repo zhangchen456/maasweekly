@@ -43,12 +43,12 @@ info "deploy-mode: $MODE"
 info "构建 release（commit=$COMMIT${BUILD_EXTRA:+，$BUILD_EXTRA}）"
 scripts/build-release.sh --commit "$COMMIT" --output "$OUTPUT_DIR" $BUILD_EXTRA
 
-# 从构建产物里取出真正的 RID：按 mtime 取最新（dist-release 可能残留旧 release；
-# 不能用 find|head -1——目录序不稳定会拿到旧产物）
-RID_DIR="$(ls -td "$OUTPUT_DIR"/*/ 2>/dev/null | head -1)"
-RID_DIR="${RID_DIR%/}"
-[ -n "$RID_DIR" ] || die "构建未产出 release 目录: $OUTPUT_DIR"
-RID="$(basename "$RID_DIR")"
+# Exact commit/dataset naming; unrelated output mtimes cannot select a release.
+BUILD_SHA="$(git rev-parse "$COMMIT")"
+BUILD_DS="$(python3 -c "import json; print(json.load(open('data/public/v1/manifest.json'))['datasetVersion'])")"
+RID="rl_$(git rev-parse --short=10 "$COMMIT")_${BUILD_DS:3:12}"
+RID_DIR="$OUTPUT_DIR/$RID"
+[ -d "$RID_DIR" ] || die "构建未产出精确候选目录: $RID_DIR"
 validate_rid "$RID"
 info "release: $RID"
 
@@ -80,6 +80,22 @@ fi
 # 仅在显式 MAAS_DEPLOY_MODE=release 时到达这里（仓库文件永不翻转）
 info "release 通道（运行时注入）：上传 incoming → 激活 → 公网冒烟"
 
+# CI opt-in: recheck main after the potentially long build and immediately
+# before activation. A newer runtime candidate owns the next deployment.
+check_main_candidate() {
+  [ "${MAAS_VERIFY_MAIN_CANDIDATE:-0}" = 1 ] || return 0
+  git fetch --no-tags origin main
+  local decision
+  decision="$(python3 scripts/workflow-policy.py candidate --sha "$BUILD_SHA")"
+  echo "$decision"
+  if [ "$(echo "$decision" | python3 -c 'import json,sys; print(str(json.load(sys.stdin)["eligible"]).lower())')" != true ]; then
+    info "跳过过时或不属于main的候选: $RID"
+    [ -z "${GITHUB_OUTPUT:-}" ] || echo 'deployed=false' >> "$GITHUB_OUTPUT"
+    exit 0
+  fi
+}
+check_main_candidate
+
 # 上传（rsync 服务端受限 shell 只放行 incoming/<rid>/）
 RSYNC_SSH="$(rsync_ssh_rsh)"
 DEST_DIR="$SERVER_INCOMING_ROOT/$RID/"
@@ -87,6 +103,7 @@ DEST_DIR="$SERVER_INCOMING_ROOT/$RID/"
 rsync -az --delete -e "$RSYNC_SSH" "$RELEASE_DIR/" "$(deploy_target):$DEST_DIR"
 info "✓ 上传完成: $RID → incoming"
 
+check_main_candidate
 exit_code=0
 remote_activate "$RID" || exit_code=$?
 if [ "$exit_code" -ne 0 ]; then
@@ -115,3 +132,8 @@ done
   || die "公网冒烟失败：status 的 datasetVersion 未见新值（候选已切但外部不可视）"
 
 echo "✓ release 通道发布完成: ${RID}（datasetVersion: ${DS_VER}）"
+
+if [ -n "${GITHUB_OUTPUT:-}" ]; then
+  echo 'deployed=true' >> "$GITHUB_OUTPUT"
+  echo "rid=$RID" >> "$GITHUB_OUTPUT"
+fi

@@ -17,21 +17,24 @@ on:
           - import      # 导入 data/weekly 新周报到站点并构建部署
           - full        # 抓取 + 导入 + 构建部署
 
+  workflow_call:
+    inputs:
+      mode:
+        type: string
+        default: import
 permissions:
   contents: write
-
-env:
-  DEPLOY_HOST: 47.237.135.97
-  DEPLOY_USER: maasdeploy
-  DEPLOY_PATH: /var/www/maasweekly/
-
-concurrency:
-  group: weekly-update
-  cancel-in-progress: false
 
 jobs:
   weekly:
     runs-on: ubuntu-latest
+    concurrency:
+      group: maas-data-write-main
+      cancel-in-progress: false
+      queue: max
+    outputs:
+      sha: ${{ steps.datacommit.outputs.sha }}
+      mode: ${{ steps.mode.outputs.mode }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,7 +49,7 @@ jobs:
       # Python 依赖（始终装：build-release run-all-tests 的 test_price_archive
       # 需要 bs4；import/full 模式 commit 前不装会被 build-release 拒载）
       - name: Install Python dependencies
-        run: pip install -r requirements.txt
+        run: pip install -c requirements.lock.txt -r requirements.txt
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -57,18 +60,23 @@ jobs:
 
       - name: Resolve mode
         id: mode
+        env:
+          REQUESTED_MODE: ${{ inputs.mode }}
         run: |
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
             echo "mode=full" >> "$GITHUB_OUTPUT"
           else
-            echo "mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
+            case "$REQUESTED_MODE" in
+              aggregate|import|full) echo "mode=$REQUESTED_MODE" >> "$GITHUB_OUTPUT" ;;
+              *) echo "invalid weekly mode" >&2; exit 2 ;;
+            esac
           fi
 
       # ---- 抓取 + 汇总 diff ----
       - name: Setup Playwright
         if: steps.mode.outputs.mode != 'import'
         run: |
-          pip install --quiet playwright beautifulsoup4
+          pip install --quiet -c requirements.lock.txt playwright beautifulsoup4
           python3 -m playwright install chromium --with-deps
 
       - name: Fetch sources & generate diff
@@ -116,40 +124,20 @@ jobs:
       # aggregate 模式提交素材（data/weekly 等汇总）；full/import 模式提交
       # 素材 + public projection + site prebuild 产物。
       - name: Commit new data + public projection
+        id: datacommit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/ site/src/content/ site/src/data/ site/public/maas-skill/
-          if git diff --cached --quiet; then
-            echo "无数据变化，跳过提交"
-          else
-            git commit -m "data: 周报更新 $(date +'%Y-%m-%d')"
-            git push
-          fi
+          bash scripts/commit-workflow-data.sh "data: 周报更新 $(date +'%Y-%m-%d')"
 
-      # ---- 构建部署（release 通道，Task 06 M10；数据已提交，从精确 SHA 构建）----
-      # 原 Build site 步骤移除——build-release.sh 统一构建（含全量测试）
-      - name: Setup SSH key
-        if: steps.mode.outputs.mode != 'aggregate'
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          cp ops/known_hosts.production ~/.ssh/known_hosts  # 受控 host key
-          chmod 600 ~/.ssh/known_hosts
-
-      - name: Deploy release (build → incoming → activate → smoke)
-        if: steps.mode.outputs.mode != 'aggregate'
-        env:
-          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
-          MAAS_DEPLOY_MODE: release
-        run: |
-          ops/deploy-release.sh --commit "$(git rev-parse HEAD)"
-
-      - name: Online verify (four surfaces)
-        if: steps.mode.outputs.mode != 'aggregate'
-        env:
-          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
-        run: |
-          RID=$(ls -td dist-release/rl_* | head -1 | xargs basename)
-          ops/verify-release.sh --online --expect-release "$RID"
+  deploy:
+    name: Deploy release
+    needs: weekly
+    if: needs.weekly.outputs.mode != 'aggregate'
+    uses: ./.github/workflows/release-deploy.yml
+    with:
+      commit: ${{ needs.weekly.outputs.sha }}
+    secrets: inherit
+    permissions:
+      contents: read

@@ -10,3 +10,13 @@ AR-02 实现进行中：worker校验/解析，200实体ACK流式回填；同版�
 针对性/API回归62/62通过（2026-10-02）；完整回归session78700仍执行site records段。容量首测已通过预算，完成完整回归后要重跑带重载期间在线请求的扩充采样（上次报告引用检查改动前，不能最终引用旧源hash）。ops生成器与install-api-runtime.sh候选仅本地，未执行生产安装；真实Nginx未安装，线上代理链验证待发布窗口。
 
 AR-02 本地完成：45/45完整回归430.07s；最终带重载流量容量测量通过，并发10 P95最大24.1ms，10×强制重载loop最大14.7ms，332请求全部200。源码SHA/API62项日志/容量/回归/结果归档完成；生产配置及真实Nginx代理链待发布验收。下一项AR-05。
+
+AR-05 开始：records.test.mjs 已改为单次临时repo/cwd构建，真实record/index/dist不写；针对性页面fixture测试通过（保留XSS/withdrawn断言+真实索引字节/详情页集合不变）。第一次CLI路径astro/astro.js不适配Astro7，已改node_modules/.bin/astro，临时根均finally清理。run-all-tests已修退出码/失败日志保留，去掉正式输出恢复build；依赖缓存新增lockfile/node/npm/ABI/platform/arch指纹脚本；API测试新增compiled aliases供统一套件一次编译复用；release package复用已验dist、独立omit=dev安装。以上未完整回归，尚未提交。下一步改daily/weekly/reusable部署工作流并做隔离git场景验证，再完整AR-05回归。
+
+AR-05 下一步工作流实现补充：统一release-deploy.yml可复用job部署锁 maas-production-deploy-main/queue:max/cancel:false；daily/weekly仅写入job持 maas-data-write-main锁，输出确切sha到独立uses发布job。deploy push包含手工data及site/content；raw data/weekly Markdown先调用weekly import可复用入口后发布。GITHUB_TOKEN提交不会触发递归push，由数据工作流显式调用发布。候选检查必须main祖先，若main仅增加普通文档允许旧候选（防docs更新让唯一代码候选被漏掉）；main增加runtime变化则跳过。构建后/激活前复查，latest候选唯一负责，服务器flock/既有旧提交拒绝继续保留。新增workflow-policy.py分类/候选选择与commit-workflow-data.sh（main变化退出75，不rebase/forcepush）尚未接入yaml/场景测试。
+
+AR-05 工作流已接入：daily/weekly写入job共享 maas-data-write-main(max队列、不可取消运行中)，输出精确sha给release-deploy.yml独立生产锁。push手工data/weekly Markdown调用weekly import路径；其他运行文件/手工data走统一发布；纯docs跳过。提交脚本main变化退出75、无force/rebase；构建后及激活前再查main祖先/新runtime变化，只有docs追加允许原候选；RID按commit+dataset算，不再按目录mtime。
+针对性9项workflow graph/实际隔离git/退出码日志/依赖缓存/精确RID测试通过，既有workflow18项通过、deploy7项通过。runner中文相邻变量发现bash解析code变量边界，已改${code}并通过真实exit23失败日志测试。
+新增requirements.lock.txt冻结本机已验证Python3.12依赖闭包；PyYAML>=6声明到requirements；CI加-c constraints。Requests2.34.0与Playwright1.54.0的PyPI页面已核实存在（并非宣称最新），来源 https://pypi.org/project/requests/2.34.0/ 和 https://pypi.org/project/playwright/1.54.0/ 。准备临时fresh Python venv安装；路径记录/tmp/maas-ar05-python-path.txt，安装session稍后poll。architecture-regression.py新增--release-workspace：要求干净且相同commit的checkout，在它运行标准build-release（内含全量suite），把日志归档到原workspace；可避免重复完整回归。还未执行完整AR-05验收、未提交实现。
+
+AR-05 干净Python3.12 venv创建和完整锁定依赖安装成功（/tmp/maas-ar05-python.oNvhIE，安装日志/tmp/ar05-python-install.txt）；接下来保存实施候选commit，创建同commit的干净临时checkout，通过标准build-release一次完成完整回归及release构建，原目录保存验收。临时checkout路径会写/tmp/maas-ar05-release-path.txt；完整回归command使用architecture-regression.py --release-workspace。

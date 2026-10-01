@@ -1,0 +1,83 @@
+name: 统一生产 release 发布
+
+on:
+  workflow_call:
+    inputs:
+      commit:
+        required: true
+        type: string
+    secrets:
+      DEPLOY_SSH_KEY:
+        required: true
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Only this job owns the production lock; callers never hold it.
+    # Keep running activation transactions. Queue all pending candidates,
+    # then skip superseded ones using main ancestry/runtime diff checks.
+    concurrency:
+      group: maas-production-deploy-main
+      cancel-in-progress: false
+      queue: max
+    env:
+      DEPLOY_HOST: 47.237.135.97
+      DEPLOY_USER: maasdeploy
+      MAAS_DEPLOY_MODE: release
+      MAAS_VERIFY_MAIN_CANDIDATE: '1'
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit }}
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Select main candidate
+        id: candidate
+        env:
+          CANDIDATE_SHA: ${{ inputs.commit }}
+        run: |
+          git fetch --no-tags origin main
+          RESULT=$(python3 scripts/workflow-policy.py candidate --sha "$CANDIDATE_SHA")
+          echo "$RESULT"
+          echo "eligible=$(echo "$RESULT" | python3 -c 'import sys,json; print(str(json.load(sys.stdin)["eligible"]).lower())')" >> "$GITHUB_OUTPUT"
+      - name: Install Python dependencies
+        if: steps.candidate.outputs.eligible == 'true'
+        run: pip install -q -c requirements.lock.txt -r requirements.txt
+      - name: Setup Node
+        if: steps.candidate.outputs.eligible == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: |
+            site/package-lock.json
+            services/agent-api/package-lock.json
+      - name: Setup SSH key
+        if: steps.candidate.outputs.eligible == 'true'
+        env:
+          DEPLOY_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          cp ops/known_hosts.production ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+      - name: Build release and deploy
+        id: deploy
+        if: steps.candidate.outputs.eligible == 'true'
+        env:
+          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
+          CANDIDATE_SHA: ${{ inputs.commit }}
+        run: ops/deploy-release.sh --commit "$CANDIDATE_SHA"
+      - name: Online verify (four surfaces)
+        if: steps.deploy.outputs.deployed == 'true'
+        env:
+          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
+          RELEASE_ID: ${{ steps.deploy.outputs.rid }}
+        run: ops/verify-release.sh --online --expect-release "$RELEASE_ID"

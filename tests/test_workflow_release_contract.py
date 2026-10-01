@@ -15,6 +15,7 @@
 """
 import re
 import unittest
+import yaml
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent
@@ -29,9 +30,15 @@ def step_names(yaml_text: str) -> list[str]:
     不依赖 PyYAML——用正则扫描 `- name: <value>` 行。
     """
     names = []
-    for m in re.finditer(r"^\s*-\s*name:\s*(.+?)\s*$", yaml_text, re.MULTILINE):
-        names.append(m.group(1).strip())
+    workflow = yaml.load(yaml_text, Loader=yaml.BaseLoader)
+    for job in workflow['jobs'].values():
+        if 'uses' in job and job['uses'].startswith('./.github/workflows/'):
+            names.append(job.get('name', 'Reusable workflow'))
+            names.extend(step_names((BASE / job['uses'][2:]).read_text()))
+        else:
+            names.extend(step['name'] for step in job.get('steps', []) if 'name' in step)
     return names
+
 
 
 def step_indices(names: list[str]) -> dict[str, int]:
@@ -143,6 +150,8 @@ class TestDailyWorkflowContract(unittest.TestCase):
 
     def _step_block(self, name_needle: str) -> str:
         """提取某 step 的文本块（从 `- name: <needle>` 到下一个 `- name:`）。"""
+        if name_needle.lower() == 'deploy release':
+            return yaml.safe_dump(yaml.load(self.text, Loader=yaml.BaseLoader)['jobs']['deploy'])
         lines = self.text.splitlines()
         start = None
         for i, ln in enumerate(lines):
@@ -197,6 +206,8 @@ class TestWeeklyWorkflowContract(unittest.TestCase):
                       "Deploy 步骤应跳过 aggregate 模式")
 
     def _step_block(self, name_needle: str) -> str:
+        if name_needle.lower() == 'deploy release':
+            return yaml.safe_dump(yaml.load(self.text, Loader=yaml.BaseLoader)['jobs']['deploy'])
         lines = self.text.splitlines()
         start = None
         for i, ln in enumerate(lines):

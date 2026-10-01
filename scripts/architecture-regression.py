@@ -9,15 +9,27 @@ import os
 from pathlib import Path
 import subprocess
 import time
+import re
+import shutil
 
 BASE = Path(__file__).resolve().parent.parent
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--task', required=True)
+    parser.add_argument('--release-workspace', type=Path, help='same-commit clean checkout: full regression plus standard immutable release build')
     args = parser.parse_args()
     if not args.task.startswith('AR-') or any(c not in 'AR-0123456789abcdefghijklmnopqrstuvwxyz' for c in args.task):
         parser.error('task must be an AR task identifier')
+    workspace = BASE
+    command = ['bash', 'scripts/run-all-tests.sh']
+    if args.release_workspace:
+        workspace = args.release_workspace.resolve()
+        current_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=BASE, text=True).strip()
+        selected_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=workspace, text=True).strip()
+        if current_commit != selected_commit or subprocess.check_output(['git', 'status', '--porcelain'], cwd=workspace, text=True).strip():
+            parser.error('release workspace must be clean and match the current source commit')
+        command = ['bash', 'scripts/build-release.sh', '--commit', current_commit]
     root = BASE / 'docs/architecture/refactoring-2026-10/acceptance' / args.task
     root.mkdir(parents=True, exist_ok=True)
     attempt = root / datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
@@ -28,15 +40,22 @@ def main():
     t = time.monotonic()
     with log.open('w') as stream:
         try:
-            exit_code = subprocess.run(['bash', 'scripts/run-all-tests.sh'], cwd=BASE, stdout=stream, stderr=subprocess.STDOUT).returncode
+            exit_code = subprocess.run(command, cwd=workspace, stdout=stream, stderr=subprocess.STDOUT).returncode
         except KeyboardInterrupt:
             exit_code = 130
+    retained = []
+    for value in re.findall(r'日志保留: (.+)', log.read_text(errors='replace')):
+        source = Path(value.strip())
+        if source.is_dir() and source.name.startswith('maas-regression.'):
+            target = attempt / 'stage-failures'
+            shutil.copytree(source, target, dirs_exist_ok=True)
+            retained.append(str(target.relative_to(BASE)))
     report = {'task': args.task, 'startedAt': started,
               'completedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(),
               'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=BASE, text=True).strip(),
               'python': subprocess.check_output(['python3', '--version'], text=True).strip(),
               'node': subprocess.check_output(['node', '--version'], text=True).strip(),
-              'command': 'bash scripts/run-all-tests.sh', 'exitCode': exit_code,
+              'command': command, 'workingDirectory': str(workspace), 'retainedStageLogs': retained, 'exitCode': exit_code,
               'elapsedSeconds': time.monotonic() - t,
               'log': str(log.relative_to(BASE)), 'logSha256': hashlib.sha256(log.read_bytes()).hexdigest(),
               'initialWorktree': before,

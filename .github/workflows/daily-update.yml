@@ -17,19 +17,16 @@ permissions:
   contents: write
   issues: write
 
-# 同一时间只允许一个实例，避免并发抓取写快照
-concurrency:
-  group: daily-update
-  cancel-in-progress: false
-
-env:
-  DEPLOY_HOST: 47.237.135.97
-  DEPLOY_USER: maasdeploy
-  DEPLOY_PATH: /var/www/maasweekly/
-
 jobs:
   update-and-deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: maas-data-write-main
+      cancel-in-progress: false
+      queue: max
+    outputs:
+      sha: ${{ steps.datacommit.outputs.sha }}
+      pricing: ${{ steps.fetch_prices.outcome }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,7 +41,7 @@ jobs:
       # Python 依赖（始终装：build-release run-all-tests 的 test_price_archive
       # 需要 bs4；skip_fetch=true 时抓取步骤的 pip install 被跳过，此处兜底）
       - name: Install Python dependencies
-        run: pip install -r requirements.txt
+        run: pip install -c requirements.lock.txt -r requirements.txt
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -57,7 +54,7 @@ jobs:
       - name: Setup Playwright
         if: ${{ !inputs.skip_fetch }}
         run: |
-          pip install --quiet playwright beautifulsoup4
+          pip install --quiet -c requirements.lock.txt playwright beautifulsoup4
           python3 -m playwright install chromium --with-deps
 
       # ---- 1. 抓取信源（可跳过）----
@@ -79,7 +76,7 @@ jobs:
         id: fetch_prices
         if: ${{ !inputs.skip_fetch }}
         run: |
-          pip install --quiet beautifulsoup4
+          pip install --quiet -c requirements.lock.txt beautifulsoup4
           python3 pipeline/scripts/fetch-prices.py
         env:
           TZ: Asia/Shanghai
@@ -89,7 +86,7 @@ jobs:
       - name: Pricing extractors regression
         if: ${{ !inputs.skip_fetch }}
         run: |
-          pip install --quiet beautifulsoup4
+          pip install --quiet -c requirements.lock.txt beautifulsoup4
           python3 tests/test_pricing_extractors.py
 
       # ---- 2.3 LLM 提炼"今日要点"（消费 diff + price_changes；失败不阻塞，前端回退规则版预览）----
@@ -148,52 +145,34 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/ site/src/data/ site/public/maas-skill/ site/public/logos/
-          if git diff --cached --quiet; then
-            echo "无数据变化，跳过提交"
+          if [ "${{ inputs.skip_fetch }}" = "true" ]; then
+            bash scripts/commit-workflow-data.sh "data: 重建 public projection $(date +'%Y-%m-%d')"
           else
-            if [ "${{ inputs.skip_fetch }}" = "true" ]; then
-              git commit -m "data: 重建 public projection $(date +'%Y-%m-%d')"
-            else
-              git commit -m "data: 每日信源抓取 $(date +'%Y-%m-%d')"
-            fi
-            git push
+            bash scripts/commit-workflow-data.sh "data: 每日信源抓取 $(date +'%Y-%m-%d')"
           fi
         id: datacommit
 
-      # ---- 6/7. 部署（release 通道，Task 06 M10：与 deploy.yml/本地链同构）----
-      # 原「Build site」步骤移除——build-release.sh 统一构建（含全量测试），
-      # 避免双重构建；数据已提交入 HEAD，从精确 SHA 构建（§5.2 先提交后发布）。
-      - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          cp ops/known_hosts.production ~/.ssh/known_hosts  # 受控 host key（T14 相关）
-          chmod 600 ~/.ssh/known_hosts
-
-      - name: Deploy release (build → incoming → activate → smoke)
-        id: deploy
-        env:
-          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
-          MAAS_DEPLOY_MODE: release
-        run: |
-          ops/deploy-release.sh --commit "$(git rev-parse HEAD)"
-
-      - name: Online verify (four surfaces)
-        id: verify
-        env:
-          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
-        run: |
-          RID=$(ls -td dist-release/rl_* | head -1 | xargs basename)
-          ops/verify-release.sh --online --expect-release "$RID"
-
+  deploy:
+    name: Deploy release
+    needs: update-and-deploy
+    uses: ./.github/workflows/release-deploy.yml
+    with:
+      commit: ${{ needs.update-and-deploy.outputs.sha }}
+    secrets: inherit
+    permissions:
+      contents: read
+  finish:
+    needs: [update-and-deploy, deploy]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
       # ---- 8. 运行健康检查（最后一步：数据已提交部署，此时才把坏消息置红）----
       # fetch-prices 的 continue-on-error 会吞掉失败让 run 保持绿色；
       # 全部来源抓取失败（退出码 2）意味着运行环境完全失效（如 Playwright 未装、
       # 断网），不能与「部分失败沿用」同等静默。放在最后：既不阻塞当日的
       # 构建/部署/数据提交，又能让失败在 run 列表里可见（红色 + 邮件通知）。
       - name: Run health check
-        if: ${{ !inputs.skip_fetch && steps.fetch_prices.outcome == 'failure' }}
+        if: ${{ !inputs.skip_fetch && needs.update-and-deploy.outputs.pricing == 'failure' }}
         run: |
           echo "✗ 价格抓取全部来源失败（退出码 2）——运行环境疑似完全失效"
           echo "（Playwright 未安装 / 网络不可达 / registry 全部失效），请检查："
@@ -202,18 +181,18 @@ jobs:
           echo "  3. 上游网站是否全部不可达（本机网络出口）"
           exit 1
 
+      - name: Check upstream workflow failures
+        if: ${{ needs.update-and-deploy.result == 'failure' || needs.deploy.result == 'failure' }}
+        run: exit 1
+
       # ---- 9. 失败通知：任何前置步骤失败时创建/追加 GitHub Issue（零外部依赖）----
       - name: Notify failure via GitHub Issue
         if: ${{ failure() && !inputs.skip_fetch }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          FAILED=""
-          [ "${{ steps.fetch_leaderboards.outcome }}" = "failure" ] && FAILED="$FAILED fetch_leaderboards"
-          [ "${{ steps.prebuild.outcome }}" = "failure" ] && FAILED="$FAILED prebuild"
-          [ "${{ steps.deploy.outcome }}" = "failure" ] && FAILED="$FAILED deploy"
-          [ "${{ steps.verify.outcome }}" = "failure" ] && FAILED="$FAILED verify"
-          EXISTING=$(gh issue list --search "CI 失败 daily-update in:title" --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
+          FAILED="update=${{ needs.update-and-deploy.result }} deploy=${{ needs.deploy.result }} pricing=${{ needs.update-and-deploy.outputs.pricing }}"
+          EXISTING=$(gh issue list --repo "$GITHUB_REPOSITORY" --search "CI 失败 daily-update in:title" --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           BODY="## daily-update CI 失败
 
@@ -228,7 +207,9 @@ jobs:
 
           修复后关闭此 Issue。"
           if [ -n "$EXISTING" ]; then
-            gh issue comment "$EXISTING" --body "$BODY"
+            printf '%s\n' "$BODY" > "$RUNNER_TEMP/failure-body.md"
+            gh issue comment "$EXISTING" --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/failure-body.md"
           else
-            gh issue create --title "CI 失败: daily-update $(date +'%Y-%m-%d')" --body "$BODY"
+            printf '%s\n' "$BODY" > "$RUNNER_TEMP/failure-body.md"
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "CI 失败: daily-update $(date +'%Y-%m-%d')" --body-file "$RUNNER_TEMP/failure-body.md"
           fi
