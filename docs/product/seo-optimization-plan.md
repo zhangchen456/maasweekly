@@ -61,6 +61,12 @@
 
 本地首轮构建通过：18,600 页面，sitemap 7,074 条。SEO 验证通过（正式 URL 和对应构建文件、原价及完整条件、无 JS 正文、刷新完整分页、网络失败/版本变化时保留内容、release 防篡改）；已有模型页测试与埋点 12 项回归通过。浏览器状态读取超时，没有冒充浏览器视觉验收。
 
-生产发布与标准 release 全量验收：执行中，结果将续写。搜索平台验证、提交和复盘步骤见 `docs/product/seo-search-console-setup.md`；缺少可用账号会话与 DNS 验证值，未声称已经提交或收录。
+生产发布已完成：最终 commit `75b8a1d8c790f4ab6bd80c0988ca78884efbf0c7`，release `rl_75b8a1d8c7_1925cbc6adaf`，北京时间 02:02:44 激活。修复后标准全量门禁 43 组通过、0 失败；manifest 22,425 文件，testsSkipped=false，工作区干净。公开数据版本保持 `ds_1925cbc6adaf0abb87106064c314e7b3d3bc513de2635b5e0aa2cf5bb5147207`，dataThrough=`2026-09-30`。
+
+代码已推送远端 main 和 `codex/seo-optimization`。使用已通过标准构建和完整性校验的本地 release，按现有受限 SSH 协议上传 incoming，再调用现有激活与四入口验收；没有改写在线根目录或安装生产服务。同 commit 触发的 GitHub workflow `36755033642` 已取消，避免重复构建/发布，不能把该 workflow 当作通过证据。
+
+线上四入口验收通过（REST status/changes、MCP 五工具与真实调用、两路 RSS 类型/ETag/304、Skill）。首页、价格页、模型目录、五个重点模型、robots 和 sitemap 共 10 个入口均 200，线上响应与本地已验证产物逐字节一致；sitemap 7,074 条，XML 类型正确；查询参数 canonical 归并到正式价格页。回滚目标为原生产版本 `rl_880e8ccff1_1925cbc6adaf`，沿用 `ops/rollback-release.sh`。
+
+完整构建与发布证据见 `docs/product/seo-validation-2026-10-01.md`。搜索平台验证、提交和复盘步骤见 `docs/product/seo-search-console-setup.md`；缺少可用账号会话与 DNS 验证值，未声称已经提交或收录。真实浏览器视觉验收因浏览器控制超时仍待完成；静态正文、刷新交互与埋点兼容性已有自动验证。
 
 发布检查补充：第一轮全量 42 组检查通过，但发现 records 测试恢复源文件后，dist 仍有测试周归档。已增加测试后干净构建，并把 SEO 验证移到该构建之后；增加 sitemap 页面条目链接完整性检查。该检查还发现原首页/周归档存在未进入正式归档的旧价格 diff ID 链接，改为仅有正式记录时链接详情，否则链接实际官方证据 URL 或价格台账，不伪造记录 ID。第一轮候选 release 不发布，修复后重新构建验证。
