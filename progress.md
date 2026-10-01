@@ -20,3 +20,7 @@ AR-05 工作流已接入：daily/weekly写入job共享 maas-data-write-main(max�
 新增requirements.lock.txt冻结本机已验证Python3.12依赖闭包；PyYAML>=6声明到requirements；CI加-c constraints。Requests2.34.0与Playwright1.54.0的PyPI页面已核实存在（并非宣称最新），来源 https://pypi.org/project/requests/2.34.0/ 和 https://pypi.org/project/playwright/1.54.0/ 。准备临时fresh Python venv安装；路径记录/tmp/maas-ar05-python-path.txt，安装session稍后poll。architecture-regression.py新增--release-workspace：要求干净且相同commit的checkout，在它运行标准build-release（内含全量suite），把日志归档到原workspace；可避免重复完整回归。还未执行完整AR-05验收、未提交实现。
 
 AR-05 干净Python3.12 venv创建和完整锁定依赖安装成功（/tmp/maas-ar05-python.oNvhIE，安装日志/tmp/ar05-python-install.txt）；接下来保存实施候选commit，创建同commit的干净临时checkout，通过标准build-release一次完成完整回归及release构建，原目录保存验收。临时checkout路径会写/tmp/maas-ar05-release-path.txt；完整回归command使用architecture-regression.py --release-workspace。
+
+AR-05标准构建完成：候选commit cb03a05b826692546e7e5f1835565bca28ff7c01，fresh Python/clean checkout，完整suite47组通过（322.73s含标准打包），release rl_cb03a05b82_6fd3cc403bf9，24355文件/703621161字节，正式tracked diff gate通过。仓库外实际生产依赖API进程REST/MCP/静态RSS与Skill8文件hash检查通过，无fixture；release-smoke.json及release-build.json归档。源码没有发布，GitHub真实调度/NginxCDN仍待上线窗口。现在build profile session待poll，完成后写AR05result、归档commit并清理本次临时clone/venv（先保留profile所需venv）。之后AR08基础。
+
+AR-05收尾：阶段profile归档，Astro4→2次、API编译5→1次（含生产包）；完整47/47+标准build322.73s，待真实GitHub调度/线上代理验证。AR05-result已写，删除临时clone/release，仅保留venv给后续回归；下一AR08基础。
