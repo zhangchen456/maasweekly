@@ -1,6 +1,6 @@
 # MCP v1 合同（Task 04）
 
-状态：本地实现完成；生产 `/api/mcp` 部署属 Task 06。
+状态：已实现并完成 Task 06 生产发布；后续同版本发布验收见 `docs/product/multilingual-seo-validation-2026-10-01.md`。当前线上健康由实际探针确认。
 本文与 `services/agent-api/src/mcp-tools.ts` 的工具定义、
 `src/tests/openapi/mcp` 测试共同构成行为基准。
 

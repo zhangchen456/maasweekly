@@ -1,0 +1,566 @@
+{
+  "measuredAt": "2026-10-01T15:24:36.290Z",
+  "commit": "b29035eef9ea02f29a141b332fa5166f83ced9fd",
+  "environment": {
+    "node": "v22.22.3",
+    "os": "darwin 27.0.0",
+    "arch": "arm64",
+    "cpus": 10,
+    "cpu": "Apple M1 Max",
+    "totalMemory": 34359738368
+  },
+  "method": {
+    "rounds": 3,
+    "requestsPerRound": 60,
+    "syntheticSeed": "ar-capacity-v1",
+    "scope": "local HTTP; 5x/10x unique remapped IDs; unchanged model catalog; no production traffic"
+  },
+  "budgets": {
+    "concurrency": 10,
+    "queryP95Ms": 200,
+    "eventLoopP99Ms": 50,
+    "sameVersionBusinessParses": 0
+  },
+  "results": [
+    {
+      "factor": 1,
+      "synthetic": false,
+      "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+      "dataThrough": "2026-10-01",
+      "counts": {
+        "changes": 7459,
+        "prices": 1435,
+        "evidence": 11651
+      },
+      "load": {
+        "medianMs": 198.72554200000002,
+        "minMs": 194.16445799999997,
+        "maxMs": 235.740417
+      },
+      "sameVersionReload": {
+        "medianMs": 229.43987500000003,
+        "minMs": 199.45441699999998,
+        "maxMs": 237.4904170000001
+      },
+      "reloadEventLoop": {
+        "elapsedMs": 194.3279590000002,
+        "maxMs": 203.554815
+      },
+      "historicalLoad": {
+        "version": "ds_1925cbc6adaf0abb87106064c314e7b3d3bc513de2635b5e0aa2cf5bb5147207",
+        "elapsedMs": 303.36349999999993
+      },
+      "throughput": [
+        {
+          "concurrency": 1,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 92.6092920000001,
+              "p50Ms": 0.9122500000000855,
+              "p95Ms": 2.2835419999998976,
+              "p99Ms": 4.117666000000099,
+              "eventLoopP99Ms": 11.386879
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 89.14670799999999,
+              "p50Ms": 0.9700410000000375,
+              "p95Ms": 2.2044579999999314,
+              "p99Ms": 2.825458000000026,
+              "eventLoopP99Ms": 11.042815
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 91.69979199999989,
+              "p50Ms": 0.966666000000032,
+              "p95Ms": 2.25712499999986,
+              "p99Ms": 2.662249999999858,
+              "eventLoopP99Ms": 11.141119
+            }
+          ]
+        },
+        {
+          "concurrency": 10,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 79.62204100000008,
+              "p50Ms": 8.055207999999993,
+              "p95Ms": 20.622708000000102,
+              "p99Ms": 25.274541,
+              "eventLoopP99Ms": 12.976127
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 74.46254199999998,
+              "p50Ms": 8.011457999999948,
+              "p95Ms": 10.720958999999993,
+              "p99Ms": 22.374874999999975,
+              "eventLoopP99Ms": 12.148735
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 73.56066600000008,
+              "p50Ms": 8.43991600000004,
+              "p95Ms": 9.147708000000193,
+              "p99Ms": 9.756833000000142,
+              "eventLoopP99Ms": 13.115391
+            }
+          ]
+        },
+        {
+          "concurrency": 30,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 74.31062500000007,
+              "p50Ms": 17.789874999999938,
+              "p95Ms": 35.42041700000004,
+              "p99Ms": 36.700791999999865,
+              "eventLoopP99Ms": 11.042815
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 68.05499999999984,
+              "p50Ms": 18.92862500000001,
+              "p95Ms": 22.738624999999956,
+              "p99Ms": 23.76366699999994,
+              "eventLoopP99Ms": 17.842175
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 64.34004100000038,
+              "p50Ms": 21.036083999999846,
+              "p95Ms": 22.954499999999825,
+              "p99Ms": 23.194040999999743,
+              "eventLoopP99Ms": 22.315007
+            }
+          ]
+        }
+      ],
+      "paging": {
+        "changes": {
+          "pages": 75,
+          "items": 7459,
+          "elapsedMs": 66.38687499999969,
+          "duplicateOrMissing": false
+        },
+        "prices": {
+          "pages": 15,
+          "items": 1435,
+          "elapsedMs": 3.902458999999908,
+          "duplicateOrMissing": false
+        }
+      },
+      "limiterStatuses": [
+        200,
+        200,
+        429
+      ],
+      "steadyMemory": {
+        "rss": 320061440,
+        "heapTotal": 110968832,
+        "heapUsed": 65632192,
+        "external": 4211895,
+        "arrayBuffers": 67954
+      },
+      "finalMemory": {
+        "rss": 585826304,
+        "heapTotal": 432553984,
+        "heapUsed": 404056720,
+        "external": 3951625,
+        "arrayBuffers": 257828
+      }
+    },
+    {
+      "sourceVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+      "seed": "ar-capacity-v1",
+      "factor": 5,
+      "synthetic": true,
+      "identityCatalogExpanded": false,
+      "datasetVersion": "ds_85497c4e19fe1573b0f253f0985acdaa6203bd7189192a38a36904e005be2bd6",
+      "dataThrough": "2026-10-01",
+      "counts": {
+        "changes": 37295,
+        "prices": 7175,
+        "evidence": 58255
+      },
+      "load": {
+        "medianMs": 1086.988875,
+        "minMs": 1037.5896659999999,
+        "maxMs": 1107.1599580000002
+      },
+      "sameVersionReload": {
+        "medianMs": 1124.8572910000003,
+        "minMs": 1080.2890829999997,
+        "maxMs": 1128.300875
+      },
+      "reloadEventLoop": {
+        "elapsedMs": 1125.1651669999992,
+        "maxMs": 1134.559231
+      },
+      "historicalLoad": null,
+      "throughput": [
+        {
+          "concurrency": 1,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 215.30820800000038,
+              "p50Ms": 3.3774590000011813,
+              "p95Ms": 6.523166000000856,
+              "p99Ms": 7.860125000001062,
+              "eventLoopP99Ms": 13.983743
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 223.30133399999977,
+              "p50Ms": 3.758625000000393,
+              "p95Ms": 5.909332999999606,
+              "p99Ms": 6.213582999998835,
+              "eventLoopP99Ms": 12.591103
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 226.05583300000035,
+              "p50Ms": 4.179000000000087,
+              "p95Ms": 6.377875000000131,
+              "p99Ms": 6.9207079999996495,
+              "eventLoopP99Ms": 14.409727
+            }
+          ]
+        },
+        {
+          "concurrency": 10,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 236.73104199999943,
+              "p50Ms": 32.734042000000045,
+              "p95Ms": 74.82416600000033,
+              "p99Ms": 92.04420799999934,
+              "eventLoopP99Ms": 22.904831
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 209.145833999999,
+              "p50Ms": 30.119957999999315,
+              "p95Ms": 34.908541999999215,
+              "p99Ms": 84.44570799999929,
+              "eventLoopP99Ms": 24.854527
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 211.12329099999988,
+              "p50Ms": 33.21808400000009,
+              "p95Ms": 34.69795899999917,
+              "p99Ms": 35.08420800000022,
+              "eventLoopP99Ms": 29.999103
+            }
+          ]
+        },
+        {
+          "concurrency": 30,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 205.13541599999917,
+              "p50Ms": 65.98308399999951,
+              "p95Ms": 118.13391700000102,
+              "p99Ms": 125.79899999999907,
+              "eventLoopP99Ms": 19.398655
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 192.33870800000113,
+              "p50Ms": 79.53650000000016,
+              "p95Ms": 83.64166699999987,
+              "p99Ms": 86.25704199999927,
+              "eventLoopP99Ms": 57.868287
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 186.68650000000162,
+              "p50Ms": 81.43820799999958,
+              "p95Ms": 83.84541699999863,
+              "p99Ms": 84.238292,
+              "eventLoopP99Ms": 76.873727
+            }
+          ]
+        }
+      ],
+      "paging": {
+        "changes": {
+          "pages": 373,
+          "items": 37295,
+          "elapsedMs": 2618.290083,
+          "duplicateOrMissing": false
+        },
+        "prices": {
+          "pages": 72,
+          "items": 7175,
+          "elapsedMs": 57.06304099999943,
+          "duplicateOrMissing": false
+        }
+      },
+      "limiterStatuses": [
+        200,
+        200,
+        429
+      ],
+      "steadyMemory": {
+        "rss": 1178157056,
+        "heapTotal": 390037504,
+        "heapUsed": 297539112,
+        "external": 4084418,
+        "arrayBuffers": 67954
+      },
+      "finalMemory": {
+        "rss": 1522352128,
+        "heapTotal": 940359680,
+        "heapUsed": 900936128,
+        "external": 4461090,
+        "arrayBuffers": 771639
+      }
+    },
+    {
+      "sourceVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+      "seed": "ar-capacity-v1",
+      "factor": 10,
+      "synthetic": true,
+      "identityCatalogExpanded": false,
+      "datasetVersion": "ds_2c9ab9917b0790dd58b036d99283e75180e6ace63a427ae7bb6c5c4febe71918",
+      "dataThrough": "2026-10-01",
+      "counts": {
+        "changes": 74590,
+        "prices": 14350,
+        "evidence": 116510
+      },
+      "load": {
+        "medianMs": 2490.777416000001,
+        "minMs": 2308.5944579999996,
+        "maxMs": 2534.144209
+      },
+      "sameVersionReload": {
+        "medianMs": 2880.113250000002,
+        "minMs": 2853.416374999999,
+        "maxMs": 2886.6649589999997
+      },
+      "reloadEventLoop": {
+        "elapsedMs": 2605.4177500000005,
+        "maxMs": 2617.245695
+      },
+      "historicalLoad": null,
+      "throughput": [
+        {
+          "concurrency": 1,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 410.13850000000093,
+              "p50Ms": 8.957624999999098,
+              "p95Ms": 13.12449999999808,
+              "p99Ms": 13.886249999999563,
+              "eventLoopP99Ms": 20.496383
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 419.3506249999991,
+              "p50Ms": 9.068291999999929,
+              "p95Ms": 13.253749999999854,
+              "p99Ms": 14.600749999997788,
+              "eventLoopP99Ms": 21.020671
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 406.8624579999996,
+              "p50Ms": 8.920207999999548,
+              "p95Ms": 12.651582999998936,
+              "p99Ms": 13.842583000001468,
+              "eventLoopP99Ms": 20.742143
+            }
+          ]
+        },
+        {
+          "concurrency": 10,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 397.5048749999987,
+              "p50Ms": 57.403291999999055,
+              "p95Ms": 137.58658300000025,
+              "p99Ms": 185.13266700000167,
+              "eventLoopP99Ms": 36.077567
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 385.40608299999803,
+              "p50Ms": 53.53220800000054,
+              "p95Ms": 67.66729200000191,
+              "p99Ms": 149.1211660000008,
+              "eventLoopP99Ms": 50.135039
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 400.95487499999945,
+              "p50Ms": 63.78399999999965,
+              "p95Ms": 72.63970900000277,
+              "p99Ms": 72.85216700000092,
+              "eventLoopP99Ms": 54.362111
+            }
+          ]
+        },
+        {
+          "concurrency": 30,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 402.0617920000004,
+              "p50Ms": 125.47354099999939,
+              "p95Ms": 256.3274590000001,
+              "p99Ms": 271.30945800000336,
+              "eventLoopP99Ms": 49.840127
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 414.57820899999933,
+              "p50Ms": 191.95158300000185,
+              "p95Ms": 197.03041700000176,
+              "p99Ms": 197.63400000000183,
+              "eventLoopP99Ms": 118.095871
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 395.44683299999815,
+              "p50Ms": 185.16941700000098,
+              "p95Ms": 188.84291700000176,
+              "p99Ms": 189.3080000000009,
+              "eventLoopP99Ms": 175.374335
+            }
+          ]
+        }
+      ],
+      "paging": {
+        "changes": {
+          "pages": 746,
+          "items": 74590,
+          "elapsedMs": 13469.054917000001,
+          "duplicateOrMissing": false
+        },
+        "prices": {
+          "pages": 144,
+          "items": 14350,
+          "elapsedMs": 252.32424999999785,
+          "duplicateOrMissing": false
+        }
+      },
+      "limiterStatuses": [
+        200,
+        200,
+        429
+      ],
+      "steadyMemory": {
+        "rss": 2284929024,
+        "heapTotal": 670564352,
+        "heapUsed": 588954272,
+        "external": 3540777,
+        "arrayBuffers": 67954
+      },
+      "finalMemory": {
+        "rss": 2584379392,
+        "heapTotal": 1830617088,
+        "heapUsed": 1776065144,
+        "external": 3916545,
+        "arrayBuffers": 227094
+      }
+    }
+  ],
+  "toolSha256": "09b12d2c539b1d388226e703993d440a8877d4eca0b82a0b295d767bc53625c5",
+  "limitations": [
+    "Local developer machine; API sampling overlapped with the initial projection profiling workload. Compare medians/ranges; final AR-08 capacity run will be isolated.",
+    "RSS is measured after repeated loads and explicit GC; it is not a production memory allocation.",
+    "5x/10x scale records, not source/model catalog diversity."
+  ]
+}

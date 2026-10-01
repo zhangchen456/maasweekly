@@ -1,0 +1,95 @@
+{
+  "commit": "b29035eef9ea02f29a141b332fa5166f83ced9fd",
+  "rounds": 3,
+  "phases": {
+    "projection": {
+      "command": [
+        "python3",
+        "pipeline/scripts/export-public-data.py",
+        "--dry-run"
+      ],
+      "seconds": [
+        15.725467583004502,
+        14.238989791992935,
+        15.326133249996928
+      ],
+      "medianSeconds": 15.326133249996928
+    },
+    "publicCheck": {
+      "command": [
+        "python3",
+        "pipeline/scripts/export-public-data.py",
+        "--check"
+      ],
+      "seconds": [
+        0.10134179198939819,
+        0.0777111669885926,
+        0.0812176249892218
+      ],
+      "medianSeconds": 0.0812176249892218
+    },
+    "apiCompile": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "seconds": [
+        1.226159625002765,
+        1.109997666993877,
+        1.1968657079996774
+      ],
+      "medianSeconds": 1.1968657079996774
+    },
+    "astroBuild": {
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "astro",
+        "build",
+        "--outDir",
+        "/var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T/maas-build-profile-c9_ur6y8/site"
+      ],
+      "seconds": [
+        37.204746666000574,
+        35.53396437500487,
+        31.256394707990694
+      ],
+      "medianSeconds": 35.53396437500487
+    },
+    "staticDataAssembly": {
+      "seconds": [
+        9.626223083992954,
+        8.650697292003315,
+        8.536582374988939
+      ],
+      "medianSeconds": 8.650697292003315
+    },
+    "cleanInstall:site": {
+      "seconds": [
+        4.710050499998033,
+        2.3270850839908235,
+        2.2025785830046516
+      ],
+      "medianSeconds": 2.3270850839908235,
+      "npmCache": "warm",
+      "nodeModules": "empty"
+    },
+    "cleanInstall:services/agent-api": {
+      "seconds": [
+        0.8564628750027623,
+        0.8318181659997208,
+        0.8637558750051539
+      ],
+      "medianSeconds": 0.8564628750027623,
+      "npmCache": "warm",
+      "nodeModules": "empty"
+    }
+  },
+  "limitations": [
+    "Dependency installation is a clean node_modules with the existing npm cache, not an empty network cache.",
+    "Assembly samples site and public data copy; full production dependency assembly remains validated by the release builder."
+  ],
+  "toolSha256": "971b76ea24c03e1322b913def1f48be1dc558a3e90136d60d9e6a61ed1012580"
+}
