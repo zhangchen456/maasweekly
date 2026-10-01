@@ -131,7 +131,7 @@ html:root body.spec-sheet .market-simple .original-quote{font-size:10px;color:va
 
 html:root body.spec-sheet .home-opening{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(240px,1fr);gap:70px;align-items:center;padding:55px 0 40px;border-bottom:1px solid var(--line-strong)}
 html:root body.spec-sheet .opening-copy .home-kicker{font-size:11px;letter-spacing:.12em;margin-bottom:22px}
-html:root body.spec-sheet .opening-copy h1{font-size:clamp(30px,3.5vw,49px);font-weight:650;line-height:1.38;letter-spacing:-.045em;margin:0;max-width:780px;text-wrap:pretty}
+html:root body.spec-sheet .opening-copy :is(h1:not(.sr-only), .highlight-title){font-size:clamp(30px,3.5vw,49px);font-weight:650;line-height:1.38;letter-spacing:-.045em;margin:0;max-width:780px;text-wrap:pretty}
 html:root body.spec-sheet .opening-deck{font-size:14px;line-height:1.8;color:var(--paper-soft);margin:22px 0}
 html:root body.spec-sheet .opening-links{display:flex;gap:24px;flex-wrap:wrap;font-size:12px}
 html:root body.spec-sheet .opening-links a{color:var(--acid);text-decoration:none;padding-bottom:6px;border-bottom:1px solid var(--line-strong)}
@@ -143,8 +143,8 @@ html:root body.spec-sheet .opening-mark{width:230px;height:230px}
 html:root body.spec-sheet .opening-wordmark{font:400 26px/1.4 "Avenir Next",sans-serif;letter-spacing:-.05em;margin-top:-14px}
 html:root body.spec-sheet .opening-brand-caption{font-size:10px;letter-spacing:.15em;color:var(--muted);margin-top:9px}
 html:root body.spec-sheet .lead-heading h2{font-size:19px;font-weight:600;color:var(--paper);margin:0}
-@media(max-width:800px){html:root body.spec-sheet .home-opening{grid-template-columns:minmax(0,1fr) 150px;gap:20px;padding:35px 0 30px}html:root body.spec-sheet .opening-brand{padding-left:15px}html:root body.spec-sheet .opening-mark{width:145px;height:145px}html:root body.spec-sheet .opening-wordmark{font-size:20px}html:root body.spec-sheet .opening-copy h1{font-size:30px}}
-@media(max-width:520px){html:root body.spec-sheet .home-opening{position:relative;display:block;padding-top:30px}html:root body.spec-sheet .opening-brand{position:absolute;right:0;top:16px;border:0;padding:0;opacity:.12;pointer-events:none;z-index:-1}html:root body.spec-sheet .opening-mark{width:180px;height:180px}html:root body.spec-sheet .opening-wordmark,html:root body.spec-sheet .opening-brand-caption{display:none}html:root body.spec-sheet .opening-copy h1{font-size:29px}html:root body.spec-sheet .opening-copy .home-kicker{font-size:10px}}
+@media(max-width:800px){html:root body.spec-sheet .home-opening{grid-template-columns:minmax(0,1fr) 150px;gap:20px;padding:35px 0 30px}html:root body.spec-sheet .opening-brand{padding-left:15px}html:root body.spec-sheet .opening-mark{width:145px;height:145px}html:root body.spec-sheet .opening-wordmark{font-size:20px}html:root body.spec-sheet .opening-copy :is(h1:not(.sr-only), .highlight-title){font-size:30px}}
+@media(max-width:520px){html:root body.spec-sheet .home-opening{position:relative;display:block;padding-top:30px}html:root body.spec-sheet .opening-brand{position:absolute;right:0;top:16px;border:0;padding:0;opacity:.12;pointer-events:none;z-index:-1}html:root body.spec-sheet .opening-mark{width:180px;height:180px}html:root body.spec-sheet .opening-wordmark,html:root body.spec-sheet .opening-brand-caption{display:none}html:root body.spec-sheet .opening-copy :is(h1:not(.sr-only), .highlight-title){font-size:29px}html:root body.spec-sheet .opening-copy .home-kicker{font-size:10px}}
 @media(max-width:520px){html:root body.spec-sheet .home-opening{isolation:isolate}html:root body.spec-sheet .opening-brand{z-index:-1}}
 html:root body.spec-sheet .opening-kicker-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;gap:15px}
 html:root body.spec-sheet .opening-kicker-row .home-kicker{margin:0}

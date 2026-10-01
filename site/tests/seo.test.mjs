@@ -9,7 +9,7 @@ import { JSDOM } from 'jsdom';
 import { canonicalUrl } from '../src/lib/seo.ts';
 import { loadVerifiedRelease } from '../src/lib/release.ts';
 import { modelPage, featuredModels } from '../src/lib/model-pages.ts';
-import { priceCells } from '../src/lib/price-display.ts';
+import { priceCells, priceUnit } from '../src/lib/price-display.ts';
 import { priceChangeLink } from '../src/lib/record-links.ts';
 
 const dist = path.resolve('dist');
@@ -67,7 +67,14 @@ for (const page of [...featured, modelPage('anthropic:claude-sonnet-4.5')]) {
   assert.equal(rows.length, page.prices.length, 'all model price conditions are rendered');
   assert.equal(doc.querySelector('h1').textContent, `${page.model.modelName} API 价格与变化`);
   for (let i = 0; i < rows.length; i++) {
-    assert.deepEqual([...rows[i].querySelectorAll('td')].slice(0, 11).map(td => td.textContent), priceCells(page.prices[i]));
+    const cells = priceCells(page.prices[i]);
+    assert.equal(rows[i].querySelectorAll('td').length, 4);
+    assert.equal(rows[i].querySelector('td strong').textContent, cells[0]);
+    assert.equal(rows[i].querySelector('td .price-subline').textContent, cells[1]);
+    assert.equal(rows[i].querySelector('.billing-badge').textContent, cells[2]);
+    assert.equal(rows[i].querySelector('.detail-amount').textContent, `${page.prices[i].amount} ${page.prices[i].currency}`);
+    assert.equal(rows[i].querySelector('.detail-amount + .price-subline').textContent, `每 ${priceUnit(page.prices[i].unitQuantity, page.prices[i].unitName)}`);
+    assert.deepEqual([...rows[i].querySelectorAll('.price-facts dd')].map(dd => dd.textContent), cells.slice(4), 'all source conditions remain in details');
     assert.equal(rows[i].dataset.priceId, page.prices[i].id);
     for (const a of rows[i].querySelectorAll('a')) assert(existsSync(path.join(dist, a.getAttribute('href'), 'index.html')));
   }
@@ -94,6 +101,7 @@ async function refreshScenario(kind) {
   const win = dom.window;
   const calls = [];
   win.priceCells = priceCells;
+  win.priceUnit = priceUnit;
   win.priceHeaders = (await import('../src/lib/price-display.ts')).priceHeaders;
   win.fetch = async value => {
     calls.push(value);
@@ -118,7 +126,7 @@ async function refreshScenario(kind) {
   if (kind === 'ok') {
     assert.equal(calls.length, Math.ceil(page.prices.length / 20) + 1);
     assert.equal(win.document.querySelectorAll('#current-prices tbody tr').length, page.prices.length);
-    assert.equal(win.document.querySelector('#current-prices td').textContent, priceCells(page.prices[0])[0]);
+    assert.equal(win.document.querySelector('#current-prices td strong').textContent, priceCells(page.prices[0])[0]);
     assert.match(win.document.getElementById('refresh-status').textContent, /已核对/);
   } else {
     assert.equal(win.document.getElementById('current-prices').innerHTML, before);
