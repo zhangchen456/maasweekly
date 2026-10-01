@@ -1,0 +1,33 @@
+{
+  "verifiedAt": "2026-10-01T18:05:17.148Z",
+  "rid": "rl_0ba9ee17ad_6fd3cc403bf9",
+  "commit": "0ba9ee17ad8a305c99cbb5e01192a613337aad3c",
+  "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+  "dataThrough": "2026-10-01",
+  "runtimeCwdOutsideRepository": true,
+  "productionDependenciesOnly": true,
+  "rest": {
+    "status": 200,
+    "changes?limit=1": 200,
+    "prices?limit=1": 200,
+    "models": 200
+  },
+  "mcp": {
+    "initialize": true,
+    "tools": [
+      "maas_get_changes",
+      "maas_get_prices",
+      "maas_get_item",
+      "maas_get_evidence",
+      "maas_get_weekly"
+    ],
+    "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f"
+  },
+  "staticFeeds": [
+    "feed.xml",
+    "feed/weekly.xml"
+  ],
+  "skillFilesVerified": 8,
+  "fixturePagesAbsent": true,
+  "scope": "Local installed Node process plus immutable static bytes; not nginx/CDN or live deployment"
+}
