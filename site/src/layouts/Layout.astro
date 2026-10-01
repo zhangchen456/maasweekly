@@ -1,5 +1,6 @@
 ---
 import '../styles/product.css';
+import BrandLogo from '../components/BrandLogo.astro';
 import analytics from '../config/analytics.json';
 import { validateAnalyticsConfig } from '../../public/analytics.js';
 import { SITE_CANONICAL } from '../config/public-access';
@@ -28,7 +29,14 @@ const canonical = canonicalUrl(Astro.url.pathname);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=price-pulse-2" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=price-pulse-2" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=price-pulse-2" />
+    <link rel="shortcut icon" href="/favicon.ico?v=price-pulse-2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=price-pulse-2" />
+    <link rel="manifest" href="/site.webmanifest?v=price-pulse-2" />
+    <meta name="theme-color" content="#172724" />
+    <meta name="apple-mobile-web-app-title" content="MaaS Daily" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     {activePath === '/' && <meta name="baidu-site-verification" content="codeva-UXsh2qWgbK" />}
@@ -42,6 +50,12 @@ const canonical = canonicalUrl(Astro.url.pathname);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="MaaS Daily" />
+    <meta property="og:image" content={`${SITE_CANONICAL}/brand/social-card.png`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="MaaS Daily — model and price intelligence" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={`${SITE_CANONICAL}/brand/social-card.png`} />
     {analytics.enabled && (
       <script is:inline type="module" src="/analytics.js" data-maas-analytics
         data-website-id={analytics.websiteId} data-canonical-url={SITE_CANONICAL}></script>
@@ -61,7 +75,7 @@ const canonical = canonicalUrl(Astro.url.pathname);
     <a class="skip-link" href="#main-content">{t("跳到内容", "Skip to content")}</a>
     <header class="topbar">
       <div class="shell topbar-inner">
-        <a href={en ? "/en/" : "/?lang=zh"} class="brand"><span class="brand-mark"></span> MAAS / DAILY</a>
+        <a href={en ? "/en/" : "/?lang=zh"} class="brand" aria-label="MaaS Daily"><BrandLogo /></a>
         <nav class="nav" aria-label={t('页面导航', 'Main navigation')}>
           {(en ? [['/en/', 'Home'], ['/en/models/', 'Models'], ['/en/pricing/', 'Prices'], ['/en/method/', 'Method'], ['/en/agent/', 'Connect']] : [['/?lang=zh', '今日'], ['/leaderboards', '榜单'], ['/pricing/', '价格'], ['/changes', '变化'], ['/sources', '信源'], ['/weekly', '归档'], ['/agent/', '接入']]).map(([href, label]) => <a href={href} aria-current={activePath === href.split('?')[0] ? 'page' : undefined}>{label}</a>)}
         </nav>
@@ -210,7 +224,6 @@ const canonical = canonicalUrl(Astro.url.pathname);
         display: flex; align-items: center; justify-content: space-between; gap: 18px;
       }
       .brand { display: flex; align-items: center; gap: 11px; font: 700 12px/1 "SF Mono", "JetBrains Mono", monospace; letter-spacing: .12em; text-decoration: none; color: var(--paper); }
-      .brand-mark { width: 9px; height: 9px; background: var(--acid); border-radius: 50%; box-shadow: 0 0 0 5px var(--acid-dim), 0 0 20px var(--acid); }
       .nav { display: flex; gap: 24px; color: var(--muted); font-size: 12px; }
       .nav a { text-decoration: none; transition: color .2s ease; }
       .nav a:hover { color: var(--paper); }
