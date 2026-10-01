@@ -13,6 +13,8 @@
 
 ## 国内搜索
 
+2026-10-01 更新：用户提供百度 HTML 验证值 `codeva-UXsh2qWgbK`，已在首页 `<head>` 持久添加对应 `baidu-site-verification` meta 标签。代码 commit `1d650396732580f0b83f10b21fa64342bbb9d14f`；[自动发布与线上验收](https://github.com/zhangchen456/maasweekly/actions/runs/36804716681) 已成功完成。实际读取生产首页确认 `<head>` 内恰好一个标签，内容与用户提供值一致。网站侧已就绪，百度平台“验证”按钮及后续链接提交由用户在已登录后台完成，未声称平台已验证通过。
+
 主要面向国内用户时，在 https://ziyuan.baidu.com/ 添加并验证正式站点，按账号实际可用的链接提交入口操作。以平台当前能力为准，不承诺有 sitemap 提交权限，不猜测收录数量。没有现成会话或验证值时保留为待办。
 
 ## 复盘口径
