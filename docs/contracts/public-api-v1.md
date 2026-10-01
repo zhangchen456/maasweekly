@@ -1,6 +1,6 @@
 # 公开数据契约与 REST API v1（Task 03）
 
-状态：本地实现完成，待 Task 04 接入 MCP/Skill、待 Task 06 生产部署。
+状态：REST/MCP/Skill 已实现并有生产验收记录；当前行为包含后续 T07 模型目录端点。生产验收见 `docs/product/multilingual-seo-validation-2026-10-01.md`；本说明不代替实时线上探针。
 本文是 `site/public/openapi-v1.json` 的行为说明，两者由
 `services/agent-api/src/tests/openapi.test.ts`（T17）自动对照。
 
@@ -86,8 +86,10 @@ Decimal 字符串（如 `"1.500000"`），禁止浮点。原币种（USD/CNY）�
   不从 changes/prices/items 反推。catalog 的 `models` 只含正式 model，
   `families` 只含正式 family；合法但整个 dataset 无记录 → 200 + 空 items，
   未登记 → 400 `invalid_model_id` / `invalid_family_id`。
-- catalog 为内部辅助文件，进入 manifest、bytes/SHA-256 校验和 datasetVersion，
-  不新增公开 `/models` endpoint。历史 cursor 只用目标 release 自己的 catalog
+- catalog 进入 manifest、bytes/SHA-256 校验和 datasetVersion；后续 T07-4B.1
+  新增 `GET /api/v1/models`，返回当前 release 的 models/families 与版本信封，
+  不从记录反推目录，也不包含 pointer/non_model。目录损坏时拒载，无有效
+  release 时返回 503。历史 cursor 只用目标 release 自己的 catalog
   重验查询；缺失/损坏（含补丁前未携带 catalog 的旧版本）按 409 处理，不回填当前 registry。
 - **cursor**：base64url 规范 JSON，绑定 schemaVersion/datasetVersion/
   endpoint/查询摘要(qh)/排序键，并携带原始查询参数（翻页时服务端
