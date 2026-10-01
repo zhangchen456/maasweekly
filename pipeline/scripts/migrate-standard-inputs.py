@@ -26,7 +26,7 @@ def migrate(root):
     for src, dst in [('site/src/data/pricing', PRICING), ('site/src/content/weekly', EDITORIAL),
                      ('site/src/content/weekly-structured', STRUCTURED)]:
         for p in sorted((root / src).rglob('*')):
-            if not p.is_file(): continue
+            if not p.is_file() or p.suffix not in (".json", ".md"): continue
             if p.is_symlink(): raise ValueError('migration input symlink')
             out = root / dst / p.relative_to(root / src); out.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(p, out)
