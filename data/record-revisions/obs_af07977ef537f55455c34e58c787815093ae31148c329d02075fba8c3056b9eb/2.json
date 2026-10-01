@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_af07977ef537f55455c34e58c787815093ae31148c329d02075fba8c3056b9eb",
+  "sourceId": "minimax-pricing",
+  "date": "2026-10-01",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "MiniMax",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+  "title": "MiniMax · 定价来源更新",
+  "summary": "Token Plan 更名为 M Plan，API-vlm 定价条目更新为通过 M Plan 调用，并新增按量计费价格 ¥0.025 元/次，同时删除旧的 Token Plan 相关说明。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-01T00:26:28+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "🔔 定价调整预告",
+        "before": "🔔 定价调整预告：自2026年7月22日起，API-vlm 按量价格调整为 ¥0.025 元/次。Token Plan 套餐内单次 API-vlm 调用扣减的 token 额度将同步减少，同等套餐可支持更多次调用。接口与能力保持不变，无需任何代码调整。",
+        "after": "🔔 定价调整预告：自2026年7月22日起，API-vlm 按量价格调整为 ¥0.025 元/次。M Plan 套餐内单次 API-vlm 调用扣减的 token 额度将同步减少，同等套餐可支持更多次调用。接口与能力保持不变，无需任何代码调整。"
+      }
+    ],
+    "added_lines": [
+      "| API-vlm | 通过 M Plan MCP 插件或工具自带的视觉接口调用 | 0.025",
+      "通过 M Plan 调用 API-vlm 时，会按其按量计费价格扣减套餐内 M Plan 额度；套餐内额度耗尽且已购积分可用时，超出部分可由已购积分自动补充支付。"
+    ],
+    "removed_lines": [
+      "通过 Token Plan 调用 API-vlm 时，会按其按量计费价格扣减套餐内 Token Plan 额度；套餐内额度耗尽且已购积分可用时，超出部分可由已购积分自动补充支付。",
+      "| API-vlm | 通过 Token Plan MCP 插件或工具自带的视觉接口调用 | 0.025"
+    ],
+    "added_count": 2,
+    "removed_count": 2,
+    "raw_added_count": 3,
+    "raw_removed_count": 3
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-01.json"
+  },
+  "permalink": "/item/obs_af07977ef537f55455c34e58c787815093ae31148c329d02075fba8c3056b9eb/"
+}

@@ -4,6 +4,14 @@
     "start": "2026-09-28",
     "end": "2026-10-04",
     "days": {
+      "2026-10-01": {
+        "substantive": 21,
+        "jitter": 1,
+        "failed": 4,
+        "releases": 5,
+        "pricings": 2,
+        "sunsets": 3
+      },
       "2026-09-30": {
         "substantive": 8,
         "jitter": 3,
@@ -30,12 +38,102 @@
       }
     },
     "totals": {
-      "substantive": 26,
-      "releases": 14,
-      "pricings": 5,
-      "sunsets": 1
+      "substantive": 47,
+      "releases": 19,
+      "pricings": 7,
+      "sunsets": 4
     },
     "highlights": [
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-01",
+        "text": "OpenAI 新增 gpt-image-2.5-flare 与 gpt-image-2.5-sunburst 图像模型，定价均为 $4.00 输入 / $1.00 输出 / $15.00 缓存输入。",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-01",
+        "text": "OpenAI 新增 API reference、Bedrock through LiteLLM、Connect to a gateway、Deploy Codex through a gateway 等网关部署文档。",
+        "type": "other"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-01",
+        "text": "Google Vertex AI 新增 Gemini 3.8 Flash TTS (Preview) 语音合成模型，支持可控单/多说话人实时合成。",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-01",
+        "text": "Vertex AI 新增多项 token 定价：$0.50、$1.00、$6.00、$9.00、$12.00、$18.00 / 1M tokens，并注明促销定价通过 50% 返点提供。",
+        "type": "pricing"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-01",
+        "text": "Cohere 发布 Embed 5 嵌入模型系列，提供 Embed 5 Fast 和 Embed 5 Pro 两档，主打检索质量提升。",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-01",
+        "text": "Cohere 新增博客文章介绍 Embed 5 及新的检索质量衡量标准 RCP-nDCG@10。",
+        "type": "other"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-01",
+        "text": "Mistral AI 模型列表新增 Leanstral 1.5（代码代理）、OCR 4.0（OCR 服务）和 Z.ai GLM 5.2 三个模型。",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-01",
+        "text": "Anthropic 宣布弃用 Claude Sonnet 4.5 模型（claude-sonnet-4-5-20250929），Claude API 退役日期为 2026 年 11 月 30 日。",
+        "type": "sunset"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-01",
+        "text": "Google Gemini API 移除 Computer Use 预览模型（gemini-2.5-computer-use-preview），新增说明按常规 token 计费。",
+        "type": "sunset"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-01",
+        "text": "MiniMax 将 Token Plan 更名为 M Plan，涉及 MiniMax-M3.1-Flash-Preview 的提供方式及 API-vlm 定价说明。",
+        "type": "other"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-01",
+        "text": "MiniMax 预告自 2026-07-22 起 API-vlm 按量价格调整为 ¥0.025 元/次，M Plan 套餐内扣减额度同步减少。",
+        "type": "pricing"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-10-01",
+        "text": "硅基流动 pricing 页面删除 ERNIE-Image-Turbo 及 baidu/ERNIE-Image-Turbo 条目。",
+        "type": "sunset"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-01",
+        "text": "LMArena 新增 Gemini 4 Argon、GPT-6.1 Sol 等模型，并更新 Claude Fable 5.1、Deepseek V4.1 Flash 等任务价格。",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-01",
+        "text": "Artificial Analysis 新增 AA-AgentPerf-Local 基准，用于评测本地 AI Agent。",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-01",
+        "text": "Artificial Analysis 新增 DeepSeek V4 Pro 0813 (Non-reasoning) 模型及 GPT-6.1 Sol 等端点。",
+        "type": "release"
+      },
       {
         "platform": "OpenAI",
         "date": "2026-09-30",
