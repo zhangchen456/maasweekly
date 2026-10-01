@@ -18,31 +18,43 @@ QUICK=false
 FAILED=()
 PASS=0
 
+SUITE_LOG_DIR="$(mktemp -d "${TMPDIR:-/tmp}/maas-regression.XXXXXX")"
+SUITE_FINISHED=false
+TEST_INDEX=0
+cleanup() {
+  if $SUITE_FINISHED && [ "${#FAILED[@]}" -eq 0 ]; then
+    rm -rf "$SUITE_LOG_DIR"
+  else
+    echo "回归未通过或中断，日志保留: $SUITE_LOG_DIR"
+  fi
+}
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
 run() {  # run <名称> <命令...>
   local name="$1"; shift
   echo "── $name"
-  local log
-  log="$(mktemp)"
-  if "$@" > "$log" 2>&1; then
+  TEST_INDEX=$((TEST_INDEX + 1))
+  local log="$SUITE_LOG_DIR/$TEST_INDEX.txt" code=0
+  "$@" > "$log" 2>&1 || code=$?
+  if [ "$code" -eq 0 ]; then
     PASS=$((PASS + 1))
     echo "   ✓ $name"
+    rm -f "$log"
   else
     FAILED+=("$name")
-    echo "   ✗ ${name}（退出码 $?）——日志关键内容："
+    echo "   ✗ ${name}（退出码 ${code}）——日志关键内容："
     tail -25 "$log" | sed 's/^/     /'
     echo "   （完整日志: ${log}）"
   fi
-  rm -f "$log"
 }
 
 echo "══ Task 01–06 统一回归 ══"
 
-# ---- 依赖就位（幂等：本地已装则秒过；CI 干净环境必需）----
-# run-all-tests 的 site/agent-api 测试假设 node_modules 已存在——本地靠历史
-# 安装残留恰好成立，CI 全新环境会 TS2688（@types/node 缺失）。统一在此装齐。
+# ---- Lockfile/toolchain/platform dependency validation ----
 if ! $QUICK; then
-  [ -d site/node_modules ] || (cd site && npm ci --silent)
-  [ -d services/agent-api/node_modules ] || (cd services/agent-api && npm ci --silent)
+  run "site dependency cache" node scripts/ensure-node-deps.mjs site
+  run "agent-api dependency cache" node scripts/ensure-node-deps.mjs services/agent-api
 fi
 
 # ---- 归档与导出门禁 ----
@@ -63,7 +75,8 @@ run "test_model_identity_audit（Task 07）" python3 -m unittest discover -s tes
 run "test_model_public_projection（Task 07）" python3 -m unittest discover -s tests -p 'test_model_public_projection.py'
 run "test_model_registry（Task 07）" python3 -m unittest discover -s tests -p 'test_model_registry.py'
 run "validate-model-registry（Task 07）" python3 pipeline/scripts/validate-model-registry.py --check
-run "audit-model-registry-coverage（Task 07）" python3 pipeline/scripts/audit-model-registry-coverage.py --output /tmp/t07-coverage-audit.json
+run "audit-model-registry-coverage（Task 07）" python3 pipeline/scripts/audit-model-registry-coverage.py --output "$SUITE_LOG_DIR/coverage-audit.json"
+run "test_architecture_workflows（AR-05）" python3 -m unittest discover -s tests -p 'test_architecture_workflows.py'
 run "test_workflow_release_contract（incident 2026-09）" python3 -m unittest discover -s tests -p 'test_workflow_release_contract.py'
 run "validate-developer-registry（T07-5.2）" python3 pipeline/scripts/validate-developer-registry.py
 run "test_developer_platform_registry（T07-5.2）" python3 -m unittest discover -s tests -p 'test_developer_platform_registry.py'
@@ -89,9 +102,8 @@ run "site: agent-interactions（copy regression）" bash -c 'cd site && node --t
 run "site: platform-logos" bash -c 'cd site && node tests/platform-logos.test.mjs'
 run "site: leaderboards" bash -c 'cd site && node tests/leaderboards.test.mjs'
 run "site: records（含残留检测）" bash -c 'cd site && node tests/records.test.mjs'
-# records tests rebuild with temporary archive fixtures. Restore a pristine dist
-# before release assembly: restoring source files alone leaves fixture week pages.
-run "site final build（测试 fixture 清理后）" bash -c 'cd site && npm exec astro build'
+# records fixtures now build in a disposable input/output root; formal dist
+# never needs a cleanup rebuild, including after interrupted fixture tests.
 run "site: SEO（canonical / sitemap / model content）" bash -c 'cd site && node --experimental-strip-types tests/seo.test.mjs'
 
 run "site: multilingual" bash -c 'cd site && node --experimental-strip-types tests/multilingual.test.mjs'
@@ -99,13 +111,14 @@ run "site: multilingual" bash -c 'cd site && node --experimental-strip-types tes
 # ---- agent-api（REST + MCP 全套）----
 run "agent-api: build" bash -c 'cd services/agent-api && npm run build'
 run "agent-api: country" bash -c 'cd services/agent-api && node --test dist/tests/country.test.js'
-run "agent-api: REST 测试" bash -c 'cd services/agent-api && npm test'
-run "agent-api: MCP 测试" bash -c 'cd services/agent-api && npm run test:mcp'
-run "agent-api: MCP 真实数据" bash -c 'cd services/agent-api && npm run test:mcp:real'
+run "agent-api: REST 测试" bash -c 'cd services/agent-api && npm run test:compiled'
+run "agent-api: MCP 测试" bash -c 'cd services/agent-api && npm run test:mcp:compiled'
+run "agent-api: MCP 真实数据" bash -c 'cd services/agent-api && npm run test:mcp:real:compiled'
 
 # ---- 汇总 ----
 echo "══════════════════════════"
 echo "通过: $PASS | 失败: ${#FAILED[@]}"
+SUITE_FINISHED=true
 if [ "${#FAILED[@]}" -gt 0 ]; then
   echo "失败项："
   for f in "${FAILED[@]}"; do echo "  ✗ $f"; done

@@ -1,127 +1,64 @@
 name: 线上更新（构建部署）
 
-# release 通道部署工作流（Task 06 M10：取代 legacy rsync 直写）。
-# 与本地发布链完全同构（生产已验证的同一套）：
-#   build-release.sh（含全量测试）→ manifest → 受限 SSH 上传 incoming
-#   → maasweekly-activate 激活 → verify-release.sh --online 四入口验收
-# 触发方式：
-#   1. push 到 main（job 内自查改动范围：代码改动才部署，纯数据提交跳过）
-#   2. 手动触发
-#
-# 安全边界（与本地链一致）：
-#   - deploy key 用 GitHub Actions 专用 forced-command key（DEPLOY_SSH_KEY secret）
-#   - 只走 maasdeploy 受限 shell（rsync-incoming/activate/rollback/status）
-#   - 不使用 root SSH；激活在服务器侧以 root 经 sudoers 单行 NOPASSWD 执行
-#   - 通道经 MAAS_DEPLOY_MODE=release 运行时注入（仓库 ops/deploy-mode 永久 legacy）
-
 on:
-  # 不用 paths 过滤：GitHub 的 paths 匹配在大 push（>3000 文件）下只检查
-  # diff 前 3000 个文件，归档数据提交动辄数千文件，代码改动排在后面时
-  # workflow 会静默不触发（官方文档明确此限制）。改为 push 一律触发，
-  # job 内用 git diff 自查改动范围，纯数据提交自动跳过。
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      commit:
+        description: '固定的 main 候选 SHA（空时使用本次触发 SHA；旧运行版本用标准 rollback）'
+        type: string
+        default: ''
 permissions:
   contents: read
 
-concurrency:
-  group: deploy
-  cancel-in-progress: true
-
-env:
-  DEPLOY_HOST: 47.237.135.97
-  DEPLOY_USER: maasdeploy
-  MAAS_DEPLOY_MODE: release
-
 jobs:
-  deploy:
+  changes:
     runs-on: ubuntu-latest
+    outputs:
+      deploy: ${{ steps.changes.outputs.deploy }}
+      import_weekly: ${{ steps.changes.outputs.import_weekly }}
+      sha: ${{ steps.changes.outputs.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          # build-release.sh 从精确 commit 构建（fetch 全历史供 diff 自查）
           fetch-depth: 0
-
-      - name: Detect deployable changes
-        id: changes
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "手动触发，直接部署"
-            echo "deploy=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          BEFORE="${{ github.event.before }}"
-          AFTER="${{ github.sha }}"
-          # before 不可得（新建分支/仓库初始 push）→ fail-open 部署
-          if ! git cat-file -e "$BEFORE" 2>/dev/null; then
-            echo "before SHA 不存在（force push/初始 push），fail-open 部署"
-            echo "deploy=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          # T14 触发范围反转：默认部署。仅以下可忽略路径跳过——
-          #   data/**、site/src/data/**、research、docs/blog、README、HANDOFF、
-          #   所有 .md。除此之外的改动均触发，包括：
-          #   site/**、pipeline、ops、.github、services、contracts、package*.json。
-          # quotepath=off：中文路径默认输出带引号的八进制，会绕过前缀匹配。
-          git -c core.quotepath=off diff --name-only "$BEFORE" "$AFTER" > /tmp/changed.txt || true
-          # 可忽略的正则（忽略即跳过；不在此处的全部触发）
-          IGNORE_RE='^(data/|site/src/data/|research/|docs/blog/|README\.md$|HANDOFF\.md$|.*\.md$)'
-          DEPLOYABLE=$(grep -vE "$IGNORE_RE" /tmp/changed.txt || true)
-          if [ -z "$DEPLOYABLE" ]; then
-            echo "改动全部落在可忽略范围（数据/研究/纯 markdown），跳过部署："
-            head -10 /tmp/changed.txt
-            echo "deploy=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "触发部署的改动："
-            echo "$DEPLOYABLE" | head -20
-            echo "deploy=true" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Setup Python
-        if: steps.changes.outputs.deploy == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install Python deps
-        if: steps.changes.outputs.deploy == 'true'
-        run: pip install -q -r requirements.txt
-
-      - name: Setup Node
-        if: steps.changes.outputs.deploy == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: site/package-lock.json
-
-      - name: Setup SSH key
-        if: steps.changes.outputs.deploy == 'true'
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          # 受控 host key（管理员核验后提交）——不用 ssh-keyscan 运行时抓取
-          cp ops/known_hosts.production ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
-
-      # ---- release 通道（与本地生产验证链同构）----
-      # build-release.sh：preflight（干净 worktree + 精确 commit）→ 全量测试
-      # （22 项）→ manifest → release 产物；deploy-release.sh：上传 incoming →
-      # 激活（服务器侧锁/校验/分树权限/蓝绿/nginx 事务）→ 公网冒烟。
-      - name: Build release and deploy
-        if: steps.changes.outputs.deploy == 'true'
+      - name: Detect deployable changes
+        id: changes
         env:
-          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+          TRIGGER_SHA: ${{ github.sha }}
+          REQUESTED_SHA: ${{ inputs.commit }}
         run: |
-          ops/deploy-release.sh --commit "${{ github.sha }}"
-
-      # 四入口 online verify（REST/MCP/RSS/Skill 与 current 同版本）
-      - name: Online verify (four surfaces)
-        if: steps.changes.outputs.deploy == 'true'
-        env:
-          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
-        run: |
-          RID=$(ls -td dist-release/rl_* | head -1 | xargs basename)
-          ops/verify-release.sh --online --expect-release "$RID"
+          SHA="${REQUESTED_SHA:-$TRIGGER_SHA}"
+          if [ "$EVENT_NAME" = workflow_dispatch ]; then
+            RESULT='{"deploy":true,"importWeekly":false}'
+          else
+            RESULT=$(python3 scripts/workflow-policy.py trigger --before "$BEFORE_SHA" --after "$TRIGGER_SHA")
+          fi
+          echo "$RESULT"
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "deploy=$(echo "$RESULT" | python3 -c 'import json,sys; print(str(json.load(sys.stdin)["deploy"]).lower())')" >> "$GITHUB_OUTPUT"
+          echo "import_weekly=$(echo "$RESULT" | python3 -c 'import json,sys; print(str(json.load(sys.stdin)["importWeekly"]).lower())')" >> "$GITHUB_OUTPUT"
+  import-weekly:
+    needs: changes
+    if: needs.changes.outputs.import_weekly == 'true'
+    uses: ./.github/workflows/weekly-update.yml
+    with:
+      mode: import
+    secrets: inherit
+    permissions:
+      contents: write
+  deploy:
+    needs: changes
+    if: needs.changes.outputs.deploy == 'true' && needs.changes.outputs.import_weekly != 'true'
+    uses: ./.github/workflows/release-deploy.yml
+    with:
+      commit: ${{ needs.changes.outputs.sha }}
+    secrets: inherit
