@@ -24,6 +24,7 @@ const canonical = canonicalUrl(Astro.url.pathname);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    {activePath === '/' && <meta name="baidu-site-verification" content="codeva-UXsh2qWgbK" />}
     <title>{title}</title>
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, follow" />}
