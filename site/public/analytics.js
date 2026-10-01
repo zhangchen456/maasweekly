@@ -1,4 +1,5 @@
 // Thin Umami Cloud adapter: no identity storage, collector or retry queue.
+import './language.js';
 export const TRACKER_URL = 'https://cloud.umami.is/script.js';
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const MODEL_ID = /^[a-z0-9_-]+:[a-z0-9_.-]+$/;
@@ -16,6 +17,7 @@ export function validateAnalyticsConfig(config) {
 }
 
 export function pageType(path) {
+  path = path.replace(/^\/en(?=\/|$)/, '') || '/';
   if (path === '/') return 'home';
   const section = path.split('/')[1];
   return ({ model: 'model_detail', models: 'model_catalog', changes: 'changes',
@@ -118,7 +120,7 @@ export function startAnalytics(win, config, canonicalUrl) {
       if (url.hostname !== canonical.hostname) {
         track('outbound_click', { target_domain: url.hostname });
       } else {
-        const match = url.pathname.match(/^\/model\/([^/]+)\/?$/);
+        const match = url.pathname.match(/^(?:\/en)?\/model\/([^/]+)\/?$/);
         const modelId = match ? decodeURIComponent(match[1]) : '';
         if (MODEL_ID.test(modelId)) track('model_click', { model_id: modelId });
       }
@@ -148,7 +150,10 @@ if (typeof window !== 'undefined') {
   const tag = document.querySelector('script[data-maas-analytics]');
   if (tag) {
     try {
-      startAnalytics(window, { enabled: true, websiteId: tag.dataset.websiteId }, tag.dataset.canonicalUrl);
+      Promise.resolve(window.__maasLanguageReady).then(() => {
+        if (!window.__maasLanguageRedirecting) startAnalytics(window,
+          { enabled: true, websiteId: tag.dataset.websiteId }, tag.dataset.canonicalUrl);
+      }).catch(() => {});
     } catch { /* Invalid runtime config cannot break the website. */ }
   }
 }

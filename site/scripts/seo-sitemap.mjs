@@ -22,7 +22,7 @@ export default function seoSitemap(origin) {
             // Evidence and tiny raw observation pages remain reachable through their parent records.
             const eligible = /^\/(?:$|(?:models|pricing|leaderboards|changes|weekly|daily|agent|method|about)\/)/.test(route)
               || route.startsWith('/model/') || route.startsWith('/item/');
-            if (!eligible) continue;
+            if (!eligible && !/^\/en\/(?:$|(?:models|pricing|model|method|agent)\/)/.test(route)) continue;
             const html = await readFile(path.join(root, file), 'utf8');
             if (/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(html)) continue;
             if (route.startsWith('/item/obs_')) {

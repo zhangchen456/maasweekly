@@ -21,6 +21,12 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
+    "geoip-country": "5.0.202609300220",
     "zod": "^4.6.5"
+  },
+  "overrides": {
+    "geoip-country": {
+      "ip-address": "10.7.2"
+    }
   }
 }

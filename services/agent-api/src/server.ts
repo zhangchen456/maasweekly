@@ -12,6 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { DatasetHolder } from './dataset.js';
 import { createMcpHandler, DEFAULT_MCP_CONFIG } from './mcp.js';
 import { createHandler, type ServerConfig } from './http.js';
+import { countryHandler } from './country.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..', '..', '..');
@@ -57,6 +58,7 @@ const restHandler = createHandler(holder, config);
 const mcpHandler = createMcpHandler(holder, mcpConfig);
 const server = http.createServer((req, res) => {
   const pathname = (req.url ?? '').split('?')[0];
+  if (pathname === '/_locale/country') { countryHandler(req, res); return; }
   if (pathname === '/api/mcp') {
     void mcpHandler(req, res);
     return;

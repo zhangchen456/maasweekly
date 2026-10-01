@@ -94,8 +94,11 @@ run "site: records（含残留检测）" bash -c 'cd site && node tests/records.
 run "site final build（测试 fixture 清理后）" bash -c 'cd site && npm exec astro build'
 run "site: SEO（canonical / sitemap / model content）" bash -c 'cd site && node --experimental-strip-types tests/seo.test.mjs'
 
+run "site: multilingual" bash -c 'cd site && node --experimental-strip-types tests/multilingual.test.mjs'
+
 # ---- agent-api（REST + MCP 全套）----
 run "agent-api: build" bash -c 'cd services/agent-api && npm run build'
+run "agent-api: country" bash -c 'cd services/agent-api && node --test dist/tests/country.test.js'
 run "agent-api: REST 测试" bash -c 'cd services/agent-api && npm test'
 run "agent-api: MCP 测试" bash -c 'cd services/agent-api && npm run test:mcp'
 run "agent-api: MCP 真实数据" bash -c 'cd services/agent-api && npm run test:mcp:real'
