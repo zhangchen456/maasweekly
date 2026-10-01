@@ -1,0 +1,173 @@
+/* MaaS Daily Spec Sheet. Brand green and the existing animated wordmark are preserved. */
+html:root[data-theme="light"]{--ink:#f1f5f1;--ink-2:#e8eeea;--panel:#fafcf9;--panel-solid:#fafcf9;--paper:#1c3029;--paper-soft:#3e554b;--muted:#607569;--acid:#078f78;--acid-dim:#078f7810;--cyan:#087963;--line:#c8d5cc;--line-strong:#a7bdb0;--radius:2px;--shadow:none;--noise-opacity:0;--bg-grad:linear-gradient(#f1f5f1,#f1f5f1)}
+html:root[data-theme="dark"]{--ink:#111a16;--ink-2:#18231d;--panel:#18251e;--panel-solid:#18251e;--paper:#e5efe8;--paper-soft:#b7ccbe;--muted:#93ab9b;--acid:#8bcab2;--acid-dim:#8bcab212;--cyan:#8bcab2;--line:#344a3e;--line-strong:#4d6858;--radius:2px;--shadow:none;--noise-opacity:0;--bg-grad:linear-gradient(#111a16,#111a16)}
+html:root body.spec-sheet{background-image:linear-gradient(var(--acid-dim) 1px,transparent 1px),linear-gradient(90deg,var(--acid-dim) 1px,transparent 1px);background-size:32px 32px;background-color:var(--ink);font-size:14px}
+html:root body.spec-sheet::before{display:none}
+html:root body.spec-sheet .shell{width:min(1320px,calc(100% - 64px))}
+html:root body.spec-sheet h1,html:root body.spec-sheet h2,html:root body.spec-sheet h3{font-family:"Avenir Next","PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:-.025em}
+html:root body.spec-sheet .topbar{background:var(--ink);backdrop-filter:none;border-bottom:1px solid var(--line-strong)}
+html:root body.spec-sheet .topbar-inner{min-height:80px;gap:16px}
+html:root body.spec-sheet .brand-logo{width:160px;height:48px}
+html:root body.spec-sheet .nav{gap:4px;font-size:12px}
+html:root body.spec-sheet .nav a{padding:8px 16px;border:1px solid transparent;border-radius:0}
+html:root body.spec-sheet .nav a[aria-current="page"]{background:var(--acid-dim);border-color:var(--line-strong);color:var(--acid)}
+html:root body.spec-sheet .nav a:hover{background:var(--panel);border-color:var(--line)}
+html:root body.spec-sheet .theme-toggle{border-radius:2px;width:32px;height:32px}
+html:root body.spec-sheet .daily-edition{padding:35px 24px;align-items:center;position:relative;background:var(--panel-solid);border:1px solid var(--line-strong);border-top:3px solid var(--acid);margin-top:28px}
+html:root body.spec-sheet .daily-edition h1{font-size:clamp(29px,3.1vw,43px);font-weight:600;letter-spacing:-.035em}
+html:root body.spec-sheet .home-kicker,html:root body.spec-sheet .section-no,html:root body.spec-sheet .pricing-kicker,html:root body.spec-sheet .eyebrow{font-family:"SFMono-Regular",Consolas,monospace;font-size:10px;letter-spacing:.08em;color:var(--acid)}
+html:root body.spec-sheet .edition-date{border-left:1px solid var(--line);padding-left:30px}
+html:root body.spec-sheet .edition-date time{color:var(--acid);font-size:17px}
+html:root body.spec-sheet .lead-section{padding:25px 0 28px}
+html:root body.spec-sheet .lead-heading{margin-bottom:13px}
+html:root body.spec-sheet .lead-grid{grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line-strong);border-radius:0;gap:0;background:var(--panel-solid)}
+html:root body.spec-sheet .lead-story{padding:24px;min-height:245px;background:var(--panel-solid)}
+html:root body.spec-sheet .lead-story.lead-0{background:color-mix(in srgb,var(--acid) 5%,var(--panel-solid))}
+html:root body.spec-sheet .lead-story h3{font-size:20px;line-height:1.55;font-weight:600;letter-spacing:-.025em;margin:16px 0 12px}
+html:root body.spec-sheet .lead-story p{font-size:12px;line-height:1.9}
+html:root body.spec-sheet .lead-meta{gap:9px;font-size:10px}
+html:root body.spec-sheet .lead-meta span:first-child{font-size:12px;border:1px solid var(--line-strong);padding:3px 6px}
+html:root body.spec-sheet .market-section{padding-top:15px}
+html:root body.spec-sheet .market-heading h2{font-size:25px;letter-spacing:-.025em}
+html:root body.spec-sheet .market-table-wrap{border:1px solid var(--line-strong);background:var(--panel-solid)}
+html:root body.spec-sheet .market-table th{background:var(--ink-2);padding:13px 15px;border-right:1px solid var(--line);font-family:"SFMono-Regular",Consolas,"PingFang SC",monospace}
+html:root body.spec-sheet .market-table td{padding:17px 15px;border-right:1px solid var(--line);font-variant-numeric:tabular-nums}
+html:root body.spec-sheet .market-table td:last-child,html:root body.spec-sheet .market-table th:last-child{border-right:0}
+html:root body.spec-sheet .market-table td:first-child a{font-size:14px}
+html:root body.spec-sheet .market-table td:nth-child(2),html:root body.spec-sheet .market-table td:nth-child(3){font-size:15px;color:var(--paper)}
+html:root body.spec-sheet .more-heading{padding:24px 0 18px;margin-top:10px}
+html:root body.spec-sheet .explore-bar{border-radius:0;background:var(--panel-solid);box-shadow:none;padding:10px}
+html:root body.spec-sheet .platform-select select,html:root body.spec-sheet .quiet-button,html:root body.spec-sheet .follow-button,html:root body.spec-sheet .search-field kbd{border-radius:2px}
+html:root body.spec-sheet .workspace-tabs{margin-top:12px}
+html:root body.spec-sheet .type-filters{gap:8px}
+html:root body.spec-sheet .type-filters button{padding:10px 14px;border:1px solid transparent;margin-bottom:8px}
+html:root body.spec-sheet .type-filters button[aria-pressed="true"]{background:var(--acid-dim);border:1px solid var(--acid)}
+html:root body.spec-sheet .platform-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--line-strong);border-left:1px solid var(--line-strong);align-items:stretch}
+html:root body.spec-sheet .platform-card{padding:22px;margin:0;background:var(--panel-solid);border-radius:0;border:0;border-right:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);display:flex;flex-direction:column}
+html:root body.spec-sheet .platform-card:hover{transform:none;background:color-mix(in srgb,var(--acid) 3%,var(--panel-solid))}
+html:root body.spec-sheet .platform-card .pc-items{flex:1;font-size:12px}
+html:root body.spec-sheet .pc-head h3{font-size:15px}
+html:root body.spec-sheet .pc-summary{font-size:11px;line-height:1.7}
+html:root body.spec-sheet .pc-item{font-size:12px;line-height:1.9}
+html:root body.spec-sheet .pc-logo{width:30px;height:30px;border-radius:4px}
+html:root body.spec-sheet .hl-type{border-radius:2px}
+html:root body.spec-sheet .section{margin-top:38px}
+html:root body.spec-sheet .section h2{font-size:24px}
+html:root body.spec-sheet .section-heading{border-bottom:1px solid var(--line-strong);padding-bottom:15px;gap:10px 20px}
+html:root body.spec-sheet .section-note{font-size:12px;line-height:1.8}
+html:root body.spec-sheet .change-card,html:root body.spec-sheet .week-panel,html:root body.spec-sheet .weekly-latest,html:root body.spec-sheet .filter-empty{border-radius:0;background:var(--panel-solid);box-shadow:none}
+html:root body.spec-sheet .pricing-hero{padding:38px 0 30px;gap:45px}
+html:root body.spec-sheet .pricing-hero h1{font-family:"Avenir Next","PingFang SC",sans-serif;font-size:clamp(30px,3.4vw,46px);font-weight:600;letter-spacing:-.035em}
+html:root body.spec-sheet .pricing-page{--pricing-accent:var(--acid)}
+html:root body.spec-sheet .pricing-index{background:var(--panel-solid);border:1px solid var(--line-strong)}
+html:root body.spec-sheet .pricing-index a{padding:0 18px;min-height:62px}
+html:root body.spec-sheet .pricing-index a:last-child{border-bottom:0}
+html:root body.spec-sheet .market-board,html:root body.spec-sheet .chip-board{border-radius:0;box-shadow:none;background:var(--panel-solid)}
+html:root body.spec-sheet .market-range,html:root body.spec-sheet .market-range i{border-radius:0;box-shadow:none}
+html:root body.spec-sheet .pricing-page .plw{--host-acid:var(--acid);--blue:var(--acid);--soft:var(--acid-dim);--green:var(--acid);font-size:13px}
+html:root body.spec-sheet .pricing-page .plw .hero h1,html:root body.spec-sheet .pricing-page .plw .hero h2{font-family:"Avenir Next","PingFang SC",sans-serif;font-size:30px;letter-spacing:-.03em;font-weight:600}
+html:root body.spec-sheet .pricing-page .plw :is(button,input,select,.signal,.panel,.pill,.card,.provider-card,.compare-section){border-radius:2px;box-shadow:none}
+html:root body.spec-sheet .pricing-page .plw .signal{background:var(--host-panel)}
+html:root body.spec-sheet .pricing-page .plw :is(.number,td){font-variant-numeric:tabular-nums}
+html:root body.spec-sheet .model-hero{padding:32px 0 24px;background:var(--panel-solid);border-bottom:1px solid var(--line-strong)}
+html:root body.spec-sheet .model-hero .shell,html:root body.spec-sheet .model-detail.shell{width:100%}
+html:root body.spec-sheet .model-hero h1{font-family:"Avenir Next","PingFang SC",sans-serif;font-size:35px;font-weight:600;letter-spacing:-.035em}
+html:root body.spec-sheet .model-section{padding:24px;border:1px solid var(--line-strong);background:var(--panel-solid);margin:0 0 18px}
+html:root body.spec-sheet :is(.model-id,.model-key-tag,.change-type,#refresh-model){border-radius:2px}
+html:root body.spec-sheet .model-detail .price-table{border:1px solid var(--line-strong)}
+html:root body.spec-sheet .model-detail .price-table th{background:var(--ink-2);padding:12px;border:1px solid var(--line);font-size:10px}
+html:root body.spec-sheet .model-detail .price-table td{padding:12px;border:1px solid var(--line);font-variant-numeric:tabular-nums}
+html:root body.spec-sheet footer{background:var(--ink);border-top:1px solid var(--line-strong)}
+@media(max-width:1050px){html:root body.spec-sheet .platform-grid{grid-template-columns:repeat(2,minmax(0,1fr))}html:root body.spec-sheet .nav a{padding:7px 11px}html:root body.spec-sheet .topbar-inner{gap:10px}}
+@media(max-width:800px){html:root body.spec-sheet .shell{width:calc(100% - 32px)}html:root body.spec-sheet .topbar-inner{padding:12px 0;min-height:78px}html:root body.spec-sheet .nav{order:4;flex-basis:100%;justify-content:space-between;overflow:auto;gap:0}html:root body.spec-sheet .nav a{padding:6px 10px;white-space:nowrap}html:root body.spec-sheet .brand{margin-right:auto}html:root body.spec-sheet .lead-grid{grid-template-columns:1fr}html:root body.spec-sheet .lead-story{min-height:0;padding:22px}html:root body.spec-sheet .lead-story+.lead-story{border-left:0;border-top:1px solid var(--line-strong)}html:root body.spec-sheet .daily-edition{padding:24px 20px;align-items:flex-start}html:root body.spec-sheet .edition-date{padding-left:15px}html:root body.spec-sheet .edition-date time{font-size:13px}html:root body.spec-sheet .pricing-hero{grid-template-columns:1fr;gap:22px}html:root body.spec-sheet .type-filters{gap:3px}html:root body.spec-sheet .type-filters button{padding:8px 9px}html:root body.spec-sheet .model-section{padding:18px}}
+@media(max-width:520px){html:root body.spec-sheet .platform-grid{grid-template-columns:1fr}html:root body.spec-sheet .daily-edition{display:block}html:root body.spec-sheet .daily-edition h1{max-width:none;font-size:29px}html:root body.spec-sheet .edition-date{border-left:0;border-top:1px solid var(--line);padding:14px 0 0;margin-top:18px;display:flex;justify-content:space-between;text-align:left}html:root body.spec-sheet .more-heading h2{font-size:21px}html:root body.spec-sheet .market-heading h2{font-size:22px}html:root body.spec-sheet .brand-logo{width:145px}html:root body.spec-sheet .language-switch{font-size:10px}}
+
+/* Brand-led hierarchy and progressively disclosed pricing. */
+html:root body.spec-sheet .brand-logo{width:200px;height:60px}
+html:root body.spec-sheet .topbar-inner{min-height:88px}
+html:root body.spec-sheet .lead-section{padding-top:28px}
+html:root body.spec-sheet .lead-heading h1{font-size:24px;margin:0;font-weight:600}
+html:root body.spec-sheet .lead-heading-tools{display:flex;gap:22px;align-items:center;font-size:12px;color:var(--muted)}
+html:root body.spec-sheet .lead-heading-tools time{font-family:monospace;color:var(--acid)}
+html:root body.spec-sheet .lead-heading-tools a{color:var(--paper-soft);text-decoration:none}
+html:root body.spec-sheet .lead-story{position:relative;isolation:isolate;overflow:hidden}
+html:root body.spec-sheet .brand-watermark{position:absolute;width:190px;height:190px;right:-20px;bottom:20px;color:var(--acid);opacity:.045;z-index:-1;pointer-events:none}
+html:root body.spec-sheet .lead-story,html:root body.spec-sheet .lead-story.lead-0{background:transparent}
+html:root body.spec-sheet .lead-grid{background:var(--panel-solid)}
+html:root body.spec-sheet .lead-story.lead-0::before{content:"";position:absolute;inset:0;background:var(--acid-dim);z-index:-2}
+html:root body.spec-sheet .market-simple{min-width:620px}
+html:root body.spec-sheet .market-simple td{vertical-align:middle;padding:19px 20px}
+html:root body.spec-sheet .market-simple td:first-child{width:38%}
+html:root body.spec-sheet .model-identity{display:flex;gap:15px;align-items:center}
+html:root body.spec-sheet .model-sequence{font:12px monospace;color:var(--acid);border:1px solid var(--line);padding:7px;background:var(--acid-dim)}
+html:root body.spec-sheet .market-simple .quote-value{font:600 24px/1.3 "SFMono-Regular",Consolas,monospace;color:var(--paper)}
+html:root body.spec-sheet .market-simple td:nth-child(3) .quote-value{color:var(--acid)}
+html:root body.spec-sheet .market-simple small{font-family:"Avenir Next","PingFang SC",sans-serif;font-size:11px;font-weight:400;white-space:normal}
+html:root body.spec-sheet .market-simple td:last-child{white-space:normal;font-family:inherit;width:22%}
+html:root body.spec-sheet .quote-details summary{cursor:pointer;font-size:12px;color:var(--paper-soft)}
+html:root body.spec-sheet .quote-details p{font-size:11px;color:var(--muted);white-space:normal;line-height:1.7;max-width:260px}
+html:root body.spec-sheet .market-simple .quote-link{display:inline-block;margin-top:8px;font-size:11px}
+@media(max-width:800px){html:root body.spec-sheet .brand-logo{width:175px;height:50px}html:root body.spec-sheet .lead-heading-tools{gap:12px;font-size:11px}html:root body.spec-sheet .lead-heading h1{font-size:22px}}
+
+html:root body.spec-sheet .price-subline{display:block;font-size:11px;color:var(--muted);margin-top:6px;font-weight:400;overflow-wrap:anywhere}
+html:root body.spec-sheet .detail-amount{font:600 23px/1.4 monospace;color:var(--acid);white-space:nowrap}
+html:root body.spec-sheet .detail-amount small{font-size:11px;font-weight:400}
+html:root body.spec-sheet .billing-badge{display:inline-block;font-size:12px;padding:5px 9px;border:1px solid var(--line);background:var(--acid-dim);color:var(--paper-soft)}
+html:root body.spec-sheet .model-detail .price-table td{padding:18px;vertical-align:middle}
+html:root body.spec-sheet .price-facts{font:11px/1.7 "PingFang SC",sans-serif;max-width:360px}
+html:root body.spec-sheet .price-facts>div{border-top:1px solid var(--line);padding:8px 0}
+html:root body.spec-sheet .price-facts dt{color:var(--muted)}
+html:root body.spec-sheet .price-facts dd{margin:3px 0 0;color:var(--paper-soft);overflow-wrap:anywhere}
+
+html:root body.spec-sheet .brand-watermark{width:410px;height:410px;right:-155px;bottom:-145px;opacity:.04;transform:rotate(-8deg)}
+html:root body.spec-sheet .lead-1 .brand-watermark{right:-115px;bottom:-175px;transform:rotate(8deg)}
+html:root body.spec-sheet .lead-2 .brand-watermark{right:-170px;bottom:-115px;transform:rotate(-12deg)}
+html:root body.spec-sheet .currency-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px;margin:18px 0;font-size:11px;color:var(--muted)}
+html:root body.spec-sheet .currency-buttons{display:flex;border:1px solid var(--line-strong)}
+html:root body.spec-sheet .currency-buttons button{border:0;background:var(--panel);color:var(--paper-soft);padding:9px 14px;font:inherit;cursor:pointer}
+html:root body.spec-sheet .currency-buttons button[aria-pressed="true"]{background:var(--acid);color:var(--ink);font-weight:600}
+html:root body.spec-sheet .currency-toolbar input{width:65px;background:var(--panel);color:var(--paper);border:1px solid var(--line-strong);padding:6px;font:12px monospace}
+html:root body.spec-sheet .market-simple .original-quote{font-size:10px;color:var(--muted);opacity:.85}
+
+html:root body.spec-sheet .home-opening{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(240px,1fr);gap:70px;align-items:center;padding:55px 0 40px;border-bottom:1px solid var(--line-strong)}
+html:root body.spec-sheet .opening-copy .home-kicker{font-size:11px;letter-spacing:.12em;margin-bottom:22px}
+html:root body.spec-sheet .opening-copy h1{font-size:clamp(30px,3.5vw,49px);font-weight:650;line-height:1.38;letter-spacing:-.045em;margin:0;max-width:780px;text-wrap:pretty}
+html:root body.spec-sheet .opening-deck{font-size:14px;line-height:1.8;color:var(--paper-soft);margin:22px 0}
+html:root body.spec-sheet .opening-links{display:flex;gap:24px;flex-wrap:wrap;font-size:12px}
+html:root body.spec-sheet .opening-links a{color:var(--acid);text-decoration:none;padding-bottom:6px;border-bottom:1px solid var(--line-strong)}
+html:root body.spec-sheet .opening-links a:hover{border-color:var(--acid)}
+html:root body.spec-sheet .opening-meta{display:flex;gap:20px;flex-wrap:wrap;font-size:10px;color:var(--muted);margin-top:28px}
+html:root body.spec-sheet .opening-meta time{font-family:monospace;color:var(--acid)}
+html:root body.spec-sheet .opening-brand{display:flex;flex-direction:column;align-items:center;border-left:1px solid var(--line);padding-left:40px}
+html:root body.spec-sheet .opening-mark{width:230px;height:230px}
+html:root body.spec-sheet .opening-wordmark{font:400 26px/1.4 "Avenir Next",sans-serif;letter-spacing:-.05em;margin-top:-14px}
+html:root body.spec-sheet .opening-brand-caption{font-size:10px;letter-spacing:.15em;color:var(--muted);margin-top:9px}
+html:root body.spec-sheet .lead-heading h2{font-size:19px;font-weight:600;color:var(--paper);margin:0}
+@media(max-width:800px){html:root body.spec-sheet .home-opening{grid-template-columns:minmax(0,1fr) 150px;gap:20px;padding:35px 0 30px}html:root body.spec-sheet .opening-brand{padding-left:15px}html:root body.spec-sheet .opening-mark{width:145px;height:145px}html:root body.spec-sheet .opening-wordmark{font-size:20px}html:root body.spec-sheet .opening-copy h1{font-size:30px}}
+@media(max-width:520px){html:root body.spec-sheet .home-opening{position:relative;display:block;padding-top:30px}html:root body.spec-sheet .opening-brand{position:absolute;right:0;top:16px;border:0;padding:0;opacity:.12;pointer-events:none;z-index:-1}html:root body.spec-sheet .opening-mark{width:180px;height:180px}html:root body.spec-sheet .opening-wordmark,html:root body.spec-sheet .opening-brand-caption{display:none}html:root body.spec-sheet .opening-copy h1{font-size:29px}html:root body.spec-sheet .opening-copy .home-kicker{font-size:10px}}
+@media(max-width:520px){html:root body.spec-sheet .home-opening{isolation:isolate}html:root body.spec-sheet .opening-brand{z-index:-1}}
+html:root body.spec-sheet .opening-kicker-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;gap:15px}
+html:root body.spec-sheet .opening-kicker-row .home-kicker{margin:0}
+html:root body.spec-sheet .carousel-play{background:none;border:0;color:var(--muted);font-size:10px;cursor:pointer;padding:6px}
+html:root body.spec-sheet .highlight-slides{display:grid}
+html:root body.spec-sheet .highlight-slide{grid-area:1/1;display:flex;flex-direction:column;min-height:300px}
+html:root body.spec-sheet .highlight-slide[hidden]{display:none}
+html:root body.spec-sheet .highlight-summary{font-size:12px;color:var(--muted);line-height:1.85;margin:0 0 22px;max-width:680px}
+html:root body.spec-sheet .highlight-slide .opening-deck{margin:18px 0 12px}
+html:root body.spec-sheet .highlight-slide .opening-links{margin-top:auto}
+html:root body.spec-sheet .carousel-controls{display:flex;align-items:center;gap:14px;margin-top:26px}
+html:root body.spec-sheet .carousel-controls button{background:transparent;border:1px solid var(--line-strong);color:var(--paper-soft);padding:8px 12px;font:12px monospace;cursor:pointer}
+html:root body.spec-sheet .carousel-pages{display:flex;gap:6px}
+html:root body.spec-sheet .carousel-pages button[aria-pressed="true"]{background:var(--acid);color:var(--ink);border-color:var(--acid)}
+html:root body.spec-sheet .carousel-controls button:hover{border-color:var(--acid)}
+html:root body.spec-sheet .carousel-status{font:11px monospace;color:var(--muted);margin-left:auto}
+html:root body.spec-sheet .opening-meta a{color:var(--acid);text-decoration:none}
+@media(max-width:800px){html:root body.spec-sheet .highlight-slide{min-height:340px}}
+@media(max-width:520px){html:root body.spec-sheet .highlight-slide{min-height:310px}html:root body.spec-sheet .carousel-controls{gap:10px}}
+/* Keep all slides in the same grid cell to reserve the tallest slide's height. */
+html:root body.spec-sheet .highlight-slides{isolation:isolate;overflow:hidden}
+html:root body.spec-sheet .highlight-slide[hidden]{display:flex;visibility:hidden;pointer-events:none}
+html:root body.spec-sheet .highlight-slide[aria-hidden="true"]{pointer-events:none}
+html:root body.spec-sheet .carousel-pages button{transition:background-color .25s,color .25s,transform .25s,border-color .25s}
+html:root body.spec-sheet .carousel-pages button[aria-pressed="true"]{transform:translateY(-3px)}
+@media(prefers-reduced-motion:reduce){html:root body.spec-sheet .carousel-pages button{transition:none;transform:none}}

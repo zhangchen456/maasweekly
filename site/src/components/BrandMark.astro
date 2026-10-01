@@ -1,0 +1,16 @@
+<svg class="hero-brand-mark" viewBox="0 0 88 88" aria-hidden="true" focusable="false">
+  <path class="mark-trace" d="M14 66V24L40 51L66 24V66" fill="none" stroke="currentColor" stroke-width="9" stroke-linejoin="round" stroke-linecap="round" pathLength="1"/>
+  <g class="mark-dot"><circle class="mark-ring" cx="66" cy="66" r="9" fill="none" stroke="var(--acid)" stroke-width="1.2"/><path class="mark-tick" d="M66 57A9 9 0 0 1 75 66" fill="none" stroke="var(--acid)" stroke-width="1.8" stroke-linecap="round"/><circle cx="66" cy="66" r="6" fill="var(--acid)"/><circle cx="66" cy="66" r="2" fill="#B5F2DD"/></g>
+</svg>
+<style>
+.hero-brand-mark{display:block;width:100%;height:100%;overflow:visible;color:var(--paper)}
+.mark-trace{animation:mark-draw 1.1s cubic-bezier(.22,1,.36,1) both}
+.mark-dot{transform-origin:66px 66px;animation:mark-arrive .4s .8s both}
+.mark-ring{opacity:.3;animation:mark-signal 4s 1.2s ease-out infinite}
+.mark-tick{transform-origin:66px 66px;animation:mark-scan 4s 1.2s ease-in-out infinite}
+@keyframes mark-draw{from{stroke-dasharray:1;stroke-dashoffset:1}to{stroke-dasharray:1;stroke-dashoffset:0}}
+@keyframes mark-arrive{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+@keyframes mark-signal{0%,70%,100%{r:9;opacity:.3}90%{r:13;opacity:0}}
+@keyframes mark-scan{0%,70%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.mark-trace,.mark-dot,.mark-ring,.mark-tick{animation:none}}
+</style>

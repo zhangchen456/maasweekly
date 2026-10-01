@@ -14,12 +14,16 @@ const modeLabels: Record<string, string> = { realtime: '实时', batch: '批处�
 const qualityLabels: Record<string, string> = { fresh: '最近抓取成功', stale: '更新失败，沿用旧数据', unknown: '更新状态未知' };
 const evidenceLabels: Record<string, string> = { complete: '证据完整', partial: '证据不完整', unavailable: '证据不可用' };
 
+export function priceUnit(quantity: number, name: string): string {
+  return quantity === 1000000 && /^tokens?$/i.test(name) ? '百万 token' : `${quantity.toLocaleString('en-US')} ${name}`;
+}
+
 export function priceCells(price: PriceRecord): string[] {
   return [
     providerLabels[price.providerId] ?? price.providerId,
     price.modelKey,
     componentLabels[price.component] ?? price.component,
-    `${price.amount} ${price.currency} / ${price.unitQuantity.toLocaleString('en-US')} ${price.unitName}`,
+    `${price.amount} ${price.currency} / ${priceUnit(price.unitQuantity, price.unitName)}`,
     price.region,
     `${modeLabels[price.billingMode] ?? price.billingMode} / ${price.serviceTier}`,
     price.contextBand ? JSON.stringify(price.contextBand) : '来源未单列',

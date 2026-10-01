@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ModelPriceLinks from '../components/ModelPriceLinks.astro';
+import HomeOverview from '../components/HomeOverview.astro';
+import '../styles/home-overview.css';
 import { priceChangeLink } from '../lib/record-links';
 import '../styles/workspace.css';
 import { getCollection } from 'astro:content';
@@ -84,23 +85,8 @@ const priceChanges: any[] = today?.price_changes || [];
 const weekHighlightCount = currentWeek?.highlights?.length || 0;
 ---
 <Layout title="MaaS Daily — 大模型 API 价格与全球 MaaS 每日动态" description="每日追踪大模型发布、API 价格变化与平台更新。查询模型报价、计费条件和官方证据，查看全球 MaaS 平台周报。">
-  <header class="hero workspace-hero">
-    <div class="hero-copy">
-      <div class="eyebrow"><span class="live-dot"></span> YOUR DAILY INTELLIGENCE</div>
-      <h1>全球 MaaS 动态，<br/><span>每日一览。</span></h1>
-      <p class="dek">全球 MaaS 动态，一处读懂。追踪模型、价格与平台能力，从要点直达信源。</p>
-      <div class="edition"><time datetime={today?.date}>{dateLong || '等待更新'}</time><span>{weekday} · 最新一期</span><span>AI 提炼 · 原文可查</span></div>
-    </div>
-    <aside class="brief-cover" aria-label="本期概览">
-      <div class="brief-top"><span>DAILY BRIEF</span><span>↗</span></div>
-      <div class="brief-number">{String(highlights.reduce((n: number, h: any) => n + h.items.length, 0)).padStart(2, '0')}<span>条精选要点</span></div>
-      <div class="brief-bottom"><span>{highlights.length} 个平台 · {dateShort}</span><button id="copy-brief" type="button">复制简报 ↗</button></div>
-      <span id="copy-status" role="status"></span>
-    </aside>
-  </header>
-
-  <ModelPriceLinks />
-
+  <HomeOverview highlights={highlights} platformOrder={platformOrder} date={today?.date} />
+  <div class="more-heading"><div><p class="home-kicker">继续了解</p><h2>更多平台动态</h2></div><div class="edition"><time datetime={today?.date}>{dateLong || '等待更新'}</time><button id="copy-brief" type="button">复制简报 ↗</button><span id="copy-status" role="status"></span></div></div>
   <div class="explore-bar" aria-label="动态筛选">
     <label class="search-field"><span aria-hidden="true">⌕</span><input id="signal-search" type="search" placeholder="搜索平台、模型或关键词…" aria-label="搜索今日要点与信号"/><kbd>/</kbd></label>
     <label class="platform-select"><span class="sr-only">筛选平台</span><select id="platform-filter"><option value="">全部平台</option>{platformOrder.map((p) => <option value={p}>{p}</option>)}</select></label>
@@ -118,8 +104,8 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
     <section class="section" id="digest">
       <div class="section-heading reveal">
         <div class="section-no">01 / DIGEST</div>
-        <h2>今日要点</h2>
-        <p class="section-note">当日各平台动态一览。</p>
+        <h2>今日平台动态</h2>
+        <p class="section-note">按平台展开，查看完整摘要与变化依据。</p>
       </div>
       {highlights.length > 0 ? (
         <div class="platform-grid">
@@ -173,6 +159,47 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
       )}
     </section>
 
+    {/* ===== 03 本周回顾（结构化） ===== */}
+    {currentWeek && (
+      <section class="section" id="week">
+        <div class="section-heading reveal">
+          <div class="section-no">03 / WEEK</div>
+          <h2>本周回顾</h2>
+          <p class="section-note">{currentWeek.week}（{fmtWeekRange(currentWeek)}）</p>
+        </div>
+        <div class="week-panel reveal">
+          <div class="week-side">
+            <div class="week-theme-card">
+              <div class="wt-kicker">WEEK THEME</div>
+              <div class="wt-theme">{currentWeek.story?.theme || '数据积累中'}</div>
+            </div>
+            <div class="week-metrics">
+              <div class="wm-item"><strong>{currentWeek.totals?.substantive ?? 0}</strong><span>平台变化</span></div>
+              <div class="wm-item c-release"><strong>{currentWeek.totals?.releases ?? 0}</strong><span>发布</span></div>
+              <div class="wm-item c-pricing"><strong>{currentWeek.totals?.pricings ?? 0}</strong><span>调价</span></div>
+              <div class="wm-item c-sunset"><strong>{currentWeek.totals?.sunsets ?? 0}</strong><span>下线</span></div>
+            </div>
+            <a class="wt-link" href={`/daily/${currentWeek.week}/`}>本周逐日要点 →</a>
+          </div>
+          <div class="week-body">
+            {storySections.length > 0 ? (
+              <div class="story-sections">
+                {storySections.map((s, i: number) => (
+                  <div class="story-sec-item reveal" style={`--d:${i * 60}ms`}>
+                    <div class="ss-head"><span class="ss-no">{String(i + 1).padStart(2, '0')}</span><h3>{s.title}</h3></div>
+                    <p>{highlightEntities(s.body).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</p>
+                  </div>
+                ))}
+              </div>
+            ) : storyParas.length > 0 ? storyParas.map((p: string) => <p>{highlightEntities(p).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</p>) : (
+              <p class="week-pending">本周串讲将在周末数据收齐后生成。当前已积累 {weekHighlightCount} 条要点。</p>
+            )}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <details class="source-drawer"><summary>原始变化与证据明细 <span>展开核对 ↓</span></summary>
     {/* ===== 02 今日信号明细（按平台分组 + logo + LLM 解读） ===== */}
     <section class="section" id="signals">
       <div class="section-heading reveal">
@@ -252,45 +279,7 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
       })}
     </section>
 
-    {/* ===== 03 本周回顾（结构化） ===== */}
-    {currentWeek && (
-      <section class="section" id="week">
-        <div class="section-heading reveal">
-          <div class="section-no">03 / WEEK</div>
-          <h2>本周回顾</h2>
-          <p class="section-note">{currentWeek.week}（{fmtWeekRange(currentWeek)}）</p>
-        </div>
-        <div class="week-panel reveal">
-          <div class="week-side">
-            <div class="week-theme-card">
-              <div class="wt-kicker">WEEK THEME</div>
-              <div class="wt-theme">{currentWeek.story?.theme || '数据积累中'}</div>
-            </div>
-            <div class="week-metrics">
-              <div class="wm-item"><strong>{currentWeek.totals?.substantive ?? 0}</strong><span>平台变化</span></div>
-              <div class="wm-item c-release"><strong>{currentWeek.totals?.releases ?? 0}</strong><span>发布</span></div>
-              <div class="wm-item c-pricing"><strong>{currentWeek.totals?.pricings ?? 0}</strong><span>调价</span></div>
-              <div class="wm-item c-sunset"><strong>{currentWeek.totals?.sunsets ?? 0}</strong><span>下线</span></div>
-            </div>
-            <a class="wt-link" href={`/daily/${currentWeek.week}/`}>本周逐日要点 →</a>
-          </div>
-          <div class="week-body">
-            {storySections.length > 0 ? (
-              <div class="story-sections">
-                {storySections.map((s, i: number) => (
-                  <div class="story-sec-item reveal" style={`--d:${i * 60}ms`}>
-                    <div class="ss-head"><span class="ss-no">{String(i + 1).padStart(2, '0')}</span><h3>{s.title}</h3></div>
-                    <p>{highlightEntities(s.body).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</p>
-                  </div>
-                ))}
-              </div>
-            ) : storyParas.length > 0 ? storyParas.map((p: string) => <p>{highlightEntities(p).map((seg: any) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</p>) : (
-              <p class="week-pending">本周串讲将在周末数据收齐后生成。当前已积累 {weekHighlightCount} 条要点。</p>
-            )}
-          </div>
-        </div>
-      </section>
-    )}
+    </details>
 
     {/* ===== 04 周度归档 ===== */}
     {pastWeeks.length > 0 && (
@@ -337,6 +326,7 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
     </section>
   </div>
 
+  <aside class="home-follow"><div><h2>让变化主动找到你。</h2><p>订阅每日变化，或在你的 Agent 里直接查询。</p></div><div><a href="/feed.xml">RSS 订阅 ↗</a><a href="/agent/">接入 Agent ↗</a></div></aside>
   <p class="footnote">数据每日自动更新 · 历史归档可查</p>
   <script src="../scripts/explore.ts"></script>
 </Layout>

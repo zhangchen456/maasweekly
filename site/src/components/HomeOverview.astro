@@ -1,0 +1,63 @@
+---
+import { featuredModels, modelRelease } from '../lib/model-pages';
+import { providerLabels, priceUnit } from '../lib/price-display';
+import BrandMark from './BrandMark.astro';
+import ledger from '../data/pricing/ledger.json';
+const fxRate = Number(ledger.fx_snapshot.rates.CNY);
+const displayAmount = (p:any) => p && ['USD','CNY'].includes(p.currency) ? new Intl.NumberFormat('zh-CN',{maximumSignificantDigits:6}).format(Number(p.amount) * (p.currency === 'USD' ? fxRate : 1)) : p?.amount ?? '—';
+const { highlights, platformOrder, date } = Astro.props;
+const labels: Record<string,string> = {sunset:'服务下线',pricing:'价格变化',release:'新模型发布',other:'平台更新'};
+const all = highlights.flatMap((h:any) => h.items.map((item:any) => ({...item,platform:h.platform,headline:h.logo_summary})));
+const picks:any[] = [];
+for (const type of ['sunset','pricing','release']) {
+  const item=all.find((i:any)=>i.type===type && !picks.some(p=>p.platform===i.platform));
+  if(item) picks.push(item);
+}
+for(const item of all) if(picks.length<3 && !picks.some(p=>p.platform===item.platform)) picks.push(item);
+const models=featuredModels().map(page=>{
+  // One explicitly disclosed source scenario, never choose a cheapest price.
+  const input=page.prices.find(p=>p.component==='input' && p.billingMode==='realtime' && p.serviceTier==='standard') ?? page.prices.find(p=>p.component==='input');
+  const scenario=(p:any)=>JSON.stringify([p.providerId,p.sourceId,p.modelKey,p.currency,p.unitName,p.unitQuantity,p.region,p.billingMode,p.serviceTier,p.contextBand,p.timeCondition]);
+  const same=input?page.prices.filter(p=>scenario(p)===scenario(input)):[];
+  const condition=input ? [input.region, input.billingMode==='realtime'?'实时':input.billingMode,input.serviceTier, input.contextBand?`上下文 ${input.contextBand.min ?? 0}–${input.contextBand.max ?? '不限'} tokens`:null,input.timeCondition?`时段 ${input.timeCondition.period === 'peak' ? '高峰' : input.timeCondition.period === 'off_peak' ? '非高峰' : input.timeCondition.period ?? JSON.stringify(input.timeCondition)}（${input.timeCondition.tz ?? '来源时区'}）`:null].filter(Boolean).join(' · ') : '暂无输入报价';
+  return {...page,input,output:same.find(p=>p.component==='output'),cache:same.find(p=>p.component==='cache_read'),condition};
+});
+const quote=(p:any)=>p?`${p.amount} ${p.currency}`:'未单列';
+const release=modelRelease();
+---
+<header class="home-opening">
+  <div class="opening-copy" data-highlight-carousel role="region" aria-roledescription="轮播" aria-label="今日重点">
+    <div class="opening-kicker-row"><p class="home-kicker">MAAS DAILY / 今日重点</p>{picks.length > 1 && <button class="carousel-play" type="button" aria-label="暂停自动轮播">暂停</button>}</div>
+    <div class="highlight-slides">{picks.map((item:any,index:number)=><article class="highlight-slide" data-highlight-slide hidden={index !== 0} role="group" aria-roledescription="幻灯片" aria-label={`${index+1} / ${picks.length}`}>
+      <h1 id={index === 0 ? 'opening-title' : undefined}>{item.headline}</h1><p class="opening-deck">{item.platform} · {labels[item.type] ?? labels.other}</p><p class="highlight-summary">{item.text}</p><div class="opening-links"><a href={`#signal-${platformOrder.indexOf(item.platform)}`}>查看记录与依据 ↗</a><a href="#market-title">比较模型价格 ↓</a></div>
+    </article>)}</div>
+    {!picks.length && <h1 id="opening-title">模型与平台，今日观察。</h1>}
+    {picks.length > 1 && <div class="carousel-controls"><button type="button" data-carousel-prev aria-label="上一条重点">←</button><div class="carousel-pages" role="group" aria-label="选择重点">{picks.map((item:any,index:number)=><button type="button" data-carousel-page={index} aria-pressed={index === 0 ? 'true' : 'false'} aria-label={`第 ${index+1} 条：${item.headline}`}>{String(index+1).padStart(2,'0')}</button>)}</div><button type="button" data-carousel-next aria-label="下一条重点">→</button><span class="carousel-status" aria-live="polite">1 / {picks.length}</span></div>}
+    <div class="opening-meta"><time datetime={date}>{date?.replaceAll('-','.') ?? '等待更新'}</time><span>官方来源追踪 · AI 摘要</span><a href="#digest">全部动态 ↗</a></div>
+  </div>
+  <div class="opening-brand"><div class="opening-mark"><BrandMark /></div><span class="opening-wordmark">MaaS Daily</span><span class="opening-brand-caption">模型 × 平台 × 价格</span></div>
+</header>
+<section class="market-section" aria-labelledby="market-title">
+  <div class="market-heading"><div><p class="home-kicker">当前价格一览</p><h2 id="market-title">几个重点模型，现在怎么收费？</h2></div><a href="/models/">全部模型 ↗</a></div>
+  <p class="market-note">每个模型展示一个明确档位的报价，换算金额为估算值。数据截至 {release.dataThrough}。</p>
+  <div class="currency-toolbar" data-home-fx={fxRate}><div class="currency-buttons" role="group" aria-label="价格显示币种"><button type="button" data-currency="CNY" aria-pressed="true">¥ 人民币</button><button type="button" data-currency="USD" aria-pressed="false">$ 美元</button></div><label>1 USD = <input id="home-fx-rate" type="number" min="0.01" max="1000" step="0.01" value={fxRate} aria-label="美元兑人民币估算汇率" /> CNY</label><span id="home-fx-note">手动汇率 · {ledger.fx_snapshot.as_of} · 非实时</span><span id="home-fx-status" role="status"></span></div>
+  <div class="market-table-wrap"><table class="market-table market-simple"><thead><tr><th scope="col">模型</th><th scope="col">输入价格</th><th scope="col">输出价格</th><th scope="col">报价条件</th></tr></thead><tbody>{models.map((page,index)=><tr>
+    <td><div class="model-identity"><span class="model-sequence">{String(index+1).padStart(2,'0')}</span><div><a href={`/model/${page.model.modelId}/`}>{page.model.modelName}</a><small>{page.input ? providerLabels[page.input.providerId] ?? page.input.providerId : ''}</small></div></div></td>
+    <td><span class="quote-value" data-quote-amount={page.input?.amount} data-quote-currency={page.input?.currency}>{displayAmount(page.input)}</span><small><span data-display-currency>{page.input && ['CNY','USD'].includes(page.input.currency) ? 'CNY' : page.input?.currency ?? '暂无报价'}</span> / {page.input ? priceUnit(page.input.unitQuantity, page.input.unitName) : '—'}</small><small class="original-quote">原价 {quote(page.input)}</small></td>
+    <td><span class="quote-value" data-quote-amount={page.output?.amount} data-quote-currency={page.output?.currency}>{displayAmount(page.output)}</span><small><span data-display-currency>{page.output && ['CNY','USD'].includes(page.output.currency) ? 'CNY' : page.output?.currency ?? '未单列'}</span>{page.output ? ` / ${priceUnit(page.output.unitQuantity, page.output.unitName)}` : ''}</small><small class="original-quote">原价 {quote(page.output)}</small></td>
+    <td><details class="quote-details"><summary>查看条件</summary><p>{page.condition}</p><p>缓存读取：{quote(page.cache)}</p><p>观察于 {page.input?.observedAt.slice(0,10)} · 证据完整</p></details><a class="quote-link" href={`/model/${page.model.modelId}/`}>完整报价 ↗</a></td>
+  </tr>)}</tbody></table></div>
+  {!models.length && <p class="home-empty">暂无符合新鲜度与证据要求的模型报价。</p>}
+  <div class="market-footer"><span>不同区域、上下文和时段可能有不同报价，查看全部档位后再比较。</span><a href="/pricing/">查找具体报价 →</a></div>
+</section>
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#signal-"]').forEach(link=>link.addEventListener('click',()=>{
+    const drawer=document.querySelector<HTMLDetailsElement>('.source-drawer');if(drawer)drawer.open=true;
+  }));
+  const openFromHash=()=>{if(location.hash.startsWith('#signal-')){const drawer=document.querySelector<HTMLDetailsElement>('.source-drawer');if(drawer)drawer.open=true;}};
+  openFromHash();window.addEventListener('hashchange',openFromHash);
+</script>
+
+<script src="../scripts/home-currency.ts"></script>
+
+<script src="../scripts/highlight-carousel.ts"></script>

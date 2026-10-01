@@ -1,4 +1,5 @@
 ---
+import { priceUnit } from '../../lib/price-display';
 import Layout from '../../layouts/Layout.astro';
 import { modelRelease, modelPage, priceCells, priceHeaders, providerLabels } from '../../lib/model-pages';
 import { PUBLIC_ACCESS } from '../../config/public-access';
@@ -44,10 +45,12 @@ const hasContent = prices.length > 0 || changes.length > 0;
       <p id="refresh-status" class="muted small" role="status" aria-live="polite"></p>
       <div id="current-prices" class="current-prices">
         {prices.length ? <table class="price-table">
-          <thead><tr>{priceHeaders.map(label => <th scope="col">{label}</th>)}<th scope="col">证据 / 变化</th></tr></thead>
+          <thead><tr><th scope="col">平台 / API 模型</th><th scope="col">计费项</th><th scope="col">价格 / 原始单位</th><th scope="col">条件与依据</th></tr></thead>
           <tbody>{prices.map(price => <tr data-price-id={price.id}>
-            {priceCells(price).map(value => <td>{value}</td>)}
-            <td>{price.evidenceId && <a href={`/evidence/${price.evidenceId}/`}>价格证据</a>}
+            <td><strong>{priceCells(price)[0]}</strong><small class="price-subline">{price.modelKey}</small></td>
+            <td><span class="billing-badge">{priceCells(price)[2]}</span></td>
+            <td><strong class="detail-amount">{price.amount} <small>{price.currency}</small></strong><small class="price-subline">每 {priceUnit(price.unitQuantity, price.unitName)}</small></td>
+            <td><details class="quote-details"><summary>查看报价条件</summary><dl class="price-facts">{priceCells(price).slice(4).map((value,index)=><div><dt>{priceHeaders[index+4]}</dt><dd>{value}</dd></div>)}</dl></details>{price.evidenceId && <a href={`/evidence/${price.evidenceId}/`}>价格证据</a>}
               {price.links.itemPermalink && <> · <a href={price.links.itemPermalink}>变化记录</a></>}
               {!price.evidenceId && !price.links.itemPermalink && '暂无链接'}</td>
           </tr>)}</tbody>
