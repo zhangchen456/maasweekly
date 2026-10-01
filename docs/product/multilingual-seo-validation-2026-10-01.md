@@ -1,11 +1,11 @@
 # 中英文实现与发布准备验收
 
-2026-10-01（Asia/Shanghai）。状态：本地实现、真实浏览器验收、标准 release 门禁与发布材料完成；生产上线等待用户明确批准。
+2026-10-01（Asia/Shanghai）。状态：用户明确授权“推送线上并上线”后，已同步 main 并完成生产发布与公网验收。
 
 ## 明确版本与产物
 
 - 代码提交：`f5fb68b32328da45ad4c6546a47ffc3032a8c783`。
-- 分支：`codex/multilingual-seo`，已推送 origin；main 未推送，仍为 `9dae94680fb6c72e70f3b37f2d4761e6b262cdc1`。
+- 分支：`codex/multilingual-seo`，已推送 origin；代码提交已 fast-forward 推送 main；验收文档随后同步主线。
 - 候选 RID：`rl_f5fb68b323_6fd3cc403bf9`。
 - 目录：`dist-release/rl_f5fb68b323_6fd3cc403bf9/`。
 - datasetVersion：`ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f`，dataThrough `2026-10-01`。
@@ -23,7 +23,7 @@
 ✓ release rl_f5fb68b323_6fd3cc403bf9 → dist-release/rl_f5fb68b323_6fd3cc403bf9
 ```
 
-manifest 的 testsSkipped=false，builtAt `2026-10-01T03:59:44Z`。原发布协议 suite 在 macOS 依既有规则跳过 1 个 flock 平台用例；生产真实激活的 flock/nginx 事务仍须线上验收。REST、MCP、RSS、Skill、中文价格页、模型身份与详情、埋点、复制、归档、SEO 和新增中英文/国家检查均通过。
+manifest 的 testsSkipped=false，builtAt `2026-10-01T03:59:44Z`。原发布协议 suite 在 macOS 依既有规则跳过 1 个 flock 平台用例；生产真实激活的 flock/nginx 事务已通过。REST、MCP、RSS、Skill、中文价格页、模型身份与详情、埋点、复制、归档、SEO 和新增中英文/国家检查均通过。
 
 首轮完整门禁为 44 通过、1 失败：原 access-pages 内链检查把首页 lang 查询当作输出文件名。修正为按 URL pathname 校验后，该组和最终全部门禁通过。另一次准备性测试因沙箱禁止回环监听、Python 环境缺少 bs4 未通过；这些尝试不作成功证据。最终使用允许本地测试服务的环境和声明依赖执行，无跳过测试构建。
 
@@ -44,16 +44,22 @@ Codex in-app browser 使用本地 Astro preview：
 - 英文 DeepSeek 详情有 6 条静态记录和对应中文路径；预览无 API 时点击刷新显示英文失败提示，并保留全部 6 条记录。
 - 临时禁用 JavaScript 后，英文详情仍显示标题、正文和 6 条价格。已恢复 JS 与正常视口。浏览器该调用返回异常缓慢，但结果已取得，未以 HTTP 读取冒充浏览器验收。
 
-## 生产状态与审批
+## 生产发布与验收
 
-上线前 `ops/verify-release.sh --online --expect-release rl_1d65039673_6fd3cc403bf9` 通过四入口同版本验收。生产仍为此 RID，数据版本与候选相同。没有上传候选 release 到 incoming，也没有激活英文站点。
+用户明确授权“推送线上并上线”后，2026-10-01 12:22（Asia/Shanghai）成功激活 `rl_f5fb68b323_6fd3cc403bf9`。原生产 `rl_1d65039673_6fd3cc403bf9` 保留供回滚。先前审批拒绝后未发布，本次在新增明确授权后执行。
 
-已准备并核验最小国家路由安装包；生产临时目录 `/tmp/maas-country-routing.2ChVpJ/` 保留待审批。候选激活器 SHA-256：`51ba87af3c18df7a6725a431e4156ea467dd2e2dc7cdf164750c994da52eb1d3`。安装脚本 dry-run 通过，备份安装曾成功，随后因生产发布审批拒绝而恢复原激活器；已实际核验恢复后的 SHA-256 为 `5792816251c2f76552ea25c5d1a1ba54dca307f7eabd969a904da4fb13e0f27f`，current 指针不变，未 reload Nginx。备份：`/usr/local/sbin/maasweekly-activate.pre-country-20261001T040031Z`。
+最小国家路由激活器已安装，SHA-256 `51ba87af3c18df7a6725a431e4156ea467dd2e2dc7cdf164750c994da52eb1d3`；原版备份 `/usr/local/sbin/maasweekly-activate.pre-country-20261001T042023Z`。Nginx syntax test、reload 和蓝绿激活成功。其他站点已有重复 server_name warning 未影响此次发布。
 
-自动审批拒绝动作 `git push origin codex/multilingual-seo:main`，理由：main push 会触发生产自动发布；用户授权实现与准备发布材料，但尚未明确授权触发上线。未通过受限 release 路径或其他方式绕过该拒绝。
+已将精确代码提交 f5fb68b323 fast-forward 推送 main。取消该 push 产生的重复自动部署 run `36814653206`（确认 cancelled），使用已通过全部标准门禁的不可变 release，经 lib-release、rsync incoming 和受限 remote_activate 完成发布，无重复构建或重复激活。
 
-待批准范围：同步实现代码到 main、安装上述最小激活器升级、使用候选 release 按现有 incoming/蓝绿/四入口验收协议上线。避免 main workflow 与本地已构建 release 重复激活。回滚目标 `rl_1d65039673_6fd3cc403bf9`；先恢复旧激活器，再执行标准 rollback 并 online verify，具体见 multilingual-seo-deployment.md。
+`ops/verify-release.sh --online --expect-release rl_f5fb68b323_6fd3cc403bf9` 全部通过：current 正确、本地与服务器 manifest 数据版本一致，REST status/changes、MCP 五工具及真实调用、RSS 两 feed 的 ETag/304、Skill manifest/install.sh 可达。完整输出保留在 `dist-release/validation-f5fb68b323/online.log`。
 
-## 剩余线上验收
+公网英文首页、models、pricing、method、agent 和五个 `/en/model/<modelId>/` 详情均返回 200，HTML lang 和中文 hreflang 正确；中文首页百度标签仍存在。一次准备性 URL 检查误用了 `/en/models/<modelId>/`，返回 404；按真实首页链接的单数 model 路径重新核验通过。
 
-生产英文 URL、国家接口的真实连接地址/伪造头/缓存行为、真实 CN/US/HK 出口、Umami 真实接收、百度实际抓取标签和 Search Console/百度后台仍未验证。IP 功能目前仅候选实现完成，未声称生产已支持。原平台注册、支付与调用的海外可用性未核实。GeoLite 数据许可署名、21 天回退和人工更新/旧数据库清理规则见部署说明；本任务未创建自动任务。
+国家接口公网返回 `{"country":"JP"}`，注入 `X-Maas-Client-IP: 223.5.5.5`、X-Forwarded-For 和 CF-IPCountry 后仍返回 JP，响应 Cache-Control: no-store。服务器实际生成路由已核验：覆盖实际 remote_addr、清空伪造转发/国家头、proxy_cache off、access_log off、一秒超时。
+
+本次生产浏览器工具创建 tab 和读取状态均超时，未取得生产浏览器页面验收证据；没有把公网 HTTP 检查当作真实浏览器验证。此前本地真实浏览器验收见上节。
+
+## 剩余验证范围
+
+真实 CN/US/HK 出口、生产浏览器交互和 Umami 真实接收、Search Console/百度后台仍未验证；百度实际首页标签已验证，但不代表后台验证成功。原平台注册、支付与调用的海外可用性未核实。GeoLite 数据许可署名、21 天回退和人工更新/旧数据库清理规则见部署说明；本任务未创建自动任务。
