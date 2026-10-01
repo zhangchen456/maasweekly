@@ -1,0 +1,19 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { featuredModels } from '../../../lib/model-pages';
+import EnglishPriceTable from '../../../components/EnglishPriceTable.astro';
+export function getStaticPaths() { return featuredModels().map(page => ({ params: { modelId: page.model.modelId }, props: { page } })); }
+const { page } = Astro.props; const { model, prices, changes, sources, keys, from, to, dataThrough, datasetVersion } = page;
+---
+<Layout locale="en" title={`${model.modelName} API prices and billing conditions — MaaS Daily`} description={`Check ${model.modelName} API prices, input/output and cache charges, original units, evidence and official sources. Data through ${dataThrough}.`} noindex={!prices.length}>
+  <header><nav aria-label="Breadcrumb"><a href="/en/">Home</a> / <a href="/en/models/">Model prices</a> / {model.modelName}</nav><h1>{model.modelName} API prices</h1><code>{model.modelId}</code><p>Data through <time datetime={dataThrough}>{dataThrough}</time>. Prices reflect accepted observations. Effective dates, failed updates and incomplete evidence are disclosed separately.</p></header>
+  <div class="model-detail" data-locale="en" data-model-id={model.modelId} data-api-base="/api/v1" data-dataset-version={datasetVersion} data-from={from} data-to={to}>
+    <section><h2>API model names</h2><p>Names below are taken from pricing records. Check the platform API documentation before calling a model.</p><div id="model-keys">{keys.map(key => <span class="model-key-tag">{key} </span>)}</div></section>
+    <section><h2>Observed API prices</h2><button id="refresh-model" type="button">Refresh data</button><p id="refresh-status" role="status" aria-live="polite"></p><p>Original currencies and units are retained. Different regions, tiers, context bands and time conditions remain separate. Unspecified conditions are not a promise of unrestricted use.</p><div id="current-prices"><EnglishPriceTable prices={prices} /></div>
+      <h3>Official pricing sources</h3><ul>{sources.map(url => <li><a href={url} target="_blank" rel="noopener noreferrer">{url}</a></li>)}</ul>
+      <p><a href="/en/method/">Data method and status definitions</a> · <a href={`/en/pricing/?modelId=${encodeURIComponent(model.modelId)}`}>Search this model's pricing records</a></p></section>
+    <section><h2>Recent observation records</h2><p>{from} to {dataThrough}, up to 10 records. Record and evidence bodies are currently in Chinese; a source observation does not by itself prove a model launch or price change.</p><div id="recent-changes">{changes.length ? changes.map(change => <article class="change-card"><time datetime={change.observationDate}>{change.observationDate}</time> · <a href={change.links.permalink}>{change.recordType === 'price_change' ? 'Pricing observation' : 'Source observation'} (Chinese)</a></article>) : <p>No records in the current data window.</p>}</div></section>
+  </div>
+  <script src="../../../scripts/model-refresh.ts"></script>
+</Layout>
+<style>header{padding:36px 0}section{padding:20px 0;border-bottom:1px solid var(--line)}p{line-height:1.7;color:var(--muted)}li{overflow-wrap:anywhere}code{overflow-wrap:anywhere}.model-detail :global(.price-table){display:block;overflow:auto}.model-detail :global(.change-card){padding:10px 0}button{padding:10px;background:var(--panel-solid);color:var(--paper);border:1px solid var(--line)}</style>

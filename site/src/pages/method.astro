@@ -60,6 +60,10 @@ const cov = release.coverage;
     <h2>8. 修订、撤回与缓存</h2>
     <p>记录可修订（修订链保留历史）与撤回（详情页仍可访问并标注）。RSS 是静态投影：修订保持条目身份，但已缓存的撤回内容无法可靠召回——<b>详情页与 API 是最新状态的权威来源</b>。接口变更见 <a href="/changelog/">变更记录</a>。</p>
 
+    <h2>语言选择与国家识别</h2>
+    <p>仅首页入口按国家选择默认语言：中国大陆（CN）中文，其他地区英文。手动选择保存在浏览器本地 180 天，优先于自动判断；具体语言页面的地址不随国家改变。定位失败按浏览器首选语言回退，无 JavaScript 时首页保留中文。VPN 或数据库误差可通过语言链接纠正。</p>
+    <p>国家识别在本站服务器使用本地数据库，不把访客地址交给新的第三方定位服务，不新增原始 IP 埋点。数据库超过 21 天未更新时停止查询并回退。This product includes GeoLite2 data created by <a href="https://www.maxmind.com/">MaxMind</a>；由 <a href="https://github.com/sapics/geoip-country">geoip-country</a> 提供，数据库受 <a href="https://www.maxmind.com/en/geolite/eula">GeoLite EULA</a> 与 <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> 约束。</p>
+
     <h2>反馈</h2>
     <p>反馈渠道待产品确认（GitHub Issues 筹备中）——确认后在此更新。</p>
   </div>

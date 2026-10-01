@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { modelRelease } from '../../lib/model-pages';
+import { englishProviderLabels } from '../../lib/price-display';
+import EnglishPriceTable from '../../components/EnglishPriceTable.astro';
+const release = modelRelease(); const prices = release.prices!;
+const providers = [...new Set(prices.map(p => p.providerId))].sort();
+---
+<Layout locale="en" title="Search model API prices and billing conditions — MaaS Daily" description="Search observed API prices by model, platform, billing component and original currency. Inspect conditions, freshness and evidence without currency conversion.">
+  <header><h1>Search model API prices</h1><p>Data through {release.dataThrough}. Amounts retain their original currency and unit. No exchange-rate conversion is applied.</p><p>Compare only offers with compatible regions, service tiers, context bands and time conditions. “Not separately specified” does not mean unrestricted.</p></header>
+  <form class="english-filters" id="price-filters">
+    <label>Model or API name<input name="q" aria-label="Model or API name" type="search" /></label>
+    <label>Platform<select name="provider" aria-label="Platform"><option value="">All platforms</option>{providers.map(id => <option value={id}>{englishProviderLabels[id] ?? id}</option>)}</select></label>
+    <label>Billing component<select name="component" aria-label="Billing component"><option value="">All components</option>{[...new Set(prices.map(p => p.component))].map(id => <option value={id}>{id.replaceAll('_', ' ')}</option>)}</select></label>
+    <label>Currency<select name="currency" aria-label="Currency"><option value="">All original currencies</option>{[...new Set(prices.map(p => p.currency))].map(id => <option>{id}</option>)}</select></label>
+    <label>Data status<select name="quality" aria-label="Data status"><option value="">All states</option><option value="fresh">Latest fetch succeeded</option><option value="stale">Update failed; previous data retained</option><option value="unknown">Unknown</option></select></label>
+    <button type="reset">Reset filters</button>
+  </form>
+  <p id="price-count" role="status" aria-live="polite">{prices.length} pricing records</p>
+  <section id="api-pricing"><EnglishPriceTable prices={prices} /></section>
+  <p><a href="/en/models/">Open a model detail page to refresh its records</a> · <a href="/en/method/">Data method</a></p>
+  <p>The <a href="/pricing/">Chinese cost and compute page</a> also includes a separately maintained cost calculator, GPU rental references and chip updates. Those supplemental datasets use different units and update schedules.</p>
+  <script>
+    const form = document.querySelector<HTMLFormElement>('#price-filters')!;
+    const url = new URL(location.href); for (const key of ['q','provider','component','currency','quality']) { const field = form.elements.namedItem(key) as HTMLInputElement; field.value = url.searchParams.get(key) || ''; }
+    function filter() { const values = new FormData(form); let count = 0; const url = new URL(location.href);
+      for (const [key, value] of values) { if (value) url.searchParams.set(key, String(value)); else url.searchParams.delete(key); }
+      history.replaceState(null, '', url);
+      for (const row of document.querySelectorAll<HTMLElement>('tbody tr')) { row.hidden = !row.dataset.search!.includes(String(values.get('q') || '').trim().toLowerCase()) || ['provider','component','currency','quality'].some(key => values.get(key) && values.get(key) !== row.dataset[key]) || Boolean(url.searchParams.get('modelId') ? url.searchParams.get('modelId') !== row.dataset.modelId : url.searchParams.get('familyId') && url.searchParams.get('familyId') !== row.dataset.familyId); if (!row.hidden) count++; }
+      document.querySelector('#price-count')!.textContent = count ? `${count} pricing records` : 'No matching records. Try another filter. No results do not imply a model is free or unavailable.';
+    }
+    form.addEventListener('input', filter); form.addEventListener('submit', e => e.preventDefault()); form.addEventListener('reset', () => {const url=new URL(location.href);url.searchParams.delete('modelId');url.searchParams.delete('familyId');history.replaceState(null,'',url); setTimeout(filter, 0);}); filter();
+  </script>
+</Layout>
+<style>header{padding:36px 0 8px}.english-filters{display:flex;flex-wrap:wrap;gap:14px}.english-filters label{display:flex;flex-direction:column;gap:6px}input,select,button{padding:8px;background:var(--panel-solid);color:var(--paper);border:1px solid var(--line)}p{line-height:1.7}</style>

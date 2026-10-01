@@ -34,3 +34,29 @@ export function priceCells(price: PriceRecord): string[] {
 export const priceHeaders = ['平台', 'API 模型名', '计费项', '价格 / 原始单位', '地区',
   '计费方式 / 服务档位', '上下文条件（原值）', '时间条件（原值）', '官方生效时间', '观察时间', '数据与证据状态'];
 
+
+export const englishProviderLabels: Record<string, string> = { ...providerLabels,
+  alibaba: 'Alibaba Cloud Model Studio', volcengine: 'Volcengine', zhipu: 'Zhipu AI',
+  baidu: 'Baidu', tencent: 'Tencent', xfyun: 'iFlytek' };
+export const englishPriceHeaders = ['Platform', 'API model name', 'Billing component', 'Price / original unit', 'Region',
+  'Billing mode / service tier', 'Context condition (source value)', 'Time condition (source value)',
+  'Official effective time', 'Observed at', 'Data and evidence status'];
+export function englishPriceCells(price: PriceRecord): string[] {
+  const components: Record<string, string> = { input: 'Input', output: 'Output', cache_read: 'Cache read',
+    cache_write: 'Cache write', cache_write_5m: 'Cache write (5 minutes)', cache_write_1h: 'Cache write (1 hour)' };
+  const quality: Record<string, string> = { fresh: 'Latest fetch succeeded', stale: 'Update failed; previous data retained', unknown: 'Update status unknown' };
+  const evidence: Record<string, string> = { complete: 'Complete evidence', partial: 'Partial evidence', unavailable: 'Evidence unavailable' };
+  const reason = price.quality.reason === '门禁全拒（0 条），疑似结构漂移'
+    ? 'Validation rejected all records (0 accepted); possible source structure change'
+    : price.quality.reason;
+  return [englishProviderLabels[price.providerId] ?? price.providerId, price.modelKey,
+    components[price.component] ?? price.component,
+    `${price.amount} ${price.currency} / ${price.unitQuantity.toLocaleString('en-US')} ${price.unitName}`,
+    price.region, `${price.billingMode} / ${price.serviceTier}`,
+    price.contextBand ? JSON.stringify(price.contextBand) : 'Not separately specified by source',
+    price.timeCondition ? JSON.stringify(price.timeCondition) : 'Not separately specified by source',
+    price.effectiveAt ?? 'Not stated by source', price.observedAt,
+    [quality[price.quality.state] ?? price.quality.state, reason,
+      price.quality.lastSuccessAt ? `Last success: ${price.quality.lastSuccessAt}` : null,
+      evidence[price.evidenceStatus] ?? price.evidenceStatus].filter(Boolean).join('; ')];
+}

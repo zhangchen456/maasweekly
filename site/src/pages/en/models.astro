@@ -1,0 +1,16 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { modelRelease } from '../../lib/model-pages';
+import { languageRoute } from '../../lib/locales';
+import { englishProviderLabels } from '../../lib/price-display';
+const release = modelRelease(); const priced = new Set(release.prices!.map(p => p.modelId));
+const models = release.modelIdentities!.models.filter(m => priced.has(m.modelId));
+---
+<Layout locale="en" title="Model API price directory — MaaS Daily" description="Find model API pricing records, original currencies, billing conditions and official sources in the verified MaaS Daily dataset.">
+  <header class="english-hero"><h1>Model API price directory</h1><p>Data through {release.dataThrough}. This directory includes models with observed prices in our current dataset, rather than every model or platform.</p></header>
+  <label>Search models <input id="model-search" type="search" /></label><p id="model-count" role="status">{models.length} models</p>
+  <ul id="model-directory">{models.map(model => <li data-search={`${model.modelName} ${model.modelId}`.toLowerCase()}><a href={languageRoute(`/model/${model.modelId}/`, 'en') ?? `/model/${model.modelId}/`}>{model.modelName} API prices { !languageRoute(`/model/${model.modelId}/`, 'en') && '(Chinese page)'}</a><small> — {englishProviderLabels[model.modelId.split(':')[0]] ?? model.modelId.split(':')[0]}</small></li>)}</ul>
+  <p><a href="/en/pricing/">Search all pricing records</a> · <a href="/en/method/">Data method and coverage</a></p>
+  <script>const search = document.querySelector<HTMLInputElement>('#model-search'); search?.addEventListener('input', () => { let count = 0; for (const row of document.querySelectorAll<HTMLElement>('#model-directory li')) { row.hidden = !row.dataset.search!.includes(search.value.trim().toLowerCase()); if (!row.hidden) count++; } document.querySelector('#model-count')!.textContent = count ? `${count} models` : 'No matching models. Try another search.'; });</script>
+</Layout>
+<style>header{padding:32px 0}li{padding:12px 0;border-bottom:1px solid var(--line)}ul{list-style:none;padding:0}input{padding:8px;background:var(--panel-solid);color:var(--paper);border:1px solid var(--line)}</style>

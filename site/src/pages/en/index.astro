@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { featuredModels, modelRelease } from '../../lib/model-pages';
+const models = featuredModels(); const release = modelRelease();
+---
+<Layout locale="en" title="Model API prices, billing conditions and evidence — MaaS Daily" description="Compare observed model API prices in their original currencies. Check billing conditions, data freshness, evidence and official pricing sources.">
+  <section class="english-hero"><p>MODEL API PRICE TRACKING</p><h1>Understand the price behind each model API.</h1>
+    <p>Check input, output and cache charges with their original currencies, units and conditions. Follow the evidence back to official pricing pages.</p>
+    <p>Data through <time datetime={release.dataThrough}>{release.dataThrough}</time>. Both language versions use the same verified dataset.</p>
+    <p><a href="/en/models/">Browse model prices →</a> · <a href="/en/pricing/">Search pricing records →</a></p>
+  </section>
+  <section><h2>Featured models</h2><div class="model-grid">{models.map(({ model, prices }) => <article><h3><a href={`/en/model/${model.modelId}/`}>{model.modelName}</a></h3><p>{prices.length} observed pricing records, with complete evidence.</p><code>{model.modelId}</code></article>)}</div></section>
+  <section><h2>Compare conditions before costs</h2><p>Regions, service tiers, billing modes, context bands and time conditions may differ. We keep each condition visible and do not infer a lowest price across incompatible offers.</p><p>English content does not imply overseas registration, payment or API access. These capabilities have not been verified.</p><p><a href="/en/method/">Read the data method</a> · <a href="/en/agent/">Use REST, MCP, RSS or the Agent Skill</a></p></section>
+</Layout>
+<style is:global>
+  .english-hero {padding:48px 0 30px;max-width:860px}.english-hero h1{font-size:clamp(32px,5vw,56px);line-height:1.1}
+  html[lang=en] main p{line-height:1.7;color:var(--muted)}html[lang=en] main a{color:var(--cyan)}
+  html[lang=en] main section{margin-bottom:36px}.model-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+  .model-grid article{padding:20px;border:1px solid var(--line);border-radius:12px}html[lang=en] code{overflow-wrap:anywhere}
+  .english-filters{display:flex;flex-wrap:wrap;gap:16px;margin:20px 0}.english-filters label{display:flex;flex-direction:column;gap:6px}
+  .english-filters input,.english-filters select{padding:8px;background:var(--panel-solid);color:var(--paper);border:1px solid var(--line);border-radius:6px}
+</style>
