@@ -1,4 +1,129 @@
 {
+  "2026-10-02": {
+    "highlights": [
+      {
+        "platform": "Kimi",
+        "logo_summary": "K3旗舰模型正式发布，定价与计费规则更新",
+        "items": [
+          {
+            "text": "Kimi K3 旗舰模型正式发布，新增 K2.6、K2.7 Code、K3 模型介绍页面",
+            "type": "release"
+          },
+          {
+            "text": "K3 系列模型缓存写入按 TTL（5min/1h）单独计费，缓存命中仅按命中价格计费",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Google Vertex AI",
+        "logo_summary": "新增Gemini 3.8 Flash TTS系列，Flash模型定价更新",
+        "items": [
+          {
+            "text": "新增 Gemini 3.8 Flash TTS 和 Gemini 3.8 Flash-Lite TTS 文本转语音模型",
+            "type": "release"
+          },
+          {
+            "text": "Gemini 3.7 Flash、Gemini 3.8 Flash 输入价格调整为 $1.50/$3.00 每百万 tokens，输出及思考 tokens 价格为 $7.50/$15.00",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "xAI",
+        "logo_summary": "视频生成价格下调，起始价降至$0.02/秒",
+        "items": [
+          {
+            "text": "xAI 视频生成（480p/720p/1080p）起始价格从 $0.05/秒 下调至 $0.02/秒",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "LMArena",
+        "logo_summary": "多款新模型上榜，部分模型价格微调",
+        "items": [
+          {
+            "text": "新增 GPT 6 Luna (Max) $0.06/task、GPT 6 Sol (Max) $0.90/task、Gemini 4 Argon (High) $0.64/task 等模型",
+            "type": "release"
+          },
+          {
+            "text": "Claude Fable 5.1 (Max) 价格从 $4.17/task 上调至 $4.38/task，Deepseek V4.1 Flash (Max) 从 $0.09/task 上调至 $0.10/task",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Google Gemini API",
+        "logo_summary": "发布Nano Banana 2与Gemini 3.1 Flash Image预览",
+        "items": [
+          {
+            "text": "发布 Nano Banana 2 和 Gemini 3.1 Flash Image 预览版",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "OpenAI",
+        "logo_summary": "新增Hotel Feeds功能（限量测试）",
+        "items": [
+          {
+            "text": "OpenAI 新增 Hotel Feeds 功能，处于限量测试阶段",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Cohere",
+        "logo_summary": "Embed 5模型发布，标题文案微调",
+        "items": [
+          {
+            "text": "Cohere 发布 Embed 5 前沿嵌入模型系列",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "Artificial Analysis",
+        "logo_summary": "新增Grok 4.7 Low等模型，移除部分旧模型",
+        "items": [
+          {
+            "text": "新增 Grok 4.7 (Low)、JT-4.1 Flash 236B A21B (Reasoning) 等模型评估",
+            "type": "release"
+          },
+          {
+            "text": "移除 MiMo-V2.6-Flash 和 JT-4.1 Flash 236B A21B 旧条目",
+            "type": "sunset"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_7ba0a774145370c258ee481336212b7c0da224b37edc87956cd4d20db03ce6f4": "Kimi 定价页面新增了 K3 旗舰模型的发布公告，并补充了 K2.6、K2.7 Code、K3 的模型介绍。计费规则更新为 K3 系列缓存写入按 TTL（5min/1h）单独计费，缓存命中仅按命中价格计费，不再重复收取写入费用。",
+      "obs_5a061d30ed2019402dd9812e36e4b789f3feac684334e2b7f7b3ca502baa2c2b": "OpenAI 模型列表新增了 Hotel Feeds (limited beta) 条目，表明该功能已进入限量测试阶段。",
+      "obs_8ae97e20ee4599d9e4a0166a3811642d16a080f921b69bd745b0151831f95a46": "OpenAI 定价页面新增了 Hotel Feeds (limited beta) 的定价信息，与模型列表更新对应。",
+      "obs_bf91caff6a0e576e9b28b51aafbb35613a900d703e80ce726d743a8e394d747f": "OpenAI 变更日志新增了 Hotel Feeds (limited beta) 的条目，记录了该功能的发布。",
+      "obs_902e907c37ec570467ef446a331dd5260011b66948e1ebf918765c75e6252cdc": "OpenAI 博客新增了 Hotel Feeds (limited beta) 相关文章，正式对外宣布该功能。",
+      "obs_a6e42e3fec11e740236a73742d9abd2bdafed261c2e6d8c4cac2334a2cd0d3d6": "Google Gemini API 变更日志更新了最后修改时间至 2026-10-01，并新增了 Nano Banana 2 和 Gemini 3.1 Flash Image 预览版的发布记录。",
+      "obs_e78278aca8015fa0ee1334f7388129fb6e94c89e453ad749c8714a448a721bfa": "Google Gemini API 博客新增了关于 Guided Vision in Gemini Live 的文章，以及 Project Suncatcher 原型卫星入轨的消息；同时删除了 Google Beam 扩展、Gemini 应用 Windows 版等旧文章。",
+      "obs_290b28a98bcc83a1d8b7421d3aee8079ba547e2866e82ca37990620a5311c5d6": "Google Vertex AI 模型列表新增了 Gemini 3.8 Flash TTS 和 Gemini 3.8 Flash-Lite TTS 两个文本转语音模型，并附有描述，表明 Vertex AI 扩展了语音生成能力。",
+      "obs_6936bd43933719fab7789d4917e4faf8cc30f4e7a8a08ce05980a978e1a6e8cf": "Google Vertex AI 定价页面新增了 Gemini 3.7 Flash 和 Gemini 3.8 Flash 的定价行，输入价格分别为 $1.50 和 $3.00 每百万 tokens，输出及思考 tokens 价格为 $7.50 和 $15.00，对应新模型上架。",
+      "obs_8507294d7d4cff8704f399dcaf9127d03417c4c29e9c1ddb7e43b5abff06e58e": "Google Vertex AI 变更日志更新了最后修改时间至 2026-09-30，但内容变化仅为反馈按钮的文本调整，无实质功能更新。",
+      "obs_4e7cdcf0ef085d71f87aac7042d0092ee68276c4518de09cab29ccb9142fd25b": "Cohere 定价页面将 Embed 5 的标题从『Introducing Embed 5—A New Family of Frontier Embedding Models』改为小写『a new family』，仅为文案调整，无实质变化。",
+      "obs_ab4ae5f1aa1d98ac019ca81bb5f8affeb8bc120d4df00ad84fc75aa22b3f6bda": "Cohere 博客同样将 Embed 5 相关文章标题进行了大小写调整，与定价页面保持一致。",
+      "obs_29b4db54b85bac135be68a3d739d943fef42b3f03210adc6c365d313406f8573": "xAI 模型列表将视频生成（480p/720p/1080p）的起始价格从 $0.05/秒 下调至 $0.02/秒，表明视频生成成本降低。",
+      "obs_72be88365dc381d285ffe97900508773148dad68a94e0ff76c17340f1738df4f": "xAI 定价页面同样将视频生成起始价格从 $0.05/秒 下调至 $0.02/秒，与模型列表更新一致。",
+      "obs_7e586db36d4b13ff06fcead2b69c47c5e2780f6c2541dc21eb7ca3a6c748600d": "Artificial Analysis 行业页面新增了 Grok 4.7 (Low) 和 JT-4.1 Flash 236B A21B (Reasoning) 的评估，同时移除了 MiMo-V2.6-Flash 和 JT-4.1 Flash 236B A21B 旧条目，并更新了部署提供商列表（新增 SambaNova 移除）。",
+      "obs_e84fe4a12f36607b68c5055f8fed381934e93827edcfb19f67af92a97c25c3bb": "LMArena 行业页面新增了 GPT 6 Luna (Max)、GPT 6 Sol (Max)、Gemini 4 Argon (High)、MiMo V2.6 Flash、MiMo V2.6 Pro 等模型，并调整了部分模型价格（如 Claude Fable 5.1 上调、Deepseek V4.1 Flash 上调），同时移除了 Claude Opus 5 相关条目。"
+    },
+    "provenance": {
+      "status": "legacy_unknown",
+      "inputSha256": null,
+      "inputRefs": [],
+      "promptVersion": null,
+      "model": null
+    }
+  },
   "2026-10-01": {
     "highlights": [
       {

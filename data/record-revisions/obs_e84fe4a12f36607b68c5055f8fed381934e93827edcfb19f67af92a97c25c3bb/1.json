@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_e84fe4a12f36607b68c5055f8fed381934e93827edcfb19f67af92a97c25c3bb",
+  "sourceId": "lmarena-industry",
+  "date": "2026-10-02",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "LMArena",
+  "sourceType": "industry",
+  "sourceUrl": "https://lmarena.ai/leaderboard",
+  "title": "LMArena · 行业数据来源更新",
+  "summary": "GPT 6 Luna (Max)$0.06/task",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "claude fable",
+        "before": "Claude Fable 5.1 (Max)$4.17/task",
+        "after": "Claude Fable 5.1 (Max)$4.38/task"
+      },
+      {
+        "key": "claude opus",
+        "before": "Claude Opus 5 (High)·",
+        "after": "Claude Opus 5.5 (High)$1.56/task"
+      },
+      {
+        "key": "deepseek v",
+        "before": "Deepseek V4.1 Flash (Max)$0.09/task",
+        "after": "Deepseek V4.1 Flash (Max)$0.10/task"
+      }
+    ],
+    "added_lines": [
+      "357,986,159357,986,159Total Sessions",
+      "Editing a file",
+      "GPT 6 Luna (Max)$0.06/task",
+      "GPT 6 Luna (Max)·",
+      "GPT 6 Sol (Max)$0.90/task",
+      "Gemini 4 Argon (High)$0.64/task",
+      "MiMo V2.6 Flash$0.04/task",
+      "MiMo V2.6 Pro$0.10/task",
+      "Qwen3.8 Flash Next·",
+      "Reading files",
+      "WebDev · xHigh"
+    ],
+    "removed_lines": [
+      "A hands-on first look at Claude Opus 5 in the Arena.",
+      "Claude Opus 5 (Max)·",
+      "Claude Opus 5 | First impressions",
+      "Claude Opus 5.5 (High)$1.57/task",
+      "357,496,153357,496,153Total Sessions",
+      "GPT 6 Luna (Max)$0.07/task",
+      "GPT 6 Sol (Max)$0.91/task"
+    ],
+    "added_count": 11,
+    "removed_count": 7,
+    "raw_added_count": 14,
+    "raw_removed_count": 15
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-02.json"
+  },
+  "permalink": "/item/obs_e84fe4a12f36607b68c5055f8fed381934e93827edcfb19f67af92a97c25c3bb/"
+}

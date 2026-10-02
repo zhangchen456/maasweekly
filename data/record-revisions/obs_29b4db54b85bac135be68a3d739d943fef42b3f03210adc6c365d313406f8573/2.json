@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_29b4db54b85bac135be68a3d739d943fef42b3f03210adc6c365d313406f8573",
+  "sourceId": "xai-modellist",
+  "date": "2026-10-02",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "xAI",
+  "sourceType": "model_list",
+  "sourceUrl": "https://docs.x.ai/docs/models",
+  "title": "xAI · 模型列表来源更新",
+  "summary": "xAI 模型列表将视频生成（480p/720p/1080p）的起始价格从 $0.05/秒 下调至 $0.02/秒，表明视频生成成本降低。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-02T00:34:30+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "video ·",
+        "before": "Video · 480p / 720p / 1080pStarting at $0.05 / sec",
+        "after": "Video · 480p / 720p / 1080pStarting at $0.02 / sec"
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [],
+    "added_count": 0,
+    "removed_count": 0,
+    "raw_added_count": 1,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-02.json"
+  },
+  "permalink": "/item/obs_29b4db54b85bac135be68a3d739d943fef42b3f03210adc6c365d313406f8573/"
+}

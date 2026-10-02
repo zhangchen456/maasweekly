@@ -29,3 +29,6 @@
 
 ## 最终交付
 八项已授权本地范围完成，各项 result/acceptance 已归档。最终候选 rl_6a78846238_6fd3cc403bf9 保留于 dist-release；未推送部署。生产代理链/实际GitHub调度/服务器预算待上线验证；AR06远端启用和Git移除DEFERRED。
+
+## 已授权线上发布（2026-10-02）
+用户同意按计划上线。整合 origin/main 6efd666e1 的今日数据；七集合新旧逐字节一致。接下来标准全量构建 → 服务器非公开候选与资源验证 → 安装候选helper/config → 正式workflow蓝绿发布 → 四入口/限流/诊断验收与回退资料归档。远端存储继续DEFERRED。
