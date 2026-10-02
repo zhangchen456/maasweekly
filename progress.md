@@ -30,3 +30,9 @@ AR-08基础完成：48/48回归293.996s、真实API启停/未就绪、5项TS诊�
 AR-03实现候选：标准source-streams/独立price-events/day/week summaries/editorial/derived pricing已迁入；采集/LLM/exporter无site权威读取；统一projector兼容写入及site prebuild。23周报渲染相等，冻结legacy loader与new loader临时生成七集合字节及当前发布字节全部一致，ds_6fd3cc不变；标准输入6tests、API68tests、source31/public16/RSS/SEO通过。canonical公共DTO生成+purevalidator+node-reader、自包含API/site bridges，schema补齐既有identity与hyphen path。下一提交候选/干净clone标准release完整回归，证据不能提前标完成。
 
 AR-03全量收尾：候选0ba9ee17ad、干净clone标准release49/49通过302.164s，tracked diff clean，rl_0ba9ee17ad_6fd3cc403bf9 24362files703637917bytes；实际仓库外生产依赖REST/MCP/RSS/Skill同版本通过。AR03result和证据归档，未推送部署。清理clone/pycache等本轮临时物后进入AR04，价格8适配器拆分先行；事务恢复需保证exporter读提交输入快照且价格沿用/offline时间不倒退。
+
+## AR-04 实施进展
+- 八家适配器独立 checkpoint 48e0c94ee；17 fixture 与冻结旧抽取器的事实/证据/warning 逐项一致。
+- 价格、信源、榜单和标准数据写入入口接入单写入方运行协议、固定输入视图、提交点与恢复/撤销。价格有界并发 2、同域限速、传输重试，原观察时间保留。
+- 实际价格 CLI 子进程归档后 os._exit、无 HTTP 恢复、两次离线幂等通过；源/榜单恢复、dry-run、浏览器 singleflight/context 释放、提交点及孤立修订撤销、输入缓存上限测试通过（13 个测试）。正式全量回归待执行。
+- 两家官方网页 deepseek/qwen dry-run 成功：12/2088 facts，退出 0；未写业务数据，不把真实网页漂移当 fixture 合同。

@@ -81,69 +81,39 @@ class LoadedInputs:
 def load_all(input_root: Path, provider_map_path: Path) -> LoadedInputs:
     """从仓库正式归档加载全部输入（input_root = 仓库根）。"""
     li = LoadedInputs()
-    root = input_root
+    root = input_root.resolve()
+    from input_snapshot import load_view
+    view = load_view(root)
+    def files(relative, pattern):
+        if view: return view.glob(relative + '/' + pattern)
+        return [(str(p.relative_to(root)), _safe_path(root, p.relative_to(root))) for p in sorted(_safe_path(root, relative).glob(pattern))]
+    def input_path(relative):
+        return view.path(relative) if view else _safe_path(root, relative)
 
     li.provider_map = load_provider_map(provider_map_path)
     li.source_registry = load_source_registry(
         _safe_path(root, "pipeline/config/source_registry.json"))
 
-    # Task 01：records + record-revisions（目录允许不存在：空归档）
-    rec_dir = _safe_path(root, "data/records")
-    if rec_dir.exists():
-        for f in sorted(rec_dir.glob("obs_*.json")):
-            li.records.append(read_json(f))
-    rev_root = _safe_path(root, "data/record-revisions")
-    if rev_root.exists():
-        for d in sorted(rev_root.iterdir()):
-            if not d.is_dir():
-                continue
-            revs = []
-            for rf in sorted(d.glob("*.json"), key=lambda p: int(p.stem)
-                             if p.stem.isdigit() else 0):
-                revs.append(read_json(rf))
-            if revs:
-                li.record_revisions[revs[0]["id"]] = revs
-
-    # Task 02：price-records + price-record-revisions
-    pr_dir = _safe_path(root, "data/price-records")
-    if pr_dir.exists():
-        for f in sorted(pr_dir.glob("price_*.json")):
-            li.price_records.append(read_json(f))
-    prev_root = _safe_path(root, "data/price-record-revisions")
-    if prev_root.exists():
-        for d in sorted(prev_root.iterdir()):
-            if not d.is_dir():
-                continue
-            revs = []
-            for rf in sorted(d.glob("*.json"), key=lambda p: int(p.stem)
-                             if p.stem.isdigit() else 0):
-                revs.append(read_json(rf))
-            if revs:
-                li.price_revisions[revs[0]["id"]] = revs
-
-    # Task 02：fact versions（全量——evidence 反查需要）
-    pfv_dir = _safe_path(root, "data/price-facts/versions")
-    if pfv_dir.exists():
-        for f in sorted(pfv_dir.glob("pfv_*.json")):
-            v = read_json(f)
-            li.fact_versions[v["version_id"]] = v
-
-    # Task 02：evidence
-    ev_dir = _safe_path(root, "data/price-evidence")
-    if ev_dir.exists():
-        for f in sorted(ev_dir.glob("ev_*.json")):
-            ev = read_json(f)
-            li.evidence[ev["id"]] = ev
-
-    # Task 02：current
-    li.current = read_json(_safe_path(root, "data/price-facts/current.json"))
+    for _, f in files('data/records', 'obs_*.json'): li.records.append(read_json(f))
+    for logical, f in files('data/record-revisions', '*/*.json'):
+        value = read_json(f); li.record_revisions.setdefault(value['id'], []).append(value)
+    for revisions in li.record_revisions.values(): revisions.sort(key=lambda value: value['revision'])
+    for _, f in files('data/price-records', 'price_*.json'): li.price_records.append(read_json(f))
+    for logical, f in files('data/price-record-revisions', '*/*.json'):
+        value = read_json(f); li.price_revisions.setdefault(value['id'], []).append(value)
+    for revisions in li.price_revisions.values(): revisions.sort(key=lambda value: value['revision'])
+    for _, f in files('data/price-facts/versions', 'pfv_*.json'):
+        value = read_json(f); li.fact_versions[value['version_id']] = value
+    for _, f in files('data/price-evidence', 'ev_*.json'):
+        value = read_json(f); li.evidence[value['id']] = value
+    li.current = read_json(input_path('data/price-facts/current.json'))
 
     # 正式周报：md frontmatter + structured json 一一对应（门禁）
     weekly_md_dir = _safe_path(root, "data/editorial/weekly")
     structured_dir = _safe_path(root, "data/derived/weekly-structured")
-    for mf in sorted(weekly_md_dir.glob("*.md")):
-        wid = mf.stem
-        sf = structured_dir / f"{wid}.json"
+    for logical, mf in files("data/editorial/weekly", "*.md"):
+        wid = Path(logical).stem
+        sf = input_path(f"data/derived/weekly-structured/{wid}.json")
         if not sf.exists():
             raise ExportError(f"正式周报缺结构化投影: {wid}（先跑 extract-structured.py）")
         structured = read_json(sf)
@@ -157,7 +127,7 @@ def load_all(input_root: Path, provider_map_path: Path) -> LoadedInputs:
 
     # 来源状态流（滚动窗口；窗口外推导为 unknown）
     from data_store import compose_daily
-    li.daily_changes = compose_daily(root)
+    li.daily_changes = compose_daily(root, view=view)
     return li
 
 

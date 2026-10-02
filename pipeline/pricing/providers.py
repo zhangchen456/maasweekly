@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import hashlib
+import asyncio
 import re
 import time
 from urllib.parse import urljoin
@@ -38,23 +39,26 @@ class PlaywrightSourceProvider:
     fetcher_version = _FETCHER_VERSION_PLAYWRIGHT
     _browser = None   # 类级单例，进程内复用
     _playwright = None
+    _launch_lock = None
 
     async def _ensure_browser(self):
-        if PlaywrightSourceProvider._browser is not None:
-            return PlaywrightSourceProvider._browser
-        from playwright.async_api import async_playwright
-
-        PlaywrightSourceProvider._playwright = await async_playwright().start()
-        PlaywrightSourceProvider._browser = (
-            await PlaywrightSourceProvider._playwright.chromium.launch(
-                headless=True,
-                args=["--disable-blink-features=AutomationControlled"],
-            )
-        )
-        return PlaywrightSourceProvider._browser
+        cls = PlaywrightSourceProvider
+        if cls._browser is not None: return cls._browser
+        if cls._launch_lock is None: cls._launch_lock = asyncio.Lock()
+        async with cls._launch_lock:
+            if cls._browser is not None: return cls._browser
+            from playwright.async_api import async_playwright
+            cls._playwright = await async_playwright().start()
+            try:
+                cls._browser = await cls._playwright.chromium.launch(headless=True,
+                    args=["--disable-blink-features=AutomationControlled"])
+                return cls._browser
+            except BaseException:
+                await cls._playwright.stop(); cls._playwright = None; raise
 
     def _assemble(self, source: SourceSpec, content: str, fetched_at: float) -> ContentSnapshot:
-        raw = content.encode("utf-8")[:_MAX_BYTES]
+        raw = content.encode("utf-8")
+        if len(raw) > _MAX_BYTES: raise ValueError("rendered page exceeds snapshot size limit")
         sha = hashlib.sha256(raw).hexdigest()
         return ContentSnapshot(
             snapshot_id=f"snap-{sha[:24]}",
@@ -76,8 +80,8 @@ class PlaywrightSourceProvider:
         """渲染单个 URL，返回页面 HTML。Kimi 多子页复用。"""
         browser = await self._ensure_browser()
         context = await browser.new_context(user_agent=_UA, service_workers="block")
-        page = await context.new_page()
         try:
+            page = await context.new_page()
             wait_until = _PLAYWRIGHT_WAIT_STRATEGY.get(source_key, "networkidle")
             await page.goto(url, wait_until=wait_until, timeout=_PLAYWRIGHT_GOTO_TIMEOUT)
             await page.wait_for_timeout(_PLAYWRIGHT_HYDRATE_MS)
@@ -87,12 +91,14 @@ class PlaywrightSourceProvider:
 
     @classmethod
     async def shutdown(cls) -> None:
-        if cls._browser is not None:
-            await cls._browser.close()
+        try:
+            if cls._browser is not None: await cls._browser.close()
+        finally:
             cls._browser = None
-        if cls._playwright is not None:
-            await cls._playwright.stop()
-            cls._playwright = None
+            try:
+                if cls._playwright is not None: await cls._playwright.stop()
+            finally:
+                cls._playwright = None; cls._launch_lock = None
 
 
 class KimiPlaywrightProvider(PlaywrightSourceProvider):

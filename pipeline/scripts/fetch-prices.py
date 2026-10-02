@@ -24,6 +24,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import asyncio
 import json
 import os
@@ -36,6 +37,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent  # repo root
 sys.path.insert(0, str(BASE_DIR / "pipeline"))
 
 from data_store import PRICING, PRICE_EVENTS, read as read_standard, write as write_standard, project_site
+from pricing.runner import collect
+from run_protocol import RunJournal, source_event
+from input_snapshot import safe as safe_input
 from pricing import archive as pa                                  # noqa: E402
 from pricing.base import SourceSpec                      # noqa: E402
 from pricing.extractors import get_extractor             # noqa: E402
@@ -54,6 +58,7 @@ SNAPSHOT_DIR = BASE_DIR / "data" / "snapshots"
 ARCHIVE_ROOT = BASE_DIR / "data"
 
 DEFAULT_CURRENCY = "CNY"
+RUN_DATE = None
 
 
 def atomic_write(path: Path, payload: dict) -> None:
@@ -137,10 +142,11 @@ def events_from_diff(diff, registry_urls: dict[str, str]) -> tuple[list[dict], l
 def _sh_today() -> str:
     """上海日历日（与归档事件口径一致，不依赖执行机器时区）。"""
     from datetime import datetime, timezone, timedelta
+    if RUN_DATE: return RUN_DATE
     return datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d")
 
 
-async def run(only: list[str] | None, dry_run: bool) -> int:
+async def run(only: list[str] | None, dry_run: bool, *, journal=None, concurrency=2, offline=None) -> int:
     today = _sh_today()  # 上海日历日（与事件归档口径一致）
     snap_dir = SNAPSHOT_DIR / today
     if not dry_run:
@@ -189,66 +195,48 @@ async def run(only: list[str] | None, dry_run: bool) -> int:
     evidence_links: dict[str, str] = {}   # 内存 ev id → 持久 ev_id（台账入口）
     now = time.time()
 
-    try:
-        for entry in entries:
-            print(f"[{entry.source_key}] {entry.url}")
-            spec = SourceSpec(source_key=entry.source_key, provider_id=entry.provider_id,
-                              url=entry.url, fetcher_version="playwright-1")
-            provider = provider_for(entry.source_key)
-            try:
-                snap = await provider.fetch(spec)
-                # 原始渲染 HTML 存档（快照正文是抓取产物，不是归档契约文件；
-                # 同名覆盖属既有行为——内容寻址的归档元数据在提交阶段写入）
-                if not dry_run:
-                    (snap_dir / f"pricing__{entry.provider_id}.html").write_text(
-                        snap.content, encoding="utf-8")
-                result = get_extractor(entry.source_key).extract(snap)
-                report = normalize_and_validate(result)
-                if not report.accepted:
-                    raise ValueError(
-                        f"门禁全拒（{len(report.rejected)} 条），疑似结构漂移")
-                for w in result.warnings:
-                    print(f"  warn: {w}")
-                for m in result.models:
-                    profiles[f"{m.provider_id}:{m.model_key}"] = m.display_name
-                for e in result.evidence:
-                    source_urls[e.evidence_id] = snap.url
-                facts = [fact_to_dict(f) for f in report.accepted]
-                print(f"  ✓ {len(facts)} facts / {len(result.models)} models")
-                all_facts.extend(facts)
-
-                # Task 02：归档记录先在内存构建（不落盘）——契约错误在
-                # 提交阶段统一预检，抓取失败不吞 ArchiveError（验收 P1-2）
-                if not dry_run:
-                    _plan_provider_archive(
-                        entry, snap, result, report, today, now,
-                        archive_plan, evidence_links)
-                source_states.append(pa.make_source_state(
-                    entry.source_key, status="ok", latest_attempt_at=now,
-                    last_success_at=now, coverage="full"))
-            except pa.ArchiveError:
-                # 归档契约错误（身份冲突/归档损坏）不是抓取失败：
-                # 直接中止整个运行，不沿用上轮、不写任何后续产物
-                raise
-            except Exception as e:  # noqa: BLE001
-                failed.append(entry.source_key)
-                print(f"  ✗ 失败，沿用上轮: {e}")
-                # partial：沿用该家最新成功 facts（无历史则跳过）
-                if entry.provider_id in prev_facts:
-                    reused = [dict(f, field_state="stale",
-                                   stale_reason="fetch_failed") for f in prev_facts[entry.provider_id]]
-                    all_facts.extend(reused)
-                    print(f"    沿用上轮 {len(reused)} 条（stale）")
-                source_states.append(pa.make_source_state(
-                    entry.source_key, status="failed", latest_attempt_at=now,
-                    last_success_at=_last_success_at(current_file, entry.source_key),
-                    coverage="failed", reason=str(e)[:200]))
-    finally:
-        await PlaywrightSourceProvider.shutdown()
+    collected = await collect(entries, journal=journal, concurrency=concurrency, offline=offline)
+    historical = False
+    provider_map = json.loads((BASE_DIR / 'pipeline/config/public_providers.json').read_text())
+    for entry, snap, result, report, error, diagnostic in collected:
+        print(f"[{entry.source_key}]")
+        if error is not None:
+            failed.append(entry.source_key)
+            print(f"  ✗ 失败，沿用上轮: {type(error).__name__}")
+            if entry.provider_id in prev_facts:
+                all_facts.extend(dict(f, field_state="stale", stale_reason="fetch_failed") for f in prev_facts[entry.provider_id])
+            source_states.append(pa.make_source_state(entry.source_key, status="failed", latest_attempt_at=now,
+                last_success_at=_last_success_at(current_file, entry.source_key), coverage="failed", reason='fetch_or_parse_failed'))
+        else:
+            observed = snap.fetched_at
+            previous_at = _last_success_at(current_file, entry.source_key)
+            if offline and previous_at and observed < previous_at: historical = True
+            for warning in result.warnings: print(f"  warn: {warning}")
+            for model in result.models: profiles[f"{model.provider_id}:{model.model_key}"] = model.display_name
+            for evidence in result.evidence: source_urls[evidence.evidence_id] = snap.url
+            facts = [fact_to_dict(f) for f in report.accepted]; all_facts.extend(facts)
+            print(f"  ✓ {len(facts)} facts / {len(result.models)} models")
+            if not dry_run:
+                raw_relative = f'data/snapshots/{today}/pricing__{entry.provider_id}.html'
+                if journal: journal.backup_raw(raw_relative)
+                (snap_dir / f"pricing__{entry.provider_id}.html").write_text(snap.content, encoding='utf-8')
+                _plan_provider_archive(entry, snap, result, report, today, observed, archive_plan, evidence_links)
+            source_states.append(pa.make_source_state(entry.source_key, status="ok", latest_attempt_at=observed,
+                last_success_at=observed, coverage="full"))
+        if journal:
+            diagnostic['countRatio'] = diagnostic.get('parsedCount', 0) / len(prev_facts[entry.provider_id]) if prev_facts.get(entry.provider_id) else None
+            if error and (last := _last_success_at(current_file, entry.source_key)):
+                diagnostic.update({'lastSuccessAt': last, 'successAgeHours': max(0, (now - last) / 3600)})
+            journal.source_result(entry.source_key, diagnostic)
+            source_event(journal, provider_map['pricingSourceKeyToSourceId'][entry.source_key], {**diagnostic, 'outcome': 'not_run'} if offline else diagnostic)
 
     if not all_facts:
         print("全部来源失败且无历史可沿用，保留旧 ledger.json")
-        return 1
+        if not dry_run and not offline:
+            current = pa.load_current(current_file)
+            _update_current(current, [], versions_root, source_states)
+            pa.save_current(current_file, current)
+        return 2
 
     # Task 02：--only 未运行的来源——保留状态 + 既有事实合回台账。
     # 否则局部调试会把全站台账覆盖成只有本次运行的厂商（T07 缺陷修正）。
@@ -294,7 +282,7 @@ async def run(only: list[str] | None, dry_run: bool) -> int:
     # diff 与事件（旧口径：daily_changes.price_changes 兼容消费者）
     # --only 时 diff 范围限定本次运行的厂商（合回的 not_run 事实不参与，
     # 避免未运行来源产生假 missing/unchanged 噪声）
-    if prev_history:
+    if prev_history and not offline:
         prev_all = prev_history.get("facts", [])
         if only:
             ran_ids = {e.provider_id for e in entries}
@@ -339,25 +327,29 @@ async def run(only: list[str] | None, dry_run: bool) -> int:
     if archive_plan:
         _commit_archive_plan(
             archive_plan, today, versions_root, evidence_root,
-            snapshots_root, source_states, prev_history, entries, events_plan)
+            snapshots_root, source_states, prev_history, entries, events_plan, run_id=journal.run_id if journal else None)
     accepted_versions.extend(archive_plan.get("_accepted_versions", []))
+    if journal:
+        journal.data.update({k: v for k, v in archive_plan.get("_run_record", {}).items() if k not in ("state", "created_at")})
+        journal.save()
 
-    atomic_write(LEDGER_FILE, dataset)
+    if not offline: atomic_write(LEDGER_FILE, dataset)
     # ledger_history 存全量事实（--only 时含合回的 not_run 来源），
     # 保证次日全量 diff 的基线完整，不被局部调试截断
-    atomic_write(HISTORY_DIR / f"{today}.json",
-                 {"date": today, "facts": all_facts})
+    if not offline:
+        atomic_write(HISTORY_DIR / f"{today}.json", {"date": today, "facts": all_facts})
 
     # 事件合并（归档提交后；事件自身有修订链恢复）
     for event in events_plan:
         pa.merge_price_event(records_root, revisions_root, event)
 
     current = pa.load_current(current_file)
-    _update_current(current, accepted_versions, versions_root, source_states)
-    pa.save_current(current_file, current)
-    project_site(BASE_DIR)
+    if not offline:
+        _update_current(current, accepted_versions, versions_root, source_states)
+        pa.save_current(current_file, current)
+        project_site(BASE_DIR)
 
-    print(f"ledger.json 已更新：{len(dataset['prices'])} 条价格 · "
+    print(f"{'离线归档完成' if offline else 'ledger.json 已更新'}：{len(dataset['prices'])} 条价格 · "
           f"{dataset['providers']} 家" + ("（partial）" if failed else ""))
 
     # 运行状态（验收 2026-09-16：全来源失败不能返回 0，否则运行环境
@@ -425,7 +417,7 @@ def _plan_provider_archive(entry, snap, result, report, today, now,
 def _commit_archive_plan(archive_plan, today, versions_root, evidence_root,
                          snapshots_root, source_states, prev_history,
                          entries, events_plan,
-                         runs_root: Path | None = None) -> None:
+                         runs_root: Path | None = None, run_id: str | None = None) -> None:
     """两阶段提交：全量预检（零写入）→ 统一落盘 → 事件判定。
 
     预检：计划内重复 ID 内容冲突、计划与磁盘不可变文件冲突。
@@ -488,12 +480,13 @@ def _commit_archive_plan(archive_plan, today, versions_root, evidence_root,
 
     # ---- 运行记录（committed） ----
     run = pa.make_run_record(
-        today, f"fetch-{today}", scope=[e.source_key for e in entries],
+        today, run_id or f"fetch-{today}", scope=[e.source_key for e in entries],
         source_states=source_states,
         accepted_versions=archive_plan.get("_accepted_versions", []),
         baseline=str(prev_history.get("date")) if prev_history else None)
-    pa.commit_run((runs_root if runs_root is not None
-                   else ARCHIVE_ROOT / pa.DIR_RUNS), run)
+    archive_plan["_run_record"] = run
+    if run_id is None:
+        pa.commit_run((runs_root if runs_root is not None else ARCHIVE_ROOT / pa.DIR_RUNS), run)
 
 
 def _baseline_before(versions_root: Path, date: str) -> dict[str, dict]:
@@ -560,6 +553,7 @@ def _update_current(current: dict, accepted_versions: list[str],
             }
     for s in source_states:
         prev = sources.get(s["source_key"]) or {}
+        if (s.get("latest_attempt_at") or 0) < (prev.get("latest_attempt_at") or 0): continue
         sources[s["source_key"]] = {
             "status": s["status"],
             "latest_attempt_at": s["latest_attempt_at"],
@@ -587,17 +581,76 @@ def _withdraw_today_events(records_root: Path, revisions_root: Path,
     return n
 
 
+def configure_root(root: Path):
+    global BASE_DIR, PRICING_DIR, LEDGER_FILE, HISTORY_DIR, SNAPSHOT_DIR, ARCHIVE_ROOT
+    BASE_DIR = root.resolve(); PRICING_DIR = BASE_DIR / PRICING; LEDGER_FILE = PRICING_DIR / 'ledger.json'
+    HISTORY_DIR = PRICING_DIR / 'ledger_history'; SNAPSHOT_DIR = BASE_DIR / 'data/snapshots'; ARCHIVE_ROOT = BASE_DIR / 'data'
+
+
 def main() -> int:
+    global RUN_DATE
     ap = argparse.ArgumentParser()
-    ap.add_argument("--dry-run", action="store_true", help="只打印不写文件")
-    ap.add_argument("--only", help="只跑指定厂商（逗号分隔，如 openai,deepseek）")
-    args = ap.parse_args()
-    only = [s.strip() for s in args.only.split(",")] if args.only else None
-    try:
-        return asyncio.run(run(only, args.dry_run))
-    except KeyboardInterrupt:
-        return 130
+    ap.add_argument('--dry-run', action='store_true', help='只打印，不写真实归档')
+    ap.add_argument('--only', help='厂商列表，如 openai,deepseek')
+    ap.add_argument('--input-root', type=Path, default=BASE_DIR)
+    ap.add_argument('--concurrency', type=int, choices=(1, 2, 3), default=2)
+    lifecycle = ap.add_mutually_exclusive_group()
+    lifecycle.add_argument('--run-id')
+    lifecycle.add_argument('--recover', help='恢复未提交的 runId，复用已抓取快照')
+    lifecycle.add_argument('--discard-run', help='撤销指定未提交运行的可变输入，保留不可变证据')
+    ap.add_argument('--retry-failed', type=Path, help='已提交运行记录，仅重新抓取失败来源')
+    ap.add_argument('--offline-snapshot', type=Path, help='运行记录中的已保存原始快照，禁止联网')
+    ap.add_argument('--extractor-version', help='离线时要求匹配当前适配器语义版本')
+    args = ap.parse_args(); configure_root(args.input_root)
+    only = [s.strip() for s in args.only.split(',')] if args.only else None
+    if only and set(only) - {entry.provider_id for entry in all_entries()}: ap.error('unknown pricing provider')
+    offline = None
+    if args.retry_failed:
+        record = json.loads(args.retry_failed.read_text())
+        if record.get('state') != 'committed': raise ValueError('retry requires a committed run; recover interrupted runs first')
+        only = [source.split(':')[0] for source, state in record['sources'].items() if state.get('outcome') == 'failed']
+        if not only: print('no failed sources'); return 0
+    if args.offline_snapshot:
+        from pricing.base import ContentSnapshot
+        record = json.loads(args.offline_snapshot.read_text()); offline = {}
+        for source, state in record['sources'].items():
+            if only and source.split(':')[0] not in only: continue
+            if 'snapshot' not in state: continue
+            if args.extractor_version and get_extractor(source).version != args.extractor_version: raise ValueError('extractor version unavailable')
+            raw = safe_input(BASE_DIR, state['contentPath']).read_bytes()
+            if hashlib.sha256(raw).hexdigest() != state['snapshot']['sha256']: raise ValueError('offline snapshot hash mismatch')
+            offline[source] = ContentSnapshot(**state['snapshot'], content=raw.decode('utf-8'))
+        if not offline: raise ValueError('no matching saved snapshots')
+        only = [source.split(':')[0] for source in offline]
+        from datetime import timezone, timedelta
+        dates = {datetime.fromtimestamp(s.fetched_at, timezone(timedelta(hours=8))).strftime('%Y-%m-%d') for s in offline.values()}
+        if len(dates) != 1: raise ValueError('offline observations must share a Shanghai calendar day')
+        RUN_DATE = dates.pop()
+    if args.dry_run:
+        if args.recover or args.discard_run: raise ValueError('recover/discard cannot be combined with dry-run')
+        return asyncio.run(run(only, True, concurrency=args.concurrency, offline=offline))
+    run_id = args.recover or args.discard_run or args.run_id
+    with RunJournal(BASE_DIR, 'prices', run_id, recover=bool(args.recover or args.discard_run)) as journal:
+        if args.discard_run: journal.discard(); print('pending run discarded'); return 0
+        if journal.finalized: print('committed run bookkeeping recovered'); return 0
+        RUN_DATE = RUN_DATE or journal.data['runDate']; journal.data['runDate'] = RUN_DATE
+        if journal.recover:
+            only = journal.data.get('only'); RUN_DATE = journal.data['runDate']
+            if journal.data.get('offline'):
+                offline = {key: journal.snapshot(key) for key, value in journal.data['sources'].items() if value.get('snapshot')}
+        else:
+            journal.data.update({'only': only, 'offline': bool(offline)})
+            if offline:
+                import uuid
+                for key, snapshot in offline.items(): journal.stage_snapshot(key, snapshot, 'attempt_' + uuid.uuid4().hex)
+            journal.save()
+        code = asyncio.run(run(only, False, journal=journal, concurrency=args.concurrency, offline=offline))
+        for entry in all_entries():
+            if entry.source_key not in journal.data['sources']:
+                journal.source_result(entry.source_key, {'outcome': 'not_run', 'lastSuccessAt': _last_success_at(ARCHIVE_ROOT / pa.DIR_CURRENT, entry.source_key)})
+        journal.finish('failed' if code else 'partial' if any(s.get('outcome') == 'failed' for s in journal.data['sources'].values()) else 'success', journal.data.get('accepted_versions', []))
+        return code
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main())

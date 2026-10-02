@@ -32,7 +32,7 @@ class ContentSnapshot:
     snapshot_id: str
     source_key: str
     url: str
-    fetched_at: float                 # epoch ms
+    fetched_at: float                 # epoch seconds (archive/public conversion contract)
     http_status: int
     content_type: str
     sha256: str

@@ -149,5 +149,13 @@ def main() -> int:
     return 0
 
 
+def configure_root(root):
+    global BASE, DEFAULT_DIFF_DIR, DEFAULT_ARCHIVE_ROOT, DEFAULT_REGISTRY
+    BASE = root; DEFAULT_DIFF_DIR = root / 'data/diff'; DEFAULT_ARCHIVE_ROOT = root / 'data'
+    DEFAULT_REGISTRY = root / 'pipeline/config/source_registry.json'
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.path.insert(0, str(BASE / 'pipeline'))
+    from run_protocol import managed_entry
+    sys.exit(managed_entry(main, BASE, 'source-backfill', configure_root))

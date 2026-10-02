@@ -1,0 +1,109 @@
+{
+  "date": "2026-10-02",
+  "runtimeTests": 13,
+  "liveCommand": "python3 pipeline/scripts/fetch-prices.py --only deepseek,qwen --concurrency 2 --dry-run",
+  "liveExitCode": 0,
+  "liveAcceptedFacts": {
+    "deepseek": 12,
+    "qwen": 2088
+  },
+  "canonicalWrites": false,
+  "sourceSha256": {
+    "pipeline/data_store.py": "e106ac9e017376c854891d159e32c9eb3eda03d7bc267401f0ab6f67c153c454",
+    "pipeline/input_snapshot.py": "e7c61a4e07e2d82dc174e0ca046b8612f8bb92db05da9c3bd70efa0b4dc04502",
+    "pipeline/model_identity/__init__.py": "b7921572059254af714bbcc28f99b4ae6eb9f967135d2555f518ec4a240bbf72",
+    "pipeline/model_identity/projector.py": "aa4abc110236921b3a8615ab467b1936d36b3216d0b810d50668bd575758053f",
+    "pipeline/model_identity/provider_map.py": "a774789af69cba995643f39c025832c1a311c8040c89492e54697dddedc6e36f",
+    "pipeline/model_identity/registry.py": "d213fb0811e1ba63558fb79c1e98160e4c99dd3fe3dda0b9904e134d6a5d24f6",
+    "pipeline/model_identity/resolver.py": "fd0e958048c54baecccf54726716e5540e6f703febaa862af0391806eae0f990",
+    "pipeline/pricing/__init__.py": "8c835b2740326f7101b6fde7fff94659e0e63c133a5161eed270534b871792f8",
+    "pipeline/pricing/adapters/__init__.py": "55a62d333ffb8fae29b8b055be0aa23343abf2cc31ba5082f4226cbfc98defe8",
+    "pipeline/pricing/adapters/anthropic.py": "4c430ac8061c160bc3970384eea4885bc3fa82d592d38b0e9cae27f78c7382a0",
+    "pipeline/pricing/adapters/common.py": "7c93bda75353b3200d7ff204dcd98e5d18531c3945040659a1b311be00f45dce",
+    "pipeline/pricing/adapters/deepseek.py": "a2eaca6416f3efaa2a57e1ad722b16aed87bd25c066345ed3a4b4bce4e7544d3",
+    "pipeline/pricing/adapters/doubao.py": "450d64f2894b9d0a5b51e5c1e0940d6585d2696d3157f89cfedd43bc8aa5f580",
+    "pipeline/pricing/adapters/glm.py": "7eb2066a4b2b583666e0c10541ee1de9875261e6e383b2f7ed0162f3f554e8de",
+    "pipeline/pricing/adapters/google.py": "5fba37a47a3c9c275603ae573ed7de60b1fac2d7d3107482d50c7d45e6570c33",
+    "pipeline/pricing/adapters/kimi.py": "7a3ce59aa5588094c48eab3d0de054f6e0303a32d72c6391c7896b636fdc44bc",
+    "pipeline/pricing/adapters/openai.py": "2472a24fd37e802c1e5d9d18ce9d9f9bb2ceb6c656d57136fe0d522ff57d7ed8",
+    "pipeline/pricing/adapters/qwen.py": "c3f568123c1da4c38297ad9043c54ae680bad77a76f70f7060bfb580aa1fd299",
+    "pipeline/pricing/archive.py": "b3b0a10b9d66e44a80ebea7c381d07f95763550e1e5a694ac7d0705fe3912dde",
+    "pipeline/pricing/base.py": "f0e2c78b8c234fb80f587382fc3e0619e8d5fae5159396100c727ac62bb584bd",
+    "pipeline/pricing/extractors.py": "e3bd234af836ef0c2bc7d42ac4fb907c6e33196ee8ef42fff94deea220c25c74",
+    "pipeline/pricing/factdiff.py": "6891bd3c7db2fd11277357ce912236a1742112486e11a8c6e15813eabd0517c6",
+    "pipeline/pricing/normalize.py": "d1407392cfee81ae8bd7a8937f3218186786b313f1d9787141635182480aec34",
+    "pipeline/pricing/providers.py": "94d702a442dd447e5209028f387df622eacdff7a46ad8758914f8187a6436eb9",
+    "pipeline/pricing/registry.py": "e7753340920707d418b0adeaaa0d76c2ea625f7be6565d2835311955fbffefc7",
+    "pipeline/pricing/runner.py": "8804c9d8f6884cdc11e1ce6af23e7202198f0fab7f030eba9051d3c55a1cfb7c",
+    "pipeline/pricing/view_data.py": "787d5c42b45036b1a4c15662faad00cc56afa67ef68ac16f416c28060c5fff2b",
+    "pipeline/public_export/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pipeline/public_export/canonical.py": "d21833b568252a8ecc2847e8ae0f893b3957ddfa7fff40aecb0ebfb71432043c",
+    "pipeline/public_export/loaders.py": "88ac14d9bfb64c6817e457ed47fd90ecec838b745efaffeebee0b746a2969d86",
+    "pipeline/public_export/projector.py": "8d0aeebb371ea26b3a858151b4813b8c4c1ae4d5d9a85ebb7b26781f70e8d81b",
+    "pipeline/public_export/validator.py": "e1c12a06524aa879cc40e4790bafc9a3d28391e606398854ffd9eb873136d302",
+    "pipeline/run_protocol.py": "16584ead8fc326c7124ea3a8987d70e01e212c9126f6012ae2bca98401e84932",
+    "pipeline/scripts/archive-price-evidence.py": "1d9a58810b9371bef7ebee640955a723729b6356bf980de33cd76fc4e37cd3b1",
+    "pipeline/scripts/archive-source-changes.py": "f99aee2f005bbd400820180e7477ffce64d096a351bc5cf5d33cbdb654b1860f",
+    "pipeline/scripts/audit-model-identities.py": "8fe75bb5d538b7295c6ea681173e62dc9b5185059d78401bf6fc09d06b723ab9",
+    "pipeline/scripts/audit-model-registry-coverage.py": "bf1b5acf53acb34a9a735ede6c88ebdef08f0b049d1b8b7973585d133bf55a9c",
+    "pipeline/scripts/diff_clean.py": "72c03f8acca9f870b3c22763d6d30b3eac2d8b199fdb746e328073ce0f2a7f7b",
+    "pipeline/scripts/export-public-data.py": "cf748a8890bf6cb0282d58909ecae5547a8b564d0c718a6c86ea4c0faf4249da",
+    "pipeline/scripts/extract-live-events.py": "c3899b504f515c2c031bc6a5b958a883974b361cdbb071957fd2a081b9b9e12d",
+    "pipeline/scripts/fetch-leaderboards.py": "2ddd3e66966566cd3198790f3d19533bb79312b200b4c31da6d8d3c0181f064c",
+    "pipeline/scripts/fetch-prices.py": "3a517d20ca6115194d68cec8de7402a1973a861f8ae4a905dd28bd593deacfac",
+    "pipeline/scripts/fetch_sources.py": "d173215c80459f84b7211f155c1faaedd2bb7a9982b6f7c50c63285fcd26c105",
+    "pipeline/scripts/llm-digest.py": "314cbb8eb84c1b2ce3bd5b2e51ed557579a95ec844055ecaafc7f749ddd95644",
+    "pipeline/scripts/llm-weekly-digest.py": "5c5b23ebc910451fe1563838055ff7759db74ddd76b4e19cba79b80bf269667f",
+    "pipeline/scripts/migrate-standard-inputs.py": "106b3a1ae1a976ddd8d0b13e0a8a55831834de3e31ae5835e95004d1cd499a40",
+    "pipeline/scripts/ontology-inventory.py": "34d43b33fc75824ac01776514565c4c5757a3c26e8dd32e5a83b750fe943168a",
+    "pipeline/scripts/project-site-data.py": "32ed380f105c54761f86274fd53c2bd88a75688f07654861beff6eceb370e649",
+    "pipeline/scripts/record_archive.py": "267fda4360be941eaf9ecd4813945f1689c17f44e1a3706e15b0113bb2bd66d5",
+    "pipeline/scripts/release_manifest.py": "1f0441d1b8e2ee2e2435356844463eb314cc2b329d303eaefc3bcabb3074ae01",
+    "pipeline/scripts/sync-diff-to-site.py": "fcd41247742196826a8c375529c340dda1220c665c03fc742dcee592219b11be",
+    "pipeline/scripts/validate-archive.py": "2b7e012c41e3cda05a43dde3befa2ef361a12286b09b23b6b3eeacf521c0d58d",
+    "pipeline/scripts/validate-developer-registry.py": "0873898aa983d1406c61a3c5a0414853eaf1f4587d5fe1132658dbb5e2967364",
+    "pipeline/scripts/validate-model-registry.py": "5d2fb778203d0eaace9e59d88b75cdbadbf75a02095458abfeeb1289d561c1a5",
+    "pipeline/scripts/validate-price-archive.py": "cb500c69d9791135d670c4b86627b629010495afd8ffa2f9f8af211be6cfffb1",
+    "pipeline/staged_fetch.py": "0bfb7aeb39e0d1dd4caede517854550203fdeb5e0ee4e97e08cea20a4bab94c3",
+    "scripts/architecture-recovery-bundle.py": "dec1cb466614d9d2a12e30e2558e35bf342ad92f1bc98b0df50ac7a804921177",
+    "tests/test_pipeline_runtime.py": "cbfcc0db05b9749a66cbfdb8b2330e21a7d76ba8aa26d87b2faadb7f7bf776a2"
+  },
+  "leaderboardMigration": {
+    "data/derived/leaderboards/terminal-bench.json": {
+      "sha256": "37c1482e307b28068f869986317f33a87de34447c4fa0443349f7096bf041fa9",
+      "oldSha256": "37c1482e307b28068f869986317f33a87de34447c4fa0443349f7096bf041fa9"
+    },
+    "data/derived/leaderboards/openrouter_session_cost.json": {
+      "sha256": "7a953bb7407e00cf858e3de52d14f11d5755443eb5bfbbc32ba6055fe4862bf0",
+      "oldSha256": "7a953bb7407e00cf858e3de52d14f11d5755443eb5bfbbc32ba6055fe4862bf0"
+    },
+    "data/derived/leaderboards/openrouter.json": {
+      "sha256": "cff7eae71bc225f3fc3c6a7a24e7d6fc19dc17a7d05f68de4d30f00b2cb890cf",
+      "oldSha256": "cff7eae71bc225f3fc3c6a7a24e7d6fc19dc17a7d05f68de4d30f00b2cb890cf"
+    },
+    "data/derived/leaderboards/swebench.json": {
+      "sha256": "9c3c8e536e13a1f129f9cc82ed977f93eb171a9535c4234051602c2285082435",
+      "oldSha256": "9c3c8e536e13a1f129f9cc82ed977f93eb171a9535c4234051602c2285082435"
+    },
+    "data/derived/leaderboards/openrouter_market_share.json": {
+      "sha256": "60ea49408bba8dba2b7fb7e07eec75336708f80f61eabe1aa65f5cc91ad4f7c3",
+      "oldSha256": "60ea49408bba8dba2b7fb7e07eec75336708f80f61eabe1aa65f5cc91ad4f7c3"
+    },
+    "data/derived/leaderboards/aa.json": {
+      "sha256": "c9683683dc641f1308797789fce1b954dff723bc78e5a1b23a04d922559b963a",
+      "oldSha256": "c9683683dc641f1308797789fce1b954dff723bc78e5a1b23a04d922559b963a"
+    },
+    "data/derived/leaderboards/lmarena.json": {
+      "sha256": "90e7a2da6d59263ceb7d72abc5f4ba43364465406ece6fbb6fe3b0beff7943a8",
+      "oldSha256": "90e7a2da6d59263ceb7d72abc5f4ba43364465406ece6fbb6fe3b0beff7943a8"
+    },
+    "data/derived/leaderboards/openrouter_apps.json": {
+      "sha256": "6ddd53c024c9456f545e295d9bc22dadacf5aa1a0e1272343b5b21d70b972319",
+      "oldSha256": "6ddd53c024c9456f545e295d9bc22dadacf5aa1a0e1272343b5b21d70b972319"
+    },
+    "data/derived/leaderboards/superclue.json": {
+      "sha256": "10e6bbcaebb4e34cd9a16c989a0051af70498057314c84c5f89480528881060f",
+      "oldSha256": "10e6bbcaebb4e34cd9a16c989a0051af70498057314c84c5f89480528881060f"
+    }
+  }
+}

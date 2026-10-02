@@ -1,0 +1,15 @@
+[deepseek:pricing]
+  ✓ 12 facts / 2 models
+[qwen:pricing]
+  ✓ 2088 facts / 213 models
+  [not_run] anthropic:pricing 保留既有 90 条事实
+  [not_run] doubao:pricing 保留既有 180 条事实
+  [not_run] glm:pricing 保留既有 27 条事实
+  [not_run] google:pricing 保留既有 76 条事实
+  [not_run] kimi:pricing 保留既有 24 条事实
+  [not_run] openai:pricing 保留既有 116 条事实
+diff: 0 新增 / 0 变更 / 925 不变 / 0 缺失
+dry-run：不写文件（含快照）
+  providers=['anthropic', 'deepseek', 'doubao', 'glm', 'google', 'kimi', 'openai', 'qwen']
+  prices=2613
+RUN-STATUS: ok 2/2 来源成功

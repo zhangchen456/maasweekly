@@ -127,6 +127,7 @@ jobs:
       - name: Prebuild site artifacts
         id: prebuild
         run: |
+          python3 pipeline/scripts/project-site-data.py
           node site/scripts/build-price-fragment.mjs
           node site/scripts/render-price-ledger.mjs
           python3 site/scripts/build-skill-package.py
@@ -151,6 +152,18 @@ jobs:
             bash scripts/commit-workflow-data.sh "data: 每日信源抓取 $(date +'%Y-%m-%d')"
           fi
         id: datacommit
+
+      - name: Preserve interrupted pipeline inputs
+        if: always() && hashFiles('data/pipeline-pending.json') != ''
+        run: python3 scripts/architecture-recovery-bundle.py --output "$RUNNER_TEMP/pipeline-recovery.tar.gz"
+      - name: Upload interrupted pipeline recovery
+        if: always() && hashFiles('data/pipeline-pending.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-recovery-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/pipeline-recovery.tar.gz
+          retention-days: 14
+          if-no-files-found: error
 
   deploy:
     name: Deploy release

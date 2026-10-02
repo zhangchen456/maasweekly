@@ -32,11 +32,33 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent  # repo root
-LB_DIR = BASE_DIR / "site" / "src" / "data" / "leaderboards"
-REGISTRY_PATH = BASE_DIR / "site" / "src" / "data" / "platform-logos.json"
+LB_DIR = BASE_DIR / "data/derived/leaderboards"
+REGISTRY_PATH = BASE_DIR / "data/normalized/platform-logos.json"
 LOGO_DIR = BASE_DIR / "site" / "public" / "logos" / "official"
 SNAPSHOT_DIR = BASE_DIR / "data" / "snapshots"
 API_BASE = "https://openrouter.ai/api/v1"
+
+sys.path.insert(0, str(BASE_DIR / 'pipeline'))
+from run_protocol import current_journal, managed_entry
+from staged_fetch import json_fetch
+from data_store import project_site
+DRY_RUN = False
+
+
+def configure_root(root):
+    global BASE_DIR, LB_DIR, REGISTRY_PATH, LOGO_DIR, SNAPSHOT_DIR
+    BASE_DIR = root; LB_DIR = root / 'data/derived/leaderboards'
+    REGISTRY_PATH = root / 'data/normalized/platform-logos.json'
+    LOGO_DIR = root / 'site/public/logos/official'; SNAPSHOT_DIR = root / 'data/snapshots'
+
+
+def fetch_json(url, api_key): return json_fetch(url, lambda: _fetch_json(url, api_key))
+
+
+def observation_now():
+    run = current_journal()
+    return datetime.fromisoformat(run.data['startedAt']) if run else datetime.now(timezone.utc)
+
 
 # permaslug 前缀 → 展示名（对齐 site/src/data/platform-logos.json 才能 logoFor 命中）
 VENDOR_MAP = {
@@ -53,7 +75,7 @@ VENDOR_MAP = {
 OTHER_VENDOR = "Other"  # rankings-daily 聚合长尾行
 
 
-def fetch_json(url: str, api_key: str):
+def _fetch_json(url: str, api_key: str):
     """curl 抓 JSON，返回 (data, error)。校验 HTTP/JSON/结构。"""
     try:
         result = subprocess.run(
@@ -259,7 +281,7 @@ def register_vendor_logos(missing: list[str]) -> int:
         info = _discover_vendor_logo(vendor_key)
         if not info:
             print(f"  ⚠ vendor_key='{vendor_key}' 无法自动获取 logo（GitHub 组织未找到）")
-            print(f"    手动操作：在 site/src/data/platform-logos.json 添加条目后运行")
+            print(f"    手动操作：在 data/normalized/platform-logos.json 添加条目后运行")
             print(f"    python3 site/scripts/refresh-logos.py --platform {vendor_key}")
             continue
         avatar_url, page_url = info
@@ -307,7 +329,7 @@ def _run_logo_check():
     still_missing, _ = check_vendor_logos()
     if still_missing:
         print(f"  ⚠ {len(still_missing)} 个 logo 仍缺失（build-release 测试可能失败）: {still_missing}")
-        print(f"    手动操作：在 site/src/data/platform-logos.json 添加条目后运行")
+        print(f"    手动操作：在 data/normalized/platform-logos.json 添加条目后运行")
         print(f"    python3 site/scripts/refresh-logos.py --platform <name>")
     elif registered:
         print(f"  ✓ {registered} 个 vendor logo 已自动补全")
@@ -323,9 +345,12 @@ def iso_date(d) -> str:
 
 def save_snapshot(dataset: str, payload: dict, today: str):
     """原始响应存档到快照目录（与 fetch_sources.py 同约定）。"""
+    if DRY_RUN: return
     snap_dir = SNAPSHOT_DIR / today
     snap_dir.mkdir(parents=True, exist_ok=True)
     path = snap_dir / f"leaderboards__openrouter__{dataset}__{today}.json"
+    journal = current_journal()
+    if journal: journal.backup_raw(str(path.relative_to(BASE_DIR)))
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
@@ -333,6 +358,7 @@ def atomic_write(rel_name: str, payload: dict, dry_run: bool):
     if dry_run:
         print(f"  [dry-run] {rel_name}: 跳过写盘")
         return
+    LB_DIR.mkdir(parents=True, exist_ok=True)
     target = LB_DIR / rel_name
     tmp = target.with_suffix(".tmp")
     tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -351,7 +377,7 @@ def load_existing(rel_name: str):
 
 def fetch_rankings(api_key: str, today: str, dry_run: bool) -> bool:
     # 滚动 7 日窗：本窗 = [today-7, today-1]（最近完整 UTC 日为止），上窗 = 前移 7 天
-    now = datetime.now(timezone.utc)
+    now = observation_now()
     end = now.date() - timedelta(days=1)
     cur_start, cur_end = end - timedelta(days=6), end
     prev_start, prev_end = cur_start - timedelta(days=7), cur_start - timedelta(days=1)
@@ -502,7 +528,7 @@ def fetch_session_cost(api_key: str, today: str, dry_run: bool) -> bool:
 # ---------- app-rankings：Top Apps ----------
 
 def fetch_apps(api_key: str, today: str, dry_run: bool) -> bool:
-    now = datetime.now(timezone.utc)
+    now = observation_now()
     end = now.date() - timedelta(days=1)
     start = end - timedelta(days=6)
     base = f"{API_BASE}/datasets/app-rankings?start_date={iso_date(start)}&end_date={iso_date(end)}"
@@ -547,22 +573,21 @@ def fetch_apps(api_key: str, today: str, dry_run: bool) -> bool:
 
 
 def main():
+    global DRY_RUN
     parser = argparse.ArgumentParser(description="OpenRouter 榜单数据抓取")
     parser.add_argument("--dry-run", action="store_true", help="不写文件")
     parser.add_argument("--only", choices=["rankings", "session-cost", "apps"], help="只跑指定数据集")
-    args = parser.parse_args()
+    args = parser.parse_args(); DRY_RUN = args.dry_run
 
     api_key = os.environ.get("OPENROUTER_API_KEY")
 
-    # vendor logo 覆盖检查（独立于抓取——即使无 API key 也检查现有榜单）
-    # 第一次检查：补上轮遗留的缺失 vendor logo
-    _run_logo_check()
-
-    if not api_key:
-        print("⚠ 未设置 OPENROUTER_API_KEY，跳过榜单抓取（保留现有数据）")
+    if not api_key and not (current_journal() and (current_journal().recover or current_journal().data.get('offline'))):
+        if current_journal(): current_journal().data['outcome'] = 'not_run'
+        print('⚠ 未设置 OPENROUTER_API_KEY，跳过榜单抓取（保留现有数据）')
         return 0
+    if not args.dry_run and not (current_journal() and current_journal().data.get('offline')): _run_logo_check()
 
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    today = observation_now().strftime("%Y-%m-%d")
     print(f"== OpenRouter 榜单抓取 {today} ==")
 
     tasks = {
@@ -574,6 +599,12 @@ def main():
     for name, fn in tasks.items():
         if args.only and name != args.only:
             continue
+        run = current_journal()
+        if run and run.data.get('selectedSources'):
+            # Retry the failed logical dataset, including its paired comparison window.
+            selected = {state.get('sourceId') for key, state in run.data.get('retrySources', run.data['sources']).items() if key in run.data['selectedSources']}
+            ids = {'rankings': {'openrouter-rankings-daily'}, 'session-cost': {'openrouter-session-cost'}, 'apps': {'openrouter-app-rankings'}}
+            if not (selected & ids[name]): continue
         print(f"[{name}]")
         results.append(fn(api_key, today, args.dry_run))
 
@@ -581,12 +612,13 @@ def main():
     print(f"== 完成：{ok}/{len(results)} 数据集成功 ==")
 
     # 第二次检查：抓取可能引入新 vendor/app，当轮发现当轮补全
-    _run_logo_check()
+    if not args.dry_run and not (current_journal() and current_journal().data.get("offline")): _run_logo_check()
 
+    if not args.dry_run: project_site(BASE_DIR)
     if results and ok == 0:
         return 1  # 全部失败才报错（CI continue-on-error 兜底）
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(managed_entry(main, BASE_DIR, "leaderboards", configure_root, allow_dry=True))
