@@ -1,4 +1,7 @@
 ---
+import BillingConditions from '../../components/BillingConditions.astro';
+import EvidenceLinks from '../../components/EvidenceLinks.astro';
+import ChangeList from '../../components/ChangeList.astro';
 import { priceUnit } from '../../lib/price-display';
 import Layout from '../../layouts/Layout.astro';
 import { modelRelease, modelPage, priceCells, priceHeaders, providerLabels } from '../../lib/model-pages';
@@ -11,6 +14,7 @@ export function getStaticPaths() {
 }
 const { page } = Astro.props;
 const { model, prices, changes, sources, keys, from, to, dataThrough, datasetVersion } = page;
+const rows = prices.map(price => ({price, cells: priceCells(price)}));
 const providerId = model.modelId.split(':')[0];
 const providerLabel = providerLabels[providerId] ?? providerId;
 const hasContent = prices.length > 0 || changes.length > 0;
@@ -46,13 +50,11 @@ const hasContent = prices.length > 0 || changes.length > 0;
       <div id="current-prices" class="current-prices">
         {prices.length ? <table class="price-table">
           <thead><tr><th scope="col">平台 / API 模型</th><th scope="col">计费项</th><th scope="col">价格 / 原始单位</th><th scope="col">条件与依据</th></tr></thead>
-          <tbody>{prices.map(price => <tr data-price-id={price.id}>
-            <td><strong>{priceCells(price)[0]}</strong><small class="price-subline">{price.modelKey}</small></td>
-            <td><span class="billing-badge">{priceCells(price)[2]}</span></td>
+          <tbody>{rows.map(({price, cells}) => <tr data-price-id={price.id}>
+            <td><strong>{cells[0]}</strong><small class="price-subline">{price.modelKey}</small></td>
+            <td><span class="billing-badge">{cells[2]}</span></td>
             <td><strong class="detail-amount">{price.amount} <small>{price.currency}</small></strong><small class="price-subline">每 {priceUnit(price.unitQuantity, price.unitName)}</small></td>
-            <td><details class="quote-details"><summary>查看报价条件</summary><dl class="price-facts">{priceCells(price).slice(4).map((value,index)=><div><dt>{priceHeaders[index+4]}</dt><dd>{value}</dd></div>)}</dl></details>{price.evidenceId && <a href={`/evidence/${price.evidenceId}/`}>价格证据</a>}
-              {price.links.itemPermalink && <> · <a href={price.links.itemPermalink}>变化记录</a></>}
-              {!price.evidenceId && !price.links.itemPermalink && '暂无链接'}</td>
+            <td><BillingConditions headers={priceHeaders} cells={cells} /><EvidenceLinks price={price} /></td>
           </tr>)}</tbody>
         </table> : <p class="empty-state">当前公开数据范围内暂无价格记录。不能据此判断该模型免费或平台未提供服务。</p>}
       </div>
@@ -64,12 +66,7 @@ const hasContent = prices.length > 0 || changes.length > 0;
       <div class="section-head"><h2>最近变化</h2><a class="section-link" href={`/changes/?modelId=${model.modelId}`}>浏览变化 →</a></div>
       <p class="muted small">{from} 至 {dataThrough} 的数据窗口，最多展示最近 10 条。没有记录不代表窗口之外没有变化。</p>
       <div id="recent-changes" class="recent-changes">
-        {changes.length ? changes.map(change => <article class="change-card">
-          <div class="change-head"><time class="change-date" datetime={change.observationDate}>{change.observationDate}</time>
-            <span class="change-type">{change.recordType === 'price_change' ? '价格事件' : '来源观察'}</span></div>
-          <a class="change-title" href={change.links.permalink}>{change.title}</a>
-          {change.summary && <p class="change-summary">{change.summary.slice(0, 160)}</p>}
-        </article>) : <p class="empty-state">当前数据窗口内暂无变化记录。</p>}
+        <ChangeList changes={changes} />
       </div>
     </section>
   </div>

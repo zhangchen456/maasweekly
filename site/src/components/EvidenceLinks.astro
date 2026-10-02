@@ -1,0 +1,9 @@
+---
+import type { PriceRecord } from '../lib/release';
+interface Props { price: PriceRecord; locale?: 'zh'|'en' }
+const { price, locale = 'zh' } = Astro.props;
+const labels = locale === 'en' ? ['Evidence (Chinese)', 'Record (Chinese)', 'No link available'] : ['价格证据', '变化记录', '暂无链接'];
+---
+{price.evidenceId && <a href={`/evidence/${price.evidenceId}/`}>{labels[0]}</a>}
+{price.links.itemPermalink && <> · <a href={price.links.itemPermalink}>{labels[1]}</a></>}
+{!price.evidenceId && !price.links.itemPermalink && labels[2]}

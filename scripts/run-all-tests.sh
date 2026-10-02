@@ -94,6 +94,8 @@ if ! $QUICK; then
 fi
 run "site: access-pages（Task 05）" bash -c 'cd site && node --experimental-strip-types tests/access-pages.test.mjs'
 run "site: rss（Task 05）" bash -c 'cd site && node --experimental-strip-types tests/rss.test.mjs'
+run "site: page ViewModel types" node services/agent-api/node_modules/typescript/bin/tsc --project site/tsconfig.page-models.json
+run "site: page ViewModel parity" bash -c 'cd site && node tests/page-models.test.mjs'
 run "site: pricing" bash -c 'cd site && node tests/pricing.test.mjs'
 run "site: model-identity-ui（T07-4A）" bash -c 'cd site && node tests/model-identity-ui.test.mjs'
 run "site: model-identity-ui-contract（T07-4A）" bash -c 'cd site && node tests/model-identity-ui-contract.test.mjs'

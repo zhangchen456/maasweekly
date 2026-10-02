@@ -1,0 +1,13 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "typeRoots": ["../services/agent-api/node_modules/@types"]
+  },
+  "include": [
+    "src/lib/home-page.ts", "src/lib/page-data.ts", "src/lib/model-pages.ts",
+    "src/scripts/price-workspace.ts"
+  ]
+}

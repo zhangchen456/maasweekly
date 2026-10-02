@@ -1,17 +1,16 @@
 ---
+import EvidenceLinks from './EvidenceLinks.astro';
 import { englishPriceCells, englishPriceHeaders } from '../lib/price-display';
 import type { PriceRecord } from '../lib/release';
-import { modelRelease } from '../lib/model-pages';
+import { modelIndex } from '../lib/model-pages';
 const { prices } = Astro.props as { prices: PriceRecord[] };
-const families = new Map(modelRelease().modelIdentities!.models.map(m => [m.modelId, m.familyId ?? '']));
+const catalog = modelIndex().models;
 ---
 <div class="table-scroll"><table class="price-table">
   <thead><tr>{englishPriceHeaders.map(label => <th scope="col">{label}</th>)}<th scope="col">Evidence / record</th></tr></thead>
-  <tbody>{prices.map(price => <tr data-price-id={price.id} data-model-id={price.modelId ?? ''} data-family-id={families.get(price.modelId ?? '') ?? ''} data-provider={price.providerId} data-component={price.component} data-currency={price.currency} data-quality={price.quality.state} data-search={`${price.modelKey} ${price.modelId ?? ''}`.toLowerCase()}>
+  <tbody>{prices.map(price => <tr data-price-id={price.id} data-model-id={price.modelId ?? ''} data-family-id={catalog.get(price.modelId ?? '')?.familyId ?? ''} data-provider={price.providerId} data-component={price.component} data-currency={price.currency} data-quality={price.quality.state} data-search={`${price.modelKey} ${price.modelId ?? ''}`.toLowerCase()}>
     {englishPriceCells(price).map(value => <td>{value}</td>)}
-    <td>{price.evidenceId && <a href={`/evidence/${price.evidenceId}/`}>Evidence (Chinese)</a>}
-      {price.links.itemPermalink && <> · <a href={price.links.itemPermalink}>Record (Chinese)</a></>}
-      {!price.evidenceId && !price.links.itemPermalink && 'No link available'}</td>
+    <td><EvidenceLinks price={price} locale="en" /></td>
   </tr>)}</tbody>
 </table></div>
 <style is:global>

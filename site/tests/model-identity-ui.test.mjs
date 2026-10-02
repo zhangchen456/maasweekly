@@ -131,8 +131,9 @@ ok('T11a ledger 保留 model_display_name',
    'model_display_name 丢失');
 
 // ---- T12: rendered HTML 含 catalog 注入 ----
-const renderedPath = new URL('site/src/data/pricing/price-ledger.rendered.html', root);
-if (existsSync(renderedPath)) {
+const renderedPath = new URL('site/dist/pricing/index.html', root);
+assert.ok(existsSync(renderedPath), 'build pricing page before testing catalog injection');
+{
   const rendered = readFileSync(renderedPath, 'utf-8');
   ok('T12 rendered HTML 含 modelIdentities',
      rendered.includes('modelIdentities'),

@@ -95,7 +95,7 @@ export function loadVerifiedRelease(
     parsed.evidence as EvidenceEntity[], parsed.weekly as WeeklyEntity[], parsed.status as StatusEntity);
   const out: PublicRelease = { datasetVersion: version, dataThrough: manifest.dataThrough, coverage: manifest.coverage };
   for (const key of opts?.select ?? []) {
-    (out as Record<string, unknown>)[key] = parsed[COLLECTION_FILE[key].replace('.json', '')];
+    (out as unknown as Record<string, unknown>)[key] = parsed[COLLECTION_FILE[key].replace('.json', '')];
   }
   return out;
 }

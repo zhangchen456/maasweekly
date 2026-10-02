@@ -1,0 +1,5 @@
+---
+interface Props { observedLabel: string; observed: string; statusLabel: string; status: string }
+const { observedLabel, observed, statusLabel, status } = Astro.props;
+---
+<div><dt>{observedLabel}</dt><dd>{observed}</dd></div><div><dt>{statusLabel}</dt><dd>{status}</dd></div>
