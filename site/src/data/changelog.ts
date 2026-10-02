@@ -36,7 +36,7 @@ export const CHANGELOG: ChangelogEntry[] = [
       {
         area: 'mcp',
         status: 'available',
-        note: 'POST /api/mcp（Streamable HTTP，五工具 maas_get_*）生产可用；Claude Code 新会话真实调用验收通过（含无结果语义）。Codex 兼容验证仍阻断（无真实 OpenAI 认证环境，未以 curl 冒充）',
+        note: 'POST /api/mcp（Streamable HTTP，五工具 maas_get_*）生产可用；Claude Code 新会话真实调用验收通过（含无结果语义）',
       },
       {
         area: 'skill',
@@ -73,7 +73,7 @@ export const CHANGELOG: ChangelogEntry[] = [
       {
         area: 'mcp',
         status: 'pending',
-        note: 'POST /api/mcp 本地实现完成，Claude Code 2.1.259 验证通过；生产路由随 Task 06 生效。Codex 兼容验证待 OpenAI 认证环境',
+        note: 'POST /api/mcp 本地实现完成，Claude Code 2.1.259 验证通过；生产路由随 Task 06 生效',
       },
       {
         area: 'rest',

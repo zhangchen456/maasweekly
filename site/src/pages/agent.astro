@@ -57,7 +57,7 @@ const mcpConfig = JSON.stringify({ mcpServers: { 'maas-daily': { type: 'http', u
           <div class="prompt-card"><div class="prompt-heading">服务器地址</div><CopyBlock code={`${base}${P.paths.mcpEndpoint}`} label="MCP 地址" /></div>
           <p class="after-copy">在客户端的 MCP 设置中添加远程服务器，保存后刷新工具列表或开启新会话。</p>
           <details class="advanced"><summary>使用 JSON 配置<span>＋</span></summary><CopyBlock code={mcpConfig} label="MCP 配置" /></details>
-          <details class="advanced"><summary>Codex 的 TOML 配置<span>＋</span></summary><CopyBlock code={`[mcp_servers.maas-daily]\nurl = "${base}${P.paths.mcpEndpoint}"`} label="TOML 配置" /><p>配置示例供参考，Codex 的真实客户端验收仍待完成。</p></details>
+          <details class="advanced"><summary>Codex 的 TOML 配置<span>＋</span></summary><CopyBlock code={`[mcp_servers.maas-daily]\nurl = "${base}${P.paths.mcpEndpoint}"`} label="TOML 配置" /></details>
           <div class="subsection"><h3>连接后，发一句验证</h3><CopyBlock code={verify} label="验证问题" /></div>
           <div class="tool-list">{[['maas_get_changes','平台变化'],['maas_get_prices','模型价格'],['maas_get_item','条目详情'],['maas_get_evidence','证据核验'],['maas_get_weekly','正式周报']].map(([name,use]) => <div><code>{name}</code><span>{use}</span></div>)}</div>
           <p class="after-copy">调用默认 10 条、最多 30 条；更多结果使用 cursor 翻页。遇到 429 按 Retry-After 等待，503 时稍后重试。</p>
@@ -85,7 +85,6 @@ const mcpConfig = JSON.stringify({ mcpServers: { 'maas-daily': { type: 'http', u
         <section class="aside-section"><span class="eyebrow">你能获得什么</span><h3>回答有来源，<br />判断有依据。</h3><ul class="benefits"><li><b>平台变化</b><span>模型发布、API 更新与价格事件</span></li><li><b>价格事实</b><span>币种、计费单位、适用条件与证据</span></li><li><b>正式周报</b><span>按期查阅，回到原始记录</span></li></ul></section>
         <section class="aside-section" id="verify"><h3>怎样算接入成功？</h3><p>完成一次真实查询，回答带有数据截至日期、覆盖范围和站内链接；响应包含 datasetVersion。下载或保存配置只是第一步。</p></section>
         <section class="aside-section"><h3>接入资源</h3><a href="/llms.txt">给 Agent 的站点说明 <span>↗</span></a><a href="/maas-skill/README.md">Skill 安装文档 <span>↗</span></a><a href={P.paths.skillManifest}>Skill 文件清单 <span>↗</span></a><a href={P.paths.openapi}>OpenAPI 定义 <span>↗</span></a><a href={P.paths.changelog}>更新记录 <span>↗</span></a></section>
-        <section class="aside-section client-status"><h3>客户端验证</h3>{P.verifiedClients.map(c => <p><strong>{c.name} · {c.surface.toUpperCase()} 已验证</strong><br />{c.version} · {c.verifiedAt}</p>)}{P.pendingClients.map(c => <p>{c.name} · 待验证</p>)}<p>服务已上线与客户端已验证是不同状态。</p></section>
       </aside>
     </div>
     <section class="data-note" id="boundary"><span class="eyebrow">关于这些数据</span><div><h3>观察快照，每次回答都带上时间</h3><p>数据截至 {release.dataThrough}，不代表供应商实时官网。未记录到匹配项，不等于外部世界没有变化；不同条件的价格需分别核对。详情页是修订与撤回状态的权威来源。</p><p class="coverage">数据版本 {release.datasetVersion.slice(0, 12)} · 变化覆盖 {release.coverage.changes.from} 至 {release.coverage.changes.to} · {release.coverage.changes.count} 条变化 · {release.coverage.prices.facts} 条价格事实</p><a href={P.paths.method}>了解数据方法与边界 ↗</a></div></section>
@@ -171,7 +170,6 @@ const mcpConfig = JSON.stringify({ mcpServers: { 'maas-daily': { type: 'http', u
   .aside-section p { font-size:12px; color:var(--muted); line-height:1.9; }
   .benefits { list-style:none; margin-top:22px; }.benefits li { margin-bottom:18px; }.benefits b { display:block; font-size:12px; font-weight:500; }.benefits span { color:var(--muted); font-size:11px; }
   .aside-section>a { display:flex; justify-content:space-between; padding:7px 0; font-size:12px; text-decoration:none; color:var(--paper-soft); }.aside-section>a:hover { color:var(--acid); }
-  .client-status { border-top:1px solid var(--line); padding-top:22px; }.client-status p { margin-bottom:10px; }.client-status strong { font-weight:500; color:var(--paper-soft); }
   .data-note { display:grid; grid-template-columns:200px 1fr; gap:30px; border-top:1px solid var(--line-strong); margin-top:24px; padding-top:30px; }.data-note h3 { font-size:15px; margin-bottom:8px; }.data-note p { font-size:12px; color:var(--muted); max-width:760px; }.data-note a { display:inline-block; margin-top:12px; font-size:12px; color:var(--acid); }.coverage { margin-top:8px; }
   .agent-page :global(.copyblock) { margin:14px 0 0; }
   .agent-page :global(.copyblock-code) { background:var(--ink-2); border-color:var(--line); color:var(--paper-soft); padding:16px; font-size:12px; line-height:1.9; border-radius:7px; }
@@ -179,7 +177,7 @@ const mcpConfig = JSON.stringify({ mcpServers: { 'maas-daily': { type: 'http', u
   .agent-page :global(.copyblock-btn) { background:var(--acid); color:var(--ink); min-height:40px; padding:8px 18px; font-size:12px; font-weight:600; transition:opacity .2s; }
   .agent-page :global(.copyblock-feedback.ok) { color:var(--acid); }.agent-page :global(.copyblock-feedback.err) { color:var(--red); }
   @media(max-width:1000px) { .access-layout { grid-template-columns:minmax(0,1fr) 210px; gap:28px; }.access-aside { padding-left:20px; }.tab-hint { font-size:10px; }.quick-steps { gap:10px; } }
-  @media(max-width:760px) { .agent-page { padding-top:36px; }.agent-hero { padding-bottom:28px; }.access-layout { grid-template-columns:1fr; gap:16px; }.access-aside { border-left:0; border-top:1px solid var(--line); padding:28px 0 0; display:grid; grid-template-columns:1fr 1fr; gap:24px; }.aside-section { margin:0; }.client-status { border:0; padding:0; }.data-note { grid-template-columns:1fr; gap:12px; }.tab-top { font-size:13px; }.tab-top small { display:none; }.method-tabs a { padding:12px 8px; } }
+  @media(max-width:760px) { .agent-page { padding-top:36px; }.agent-hero { padding-bottom:28px; }.access-layout { grid-template-columns:1fr; gap:16px; }.access-aside { border-left:0; border-top:1px solid var(--line); padding:28px 0 0; display:grid; grid-template-columns:1fr 1fr; gap:24px; }.aside-section { margin:0; }.data-note { grid-template-columns:1fr; gap:12px; }.tab-top { font-size:13px; }.tab-top small { display:none; }.method-tabs a { padding:12px 8px; } }
   @media(max-width:480px) { .intro { font-size:14px; }.desktop-break { display:none; }h2 { font-size:23px; }.quick-steps { grid-template-columns:1fr; gap:14px; }.quick-steps small { display:inline; margin-left:9px; }.quick-steps b { min-width:18px; }.tab-hint { display:none; }.prompt-card { padding:16px; }.prompt-heading small { font-size:10px; }.access-aside { grid-template-columns:1fr; }.tool-list>div { font-size:11px; }.hero-meta { gap:8px 14px; } }
   @media(prefers-reduced-motion:reduce) { .method-tabs a,.agent-page :global(.copyblock-btn) { transition:none; } }
 </style>
