@@ -5,6 +5,7 @@ semantic snapshot identities remain in archival metadata and migration manifests
 """
 from __future__ import annotations
 import hashlib
+from collections import OrderedDict
 import os
 import re
 import tempfile
@@ -78,30 +79,49 @@ class CachedBlobReader:
         if max_bytes < 0: raise ValueError('negative cache budget')
         self.backend = backend; self.cache = FilesystemBlobStore(cache)
         self.max_bytes = max_bytes; self.hits = 0; self.misses = 0
+        self.entries = OrderedDict(); self.payload_bytes = 0
         self.prune()
 
+    def _trim(self):
+        while self.payload_bytes > self.max_bytes and self.entries:
+            digest, size = self.entries.popitem(last=False)
+            self.cache.path(digest).unlink(missing_ok=True); self.payload_bytes -= size
+        return self.payload_bytes
+
+    def _discard(self, digest):
+        self.cache.path(digest).unlink(missing_ok=True)
+        self.payload_bytes -= self.entries.pop(digest, 0)
+
     def prune(self):
+        # Scan on initialization/explicit audit, rather than once for every restored blob.
         safe_path(self.cache.root, '.')
         paths = []
         if self.cache.root.exists():
             for p in self.cache.root.glob('sha256/*/*'):
                 if p.is_symlink(): raise BlobIntegrityError('cache symlink rejected')
                 if p.is_file() and re.fullmatch('[0-9a-f]{64}', p.name): paths.append(p)
-        total = sum(p.stat().st_size for p in paths)
-        for p in sorted(paths, key=lambda p: (p.stat().st_mtime_ns, p.name)):
-            if total <= self.max_bytes: break
-            total -= p.stat().st_size; p.unlink()
-        return total
+        paths.sort(key=lambda p: (p.stat().st_mtime_ns, p.name))
+        self.entries = OrderedDict((p.name,p.stat().st_size) for p in paths)
+        self.payload_bytes = sum(self.entries.values())
+        return self._trim()
 
     def get(self, sha256: str, *, expected_bytes: int | None = None) -> bytes:
         path = self.cache.path(sha256)
         if path.exists():
             try: raw = self.cache.get(sha256, expected_bytes=expected_bytes)
-            except BlobIntegrityError: path.unlink()  # A bad cache never authorizes bad bytes.
+            except BlobIntegrityError: self._discard(sha256)
             else:
-                self.hits += 1; os.utime(path, None); return raw
+                self.hits += 1; os.utime(path, None)
+                if sha256 not in self.entries:
+                    self.entries[sha256] = len(raw); self.payload_bytes += len(raw)
+                self.entries.move_to_end(sha256); self._trim()
+                return raw
+        else:
+            self.payload_bytes -= self.entries.pop(sha256, 0)
         self.misses += 1
         raw = self.backend.get(sha256, expected_bytes=expected_bytes)
         if len(raw) <= self.max_bytes:
-            self.cache.putIfAbsent(sha256, raw); self.prune()
+            self.cache.putIfAbsent(sha256, raw)
+            self.entries[sha256] = len(raw); self.payload_bytes += len(raw)
+            self._trim()
         return raw

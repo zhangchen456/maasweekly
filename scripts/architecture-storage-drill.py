@@ -83,7 +83,7 @@ def main():
     # Dependency cache is copied from the locked local environment; it is not recovered business input.
     shutil.copytree(source/'site/node_modules',destination/'site/node_modules',symlinks=True)
     report['stages'].append(run(['npm','run','build'],destination/'site',evidence/'site-build.txt'))
-    report['builtPages']=sum(1 for p in (destination/'site/dist').rglob('*.html'))
+    report['builtHtmlFiles']=sum(1 for p in (destination/'site/dist').rglob('*.html'))
     # Missing/corrupt/unavailable object failures leave isolated candidates unbuildable.
     digest=next(iter(unique));original_blob=store.get(digest);faults=[]
     for kind in ('missing','corrupt','unreachable'):
@@ -103,6 +103,6 @@ def main():
     report['faults']=faults
     orphan=b'orphan only for cleanup dry run';orphan_hash=checksum(orphan);store.putIfAbsent(orphan_hash,orphan)
     cleanup=cleanup_plan(store.root,[manifest],now=time.time()+15*86400,grace_seconds=14*86400);assert [r['blobId'] for r in cleanup['candidates']]==['blob_'+orphan_hash];assert store.path(orphan_hash).exists();report['cleanupDryRun']=cleanup
-    (evidence/'drill.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps({'files':report['files'],'uniqueBytes':report['uniqueBytes'],'builtPages':report['builtPages'],'evidence':str(evidence)}))
+    (evidence/'drill.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps({'files':report['files'],'uniqueBytes':report['uniqueBytes'],'builtHtmlFiles':report['builtHtmlFiles'],'evidence':str(evidence)}))
 
 if __name__=='__main__':main()
