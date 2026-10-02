@@ -34,5 +34,7 @@ AR-03全量收尾：候选0ba9ee17ad、干净clone标准release49/49通过302.16
 ## AR-04 实施进展
 - 八家适配器独立 checkpoint 48e0c94ee；17 fixture 与冻结旧抽取器的事实/证据/warning 逐项一致。
 - 价格、信源、榜单和标准数据写入入口接入单写入方运行协议、固定输入视图、提交点与恢复/撤销。价格有界并发 2、同域限速、传输重试，原观察时间保留。
-- 实际价格 CLI 子进程归档后 os._exit、无 HTTP 恢复、两次离线幂等通过；源/榜单恢复、dry-run、浏览器 singleflight/context 释放、提交点及孤立修订撤销、输入缓存上限测试通过（13 个测试）。正式全量回归待执行。
+- 实际价格 CLI 子进程归档后 os._exit、无 HTTP 恢复、两次离线幂等通过；源/榜单恢复、dry-run、浏览器 singleflight/context 释放、提交点及孤立修订撤销、输入缓存上限测试通过（18 个测试）。正式全量回归待执行。
 - 两家官方网页 deepseek/qwen dry-run 成功：12/2088 facts，退出 0；未写业务数据，不把真实网页漂移当 fixture 合同。
+
+- 增补 unchanged 成功状态、旧观察离线重放不覆盖 current/事件/原始槽位、通用来源冻结对比快照与 offline-preview；畸形榜单 JSON 保留原响应且不再次 HTTP 重试。先前 50/50 通过，最终改动将重新执行全量标准 release。

@@ -47,6 +47,7 @@ DRY_RUN = False
 
 def configure_root(root):
     global BASE_DIR, LB_DIR, REGISTRY_PATH, LOGO_DIR, SNAPSHOT_DIR
+    root = root.resolve()
     BASE_DIR = root; LB_DIR = root / 'data/derived/leaderboards'
     REGISTRY_PATH = root / 'data/normalized/platform-logos.json'
     LOGO_DIR = root / 'site/public/logos/official'; SNAPSHOT_DIR = root / 'data/snapshots'
@@ -75,6 +76,19 @@ VENDOR_MAP = {
 OTHER_VENDOR = "Other"  # rankings-daily 聚合长尾行
 
 
+def retain_invalid_response(url, raw):
+    run = current_journal()
+    if not run or DRY_RUN: return
+    from staged_fetch import source_key
+    from pricing.base import ContentSnapshot
+    import time
+    key = source_key(url); sha = hashlib.sha256(raw.encode()).hexdigest()
+    run.stage_snapshot(key, ContentSnapshot(snapshot_id='invalid_' + sha, source_key=key, url=url,
+        fetched_at=time.time(), http_status=200, content_type='application/json', sha256=sha, content=raw,
+        fetcher_version='leaderboard-json-1'), run.data['sources'].get(key, {}).get('attemptId'))
+    run.source_result(key, {'snapshotErrorCode': 'schema_failed'})
+
+
 def _fetch_json(url: str, api_key: str):
     """curl 抓 JSON，返回 (data, error)。校验 HTTP/JSON/结构。"""
     try:
@@ -89,14 +103,20 @@ def _fetch_json(url: str, api_key: str):
             return None, f"HTTP {result.returncode} (stderr: {result.stderr[:150]})"
         data = json.loads(raw)
         if not isinstance(data.get("data"), list) or not data.get("data"):
+            retain_invalid_response(url, raw)
             return None, "响应 data 为空"
         if not data.get("meta", {}).get("as_of"):
+            retain_invalid_response(url, raw)
             return None, "响应缺 meta.as_of"
         return data, None
     except subprocess.TimeoutExpired:
         return None, "curl 超时 (40s)"
     except json.JSONDecodeError:
+        retain_invalid_response(url, raw)
         return None, "JSON 解析失败"
+    except (TypeError, AttributeError):
+        retain_invalid_response(url, raw)
+        return None, "JSON 结构非法"
     except Exception as e:
         return None, f"请求失败: {e}"
 
@@ -573,12 +593,16 @@ def fetch_apps(api_key: str, today: str, dry_run: bool) -> bool:
 
 
 def main():
-    global DRY_RUN
+    global DRY_RUN, LB_DIR, SNAPSHOT_DIR
     parser = argparse.ArgumentParser(description="OpenRouter 榜单数据抓取")
     parser.add_argument("--dry-run", action="store_true", help="不写文件")
     parser.add_argument("--only", choices=["rankings", "session-cost", "apps"], help="只跑指定数据集")
     args = parser.parse_args(); DRY_RUN = args.dry_run
 
+    run = current_journal()
+    if run and run.data.get('offline'):
+        preview = run.path.parent / 'offline-preview'
+        LB_DIR = preview / 'leaderboards'; SNAPSHOT_DIR = preview / 'snapshots'
     api_key = os.environ.get("OPENROUTER_API_KEY")
 
     if not api_key and not (current_journal() and (current_journal().recover or current_journal().data.get('offline'))):
@@ -614,7 +638,7 @@ def main():
     # 第二次检查：抓取可能引入新 vendor/app，当轮发现当轮补全
     if not args.dry_run and not (current_journal() and current_journal().data.get("offline")): _run_logo_check()
 
-    if not args.dry_run: project_site(BASE_DIR)
+    if not args.dry_run and not (run and run.data.get('offline')): project_site(BASE_DIR)
     if results and ok == 0:
         return 1  # 全部失败才报错（CI continue-on-error 兜底）
     return 0

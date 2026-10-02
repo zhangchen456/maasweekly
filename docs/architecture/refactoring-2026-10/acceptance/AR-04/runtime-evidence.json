@@ -1,6 +1,6 @@
 {
   "date": "2026-10-02",
-  "runtimeTests": 13,
+  "runtimeTests": 18,
   "liveCommand": "python3 pipeline/scripts/fetch-prices.py --only deepseek,qwen --concurrency 2 --dry-run",
   "liveExitCode": 0,
   "liveAcceptedFacts": {
@@ -34,14 +34,14 @@
     "pipeline/pricing/normalize.py": "d1407392cfee81ae8bd7a8937f3218186786b313f1d9787141635182480aec34",
     "pipeline/pricing/providers.py": "94d702a442dd447e5209028f387df622eacdff7a46ad8758914f8187a6436eb9",
     "pipeline/pricing/registry.py": "e7753340920707d418b0adeaaa0d76c2ea625f7be6565d2835311955fbffefc7",
-    "pipeline/pricing/runner.py": "8804c9d8f6884cdc11e1ce6af23e7202198f0fab7f030eba9051d3c55a1cfb7c",
+    "pipeline/pricing/runner.py": "8c6112f513045d3a6819145da5a217c89c273b6f96cbcdd146da55e1a20ad98e",
     "pipeline/pricing/view_data.py": "787d5c42b45036b1a4c15662faad00cc56afa67ef68ac16f416c28060c5fff2b",
     "pipeline/public_export/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "pipeline/public_export/canonical.py": "d21833b568252a8ecc2847e8ae0f893b3957ddfa7fff40aecb0ebfb71432043c",
     "pipeline/public_export/loaders.py": "88ac14d9bfb64c6817e457ed47fd90ecec838b745efaffeebee0b746a2969d86",
     "pipeline/public_export/projector.py": "8d0aeebb371ea26b3a858151b4813b8c4c1ae4d5d9a85ebb7b26781f70e8d81b",
     "pipeline/public_export/validator.py": "e1c12a06524aa879cc40e4790bafc9a3d28391e606398854ffd9eb873136d302",
-    "pipeline/run_protocol.py": "16584ead8fc326c7124ea3a8987d70e01e212c9126f6012ae2bca98401e84932",
+    "pipeline/run_protocol.py": "86fe6454f31ba53eb7c81b4387408a9efa4916d0d063577bdcfc4edea4b875e2",
     "pipeline/scripts/archive-price-evidence.py": "1d9a58810b9371bef7ebee640955a723729b6356bf980de33cd76fc4e37cd3b1",
     "pipeline/scripts/archive-source-changes.py": "f99aee2f005bbd400820180e7477ffce64d096a351bc5cf5d33cbdb654b1860f",
     "pipeline/scripts/audit-model-identities.py": "8fe75bb5d538b7295c6ea681173e62dc9b5185059d78401bf6fc09d06b723ab9",
@@ -49,9 +49,9 @@
     "pipeline/scripts/diff_clean.py": "72c03f8acca9f870b3c22763d6d30b3eac2d8b199fdb746e328073ce0f2a7f7b",
     "pipeline/scripts/export-public-data.py": "cf748a8890bf6cb0282d58909ecae5547a8b564d0c718a6c86ea4c0faf4249da",
     "pipeline/scripts/extract-live-events.py": "c3899b504f515c2c031bc6a5b958a883974b361cdbb071957fd2a081b9b9e12d",
-    "pipeline/scripts/fetch-leaderboards.py": "2ddd3e66966566cd3198790f3d19533bb79312b200b4c31da6d8d3c0181f064c",
-    "pipeline/scripts/fetch-prices.py": "3a517d20ca6115194d68cec8de7402a1973a861f8ae4a905dd28bd593deacfac",
-    "pipeline/scripts/fetch_sources.py": "d173215c80459f84b7211f155c1faaedd2bb7a9982b6f7c50c63285fcd26c105",
+    "pipeline/scripts/fetch-leaderboards.py": "6a8ee84df2a6594ebf0c33864d0f418bb6bc49f4896b8e11c380bc9cd696c3cf",
+    "pipeline/scripts/fetch-prices.py": "618ab57d456ee5eef9245b61802da6a35bae17a967c666a9a13f0d6a8de460d3",
+    "pipeline/scripts/fetch_sources.py": "5d9f881102db3a349b7d0a792ab871dc7607e3dda0d497f14e3df2f59b42f863",
     "pipeline/scripts/llm-digest.py": "314cbb8eb84c1b2ce3bd5b2e51ed557579a95ec844055ecaafc7f749ddd95644",
     "pipeline/scripts/llm-weekly-digest.py": "5c5b23ebc910451fe1563838055ff7759db74ddd76b4e19cba79b80bf269667f",
     "pipeline/scripts/migrate-standard-inputs.py": "106b3a1ae1a976ddd8d0b13e0a8a55831834de3e31ae5835e95004d1cd499a40",
@@ -64,9 +64,9 @@
     "pipeline/scripts/validate-developer-registry.py": "0873898aa983d1406c61a3c5a0414853eaf1f4587d5fe1132658dbb5e2967364",
     "pipeline/scripts/validate-model-registry.py": "5d2fb778203d0eaace9e59d88b75cdbadbf75a02095458abfeeb1289d561c1a5",
     "pipeline/scripts/validate-price-archive.py": "cb500c69d9791135d670c4b86627b629010495afd8ffa2f9f8af211be6cfffb1",
-    "pipeline/staged_fetch.py": "0bfb7aeb39e0d1dd4caede517854550203fdeb5e0ee4e97e08cea20a4bab94c3",
+    "pipeline/staged_fetch.py": "0f89609a219c7bd90e20e3572b3b3f860ca8d5d9453bd1d766f0044365bfc874",
     "scripts/architecture-recovery-bundle.py": "dec1cb466614d9d2a12e30e2558e35bf342ad92f1bc98b0df50ac7a804921177",
-    "tests/test_pipeline_runtime.py": "cbfcc0db05b9749a66cbfdb8b2330e21a7d76ba8aa26d87b2faadb7f7bf776a2"
+    "tests/test_pipeline_runtime.py": "4f0aa5cbd0789d85be4ca0d17b4ec63a9b271a5476251c07ab4fed6002c2f33d"
   },
   "leaderboardMigration": {
     "data/derived/leaderboards/terminal-bench.json": {
@@ -105,5 +105,6 @@
       "sha256": "10e6bbcaebb4e34cd9a16c989a0051af70498057314c84c5f89480528881060f",
       "oldSha256": "10e6bbcaebb4e34cd9a16c989a0051af70498057314c84c5f89480528881060f"
     }
-  }
+  },
+  "liveImplementationCommit": "a0d554c77c9d6ec60010866575a918e0c48d169b"
 }

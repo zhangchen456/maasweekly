@@ -24,7 +24,7 @@ async def collect(entries, *, journal=None, concurrency=2, offline=None, timeout
             version = extractor.version
             if state.get('snapshot') and state.get('extractorVersion') not in (None, version):
                 raise ValueError('staged extractor version differs; use the matching implementation')
-            if journal: journal.source_result(source, {'attemptId': attempt, 'phase': 'fetching', 'extractorVersion': version})
+            if journal: journal.source_result(source, {'attemptId': attempt, 'phase': 'fetching', 'extractorVersion': version, 'rulesVersion': 'normalize-1', 'schemaVersion': 1})
             snap = offline.get(source) if offline else None
             if snap is None and journal and journal.recover: snap = journal.snapshot(source)
             tried = 0

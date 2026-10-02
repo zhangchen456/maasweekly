@@ -30,6 +30,8 @@ python3 pipeline/scripts/fetch-leaderboards.py --recover boards_review_001 --onl
 python3 pipeline/scripts/fetch-leaderboards.py --dry-run --only session-cost
 ```
 
+通用信源/榜单离线执行在该 run 的 offline-preview/ 下生成复核产物，不替换 canonical diff、榜单或原始快照槽位，也不自动应用到站点。新的真实采集才更新这些产物。
+
 通用同步写入方的恢复需重传原业务参数，协议检查 argv 一致。通用信源重试限制到失败 URL；榜单重试限制到失败的逻辑数据集，排名类会连同配对的比较窗口取回。榜单 dry-run 不写原始响应、注册表或图标；没有 API key 时 outcome=not_run，保留数据。通用信源及摘要/导入写入方的 dry-run 跳过执行并打印说明，不生成差异。
 
 信源和榜单沿用串行传输与原 curl 超时（30/40 秒），增加一次有退避的传输重试；价格初始并发 2，允许 1–3，同域串行、开始间隔至少 1 秒，整体请求超时 120 秒、一次退避重试。解析/Schema 失败不重新联网。抓取与解析可以并行，归档、current 与投影只有一个写入方，`data/.pipeline.lock` 还防止不同入口竞争。

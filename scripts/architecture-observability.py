@@ -36,7 +36,7 @@ def aggregate(events, previous=None):
             attempt = (event.get('runId'), source, event.get('attemptId'))
             if attempt in seen_attempts: continue
             seen_attempts.add(attempt)
-            outcome = event.get('outcome')
+            outcome = 'success' if event.get('outcome') == 'unchanged' else event.get('outcome')
             if outcome == 'success': source_failures[source] = 0
             elif outcome == 'failed': source_failures[source] = source_failures.get(source, 0) + 1
             # not_run is not a success and does not clear previous failures.
