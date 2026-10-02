@@ -69,6 +69,10 @@ const reload = async (force = false) => {
   logger?.emit({ kind: 'dataset.load', releaseId, datasetVersion: holder.current?.version ?? null,
     result, force, elapsedMs: performance.now() - started,
     errorCode: result === 'failed' ? 'dataset_load_failed' : null,
+    dataCounts: result === 'changed' && holder.current ? { changes: holder.current.changes.length,
+      prices: holder.current.prices.length, evidence: holder.current.evidenceById.size,
+      unresolvedPrices: holder.current.prices.filter(price => !price.modelId).length } : undefined,
+    evidenceIntegrity: result === 'changed' ? 'validated' : undefined,
     cache: holder.cacheState, counters: { ...holder.metrics } });
   return result;
 };

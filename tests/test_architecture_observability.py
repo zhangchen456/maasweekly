@@ -29,3 +29,43 @@ class DiagnosticsTests(unittest.TestCase):
         self.assertEqual(len(report['activeAlerts']), 4)
         events += [{'kind': 'runtime.sample', 'health': {'ready': True, 'freshness': 'fresh'}}, {'kind': 'dataset.load', 'result': 'changed'}, {'kind': 'release.result', 'outcome': 'success'}, {'kind': 'pipeline.source', 'sourceId': 'test', 'attemptId': 2, 'outcome': 'success', 'countRatio': 1}]
         self.assertEqual(module.aggregate(events, report)['activeAlerts'], {})
+
+    def test_real_build_preflight_outcome_and_disable(self):
+        import os, shutil, subprocess, tempfile
+        base = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory(prefix='ar08-build-') as temp:
+            root = Path(temp)
+            def git(*args): subprocess.run(['git', '-C', temp, *args], check=True, capture_output=True)
+            git('init'); git('config', 'user.name', 'test'); git('config', 'user.email', 'test@example.invalid')
+            (root/'tracked').write_text('one'); git('add', '.'); git('commit', '-m', 'fixture')
+            env = {**os.environ, 'MAAS_RELEASE_REPO': temp}
+            def run(): return subprocess.run(['bash', str(base/'scripts/build-release.sh'), '--preflight-only'], env=env, capture_output=True, text=True)
+            clean = run(); self.assertEqual(clean.returncode, 0)
+            import json
+            events = [json.loads(line) for line in clean.stderr.splitlines() if line.startswith('{')]
+            self.assertEqual(events[-1]['kind'], 'release.result'); self.assertEqual(events[-1]['outcome'], 'success')
+            self.assertEqual(len(events[-1]['gitCommit']), 40)
+            (root/'tracked').write_text('two')
+            failed = run(); self.assertEqual(failed.returncode, 1)
+            bad = [json.loads(line) for line in failed.stderr.splitlines() if line.startswith('{')]
+            state = module.aggregate(bad); self.assertIn('release:preflight', state['activeAlerts'])
+            self.assertEqual(module.aggregate(bad, state)['transitions'], [])
+            self.assertEqual(module.aggregate(events, state)['transitions'], [{'key':'release:preflight','state':'recovered'}])
+            env['MAAS_RELEASE_DIAGNOSTICS']='0'
+            disabled = run(); self.assertEqual(disabled.returncode, 1); self.assertNotIn('release.result', disabled.stderr)
+
+    def test_operations_do_not_clear_other_release_failure(self):
+        state = module.aggregate([{'kind':'release.result','operation':'activate','outcome':'failed'}])
+        report = module.aggregate([{'kind':'release.result','operation':'build','outcome':'success'}], state)
+        self.assertIn('release:activate', report['activeAlerts'])
+        self.assertEqual(report['transitions'], [])
+
+    def test_mixed_window_overflow_preserves_previous_state(self):
+        import json, subprocess, sys, tempfile
+        with tempfile.TemporaryDirectory(prefix='ar08-window-') as temp:
+            root=Path(temp); log=root/'log'; state=root/'state'
+            state.write_text('{"activeAlerts":{}}')
+            log.write_text('normal build text\n{not json\n'+json.dumps({'kind':'release.result','outcome':'failed'})+'\n')
+            script=Path(module.__file__)
+            run=subprocess.run([sys.executable,str(script),str(log),'--mixed','--state',str(state),'--max-events','0'],capture_output=True)
+            self.assertNotEqual(run.returncode,0); self.assertEqual(state.read_text(),'{"activeAlerts":{}}')

@@ -59,8 +59,11 @@ def aggregate(events, previous=None):
             if event.get('result') == 'failed': alerts['data:load'] = 'load_failed'
             elif event.get('result') == 'changed': alerts.pop('data:load', None)
         elif kind == 'release.result':
-            if event.get('outcome') == 'failed': alerts['release:candidate'] = 'candidate_failed'
-            elif event.get('outcome') == 'success': alerts.pop('release:candidate', None)
+            operation = event.get('operation', 'candidate')
+            if operation not in ('candidate', 'preflight', 'build', 'activate', 'rollback'): continue
+            key = 'release:' + operation
+            if event.get('outcome') == 'failed': alerts[key] = 'candidate_failed'
+            elif event.get('outcome') == 'success': alerts.pop(key, None)
     report = {}
     for route, values in counts.items():
         timings = sorted(routes[route])
@@ -79,14 +82,24 @@ def aggregate(events, previous=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('log', type=Path)
+    parser.add_argument('--mixed', action='store_true', help='extract internal JSON objects from CI text logs')
+    parser.add_argument('--max-events', type=int, default=100000, help='bounded aggregation window; reject overflow without updating state')
     parser.add_argument('--state', type=Path, help='optional previous alert state, atomically replaced')
     args = parser.parse_args()
     previous = json.loads(args.state.read_text()) if args.state and args.state.exists() else None
     events = []
     with args.log.open() as stream:
         for line in stream:
+            if args.mixed and not line.startswith('{'): continue
             if len(line) > 8192: raise ValueError('oversized diagnostic line')
-            if line.strip(): events.append(json.loads(line))
+            if line.strip():
+                try: event = json.loads(line)
+                except ValueError:
+                    if args.mixed: continue
+                    raise
+                if not isinstance(event, dict) or not isinstance(event.get('kind'), str): continue
+                events.append(event)
+                if len(events) > args.max_events: raise ValueError('diagnostic window exceeds max-events')
     result = aggregate(events, previous)
     result['generatedAt'] = datetime.now(timezone.utc).isoformat()
     if args.state:
