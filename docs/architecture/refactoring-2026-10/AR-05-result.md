@@ -1,6 +1,6 @@
 # AR-05 验收结果
 
-状态：DONE_LOCAL / WORKFLOW_ROLLOUT_PENDING。2026-10-02（Asia/Shanghai）。实施候选 `cb03a05b826692546e7e5f1835565bca28ff7c01`，未推送/部署。
+状态：RELEASED（2026-10-02），见[线上验收](./release-2026-10-02.md)。 以下实施候选及本地验收描述保留历史记录。
 
 ## 实现
 

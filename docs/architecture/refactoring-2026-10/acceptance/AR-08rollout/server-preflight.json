@@ -1,0 +1,44 @@
+{
+  "releaseId": "rl_8ebc6b9e4e_0da7f0c0f2bc",
+  "expectedDatasetVersion": "ds_0da7f0c0f2bcd5df62281a262539b65a1742e3fbd710a14724359b58675c1b13",
+  "scope": "Non-public loopback transient service; existing production pointer unchanged",
+  "rest": {
+    "status": 200,
+    "changes?limit=1": 200,
+    "prices?limit=1": 200,
+    "models": 200
+  },
+  "priorProductionCursorContinues": true,
+  "historicalCursor": {
+    "version": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+    "status": 200,
+    "elapsedMs": 1540.6150948256254,
+    "scope": "internally signed contract fixture"
+  },
+  "traffic": {
+    "concurrency": 10,
+    "requests": 60,
+    "p95Ms": 67.96500086784363,
+    "maxMs": 78.34902498871088,
+    "allSuccessful": true
+  },
+  "cursorAfterReload": true,
+  "limiter": {
+    "clientALimited": true,
+    "clientBStatus": 200,
+    "attempts": 61
+  },
+  "mcp": {
+    "status": 200,
+    "independentOfRestQuota": true,
+    "datasetVersion": "ds_0da7f0c0f2bcd5df62281a262539b65a1742e3fbd710a14724359b58675c1b13"
+  },
+  "service": {
+    "ActiveState": "active",
+    "MemoryCurrent": "413306880",
+    "MemoryPeak": "486608896",
+    "MemoryMax": "805306368"
+  },
+  "publicPointer": "releases/rl_6efd666e1f_0da7f0c0f2bc",
+  "availableKiB": 774436
+}

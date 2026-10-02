@@ -1,6 +1,6 @@
 # AR-04：信源适配器与可恢复管线
 
-状态：LOCAL_VERIFIED；结果见 [AR-04-result.md](./AR-04-result.md)。优先级：P2。依赖：AR-03。
+状态：RELEASED（2026-10-02），见[线上验收](./release-2026-10-02.md)。
 
 ## 目标与范围
 

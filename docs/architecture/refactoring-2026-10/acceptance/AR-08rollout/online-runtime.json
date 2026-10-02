@@ -1,0 +1,44 @@
+{
+  "releaseId": "rl_8ebc6b9e4e_0da7f0c0f2bc",
+  "datasetVersion": "ds_0da7f0c0f2bcd5df62281a262539b65a1742e3fbd710a14724359b58675c1b13",
+  "apiQuota": {
+    "clientALimited": true,
+    "attempts": 61,
+    "clientBStatus": 200,
+    "mcpIndependentStatus": 200,
+    "scope": "controlled distinct proxy identities on trusted loopback"
+  },
+  "nginxOverwritesSpoofedClientHeader": true,
+  "nginxQuota": {
+    "requests": 30,
+    "responses429": 20,
+    "problemJson": true,
+    "retryAfter": true,
+    "cors": true,
+    "scope": "bounded local source burst; no public visitor quota touched"
+  },
+  "status": "current:  rl_8ebc6b9e4e_0da7f0c0f2bc\nprevious: rl_6efd666e1f_0da7f0c0f2bc\nslots:    {\n  \"rid_to_slot\": {\n    \"rl_6efd666e1f_0da7f0c0f2bc\": \"blue\",\n    \"rl_8ebc6b9e4e_0da7f0c0f2bc\": \"green\"\n  },\n  \"slot_to_rid\": {\n    \"blue\": \"rl_6efd666e1f_0da7f0c0f2bc\",\n    \"green\": \"rl_8ebc6b9e4e_0da7f0c0f2bc\"\n  }\n}\nreleases: rl_0c3f66089e_24f83f7ea886 rl_12692c5951_0d06b4202336 rl_1399074a8a_0d06b4202336 rl_1b44dae2f5_6fd3cc403bf9 rl_1d65039673_6fd3cc403bf9 rl_1de1eedaef_6fd3cc403bf9 rl_30593edc54_27a267f0ce08 rl_31c918e04d_24f83f7ea886 rl_3619aed4e5_23022902ffc5 rl_4428186735_27a267f0ce08 rl_5df49ba3c2_ad2f4eb32b99 rl_65fe566e50_8b9fb7b09ead rl_6efd666e1f_0da7f0c0f2bc rl_72457f6cc2_795f17baf749 rl_75b8a1d8c7_1925cbc6adaf rl_77f48c7b53_24f83f7ea886 rl_880e8ccff1_1925cbc6adaf rl_8ebc6b9e4e_0da7f0c0f2bc rl_8f22cd3877_57b98d96fe9b rl_97afdbdf80_6fd3cc403bf9 rl_9b81a07f52_24f83f7ea886 rl_a3d1a460b1_24f83f7ea886 rl_b138dbb8d2_57b98d96fe9b rl_b29035eef9_6fd3cc403bf9 rl_c982644810_03c2bf0b968d rl_d825af8793_27a267f0ce08 rl_df4f2f0b24_3911a1c6cde3 rl_f5fb68b323_6fd3cc403bf9 rl_f684fc186c_1925cbc6adaf \nincoming: \ndatasetVersion: ds_0da7f0c0f2bcd5df62281a262539b65a1742e3fbd710a14724359b58675c1b13\ndataThrough:    2026-10-02\ngitCommit:      8ebc6b9e4e8049313546ed79ba7d7a03eae48737\n--- \u6700\u8fd1\u6fc0\u6d3b ---\n[2026-10-01T08:42:39Z] activate rl_97afdbdf80_6fd3cc403bf9 ok (commit=97afdbdf80)\n[2026-10-01T12:11:01Z] activate rl_1de1eedaef_6fd3cc403bf9 ok (commit=1de1eedaef)\n[2026-10-01T12:33:21Z] activate rl_b29035eef9_6fd3cc403bf9 ok (commit=b29035eef9)\n[2026-10-02T00:41:00Z] activate rl_6efd666e1f_0da7f0c0f2bc ok (commit=6efd666e1f)\n[2026-10-02T04:34:49Z] activate rl_8ebc6b9e4e_0da7f0c0f2bc ok (commit=8ebc6b9e4e)\n",
+  "units": "Id=maas-agent@blue.service\nActiveState=inactive\nMemoryCurrent=[not set]\nMemoryPeak=[not set]\nMemoryMax=infinity\n\nId=maas-agent@green.service\nActiveState=active\nMemoryCurrent=259723264\nMemoryPeak=377520128\nMemoryMax=infinity\n",
+  "availableKiB": 1151064,
+  "diagnostics": {
+    "events": 82,
+    "kinds": [
+      "api.request"
+    ],
+    "lastMetric": null,
+    "unexpectedPrivateFields": false
+  },
+  "releaseDiagnostic": {
+    "timestamp": "2026-10-02T04:34:49.436993+00:00",
+    "kind": "release.result",
+    "operation": "activate",
+    "outcome": "success",
+    "exitCode": 0,
+    "elapsedMs": 36000,
+    "timingResolutionMs": 1000,
+    "releaseId": "rl_8ebc6b9e4e_0da7f0c0f2bc",
+    "gitCommit": "8ebc6b9e4e8049313546ed79ba7d7a03eae48737",
+    "datasetVersion": "ds_0da7f0c0f2bcd5df62281a262539b65a1742e3fbd710a14724359b58675c1b13"
+  },
+  "diagnosticBytes": 356
+}
