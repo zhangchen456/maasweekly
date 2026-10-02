@@ -1,0 +1,756 @@
+{
+  "date": "2026-09-12",
+  "fetched_at": "2026-09-12T07:00:20.424065",
+  "stats": {
+    "total": 68,
+    "success": 65,
+    "failed": 3,
+    "changed": 16,
+    "unchanged": 49
+  },
+  "changes": [
+    {
+      "platform": "火山方舟",
+      "source_type": "model_list",
+      "url": "https://www.volcengine.com/docs/82379/1330310",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11071)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "pricing",
+      "url": "https://www.volcengine.com/docs/82379/1544106",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11071)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "changelog",
+      "url": "https://www.volcengine.com/docs/82379/1159177",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11071)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "blog",
+      "url": "https://www.volcengine.com/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "model_list",
+      "url": "https://help.aliyun.com/zh/model-studio/models",
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 3,
+      "added_lines": [
+        "| deepseek-v4-pro-0813 | deepseek-v4-flash-0731 | kimi/kimi-k3",
+        "| qwen3.7-text-embedding-flash | qwen3.7-text-embedding | qwen3-vl-embedding",
+        "| qwen3.7-text-rerank | |"
+      ],
+      "removed_lines": [
+        "| deepseek-v4-pro | deepseek-v4-flash-0731 | kimi/kimi-k3",
+        "| qwen3-rerank | |",
+        "| text-embedding-v4 | qwen3.7-text-embedding | tongyi-embedding-vision-plus"
+      ]
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "pricing",
+      "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "changelog",
+      "url": "https://help.aliyun.com/zh/model-studio/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "blog",
+      "url": "https://qwenlm.github.io/blog/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "model_list",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "pricing",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "changelog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Mmh8l4qwj",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "blog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "model_list",
+      "url": "https://cloud.tencent.com/document/product/1729/104753",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "pricing",
+      "url": "https://cloud.tencent.com/document/product/1729/97731",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "changelog",
+      "url": "https://cloud.tencent.com/document/product/1729/97765",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "blog",
+      "url": "https://cloud.tencent.com/document/product/1729/132069",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "model_list",
+      "url": "https://cloud.siliconflow.cn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "pricing",
+      "url": "https://siliconflow.cn/pricing",
+      "status": "changed",
+      "added_count": 10,
+      "removed_count": 13,
+      "added_lines": [
+        "-展开更多 30 个模型",
+        "Hy4 preview",
+        "Qwen/Qwen3.5-27B",
+        "Qwen3.5-27B",
+        "hunyuanZ-aideepseek-aimeituan-longcatKimiQwenTongyi-MAIBaiduStepfun-aiinclusionAIChinaTelecomByteDanceWanopenmossFunAudioLLMBAAIKolors",
+        "tencent/Hy4-preview",
+        "输入 [0, 128k)¥ 0.60",
+        "输入 [0, 128k)¥ 4.80",
+        "输入 [128k, +∞)¥ 1.80",
+        "输入 [128k, +∞)¥ 14.40"
+      ],
+      "removed_lines": [
+        "-展开更多 31 个模型",
+        "MiniMax-M2.5",
+        "MiniMax-M2.5 (Pro)",
+        "MiniMaxAI/MiniMax-M2.5",
+        "Pro/MiniMaxAI/MiniMax-M2.5",
+        "Qwen/Qwen3.5-397B-A17B",
+        "Qwen3.5-397B-A17B",
+        "Z-aideepseek-aimeituan-longcatKimiQwennex-agiMiniMaxAITongyi-MAIBaiduStepfun-aiinclusionAIChinaTelecomhunyuanByteDanceWanopenmossFunAudioLLMBAAIKolors",
+        "nex-agi/Nex-N2-Pro",
+        "输入 [0, 128k)¥ 1.20"
+      ]
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "changelog",
+      "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "图片生成 API 默认添加「AI 生成」显式水印：本次变更适用于通过 API 执行的图片生成请求。API 生成的图片将默认添加「AI 生成」显式水印，隐式水印固定添加。当且仅当开发者需要对生成图片执行下游的进一步处理时，才应显式传入 X-Enable-Watermark: 0 声明不添加显式水印；此时，开发者有法定义务自行对最终输出图片添加相关显式水印。"
+      ],
+      "removed_lines": [
+        "「AI 生成」水印默认添加：平台将为生成图片默认添加「AI 生成」水印。如需生成不带水印的图片，请在请求 Header 中显式传入 X-Enable-Watermark: 0，否则生成的图片将带有水印。"
+      ]
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "blog",
+      "url": "https://siliconflow.cn/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "model_list",
+      "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "pricing",
+      "url": "https://bigmodel.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "changelog",
+      "url": "https://docs.bigmodel.cn/cn/update/new-releases",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "blog",
+      "url": "https://www.bigmodel.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "model_list",
+      "url": "https://platform.kimi.com/docs/api/models-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "pricing",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
+      "status": "changed",
+      "added_count": 6,
+      "removed_count": 6,
+      "added_lines": [
+        "Kimi K2.6 模型介绍",
+        "Kimi K2.7 Code 模型介绍",
+        "Kimi K3 模型介绍",
+        "各模型的能力介绍与适用场景见对应的模型指南：",
+        "模型推理接口对 Input 和 Output 均实行按量计费。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。",
+        "此处 1M = 1,000,000，表格中的价格代表每消耗 1M tokens 的价格。"
+      ],
+      "removed_lines": [
+        "Chat Completion 接口收费：我们对 Input 和 Output 均实行按量计费。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）接口限时免费，即您只上传并抽取文档，这个API本身不会产生费用。",
+        "Kimi K2.7 Code",
+        "Kimi 的 Coding 模型，多模态模型",
+        "旗舰模型，1M token 上下文",
+        "计费方式调整通知自 9 月 14 日 0:00 起，Kimi API 开放平台（platform.kimi.com）账户消耗将按现金、代金券各 50% 的统一比例扣除；当现金或代金券任一余额用尽后，后续账户消耗将全额从另一类余额中扣除。已签署合同的用户以合同约定为准，继续优先消耗代金券，不受此次调整影响。",
+        "请查看各模型的详细定价："
+      ]
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "changelog",
+      "url": "https://platform.kimi.com/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "blog",
+      "url": "https://www.moonshot.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "model_list",
+      "url": "https://platform.minimaxi.com/docs/guides/models-intro",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "pricing",
+      "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "changelog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "blog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "model_list",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 2,
+      "added_lines": [
+        "(2) 为响应广大用户的需求，我们决定在 2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变；如有变动，我们将另行通知。感谢您的理解与支持！",
+        "(4) 更多并发限制细节，请参考\u0000限速与隔离。"
+      ],
+      "removed_lines": [
+        "(2) 经多方测试，V4.1 Flash 在性能、费用、速度、总用时等各项指标上已全面超越 V4 Pro，因此我们计划有序下线 V4 Pro。北京时间 2026 年 9 月 14 日 12:00 之后，至未来 V4.1 Pro 上线之前，您访问 deepseek-v4-pro 的请求将全部路由到 V4.1 Flash，并按 V4.1 Flash 价格计费。",
+        "(4) 更多并发限制细节，请参考限速与隔离。"
+      ]
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "pricing",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 2,
+      "added_lines": [
+        "(2) 为响应广大用户的需求，我们决定在 2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变；如有变动，我们将另行通知。感谢您的理解与支持！",
+        "(4) 更多并发限制细节，请参考\u0000限速与隔离。"
+      ],
+      "removed_lines": [
+        "(2) 经多方测试，V4.1 Flash 在性能、费用、速度、总用时等各项指标上已全面超越 V4 Pro，因此我们计划有序下线 V4 Pro。北京时间 2026 年 9 月 14 日 12:00 之后，至未来 V4.1 Pro 上线之前，您访问 deepseek-v4-pro 的请求将全部路由到 V4.1 Flash，并按 V4.1 Flash 价格计费。",
+        "(4) 更多并发限制细节，请参考限速与隔离。"
+      ]
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "changelog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "(2) In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!"
+      ],
+      "removed_lines": [
+        "(2) After extensive testing, V4.1 Flash has comprehensively surpassed V4 Pro in performance, cost, speed, and total time, so we plan to retire V4 Pro in an orderly manner. From 12:00 Beijing Time on September 14, 2026, and until V4.1 Pro is released in the future, requests to deepseek-v4-pro will all be routed to V4.1 Flash and billed at the V4.1 Flash price."
+      ]
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "blog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "(2) In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!"
+      ],
+      "removed_lines": [
+        "(2) After extensive testing, V4.1 Flash has comprehensively surpassed V4 Pro in performance, cost, speed, and total time, so we plan to retire V4 Pro in an orderly manner. From 12:00 Beijing Time on September 14, 2026, and until V4.1 Pro is released in the future, requests to deepseek-v4-pro will all be routed to V4.1 Flash and billed at the V4.1 Flash price."
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "model_list",
+      "url": "https://platform.openai.com/docs/models",
+      "status": "changed",
+      "added_count": 7,
+      "removed_count": 8,
+      "added_lines": [
+        "Account Management",
+        "Bidding & Budgets",
+        "Campaign Management",
+        "Conversion Tracking",
+        "GPT-RosalindLife sciences reasoning for approved organizationsgpt-rosalind-research",
+        "Models for life sciences research",
+        "Rethinking skills and prompts for GPT-6 Astra"
+      ],
+      "removed_lines": [
+        "API Partner Setup",
+        "Campaign Targeting",
+        "Conversion-Optimized Campaigns",
+        "Custom Audiences",
+        "Delta Feeds API",
+        "Location Targeting",
+        "Meet the winners of OpenAI Build Week",
+        "Platform Targeting"
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "pricing",
+      "url": "https://platform.openai.com/docs/pricing",
+      "status": "changed",
+      "added_count": 7,
+      "removed_count": 8,
+      "added_lines": [
+        "Account Management",
+        "Bidding & Budgets",
+        "Billing for gpt-rosalind-research begins on October 5, 2026. Cache-write pricing does not apply to this model. Access is limited to approved internal research through the trusted-access program. All eligible organizations will continue to get access to the latest GPT-Rosalind models as they’re released.",
+        "Campaign Management",
+        "Conversion Tracking",
+        "Rethinking skills and prompts for GPT-6 Astra",
+        "| Life Sciences | gpt-rosalind-research | $5.00 | $0.50 | $25.00"
+      ],
+      "removed_lines": [
+        "API Partner Setup",
+        "Campaign Targeting",
+        "Conversion-Optimized Campaigns",
+        "Custom Audiences",
+        "Delta Feeds API",
+        "Location Targeting",
+        "Meet the winners of OpenAI Build Week",
+        "Platform Targeting"
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "changelog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "changed",
+      "added_count": 8,
+      "removed_count": 8,
+      "added_lines": [
+        "Account Management",
+        "Bidding & Budgets",
+        "Campaign Management",
+        "Conversion Tracking",
+        "GPT-Rosalind (gpt-rosalind-research) is now generally available through the trusted-access program for approved internal life sciences research.",
+        "Rethinking skills and prompts for GPT-6 Astra",
+        "Standard pricing is $5 per 1M input tokens, $0.50 per 1M cached input tokens, and $25 per 1M output tokens. Billing begins on October 5, 2026. See pricing for details.",
+        "gpt-rosalind-research"
+      ],
+      "removed_lines": [
+        "API Partner Setup",
+        "Campaign Targeting",
+        "Conversion-Optimized Campaigns",
+        "Custom Audiences",
+        "Delta Feeds API",
+        "Location Targeting",
+        "Meet the winners of OpenAI Build Week",
+        "Platform Targeting"
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "blog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "changed",
+      "added_count": 8,
+      "removed_count": 8,
+      "added_lines": [
+        "Account Management",
+        "Bidding & Budgets",
+        "Campaign Management",
+        "Conversion Tracking",
+        "GPT-Rosalind (gpt-rosalind-research) is now generally available through the trusted-access program for approved internal life sciences research.",
+        "Rethinking skills and prompts for GPT-6 Astra",
+        "Standard pricing is $5 per 1M input tokens, $0.50 per 1M cached input tokens, and $25 per 1M output tokens. Billing begins on October 5, 2026. See pricing for details.",
+        "gpt-rosalind-research"
+      ],
+      "removed_lines": [
+        "API Partner Setup",
+        "Campaign Targeting",
+        "Conversion-Optimized Campaigns",
+        "Custom Audiences",
+        "Delta Feeds API",
+        "Location Targeting",
+        "Meet the winners of OpenAI Build Week",
+        "Platform Targeting"
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "model_list",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "pricing",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "changelog",
+      "url": "https://docs.anthropic.com/en/release-notes/api",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "blog",
+      "url": "https://www.anthropic.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "model_list",
+      "url": "https://ai.google.dev/gemini-api/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 13,
+      "added_lines": [
+        "For enterprise deployments, powered by Gemini Enterprise Agent Platform.",
+        "Last updated 2026-09-11 UTC.",
+        "Warning: Gemini 2.5 Flash Image (gemini-2.5-flash-image) is deprecated and will be shut down on October 2, 2026; migrate to Gemini 3.1 Flash Image or Gemini 3.1 Flash Lite Image to avoid service disruption.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-11 UTC.\"],[],[]]"
+      ],
+      "removed_lines": [
+        "$2.00 (audio)",
+        "For large-scale deployments with custom needs for security, support, and compliance, powered by Gemini Enterprise Agent Platform.",
+        "Gemini Embedding",
+        "Gemini Robotics ER 1.6 Preview",
+        "Gemini Robotics ER, short for Gemini Robotics-Embodied Reasoning, is a thinking",
+        "Last updated 2026-09-08 UTC.",
+        "Our first Gemini Embeddings model for text-only use cases.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-08 UTC.\"],[],[]]",
+        "gemini-embedding-001",
+        "gemini-robotics-er-1.6-preview"
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "changelog",
+      "url": "https://ai.google.dev/gemini-api/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "blog",
+      "url": "https://blog.google/technology/ai/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "model_list",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "pricing",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "changelog",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "blog",
+      "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "model_list",
+      "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "pricing",
+      "url": "https://mistral.ai/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "changelog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "blog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "model_list",
+      "url": "https://docs.cohere.com/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "pricing",
+      "url": "https://cohere.com/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "changelog",
+      "url": "https://docs.cohere.com/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "blog",
+      "url": "https://txt.cohere.com/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "model_list",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "pricing",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "changelog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "blog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "讯飞星辰MaaS",
+      "source_type": "changelog",
+      "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+      "status": "unchanged"
+    },
+    {
+      "platform": "HuggingFace",
+      "source_type": "industry",
+      "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+      "status": "changed",
+      "added_count": 31,
+      "removed_count": 31,
+      "added_lines": [
+        "\"downloads\": 16063720,",
+        "\"downloads\": 16515105,",
+        "\"downloads\": 16873471,",
+        "\"downloads\": 17187044,",
+        "\"downloads\": 17924207,",
+        "\"downloads\": 18178285,",
+        "\"downloads\": 18981590,",
+        "\"downloads\": 20685071,",
+        "\"downloads\": 21183912,",
+        "\"downloads\": 21762299,",
+        "\"downloads\": 23166191,",
+        "\"downloads\": 24088055,",
+        "\"downloads\": 24270514,",
+        "\"downloads\": 254035929,",
+        "\"downloads\": 37793325,",
+        "\"downloads\": 46383496,",
+        "\"downloads\": 47177338,",
+        "\"downloads\": 59304674,",
+        "\"downloads\": 64607097,",
+        "\"downloads\": 87585258,",
+        "\"likes\": 1087,",
+        "\"likes\": 1169,",
+        "\"likes\": 1434,",
+        "\"likes\": 1596,",
+        "\"likes\": 1772,",
+        "\"likes\": 25,",
+        "\"likes\": 3219,",
+        "\"likes\": 3491,",
+        "\"likes\": 445,",
+        "\"likes\": 5821,"
+      ],
+      "removed_lines": [
+        "\"downloads\": 16124079,",
+        "\"downloads\": 16473284,",
+        "\"downloads\": 16884718,",
+        "\"downloads\": 17379879,",
+        "\"downloads\": 18212308,",
+        "\"downloads\": 18620166,",
+        "\"downloads\": 18813055,",
+        "\"downloads\": 21008990,",
+        "\"downloads\": 21035280,",
+        "\"downloads\": 21677276,"
+      ]
+    },
+    {
+      "platform": "Artificial Analysis",
+      "source_type": "industry",
+      "url": "https://artificialanalysis.ai/",
+      "status": "changed",
+      "added_count": 19,
+      "removed_count": 12,
+      "added_lines": [
+        "11 of 480 releases",
+        "13 of 59 model creators",
+        "14 of 15 models",
+        "24 of 24 models",
+        "25 of 163 models",
+        "25 of 242 models",
+        "25 of 522 models",
+        "26 of 647 models",
+        "Agnes 3.0 Flash",
+        "Anthropic + CognitionOpenAI",
+        "AnthropicOpenAIMetaZ AISpaceXAIKimiGoogleAlibabaDeepSeekMBZUAI Institute of Foundation ModelsMiniMaxThinking MachinesMistral",
+        "Artificial Analysis Coding Agent Index vs. Cost per Task",
+        "Artificial Analysis Coding Agent Index vs. average pay-per-token API cost per task (USD)",
+        "Each point represents a coding-agent variant. Farther left means lower average cost per task, while higher on the chart means higher benchmark performance. The most efficient agents sit toward the upper-left: stronger results at lower cost.",
+        "Estimate (independent evaluation forthcoming)",
+        "How to Read This Chart",
+        "Incorporates 7 evaluations: AA-Omniscience, GDPval-AA v2, AA-Briefcase, Humanity's Last Exam, AutomationBench-AA, AA-LCR v1.1, GDP.pdf · Higher is better",
+        "Muse Spark 1.3 (xhigh)See more",
+        "OpenAI + CognitionMetaZ.aiMoonshot AISpaceXAIAlibaba CloudDeepSeekGoogle"
+      ],
+      "removed_lines": [
+        "11 of 479 releases",
+        "12 of 59 model creators",
+        "13 of 13 models",
+        "23 of 23 models",
+        "24 of 163 models",
+        "24 of 241 models",
+        "24 of 521 models",
+        "25 of 646 models",
+        "AnthropicOpenAIMetaZ AISpaceXAIKimiGoogleAlibabaDeepSeekMiniMaxThinking MachinesMistral",
+        "Gemini 3.8 Flash (low)See more"
+      ]
+    },
+    {
+      "platform": "LMArena",
+      "source_type": "industry",
+      "url": "https://lmarena.ai/leaderboard",
+      "status": "changed",
+      "added_count": 29,
+      "removed_count": 27,
+      "added_lines": [
+        "10.80%±1.88%",
+        "11.06%±1.70%",
+        "12.39%±2.60%",
+        "13.85%±1.92%",
+        "5.23%±1.31%",
+        "5.88%±1.82%",
+        "6.46%±0.70%",
+        "695/695 | Overall",
+        "7.51%±1.42%",
+        "7.57%±1.40%",
+        "9.09%±1.42%",
+        "claude-fable-5.1-max1501±8",
+        "claude-fable-5.1-max1758+14/-14",
+        "claude-fable-51506±5",
+        "claude-fable-51628+7/-7",
+        "claude-opus-4-61497±3",
+        "claude-opus-5-high1493±4",
+        "claude-opus-5-high1660+7/-7",
+        "claude-opus-5-max1687+7/-7",
+        "gemini-3.8-flash-high1493",
+        "gpt-6-astra-max |",
+        "gpt-6-astra-max1800+16/-16",
+        "grok-4.6-high |",
+        "muse-spark-1.11494±5",
+        "muse-spark-1.2 (xHigh)1499±11",
+        "muse-spark-1.3-max1652+12/-12",
+        "qwen3.8-flash-next1635",
+        "qwen3.8-max-09021681",
+        "qwen3.8-max1671"
+      ],
+      "removed_lines": [
+        "10.79%±1.92%",
+        "11.42%±1.73%",
+        "12.55%±2.18%",
+        "14.51%±1.90%",
+        "5.37%±1.40%",
+        "6.31%±1.88%",
+        "6.59%±0.70%",
+        "693/693 | Overall",
+        "7.69%±1.44%",
+        "7.75%±1.45%"
+      ]
+    }
+  ]
+}

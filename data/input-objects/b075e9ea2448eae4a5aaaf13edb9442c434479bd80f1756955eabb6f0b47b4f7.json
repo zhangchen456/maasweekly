@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "6efd666e1f1363a56b7267b1b535bca987ccec48",
+  "purpose": "Final explicit legacy-to-standard cutover after daily 2026-10-02 update; subsequent writers use standard ownership",
+  "changed": [
+    {
+      "path": "data/derived/day-summaries.json",
+      "oldSha256": "aa7cbae0d0aa6cdbb9ca93fb6f329476e7c112e673ea0fddc2bb7a8423fa5985",
+      "newSha256": "c9a43e797f90eac37b206a2dca86f8c09ec07dd7a7216f02db174dab7140c8fd"
+    },
+    {
+      "path": "data/derived/leaderboards/openrouter.json",
+      "oldSha256": "cff7eae71bc225f3fc3c6a7a24e7d6fc19dc17a7d05f68de4d30f00b2cb890cf",
+      "newSha256": "86f0d14169b69242701dabb731dcf49cc646d48e6871ddbf682a02a659ff99dc"
+    },
+    {
+      "path": "data/derived/leaderboards/openrouter_apps.json",
+      "oldSha256": "6ddd53c024c9456f545e295d9bc22dadacf5aa1a0e1272343b5b21d70b972319",
+      "newSha256": "9cdd068f1d5cb9bbbe2ab9475dcab2d19f3c0fbc41596374251908d333c1a850"
+    },
+    {
+      "path": "data/derived/leaderboards/openrouter_market_share.json",
+      "oldSha256": "60ea49408bba8dba2b7fb7e07eec75336708f80f61eabe1aa65f5cc91ad4f7c3",
+      "newSha256": "c1d96e63713c87489fae6335f6ab0fc8621e352ca4bf49f60b59afa5da7d2674"
+    },
+    {
+      "path": "data/derived/leaderboards/openrouter_session_cost.json",
+      "oldSha256": "7a953bb7407e00cf858e3de52d14f11d5755443eb5bfbbc32ba6055fe4862bf0",
+      "newSha256": "26f65edc2bda3a1f3471c33359a08f2ab667a95d2abc9a3c55e5caa447a24057"
+    },
+    {
+      "path": "data/derived/pricing/ledger.json",
+      "oldSha256": "7d0c0850d035acc234f2d6edacb368265e81d70e0509d30f4b7082c0741052ef",
+      "newSha256": "12b7a92e8c313378492e8591a0299a7e7ec5363844273fe5d8f54b75b57bf3bb"
+    },
+    {
+      "path": "data/derived/pricing/ledger_history/2026-10-02.json",
+      "oldSha256": null,
+      "newSha256": "1169be0d32aa762a0f3ce3722121fc5a55aca38f483010adbca7138f0515d323"
+    },
+    {
+      "path": "data/derived/weekly-rollup.json",
+      "oldSha256": "9f2246ead8dafb3dd3c0bf02758f0d72770e4508cd84b02bdd5e8dac01b3634f",
+      "newSha256": "05cb6745b5ae6e3c3fbbe09c615057fbf7140535df61e5835dab93d312e2834f"
+    },
+    {
+      "path": "data/normalized/source-streams.json",
+      "oldSha256": "2369151cf8d36680db692dd226086893d522fbdd08ddb00d695fd36892b4baa2",
+      "newSha256": "6371d3aa14d6a24c509bb24fc8dc2ace95b8d7769e108642090f845225e6ba15"
+    }
+  ],
+  "preservedOriginalMigrationMarker": true,
+  "historicalSummaryProvenance": "legacy_unknown; no LLM calls"
+}

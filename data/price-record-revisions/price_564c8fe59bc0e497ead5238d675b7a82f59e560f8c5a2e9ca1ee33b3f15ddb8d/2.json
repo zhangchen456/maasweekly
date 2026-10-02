@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "price_564c8fe59bc0e497ead5238d675b7a82f59e560f8c5a2e9ca1ee33b3f15ddb8d",
+  "date": "2026-10-02",
+  "recordType": "price_change",
+  "fact_key": "4a9b59b83e651900c68cc7e4a85fbb0f3c11d6423aca4fd878c52ee8e5fa989f",
+  "provider": "doubao",
+  "model": "doubao-seed-2.0-mini",
+  "component": "cache_read",
+  "currency": "CNY",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "cn",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": {
+    "min": 128000,
+    "max": 256000
+  },
+  "timeCondition": null,
+  "beforeVersionId": "pfv_938546e2b8a855d6718bcea626bb40481ca320349b8d4678a14a0a83ba70970b",
+  "afterVersionId": "pfv_b62abdc0bdb7064e1e994a29c3692d2954dbc3d59a0ee20e37df1de2e5d5b666",
+  "beforeEvidenceId": "ev_112265c13618d290503469aad5114f6617277d193442000149efcb6ee7c3ede1",
+  "afterEvidenceId": "ev_245784850071781633ec624c23c9ed31baa3ef068c83c2431f54768dd60b73ad",
+  "beforeObservedAt": "2026-10-01T00:25:18+00:00",
+  "afterObservedAt": "2026-10-02T08:32:20+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "0.32",
+    "current": "0.16",
+    "direction": "down",
+    "percent": "-50.00"
+  },
+  "revision": 2,
+  "status": "active",
+  "revisedAt": "2026-10-02T08:32:32+00:00",
+  "revisionReason": "事件内容更新",
+  "permalink": "/item/price_564c8fe59bc0e497ead5238d675b7a82f59e560f8c5a2e9ca1ee33b3f15ddb8d/",
+  "provenance": {}
+}

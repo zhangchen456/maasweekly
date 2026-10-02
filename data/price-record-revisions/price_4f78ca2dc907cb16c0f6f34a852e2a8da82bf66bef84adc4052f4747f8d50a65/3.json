@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "price_4f78ca2dc907cb16c0f6f34a852e2a8da82bf66bef84adc4052f4747f8d50a65",
+  "date": "2026-10-02",
+  "recordType": "price_change",
+  "fact_key": "688f9c2c30a855e60b515cc218bb625f2f429bad9085b989d82e7bdb47db5b0c",
+  "provider": "doubao",
+  "model": "doubao-seed-2.1-turbo",
+  "component": "output",
+  "currency": "CNY",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "cn",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": {
+    "min": 0,
+    "max": 256000
+  },
+  "timeCondition": null,
+  "beforeVersionId": "pfv_58253575b67f3dd0d2154a80b7300cb184fc38a0fd8ed7bab9012e8e1d1eeb95",
+  "afterVersionId": "pfv_dae6d3bff47704b462b32d025f952d366eb8e33a392d41c2060dee60f0f23542",
+  "beforeEvidenceId": "ev_112265c13618d290503469aad5114f6617277d193442000149efcb6ee7c3ede1",
+  "afterEvidenceId": "ev_245784850071781633ec624c23c9ed31baa3ef068c83c2431f54768dd60b73ad",
+  "beforeObservedAt": "2026-10-01T00:25:18+00:00",
+  "afterObservedAt": "2026-10-02T08:32:20+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "30",
+    "current": "15",
+    "direction": "down",
+    "percent": "-50.00"
+  },
+  "revision": 3,
+  "status": "active",
+  "revisedAt": "2026-10-02T08:32:32+00:00",
+  "revisionReason": "事件内容更新",
+  "permalink": "/item/price_4f78ca2dc907cb16c0f6f34a852e2a8da82bf66bef84adc4052f4747f8d50a65/",
+  "provenance": {}
+}

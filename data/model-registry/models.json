@@ -1122,6 +1122,21 @@
       "notes": "T07-2.5 补录：高频无风险特征（无日期基名歧义/指针/序号/emoji）"
     },
     {
+      "modelId": "alibaba:qwen3.8-max",
+      "providerId": "alibaba",
+      "canonicalName": "Qwen3.8 Max",
+      "familyId": "alibaba:qwen-max",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "qwen3.8-max",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "2026-10-02：官方当前定价页核验，首页选型补录。"
+    },
+    {
       "modelId": "anthropic:claude-fable",
       "providerId": "anthropic",
       "canonicalName": "Claude Fable",
@@ -1442,6 +1457,21 @@
       "notes": "T07-2.5 补录：Anthropic 旧版本——raw 即 API id，无歧义特征"
     },
     {
+      "modelId": "anthropic:claude-opus-5.5",
+      "providerId": "anthropic",
+      "canonicalName": "Claude Opus 5.5",
+      "familyId": "anthropic:claude-opus",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "claude-opus-5.5",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "2026-10-02：官方当前定价页核验，首页选型补录。"
+    },
+    {
       "modelId": "anthropic:claude-sonnet",
       "providerId": "anthropic",
       "canonicalName": "Claude Sonnet",
@@ -1535,6 +1565,21 @@
         }
       ],
       "notes": "T07-2.5 补录：Anthropic 旧版本——raw 即 API id，无歧义特征"
+    },
+    {
+      "modelId": "anthropic:claude-sonnet-5.5",
+      "providerId": "anthropic",
+      "canonicalName": "Claude Sonnet 5.5",
+      "familyId": "anthropic:claude-sonnet",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "claude-sonnet-5.5",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "2026-10-02：官方当前定价页核验，首页选型补录。"
     },
     {
       "modelId": "deepseek:deepseek-flash",
@@ -1725,6 +1770,21 @@
         }
       ],
       "notes": "T07-2.5 补录：Google 稳定项（preview 已按产品名语义判别）"
+    },
+    {
+      "modelId": "google:gemini-3.1-pro-preview",
+      "providerId": "google",
+      "canonicalName": "Gemini 3.1 Pro Preview",
+      "familyId": "google:gemini",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "gemini-3.1-pro-preview",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "2026-10-02：官方当前定价页核验，首页选型补录。"
     },
     {
       "modelId": "google:gemini-3.5",
@@ -2000,6 +2060,21 @@
         }
       ],
       "notes": "openai 体系无 display name（raw=API id）——与 anthropic 同为高可信结构化"
+    },
+    {
+      "modelId": "openai:gpt-6.1-sol",
+      "providerId": "openai",
+      "canonicalName": "GPT-6.1 Sol",
+      "familyId": "openai:gpt-6",
+      "classification": "model",
+      "aliases": [
+        {
+          "value": "gpt-6.1-sol",
+          "type": "raw",
+          "source": "pricing"
+        }
+      ],
+      "notes": "2026-10-02：官方当前定价页核验，首页选型补录。"
     },
     {
       "modelId": "volcengine:doubao-1.5-pro-32k",

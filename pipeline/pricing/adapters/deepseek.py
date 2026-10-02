@@ -39,7 +39,7 @@ from .common import (
     stable_identity
 )
 
-_EXTRACTOR_VERSION_DEEPSEEK = "deepseek-1"
+_EXTRACTOR_VERSION_DEEPSEEK = "deepseek-2"
 
 class DeepSeekPricingExtractor:
     """解析 DeepSeek 价格页（M6：真实 HTML rowspan 表 + 峰谷）。
@@ -70,6 +70,12 @@ class DeepSeekPricingExtractor:
                 models=[], price_facts=[], evidence=[], warnings=_drift_warnings("deepseek", []),
             )
         table = tables[0]
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(html, "html.parser")
+        schedule_note = soup.find(string=lambda x: x and "Peak hours are" in x)
+        schedule = str(schedule_note).strip() if schedule_note else None
+        if schedule_note:
+            table.html_fragment += str(schedule_note.parent)
         # 找 PRICING 行的起始，模型名在第一行
         # 模型名行：含 MODEL 标签，数据列从第 3 列开始
         model_row = None
@@ -86,7 +92,7 @@ class DeepSeekPricingExtractor:
         model_cols: list[tuple[int, str]] = []  # (col_idx, model_name)
         for ci, cell in enumerate(model_row):
             if ci >= 3 and cell.strip().lower().startswith("deepseek"):
-                model_cols.append((ci, cell.strip()))
+                model_cols.append((ci, _clean_model_name(cell)))
         if not model_cols:
             return ExtractionResult(
                 snapshot_id=snapshot.snapshot_id, extractor_version=self.version,
@@ -118,7 +124,7 @@ class DeepSeekPricingExtractor:
                 period_enum = "off_peak"
             elif "peak" in period_label:
                 period_enum = "peak"
-            tc = TimeCondition(period=period_enum, tz="Asia/Shanghai", schedule=period_label) if period_enum else None
+            tc = TimeCondition(period=period_enum, tz="UTC", schedule=schedule or period_label) if period_enum else None
             # 各模型列价格
             for ci, model_name in model_cols:
                 if ci >= len(row):

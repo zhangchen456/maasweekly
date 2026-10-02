@@ -1,0 +1,850 @@
+{
+  "date": "2026-09-24",
+  "fetched_at": "2026-09-24T07:28:04.620692",
+  "stats": {
+    "total": 68,
+    "success": 68,
+    "failed": 0,
+    "changed": 19,
+    "unchanged": 49
+  },
+  "changes": [
+    {
+      "platform": "火山方舟",
+      "source_type": "model_list",
+      "url": "https://www.volcengine.com/docs/82379/1330310",
+      "status": "first_fetch",
+      "content_length": 19359
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "pricing",
+      "url": "https://www.volcengine.com/docs/82379/1544106",
+      "status": "changed",
+      "added_count": 207,
+      "removed_count": 1,
+      "added_lines": [
+        "0.0005 元/千token​",
+        "0.0007 元/千token​",
+        "0.0015 元/GB/小时​",
+        "0.0018 元/千token​",
+        "0.0416 元/知识库/小时​",
+        "0.45 元/CU/小时​",
+        "10.875 万 token / 次 * 0.80 元/万 token​",
+        "12.6875 万 token / 次 * 0.80 元/万 token​",
+        "13.56~30.13​",
+        "16.3125 万 token / 次 * 0.80 元/万 token​",
+        "20.12~78.25​",
+        "27.99~62.21​",
+        "3.00 万 token / 次 * 0.60 元/万 token​",
+        "3.00 万 token / 次 * 0.80 元/万 token​",
+        "3.63~14.12​",
+        "3000万 token：1000元，可生成 1000次，平均 1 元/次。​",
+        "300万 token：150元，可生成 100次，平均 1.5 元/次。​",
+        "5.44~12.10​",
+        "7.25 万 token / 次 * 0.80 元/万 token​",
+        "8.16~31.75​",
+        "= 文本输入 tokens × 文本输入单价+ min((width × height)/784，1312 ) × 图片输入单价​",
+        "> 261 万像素（分辨率 1.5K 以上）：0.30​",
+        "> 261 万像素（分辨率 1.5K 以上）：0.60​",
+        "Agent Plan 个人版​",
+        "Agent 的云端隔离沙箱，用于在会话内执行代码、读写文件、运行命令行工具，会话结束后自动回收。​",
+        "Agent 调用工具产生的费用，当前支持 web_search（实时联网搜索，返回网页标题、摘要与链接）与 web_fetch（网页内容抓取，返回正文 Markdown 或提炼文本）。​",
+        "Agent 调用模型产生的费用。​",
+        "Coding Plan 个人版​",
+        "Hitem3d-2.0​",
+        "Hyper3d-Gen2 模型提供优惠资源包，购买链接：影眸大模型服务资源包​"
+      ],
+      "removed_lines": [
+        "最近更新时间：2026.09.22 18:00:03"
+      ]
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "changelog",
+      "url": "https://www.volcengine.com/docs/82379/1159177",
+      "status": "changed",
+      "added_count": 105,
+      "removed_count": 0,
+      "added_lines": [
+        "API Key 管理​",
+        "Agent / Coding Plan 创建 和 续费 接口新增 AgreementAccepted 字段​",
+        "Agent Plan / Coding Plan​",
+        "Agent Plan Medium 及以上档位套餐上线 Kimi K3 模型​",
+        "Agent Plan 上线 Harness 能力 “Agent 进化”​",
+        "Agent Plan 支持 Doubao-Seedream-5.0 & Doubao-Seedance-2.0​",
+        "Agent Plan/Coding Plan​",
+        "Agent Plan​",
+        "Chat / Responses API 支持 reasoning_effort 参数兼容，超出当前模型或 API 支持范围的取值可按兼容逻辑处理​",
+        "Chat API 按 token 付费支持低延迟模式，支持模型为doubao-seed-2.0-pro、doubao-seed-2.0-lite​",
+        "Claude Code 和 Codex 支持 Web Search 功能。详见在 Claude Code 中使用 Web Search 工具、在 Codex 中使用 Web Search 工具。​",
+        "Coding Plan / Agent Plan​",
+        "Coding Plan 升级支持auto模式、支持多模型​",
+        "Coding Plan​",
+        "Coding plan / Agent plan​",
+        "Contents Generations API 新增 priority 字段，支持请求级别设置同推理接入点下的任务优先级​",
+        "Credentials 优化：支持自定义 Header 鉴权、自定义 MCP 二次编辑​",
+        "Doubao-Seed3D-2.0 模型新增 obj/usd/usdz 格式​",
+        "Doubao-Seedance-1.5-pro 模型支持 Draft 样片模式​",
+        "Doubao-Seedance-1.5-pro 模型支持1080p​",
+        "Doubao-Seedance-2.0 支持使用本账号下近 30 天内由 Doubao-Seedance-2.0 及 Doubao-Seedance-2.0-fast 生成的含人脸视频、Doubao-Seedance-2.0 及 Doubao-Seedance-2.0-fast 生成的含人脸视频对应的尾帧图片、Doubao-Seedream-5.0-lite 文生图得到的含人脸图片模型的含人脸原始产物，作为输入素材，再次调用 Doubao-Seedance-2.0 系列模型进行二次创作​",
+        "Doubao-Seedance-2.0 模型支持 1080p​",
+        "Doubao-Seedream-5.0-lite 支持 4K 分辨率​",
+        "Doubao-seed-2.0-Pro/Lite/Mini 模型图像/视频理解升级​",
+        "Doubao-seed-2.0-Pro/Lite/Mini 模型支持长视频理解和视觉定位​",
+        "Doubao-seed-2.0-Pro/Lite/Mini 模型错误码变更：当用户请求平台过快时，Error Code将从ServerOverloaded，变更为 RequestBurstTooFast。后续模型也将遵从此规则​",
+        "Environments 新增可复用的 TOS 产物存储配置，并支持 Session 级覆盖，让 Agent 产物默认可按环境统一落盘到指定 TOS 目录，同时保持特殊场景的灵活覆盖​",
+        "Image Generation API输入图大小限制从10MB扩大到 30MB​",
+        "Managed Agents​",
+        "Managed Agent​"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "blog",
+      "url": "https://www.volcengine.com/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "model_list",
+      "url": "https://help.aliyun.com/zh/model-studio/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "pricing",
+      "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "其中，忙时为北京时间 8:00 - 22:00，闲时为北京时间 22:00 - 次日 8:00。"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "changelog",
+      "url": "https://help.aliyun.com/zh/model-studio/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "blog",
+      "url": "https://qwenlm.github.io/blog/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "model_list",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "pricing",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "status": "changed",
+      "added_count": 36,
+      "removed_count": 1,
+      "added_lines": [
+        "2026年9月24日 00:00 – 2026年10月7日 23:59",
+        "22:00–次日8:00",
+        "DeepSeek-V4-Pro-0813",
+        "DeepSeek-V4.1-Flash",
+        "DeepSeek-V4.1-Flash、DeepSeek-V4-Pro-0813、GLM-5.3",
+        "| DeepSeek-V3.2 （即将下线）",
+        "| DeepSeek-V4-Flash-0731",
+        "| DeepSeek-V4-Flash-0731（8月24日生效）",
+        "| DeepSeek-V4-Flash-0731（空闲时段为限时活动，8月25日0点起生效）",
+        "| DeepSeek-V4-Flash（即将下线）",
+        "| DeepSeek-V4-Pro-0813",
+        "| DeepSeek-V4-Pro-0813（空闲时段为限时活动，8月25日0点起生效）",
+        "| 原价：0.00002国庆限定价：0.000012",
+        "| 原价：0.00004国庆限定价：0.000024",
+        "| 原价：0.00015国庆限定价：0.00009",
+        "| 原价：0.0003国庆限定价：0.00018",
+        "| 原价：0.001国庆限定价：0.0006",
+        "| 原价：0.002国庆限定价：0.0012",
+        "| 原价：0.0045国庆限定价：0.0027",
+        "| 原价：0.004国庆限定价：0.0024",
+        "| 原价：0.008国庆限定价：0.0048",
+        "| 原价：0.009国庆限定价：0.0054",
+        "| 原价：0.0135国庆限定价：0.0081",
+        "| 原价：0.027国庆限定价：0.0162",
+        "| 原价：0.028国庆限定价：0.0168",
+        "| 命中缓存（空闲时段：22:00-次日8:00）",
+        "| 命中缓存（空闲时段：22:00-次日8:00，9月9日起生效）",
+        "| 命中缓存（高峰时段：8:00-22:00）",
+        "| 命中缓存（高峰时段：8:00-22:00，9月9日起生效）",
+        "| 输入（空闲时段：22:00-次日8:00）"
+      ],
+      "removed_lines": [
+        "更新时间：2026-09-22"
+      ]
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "changelog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Mmh8l4qwj",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "blog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "model_list",
+      "url": "https://cloud.tencent.com/document/product/1729/104753",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "pricing",
+      "url": "https://cloud.tencent.com/document/product/1729/97731",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "changelog",
+      "url": "https://cloud.tencent.com/document/product/1729/97765",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "blog",
+      "url": "https://cloud.tencent.com/document/product/1729/132069",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "model_list",
+      "url": "https://cloud.siliconflow.cn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "pricing",
+      "url": "https://siliconflow.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "changelog",
+      "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "blog",
+      "url": "https://siliconflow.cn/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "model_list",
+      "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "pricing",
+      "url": "https://bigmodel.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "changelog",
+      "url": "https://docs.bigmodel.cn/cn/update/new-releases",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "blog",
+      "url": "https://www.bigmodel.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "model_list",
+      "url": "https://platform.kimi.com/docs/api/models-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "pricing",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "changelog",
+      "url": "https://platform.kimi.com/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "blog",
+      "url": "https://www.moonshot.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "model_list",
+      "url": "https://platform.minimaxi.com/docs/guides/models-intro",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "pricing",
+      "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "changelog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "blog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "model_list",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "pricing",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "changelog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "blog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "model_list",
+      "url": "https://platform.openai.com/docs/models",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "Bringing my LED display to life with GPT-Live-1 and Codex"
+      ],
+      "removed_lines": [
+        "Automating repetitive work at OpenAI with Codex"
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "pricing",
+      "url": "https://platform.openai.com/docs/pricing",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "Bringing my LED display to life with GPT-Live-1 and Codex"
+      ],
+      "removed_lines": [
+        "Automating repetitive work at OpenAI with Codex"
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "changelog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "Bringing my LED display to life with GPT-Live-1 and Codex"
+      ],
+      "removed_lines": [
+        "Automating repetitive work at OpenAI with Codex"
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "blog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "Bringing my LED display to life with GPT-Live-1 and Codex"
+      ],
+      "removed_lines": [
+        "Automating repetitive work at OpenAI with Codex"
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "model_list",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+      "status": "changed",
+      "added_count": 17,
+      "removed_count": 10,
+      "added_lines": [
+        "| Amazon Bedrock ID | anthropic.claude-fable-5-1 | anthropic.claude-opus-5-5 | anthropic.claude-sonnet-5 | anthropic.claude-haiku-4-5",
+        "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5-20251001",
+        "| Claude API alias | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+        "| Claude Platform on AWS ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+        "| Comparative latency | Slower | Moderate | Fast | Fastest",
+        "| Context window | 1M tokens | 1M tokens | 1M tokens | 200K tokens",
+        "| Default effort | high | medium | high | Not supported",
+        "| Google Cloud ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5@20251001",
+        "| Max output | 128K tokens | 128K tokens | 128K tokens | 64K tokens",
+        "| Microsoft Foundry ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5",
+        "| Model IDs |",
+        "| Pricing | $10 / input MTok$50 / output MTok | $4 / input MTok$20 / output MTok | $2 / input MTok$10 / output MTok | $1 / input MTok$5 / output MTok",
+        "| Reliable knowledge cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Feb 2025",
+        "| Retirement | Not sooner than September 1, 2027 | Not sooner than September 22, 2027 | Not sooner than June 30, 2027 | Not sooner than October 15, 2026",
+        "| Thinking | Adaptive (always on) | Adaptive (always on) | Adaptive | Extended",
+        "| Training data cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Jul 2025",
+        "Additional details |"
+      ],
+      "removed_lines": [
+        "Claude Opus 5",
+        "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5 | claude-haiku-4-5-20251001",
+        "| Comparative latency | Slower | Moderate | Fast | Fastest",
+        "| Context window | 1M tokens | 1M tokens | 1M tokens | 200K tokens",
+        "| Default effort | high | medium | high | Not supported",
+        "| Max output | 128K tokens | 128K tokens | 128K tokens | 64K tokens",
+        "| Pricing | $10 / input MTok$50 / output MTok | $4 / input MTok$20 / output MTok | $2 / input MTok$10 / output MTok | $1 / input MTok$5 / output MTok",
+        "| Reliable knowledge cutoff | Jun 2026 | Jun 2026 | Jan 2026 | Feb 2025",
+        "| Show all details",
+        "| Thinking | Adaptive (always on) | Adaptive (always on) | Adaptive | Extended"
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "pricing",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+      "status": "changed",
+      "added_count": 65,
+      "removed_count": 61,
+      "added_lines": [
+        "$0.08 / MTok",
+        "$0.10 / MTok",
+        "$0.20 / MTok",
+        "$0.25 / MTok",
+        "$0.30 / MTok",
+        "$0.40 / MTok |",
+        "$0.50 / MTok",
+        "$0.50 / MTok |",
+        "$0.80 / MTok |",
+        "$1 / MTok |",
+        "$1.25 / MTok |",
+        "$1.50 / MTok",
+        "$1.50 / MTok |",
+        "$1.60 / MTok |",
+        "$10 / MTok |",
+        "$12.50 / MTok",
+        "$12.50 / MTok |",
+        "$15 / MTok |",
+        "$18.75 / MTok |",
+        "$2 / MTok |",
+        "$2.50 / MTok",
+        "$2.50 / MTok |",
+        "$20 / MTok |",
+        "$25 / MTok |",
+        "$3 / MTok |",
+        "$3.75 / MTok |",
+        "$30 / MTok |",
+        "$37.50 / MTok",
+        "$4 / MTok |",
+        "$5 / MTok |"
+      ],
+      "removed_lines": [
+        "1 Cache hits and refreshes on Claude Fable 5.1 and Claude Mythos 5.1 are priced at 0.025x the base input price.",
+        "2 Cache hits and refreshes on Claude Opus 5.5 are priced at 0.05x the base input price.",
+        "Claude Consumption Units. If Customer accesses the Services through certain Marketplace Platforms (e.g., Claude Platform on AWS), usage will be invoiced in Claude Consumption Units (\"CCU\") rather than per MTok. A CCU is a unit of measure used solely for Marketplace Platform invoicing. One hundred (100) CCU represents $1.00 USD of fees owed for the Services, calculated at the applicable prices on claude.com/pricing#api, after application of any discounts.",
+        "Claude Consumption Units. If Customer accesses the Services through certain Marketplace Platforms (e.g., Claude Platform on AWS, Claude in Microsoft Foundry), usage will be invoiced in Claude Consumption Units (\"CCU\") rather than per MTok. A CCU is a unit of measure used solely for Marketplace Platform invoicing. One hundred (100) CCU represents $1.00 USD of fees owed for the Services, calculated at the applicable prices on claude.com/pricing#api, after application of any discounts.",
+        "Claude Opus 5",
+        "For Claude Platform on AWS pricing, see Claude Platform on AWS pricing.",
+        "MTok = Million tokens. The \"Base Input Tokens\" column shows standard input pricing, the \"5m Cache Writes\", \"1h Cache Writes\", and \"Cache Hits & Refreshes\" columns are specific to prompt caching, and \"Output Tokens\" shows output pricing. See prompt caching pricing for an explanation of the cache columns and pricing multipliers.",
+        "The $2/$10 per million input/output token pricing for Claude Sonnet 5, announced at launch as introductory pricing through August 31, 2026, is now the standard price. The previously scheduled increase to $3/$15 per million input/output tokens on September 1, 2026 will not occur.",
+        "| Claude Fable 5 | $10 / MTok | $12.50 / MTok | $20 / MTok | $1 / MTok | $50 / MTok",
+        "| Claude Fable 5 | $5 / MTok | $25 / MTok"
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "changelog",
+      "url": "https://docs.anthropic.com/en/release-notes/api",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "blog",
+      "url": "https://www.anthropic.com/news",
+      "status": "changed",
+      "added_count": 5,
+      "removed_count": 8,
+      "added_lines": [
+        "A rare strain of Ebola, with no confirmed vaccine, is spreading through the east of the Democratic Republic of Congo. World health organizations are using Claude to move as fast as possible to combat it.",
+        "Aug 7, 2026ProductImproving Fable 5's biology safeguardsSee more",
+        "FeaturesSep 22, 2026",
+        "Sep 23, 2026Science Claude discovers a novel enzyme system with CRISPR-like repeats",
+        "The Situation Report"
+      ],
+      "removed_lines": [
+        "AnnouncementsAug 27, 2026",
+        "AnnouncementsAug 31, 2026",
+        "Aug 4, 2026AnnouncementsMariano-Florentino (Tino) Cuéllar to join Anthropic as Chief Global Affairs OfficerSee more",
+        "Aug 7, 2026ProductImproving Fable 5's biology safeguards",
+        "Improving our alignment and security efforts",
+        "On July 30, we reported three incidents in which Claude models gained unauthorized access to real computer systems. We are conducting an in-depth analysis of both incidents, and planning to work with METR for an independent review. In the meantime, we’re sharing some of the changes we’ve made over the past month.",
+        "Previewing the Model Hardware Standard",
+        "We’re opening a research preview of the Model Hardware Standard (MHS), a shared specification for AI agents to safely operate physical devices, to a first group of scientific research labs and advanced manufacturers."
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "model_list",
+      "url": "https://ai.google.dev/gemini-api/docs/models",
+      "status": "changed",
+      "added_count": 11,
+      "removed_count": 3,
+      "added_lines": [
+        "Fast, cost-efficient text-to-speech model for high-volume production, real-time voice agent cascades, and Voice replication.",
+        "Flagship creative text-to-speech model for studio-grade voice fidelity, expressive acting, Voice design, and Voice replication.",
+        "Gemini 3.8 Flash TTS",
+        "Gemini 3.8 Flash-Lite TTS",
+        "Last updated 2026-09-23 UTC.",
+        "Legacy TTS preview model. We recommend updating to Gemini 3.8 Flash TTS or Gemini 3.8 Flash-Lite TTS.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-23 UTC.\"],[],[]]",
+        "gemini-3.8-flash-lite-tts",
+        "gemini-3.8-flash-tts",
+        "| Gemini 3.8 Flash-Lite TTS",
+        "| Gemini 3.8 Flash TTS"
+      ],
+      "removed_lines": [
+        "Last updated 2026-09-22 UTC.",
+        "Powerful, low-latency speech generation.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-22 UTC.\"],[],[]]"
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "status": "changed",
+      "added_count": 34,
+      "removed_count": 2,
+      "added_lines": [
+        "$0.05 (input caching) starting January 1, 2027.",
+        "$0.125 (input caching) starting January 1, 2027.",
+        "$0.25 (input caching) starting January 1, 2027.",
+        "$0.45 (input caching) starting January 1, 2027.",
+        "$0.50 (text) starting January 1, 2027.",
+        "$1.00 (text) starting January 1, 2027.",
+        "$1.80 (text) starting January 1, 2027.",
+        "$12.00 (audio) starting January 1, 2027.",
+        "$18.00 (audio) starting January 1, 2027.",
+        "$21.60 (audio) starting January 1, 2027.",
+        "$32.40 (audio) starting January 1, 2027.",
+        "$6.00 (audio) starting January 1, 2027.",
+        "$9.00 (audio) starting January 1, 2027.",
+        "Gemini 3.8 Flash TTS",
+        "Gemini 3.8 Flash-Lite TTS",
+        "Last updated 2026-09-23 UTC.",
+        "Our 3.8 Flash Text-to-Speech audio model engineered for studio-grade voice fidelity, expressive acting, and long-form stability.",
+        "Our 3.8 Flash-Lite Text-to-Speech audio model optimized for high-throughput, low-latency, and cost-efficient conversational speech.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-23 UTC.\"],[],[]]",
+        "gemini-3.8-flash-lite-tts",
+        "gemini-3.8-flash-tts",
+        "| $0.025 (input caching) through December 31, 2026.",
+        "| $0.0625 (input caching) through December 31, 2026.",
+        "| $0.125 (input caching) through December 31, 2026.",
+        "| $0.225 (input caching) through December 31, 2026.",
+        "| $0.25 (text) through December 31, 2026.",
+        "| $0.50 (text) through December 31, 2026.",
+        "| $0.90 (text) through December 31, 2026.",
+        "| $10.80 (audio) through December 31, 2026.",
+        "| $16.20 (audio) through December 31, 2026."
+      ],
+      "removed_lines": [
+        "Last updated 2026-09-22 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-22 UTC.\"],[],[]]"
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "changelog",
+      "url": "https://ai.google.dev/gemini-api/docs/changelog",
+      "status": "changed",
+      "added_count": 20,
+      "removed_count": 2,
+      "added_lines": [
+        "(GA): Released our next-generation text-to-speech (TTS) audio models and",
+        "(gemini-3.8-flash-lite-tts): Fast, cost-efficient TTS model built to",
+        "(gemini-3.8-flash-tts): Flagship creative TTS model engineered for",
+        "Create persistent custom vocal personas from text prompts, replicate",
+        "Extended Voice Library:",
+        "Gemini 3.8 Flash TTS",
+        "Gemini 3.8 Flash TTS and Gemini 3.8 Flash-Lite TTS generally available",
+        "Gemini 3.8 Flash-Lite TTS",
+        "Last updated 2026-09-23 UTC.",
+        "See the Text-to-speech guide to get",
+        "September 22, 2026",
+        "Voice design,",
+        "Voice replication, and the",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-23 UTC.\"],[],[]]",
+        "and real-time voice agent cascades.",
+        "long-form multi-turn stability.",
+        "replace gemini-3.1-flash-tts-preview for high-throughput production",
+        "studio-grade voice fidelity, nuanced acting, regional dialects, and",
+        "the Gemini API Voices endpoint (/v1beta/voices):",
+        "voices with consent verification, and query 150+ prebuilt and custom"
+      ],
+      "removed_lines": [
+        "Last updated 2026-09-22 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-22 UTC.\"],[],[]]"
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "blog",
+      "url": "https://blog.google/technology/ai/",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 2,
+      "added_lines": [
+        "A new wave of Connected Apps is rolling out to Gemini.",
+        "Google Beam expands with new regions, partners, and customers"
+      ],
+      "removed_lines": [
+        "Create your best tracks yet with Lyria 3.5 in Gemini.",
+        "Our new contrail avoidance trial in Asia-Pacific"
+      ]
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "model_list",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "pricing",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "changelog",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "blog",
+      "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "model_list",
+      "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "pricing",
+      "url": "https://mistral.ai/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "changelog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "blog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "model_list",
+      "url": "https://docs.cohere.com/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "pricing",
+      "url": "https://cohere.com/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "changelog",
+      "url": "https://docs.cohere.com/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "blog",
+      "url": "https://txt.cohere.com/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "model_list",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "pricing",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "changelog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "blog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "讯飞星辰MaaS",
+      "source_type": "changelog",
+      "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+      "status": "unchanged"
+    },
+    {
+      "platform": "HuggingFace",
+      "source_type": "industry",
+      "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+      "status": "changed",
+      "added_count": 35,
+      "removed_count": 35,
+      "added_lines": [
+        "\"downloads\": 14308511,",
+        "\"downloads\": 15369050,",
+        "\"downloads\": 17267935,",
+        "\"downloads\": 17428935,",
+        "\"downloads\": 19429010,",
+        "\"downloads\": 20117097,",
+        "\"downloads\": 20651725,",
+        "\"downloads\": 21517501,",
+        "\"downloads\": 21841634,",
+        "\"downloads\": 22273378,",
+        "\"downloads\": 22795863,",
+        "\"downloads\": 24644038,",
+        "\"downloads\": 251354399,",
+        "\"downloads\": 26662555,",
+        "\"downloads\": 37229647,",
+        "\"downloads\": 45461966,",
+        "\"downloads\": 46018622,",
+        "\"downloads\": 47371933,",
+        "\"downloads\": 64379163,",
+        "\"downloads\": 88690825,",
+        "\"likes\": 1142,",
+        "\"likes\": 1211,",
+        "\"likes\": 1410,",
+        "\"likes\": 1673,",
+        "\"likes\": 185,",
+        "\"likes\": 1976,",
+        "\"likes\": 3368,",
+        "\"likes\": 349,",
+        "\"likes\": 3615,",
+        "\"likes\": 4167,"
+      ],
+      "removed_lines": [
+        "\"downloads\": 14337469,",
+        "\"downloads\": 15279647,",
+        "\"downloads\": 17313621,",
+        "\"downloads\": 17477279,",
+        "\"downloads\": 18936442,",
+        "\"downloads\": 20173542,",
+        "\"downloads\": 20811576,",
+        "\"downloads\": 21305822,",
+        "\"downloads\": 21991721,",
+        "\"downloads\": 22067425,"
+      ]
+    },
+    {
+      "platform": "Artificial Analysis",
+      "source_type": "industry",
+      "url": "https://artificialanalysis.ai/",
+      "status": "changed",
+      "added_count": 11,
+      "removed_count": 10,
+      "added_lines": [
+        "10 of 497 releases",
+        "14 of 20 models",
+        "15 of 93 models",
+        "27 of 192 models",
+        "27 of 255 models",
+        "27 of 549 models",
+        "28 of 674 models",
+        "Claude Opus 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)See more",
+        "Mercury 2.5",
+        "New language model evaluation · 23 Sept",
+        "Under review"
+      ],
+      "removed_lines": [
+        "10 of 496 releases",
+        "14 of 19 models",
+        "15 of 91 models",
+        "27 of 191 models",
+        "27 of 254 models",
+        "27 of 548 models",
+        "28 of 673 models",
+        "Benchmarking Grok 4.7See more",
+        "Claude Opus 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+        "New article published · 21 Sept"
+      ]
+    },
+    {
+      "platform": "LMArena",
+      "source_type": "industry",
+      "url": "https://lmarena.ai/leaderboard",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 4,
+      "added_lines": [
+        "claude-fable-5.1-max1753+11/-11",
+        "gpt-6-sol-max1689+19/-19",
+        "kimi-k3-max1659+7/-7",
+        "qwen3.8-max-09021660"
+      ],
+      "removed_lines": [
+        "claude-fable-5.1-max1755+11/-11",
+        "grok-4.7-xhigh1632+17/-17",
+        "kimi-k3-max1658+7/-7",
+        "qwen3.8-max-09021662"
+      ]
+    }
+  ]
+}

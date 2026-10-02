@@ -25,7 +25,7 @@ class SourceRegistryEntry:
 
 
 # Registry 版本：结构变更时升版，写入 GoalRun 可观测性记录
-REGISTRY_VERSION = "2026-08-31.2"
+REGISTRY_VERSION = "2026-10-02.1"
 
 _REGISTRY: list[SourceRegistryEntry] = [
     SourceRegistryEntry(
@@ -35,17 +35,17 @@ _REGISTRY: list[SourceRegistryEntry] = [
         page_language="en",
         region="global",
         required=True,
-        adapter_version="openai-1",
+        adapter_version="openai-3",
         fetcher_version="playwright-1",  # M6：Next.js SPA，http-1 拿到空壳，需渲染
     ),
     SourceRegistryEntry(
         source_key="anthropic:pricing",
         provider_id="anthropic",
-        url="https://docs.anthropic.com/en/docs/about-claude/pricing",
+        url="https://platform.claude.com/docs/en/about-claude/pricing",
         page_language="en",
         region="global",
         required=True,
-        adapter_version="anthropic-1",
+        adapter_version="anthropic-2",
         fetcher_version="playwright-1",  # M6：JS 渲染价格表，http-1 拿不到
     ),
     SourceRegistryEntry(
@@ -55,7 +55,7 @@ _REGISTRY: list[SourceRegistryEntry] = [
         page_language="en",
         region="global",
         required=True,
-        adapter_version="google-1",
+        adapter_version="google-3",
         fetcher_version="playwright-1",  # M6：SPA 渲染价格表，http-1 拿不到
     ),
     SourceRegistryEntry(
@@ -65,7 +65,7 @@ _REGISTRY: list[SourceRegistryEntry] = [
         page_language="zh",
         region="cn",
         required=True,
-        adapter_version="deepseek-1",
+        adapter_version="deepseek-2",
         fetcher_version="playwright-1",  # M6：静态文档站，但含 rowspan 表格需渲染后解析
     ),
     SourceRegistryEntry(
@@ -75,7 +75,7 @@ _REGISTRY: list[SourceRegistryEntry] = [
         page_language="zh",
         region="cn",
         required=True,
-        adapter_version="kimi-2",
+        adapter_version="kimi-3",
         fetcher_version="playwright-1",  # 新站价格已在单页（chat），rows:[[ 提取沿用
     ),
     SourceRegistryEntry(
@@ -85,7 +85,7 @@ _REGISTRY: list[SourceRegistryEntry] = [
         page_language="zh",
         region="cn",
         required=True,
-        adapter_version="glm-1",
+        adapter_version="glm-2",
         fetcher_version="playwright-1",
     ),
     SourceRegistryEntry(
@@ -95,7 +95,7 @@ _REGISTRY: list[SourceRegistryEntry] = [
         page_language="zh",
         region="cn",
         required=True,
-        adapter_version="doubao-2",
+        adapter_version="doubao-3",
         fetcher_version="playwright-1",  # M6：JS 渲染页，http-1 拿到未渲染内容
     ),
     SourceRegistryEntry(

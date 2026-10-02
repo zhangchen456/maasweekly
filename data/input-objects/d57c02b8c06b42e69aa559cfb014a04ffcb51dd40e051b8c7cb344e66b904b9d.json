@@ -1,0 +1,509 @@
+{
+  "date": "2026-05-17",
+  "period": "2026-05-11 ~ 2026-05-17",
+  "headline": [
+    {
+      "rank": 1,
+      "level": "critical",
+      "platform": "",
+      "title": "百度文心5.1正式发布，预训练成本仅业界6%",
+      "summary": "百度文心5.1正式发布，预训练成本仅业界6%",
+      "detail_markdown": "— 采用\"多维弹性预训练\"技术，以仅约6%的业界同规模预训练成本实现基础能力全面领先。总参数压缩至约1/3、激活参数压缩至约1/2。LMArena搜索榜1223分国内第一、全球第四，Agent能力超越DeepSeek-V4-Pro，创意写作与Gemini 3.1 Pro同等水平。已在百度千帆、文心一言官网上线，API调用model_name为`ernie-5.1`。",
+      "date_mentioned": "1/3",
+      "is_new": null
+    },
+    {
+      "rank": 2,
+      "level": "critical",
+      "platform": "",
+      "title": "百度Create 2026 AI开发者大会，李彦宏提出DAA新度量衡",
+      "summary": "百度搭子DuMate、秒哒、伐谋、一镜",
+      "detail_markdown": "— DAA（Daily Active Agents，日活智能体数）对应移动互联网DAU，李彦宏认为Token只代表成本不代表收益，DAA才是衡量平台繁荣核心指标，预测全球DAA可能超100亿。百度智能云全面升级为\"新全栈AI云\"，从传统MaaS进化为\"MaaS+Agent\"平台，构建\"芯-云-模-体\"全栈能力，Agent Infra可节省23% Token消耗、任务成功率超95%。昆仑芯P800国产AI芯片出货量前三，天池256卡超节点6月上市。自研Agent产品矩阵：百度搭子DuMate、秒哒、伐谋、一镜。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 3,
+      "level": "critical",
+      "platform": "DeepSeek",
+      "title": "DeepSeek首轮融资目标500亿元，梁文锋自掏200亿，V4.1定档6月",
+      "summary": "DeepSeek首轮融资目标500亿元，梁文锋自掏200亿，V4.1定档6月",
+      "detail_markdown": "— 首轮融资目标最高500亿人民币（约73.5亿美元），估值飙升至约515亿美元（约3500亿人民币），21天翻5倍创中国AI融资纪录。梁文锋个人出资200亿占本轮40%，国家大基金领投、腾讯参投。从\"不融资、不商业化、不路演\"转向主动寻求外部融资，计划推出企业产品实现收入正增长。V4.1定档6月发布，聚焦Agent方向。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 4,
+      "level": "critical",
+      "platform": "MiniMax",
+      "title": "MiniMax M1发布，全球首个开源大规模混合架构推理模型",
+      "summary": "MiniMax M1发布，全球首个开源大规模混合架构推理模型",
+      "detail_markdown": "— 支持业内最高100万上下文输入（与Gemini 2.5 Pro持平，是DeepSeek R1的8倍），业内最长8万Token推理输出。闪电注意力机制为主的混合架构，8万Token深度推理只需DeepSeek R1约30%算力。提出CISPO强化学习算法比DAPO收敛快一倍。整个RL阶段仅用512块H800三周，租赁成本仅53.47万美金。长上下文理解超越所有开源模型、超越OpenAI o3和Claude 4 Opus全球第二。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 5,
+      "level": "critical",
+      "platform": "DeepSeek",
+      "title": "DeepSeek V4 API正式全量开放，百万上下文成标配",
+      "summary": "DeepSeek V4 API正式全量开放，百万上下文成标配",
+      "detail_markdown": "— V4-Pro（1.6T/49B）和V4-Flash（284B/13B）全系标配1M上下文，完整开源无功能阉割。支持非思考模式与思考模式切换、`reasoning_effort`参数自定义思考强度、Json Output/Tool Calls/对话前缀续写。针对Claude Code、OpenClaw、OpenCode、CodeBuddy等主流Agent产品专项优化。V4-Flash缓存命中输入0.2元/百万token，V4-Pro缓存未命中输入12元/百万token。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 6,
+      "level": "critical",
+      "platform": "Kimi",
+      "title": "Kimi发布WebBridge浏览器自动化插件",
+      "summary": "Kimi发布WebBridge浏览器自动化插件",
+      "detail_markdown": "— AI Agent可像人类一样操作浏览器，支持搜索、点击、输入、滚动、数据提取。本地优先架构通过Chrome DevTools Protocol运行，所有浏览数据留在本地不经过云端。支持已登录会话和敏感企业数据，兼容Kimi Code CLI、Claude Code、Cursor、Codex、Hermes。底层Kimi K2.6 SWE-Bench Pro 58.6%超越GPT-5.4的57.7%。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 7,
+      "level": "critical",
+      "platform": "",
+      "title": "阿里千问与淘宝全面打通，全球首个AI购物全链路闭环",
+      "summary": "阿里千问与淘宝全面打通，全球首个AI购物全链路闭环",
+      "detail_markdown": "— 千问App内对话完成商品挑选、对比、下单购买，淘宝App内\"千问AI购物助手\"提供AI试穿、AI算优惠、AI低价帮抢。全球超大规模电商平台与顶级大模型首次深度融合，基于40亿商品库的自然语言购物体验，以Agentic AI替代传统关键词搜索购物模式。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 8,
+      "level": "notable",
+      "platform": "硅基流动",
+      "title": "硅基流动完成近亿元天使+轮融资",
+      "summary": "硅基流动完成近亿元天使+轮融资",
+      "detail_markdown": "— 某知名产业方领投，智谱AI、360、水木清华校友基金跟投，老股东耀途资本超额跟进。创始人袁进辉（前OneFlow创始人、微软亚洲研究院主管研究员）。SiliconCloud一站式大模型API云服务平台，SDXL 1秒出图、推理速度50 Tokens/s。智谱AI参投标志着AI Infra层投资升温。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 9,
+      "level": "notable",
+      "platform": "智谱AI",
+      "title": "智谱AI港交所上市后推进科创板IPO",
+      "summary": "智谱AI港交所上市后推进科创板IPO",
+      "detail_markdown": "— 2026年1月港交所上市，股价翻6倍有余，市值超越百度。同时推进科创板IPO（国泰海通证券及中金公司辅导）。MaaS平台ARR达17亿元同比提升60倍，一季度API调用定价提升83%仍供不应求。GLM Coding Plan付费开发者突破24.2万，Token调用量6个月涨15倍。市值超3700亿港元，定位\"中国版Anthropic\"。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 10,
+      "level": "notable",
+      "platform": "",
+      "title": "百度昆仑芯启动科创板IPO上市辅导",
+      "summary": "百度昆仑芯启动科创板IPO上市辅导",
+      "detail_markdown": "— 百度持股57.67%为控股股东，中银国际判断估值300-1000亿港元区间头部。前身为百度智能芯片及架构部（最早追溯至2011年），2018年推出昆仑1代，2021年完成独立融资分拆。CUDA兼容性表现突出，文心5.1在昆仑芯P800上训练完成，推理性能优于英伟达H20。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 11,
+      "level": "notable",
+      "platform": "",
+      "title": "火山引擎MaaS市场份额49.5%持续领跑",
+      "summary": "调用规模→推理成本→吸引客户→规模扩大",
+      "detail_markdown": "— IDC报告显示2025年中国企业级MaaS市场大模型调用量同比增长16倍达1941万亿Token，火山引擎份额从49.2%提升至49.5%。规模效应形成飞轮：调用规模→推理成本→吸引客户→规模扩大。推出Agent产品ArkClaw、HiAgent等完整开发运营平台。2025年累计消耗万亿Tokens的企业从100家增长到140家。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 12,
+      "level": "notable",
+      "platform": "腾讯混元",
+      "title": "腾讯混元Hy3调用量增10倍，闭源旗舰五六月份发布",
+      "summary": "腾讯混元Hy3调用量增10倍，闭源旗舰五六月份发布",
+      "detail_markdown": "— 腾讯Q1 2026电话会披露Hy3 Token调用量较混元2提升超10倍，已接入131款腾讯产品。5月8日免费期结束后仍保持OpenRouter领先地位。2026年混元投入将超360亿元（较2025年180亿翻倍）。HY-World 2.0多模态世界模型已GitHub开源。",
+      "date_mentioned": "5月8日",
+      "is_new": null
+    },
+    {
+      "rank": 13,
+      "level": "notable",
+      "platform": "",
+      "title": "阶跃星辰25亿美元Pre-IPO融资",
+      "summary": "阶跃星辰25亿美元Pre-IPO融资",
+      "detail_markdown": "— 腾讯作为老股东跟投，已拆除红筹架构加速赴港IPO，投前估值50-60亿美元，目标递表上半年（可能推迟下半年），预期基石定价100亿美元左右。4200万台手机预装覆盖60%头部品牌。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 14,
+      "level": "notable",
+      "platform": "",
+      "title": "大模型行业进入清场前夜",
+      "summary": "大模型行业进入清场前夜",
+      "detail_markdown": "— 过去一周Kimi 20亿、阶跃星辰近25亿、DeepSeek目标500亿人民币，三家三天超70亿美元资金集中涌入。2025年AI模型层公司仅完成22笔投资、披露金额94亿元同比下降52.9%。淘汰率超90%，没有上市或国家队背书的公司可能被直接清场。\n\n---",
+      "date_mentioned": "",
+      "is_new": null
+    }
+  ],
+  "platforms": [
+    {
+      "name": "火山方舟（豆包）",
+      "status": "active",
+      "status_text": "MaaS市场份额49.5%持续领跑",
+      "this_week": [
+        "IDC报告确认火山引擎MaaS市场份额达49.5%，继续领跑行业",
+        "2025年中国企业级MaaS市场大模型调用量同比增长16倍达1941万亿Token",
+        "中国公有云上每产生两个大模型Token，就有接近一个跑在火山引擎上",
+        "规模效应飞轮形成：模型能力→调用规模→推理成本→吸引客户→规模扩大",
+        "推出Agent产品ArkClaw、HiAgent等完整开发运营平台",
+        "MaaS从标准化模型接口转向Agent基础设施",
+        "2025年累计消耗万亿Tokens的企业从100家增长到140家",
+        "战略定位：不跟进涨价，坚持低价扩大规模"
+      ],
+      "recent": [
+        "豆包付费订阅服务测试中（68/200/500元三档）",
+        "Doubao-Seed-2.0-lite首款全模态理解模型已发布（5月6日）",
+        "豆包月活3.45亿，日均Token消耗量突破120万亿"
+      ]
+    },
+    {
+      "name": "阿里百炼",
+      "status": "active",
+      "status_text": "千问淘宝全面打通",
+      "this_week": [
+        "千问与淘宝全面打通，全球首个AI购物全链路闭环： - 千问App内对话完成商品挑选、对比、下单购买 - 淘宝App内\"千问AI购物助手\"提供AI试穿、AI算优惠、AI低价帮抢 - 基于40亿商品库的自然语言购物体验，Agentic AI替代关键词搜索 - 全球超大规模电商平台与顶级大模型首次深度融合",
+        "财报披露ARR破80亿元",
+        "Qwen3.5-Omni全模态模型、Wan2.7视频生成",
+        "Qwen3.6持续推广，文档更新"
+      ],
+      "recent": [
+        "Qwen3.6-27B发布（本地部署黄金模型）",
+        "通义千问累计下载量近10亿",
+        "新用户7000万免费Token，Batch调用5折"
+      ]
+    },
+    {
+      "name": "百度千帆",
+      "status": "critical",
+      "status_text": "文心5.1发布+Create 2026大会",
+      "this_week": [
+        "文心5.1正式发布（5月9日）： - \"多维弹性预训练\"技术，仅约6%业界同规模预训练成本实现能力领先 - 总参数压缩至约1/3，激活参数压缩至约1/2 - LMArena搜索榜1223分国内第一、全球第四 - Agent能力超越DeepSeek-V4-Pro，创意写作与Gemini 3.1 Pro同等水平 - API调用model_name为`ernie-5.1`",
+        "Create 2026 AI开发者大会（5月13-14日）： - 李彦宏提出DAA（Daily Active Agents）新度量衡 - 智能云全面升级为\"新全栈AI云\"，\"MaaS+Agent\"平台，\"芯-云-模-体\"全栈能力 - Agent Infra：Token消耗节省23%，任务成功率超95% - AI Infra：昆仑芯P800国产出货量前三，天池256卡超节点6月上市，推理效率提升50% - 自研Agent产品矩阵：百度搭子DuMate、秒哒、伐谋、一镜 - 战略定位转变：从\"广告+非广告\"调整为\"AI新业务+传统业务\"，更像AI Infra公司 - 百度核心AI新业务2025年营收400亿元同比增长48%占比39%",
+        "昆仑芯启动科创板IPO上市辅导（5月7日），百度持股57.67%，估值预期300-1000亿港元",
+        "文心5.1在昆仑芯P800上训练完成，推理性能优于英伟达H20"
+      ],
+      "recent": [
+        "Ernie Image开源生图模型（80亿参数）"
+      ]
+    },
+    {
+      "name": "腾讯混元",
+      "status": "active",
+      "status_text": "Hy3调用量增10倍+旗舰版即将发布",
+      "this_week": [
+        "腾讯Q1 2026电话会披露： - Hy3 Token调用量较混元2提升超10倍 - 已接入131款腾讯产品 - 5月8日免费期结束后仍保持OpenRouter领先地位 - 2026年混元投入将超360亿元（较2025年180亿翻倍） - 闭源旗舰版本预计五六月份发布",
+        "HY-World 2.0多模态世界模型GitHub开源",
+        "Hy3 preview持续登顶OpenRouter周榜"
+      ],
+      "recent": [
+        "Hy3 preview发布（295B/A21B, 256K, 快慢融合MoE）",
+        "姚顺雨主导技术重构，提出\"评测真实性\"原则",
+        "Hunyuan3D-PolyGen 3D重拓扑模型发布",
+        "HY 2.0 Instruct输入价涨幅463%"
+      ]
+    },
+    {
+      "name": "硅基流动",
+      "status": "critical",
+      "status_text": "近亿元融资完成",
+      "this_week": [
+        "完成近亿元天使+轮融资（5月16日）： - 某知名产业方领投，智谱AI、360、水木清华校友基金跟投，老股东耀途资本超额跟进 - 创始人袁进辉（前OneFlow创始人，微软亚洲研究院主管研究员） - 核心产品SiliconCloud一站式大模型API云服务平台 - 技术优势：SDXL 1秒出图、推理速度50 Tokens/s、OneDiff推理引擎最高3倍加速、SiliconLLM最高10倍性能加速 - 上线公测后每天Token生成量达数十亿 - Qwen2(7B)、GLM4(9B)、Yi1.5(9B)等顶尖开源模型免费使用 - 战略定位：AI Infra层，大模型时代的\"操作系统\"",
+        "Coding Plan对比指南发布，覆盖主流国产模型接入"
+      ],
+      "recent": [
+        "联合创始人杨攀离职",
+        "9B以下模型永久免费",
+        "DeepSeek V4 Flash FP8端点83.7 t/s"
+      ]
+    },
+    {
+      "name": "智谱 AI",
+      "status": "active",
+      "status_text": "商业化路径清晰，市值超3700亿港元",
+      "this_week": [
+        "商业化路径清晰化： - 2025年营收7.24亿元，同比增长131.9% - MaaS API平台ARR 17亿元，同比提升60倍 - GLM Coding Plan付费开发者突破24.2万 - Token调用量6个月涨15倍 - 企业API收入占比26.3%（提升空间巨大） - 战略定位\"中国版Anthropic\"，专注卖Token - 商业化公式：AGI商业价值 = 智能上界 × Token消耗规模",
+        "港交所上市后推进科创板IPO（国泰海通证券及中金公司辅导）",
+        "市值超3700亿港元，与百度相当",
+        "一季度API调用定价提升83%仍供不应求",
+        "GLM-5.1代码能力持续推广，Coding Plan售罄，API替代方案普及",
+        "参投硅基流动天使+轮融资（AI Infra布局）"
+      ],
+      "recent": [
+        "GLM-5V-Turbo发布（首个多模态Coding基座模型）",
+        "GLM-5（754B/A40B）MIT开源，华为昇腾910B训练",
+        "三次涨价累计涨幅83%",
+        "产品矩阵完整对标OpenAI"
+      ]
+    },
+    {
+      "name": "Kimi（月之暗面）",
+      "status": "active",
+      "status_text": "WebBridge发布+K3进入pre-train",
+      "this_week": [
+        "发布WebBridge浏览器自动化插件（5月15日）： - AI Agent可像人类一样操作浏览器：搜索、点击、输入、滚动、数据提取 - 本地优先架构，通过Chrome DevTools Protocol运行 - 所有浏览数据留在本地不经过云端，支持已登录会话和敏感企业数据 - 兼容Kimi Code CLI、Claude Code、Cursor、Codex、Hermes - 底层Kimi K2.6 SWE-Bench Pro 58.6%超越GPT-5.4的57.7%和Claude Opus 4.6的53.4%",
+        "D轮融资20亿美元细节披露： - 领投方美团龙珠，参投方水木资本、中国移动、CPE源峰 - 半年累计融资超39亿美元 - ARR 4月已超2亿美元 - 资金用途：扩增显卡、加速K3模型训练研发 - Kimi K2.6成为OpenRouter上使用量第二的大语言模型",
+        "K3模型已进入pre-train阶段，预计2026年7月正式推出",
+        "NVIDIA已发布Kimi-K2.6-NVFP4量化版本"
+      ],
+      "recent": [
+        "K2.6发布开源（1T/A32B, 256K, 300子Agent）",
+        "海外收入已超越国内，付费用户月环比增速超170%",
+        "累计融资额超376亿人民币，大模型创业公司中最多"
+      ]
+    },
+    {
+      "name": "MiniMax",
+      "status": "critical",
+      "status_text": "M1开源推理模型发布",
+      "this_week": [
+        "M1开源推理模型发布（5月11日）： - 全球首个开源大规模混合架构推理模型 - 100万上下文输入（与Gemini 2.5 Pro持平，是DeepSeek R1的8倍） - 业内最长8万Token推理输出 - 闪电注意力机制混合架构，8万Token推理只需DeepSeek R1约30%算力 - CISPO强化学习算法比DAPO收敛快一倍，显著优于GRPO - RL阶段仅用512块H800三周，租赁成本仅53.47万美金 - SWE-bench 56.0%，长上下文理解超越所有开源模型全球第二，TAU-bench领跑开源战胜Gemini 2.5 Pro - 定价：0-32k输入0.8元/百万token输出8元，128k-1M输入2.4元输出24元 - 权重已在HuggingFace和GitHub开源，vLLM和Transformer部署支持 - MiniMax APP和Web不限量免费使用",
+        "M2.5详细数据披露： - SWE-Bench Verified 80.2%（行业顶尖），Multi-SWE-Bench 51.3%（第一），BrowseComp 76.3% - 100 TPS每秒输出，连续工作1小时仅1美金 - 完成复杂任务速度比M2.1快37%，Token消耗降低5% - 内部30%任务由M2.5自主完成，生成代码占新提交代码80%",
+        "连续四日更新预告"
+      ],
+      "recent": [
+        "M2.7自演化模型发布（SWE-Pro 56.22%, GDPval-AA ELO 1495）",
+        "Hailuo 2.3视频模型+Media Agent发布",
+        "港股市值突破3000亿港元，上市43天涨487%"
+      ]
+    },
+    {
+      "name": "DeepSeek",
+      "status": "critical",
+      "status_text": "融资500亿+V4 API全量开放+V4.1定档6月",
+      "this_week": [
+        "首轮融资目标500亿元（5月9日）： - 梁文锋个人出资200亿占本轮40% - 国家大基金领投（洽谈中），腾讯参投（洽谈中） - 估值飙升至约515亿美元（约3500亿人民币），21天翻5倍 - 从\"不融资\"转向主动寻求外部融资 - 计划推出企业产品实现收入正增长 - 过去一年5名核心开发人员流失，但270人团队离职率不到4%",
+        "V4 API正式全量开放（5月13日）： - V4-Pro（1.6T/49B）和V4-Flash（284B/13B）全系标配1M上下文 - 完整开源无功能阉割，权重在HuggingFace、ModelScope开放 - 支持非思考模式与思考模式、`reasoning_effort`参数 - 针对Claude Code、OpenClaw、OpenCode、CodeBuddy等专项优化 - V4-Flash缓存命中输入0.2元/百万token，V4-Pro缓存未命中输入12元/百万token - 旧接口`deepseek-chat`和`deepseek-reasoner`7月24日停止使用",
+        "V4.1定档6月发布，聚焦Agent方向",
+        "V4识图模式测试中"
+      ],
+      "recent": [
+        "V4发布开源（4月24日），全面适配华为昇腾950PR",
+        "NIST评估为迄今最强大中国AI模型"
+      ]
+    }
+  ],
+  "summary_table": {
+    "headers": [
+      "平台",
+      "状态",
+      "本周动态",
+      "近期关注节点"
+    ],
+    "rows": [
+      [
+        "火山方舟（豆包）",
+        "🟢",
+        "IDC报告市场份额49.5%持续领跑",
+        "豆包付费订阅正式上线"
+      ],
+      [
+        "阿里百炼",
+        "🟢",
+        "千问淘宝全面打通，全球首个AI购物闭环",
+        "Qwen3.5-Omni推广"
+      ],
+      [
+        "百度千帆",
+        "🔴",
+        "文心5.1发布，Create 2026大会，DAA新度量衡",
+        "昆仑芯天池256卡超节点6月上市"
+      ],
+      [
+        "腾讯混元",
+        "🟢",
+        "Hy3调用量增10倍接入131款产品，闭源旗舰五六月发布",
+        "闭源旗舰版本发布"
+      ],
+      [
+        "硅基流动",
+        "🔴",
+        "近亿元天使+轮融资完成，智谱AI参投",
+        "平台运营持续扩张"
+      ],
+      [
+        "智谱AI",
+        "🟢",
+        "商业化路径清晰ARR 17亿，推进科创板IPO",
+        "科创板IPO进展"
+      ],
+      [
+        "Kimi（月之暗面）",
+        "🟢",
+        "WebBridge发布，K3进入pre-train预计7月发布",
+        "K3模型发布"
+      ],
+      [
+        "MiniMax",
+        "🔴",
+        "M1开源推理模型发布（100万上下文），连续四日更新",
+        "M1后续产品更新"
+      ],
+      [
+        "DeepSeek",
+        "🔴",
+        "融资500亿V4.1定档6月，V4 API全量开放",
+        "V4.1发布、融资交割"
+      ]
+    ]
+  },
+  "trends": [],
+  "watchpoints": {
+    "headers": [
+      "日期",
+      "事件",
+      "影响平台"
+    ],
+    "rows": [
+      [
+        "2026-05-19",
+        "Google I/O 2026，预计发布Gemini新版本",
+        "全行业"
+      ],
+      [
+        "2026-05-31",
+        "DeepSeek V4-Pro 75%折扣截止",
+        "DeepSeek"
+      ],
+      [
+        "2026-06",
+        "DeepSeek V4.1发布",
+        "DeepSeek"
+      ],
+      [
+        "2026-06",
+        "腾讯混元闭源旗舰版本发布",
+        "腾讯混元"
+      ],
+      [
+        "2026-06",
+        "昆仑芯天池256卡超节点正式上市",
+        "百度千帆"
+      ],
+      [
+        "2026-06/06-30",
+        "阶跃星辰计划港股交表",
+        "阶跃星辰"
+      ],
+      [
+        "2026-07",
+        "Kimi K3预计发布",
+        "Kimi（月之暗面）"
+      ],
+      [
+        "2026-07-24",
+        "DeepSeek旧API接口（deepseek-chat/reasoner）停止服务",
+        "DeepSeek"
+      ],
+      [
+        "持续关注",
+        "智谱AI科创板IPO进展",
+        "智谱AI"
+      ],
+      [
+        "持续关注",
+        "百度昆仑芯科创板IPO进展",
+        "百度千帆"
+      ],
+      [
+        "持续关注",
+        "DeepSeek首轮融资交割（目标500亿人民币）",
+        "DeepSeek"
+      ],
+      [
+        "持续关注",
+        "MiniMax连续四日更新（M1后续产品）",
+        "MiniMax"
+      ]
+    ]
+  },
+  "event_index": [
+    {
+      "date": "2026-05-09",
+      "text": "百度文心5.1正式发布（搜索能力国内第一，预训练成本仅业界6%）"
+    },
+    {
+      "date": "2026-05-09",
+      "text": "DeepSeek首轮融资目标500亿元（梁文锋自掏200亿，V4.1定档6月）"
+    },
+    {
+      "date": "2026-05-11",
+      "text": "MiniMax M1开源推理模型发布（全球首个大规模混合架构，100万上下文）"
+    },
+    {
+      "date": "2026-05-11",
+      "text": "阿里千问与淘宝全面打通（全球首个AI购物全链路闭环）"
+    },
+    {
+      "date": "2026-05-13",
+      "text": "智谱AI港交所上市后推进科创板IPO（股价翻6倍，市值超越百度）"
+    },
+    {
+      "date": "2026-05-13",
+      "text": "百度昆仑芯启动科创板IPO上市辅导"
+    },
+    {
+      "date": "2026-05-13",
+      "text": "Create 2026百度AI开发者大会开幕（李彦宏提出DAA新度量衡）"
+    },
+    {
+      "date": "2026-05-13",
+      "text": "DeepSeek V4 API正式全量开放（Flash/Pro双版本，百万上下文成标配）"
+    },
+    {
+      "date": "2026-05-14",
+      "text": "百度Create 2026大会首日（DAA新度量衡，智能云全面升级\"新全栈AI云\"）"
+    },
+    {
+      "date": "2026-05-14",
+      "text": "大模型行业进入清场前夜（融资集中度分析）"
+    },
+    {
+      "date": "2026-05-15",
+      "text": "火山引擎MaaS市场份额达49.5%继续领跑（IDC报告）"
+    },
+    {
+      "date": "2026-05-15",
+      "text": "Kimi发布WebBridge浏览器自动化插件"
+    },
+    {
+      "date": "2026-05-15",
+      "text": "腾讯混元HY-World 2.0多模态世界模型开源"
+    },
+    {
+      "date": "2026-05-16",
+      "text": "硅基流动完成近亿元天使+轮融资（智谱AI参投）"
+    },
+    {
+      "date": "2026-05-16",
+      "text": "阶跃星辰25亿美元Pre-IPO融资（腾讯跟投，加速赴港IPO）"
+    },
+    {
+      "date": "2026-05-17",
+      "text": "智谱商业化路径清晰化（ARR 17亿，市值超3700亿港元）"
+    },
+    {
+      "date": "2026-05-17",
+      "text": "Kimi K3模型进入pre-train阶段（预计7月发布）"
+    },
+    {
+      "date": "2026-05-17",
+      "text": "NVIDIA发布Kimi-K2.6-NVFP4量化版本"
+    },
+    {
+      "date": "2026-05-17",
+      "text": "MiniMax M2.5详细技术数据披露（SWE-Bench 80.2%）"
+    },
+    {
+      "date": "2026-05-17",
+      "text": "腾讯混元Hy3调用量增10倍，2026年投入超360亿元"
+    }
+  ]
+}

@@ -85,6 +85,11 @@ class PlaywrightSourceProvider:
             wait_until = _PLAYWRIGHT_WAIT_STRATEGY.get(source_key, "networkidle")
             await page.goto(url, wait_until=wait_until, timeout=_PLAYWRIGHT_GOTO_TIMEOUT)
             await page.wait_for_timeout(_PLAYWRIGHT_HYDRATE_MS)
+            if source_key == "openai:pricing":
+                trigger = page.locator('[aria-label="Long context pricing details"]').first
+                if await trigger.count():
+                    await trigger.hover()
+                    await page.locator('[role="tooltip"]').wait_for(state="visible", timeout=3000)
             return await page.content()
         finally:
             await context.close()

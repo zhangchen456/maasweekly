@@ -25,16 +25,19 @@ const { ledger, fxRate, displayAmount, updateLabel, labels, picks, modelGroups, 
   <div class="market-heading"><div><p class="home-kicker">当前价格一览</p><h2 id="market-title">各家旗舰与主力模型，怎么选、怎么收费</h2></div><a href="/models/">全部模型 ↗</a></div>
   <p class="market-note">按官方定位分组，查看输入与输出成本。金额来自采集快照，换算为估算值。数据截至 {release.dataThrough}。</p>
   <div class="currency-toolbar" data-home-fx={fxRate}><div class="currency-buttons" role="group" aria-label="价格显示币种"><button type="button" data-currency="CNY" aria-pressed="true">¥ 人民币</button><button type="button" data-currency="USD" aria-pressed="false">$ 美元</button></div><label>1 USD = <input id="home-fx-rate" type="number" min="0.01" max="1000" step="0.01" value={fxRate} aria-label="美元兑人民币估算汇率" /> CNY</label><span id="home-fx-note">手动汇率 · {ledger.fx_snapshot.as_of} · 非实时</span><span id="home-fx-status" role="status"></span></div>
-  <nav class="model-group-nav" aria-label="模型比较分组">{modelGroups.map(group => <a href={`#home-models-${group.id}`}>{group.title}</a>)}</nav>
-  {modelGroups.map(group => <section class="home-model-group" data-home-group={group.id} id={`home-models-${group.id}`} aria-labelledby={`group-title-${group.id}`}>
-    <div class="model-group-heading"><h3 id={`group-title-${group.id}`}>{group.title}</h3><p>{group.description}</p></div>
-    <div class="market-table-wrap"><table class="market-table market-simple"><thead><tr><th scope="col">模型与定位</th><th scope="col">输入价格</th><th scope="col">输出价格</th><th scope="col">报价条件</th></tr></thead><tbody>{group.models.map((page,index)=><tr data-home-model={page.pick.modelId}>
+  <div data-model-tabs>
+  <div class="model-group-nav" role="tablist" aria-label="模型比较分组">{modelGroups.map((group,index) => <button type="button" role="tab" id={`model-tab-${group.id}`} aria-controls="home-model-panel" aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1} data-model-tab={group.id}>{group.title}<span>{group.models.length}</span></button>)}</div>
+  <div id="home-model-panel" role="tabpanel" aria-labelledby={`model-tab-${modelGroups[0].id}`} tabindex="0">
+    {modelGroups.map((group,index) => <p class="model-group-description" data-model-description={group.id} hidden={index !== 0}>{group.description}</p>)}
+    <div class="market-table-wrap"><table class="market-table market-simple"><thead><tr><th scope="col">模型与定位</th><th scope="col">输入价格</th><th scope="col">输出价格</th><th scope="col">报价条件</th></tr></thead>{modelGroups.map((group,groupIndex) => <tbody data-home-group={group.id} hidden={groupIndex !== 0}>{group.models.map((page,index)=><tr data-home-model={page.pick.modelId}>
       <td><div class="model-identity"><span class="model-sequence">{String(index+1).padStart(2,'0')}</span><div>{page.modelHref ? <a href={page.modelHref}>{page.pick.name}</a> : <strong class="home-model-name">{page.pick.name}</strong>}<small>{providerLabels[page.pick.providerId] ?? page.pick.providerId} · {page.pick.reason}</small><a class="model-selection-source" href={page.pick.source} target="_blank" rel="noopener noreferrer">官方定位 ↗</a></div></div></td>
       <td>{page.input ? <><span class="quote-value" data-quote-amount={page.input.amount} data-quote-currency={page.input.currency}>{displayAmount(page.input)}</span><small><span data-display-currency>{['CNY','USD'].includes(page.input.currency) ? 'CNY' : page.input.currency}</span> / {priceUnit(page.input.unitQuantity,page.input.unitName)}</small><small class="original-quote">原价 {quote(page.input)}</small></> : <span class="home-quote-pending">{page.quoteStatus}</span>}</td>
       <td>{page.output ? <><span class="quote-value" data-quote-amount={page.output.amount} data-quote-currency={page.output.currency}>{displayAmount(page.output)}</span><small><span data-display-currency>{['CNY','USD'].includes(page.output.currency) ? 'CNY' : page.output.currency}</span> / {priceUnit(page.output.unitQuantity,page.output.unitName)}</small><small class="original-quote">原价 {quote(page.output)}</small></> : <span class="home-quote-pending">{page.input ? '该档位未单列' : '—'}</span>}</td>
       <td>{page.input && <details class="quote-details"><summary>查看条件</summary><p>{page.condition}</p><p>缓存读取：{quote(page.cache)}</p><p>观察于 {page.input.observedAt.slice(0,10)} · 证据完整</p></details>}{page.modelHref && <a class="quote-link" href={page.modelHref}>报价与证据 ↗</a>}</td>
-    </tr>)}</tbody></table></div>
-  </section>)}
+    </tr>)}</tbody>)}</table></div>
+  </div>
+  <noscript><style>[data-home-group][hidden]{display:table-row-group!important}[data-model-description][hidden]{display:block!important}.model-group-nav{display:none}</style><p>未启用 JavaScript，以下依次展示全部分组。</p></noscript>
+  </div>
   <p class="market-note">型号定位核对于 {modelGroups[0]?.reviewedAt}。缺少可核验报价的型号保留在列表中，不以旧型号代替。</p>
   <div class="market-footer"><span>不同区域、上下文和时段可能有不同报价，查看全部档位后再比较。</span><a href="/pricing/">查找具体报价 →</a></div>
 </section>
@@ -49,3 +52,5 @@ const { ledger, fxRate, displayAmount, updateLabel, labels, picks, modelGroups, 
 <script src="../scripts/home-currency.ts"></script>
 
 <script src="../scripts/highlight-carousel.ts"></script>
+
+<script src="../scripts/home-model-tabs.ts"></script>

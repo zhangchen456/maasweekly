@@ -1,0 +1,716 @@
+{
+  "date": "2026-09-22",
+  "fetched_at": "2026-09-22T07:51:33.255677",
+  "stats": {
+    "total": 68,
+    "success": 67,
+    "failed": 1,
+    "changed": 18,
+    "unchanged": 49
+  },
+  "changes": [
+    {
+      "platform": "火山方舟",
+      "source_type": "model_list",
+      "url": "https://www.volcengine.com/docs/82379/1330310",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11071)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "pricing",
+      "url": "https://www.volcengine.com/docs/82379/1544106",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 11,
+      "added_lines": [
+        "Plugin 异常处理",
+        "最近更新时间：2026.09.21 17:49:25"
+      ],
+      "removed_lines": [
+        "AgentPilot OpenAPI 使用指南",
+        "AgentPilot SDK 参考",
+        "PromptPilot",
+        "PromptPilot 概述",
+        "PromptPilot 管理",
+        "PromptPilot 订阅管理",
+        "VideoPilot API",
+        "VideoPilot 功能介绍",
+        "最近更新时间：2026.09.17 18:24:52",
+        "视觉理解 Solution"
+      ]
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "changelog",
+      "url": "https://www.volcengine.com/docs/82379/1159177",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "审核版权合作与生成视频"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "blog",
+      "url": "https://www.volcengine.com/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "model_list",
+      "url": "https://help.aliyun.com/zh/model-studio/models",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 4,
+      "added_lines": [
+        "| qwen-audio-3.1-asr-flash-streaming | qwen-audio-3.1-asr-flash-filetrans | qwen3.8-omni-flash-realtime",
+        "| qwen-audio-3.1-realtime-plus | qwen3.5-omni-plus | qwen3.8-omni-flash-realtime",
+        "| qwen3.8-omni-flash-realtime | qwen3.8-omni-flash |",
+        "融合文本、图像、音频、视频等多种模态的理解与生成能力。音视频分析与文本生成选择 qwen3.8-omni-flash，通过 Chat Completions 或 Responses 调用；实时音视频对话选择 qwen3.8-omni-flash-realtime。"
+      ],
+      "removed_lines": [
+        "| qwen-audio-3.0-asr-flash-streaming | qwen-audio-3.0-asr-flash-filetrans | qwen3.5-omni-plus-realtime",
+        "| qwen-audio-3.1-realtime-plus | qwen3.5-omni-plus |",
+        "| qwen3.5-omni-plus-realtime | qwen3.8-omni-flash |",
+        "融合文本、图像、音频、视频等多种模态的理解与生成能力。音视频分析与文本生成选择 qwen3.8-omni-flash，通过 Chat Completions 或 Responses 调用；实时音视频对话选择 qwen3.5-omni-plus-realtime。"
+      ]
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "pricing",
+      "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "status": "changed",
+      "added_count": 47,
+      "removed_count": 7,
+      "added_lines": [
+        "100万Token |",
+        "Qwen-Audio-3.1-ASR-Flash-Message",
+        "Qwen-Audio-3.x-ASR-Flash",
+        "Qwen-Audio-3.x-ASR-Flash-Filetrans",
+        "Qwen-Audio-3.x-ASR-Flash-Streaming",
+        "ZHIPU/GLM-5.3-FlashX |",
+        "qwen-audio-3.0-asr-flash-filetrans：按输入音频的秒数计费，输出不计费。",
+        "qwen-audio-3.0-asr-flash-streaming：按输入音频的秒数计费，输出不计费。",
+        "qwen-audio-3.0-asr-flash：按输入音频的秒数计费，输出不计费。",
+        "qwen-audio-3.1-asr-flash-filetrans：按输入和输出 Token 数分别计费。",
+        "qwen-audio-3.1-asr-flash-streaming：按输入和输出 Token 数分别计费。",
+        "qwen-audio-3.1-asr-flash：按输入和输出 Token 数分别计费。",
+        "qwen3.8-omni-flash-realtime |",
+        "stepfun/step-5-preview |",
+        "vanchin/deepseek-v4.1-flash",
+        "| qwen-audio-3.0-asr-flash | 0.00022元/秒 | 不计费 | 36,000秒（10小时）",
+        "| qwen-audio-3.0-asr-flash | 国际 | 0.00026元/秒 | 不计费",
+        "| qwen-audio-3.0-asr-flash-filetrans | 0.00022元/秒 | 不计费 | 36,000秒（10小时）",
+        "| qwen-audio-3.0-asr-flash-filetrans | 国际 | 0.00026元/秒 | 不计费",
+        "| qwen-audio-3.0-asr-flash-streaming | 0.00033元/秒 | 不计费 | 36,000秒（10小时）",
+        "| qwen-audio-3.0-asr-flash-streaming | 国际 | 0.00066元/秒 | 不计费",
+        "| qwen-audio-3.1-asr-flash | 0.8元/百万 Token | 2.7元/百万 Token | 100万 Token",
+        "| qwen-audio-3.1-asr-flash | 国际 | 1.094元/百万 Token | 3.427元/百万 Token",
+        "| qwen-audio-3.1-asr-flash-filetrans | 0.8元/百万 Token | 2.7元/百万 Token | 100万 Token",
+        "| qwen-audio-3.1-asr-flash-filetrans | 国际 | 1.094元/百万 Token | 3.427元/百万 Token",
+        "| qwen-audio-3.1-asr-flash-message | 6元 | 4.5元 | 100万Token",
+        "| qwen-audio-3.1-asr-flash-message | 国际 | 6.781元 | 5.104元",
+        "| qwen-audio-3.1-asr-flash-streaming | 6元/百万 Token | 4.5元/百万 Token | 100万 Token",
+        "| qwen-audio-3.1-asr-flash-streaming | 国际 | 6.781元/百万 Token | 5.104元/百万 Token",
+        "| qwen-audio-3.1-tts-flash | 1.5元 | 12元 | 100万 Token |"
+      ],
+      "removed_lines": [
+        "Qwen-Audio-3.0-ASR-Flash",
+        "Qwen-Audio-3.0-ASR-Flash-Filetrans",
+        "Qwen-Audio-3.0-ASR-Flash-Streaming",
+        "qwen-audio-3.0-asr-flash |",
+        "qwen-audio-3.0-asr-flash-filetrans |",
+        "qwen-audio-3.0-asr-flash-streaming |",
+        "qwen-audio-3.1-tts-flash |"
+      ]
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "changelog",
+      "url": "https://help.aliyun.com/zh/model-studio/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "blog",
+      "url": "https://qwenlm.github.io/blog/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "model_list",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "pricing",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "changelog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Mmh8l4qwj",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "blog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "model_list",
+      "url": "https://cloud.tencent.com/document/product/1729/104753",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "pricing",
+      "url": "https://cloud.tencent.com/document/product/1729/97731",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "changelog",
+      "url": "https://cloud.tencent.com/document/product/1729/97765",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "blog",
+      "url": "https://cloud.tencent.com/document/product/1729/132069",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "model_list",
+      "url": "https://cloud.siliconflow.cn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "pricing",
+      "url": "https://siliconflow.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "changelog",
+      "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 2,
+      "added_lines": [
+        "创建对话请求（Anthropic） POST",
+        "创建对话请求（OpenAI） POST",
+        "创建快速决策请求（TypeSafe） POST"
+      ],
+      "removed_lines": [
+        "创建对话请求(Anthropic) POST",
+        "创建对话请求(OpenAI) POST"
+      ]
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "blog",
+      "url": "https://siliconflow.cn/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "model_list",
+      "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "pricing",
+      "url": "https://bigmodel.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "changelog",
+      "url": "https://docs.bigmodel.cn/cn/update/new-releases",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "blog",
+      "url": "https://www.bigmodel.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "model_list",
+      "url": "https://platform.kimi.com/docs/api/models-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "pricing",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "changelog",
+      "url": "https://platform.kimi.com/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "blog",
+      "url": "https://www.moonshot.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "model_list",
+      "url": "https://platform.minimaxi.com/docs/guides/models-intro",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "pricing",
+      "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "changelog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "blog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "model_list",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "pricing",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "changelog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "blog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "model_list",
+      "url": "https://platform.openai.com/docs/models",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "WebRTC with WARP"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "pricing",
+      "url": "https://platform.openai.com/docs/pricing",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "WebRTC with WARP"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "changelog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "WebRTC with WARP"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "blog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "WebRTC with WARP"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "model_list",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "pricing",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "changelog",
+      "url": "https://docs.anthropic.com/en/release-notes/api",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "blog",
+      "url": "https://www.anthropic.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "model_list",
+      "url": "https://ai.google.dev/gemini-api/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "changelog",
+      "url": "https://ai.google.dev/gemini-api/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "blog",
+      "url": "https://blog.google/technology/ai/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "model_list",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "pricing",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 3,
+      "added_lines": [
+        "Models Supported: Claude Haiku 4.5, Claude Sonnet 4.5, Claude Sonnet 4.6, Claude Sonnet 4, Claude Opus 4, Claude Opus 4.5 and Claude Opus 4.6."
+      ],
+      "removed_lines": [
+        "Claude Opus 4.1 |",
+        "Models with uniform pricing across all regions",
+        "﻿Models Supported: Claude Haiku 4.5, Claude Sonnet 4.5, Claude Sonnet 4.6, Claude Sonnet 4, Claude Opus 4.1, Claude Opus 4, Claude Opus 4.5 and Claude Opus 4.6."
+      ]
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "changelog",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "blog",
+      "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 3,
+      "added_lines": [
+        "By Michael Gerstenhaber • 9-minute read",
+        "FinOps for the AI era: New flexible billing and cost controls for agents"
+      ],
+      "removed_lines": [
+        "By Hitesh Bhatia • 4-minute read",
+        "How Airtel delivered its flawless Indian Premiere League 2026 cricket broadcasts",
+        "Media & Entertainment"
+      ]
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "model_list",
+      "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "pricing",
+      "url": "https://mistral.ai/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "changelog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "blog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "model_list",
+      "url": "https://docs.cohere.com/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "pricing",
+      "url": "https://cohere.com/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "changelog",
+      "url": "https://docs.cohere.com/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "blog",
+      "url": "https://txt.cohere.com/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "model_list",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "changed",
+      "added_count": 7,
+      "removed_count": 5,
+      "added_lines": [
+        "Encrypted reasoning",
+        "Last updated: September 21, 2026",
+        "Meet grok-4.7",
+        "Newgrok-4.7",
+        "On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. See Encrypted reasoning content.",
+        "The knowledge cut-off date of Grok 4.7 is May 2026.",
+        "Your choice depends on your use case. We have dedicated models and APIs for audio, image, and video capabilities. For everything else, including code, use Grok 4.7. It is the most capable model we’ve built."
+      ],
+      "removed_lines": [
+        "Last updated: August 21, 2026",
+        "Meet grok-4.6",
+        "Newgrok-4.6",
+        "The knowledge cut-off date of Grok 4.6 is February 1, 2026.",
+        "Your choice depends on your use case. We have dedicated models and APIs for audio, image, and video capabilities. For everything else, including code, use Grok 4.6. It is the most intelligent and fastest model we’ve built."
+      ]
+    },
+    {
+      "platform": "xAI",
+      "source_type": "pricing",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "changed",
+      "added_count": 7,
+      "removed_count": 5,
+      "added_lines": [
+        "Encrypted reasoning",
+        "Last updated: September 21, 2026",
+        "Meet grok-4.7",
+        "Newgrok-4.7",
+        "On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. See Encrypted reasoning content.",
+        "The knowledge cut-off date of Grok 4.7 is May 2026.",
+        "Your choice depends on your use case. We have dedicated models and APIs for audio, image, and video capabilities. For everything else, including code, use Grok 4.7. It is the most capable model we’ve built."
+      ],
+      "removed_lines": [
+        "Last updated: August 21, 2026",
+        "Meet grok-4.6",
+        "Newgrok-4.6",
+        "The knowledge cut-off date of Grok 4.6 is February 1, 2026.",
+        "Your choice depends on your use case. We have dedicated models and APIs for audio, image, and video capabilities. For everything else, including code, use Grok 4.6. It is the most intelligent and fastest model we’ve built."
+      ]
+    },
+    {
+      "platform": "xAI",
+      "source_type": "changelog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 2,
+      "added_lines": [
+        "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast, the same model at twice the token rates, is available only through Cursor and Grok Build, not on the public xAI API. See the Grok 4.7 overview and the announcement.",
+        "Last updated: September 21, 2026",
+        "Meet grok-4.7",
+        "September 21"
+      ],
+      "removed_lines": [
+        "Last updated: September 17, 2026",
+        "Meet grok-4.6"
+      ]
+    },
+    {
+      "platform": "xAI",
+      "source_type": "blog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 2,
+      "added_lines": [
+        "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast, the same model at twice the token rates, is available only through Cursor and Grok Build, not on the public xAI API. See the Grok 4.7 overview and the announcement.",
+        "Last updated: September 21, 2026",
+        "Meet grok-4.7",
+        "September 21"
+      ],
+      "removed_lines": [
+        "Last updated: September 17, 2026",
+        "Meet grok-4.6"
+      ]
+    },
+    {
+      "platform": "讯飞星辰MaaS",
+      "source_type": "changelog",
+      "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+      "status": "unchanged"
+    },
+    {
+      "platform": "HuggingFace",
+      "source_type": "industry",
+      "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+      "status": "changed",
+      "added_count": 33,
+      "removed_count": 33,
+      "added_lines": [
+        "\"downloads\": 14337258,",
+        "\"downloads\": 15113702,",
+        "\"downloads\": 17385800,",
+        "\"downloads\": 17447121,",
+        "\"downloads\": 18503927,",
+        "\"downloads\": 20047151,",
+        "\"downloads\": 20901410,",
+        "\"downloads\": 20917518,",
+        "\"downloads\": 21877109,",
+        "\"downloads\": 21994538,",
+        "\"downloads\": 22629668,",
+        "\"downloads\": 24729634,",
+        "\"downloads\": 24836019,",
+        "\"downloads\": 251048129,",
+        "\"downloads\": 37317623,",
+        "\"downloads\": 45687282,",
+        "\"downloads\": 46140403,",
+        "\"downloads\": 48121042,",
+        "\"downloads\": 64343667,",
+        "\"downloads\": 88600335,",
+        "\"likes\": 1137,",
+        "\"likes\": 1208,",
+        "\"likes\": 1409,",
+        "\"likes\": 1565,",
+        "\"likes\": 1660,",
+        "\"likes\": 184,",
+        "\"likes\": 1956,",
+        "\"likes\": 3367,",
+        "\"likes\": 3587,",
+        "\"likes\": 4161,"
+      ],
+      "removed_lines": [
+        "\"downloads\": 14480893,",
+        "\"downloads\": 15132408,",
+        "\"downloads\": 17465321,",
+        "\"downloads\": 17738844,",
+        "\"downloads\": 18269111,",
+        "\"downloads\": 19744243,",
+        "\"downloads\": 20700265,",
+        "\"downloads\": 21013884,",
+        "\"downloads\": 21853212,",
+        "\"downloads\": 22242121,"
+      ]
+    },
+    {
+      "platform": "Artificial Analysis",
+      "source_type": "industry",
+      "url": "https://artificialanalysis.ai/",
+      "status": "changed",
+      "added_count": 25,
+      "removed_count": 27,
+      "added_lines": [
+        "10 of 33 models",
+        "10 of 493 releases",
+        "14 of 16 models",
+        "15 of 15 providers",
+        "15 of 160 models",
+        "15 of 59 model creators",
+        "15 of 91 models",
+        "27 of 174 models",
+        "27 of 237 models",
+        "27 of 27 models",
+        "27 of 531 models",
+        "28 of 656 models",
+        "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailScalewayTogether AI",
+        "Announcing the Artificial Analysis Intelligence Index v4.3See more",
+        "AnthropicAnthropic + CognitionOpenAIOpenAI + CognitionSpaceXAIMetaZ.aiMoonshot AIAlibaba CloudDeepSeekGoogle",
+        "AnthropicOpenAIMetaSpaceXAIXiaomiAlibabaZ AIStepFunKimiGoogleDeepSeekInstitute of Foundation ModelsMiniMaxThinking MachinesMistral",
+        "AnthropicOpenAIMetaSpaceXAIZ AIKimiGoogleDeepSeekOther Models",
+        "Benchmarking Grok 4.7",
+        "GoogleStepFunThinking MachinesZ AIXiaomiMiniMaxOpenAIAnthropicMetaSpaceXAINVIDIADeepSeekAlibabaMistralKimi",
+        "Grok 4.7 (high)",
+        "Grok 4.7 (xhigh)",
+        "MiMo-V2.6-Pro",
+        "New article published · 21 Sept",
+        "New language model evaluation · 21 Sept",
+        "ProprietaryOpen WeightsOpen Weights (Commercial Use Restricted)"
+      ],
+      "removed_lines": [
+        "11 of 33 models",
+        "11 of 491 releases",
+        "14 of 15 models",
+        "14 of 59 model creators",
+        "15 of 161 models",
+        "15 of 90 models",
+        "16 of 16 providers",
+        "26 of 171 models",
+        "26 of 234 models",
+        "26 of 26 models"
+      ]
+    },
+    {
+      "platform": "LMArena",
+      "source_type": "industry",
+      "url": "https://lmarena.ai/leaderboard",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 2,
+      "added_lines": [
+        "grok-imagine-image-2.0 (low)1315±12",
+        "grok-imagine-image-2.0 (low)1439±8"
+      ],
+      "removed_lines": [
+        "grok-imagine-image-2.0 (low)1315",
+        "grok-imagine-image-2.0 (low)1439"
+      ]
+    }
+  ]
+}

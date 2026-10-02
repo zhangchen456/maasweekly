@@ -47,11 +47,10 @@ assert.deepEqual(groups.map(g=>g.id),['flagship','value','coding']);
 assert.equal(groups[0].models.length,8);
 assert.equal(groups[1].models.length,8);
 assert(!groups.slice(0,2).flatMap(g=>g.models).some(p=>p.pick.modelId.includes('coder') || p.pick.modelId.endsWith('-code')));
-const opus=groups[0].models.find(p=>p.pick.modelId==='anthropic:claude-opus-5.5');
-assert(opus && !opus.input && !opus.modelHref, 'missing catalog does not substitute an older model');
-const astra=groups[0].models.find(p=>p.pick.modelId==='openai:gpt-6-astra');
-assert(astra && !astra.input, 'partial evidence is never promoted as a verified quote');
-assert(!groups[0].models.find(p=>p.pick.modelId==='kimi:kimi-k3').input, 'known official price discrepancy is withheld');
+assert.equal(groups.flatMap(g=>g.models).length,18);
+for (const row of groups.flatMap(g=>g.models)) {
+  assert(row.input && row.output && row.modelHref, `${row.pick.modelId}: complete current quote and model page required`);
+}
 for (const group of groups) for (const row of group.models) {
   assert(row.pick.source.startsWith('https://'));
   if(row.input) {
@@ -69,4 +68,9 @@ const selected=home.selectHomeQuote([
  {...base,id:'bad-cache',region:'cn',component:'cache_read',evidenceStatus:'partial'},
 ], 'alibaba');
 assert.equal(selected.input.id,'cn-input');assert.equal(selected.output.id,'cn-output');assert.equal(selected.cache,undefined);
-console.log('Homepage groups: missing quotes, partial evidence, specialist isolation and scenario matching passed');
+assert.equal(home.selectHomeQuote([{...base,evidenceStatus:'partial'}], 'alibaba').input,undefined);
+assert.equal(home.selectHomeQuote([], 'alibaba').input,undefined);
+const newer={...base,observedAt:'2026-10-02T12:00:00Z',timeCondition:{period:'promotional',tz:'UTC',schedule:'through December 31, 2026'}};
+assert.equal(home.selectHomeQuote([{...base,id:'old',observedAt:'2026-10-01T12:00:00Z'}, {...newer,id:'new'}], 'alibaba').input.id,'new');
+assert.equal(home.selectHomeQuote([{...base,observedAt:'2026-10-01T12:00:00Z'}, {...newer,evidenceStatus:'partial'}], 'alibaba').input,undefined);
+console.log('Homepage groups: all 18 verified quotes, specialist isolation, partial-evidence exclusion and scenario matching passed');

@@ -25,9 +25,9 @@ export const HOME_MODEL_GROUPS = [
     pick('anthropic', 'claude-opus-5.5', 'Claude Opus 5.5', '长程智能体与知识工作', 'Long-running agents and knowledge work', claude),
     pick('google', 'gemini-3.1-pro-preview', 'Gemini 3.1 Pro Preview', '复杂任务与工具调用 · 预览版', 'Complex tasks and tool use · Preview', google),
     pick('alibaba', 'qwen3.8-max', 'Qwen3.8 Max', '千问 Max 通用能力档', 'Qwen Max general capability tier', qwen),
-    pick('deepseek', 'deepseek-v4-pro', 'DeepSeek V4 Pro', 'Pro 通用能力档', 'Pro general capability tier', deepseek, '价格变更待核验'),
+    pick('deepseek', 'deepseek-v4-pro', 'DeepSeek V4 Pro', 'Pro 通用能力档', 'Pro general capability tier', deepseek),
     pick('zhipu', 'glm-5.3', 'GLM-5.3', '复杂工程与长程智能体', 'Complex engineering and long-running agents', glm),
-    pick('kimi', 'kimi-k3', 'Kimi K3', '深度推理与知识工作', 'Deep reasoning and knowledge work', kimi, '价格变更待核验'),
+    pick('kimi', 'kimi-k3', 'Kimi K3', '深度推理与知识工作', 'Deep reasoning and knowledge work', kimi),
     pick('volcengine', 'doubao-seed-2.1-pro', 'Doubao Seed 2.1 Pro', 'Seed Pro 通用能力档', 'Seed Pro general capability tier', doubao),
   ] },
   { id: 'value', title: '主力性价比', titleEn: 'Everyday value', description: '关注日常任务的能力、成本与响应速度；性价比取决于你的实际任务。', descriptionEn: 'Balance capability, cost and speed for everyday work. Value depends on your workload.', models: [

@@ -64,6 +64,7 @@ run "validate-price-archive（Task 02）" python3 pipeline/scripts/validate-pric
 run "build-skill-package --check" python3 site/scripts/build-skill-package.py --check
 
 # ---- Python 测试 ----
+run "test_current_pricing（official table drift）" python3 -m unittest discover -s tests -p 'test_current_pricing.py'
 run "test_record_archive（Task 01）" python3 -m unittest discover -s tests -p 'test_record_archive.py'
 run "test_price_archive（Task 02）" python3 -m unittest discover -s tests -p 'test_price_archive.py'
 run "test_public_export（Task 03）" python3 -m unittest discover -s tests -p 'test_public_export.py'

@@ -1,0 +1,3575 @@
+{
+  "2026-09-30": [
+    {
+      "id": "price_a6978b93fa0a3fc4847c483af2f93b4d28cda8c64619288f79e785c5f57028b1",
+      "provider": "openai",
+      "model": "gpt-6-astra",
+      "component": "input",
+      "previous": "40.000000",
+      "current": "120.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_83e1c2474a2a9730b645bf9f84b2304a31fdac0f1751a2b5747eee28a4c84902",
+      "provider": "openai",
+      "model": "gpt-6-astra",
+      "component": "cache_read",
+      "previous": "4.000000",
+      "current": "12.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_b2bd91487e7f73cab5692831f3c3d5f2c81e3f04ff6c859bd151689e69af25b9",
+      "provider": "openai",
+      "model": "gpt-6-astra",
+      "component": "cache_write",
+      "previous": "50.000000",
+      "current": "150.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_fe7ba055f0efc1c12052c141a11b0cf90b589fb9a3383b5e6f673aa66ff393a1",
+      "provider": "openai",
+      "model": "gpt-6-astra",
+      "component": "output",
+      "previous": "150.000000",
+      "current": "450.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_4f216468d3485e5c0b9a1800a3c6744999f735fd34455f3bb4af87d82e79082c",
+      "provider": "openai",
+      "model": "gpt-6.1-sol",
+      "component": "input",
+      "current": "8.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_010759e081a82f3fa12b46d1b18fc16e0d82cebce97630274c08791ebace7dc0",
+      "provider": "openai",
+      "model": "gpt-6.1-sol",
+      "component": "cache_read",
+      "current": "0.400000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_e9666cfc046b7c2b8ed9e58b7a5a937819e6c724492d07747093529b1a5bbeb7",
+      "provider": "openai",
+      "model": "gpt-6.1-sol",
+      "component": "cache_write",
+      "current": "10.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_29a0bdb7c628845d3bea62b82db43ed8eeba38b51f70fec5251c9d15c35a2695",
+      "provider": "openai",
+      "model": "gpt-6.1-sol",
+      "component": "output",
+      "current": "30.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    }
+  ],
+  "2026-09-24": [
+    {
+      "id": "price_181313b2be6ce496be56b0e02ad68c5124d30f2414990a45b2125678f37c99aa",
+      "provider": "google",
+      "model": "gemini-3.8-flash-tts",
+      "component": "input",
+      "current": "0.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_6525d40e122eedb75c7c03c59589c8dc0f26398ffab113499e6775c0dc6dff82",
+      "provider": "google",
+      "model": "gemini-3.8-flash-tts",
+      "component": "output",
+      "current": "9.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_645528d49a8dfe92047327ff2573a4b7f6e6cea5685723b9210322330673c50f",
+      "provider": "google",
+      "model": "gemini-3.8-flash-tts",
+      "component": "cache_read",
+      "current": "0.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_7be0c29cdc0e0466dc7811b32fba739951b15757666caf9de36b0e562058312c",
+      "provider": "google",
+      "model": "gemini-3.8-flash-lite-tts",
+      "component": "input",
+      "current": "0.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_d076bb68d12fd0c689e47a3a3e486f36745bde6356c3ab1c368473f6d723ca3c",
+      "provider": "google",
+      "model": "gemini-3.8-flash-lite-tts",
+      "component": "output",
+      "current": "6.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_effa6f8deb16b83b7a2a6332be1005c6595d0831ba6d0285f2fa10e33c5b2752",
+      "provider": "google",
+      "model": "gemini-3.8-flash-lite-tts",
+      "component": "cache_read",
+      "current": "0.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    }
+  ],
+  "2026-09-23": [
+    {
+      "id": "price_a92c9f1da5aac00a1ff0d7b4b121f72873e5bfa28890ff0cd25ab2631c578ed5",
+      "provider": "google",
+      "model": "gemini-2.5-computer-use-preview",
+      "component": "input",
+      "previous": "1.000000",
+      "current": "1.250000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_2d5356a275ad74aade8014eb7779622b9a409d7c0b2c6bff51307888dbc8593b",
+      "provider": "google",
+      "model": "gemini-2.5-computer-use-preview",
+      "component": "output",
+      "previous": "5.000000",
+      "current": "10.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_9c4f7ac33eba9a572a9232845333dcd1184e5940d9c4e502b7f3426fa16ba49d",
+      "provider": "anthropic",
+      "model": "claude-opus-5.5",
+      "component": "input",
+      "current": "4.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_3bea2980ad4e09fef22d86c1c906dd07ee736f8b20ed08c9fe525d2f96fe810c",
+      "provider": "anthropic",
+      "model": "claude-opus-5.5",
+      "component": "cache_write",
+      "current": "5.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_9a135fdd4a55492cd1ddb8526f4e76507ea40e248caefc032cbabe2d9f5830e3",
+      "provider": "anthropic",
+      "model": "claude-opus-5.5",
+      "component": "cache_write",
+      "current": "8.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_7eedc0b632f2a9abd35cf462fdca6f4df45235e58161becf88f8cb38e984bd8f",
+      "provider": "anthropic",
+      "model": "claude-opus-5.5",
+      "component": "cache_read",
+      "current": "0.200000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_9e48377754cca7d82df8704f3a4d1b0d476a8b0f5684dba1548fdbe0afc85625",
+      "provider": "anthropic",
+      "model": "claude-opus-5.5",
+      "component": "output",
+      "current": "20.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_725c37df416c953b00d4d260c2e385e655dd006a734d7d9894a83f4322819dc1",
+      "provider": "doubao",
+      "model": "doubao-seedream-5-0-flash",
+      "component": "output",
+      "current": "0.120000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
+    },
+    {
+      "id": "price_0110aa37157a2177259bc460bbdbeeecd10ffe89259b4b4b41b0dc1aa2f89361",
+      "provider": "google",
+      "model": "gemini-robotics-er-2-streaming-preview",
+      "component": "input",
+      "current": "1.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_7e8ab5379d8ee27086e5a242bb6ffa1bb165c222fb7d537a8860ffa8b8f257da",
+      "provider": "google",
+      "model": "gemini-robotics-er-2-streaming-preview",
+      "component": "output",
+      "current": "5.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_0c28bbd66e4a0308ff6720aa0596e474785a4b562b37ef7ed94920af7b09c55f",
+      "provider": "openai",
+      "model": "gpt-6-sol",
+      "component": "input",
+      "current": "8.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_5b9fccdadde968afc46d264caa783ebf714ecc283a4cac2ba837f77398241d04",
+      "provider": "openai",
+      "model": "gpt-6-sol",
+      "component": "cache_read",
+      "current": "0.800000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_87c2796752d76f912bf77e1a11e1fed373f6fc4c83e2bff9a1fcae9e576c403a",
+      "provider": "openai",
+      "model": "gpt-6-sol",
+      "component": "cache_write",
+      "current": "10.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_4a83b2dec520b18dbeecd6403d143494b356bde386fdeb8ff067a3852a24c320",
+      "provider": "openai",
+      "model": "gpt-6-sol",
+      "component": "output",
+      "current": "30.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_322a702548db7a73a3614b0e7c9427bab169d53e2c9c7eaae0a8570c42831ed0",
+      "provider": "openai",
+      "model": "gpt-6-luna",
+      "component": "input",
+      "current": "0.400000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_afeec70a9de6c377d039ee54decf85eda02943f4241de9f53e5d98442dc36a5e",
+      "provider": "openai",
+      "model": "gpt-6-luna",
+      "component": "cache_read",
+      "current": "0.040000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_bb0d6db7323a9ae4f21ec690f1102a35412002950c0493e584a6c0617c7837e2",
+      "provider": "openai",
+      "model": "gpt-6-luna",
+      "component": "cache_write",
+      "current": "0.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "id": "price_193b06b6d1e876a77ef939a3b1312ee97a172c0bc2ea7484e26c1e43e0c46e7d",
+      "provider": "openai",
+      "model": "gpt-6-luna",
+      "component": "output",
+      "current": "1.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://developers.openai.com/api/docs/pricing"
+    }
+  ],
+  "2026-09-22": [
+    {
+      "id": "price_a68801ccf83d404022fd4d1f451a791fc19ac29833103b6902fc77146b0ed5c5",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-tts-flash",
+      "component": "input",
+      "previous": "1.000000",
+      "current": "1.500000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_1c2b837532d5540820b89228788e35e429f69dfc8986d23b71f45e77472e2fca",
+      "provider": "qwen",
+      "model": "qwen-audio-3.0-realtime-flash",
+      "component": "input",
+      "previous": "30.000000",
+      "current": "6.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_086dbba0cea4b93d2cdb6fd25c8f956b6f946c74f0140203b9a333d9770bcf6d",
+      "provider": "qwen",
+      "model": "qwen-audio-3.0-realtime-flash",
+      "component": "output",
+      "previous": "100.000000",
+      "current": "12.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_1e5bbd8705be981d217d28759917c3935618bc65bbbbcfb8f590c6cafcaa32ef",
+      "provider": "qwen",
+      "model": "qwen-audio-3.0-realtime-flash",
+      "component": "input",
+      "previous": "33.724000",
+      "current": "6.781000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_94318a5030637be010dd565467a821953a5730f61301b101966da974a3324825",
+      "provider": "qwen",
+      "model": "qwen-audio-3.0-realtime-flash",
+      "component": "output",
+      "previous": "112.413000",
+      "current": "13.636000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_b9538ad5ecc3f7fa03106c1fac82aaa38b1c3700e759d73fc282c9f9600b58d0",
+      "provider": "doubao",
+      "model": "doubao-seed-2.1-lite",
+      "component": "input",
+      "current": "0.400000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
+    },
+    {
+      "id": "price_0ad05e348ee55a33dc0c960febd77506d63fe1af3efc5ca06ca364110b52060d",
+      "provider": "doubao",
+      "model": "doubao-seed-2.1-lite",
+      "component": "cache_read",
+      "current": "0.160000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
+    },
+    {
+      "id": "price_0f45d3cc5ac7d5baea1a7f059d23dda7c6737f89665849db03590d51bb05932e",
+      "provider": "doubao",
+      "model": "doubao-seed-2.1-lite",
+      "component": "output",
+      "current": "1.350000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
+    },
+    {
+      "id": "price_dc9c817d5605a3096cb34965377e2c6811df98ea3faa1c062c372bd6ba5c9287",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-tts-flash",
+      "component": "output",
+      "current": "12.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_96fa363b62322e5f9009e0ea481edeb14eb232e6d82db4b2f4219d252ec3cf1c",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash-message",
+      "component": "input",
+      "current": "6.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_8ee2b74da2cc84fe9f3941c7702dddeeae790169dffd3bb634131003f7407003",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash-message",
+      "component": "output",
+      "current": "4.500000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_612da2eaefde207ffdeb423d0b5a57bce3d34dd6bca06a28e8c9addfe9bbc5dd",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash-message",
+      "component": "input",
+      "current": "6.781000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_d6c44083b0ad9e1d0cea9f07820d501f7c2c41ff8fcf2e3402d59256cbdd3ccd",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash-message",
+      "component": "output",
+      "current": "5.104000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_da78e5d472e1d79032a06a379837f36a56556596f5331e1304aa961bd991a6d0",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash-streaming",
+      "component": "input",
+      "current": "6.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_54fa536e19786a130df3bb203addf804c89dfdc5bdd15c7a39a35d6d94e5fd85",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash-streaming",
+      "component": "output",
+      "current": "4.500000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_0651c9a7858b10e61a80e84f6ad73aa9dd3c4a3db5f732925615024d76a5c0c9",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash-streaming",
+      "component": "input",
+      "current": "6.781000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_c1ce91a24a176bed82b5a4f853afebacaf24ba7496db1bf8cb37001ee6ade928",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash-streaming",
+      "component": "output",
+      "current": "5.104000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_64ece353e98ab14faa548ebc6d3ebc8298873a6f0e7e8a3681292040f1956687",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash-filetrans",
+      "component": "input",
+      "current": "0.800000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_1036e32700fa25bb7a072b93ac9fef1bd8d8e8b224d9b7253910641eb36d30f7",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash-filetrans",
+      "component": "output",
+      "current": "2.700000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_a9c515aa90f75e7670504ba28a13f721b72fd136c50c44f0cd8cc8cbe84db366",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash-filetrans",
+      "component": "input",
+      "current": "1.094000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_a54b8e02602245a3c40bc93ee4c88dbb2b71766643382774307cff28300cd14a",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash-filetrans",
+      "component": "output",
+      "current": "3.427000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_ec109f857f874e2682e3865defaab5dabea6f4bcf0d1b314c4533ae2c448972a",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash",
+      "component": "input",
+      "current": "0.800000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_9f7b8a931002bb8c808acf4733c8e6497f8e115e06daa6f8b9e24d342e1b0730",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash",
+      "component": "output",
+      "current": "2.700000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_23731aa53ee2080dd111123387d480b868a439414604ab9797a29a49bbd513fe",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash",
+      "component": "input",
+      "current": "1.094000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_7006c998264b6cf26de13f0df5416ea4015882878432b57251d052eb1960e3f4",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-asr-flash",
+      "component": "output",
+      "current": "3.427000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    }
+  ],
+  "2026-09-21": [
+    {
+      "id": "price_77d18b33ead7d35ddfef2e134f1bf81100e19f8a916b37d192e9182a09ff6153",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-realtime-plus",
+      "component": "input",
+      "current": "40.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_c9f64f19c509c3a081673e1bd7bdd9ce8ca7a774783147d51b548770a6f02fdc",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-realtime-plus",
+      "component": "output",
+      "current": "150.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_4bca20d5ee713efee7e94fa904470fab559dca8b6d7897ffb1033298a1855093",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-realtime-plus",
+      "component": "input",
+      "current": "47.963000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_d005d4804970b414c85beef13f6498a4e72f354316009c392888d9bd161583e6",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-realtime-plus",
+      "component": "output",
+      "current": "179.861000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    }
+  ],
+  "2026-09-20": [
+    {
+      "id": "price_1c181425cf150d4797b5846787f8d6f0f890abd64f00c5211216935218a8fd34",
+      "provider": "kimi",
+      "model": "kimi-k3",
+      "component": "cache_read",
+      "previous": "2.000000",
+      "current": "20.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://platform.kimi.com/docs/pricing/chat"
+    },
+    {
+      "id": "price_607db1e56157c3cd9af3b658d5f6c60791b03e7183faa6e97d4863d2a4ef3db2",
+      "provider": "kimi",
+      "model": "kimi-k3",
+      "component": "input",
+      "previous": "20.000000",
+      "current": "40.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://platform.kimi.com/docs/pricing/chat"
+    },
+    {
+      "id": "price_2cf607385d1b5ee4ff3c199d02ece4f20ae9364f1d4c5788021725d790788a4e",
+      "provider": "kimi",
+      "model": "kimi-k3",
+      "component": "output",
+      "previous": "100.000000",
+      "current": "2.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://platform.kimi.com/docs/pricing/chat"
+    },
+    {
+      "id": "price_212155877b8ecc9b0be5eb1663bec06fa40cda1aa95fa8880cbbb152d8a67d73",
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro",
+      "component": "cache_read",
+      "current": "0.022000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "id": "price_c45c4dadbedf3fb2f23f3ace0d7e36bcda38cf2701d06bbc725e594d24a046fb",
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro",
+      "component": "cache_read",
+      "current": "0.044000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "id": "price_5927c0d4f716bda3f64acaf073a30bfd25caf6bec31dcf7ccd171f0c6d36ed26",
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro",
+      "component": "input",
+      "current": "0.660000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "id": "price_fafe446c8faa458e4c854813f82dfa23e91f055b39485b556efb6e423f0c9dca",
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro",
+      "component": "input",
+      "current": "1.320000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "id": "price_3f4adb6e84d50634c63d7a56a22f98a634236de82f81394c4836ed433c934a2c",
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro",
+      "component": "output",
+      "current": "1.980000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "id": "price_7b9d649e13cca8abcbd44c7ee6e669aeb8fd16e999d1f9bc966c2bd73c318d11",
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro",
+      "component": "output",
+      "current": "3.960000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    }
+  ],
+  "2026-09-19": [
+    {
+      "id": "price_b485143eaa94bb52c81e6cfb80d5edf11625f96fb9d3a522073a8aa2d702c6be",
+      "provider": "qwen",
+      "model": "qwen-mt-uni",
+      "component": "input",
+      "current": "400.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_cc0bdf954188468c55a856d841903f434f5a0814605ad5dda77ce8cc1bd40da3",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-tts-flash",
+      "component": "input",
+      "current": "1.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_c03c318942a99c8a548637aa364f925365c5101d645dd3c05559f7a5b6a0784e",
+      "provider": "qwen",
+      "model": "qwen3.8-livetranslate-flash-realtime",
+      "component": "input",
+      "current": "4.010000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_5692368322f719f6b688dea07c2f3756b468129685b6d554e7c84cf1c9d5f465",
+      "provider": "qwen",
+      "model": "qwen3.8-livetranslate-flash-realtime",
+      "component": "output",
+      "current": "218.752000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    }
+  ],
+  "2026-09-18": [
+    {
+      "id": "price_ae7ab00d9caacb9bff85434134d92e8377e54e8f2f56dbbf9ed5aba15991e63d",
+      "provider": "qwen",
+      "model": "qwen3.7-max",
+      "component": "input",
+      "current": "18.736000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_6f0f79af4d0112562a6437c4e906b337a840f4ed2c8e326fc6177d60fc4ab4d4",
+      "provider": "qwen",
+      "model": "qwen3.7-max",
+      "component": "output",
+      "current": "56.207000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_7b97a8c3c594bacaedddb1e7017fb6734e7f7a7b885623c1f4ba82a5ee931031",
+      "provider": "qwen",
+      "model": "qwen3.7-plus",
+      "component": "input",
+      "current": "2.998000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_fc38ec3da031dc4da81108b016214b56536601e14c3f4e8e2c74acffbc909e88",
+      "provider": "qwen",
+      "model": "qwen3.7-plus",
+      "component": "output",
+      "current": "11.991000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_8436702f2c14d2be628a0493489cb9c4aa222f491a1c297a37f0331b096cced1",
+      "provider": "qwen",
+      "model": "qwen3.7-plus",
+      "component": "input",
+      "current": "8.993000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_0836625a8cbe304a812122bf7aca79c6143a474d09212cb1d8a9c39a0f1a791b",
+      "provider": "qwen",
+      "model": "qwen3.7-plus",
+      "component": "output",
+      "current": "35.972000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_bc56e27ebfd6a0e9b624b88bf23c6e1d36164d0d8e741c28ac8e2abecf17dd3f",
+      "provider": "qwen",
+      "model": "qwen-plus",
+      "component": "input",
+      "current": "2.936000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_abb89f01d196daa705e822b0e09fc284ed181ea658f0fef088ad16877816abfa",
+      "provider": "qwen",
+      "model": "qwen-plus",
+      "component": "output",
+      "current": "29.357000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_9fa1fdda4fa14259b083762a5a63b838b8e8ec8a66fa742a865a390935ba96ec",
+      "provider": "qwen",
+      "model": "qwen-plus",
+      "component": "input",
+      "current": "8.807000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_a971c5a3c4017cfb1ba139d0ef19ebdd0dceed084dd792f9cd21db3a71b59f11",
+      "provider": "qwen",
+      "model": "qwen-plus",
+      "component": "output",
+      "current": "88.071000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_8e0eb3fc65750587660405b224d607e8129dfb2494a7b4afb3e76bdcf301dd2a",
+      "provider": "qwen",
+      "model": "qwen-plus-2025-12-01",
+      "component": "input",
+      "current": "2.936000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_07f039095a0f03ef9aa68ff565628138b40f441dd8c9d99bb3892568982259b0",
+      "provider": "qwen",
+      "model": "qwen-plus-2025-12-01",
+      "component": "output",
+      "current": "29.357000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_bb2d55b06ee475cf95913d281a8195e342a8303b38ae76c8fc1cab2707a988fd",
+      "provider": "qwen",
+      "model": "qwen-plus-2025-12-01",
+      "component": "input",
+      "current": "8.807000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_f4b820e1b7c52510170f83222333818ba67366715dbd1bf3e6c2f3dddfd39147",
+      "provider": "qwen",
+      "model": "qwen-plus-2025-12-01",
+      "component": "output",
+      "current": "88.071000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_97e0485f00e8e7e1a750bf501eddc23297bcc1dd07928c02ff8f8c766ab4cc88",
+      "provider": "qwen",
+      "model": "qwen3.6-flash",
+      "component": "input",
+      "current": "1.873550",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_1612e39810f9315c2c6fc9d237c2ef3e2f274973a420b8edaa7f369568d8ee8d",
+      "provider": "qwen",
+      "model": "qwen3.6-flash",
+      "component": "output",
+      "current": "11.241300",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_7b6c8882a11f1ecbd82da8eb42c441098e19c6578bb37ef089e7624bb43fb01b",
+      "provider": "qwen",
+      "model": "qwen3.6-flash",
+      "component": "input",
+      "current": "7.494200",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_c118febb1efd3b0ebf51e7feca97ee25118fa494cd3b0dd32b0fb83ff98c0d79",
+      "provider": "qwen",
+      "model": "qwen3.6-flash",
+      "component": "output",
+      "current": "29.975800",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_073d2db7caf10b9c086f32de5798eb6878d389cd4a8c6005cf8649107278991b",
+      "provider": "qwen",
+      "model": "qwen-flash",
+      "component": "input",
+      "current": "0.367000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_79569633f027d4551246a449973c606adc3729d3d748c765fc4639df29c4163b",
+      "provider": "qwen",
+      "model": "qwen-flash",
+      "component": "output",
+      "current": "2.936000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_a9e2e27eb0ec84ce47500ad7819d0752ed6d80b80a0e7dddc5d9036c7fb49df4",
+      "provider": "qwen",
+      "model": "qwen-flash",
+      "component": "input",
+      "current": "1.835000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_ccac2ae2b48a5a4f4b5729a8ef950fe5d713068bde5cafefff3dd54742296574",
+      "provider": "qwen",
+      "model": "qwen-flash",
+      "component": "output",
+      "current": "14.678000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_d93a1388140bc1e72cefa71cf04052f7744c4acec022e2dd31e8550806b5df55",
+      "provider": "qwen",
+      "model": "qwen-flash-2025-07-28",
+      "component": "input",
+      "current": "0.367000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_f204d3e3441138624f861f37fa7ac6720fdbe0508fab813d227fdf6032e99ce2",
+      "provider": "qwen",
+      "model": "qwen-flash-2025-07-28",
+      "component": "output",
+      "current": "2.936000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_d05fa8e88e3c51539293bf14e4ef36a30652f3fc608000b5a2352ff93e7bde63",
+      "provider": "qwen",
+      "model": "qwen-flash-2025-07-28",
+      "component": "input",
+      "current": "1.835000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_f449ce211f48546adb4ac86a28f01dc86860d30afe05e8c9762a628d060b05e2",
+      "provider": "qwen",
+      "model": "qwen-flash-2025-07-28",
+      "component": "output",
+      "current": "14.678000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_718bae4a93d786ae8afa4bae268eb5cd71fb219ca56aada92b1721abcdec7ee8",
+      "provider": "qwen",
+      "model": "qwen3.8-omni-flash",
+      "component": "input",
+      "current": "0.100000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_48b42b236b97af85cb39b4d2efdf99d5605e3db7d424b89347af14f547d8240f",
+      "provider": "qwen",
+      "model": "qwen3.8-omni-flash",
+      "component": "output",
+      "current": "2.700000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_c05ec6a9c4a352c14fdceb8325d19c0d052866e89435d0d5ff45522d22f60c40",
+      "provider": "qwen",
+      "model": "qwen3.8-omni-flash",
+      "component": "input",
+      "current": "0.100000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_8df9d874235c56f1fb4467796921c9c114184b5a7ff72b6ea39eea0cacdd63de",
+      "provider": "qwen",
+      "model": "qwen3.8-omni-flash",
+      "component": "output",
+      "current": "2.700000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_7ce89d3a802bddbf162f8526d615a31a405ecf8a6622f88093b7e44d206fa1a7",
+      "provider": "qwen",
+      "model": "qwen3-vl-flash",
+      "component": "input",
+      "current": "0.367000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_1bd9d58b15e0456703e00bc31b3c9aa7b22ff012aaff181782f0c69355e75334",
+      "provider": "qwen",
+      "model": "qwen3-vl-flash",
+      "component": "output",
+      "current": "2.936000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_57a5ebdb0b91f669d9d6f115d850fba7dd099a6d6b1638723c58ef33c2ab1095",
+      "provider": "qwen",
+      "model": "qwen3-vl-flash",
+      "component": "input",
+      "current": "0.881000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_eeda728bbcc211c73a17086f624ed1f1f9f8ecd138bd7c45cc1a84986c32b3bb",
+      "provider": "qwen",
+      "model": "qwen3-vl-flash",
+      "component": "output",
+      "current": "7.046000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_227892f4ade743e0c12595ae661aa20bdd7f43bfa443208a37e4a94fc9559683",
+      "provider": "qwen",
+      "model": "qwen3-vl-flash-2026-01-22",
+      "component": "input",
+      "current": "0.367000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_48710177f8e262db96e33ed3e9eef9f6c07eb217552a563053d2590286a09ed5",
+      "provider": "qwen",
+      "model": "qwen3-vl-flash-2026-01-22",
+      "component": "output",
+      "current": "2.936000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_229afd1929b1c7fdc2a836e0d098ff474e429d50d7e58cf41a3137d6c47c6007",
+      "provider": "qwen",
+      "model": "qwen3-vl-flash-2026-01-22",
+      "component": "input",
+      "current": "0.881000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_4d5a16d5d058a7149feddcc5f6d3f3e65afe09d8e25023b5b4ec4005a8f795de",
+      "provider": "qwen",
+      "model": "qwen3-vl-flash-2026-01-22",
+      "component": "output",
+      "current": "7.046000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_251a729f12513eaeb97c65d73306d34602ee4acb2751c893a44098ad353370c2",
+      "provider": "qwen",
+      "model": "qwen3-vl-flash-2025-10-15",
+      "component": "input",
+      "current": "0.367000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_fac3e5c5710459757e04206554cfab166b19c90ca780bfe1b16d0509efcb0907",
+      "provider": "qwen",
+      "model": "qwen3-vl-flash-2025-10-15",
+      "component": "output",
+      "current": "2.936000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_b642600a7ddd3a8b79167e7963e679c166f9441acd0a2385fe3d47c25a400dde",
+      "provider": "qwen",
+      "model": "qwen3-vl-flash-2025-10-15",
+      "component": "input",
+      "current": "0.881000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_71a582fb64e136dd7d20064570de8fad7a43d0c61355aca7df50cc630129e881",
+      "provider": "qwen",
+      "model": "qwen3-vl-flash-2025-10-15",
+      "component": "output",
+      "current": "7.046000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_3faa25ebac88a849341ab9d90b82e8c0c6ec00e22a3e1f62d9201aacff53bdff",
+      "provider": "qwen",
+      "model": "qwen-mt-lite",
+      "component": "input",
+      "current": "0.881000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_76f2809e5d691aa1984802bca36eca5cfa09c1622bc9d739b991a6241c6033a2",
+      "provider": "qwen",
+      "model": "qwen-mt-lite",
+      "component": "output",
+      "current": "2.642000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_1c4acf4d9550e4edca768e252fac8722d4b0b56c19c83e9a6f2417393c0e4d30",
+      "provider": "qwen",
+      "model": "qwen3.8-livetranslate-flash-realtime",
+      "component": "input",
+      "current": "3.300000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_602a24f99e79bb033175710f3f9e7a6924f38c42c794d4d520a9311ce0ba4bb9",
+      "provider": "qwen",
+      "model": "qwen3.8-livetranslate-flash-realtime",
+      "component": "output",
+      "current": "160.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_afb1e9ec47b87dee391e46147ca43def262bcb9e3446bd5e924e8a9e99bd9f34",
+      "provider": "qwen",
+      "model": "qwen3-asr-flash",
+      "component": "input",
+      "current": "0.000035",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_02c7a13402673a428d8b0cfaa95f1e01916f02ab4a3041c90f74ce0c38371da9",
+      "provider": "qwen",
+      "model": "qwen3-asr-flash-2025-09-08",
+      "component": "input",
+      "current": "0.000035",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    }
+  ],
+  "2026-09-16": [
+    {
+      "id": "price_358d3ea6a3d3efe5eeb824e2a47d01c559942cd7015165ad73d7700f660f81ce",
+      "provider": "anthropic",
+      "model": "claude-fable-5.1",
+      "component": "cache_write",
+      "current": "12.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_9ecd1d72dc25d06fbbdf23992cfbd86533cbd75b794df8a19a5be59df2ede254",
+      "provider": "anthropic",
+      "model": "claude-fable-5.1",
+      "component": "cache_write",
+      "current": "20.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_5901559e8777eb33f504e07986b9cc48121310dddb7b0f20414d776bb01d38a6",
+      "provider": "anthropic",
+      "model": "claude-mythos-5.1",
+      "component": "cache_write",
+      "current": "12.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_f9f23d2ecd2748889d38cdaab73e42beffe2c33f299dc39e3c77fa2a50919593",
+      "provider": "anthropic",
+      "model": "claude-mythos-5.1",
+      "component": "cache_write",
+      "current": "20.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_2007870dd91de20f6e8bbbb4f356f1d339625c7e6dc6796c60c50722411c783a",
+      "provider": "anthropic",
+      "model": "claude-fable-5",
+      "component": "cache_write",
+      "current": "12.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_bb68e7a18f619bc7e7650d9b05b349c4951eb09d748daec0d19665955a54d587",
+      "provider": "anthropic",
+      "model": "claude-fable-5",
+      "component": "cache_write",
+      "current": "20.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_036feb56668f15533e985c8a5f240af4a9fd78f2b82fbc95394d513df7600c0e",
+      "provider": "anthropic",
+      "model": "claude-mythos-5",
+      "component": "cache_write",
+      "current": "12.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_1915efa99a3c173ad1e291348bd33859e42ef84cff2932abab69660636246ee4",
+      "provider": "anthropic",
+      "model": "claude-mythos-5",
+      "component": "cache_write",
+      "current": "20.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_c91addc92743880fcbd9db36d69c43e637b00025b8a0683057597e7f2251185d",
+      "provider": "anthropic",
+      "model": "claude-opus-5",
+      "component": "cache_write",
+      "current": "6.250000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_0a1905722d118a12c1de4da99770118459696b3c3183f78e9ad2c059a15870b2",
+      "provider": "anthropic",
+      "model": "claude-opus-5",
+      "component": "cache_write",
+      "current": "10.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_f59a362f72db21bc3c2a6067d1d09599f324694f73f119b3a7cb58f70723fef6",
+      "provider": "anthropic",
+      "model": "claude-opus-4.8",
+      "component": "cache_write",
+      "current": "6.250000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_7c64453aad374fd0cd3e0d6d115b9caf959d3486bca2f713ba2a8e71c9575d90",
+      "provider": "anthropic",
+      "model": "claude-opus-4.8",
+      "component": "cache_write",
+      "current": "10.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_890ce485abe550da742db313c33bf8c1ca322215cbab33d6a219573138afdd98",
+      "provider": "anthropic",
+      "model": "claude-opus-4.7",
+      "component": "cache_write",
+      "current": "6.250000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_d3be7ce59238ca28116b38ae64f7bd136240d6bf0fafbb552e30e1c418b0bad6",
+      "provider": "anthropic",
+      "model": "claude-opus-4.7",
+      "component": "cache_write",
+      "current": "10.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_28eb33f5c83f6bad859c0eb67a669f08799dfa0fa324b6b7d3b7cc8fb83f97a1",
+      "provider": "anthropic",
+      "model": "claude-opus-4.6",
+      "component": "cache_write",
+      "current": "6.250000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_4b64b3a5d8c549e04f4603128c92d3fc8e5712958a6ddbab067de3b943fdbbaa",
+      "provider": "anthropic",
+      "model": "claude-opus-4.6",
+      "component": "cache_write",
+      "current": "10.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_c77363f82ae7b6eb5d21b2f5e68d720f48129b5980aad5392db2634b268da121",
+      "provider": "anthropic",
+      "model": "claude-opus-4.5",
+      "component": "cache_write",
+      "current": "6.250000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_45d2a8ff2fed8b5b5ae1dfdba8bc64d8294a99319e72561264fc409284412e65",
+      "provider": "anthropic",
+      "model": "claude-opus-4.5",
+      "component": "cache_write",
+      "current": "10.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_0a68890fcab4fc8ea6f4837d43376b59878f5700e7e7978abe4b47df24df1abb",
+      "provider": "anthropic",
+      "model": "claude-opus-4.1",
+      "component": "cache_write",
+      "current": "18.750000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_e30490f879c2b5d9febaca733518608c202fd8eccc0e9adc81c8345eaeca643f",
+      "provider": "anthropic",
+      "model": "claude-opus-4.1",
+      "component": "cache_write",
+      "current": "30.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_e9445051c075c93cf50750bd2fd56b5b6f9e85c295ef4808d373b393489edd90",
+      "provider": "anthropic",
+      "model": "claude-opus-4",
+      "component": "cache_write",
+      "current": "18.750000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_43f4a6d190c2442c7f4db1063f5a2e12eabb58d815a6c703adb64eadf42772e9",
+      "provider": "anthropic",
+      "model": "claude-opus-4",
+      "component": "cache_write",
+      "current": "30.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_0e547147e1e77c934c6c87a59672378a8d0bdc3ecfe4eeef086a48c24a36a8d6",
+      "provider": "anthropic",
+      "model": "claude-sonnet-5",
+      "component": "cache_write",
+      "current": "2.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_e0b5db16aefebc71f05f39b75e754bf38592da2b68b42f304707edbeb3a5d625",
+      "provider": "anthropic",
+      "model": "claude-sonnet-5",
+      "component": "cache_write",
+      "current": "4.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_8b0aca8c59024786c92ea2edd439cd96d3f9c3e8cdcb6598c37f33e0cceb8a0d",
+      "provider": "anthropic",
+      "model": "claude-sonnet-4.6",
+      "component": "cache_write",
+      "current": "3.750000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_b41e570fbff44e242473f0dfb549eecc55ac304d1c1e56907e28cc21adda6f53",
+      "provider": "anthropic",
+      "model": "claude-sonnet-4.6",
+      "component": "cache_write",
+      "current": "6.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_658f0ff4fcd54569706c591b3295018f94daee35c5cf8ad6b4acbb1da8a5f7fd",
+      "provider": "anthropic",
+      "model": "claude-sonnet-4.5",
+      "component": "cache_write",
+      "current": "3.750000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_b6b9a2024484a5af2c895ca17242d9b5915ab6d9ca4fe25237e8b8bbc8684ccd",
+      "provider": "anthropic",
+      "model": "claude-sonnet-4.5",
+      "component": "cache_write",
+      "current": "6.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_afa3a3590d6d2ccc7cde727d1ce314fb1a76a3dc4cde1086bca280771d785fd8",
+      "provider": "anthropic",
+      "model": "claude-sonnet-4",
+      "component": "cache_write",
+      "current": "3.750000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_d2fb6cd444a5750b7d6302096d94c7a99da78866f71ba61de13869944c3a1f88",
+      "provider": "anthropic",
+      "model": "claude-sonnet-4",
+      "component": "cache_write",
+      "current": "6.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_789d941dd3e841bfd80c1fdff305d6694b484c6f1743521ff4d4c2ec1ec45dc6",
+      "provider": "anthropic",
+      "model": "claude-haiku-4.5",
+      "component": "cache_write",
+      "current": "1.250000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_4d4dfb6fd7dbbb1e0d79676c8e834489178e7248d3f730756a160df50f2472b3",
+      "provider": "anthropic",
+      "model": "claude-haiku-4.5",
+      "component": "cache_write",
+      "current": "2.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_b2df01c916cff8684f38d6e06d09333a6c7cca26f944570bf12190683bc14c30",
+      "provider": "anthropic",
+      "model": "claude-haiku-3.5",
+      "component": "cache_write",
+      "current": "1.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_5399ed7efc52d0f5f65b75aa520c8ae6b7cde56a56c3f2303fd3f1336b7d3e57",
+      "provider": "anthropic",
+      "model": "claude-haiku-3.5",
+      "component": "cache_write",
+      "current": "1.600000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://docs.anthropic.com/en/docs/about-claude/pricing"
+    },
+    {
+      "id": "price_a4e2562e15ac0251901bb62b4f4ce5e2d8d633ee9030521e1c938b09ce14116e",
+      "provider": "doubao",
+      "model": "doubao-seed-2.1-pro",
+      "component": "input",
+      "current": "3.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
+    },
+    {
+      "id": "price_3820b4d9554297c8313452255083a5d36ef95f6b2cfdb75c39bd9a52622381ab",
+      "provider": "doubao",
+      "model": "doubao-seed-2.1-pro",
+      "component": "cache_read",
+      "current": "1.200000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
+    },
+    {
+      "id": "price_09ed33ba13ab810b64dc1c31604e9537ca04c8d73697df0ce66fb910ba2c8e79",
+      "provider": "doubao",
+      "model": "doubao-seed-2.1-pro",
+      "component": "output",
+      "current": "15.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://www.volcengine.com/docs/82379/1544106"
+    },
+    {
+      "id": "price_e02ee201bf39f00bf89421153e025d0b405780613669201410dce8308e60d48a",
+      "provider": "google",
+      "model": "gemini-3.8-live,-gemini-3.8-live-extended-thinking,-and-gemini-3.1-flash-live-preview",
+      "component": "input",
+      "current": "0.750000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_346bde500ddd5e6f5409f86b0b0bf4ac18b5dacfee756550899638adfbb3a68f",
+      "provider": "google",
+      "model": "gemini-3.8-live,-gemini-3.8-live-extended-thinking,-and-gemini-3.1-flash-live-preview",
+      "component": "output",
+      "current": "4.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    }
+  ],
+  "2026-09-12": [
+    {
+      "provider": "google",
+      "model": "gemini-2.5-computer-use-preview",
+      "component": "input",
+      "previous": "1.250000",
+      "current": "1.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-2.5-computer-use-preview",
+      "component": "output",
+      "previous": "10.000000",
+      "current": "5.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    }
+  ],
+  "2026-09-11": [
+    {
+      "provider": "deepseek",
+      "model": "deepseek-flash-(1)",
+      "component": "cache_read",
+      "current": "0.003000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro-(2)",
+      "component": "cache_read",
+      "current": "0.022000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-flash-(1)",
+      "component": "cache_read",
+      "current": "0.006000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro-(2)",
+      "component": "cache_read",
+      "current": "0.044000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-flash-(1)",
+      "component": "input",
+      "current": "0.150000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro-(2)",
+      "component": "input",
+      "current": "0.660000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-flash-(1)",
+      "component": "input",
+      "current": "0.300000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro-(2)",
+      "component": "input",
+      "current": "1.320000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-flash-(1)",
+      "component": "output",
+      "current": "0.600000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro-(2)",
+      "component": "output",
+      "current": "1.980000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-flash-(1)",
+      "component": "output",
+      "current": "1.200000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro-(2)",
+      "component": "output",
+      "current": "3.960000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://api-docs.deepseek.com/quick_start/pricing"
+    }
+  ],
+  "2026-09-10": [
+    {
+      "provider": "glm",
+      "model": "glm-5.3-flash",
+      "component": "input",
+      "previous": "0.400000",
+      "current": "0.800000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-5.3-flash",
+      "component": "output",
+      "previous": "1.400000",
+      "current": "2.800000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-5.3-flash",
+      "component": "cache_read",
+      "previous": "0.115000",
+      "current": "0.230000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    }
+  ],
+  "2026-09-09": [
+    {
+      "provider": "google",
+      "model": "gemini-robotics-er-2-preview",
+      "component": "input",
+      "previous": "2.000000",
+      "current": "1.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-robotics-er-2-preview",
+      "component": "output",
+      "previous": "10.000000",
+      "current": "5.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-robotics-er-2-preview",
+      "component": "cache_read",
+      "previous": "1.000000",
+      "current": "0.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-robotics-er-2-streaming-preview",
+      "component": "input",
+      "previous": "2.000000",
+      "current": "1.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-robotics-er-2-streaming-preview",
+      "component": "output",
+      "previous": "10.000000",
+      "current": "5.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    }
+  ],
+  "2026-09-08": [
+    {
+      "provider": "glm",
+      "model": "glm-ocr",
+      "component": "input",
+      "current": "0.200000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-ocr",
+      "component": "output",
+      "current": "0.200000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-5v-turbo",
+      "component": "input",
+      "current": "5.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-5v-turbo",
+      "component": "input",
+      "current": "7.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-5v-turbo",
+      "component": "output",
+      "current": "22.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-5v-turbo",
+      "component": "output",
+      "current": "26.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-4.6v",
+      "component": "input",
+      "current": "1.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-4.6v",
+      "component": "input",
+      "current": "2.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-4.6v",
+      "component": "output",
+      "current": "3.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-4.6v",
+      "component": "output",
+      "current": "6.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-4.6v-flashx",
+      "component": "input",
+      "current": "0.150000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-4.6v-flashx",
+      "component": "input",
+      "current": "0.300000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-4.6v-flashx",
+      "component": "output",
+      "current": "1.500000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-4.6v-flashx",
+      "component": "output",
+      "current": "3.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-4.5v",
+      "component": "input",
+      "current": "2.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-4.5v",
+      "component": "input",
+      "current": "4.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-4.5v",
+      "component": "output",
+      "current": "6.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-4.5v",
+      "component": "output",
+      "current": "12.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-5.1",
+      "component": "input",
+      "current": "6.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-5.1",
+      "component": "input",
+      "current": "8.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-5.1",
+      "component": "output",
+      "current": "24.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "provider": "glm",
+      "model": "glm-5.1",
+      "component": "output",
+      "current": "28.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    }
+  ],
+  "2026-10-02": [
+    {
+      "id": "price_970e59d744b3674f38bce8c3c024ca62025557e8d917e6410342a8b0e7d5f195",
+      "provider": "google",
+      "model": "gemini-3.5-flash",
+      "component": "cache_read",
+      "previous": "1.000000",
+      "current": "0.150000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_b3c96b0e5ac6200cdd16a998f812add2263e8cb58bd71d74cfc6da646b2fc689",
+      "provider": "google",
+      "model": "gemini-3.5-flash-lite",
+      "component": "cache_read",
+      "previous": "1.000000",
+      "current": "0.030000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_3d59c0a4af5aa71d93212bd4847a506defb867f8896326a5dd376e5f1c6deec3",
+      "provider": "google",
+      "model": "gemini-3.1-flash-lite",
+      "component": "cache_read",
+      "previous": "1.000000",
+      "current": "0.025000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_01e035d14c91a3060282db0683bb0b3edf59953e4e8393853ab269d388764c22",
+      "provider": "google",
+      "model": "gemini-3-flash-preview",
+      "component": "cache_read",
+      "previous": "1.000000",
+      "current": "0.050000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_c34015fb48cebe79b10a8463d270c248a7e40957f494b6367d235200ec9d4a09",
+      "provider": "google",
+      "model": "gemini-2.5-flash",
+      "component": "cache_read",
+      "previous": "1.000000",
+      "current": "0.030000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_121342055337569d50d9e8681923cab7ce68d4f493ec27a4bdffc4b9d4f5bba5",
+      "provider": "google",
+      "model": "gemini-2.5-flash-lite",
+      "component": "cache_read",
+      "previous": "1.000000",
+      "current": "0.010000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_3daee20eb45ba58875c1a1294d12d58f4492e9dadce0f4e48b28383d449cd7df",
+      "provider": "google",
+      "model": "gemini-3.8-flash",
+      "component": "input",
+      "current": "0.750000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_ba085c380dfd9c146051798de95a4f86c8ac5ef9be84f28a23918ad4ed6c6774",
+      "provider": "google",
+      "model": "gemini-3.8-flash",
+      "component": "output",
+      "current": "3.750000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_6fa50edaa44b4c37ad837ca05e615fff2dac1513a6895a3c9c5b7daa921977a4",
+      "provider": "google",
+      "model": "gemini-3.8-flash",
+      "component": "cache_read",
+      "current": "0.075000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_b91bc9e7185e340097f11af3cd7be7583dd4a9bf6381c1d1870a23cf026c333b",
+      "provider": "google",
+      "model": "gemini-3.7-flash",
+      "component": "input",
+      "current": "0.750000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_e2d4c1f57b326f10adabd36743e7586b2e65d8cbd80742b97af24716285acfe8",
+      "provider": "google",
+      "model": "gemini-3.7-flash",
+      "component": "output",
+      "current": "3.750000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_725b5237702d2585a2a1d3ac9e0193181cd27e1d62d246d12257dbdf6652c83f",
+      "provider": "google",
+      "model": "gemini-3.7-flash",
+      "component": "cache_read",
+      "current": "0.075000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_9ef0951080c70720a2837b4104bc1110efe2ec2415ce04f14886d9af097e4fb7",
+      "provider": "google",
+      "model": "gemini-3.6-flash",
+      "component": "input",
+      "current": "0.750000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_b36465916380028edbef3027e4adf326261d9a386cd6d58771de67b119ef441a",
+      "provider": "google",
+      "model": "gemini-3.6-flash",
+      "component": "output",
+      "current": "3.750000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_c0764d201086682e449abeae504eed35364b4816e602c50fe782255b66cbcd7f",
+      "provider": "google",
+      "model": "gemini-3.6-flash",
+      "component": "cache_read",
+      "current": "0.075000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_8a834aee9a03abb998199303f23bc2eea49255e7037937c3897575d01298122a",
+      "provider": "google",
+      "model": "gemini-3.1-pro-preview",
+      "component": "input",
+      "current": "2.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_6b5f95f033e8807b504ec9f77badecf237473645e8e20a68d1f310a2193476cd",
+      "provider": "google",
+      "model": "gemini-3.1-pro-preview",
+      "component": "input",
+      "current": "4.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_e9ca2667e6089f92da0b1d41bb22d32a70796015b02cde9764ba85cbb5d80d2b",
+      "provider": "google",
+      "model": "gemini-3.1-pro-preview",
+      "component": "output",
+      "current": "12.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_1f0521de5dc0ec9d4b77d3f0439f5945172505f93f39f68ce5690c7ce0bfc7d1",
+      "provider": "google",
+      "model": "gemini-3.1-pro-preview",
+      "component": "output",
+      "current": "18.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_206b686e4ee1437f42b77d1048ea6ff9d5ec12bc23372f4e17854d6dab66500d",
+      "provider": "google",
+      "model": "gemini-3.1-pro-preview",
+      "component": "cache_read",
+      "current": "0.200000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_135d5e35a192838e5d5b89d645e16d99c977887bfaac4bf55b36398b64008827",
+      "provider": "google",
+      "model": "gemini-3.1-pro-preview",
+      "component": "cache_read",
+      "current": "0.400000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_f1777217a2ac158671a9d278c466bc79f429ad934fe0bbf0b9bc4d1cc27de49e",
+      "provider": "google",
+      "model": "gemini-3.8-flash-tts",
+      "component": "input",
+      "current": "0.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_ce519108bce6870dd7a9b3c1f586ad9ccad711b8de7dd08fbcbf6c5baa29d97f",
+      "provider": "google",
+      "model": "gemini-3.8-flash-tts",
+      "component": "output",
+      "current": "0.002250",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_42c3bed93806e551cf8a8f65af2710f03c24185eb5c8013397c289a1b1e86c20",
+      "provider": "google",
+      "model": "gemini-3.8-flash-tts",
+      "component": "cache_read",
+      "current": "0.125000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_ad793d6308ca74cee083c8941c8c40c866fab533f523e6d2e9cbff3c2c9b15b9",
+      "provider": "google",
+      "model": "gemini-3.8-flash-lite-tts",
+      "component": "input",
+      "current": "0.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_6ae26e66b6a2af54b336d71de1e399baeac14f229522fec547f39949955a47d8",
+      "provider": "google",
+      "model": "gemini-3.8-flash-lite-tts",
+      "component": "output",
+      "current": "0.001500",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_e1d357eebca56632b5c94d4fb589db499d27c91674e353c6dba6f28fd2c6084c",
+      "provider": "google",
+      "model": "gemini-3.8-flash-lite-tts",
+      "component": "cache_read",
+      "current": "0.125000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_75cd2a0c80967738a8f1d814b366c029b7ea3082082a4bf8ccd4ea0a2f5662e5",
+      "provider": "google",
+      "model": "gemini-2.5-pro",
+      "component": "input",
+      "current": "1.250000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_45df9bf38f4112fcaf37eb675f4b69581e2f814cdb687e8efc2e8200bde635dd",
+      "provider": "google",
+      "model": "gemini-2.5-pro",
+      "component": "input",
+      "current": "2.500000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_3733124cd79a80de081213aaa2dd3ff536ee2b220b276487934211172947a6d5",
+      "provider": "google",
+      "model": "gemini-2.5-pro",
+      "component": "output",
+      "current": "10.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_2cb08e92a17d8fe82cafeb41d0caa539b8996e347e1303767d99d34be29e23b8",
+      "provider": "google",
+      "model": "gemini-2.5-pro",
+      "component": "output",
+      "current": "15.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_2860f60845a2654ad8d139a277a93a0bd7250fd0480a6cde5269b0ec0665a91e",
+      "provider": "google",
+      "model": "gemini-2.5-pro",
+      "component": "cache_read",
+      "current": "0.125000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_1fe6cef137598b6489b209729ef4729fd483266726a28451181514dcdf38d247",
+      "provider": "google",
+      "model": "gemini-2.5-pro",
+      "component": "cache_read",
+      "current": "0.250000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_823ad513490e3195b5d820ac18dd6e61edad4e7e7b1c75e3bf2e16628c2e99b5",
+      "provider": "google",
+      "model": "gemini-robotics-er-2-preview",
+      "component": "input",
+      "current": "1.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_321638078ce6977c0cff164cc01b317d4e225f59e820115cac647483a4b24031",
+      "provider": "google",
+      "model": "gemini-robotics-er-2-preview",
+      "component": "output",
+      "current": "5.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_1eb8dd9051061ffeb1482714a1bacbe1658e8f3142e1770686b33391290cffa0",
+      "provider": "google",
+      "model": "gemini-robotics-er-2-preview",
+      "component": "cache_read",
+      "current": "0.100000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_f99e4ca5aebb822828a73f0d20e36a01c060e685b261398b373f3dff8d11d7a6",
+      "provider": "google",
+      "model": "gemini-robotics-er-2-streaming-preview",
+      "component": "input",
+      "current": "1.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_691596e528f03dc3a1b339111864468fe3eb39d8c59196e117f20faccd8e1f43",
+      "provider": "google",
+      "model": "gemini-robotics-er-2-streaming-preview",
+      "component": "output",
+      "current": "5.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    }
+  ]
+}

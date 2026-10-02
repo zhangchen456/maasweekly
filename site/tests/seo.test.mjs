@@ -60,6 +60,13 @@ for (const route of ['', 'pricing', 'models', 'changes', 'weekly']) {
   assert.equal(doc.querySelectorAll('script[data-maas-analytics]').length, 1);
 }
 
+const home = docFor('');
+assert.equal(home.querySelectorAll('.market-table').length,1,'one shared price table');
+assert.equal(home.querySelectorAll('[role=tab]').length,3);
+assert.equal(home.querySelectorAll('[role=tab][aria-selected=true]').length,1);
+assert.equal(home.querySelector('[data-home-group]:not([hidden])').dataset.homeGroup,'flagship');
+assert.equal(home.querySelectorAll('[data-home-model]').length,18);
+assert.equal(home.querySelectorAll('[data-quote-amount]').length,36,'all models have input and output quotes');
 const featured = featuredModels();
 assert(featured.length <= 5, 'only featured models with fresh, complete evidence are promoted');
 for (const page of [...featured, modelPage('anthropic:claude-sonnet-4.5')]) {

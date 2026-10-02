@@ -39,7 +39,7 @@ from .common import (
     stable_identity
 )
 
-_EXTRACTOR_VERSION_DOUBAO = "doubao-2"
+_EXTRACTOR_VERSION_DOUBAO = "doubao-3"
 
 class DoubaoPricingExtractor:
     """解析豆包（火山引擎）价格页（M6：真实 HTML 表格）。
@@ -60,6 +60,8 @@ class DoubaoPricingExtractor:
         return self._extract_markdown(snapshot, raw)
 
     def _extract_html(self, snapshot: ContentSnapshot, html: str) -> ExtractionResult:
+        from bs4 import BeautifulSoup
+        dom_tables = BeautifulSoup(html, "html.parser").find_all("table")
         tables = _parse_html_tables(html)
         models: list[ModelProfile] = []
         facts: list[PriceFact] = []
@@ -68,6 +70,13 @@ class DoubaoPricingExtractor:
         for table in tables:
             if not table.rows:
                 continue
+            dom_table = dom_tables[table.table_index]
+            section = dom_table.find_previous(string=lambda x: x and re.fullmatch(r"\s*(?:在线推理（[^）]+）|批量推理)\s*", x))
+            label = str(section).strip() if section else ""
+            billing = "batch" if "批量" in label else "realtime"
+            tier = "priority" if "低延迟" in label else "flex" if "低优" in label else "standard"
+            if section:
+                table.html_fragment = "<p>" + label + "</p>" + table.html_fragment
             header = table.rows[0]
             flat = " ".join(header)
             # 只处理含「模型名称」或「模型」列的价格表
@@ -174,8 +183,8 @@ class DoubaoPricingExtractor:
                         continue
                     facts.append(_make_fact(
                         snapshot, ev.evidence_id, "doubao", model_name,
-                        comp, "realtime", p, region=_region_for("doubao"),
-                        context_band=band,
+                        comp, billing, p, region=_region_for("doubao"),
+                        context_band=band, service_tier=tier,
                     ))
                     has_fact = True
                 if has_fact:

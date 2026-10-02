@@ -332,11 +332,15 @@ def _parse_html_tables(html: str) -> list[HtmlTable]:
                         occupied[rr].add(c_idx + dc)
                         max_col = max(max_col, c_idx + dc)
                 c_idx += colspan
-        # 表头行数：前若干行若全是 th 或含 th 算表头
-        header_rows = 0
-        for r_idx, tr in enumerate(rows_raw):
-            if tr.find("th") or all(c.name == "th" for c in tr.find_all(["td", "th"])):
-                header_rows = r_idx + 1
+        # Only leading header rows count. A body row-group heading must not
+        # discard the model rows that precede it (Claude's expandable table).
+        thead = table.find("thead")
+        header_rows = len(thead.find_all("tr")) if thead else 0
+        if thead is None:
+            for tr in rows_raw:
+                if not tr.find("th"):
+                    break
+                header_rows += 1
         # 收成二维 list，裁剪到实际列数
         rows = []
         for r in grid[: len(rows_raw)]:
@@ -419,6 +423,7 @@ def _make_fact(
     region: str,
     context_band: ContextBand | None = None,
     time_condition: TimeCondition | None = None,
+    service_tier: str = "standard",
 ) -> PriceFact:
     amount, currency, unit_quantity = parsed
     model_key = model_display.lower().replace(" ", "-")
@@ -428,7 +433,7 @@ def _make_fact(
         component=component,
         region=region,
         billing_mode=billing_mode,
-        service_tier="standard",
+        service_tier=service_tier,
         context_band=context_band,
         time_condition=time_condition,
     )
@@ -443,7 +448,7 @@ def _make_fact(
         unit_quantity=unit_quantity,
         unit_name="token",
         region=region,
-        service_tier="standard",
+        service_tier=service_tier,
         context_band=context_band,
         time_condition=time_condition,
         effective_at=None,

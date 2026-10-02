@@ -39,7 +39,7 @@ from .common import (
     stable_identity
 )
 
-_EXTRACTOR_VERSION_ANTHROPIC = "anthropic-1"
+_EXTRACTOR_VERSION_ANTHROPIC = "anthropic-2"
 
 class AnthropicPricingExtractor:
     """解析 Anthropic 价格页（M6：真实 HTML 表格）。
@@ -59,6 +59,8 @@ class AnthropicPricingExtractor:
         return self._extract_markdown(snapshot, raw)
 
     def _extract_html(self, snapshot: ContentSnapshot, html: str) -> ExtractionResult:
+        from bs4 import BeautifulSoup
+        dom_tables = BeautifulSoup(html, "html.parser").find_all("table")
         tables = _parse_html_tables(html)
         models: list[ModelProfile] = []
         facts: list[PriceFact] = []
@@ -67,22 +69,22 @@ class AnthropicPricingExtractor:
         for table in tables:
             if not table.rows:
                 continue
-            header = table.rows[0]
+            header = table.rows[table.header_rows - 1] if table.header_rows else table.rows[0]
             # 只处理含 Base Input Tokens + Output 的价格表（跳过 CCU 概念表等）
             flat = " ".join(header).lower()
-            if "base input" not in flat or "output" not in flat:
+            if not ("base input" in flat or ("input" in flat and "writes" in flat)) or "output" not in flat:
                 continue
             model_col = None
             cols: list[tuple[int, str, TimeCondition | None]] = []
             for ci, h in enumerate(header):
                 hl = h.lower()
-                if "model" in hl and model_col is None:
+                if ("model" in hl or hl == "name") and model_col is None:
                     model_col = ci
-                if "base input" in hl:
+                if "base input" in hl or hl == "input":
                     cols.append((ci, "input", None))
-                elif "cache hits" in hl or "cache read" in hl or ("cache" in hl and "refresh" in hl):
+                elif "hits" in hl or "cache read" in hl or ("cache" in hl and "refresh" in hl):
                     cols.append((ci, "cache_read", None))
-                elif "cache write" in hl or "cache writes" in hl:
+                elif "write" in hl:
                     # 5m/1h 时效是计费条件（Task 02 §4.1：同一身份禁止静默覆盖）。
                     # 不区分时两列同 fact_key，dict 覆盖会丢失 1h 价或误报涨跌。
                     tc = None
@@ -99,10 +101,13 @@ class AnthropicPricingExtractor:
                 continue
             ev, ev_idx = _evidence_for_html(snapshot, ev_idx, table, self.version)
             evidence.append(ev)
-            for row in table.data_rows():
+            dom_rows = dom_tables[table.table_index].find_all("tr")[table.header_rows:]
+            for row_index, row in enumerate(table.data_rows()):
                 if model_col >= len(row):
                     continue
-                model_name = _clean_model_name(row[model_col])
+                cell = dom_rows[row_index].find_all(["td", "th"])[model_col]
+                link = cell.find("a")
+                model_name = _clean_model_name(link.get_text(" ", strip=True) if link else row[model_col])
                 if not model_name:
                     continue
                 model_key = model_name.lower().replace(" ", "-")
