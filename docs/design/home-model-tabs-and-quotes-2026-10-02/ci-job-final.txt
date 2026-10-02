@@ -1,0 +1,641 @@
+﻿2026-10-02T12:07:16.7272057Z Current runner version: '2.337.0'
+2026-10-02T12:07:16.7305081Z ##[group]Runner Image Provisioner
+2026-10-02T12:07:16.7306548Z Hosted Compute Agent
+2026-10-02T12:07:16.7307816Z Version: 20260901.588
+2026-10-02T12:07:16.7308984Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+2026-10-02T12:07:16.7310589Z Build Date: 2026-09-01T19:56:44Z
+2026-10-02T12:07:16.7312220Z Worker ID: {2ce082a7-3e0d-4148-bb4b-652d18cb01bf}
+2026-10-02T12:07:16.7313782Z Azure Region: eastus2
+2026-10-02T12:07:16.7315177Z ##[endgroup]
+2026-10-02T12:07:16.7317831Z ##[group]Operating System
+2026-10-02T12:07:16.7319229Z Ubuntu
+2026-10-02T12:07:16.7320436Z 24.04.5
+2026-10-02T12:07:16.7321804Z LTS
+2026-10-02T12:07:16.7323059Z ##[endgroup]
+2026-10-02T12:07:16.7324084Z ##[group]Runner Image
+2026-10-02T12:07:16.7325181Z Image: ubuntu-24.04
+2026-10-02T12:07:16.7326447Z Version: 20260927.320.1
+2026-10-02T12:07:16.7328877Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260927.320/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-02T12:07:16.7332140Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260927.320
+2026-10-02T12:07:16.7334114Z ##[endgroup]
+2026-10-02T12:07:16.7336460Z ##[group]GITHUB_TOKEN Permissions
+2026-10-02T12:07:16.7339534Z Contents: read
+2026-10-02T12:07:16.7340824Z Metadata: read
+2026-10-02T12:07:16.7342247Z ##[endgroup]
+2026-10-02T12:07:16.7345744Z Secret source: Actions
+2026-10-02T12:07:16.7347628Z Cache mode: write
+2026-10-02T12:07:16.7349560Z Prepare workflow directory
+2026-10-02T12:07:16.7910499Z Prepare all required actions
+2026-10-02T12:07:16.7981505Z Getting action download info
+2026-10-02T12:07:17.0250580Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-02T12:07:17.1503270Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-02T12:07:17.2372753Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-02T12:07:17.3257309Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-02T12:07:17.5324134Z Uses: zhangchen456/maasweekly/.github/workflows/release-deploy.yml@refs/heads/main (f3e2da7bc97e4091a684353640cba1b26ee808d6)
+2026-10-02T12:07:17.5328705Z ##[group] Inputs
+2026-10-02T12:07:17.5329378Z   commit: f3e2da7bc97e4091a684353640cba1b26ee808d6
+2026-10-02T12:07:17.5330077Z ##[endgroup]
+2026-10-02T12:07:17.5330604Z Complete job name: deploy / deploy
+2026-10-02T12:07:17.6113011Z ##[group]Run actions/checkout@v4
+2026-10-02T12:07:17.6113956Z with:
+2026-10-02T12:07:17.6114509Z   ref: f3e2da7bc97e4091a684353640cba1b26ee808d6
+2026-10-02T12:07:17.6115174Z   fetch-depth: 0
+2026-10-02T12:07:17.6115717Z   repository: zhangchen456/maasweekly
+2026-10-02T12:07:17.6119571Z   token: ***
+2026-10-02T12:07:17.6120078Z   ssh-strict: true
+2026-10-02T12:07:17.6120575Z   ssh-user: git
+2026-10-02T12:07:17.6121327Z   persist-credentials: true
+2026-10-02T12:07:17.6121894Z   clean: true
+2026-10-02T12:07:17.6122425Z   sparse-checkout-cone-mode: true
+2026-10-02T12:07:17.6123017Z   fetch-tags: false
+2026-10-02T12:07:17.6123541Z   show-progress: true
+2026-10-02T12:07:17.6124062Z   lfs: false
+2026-10-02T12:07:17.6124543Z   submodules: false
+2026-10-02T12:07:17.6125066Z   set-safe-directory: true
+2026-10-02T12:07:17.6125636Z   allow-unsafe-pr-checkout: false
+2026-10-02T12:07:17.6126482Z env:
+2026-10-02T12:07:17.6126967Z   DEPLOY_HOST: 47.237.135.97
+2026-10-02T12:07:17.6127572Z   DEPLOY_USER: maasdeploy
+2026-10-02T12:07:17.6128125Z   MAAS_DEPLOY_MODE: release
+2026-10-02T12:07:17.6128691Z   MAAS_VERIFY_MAIN_CANDIDATE: 1
+2026-10-02T12:07:17.6129259Z ##[endgroup]
+2026-10-02T12:07:17.7224030Z Syncing repository: zhangchen456/maasweekly
+2026-10-02T12:07:17.7226654Z ##[group]Getting Git version info
+2026-10-02T12:07:17.7227900Z Working directory is '/home/runner/work/maasweekly/maasweekly'
+2026-10-02T12:07:17.7229650Z [command]/usr/bin/git version
+2026-10-02T12:07:17.7302959Z git version 2.55.0
+2026-10-02T12:07:17.7323797Z ##[endgroup]
+2026-10-02T12:07:17.7361288Z Temporarily overriding HOME='/home/runner/work/_temp/6d458075-4e40-4fb6-9c89-cbd289ec00f1' before making global git config changes
+2026-10-02T12:07:17.7382394Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-02T12:07:17.7392542Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/maasweekly/maasweekly
+2026-10-02T12:07:17.7451577Z Deleting the contents of '/home/runner/work/maasweekly/maasweekly'
+2026-10-02T12:07:17.7454279Z ##[group]Initializing the repository
+2026-10-02T12:07:17.7461236Z [command]/usr/bin/git init /home/runner/work/maasweekly/maasweekly
+2026-10-02T12:07:17.7618180Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-02T12:07:17.7619325Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-02T12:07:17.7620358Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-02T12:07:17.7621400Z hint: call:
+2026-10-02T12:07:17.7621873Z hint:
+2026-10-02T12:07:17.7622474Z hint: 	git config --global init.defaultBranch <name>
+2026-10-02T12:07:17.7623206Z hint:
+2026-10-02T12:07:17.7623877Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-02T12:07:17.7624919Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-02T12:07:17.7625731Z hint:
+2026-10-02T12:07:17.7626326Z hint: 	git branch -m <name>
+2026-10-02T12:07:17.7627281Z hint:
+2026-10-02T12:07:17.7628493Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-02T12:07:17.7629710Z Initialized empty Git repository in /home/runner/work/maasweekly/maasweekly/.git/
+2026-10-02T12:07:17.7653495Z [command]/usr/bin/git remote add origin https://github.com/zhangchen456/maasweekly
+2026-10-02T12:07:17.7720337Z ##[endgroup]
+2026-10-02T12:07:17.7721725Z ##[group]Disabling automatic garbage collection
+2026-10-02T12:07:17.7727061Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-02T12:07:17.7770410Z ##[endgroup]
+2026-10-02T12:07:17.7772315Z ##[group]Setting up auth
+2026-10-02T12:07:17.7782785Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-02T12:07:17.7853353Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-02T12:07:17.8316162Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-02T12:07:17.8353564Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-02T12:07:17.8583252Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-02T12:07:17.8619341Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-02T12:07:17.8849819Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-02T12:07:17.8891478Z ##[endgroup]
+2026-10-02T12:07:17.8892455Z ##[group]Fetching the repository
+2026-10-02T12:07:17.8901426Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-02T12:07:24.0869753Z From https://github.com/zhangchen456/maasweekly
+2026-10-02T12:07:24.0872478Z  * [new branch]          codex/multilingual-seo -> origin/codex/multilingual-seo
+2026-10-02T12:07:24.0874565Z  * [new branch]          codex/seo-optimization -> origin/codex/seo-optimization
+2026-10-02T12:07:24.0878240Z  * [new branch]          docs/t08-0-analytics-architecture -> origin/docs/t08-0-analytics-architecture
+2026-10-02T12:07:24.0881346Z  * [new branch]          fix/cursor-logo        -> origin/fix/cursor-logo
+2026-10-02T12:07:24.0884269Z  * [new branch]          fix/workflow-public-projection -> origin/fix/workflow-public-projection
+2026-10-02T12:07:24.0886411Z  * [new branch]          main                   -> origin/main
+2026-10-02T12:07:24.0888549Z  * [new branch]          t08-1a-analytics-foundation -> origin/t08-1a-analytics-foundation
+2026-10-02T12:07:24.0890630Z  * [new branch]          task-06-m7-candidate   -> origin/task-06-m7-candidate
+2026-10-02T12:07:24.0892706Z  * [new branch]          task-07-model-identity -> origin/task-07-model-identity
+2026-10-02T12:07:24.0894375Z  * [new branch]          task-07-t07-4a         -> origin/task-07-t07-4a
+2026-10-02T12:07:24.0896030Z  * [new branch]          task-07-t07-4a2        -> origin/task-07-t07-4a2
+2026-10-02T12:07:24.0898229Z  * [new branch]          task-07-t07-4b1-model-catalog -> origin/task-07-t07-4b1-model-catalog
+2026-10-02T12:07:24.0900317Z  * [new branch]          task-07-t07-4b2-model-detail -> origin/task-07-t07-4b2-model-detail
+2026-10-02T12:07:24.0903100Z  * [new branch]          task-07-t07-5-1-ontology-inventory -> origin/task-07-t07-5-1-ontology-inventory
+2026-10-02T12:07:24.0905120Z  * [new branch]          task-07-t07-5-2-dev-platform-registry -> origin/task-07-t07-5-2-dev-platform-registry
+2026-10-02T12:07:24.0906861Z  * [new branch]          task-07-t07-5-ontology-design -> origin/task-07-t07-5-ontology-design
+2026-10-02T12:07:24.0909476Z [command]/usr/bin/git rev-parse --verify --quiet f3e2da7bc97e4091a684353640cba1b26ee808d6^{object}
+2026-10-02T12:07:24.0928913Z f3e2da7bc97e4091a684353640cba1b26ee808d6
+2026-10-02T12:07:24.0936698Z ##[endgroup]
+2026-10-02T12:07:24.0938879Z ##[group]Determining the checkout info
+2026-10-02T12:07:24.0941448Z ##[endgroup]
+2026-10-02T12:07:24.0942956Z [command]/usr/bin/git sparse-checkout disable
+2026-10-02T12:07:24.1005526Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-02T12:07:24.1051848Z ##[group]Checking out the ref
+2026-10-02T12:07:24.1054951Z [command]/usr/bin/git checkout --progress --force f3e2da7bc97e4091a684353640cba1b26ee808d6
+2026-10-02T12:07:25.2496387Z Updating files:  13% (14773/110864)
+2026-10-02T12:07:25.2979251Z Updating files:  14% (15521/110864)
+2026-10-02T12:07:25.3452390Z Updating files:  15% (16630/110864)
+2026-10-02T12:07:25.3913312Z Updating files:  16% (17739/110864)
+2026-10-02T12:07:25.4373180Z Updating files:  17% (18847/110864)
+2026-10-02T12:07:25.4887544Z Updating files:  18% (19956/110864)
+2026-10-02T12:07:25.5343096Z Updating files:  19% (21065/110864)
+2026-10-02T12:07:25.5792031Z Updating files:  20% (22173/110864)
+2026-10-02T12:07:25.6245764Z Updating files:  21% (23282/110864)
+2026-10-02T12:07:25.6693594Z Updating files:  22% (24391/110864)
+2026-10-02T12:07:25.7196581Z Updating files:  23% (25499/110864)
+2026-10-02T12:07:25.7645199Z Updating files:  24% (26608/110864)
+2026-10-02T12:07:25.8094382Z Updating files:  25% (27716/110864)
+2026-10-02T12:07:25.8542016Z Updating files:  26% (28825/110864)
+2026-10-02T12:07:25.8996072Z Updating files:  27% (29934/110864)
+2026-10-02T12:07:25.9449355Z Updating files:  28% (31042/110864)
+2026-10-02T12:07:25.9905553Z Updating files:  29% (32151/110864)
+2026-10-02T12:07:26.0351635Z Updating files:  30% (33260/110864)
+2026-10-02T12:07:26.0799456Z Updating files:  31% (34368/110864)
+2026-10-02T12:07:26.1243081Z Updating files:  32% (35477/110864)
+2026-10-02T12:07:26.1685344Z Updating files:  33% (36586/110864)
+2026-10-02T12:07:26.2143175Z Updating files:  34% (37694/110864)
+2026-10-02T12:07:26.2164581Z Updating files:  35% (38803/110864)
+2026-10-02T12:07:26.2587044Z Updating files:  35% (38854/110864)
+2026-10-02T12:07:26.3032542Z Updating files:  36% (39912/110864)
+2026-10-02T12:07:26.3479211Z Updating files:  37% (41020/110864)
+2026-10-02T12:07:26.3920142Z Updating files:  38% (42129/110864)
+2026-10-02T12:07:26.4365499Z Updating files:  39% (43237/110864)
+2026-10-02T12:07:26.4809873Z Updating files:  40% (44346/110864)
+2026-10-02T12:07:26.5255886Z Updating files:  41% (45455/110864)
+2026-10-02T12:07:26.5699155Z Updating files:  42% (46563/110864)
+2026-10-02T12:07:26.6145173Z Updating files:  43% (47672/110864)
+2026-10-02T12:07:26.6591778Z Updating files:  44% (48781/110864)
+2026-10-02T12:07:26.7041927Z Updating files:  45% (49889/110864)
+2026-10-02T12:07:26.7527549Z Updating files:  46% (50998/110864)
+2026-10-02T12:07:26.7971976Z Updating files:  47% (52107/110864)
+2026-10-02T12:07:26.8419940Z Updating files:  48% (53215/110864)
+2026-10-02T12:07:26.8866843Z Updating files:  49% (54324/110864)
+2026-10-02T12:07:26.9325101Z Updating files:  50% (55432/110864)
+2026-10-02T12:07:27.0102233Z Updating files:  51% (56541/110864)
+2026-10-02T12:07:27.0541897Z Updating files:  52% (57650/110864)
+2026-10-02T12:07:27.1052556Z Updating files:  53% (58758/110864)
+2026-10-02T12:07:27.1496079Z Updating files:  54% (59867/110864)
+2026-10-02T12:07:27.1935182Z Updating files:  55% (60976/110864)
+2026-10-02T12:07:27.2165040Z Updating files:  56% (62084/110864)
+2026-10-02T12:07:27.2377465Z Updating files:  56% (62662/110864)
+2026-10-02T12:07:27.2818492Z Updating files:  57% (63193/110864)
+2026-10-02T12:07:27.3257985Z Updating files:  58% (64302/110864)
+2026-10-02T12:07:27.3694965Z Updating files:  59% (65410/110864)
+2026-10-02T12:07:27.4131513Z Updating files:  60% (66519/110864)
+2026-10-02T12:07:27.4571816Z Updating files:  61% (67628/110864)
+2026-10-02T12:07:27.5017489Z Updating files:  62% (68736/110864)
+2026-10-02T12:07:27.5452276Z Updating files:  63% (69845/110864)
+2026-10-02T12:07:27.5889882Z Updating files:  64% (70953/110864)
+2026-10-02T12:07:27.6326079Z Updating files:  65% (72062/110864)
+2026-10-02T12:07:27.6772819Z Updating files:  66% (73171/110864)
+2026-10-02T12:07:27.7214464Z Updating files:  67% (74279/110864)
+2026-10-02T12:07:27.7683578Z Updating files:  68% (75388/110864)
+2026-10-02T12:07:27.8122055Z Updating files:  69% (76497/110864)
+2026-10-02T12:07:27.8568260Z Updating files:  70% (77605/110864)
+2026-10-02T12:07:27.9009557Z Updating files:  71% (78714/110864)
+2026-10-02T12:07:27.9447642Z Updating files:  72% (79823/110864)
+2026-10-02T12:07:27.9895710Z Updating files:  73% (80931/110864)
+2026-10-02T12:07:28.0350111Z Updating files:  74% (82040/110864)
+2026-10-02T12:07:28.0799911Z Updating files:  75% (83148/110864)
+2026-10-02T12:07:28.1238472Z Updating files:  76% (84257/110864)
+2026-10-02T12:07:28.1682913Z Updating files:  77% (85366/110864)
+2026-10-02T12:07:28.2165231Z Updating files:  78% (86474/110864)
+2026-10-02T12:07:28.2422810Z Updating files:  78% (87193/110864)
+2026-10-02T12:07:28.3286329Z Updating files:  79% (87583/110864)
+2026-10-02T12:07:28.3989378Z Updating files:  80% (88692/110864)
+2026-10-02T12:07:28.4684944Z Updating files:  81% (89800/110864)
+2026-10-02T12:07:28.7641780Z Updating files:  82% (90909/110864)
+2026-10-02T12:07:28.8369453Z Updating files:  83% (92018/110864)
+2026-10-02T12:07:28.9131629Z Updating files:  84% (93126/110864)
+2026-10-02T12:07:29.3064128Z Updating files:  85% (94235/110864)
+2026-10-02T12:07:29.3603204Z Updating files:  85% (94472/110864)
+2026-10-02T12:07:29.4292198Z Updating files:  86% (95344/110864)
+2026-10-02T12:07:29.4978727Z Updating files:  87% (96452/110864)
+2026-10-02T12:07:29.5576103Z Updating files:  88% (97561/110864)
+2026-10-02T12:07:29.5998205Z Updating files:  89% (98669/110864)
+2026-10-02T12:07:29.6422798Z Updating files:  90% (99778/110864)
+2026-10-02T12:07:29.6846638Z Updating files:  91% (100887/110864)
+2026-10-02T12:07:29.7269028Z Updating files:  92% (101995/110864)
+2026-10-02T12:07:29.7691092Z Updating files:  93% (103104/110864)
+2026-10-02T12:07:29.8114328Z Updating files:  94% (104213/110864)
+2026-10-02T12:07:30.2198313Z Updating files:  95% (105321/110864)
+2026-10-02T12:07:30.5272125Z Updating files:  95% (106368/110864)
+2026-10-02T12:07:30.5874726Z Updating files:  96% (106430/110864)
+2026-10-02T12:07:30.7630602Z Updating files:  97% (107539/110864)
+2026-10-02T12:07:30.9218510Z Updating files:  98% (108647/110864)
+2026-10-02T12:07:31.1937465Z Updating files:  99% (109756/110864)
+2026-10-02T12:07:31.1938248Z Updating files: 100% (110864/110864)
+2026-10-02T12:07:31.1938749Z Updating files: 100% (110864/110864), done.
+2026-10-02T12:07:31.3809941Z Note: switching to 'f3e2da7bc97e4091a684353640cba1b26ee808d6'.
+2026-10-02T12:07:31.3810621Z 
+2026-10-02T12:07:31.3811455Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-02T12:07:31.3812393Z changes and commit them, and you can discard any commits you make in this
+2026-10-02T12:07:31.3813372Z state without impacting any branches by switching back to a branch.
+2026-10-02T12:07:31.3814039Z 
+2026-10-02T12:07:31.3814491Z If you want to create a new branch to retain commits you create, you may
+2026-10-02T12:07:31.3815889Z do so (now or later) by using -c with the switch command. Example:
+2026-10-02T12:07:31.3816431Z 
+2026-10-02T12:07:31.3816626Z   git switch -c <new-branch-name>
+2026-10-02T12:07:31.3816912Z 
+2026-10-02T12:07:31.3817081Z Or undo this operation with:
+2026-10-02T12:07:31.3817365Z 
+2026-10-02T12:07:31.3817547Z   git switch -
+2026-10-02T12:07:31.3817788Z 
+2026-10-02T12:07:31.3818164Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-02T12:07:31.3818757Z 
+2026-10-02T12:07:31.3819206Z HEAD is now at f3e2da7bc test: decouple empty-model regressions from live quote coverage
+2026-10-02T12:07:31.3928568Z ##[endgroup]
+2026-10-02T12:07:31.3986159Z [command]/usr/bin/git log -1 --format=%H
+2026-10-02T12:07:31.4018925Z f3e2da7bc97e4091a684353640cba1b26ee808d6
+2026-10-02T12:07:31.4345387Z ##[group]Run actions/setup-python@v5
+2026-10-02T12:07:31.4345931Z with:
+2026-10-02T12:07:31.4346329Z   python-version: 3.12
+2026-10-02T12:07:31.4346779Z   check-latest: false
+2026-10-02T12:07:31.4350527Z   token: ***
+2026-10-02T12:07:31.4350788Z   update-environment: true
+2026-10-02T12:07:31.4351386Z   allow-prereleases: false
+2026-10-02T12:07:31.4352328Z   freethreaded: false
+2026-10-02T12:07:31.4352750Z env:
+2026-10-02T12:07:31.4353128Z   DEPLOY_HOST: 47.237.135.97
+2026-10-02T12:07:31.4353607Z   DEPLOY_USER: maasdeploy
+2026-10-02T12:07:31.4354057Z   MAAS_DEPLOY_MODE: release
+2026-10-02T12:07:31.4354553Z   MAAS_VERIFY_MAIN_CANDIDATE: 1
+2026-10-02T12:07:31.4355018Z ##[endgroup]
+2026-10-02T12:07:31.5910836Z ##[group]Installed versions
+2026-10-02T12:07:31.6010470Z (node:2285) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-02T12:07:31.6012004Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-02T12:07:31.6012734Z Successfully set up CPython (3.12.14)
+2026-10-02T12:07:31.6013647Z ##[endgroup]
+2026-10-02T12:07:31.6215785Z ##[group]Run git fetch --no-tags origin main
+2026-10-02T12:07:31.6216273Z [36;1mgit fetch --no-tags origin main[0m
+2026-10-02T12:07:31.6216777Z [36;1mRESULT=$(python3 scripts/workflow-policy.py candidate --sha "$CANDIDATE_SHA")[0m
+2026-10-02T12:07:31.6217263Z [36;1mecho "$RESULT"[0m
+2026-10-02T12:07:31.6217872Z [36;1mecho "eligible=$(echo "$RESULT" | python3 -c 'import sys,json; print(str(json.load(sys.stdin)["eligible"]).lower())')" >> "$GITHUB_OUTPUT"[0m
+2026-10-02T12:07:31.6548805Z shell: /usr/bin/bash -e {0}
+2026-10-02T12:07:31.6549159Z env:
+2026-10-02T12:07:31.6549431Z   DEPLOY_HOST: 47.237.135.97
+2026-10-02T12:07:31.6549763Z   DEPLOY_USER: maasdeploy
+2026-10-02T12:07:31.6550072Z   MAAS_DEPLOY_MODE: release
+2026-10-02T12:07:31.6550390Z   MAAS_VERIFY_MAIN_CANDIDATE: 1
+2026-10-02T12:07:31.6550800Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:31.6551818Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-02T12:07:31.6552422Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:31.6552925Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:31.6553432Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:31.6553935Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-02T12:07:31.6554440Z   CANDIDATE_SHA: f3e2da7bc97e4091a684353640cba1b26ee808d6
+2026-10-02T12:07:31.6554860Z ##[endgroup]
+2026-10-02T12:07:31.8777452Z From https://github.com/zhangchen456/maasweekly
+2026-10-02T12:07:31.8778412Z  * branch                main       -> FETCH_HEAD
+2026-10-02T12:07:32.4967429Z {"eligible": true, "reason": "exact main candidate; later documentation is harmless"}
+2026-10-02T12:07:32.5266379Z ##[group]Run pip install -q -c requirements.lock.txt -r requirements.txt
+2026-10-02T12:07:32.5266970Z [36;1mpip install -q -c requirements.lock.txt -r requirements.txt[0m
+2026-10-02T12:07:32.5332757Z shell: /usr/bin/bash -e {0}
+2026-10-02T12:07:32.5333038Z env:
+2026-10-02T12:07:32.5333272Z   DEPLOY_HOST: 47.237.135.97
+2026-10-02T12:07:32.5333539Z   DEPLOY_USER: maasdeploy
+2026-10-02T12:07:32.5333805Z   MAAS_DEPLOY_MODE: release
+2026-10-02T12:07:32.5334066Z   MAAS_VERIFY_MAIN_CANDIDATE: 1
+2026-10-02T12:07:32.5334404Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:32.5334870Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-02T12:07:32.5335324Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:32.5335755Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:32.5336175Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:32.5336630Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-02T12:07:32.5336979Z ##[endgroup]
+2026-10-02T12:07:37.1291642Z ##[group]Run actions/setup-node@v4
+2026-10-02T12:07:37.1291992Z with:
+2026-10-02T12:07:37.1292216Z   node-version: 22
+2026-10-02T12:07:37.1292453Z   cache: npm
+2026-10-02T12:07:37.1292871Z   cache-dependency-path: site/package-lock.json
+services/agent-api/package-lock.json
+
+2026-10-02T12:07:37.1293340Z   always-auth: false
+2026-10-02T12:07:37.1293590Z   check-latest: false
+2026-10-02T12:07:37.1296084Z   token: ***
+2026-10-02T12:07:37.1296316Z env:
+2026-10-02T12:07:37.1296534Z   DEPLOY_HOST: 47.237.135.97
+2026-10-02T12:07:37.1296805Z   DEPLOY_USER: maasdeploy
+2026-10-02T12:07:37.1297058Z   MAAS_DEPLOY_MODE: release
+2026-10-02T12:07:37.1297323Z   MAAS_VERIFY_MAIN_CANDIDATE: 1
+2026-10-02T12:07:37.1297679Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:37.1298142Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-02T12:07:37.1298594Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:37.1299046Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:37.1299460Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:37.1299860Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-02T12:07:37.1300204Z ##[endgroup]
+2026-10-02T12:07:37.2697654Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+2026-10-02T12:07:37.2702773Z (node:2330) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-02T12:07:37.2703705Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-02T12:07:37.2705936Z ##[group]Environment details
+2026-10-02T12:07:37.8970154Z node: v22.23.3
+2026-10-02T12:07:37.8970669Z npm: 10.9.9
+2026-10-02T12:07:37.8971407Z yarn: 1.22.22
+2026-10-02T12:07:37.8972463Z ##[endgroup]
+2026-10-02T12:07:37.8996173Z [command]/opt/hostedtoolcache/node/22.23.3/x64/bin/npm config get cache
+2026-10-02T12:07:38.4556320Z /home/runner/.npm
+2026-10-02T12:07:38.5494950Z Cache hit for: node-cache-Linux-x64-npm-851c2f46108ad104ceb43a384022af699c8f5a86016a7a6d46dfd7738f3e2821
+2026-10-02T12:07:38.5598639Z (node:2330) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-02T12:07:39.1168678Z Received 86871336 of 86871336 (100.0%), 157.2 MBs/sec
+2026-10-02T12:07:39.1169953Z Cache Size: ~83 MB (86871336 B)
+2026-10-02T12:07:39.1286256Z [command]/usr/bin/tar -xf /home/runner/work/_temp/4cc263d6-5f2b-48fd-be53-ad6453db0060/cache.tzst -P -C /home/runner/work/maasweekly/maasweekly --use-compress-program unzstd
+2026-10-02T12:07:39.3041801Z Cache restored successfully
+2026-10-02T12:07:39.3088989Z Cache restored from key: node-cache-Linux-x64-npm-851c2f46108ad104ceb43a384022af699c8f5a86016a7a6d46dfd7738f3e2821
+2026-10-02T12:07:39.3271986Z ##[group]Run mkdir -p ~/.ssh
+2026-10-02T12:07:39.3272371Z [36;1mmkdir -p ~/.ssh[0m
+2026-10-02T12:07:39.3272737Z [36;1mprintf '%s\n' "$DEPLOY_PRIVATE_KEY" > ~/.ssh/id_ed25519[0m
+2026-10-02T12:07:39.3273129Z [36;1mchmod 600 ~/.ssh/id_ed25519[0m
+2026-10-02T12:07:39.3273488Z [36;1mcp ops/known_hosts.production ~/.ssh/known_hosts[0m
+2026-10-02T12:07:39.3273856Z [36;1mchmod 600 ~/.ssh/known_hosts[0m
+2026-10-02T12:07:39.3344808Z shell: /usr/bin/bash -e {0}
+2026-10-02T12:07:39.3345109Z env:
+2026-10-02T12:07:39.3345344Z   DEPLOY_HOST: 47.237.135.97
+2026-10-02T12:07:39.3345636Z   DEPLOY_USER: maasdeploy
+2026-10-02T12:07:39.3345917Z   MAAS_DEPLOY_MODE: release
+2026-10-02T12:07:39.3346204Z   MAAS_VERIFY_MAIN_CANDIDATE: 1
+2026-10-02T12:07:39.3346555Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:39.3347047Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-02T12:07:39.3347540Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:39.3347958Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:39.3348375Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:39.3348797Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-02T12:07:39.3351352Z   DEPLOY_PRIVATE_KEY: ***
+2026-10-02T12:07:39.3351651Z ##[endgroup]
+2026-10-02T12:07:39.3515670Z ##[group]Run set -o pipefail
+2026-10-02T12:07:39.3516028Z [36;1mset -o pipefail[0m
+2026-10-02T12:07:39.3516526Z [36;1mops/deploy-release.sh --commit "$CANDIDATE_SHA" 2>&1 | tee "$RUNNER_TEMP/release-build.txt"[0m
+2026-10-02T12:07:39.3575587Z shell: /usr/bin/bash -e {0}
+2026-10-02T12:07:39.3575883Z env:
+2026-10-02T12:07:39.3576109Z   DEPLOY_HOST: 47.237.135.97
+2026-10-02T12:07:39.3576396Z   DEPLOY_USER: maasdeploy
+2026-10-02T12:07:39.3576685Z   MAAS_DEPLOY_MODE: release
+2026-10-02T12:07:39.3576961Z   MAAS_VERIFY_MAIN_CANDIDATE: 1
+2026-10-02T12:07:39.3577308Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:39.3577785Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-02T12:07:39.3578252Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:39.3578673Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:39.3579100Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:07:39.3579598Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-02T12:07:39.3579991Z   MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
+2026-10-02T12:07:39.3580366Z   CANDIDATE_SHA: f3e2da7bc97e4091a684353640cba1b26ee808d6
+2026-10-02T12:07:39.3580715Z ##[endgroup]
+2026-10-02T12:07:39.3741838Z · deploy-mode: release
+2026-10-02T12:07:39.3742706Z · 构建 release（commit=f3e2da7bc97e4091a684353640cba1b26ee808d6）
+2026-10-02T12:07:39.3775399Z [0/6] preflight
+2026-10-02T12:07:39.9578133Z   ✓ commit f3e2da7bc，工作区干净
+2026-10-02T12:07:39.9813915Z {"timestamp":"2026-10-02T12:07:39.980843+00:00","kind":"release.stage","operation":"build","stage":"preflight","outcome":"success","exitCode":0,"elapsedMs":0,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6"}
+2026-10-02T12:07:39.9848949Z [1/6] 公开数据投影
+2026-10-02T12:08:22.7475496Z datasetVersion ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2 已发布且内容一致，零写入（幂等）
+2026-10-02T12:08:22.7477711Z ✓ 发布 ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2（changes=8203 items=8203 prices=1792 evidence=12791 weekly=23）dataThrough=2026-10-02
+2026-10-02T12:08:22.8569312Z ✓ 公开数据校验通过：ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2 · 7 文件 · dataThrough 2026-10-02
+2026-10-02T12:08:22.8872297Z {"timestamp":"2026-10-02T12:08:22.886602+00:00","kind":"release.stage","operation":"build","stage":"projection","outcome":"success","exitCode":0,"elapsedMs":43000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6"}
+2026-10-02T12:08:22.8907757Z [2/6] 统一全量回归（Task 01–06）
+2026-10-02T12:08:22.8961617Z ══ Task 01–06 统一回归 ══
+2026-10-02T12:08:22.8962340Z ── site dependency cache
+2026-10-02T12:08:27.6165154Z    ✓ site dependency cache
+2026-10-02T12:08:27.6176579Z ── agent-api dependency cache
+2026-10-02T12:08:29.7070108Z    ✓ agent-api dependency cache
+2026-10-02T12:08:29.7082592Z ── export-public-data --check
+2026-10-02T12:08:29.8048423Z    ✓ export-public-data --check
+2026-10-02T12:08:29.8062338Z ── validate-archive（Task 01）
+2026-10-02T12:08:29.9732413Z    ✓ validate-archive（Task 01）
+2026-10-02T12:08:29.9745751Z ── validate-price-archive（Task 02）
+2026-10-02T12:08:56.3942929Z    ✓ validate-price-archive（Task 02）
+2026-10-02T12:08:56.3954746Z ── build-skill-package --check
+2026-10-02T12:08:56.4342009Z    ✓ build-skill-package --check
+2026-10-02T12:08:56.4353397Z ── test_current_pricing（official table drift）
+2026-10-02T12:08:57.2325361Z    ✓ test_current_pricing（official table drift）
+2026-10-02T12:08:57.2339706Z ── test_record_archive（Task 01）
+2026-10-02T12:08:57.8998061Z    ✓ test_record_archive（Task 01）
+2026-10-02T12:08:57.9012106Z ── test_price_archive（Task 02）
+2026-10-02T12:09:04.9782908Z    ✓ test_price_archive（Task 02）
+2026-10-02T12:09:04.9797125Z ── test_public_export（Task 03）
+2026-10-02T12:09:47.9923528Z    ✓ test_public_export（Task 03）
+2026-10-02T12:09:47.9937425Z ── test_skill_package（Task 04）
+2026-10-02T12:10:00.5409713Z    ✓ test_skill_package（Task 04）
+2026-10-02T12:10:00.5422649Z ── test_release_build（Task 06）
+2026-10-02T12:10:00.8821640Z    ✓ test_release_build（Task 06）
+2026-10-02T12:10:00.8834573Z ── test_release_activation（Task 06）
+2026-10-02T12:10:40.2833241Z    ✓ test_release_activation（Task 06）
+2026-10-02T12:10:40.2846385Z ── test_deploy_mode（Task 06 M7）
+2026-10-02T12:10:40.3756090Z    ✓ test_deploy_mode（Task 06 M7）
+2026-10-02T12:10:40.3767889Z ── test_model_identity_audit（Task 07）
+2026-10-02T12:10:42.9580269Z    ✓ test_model_identity_audit（Task 07）
+2026-10-02T12:10:42.9593517Z ── test_model_public_projection（Task 07）
+2026-10-02T12:11:24.4553520Z    ✓ test_model_public_projection（Task 07）
+2026-10-02T12:11:24.4569087Z ── test_model_registry（Task 07）
+2026-10-02T12:11:27.8578157Z    ✓ test_model_registry（Task 07）
+2026-10-02T12:11:27.8593120Z ── validate-model-registry（Task 07）
+2026-10-02T12:11:28.4352532Z    ✓ validate-model-registry（Task 07）
+2026-10-02T12:11:28.4365558Z ── audit-model-registry-coverage（Task 07）
+2026-10-02T12:11:28.7655447Z    ✓ audit-model-registry-coverage（Task 07）
+2026-10-02T12:11:28.7669027Z ── test_architecture_workflows（AR-05）
+2026-10-02T12:11:29.5654859Z    ✓ test_architecture_workflows（AR-05）
+2026-10-02T12:11:29.5668443Z ── test_architecture_observability（AR-08）
+2026-10-02T12:11:29.8128096Z    ✓ test_architecture_observability（AR-08）
+2026-10-02T12:11:29.8139469Z ── test_blob_storage（AR-06）
+2026-10-02T12:11:29.9915085Z    ✓ test_blob_storage（AR-06）
+2026-10-02T12:11:29.9928933Z ── test_pipeline_runtime（AR-04）
+2026-10-02T12:11:34.1339322Z    ✓ test_pipeline_runtime（AR-04）
+2026-10-02T12:11:34.1352847Z ── test_standard_inputs（AR-03）
+2026-10-02T12:11:34.2458915Z    ✓ test_standard_inputs（AR-03）
+2026-10-02T12:11:34.2472600Z ── test_workflow_release_contract（incident 2026-09）
+2026-10-02T12:12:59.4307674Z    ✓ test_workflow_release_contract（incident 2026-09）
+2026-10-02T12:12:59.4321324Z ── validate-developer-registry（T07-5.2）
+2026-10-02T12:12:59.4604169Z    ✓ validate-developer-registry（T07-5.2）
+2026-10-02T12:12:59.4616956Z ── test_developer_platform_registry（T07-5.2）
+2026-10-02T12:12:59.5492297Z    ✓ test_developer_platform_registry（T07-5.2）
+2026-10-02T12:12:59.5505476Z ── test_analytics_foundation（T08-1A）
+2026-10-02T12:12:59.6422152Z    ✓ test_analytics_foundation（T08-1A）
+2026-10-02T12:12:59.6435513Z ── test_umami_postgres_preflight（T08-1A）
+2026-10-02T12:12:59.7465560Z    ✓ test_umami_postgres_preflight（T08-1A）
+2026-10-02T12:12:59.7477792Z ── test_umami_prerequisites（T08-1A）
+2026-10-02T12:12:59.8132882Z    ✓ test_umami_prerequisites（T08-1A）
+2026-10-02T12:12:59.8144262Z ── test_inventory_capability（T08-1A Gate B Preflight）
+2026-10-02T12:12:59.9003910Z    ✓ test_inventory_capability（T08-1A Gate B Preflight）
+2026-10-02T12:12:59.9016273Z ── site build（含 prebuild 门禁）
+2026-10-02T12:14:08.9124998Z    ✓ site build（含 prebuild 门禁）
+2026-10-02T12:14:08.9146404Z ── site: access-pages（Task 05）
+2026-10-02T12:14:12.5082328Z    ✓ site: access-pages（Task 05）
+2026-10-02T12:14:12.5095331Z ── site: rss（Task 05）
+2026-10-02T12:14:13.4979574Z    ✓ site: rss（Task 05）
+2026-10-02T12:14:13.4992859Z ── site: page ViewModel types
+2026-10-02T12:14:15.0116033Z    ✓ site: page ViewModel types
+2026-10-02T12:14:15.0129059Z ── site: page ViewModel parity
+2026-10-02T12:14:15.9310399Z    ✓ site: page ViewModel parity
+2026-10-02T12:14:15.9322923Z ── site: pricing
+2026-10-02T12:14:15.9868905Z    ✓ site: pricing
+2026-10-02T12:14:15.9881942Z ── site: model-identity-ui（T07-4A）
+2026-10-02T12:14:16.0809468Z    ✓ site: model-identity-ui（T07-4A）
+2026-10-02T12:14:16.0821990Z ── site: model-identity-ui-contract（T07-4A）
+2026-10-02T12:14:18.0375978Z    ✓ site: model-identity-ui-contract（T07-4A）
+2026-10-02T12:14:18.0389276Z ── site: changes-browser-contract（T07-4A.2）
+2026-10-02T12:14:18.1753612Z    ✓ site: changes-browser-contract（T07-4A.2）
+2026-10-02T12:14:18.1766702Z ── site: changes-browser-ui（T07-4A.2）
+2026-10-02T12:14:22.7129590Z    ✓ site: changes-browser-ui（T07-4A.2）
+2026-10-02T12:14:22.7142813Z ── site: model-detail（T07-4B.2）
+2026-10-02T12:14:24.4389041Z    ✓ site: model-detail（T07-4B.2）
+2026-10-02T12:14:24.4402891Z ── site: analytics（T08 lightweight）
+2026-10-02T12:14:25.3980187Z    ✓ site: analytics（T08 lightweight）
+2026-10-02T12:14:25.3993164Z ── site: agent-interactions（copy regression）
+2026-10-02T12:14:26.3083747Z    ✓ site: agent-interactions（copy regression）
+2026-10-02T12:14:26.3096190Z ── site: platform-logos
+2026-10-02T12:14:26.4114892Z    ✓ site: platform-logos
+2026-10-02T12:14:26.4128894Z ── site: leaderboards
+2026-10-02T12:14:26.4885822Z    ✓ site: leaderboards
+2026-10-02T12:14:26.4901971Z ── site: records（含残留检测）
+2026-10-02T12:15:12.5303594Z    ✓ site: records（含残留检测）
+2026-10-02T12:15:12.5318489Z ── site: SEO（canonical / sitemap / model content）
+2026-10-02T12:15:18.7354799Z    ✓ site: SEO（canonical / sitemap / model content）
+2026-10-02T12:15:18.7368058Z ── site: multilingual
+2026-10-02T12:16:16.7882879Z    ✓ site: multilingual
+2026-10-02T12:16:16.7895848Z ── agent-api: build
+2026-10-02T12:16:19.3689233Z    ✓ agent-api: build
+2026-10-02T12:16:19.3703077Z ── agent-api: country
+2026-10-02T12:16:19.5454049Z    ✓ agent-api: country
+2026-10-02T12:16:19.5474204Z ── agent-api: REST 测试
+2026-10-02T12:16:21.2334192Z    ✓ agent-api: REST 测试
+2026-10-02T12:16:21.2347528Z ── agent-api: MCP 测试
+2026-10-02T12:16:21.9167043Z    ✓ agent-api: MCP 测试
+2026-10-02T12:16:21.9179564Z ── agent-api: MCP 真实数据
+2026-10-02T12:16:22.9577158Z    ✓ agent-api: MCP 真实数据
+2026-10-02T12:16:22.9589199Z ══════════════════════════
+2026-10-02T12:16:22.9589756Z 通过: 54 | 失败: 0
+2026-10-02T12:16:22.9592336Z 全部通过 ✓
+2026-10-02T12:16:22.9851650Z {"timestamp":"2026-10-02T12:16:22.984568+00:00","kind":"release.stage","operation":"build","stage":"regression","outcome":"success","exitCode":0,"elapsedMs":480000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6"}
+2026-10-02T12:16:22.9888054Z [3/6] tracked diff 复查
+2026-10-02T12:16:23.5051558Z {"timestamp":"2026-10-02T12:16:23.504512+00:00","kind":"release.stage","operation":"build","stage":"clean-tree","outcome":"success","exitCode":0,"elapsedMs":1000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6"}
+2026-10-02T12:16:23.5086146Z [4/6] agent-api 生产包（已验编译产物 + omit=dev 安装）
+2026-10-02T12:16:25.2793824Z {"timestamp":"2026-10-02T12:16:25.278750+00:00","kind":"release.stage","operation":"build","stage":"runtime-package","outcome":"success","exitCode":0,"elapsedMs":2000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6"}
+2026-10-02T12:16:25.2828380Z [5/6] 组装 release
+2026-10-02T12:16:28.6353424Z {"timestamp":"2026-10-02T12:16:28.634691+00:00","kind":"release.stage","operation":"build","stage":"assembly","outcome":"success","exitCode":0,"elapsedMs":3000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6","releaseId":"rl_f3e2da7bc9_a032da03d915","datasetVersion":"ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2"}
+2026-10-02T12:16:28.6386881Z [6/6] manifest
+2026-10-02T12:16:33.1638361Z ✓ manifest: rl_f3e2da7bc9_a032da03d915（26282 文件，804311486 字节）
+2026-10-02T12:16:37.2195668Z ✓ release 校验通过
+2026-10-02T12:16:37.2259610Z ✓ release rl_f3e2da7bc9_a032da03d915 → dist-release/rl_f3e2da7bc9_a032da03d915
+2026-10-02T12:16:37.2279962Z   datasetVersion=ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2 dataThrough=2026-10-02 commit=f3e2da7bc
+2026-10-02T12:16:37.2515619Z {"timestamp":"2026-10-02T12:16:37.250937+00:00","kind":"release.stage","operation":"build","stage":"manifest","outcome":"success","exitCode":0,"elapsedMs":9000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6","releaseId":"rl_f3e2da7bc9_a032da03d915","datasetVersion":"ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2"}
+2026-10-02T12:16:37.3103858Z {"timestamp":"2026-10-02T12:16:37.277464+00:00","kind":"release.result","operation":"build","stage":"manifest","outcome":"success","exitCode":0,"elapsedMs":538000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6","releaseId":"rl_f3e2da7bc9_a032da03d915","datasetVersion":"ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2","totals":{"files":26282,"bytes":804311486}}
+2026-10-02T12:16:37.4443103Z · release: rl_f3e2da7bc9_a032da03d915
+2026-10-02T12:16:37.4477265Z · release 通道（运行时注入）：上传 incoming → 激活 → 公网冒烟
+2026-10-02T12:16:37.6706586Z From https://github.com/zhangchen456/maasweekly
+2026-10-02T12:16:37.6707402Z  * branch                main       -> FETCH_HEAD
+2026-10-02T12:16:37.7174921Z {"eligible": true, "reason": "exact main candidate; later documentation is harmless"}
+2026-10-02T12:17:01.4443170Z · ✓ 上传完成: rl_f3e2da7bc9_a032da03d915 → incoming
+2026-10-02T12:17:01.6279802Z From https://github.com/zhangchen456/maasweekly
+2026-10-02T12:17:01.6280326Z  * branch                main       -> FETCH_HEAD
+2026-10-02T12:17:01.6810443Z {"eligible": true, "reason": "exact main candidate; later documentation is harmless"}
+2026-10-02T12:17:40.1329279Z 2026/10/02 20:17:39 [warn] 2424925#2424925: conflicting server name "www.zhangchen456.xyz" on 0.0.0.0:80, ignored
+2026-10-02T12:17:40.1338585Z 2026/10/02 20:17:39 [warn] 2424925#2424925: conflicting server name "www.zhangchen456.xyz" on 0.0.0.0:443, ignored
+2026-10-02T12:17:40.1339556Z nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+2026-10-02T12:17:40.1340200Z nginx: configuration file /etc/nginx/nginx.conf test is successful
+2026-10-02T12:17:40.1525567Z 2026/10/02 20:17:40 [warn] 2424926#2424926: conflicting server name "www.zhangchen456.xyz" on 0.0.0.0:80, ignored
+2026-10-02T12:17:40.1532381Z 2026/10/02 20:17:40 [warn] 2424926#2424926: conflicting server name "www.zhangchen456.xyz" on 0.0.0.0:443, ignored
+2026-10-02T12:17:40.1533682Z 2026/10/02 20:17:40 [notice] 2424926#2424926: signal process started
+2026-10-02T12:17:40.5518414Z ✓ activated rl_f3e2da7bc9_a032da03d915
+2026-10-02T12:17:40.6601446Z · ✓ 激活完成: rl_f3e2da7bc9_a032da03d915
+2026-10-02T12:17:40.7143703Z · 公网冒烟: https://daily.maas.click/api/v1/status（expect datasetVersion: ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2）
+2026-10-02T12:17:41.9027402Z ✓ release 通道发布完成: rl_f3e2da7bc9_a032da03d915（datasetVersion: ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2）
+2026-10-02T12:17:41.9073056Z ##[group]Run ops/verify-release.sh --online --expect-release "$RELEASE_ID"
+2026-10-02T12:17:41.9073639Z [36;1mops/verify-release.sh --online --expect-release "$RELEASE_ID"[0m
+2026-10-02T12:17:41.9135644Z shell: /usr/bin/bash -e {0}
+2026-10-02T12:17:41.9135920Z env:
+2026-10-02T12:17:41.9136145Z   DEPLOY_HOST: 47.237.135.97
+2026-10-02T12:17:41.9136442Z   DEPLOY_USER: maasdeploy
+2026-10-02T12:17:41.9136701Z   MAAS_DEPLOY_MODE: release
+2026-10-02T12:17:41.9136971Z   MAAS_VERIFY_MAIN_CANDIDATE: 1
+2026-10-02T12:17:41.9137306Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:17:41.9137774Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-02T12:17:41.9138231Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:17:41.9138642Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:17:41.9139060Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:17:41.9139518Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-02T12:17:41.9139906Z   MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
+2026-10-02T12:17:41.9140235Z   RELEASE_ID: rl_f3e2da7bc9_a032da03d915
+2026-10-02T12:17:41.9140529Z ##[endgroup]
+2026-10-02T12:17:45.6487416Z · ✓ 服务器 current: rl_f3e2da7bc9_a032da03d915
+2026-10-02T12:17:45.6540275Z · · 服务器 datasetVersion=ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2 / dataThrough=2026-10-02
+2026-10-02T12:17:46.8373451Z · ✓ REST /api/v1/status datasetVersion=ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2
+2026-10-02T12:17:48.3225200Z · ✓ REST /api/v1/changes?limit=10 datasetVersion=ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2
+2026-10-02T12:17:49.2598495Z · ✓ MCP initialize 可达
+2026-10-02T12:17:50.2099378Z · ✓ MCP 五工具齐备
+2026-10-02T12:17:51.1664187Z · ✓ MCP 工具调用 datasetVersion=ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2
+2026-10-02T12:17:53.1524279Z · ✓ RSS /feed.xml（rss+xml + ETag + 304）
+2026-10-02T12:17:54.7792497Z · ✓ RSS /feed/weekly.xml（rss+xml + ETag + 304）
+2026-10-02T12:17:56.1701565Z · ✓ Skill manifest + install.sh 可达
+2026-10-02T12:17:56.1703184Z ✓ 在线验收通过: current=rl_f3e2da7bc9_a032da03d915 / datasetVersion=ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2（REST+MCP+RSS+Skill 四入口）
+2026-10-02T12:17:56.1815652Z ##[group]Run if [ -f "$RUNNER_TEMP/release-build.txt" ]; then
+2026-10-02T12:17:56.1816184Z [36;1mif [ -f "$RUNNER_TEMP/release-build.txt" ]; then[0m
+2026-10-02T12:17:56.1816900Z [36;1m  python3 scripts/architecture-observability.py "$RUNNER_TEMP/release-build.txt" --mixed > "$RUNNER_TEMP/release-diagnostics.json"[0m
+2026-10-02T12:17:56.1817551Z [36;1mfi[0m
+2026-10-02T12:17:56.1879764Z shell: /usr/bin/bash -e {0}
+2026-10-02T12:17:56.1880050Z env:
+2026-10-02T12:17:56.1880277Z   DEPLOY_HOST: 47.237.135.97
+2026-10-02T12:17:56.1880559Z   DEPLOY_USER: maasdeploy
+2026-10-02T12:17:56.1880828Z   MAAS_DEPLOY_MODE: release
+2026-10-02T12:17:56.1881335Z   MAAS_VERIFY_MAIN_CANDIDATE: 1
+2026-10-02T12:17:56.1881677Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:17:56.1882151Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-02T12:17:56.1882612Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:17:56.1883061Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:17:56.1883720Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:17:56.1884140Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-02T12:17:56.1884524Z ##[endgroup]
+2026-10-02T12:17:56.2387347Z ##[group]Run actions/upload-artifact@v4
+2026-10-02T12:17:56.2387694Z with:
+2026-10-02T12:17:56.2388034Z   name: release-diagnostics-f3e2da7bc97e4091a684353640cba1b26ee808d6
+2026-10-02T12:17:56.2388659Z   path: /home/runner/work/_temp/release-build.txt
+/home/runner/work/_temp/release-diagnostics.json
+
+2026-10-02T12:17:56.2389191Z   if-no-files-found: ignore
+2026-10-02T12:17:56.2389462Z   retention-days: 14
+2026-10-02T12:17:56.2389711Z   compression-level: 6
+2026-10-02T12:17:56.2389952Z   overwrite: false
+2026-10-02T12:17:56.2390200Z   include-hidden-files: false
+2026-10-02T12:17:56.2390496Z env:
+2026-10-02T12:17:56.2390712Z   DEPLOY_HOST: 47.237.135.97
+2026-10-02T12:17:56.2391276Z   DEPLOY_USER: maasdeploy
+2026-10-02T12:17:56.2391543Z   MAAS_DEPLOY_MODE: release
+2026-10-02T12:17:56.2391827Z   MAAS_VERIFY_MAIN_CANDIDATE: 1
+2026-10-02T12:17:56.2392165Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:17:56.2392700Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-02T12:17:56.2393155Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:17:56.2393567Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:17:56.2393980Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-02T12:17:56.2394397Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-02T12:17:56.2394749Z ##[endgroup]
+2026-10-02T12:17:56.4120555Z (node:11136) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-02T12:17:56.4122794Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-02T12:17:56.4196802Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-02T12:17:56.4206701Z The least common ancestor is /home/runner/work/_temp. This will be the root directory of the artifact
+2026-10-02T12:17:56.4208211Z With the provided path, there will be 2 files uploaded
+2026-10-02T12:17:56.4209717Z Artifact name is valid!
+2026-10-02T12:17:56.4210557Z Root directory input is valid!
+2026-10-02T12:17:56.6287488Z Beginning upload of artifact content to blob storage
+2026-10-02T12:17:56.6498056Z (node:11136) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-02T12:17:56.6758765Z Uploaded bytes 2871
+2026-10-02T12:17:56.6881610Z Finished uploading artifact content to blob storage!
+2026-10-02T12:17:56.6882892Z SHA256 digest of uploaded artifact zip is 2bbc1c9692511f42aecf38d54a3dba5dd3ef4806e913eda5d2f8b98c79732f61
+2026-10-02T12:17:56.6884855Z Finalizing artifact upload
+2026-10-02T12:17:56.9046339Z Artifact release-diagnostics-f3e2da7bc97e4091a684353640cba1b26ee808d6.zip successfully finalized. Artifact ID 11225896156
+2026-10-02T12:17:56.9048066Z Artifact release-diagnostics-f3e2da7bc97e4091a684353640cba1b26ee808d6 has been successfully uploaded! Final size is 2871 bytes. Artifact ID is 11225896156
+2026-10-02T12:17:56.9052941Z Artifact download URL: https://github.com/zhangchen456/maasweekly/actions/runs/36987539497/artifacts/11225896156
+2026-10-02T12:17:56.9225704Z Post job cleanup.
+2026-10-02T12:17:57.0468607Z (node:11149) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-02T12:17:57.0469599Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-02T12:17:57.0472768Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-851c2f46108ad104ceb43a384022af699c8f5a86016a7a6d46dfd7738f3e2821, not saving cache.
+2026-10-02T12:17:57.0618512Z Post job cleanup.
+2026-10-02T12:17:57.1869869Z (node:11157) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-02T12:17:57.1872275Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-02T12:17:57.2072316Z Post job cleanup.
+2026-10-02T12:17:57.2959827Z [command]/usr/bin/git version
+2026-10-02T12:17:57.3006044Z git version 2.55.0
+2026-10-02T12:17:57.3049621Z Temporarily overriding HOME='/home/runner/work/_temp/735d2683-e047-41b2-92ce-30e2aa130187' before making global git config changes
+2026-10-02T12:17:57.3050778Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-02T12:17:57.3055838Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/maasweekly/maasweekly
+2026-10-02T12:17:57.3097326Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-02T12:17:57.3134239Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-02T12:17:57.3482974Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-02T12:17:57.3510153Z http.https://github.com/.extraheader
+2026-10-02T12:17:57.3524193Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-02T12:17:57.3571670Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-02T12:17:57.3937350Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-02T12:17:57.3979544Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-02T12:17:57.4436415Z Cleaning up orphan processes
+2026-10-02T12:17:57.4829256Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
