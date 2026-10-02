@@ -27,7 +27,6 @@ jobs:
       DEPLOY_USER: maasdeploy
       MAAS_DEPLOY_MODE: release
       MAAS_VERIFY_MAIN_CANDIDATE: '1'
-      MAAS_REGRESSION_LOG_ROOT: ${{ runner.temp }}/regression-failures
     steps:
       - name: Checkout exact candidate
         uses: actions/checkout@v4
@@ -73,6 +72,7 @@ jobs:
         id: deploy
         if: steps.candidate.outputs.eligible == 'true'
         env:
+          MAAS_REGRESSION_LOG_ROOT: ${{ runner.temp }}/regression-failures
           MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
           CANDIDATE_SHA: ${{ inputs.commit }}
         run: |
