@@ -78,8 +78,12 @@ console.log('[3] T10（真实数据半项）：时间精度混合');
   const items = doc.rss.channel.item;
   const withDate = items.filter((i) => i.pubDate);
   const withoutDate = items.filter((i) => !i.pubDate);
-  check('存在混合形态（有/无 pubDate 并存）', withDate.length > 0 && withoutDate.length > 0,
-    `有 ${withDate.length} 无 ${withoutDate.length}`);
+  const release = loadVerifiedRelease(undefined, { select: ['changes'] });
+  const byId = new Map(release.changes.map(c => [c.id,c]));
+  check('pubDate 与实际记录的时间精度一致', items.every(i => {
+    const c = byId.get(String(i.guid?.['#text'] ?? i.guid));
+    return c && Boolean(i.pubDate) === Boolean(c.timePrecision === 'datetime' && c.observedAt);
+  }));
   check('pubDate 全为 RFC822 UTC（GMT 结尾）',
     withDate.every((i) => / GMT$/.test(String(i.pubDate))));
   check('无 pubDate 条目的描述含日期精度说明',

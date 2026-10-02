@@ -3,15 +3,213 @@
   "$id": "https://daily.maas.click/schemas/public-v1/model-identities.schema.json",
   "title": "Release-frozen public model identity catalog",
   "type": "object",
-  "required": ["models", "families"],
+  "required": [
+    "models",
+    "families"
+  ],
   "properties": {
-    "models": {"type": "array", "items": {"type": "object", "required": ["modelId", "modelName"], "properties": {
-      "modelId": {"type": "string", "pattern": "^[a-z0-9-]+:[a-z0-9.-]+$"}, "modelName": {"type": "string"},
-      "familyId": {"type": "string"}, "familyName": {"type": "string"}
-    }, "additionalProperties": false}},
-    "families": {"type": "array", "items": {"type": "object", "required": ["familyId", "familyName"], "properties": {
-      "familyId": {"type": "string", "pattern": "^[a-z0-9-]+:[a-z0-9.-]+$"}, "familyName": {"type": "string"}
-    }, "additionalProperties": false}}
+    "models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "modelId",
+          "modelName"
+        ],
+        "properties": {
+          "modelId": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+:[a-z0-9.-]+$"
+          },
+          "modelName": {
+            "type": "string"
+          },
+          "familyId": {
+            "type": "string"
+          },
+          "familyName": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "families": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "familyId",
+          "familyName"
+        ],
+        "properties": {
+          "familyId": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+:[a-z0-9.-]+$"
+          },
+          "familyName": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "developers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "developerId",
+          "displayName"
+        ],
+        "properties": {
+          "developerId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "displayName": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "platforms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "platformId",
+          "displayName"
+        ],
+        "properties": {
+          "platformId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "displayName": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "upstreamModels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "upstreamModelId",
+          "modelId",
+          "developerId",
+          "modelName",
+          "evidence"
+        ],
+        "properties": {
+          "upstreamModelId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "modelId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "developerId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "modelName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "type": "object",
+            "required": [
+              "url",
+              "verifiedAt"
+            ],
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "verifiedAt": {
+                "type": "string",
+                "format": "date"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "availabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "availabilityId",
+          "upstreamModelId",
+          "modelId",
+          "platformId",
+          "apiModelIds",
+          "sourceId",
+          "evidence"
+        ],
+        "properties": {
+          "availabilityId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "upstreamModelId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "modelId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "platformId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "apiModelIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          },
+          "sourceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "type": "object",
+            "required": [
+              "url",
+              "verifiedAt"
+            ],
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "verifiedAt": {
+                "type": "string",
+                "format": "date"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
   },
   "additionalProperties": false
 }

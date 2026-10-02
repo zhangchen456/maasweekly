@@ -164,6 +164,18 @@
     },
     "familyName": {
       "type": "string"
+    },
+    "platformId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "upstreamModelId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "availabilityId": {
+      "type": "string",
+      "minLength": 1
     }
   },
   "additionalProperties": false

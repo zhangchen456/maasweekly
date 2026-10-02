@@ -2,7 +2,7 @@
   "name": "@maasweekly/agent-api",
   "version": "1.0.0",
   "private": true,
-  "description": "MaaS Daily \u533f\u540d\u53ea\u8bfb REST API v1\uff08Task 03\uff1b\u67e5\u8be2\u903b\u8f91\u4e0e MCP \u5171\u7528\u7684 query \u6a21\u5757\uff09",
+  "description": "MaaS Daily 匿名只读 REST API v1（Task 03；查询逻辑与 MCP 共用的 query 模块）",
   "type": "module",
   "engines": {
     "node": ">=22.12.0"
@@ -10,11 +10,11 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
-    "test": "npm run build && node --test --test-force-exit \"dist/tests/http.test.js\" \"dist/tests/versioning.test.js\" \"dist/tests/openapi.test.js\" \"dist/tests/p1-fixes.test.js\" \"dist/tests/model-identity.test.js\" \"dist/tests/runtime.test.js\" \"dist/tests/observability.test.js\" \"dist/tests/contracts.test.js\"",
+    "test": "npm run build && node --test --test-force-exit \"dist/tests/http.test.js\" \"dist/tests/versioning.test.js\" \"dist/tests/openapi.test.js\" \"dist/tests/p1-fixes.test.js\" \"dist/tests/model-identity.test.js\" \"dist/tests/runtime.test.js\" \"dist/tests/observability.test.js\" \"dist/tests/contracts.test.js\" \"dist/tests/cross-platform.test.js\"",
     "test:real": "npm run build && node --test dist/tests/real.test.js",
     "test:mcp": "npm run build && node --test --test-force-exit dist/tests/mcp.test.js",
     "test:mcp:real": "npm run build && node --test --test-force-exit dist/tests/mcp-real.test.js",
-    "test:compiled": "node --test --test-force-exit \"dist/tests/http.test.js\" \"dist/tests/versioning.test.js\" \"dist/tests/openapi.test.js\" \"dist/tests/p1-fixes.test.js\" \"dist/tests/model-identity.test.js\" \"dist/tests/runtime.test.js\" \"dist/tests/observability.test.js\" \"dist/tests/contracts.test.js\"",
+    "test:compiled": "node --test --test-force-exit \"dist/tests/http.test.js\" \"dist/tests/versioning.test.js\" \"dist/tests/openapi.test.js\" \"dist/tests/p1-fixes.test.js\" \"dist/tests/model-identity.test.js\" \"dist/tests/runtime.test.js\" \"dist/tests/observability.test.js\" \"dist/tests/contracts.test.js\" \"dist/tests/cross-platform.test.js\"",
     "test:mcp:compiled": "node --test --test-force-exit dist/tests/mcp.test.js",
     "test:mcp:real:compiled": "node --test --test-force-exit dist/tests/mcp-real.test.js",
     "prebuild": "python3 ../../scripts/generate-public-contract.py --check"

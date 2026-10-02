@@ -9,6 +9,7 @@ from .doubao import DoubaoPricingExtractor
 from .qwen import QwenPricingExtractor
 from .anthropic import AnthropicPricingExtractor
 from .google import GooglePricingExtractor
+from .vertex import VertexPricingExtractor
 
 class SourceExtractor(Protocol):
     def extract(self, snapshot: ContentSnapshot) -> ExtractionResult: ...
@@ -22,6 +23,8 @@ _EXTRACTORS: dict[str, SourceExtractor] = {
     "qwen:pricing": QwenPricingExtractor(),
     "anthropic:pricing": AnthropicPricingExtractor(),
     "google:pricing": GooglePricingExtractor(),
+    "vertex-google:pricing": VertexPricingExtractor("vertex-google"),
+    "vertex-anthropic:pricing": VertexPricingExtractor("vertex-anthropic"),
 }
 
 def get_extractor(source_key: str) -> SourceExtractor | None:

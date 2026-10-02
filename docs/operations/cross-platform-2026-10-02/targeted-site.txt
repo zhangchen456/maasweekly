@@ -1,0 +1,63 @@
+Pricing ledger: 10 家 / 2801 条价格 / 309 模型，校验通过。
+Logo registry: platforms, aliases, daily data and file hashes passed.
+All leaderboard vendors and applications have local logo mappings.
+[0] 前置：dist feed 存在
+  ✓ dist/feed.xml 存在
+  ✓ dist/feed/weekly.xml 存在
+[1] T06：feed.xml 合规 RSS 2.0 + 100 条 + 顺序 + GUID + 链接实存
+  ✓ RSS 2.0 根
+  ✓ channel 三要素
+  ✓ 条数 ≤ 100（实得 100）
+  ✓ GUID 唯一
+  ✓ GUID 全为稳定 record ID
+  ✓ GUID 不含 datasetVersion/构建日期
+  ✓ 顺序与公开排序一致
+  ✓ 全部链接的详情页在 dist 实存
+  ✓ link 全为 canonical HTTPS
+[2] T07：weekly.xml ≤30 期 + GUID + 链接实存 + 倒序
+  ✓ 期数 ≤ 30（实得 23）
+  ✓ GUID 唯一且为日期 ID
+  ✓ 最新在前（倒序）
+  ✓ 周报链接 dist 实存
+  ✓ weekly 无 pubDate（日期精度不合成午夜）
+[3] T10（真实数据半项）：时间精度混合
+  ✓ pubDate 与实际记录的时间精度一致
+  ✓ pubDate 全为 RFC822 UTC（GMT 结尾）
+  ✓ 无 pubDate 条目的描述含日期精度说明
+  ✓ channel 无 lastBuildDate（不用构建时间冒充）
+[4] T09：修订保 GUID / withdrawn 退出（单元 fixture）
+  ✓ 修订后 GUID 不变
+  ✓ 修订后内容更新
+  ✓ withdrawn 退出默认 feed
+[5] T10（单元）：date/datetime 混合
+  ✓ datetime → pubDateIso 有值
+  ✓ date → pubDateIso null（不合成午夜）
+  ✓ rfc2822Utc 固定 UTC（+08:00 → UTC 同时区换算）
+[6] T11：注入攻击（XML/HTML/控制字符/超长）
+  ✓ 注入后 feed 仍可解析
+  ✓ 无未转义 <script>
+  ✓ 控制字符被剥离
+  ✓ 超长截断（XML 内 title ≤ 200 码点+省略号）
+  ✓ 超长 description 截断
+  ✓ 错误信息不含本机路径
+[7] T08（单元级）：确定性
+  ✓ 同输入双调用逐字节相同
+  ✓ 生成器源码（非注释）无 Date.now/Math.random
+[8] T16 + 复验 P1-1：release 校验链（6 类反例）
+  ✓ 目录缺失 → throw
+  ✓ 合法迷你 release 通过
+  ✓ 清单删除后 select 文件 → 拒（防 TAMPERED 绕过）
+  ✓ 清单条目重复 → 拒
+  ✓ ../ 路径逃逸 → 拒
+  ✓ 其他版本目录 → 拒（版本错位）
+  ✓ bytes 篡改 → 拒
+  ✓ sha256 篡改 → 拒
+  ✓ datasetVersion 格式非法 → 拒
+  ✓ 合法 changes+weekly 双集合加载
+  ✓ 所有错误不泄露本机路径
+[9] T12：链接遍历（feed + 页面 + llms.txt）
+  ✓ 外部 URL 全为 canonical HTTPS
+  ✓ 内部链接 dist 实存
+
+全部通过 ✓
+{"models":3,"rows":19,"exactPlatforms":true,"scenarioParity":true,"defaultSourceStable":true,"missingQuoteExclusion":true,"rendered":true}

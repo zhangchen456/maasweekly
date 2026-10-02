@@ -69,6 +69,8 @@ run "build-skill-package --check" python3 site/scripts/build-skill-package.py --
 # ---- Python 测试 ----
 run "test_release_retention（live references）" python3 -m unittest discover -s tests -p 'test_release_retention.py'
 run "test_operations_budget（production resource thresholds）" python3 -m unittest discover -s tests -p 'test_operations_budget.py'
+run "test_public_retention（公开历史引用完整性）" python3 -m unittest discover -s tests -p 'test_public_retention.py'
+run "test_cross_platform（关系与官方价格）" python3 -m unittest discover -s tests -p 'test_cross_platform.py'
 run "test_regression_diagnostics（CI failure evidence）" python3 -m unittest discover -s tests -p 'test_regression_diagnostics.py'
 run "test_current_pricing（official table drift）" python3 -m unittest discover -s tests -p 'test_current_pricing.py'
 run "test_record_archive（Task 01）" python3 -m unittest discover -s tests -p 'test_record_archive.py'
@@ -104,6 +106,7 @@ run "site: access-pages（Task 05）" bash -c 'cd site && node --experimental-st
 run "site: rss（Task 05）" bash -c 'cd site && node --experimental-strip-types tests/rss.test.mjs'
 run "site: page ViewModel types" node services/agent-api/node_modules/typescript/bin/tsc --project site/tsconfig.page-models.json
 run "site: page ViewModel parity" bash -c 'cd site && node tests/page-models.test.mjs'
+run "site: cross-platform" bash -c 'cd site && node tests/cross-platform.test.mjs'
 run "site: pricing" bash -c 'cd site && node tests/pricing.test.mjs'
 run "site: model-identity-ui（T07-4A）" bash -c 'cd site && node tests/model-identity-ui.test.mjs'
 run "site: model-identity-ui-contract（T07-4A）" bash -c 'cd site && node tests/model-identity-ui-contract.test.mjs'

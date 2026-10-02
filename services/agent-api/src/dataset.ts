@@ -15,7 +15,7 @@ import path from 'node:path';
 
 import { SCHEMA_VERSION, type Manifest, type ManifestFileEntry, type ModelIdentityCatalog,
   type ChangeEntity, type ItemEntity, type PriceEntity, type EvidenceEntity, type WeeklyEntity, type StatusEntity } from './public-contract/entities.js';
-import { DatasetError, DS_RE, validateManifest, validateIdentityCatalog, validateCollections } from './public-contract/validation.js';
+import { DatasetError, DS_RE, validateManifest, validateIdentityCatalog, validatePricePlatforms, validateCollections } from './public-contract/validation.js';
 import { readVerified } from './public-contract/node-reader.js';
 export * from './public-contract/entities.js';
 export { DatasetError } from './public-contract/validation.js';
@@ -80,6 +80,7 @@ export class Dataset {
     this.weeklyDescending = [...weekly].sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
     this.status = status;
     this.modelIdentities = typeof root === 'string' ? Dataset.readIdentityCatalog(root, manifest) : root;
+    validatePricePlatforms(this.modelIdentities, prices);
     this.enums = {
       providers: new Set(status.providers.map((p) => p.providerId)),
       changeTypes: new Set(changes.map((c) => c.changeType)),
