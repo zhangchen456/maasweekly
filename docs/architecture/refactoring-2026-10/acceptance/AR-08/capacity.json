@@ -1,0 +1,726 @@
+{
+  "measuredAt": "2026-10-02T03:34:36.654Z",
+  "sourceSha256": {
+    "scripts/architecture-benchmark.mjs": "3be32e15a737ff0a52367a228d4f99a504731db953836669c2e9eab0651ea722",
+    "services/agent-api/dist/country.js": "c9740451f9af95ed425a25ddcad0d6c95ec3c2a29bf964e051262e032275a923",
+    "services/agent-api/dist/dataset-loader.js": "20bc2840a34397d6b3bf86bc955cfb66223fd4b9b53606a94332290e330323eb",
+    "services/agent-api/dist/dataset-worker.js": "0ec0619ae05cb93d9a6c57e00102002f09fdd4638d8d891ea147dc4477f0ebe2",
+    "services/agent-api/dist/dataset.js": "55bb80fdbd61813a9a956d9affabb693468632065ae56c01a7613ef042b5ed6c",
+    "services/agent-api/dist/http.js": "f6533b7aedcf736165683e3c6935cff152ef7c8a59ff13f76122f1e412c3f499",
+    "services/agent-api/dist/mcp-tools.js": "918f8a3633c144795186ca140cc2030ad266caa1c6194e2e12456278362e9b21",
+    "services/agent-api/dist/mcp.js": "09bab34f48e1b4fc00eb263f6bb616109823a4783c13e574052909ca4684b288",
+    "services/agent-api/dist/observability.js": "a1d9ea4ec39671ea21f57914c0cc06ebf2f6d9de5a3244dd17f1cd4feeb73ff8",
+    "services/agent-api/dist/public-consts.js": "aa227fa136d62de6b486417a9af27e51a8e7641517aa94b068d32d2ccf3ea79e",
+    "services/agent-api/dist/public-contract/entities.js": "af26c98786905f71be5879d3ff9cc0ee5687bbcfa8a99ca99ed586c3c6ea8f0c",
+    "services/agent-api/dist/public-contract/node-reader.js": "cb79125d27422da4784be5a0147b93b4360cec217d6b7355646ef765c879ffa4",
+    "services/agent-api/dist/public-contract/schema-dto.js": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "services/agent-api/dist/public-contract/validation.js": "25c633b58788f0dde3d84142d8bb8f61eaf0a81dd3e1fe3959d6b634cb493c0f",
+    "services/agent-api/dist/query.js": "f2db45984ba8fbc48abf614ec839a290ba19f01d01debfbdd938cb06da6313c6",
+    "services/agent-api/dist/rate-limit.js": "db89083e118433e69a2567865a0ad21d966e145c1f8ce33edda11e4742c61ffa",
+    "services/agent-api/dist/server.js": "0b99f85065c422d94978d279e3e5c6d9f242a5ab9865b2d27977bb3a42a02d80",
+    "services/agent-api/dist/tests/contracts.test.js": "cef53685821dd187df68f106c4e20559462646484fcb26a0c815b90dca56c886",
+    "services/agent-api/dist/tests/country.test.js": "407249ea2971dbb285f96588d974802976747322f31d5aa36c7af8fa3524c01f",
+    "services/agent-api/dist/tests/fixture.js": "0590e2c3f564bdccee5d461461758ae4324218352fbbbb8c25d9f03027aa26c8",
+    "services/agent-api/dist/tests/http.test.js": "271af323b4c8330df532ae810e4b5859df603f289af6b2ba2ec0ef36dd2c598a",
+    "services/agent-api/dist/tests/mcp-real.test.js": "a9195f2df5ca8fa9f15bfca3193267cfe743fc5431f05de7603439005bdd4304",
+    "services/agent-api/dist/tests/mcp.test.js": "554082e662475fcdb06684abf4ba46769599a3dea28201b153fac89086c3ec52",
+    "services/agent-api/dist/tests/model-identity.test.js": "624646d5f1f66313a320040f57c8a5e05cb044df6e546898ce6a237fbd0308fa",
+    "services/agent-api/dist/tests/observability.test.js": "622217c2c5c6a284582c9591ec613da1ad35b7a82892fc3a355629a28207aea6",
+    "services/agent-api/dist/tests/openapi.test.js": "dc4c2cd6b569e68ede5ed89865c73b07060e786ff0c6cdf7664a7999235b71b2",
+    "services/agent-api/dist/tests/p1-fixes.test.js": "b2d69d3312eee9e7a1b90ce9437196510d9cbea33b707703338a5c4975caadd4",
+    "services/agent-api/dist/tests/real.test.js": "20aee386280852fd648d5603b6389b704687f6921baa2cfea52c19852802c444",
+    "services/agent-api/dist/tests/runtime.test.js": "9441dcb0908277a5f0cc86cf4d725d7d1e2dd5450e68620231b998edd87f7f45",
+    "services/agent-api/dist/tests/versioning.test.js": "5491d03b0224ad77137989547c8609dcc0972f7f4fa3d45cccac9e075e2b255e",
+    "services/agent-api/package-lock.json": "4bb5934fd0b1a425c8566fc2c328ff57fb2b1af825c3c6f32dc24f5650bc2ed9",
+    "services/agent-api/src/country.ts": "d81ee488ae8ac899f9265349c3365e9fa1b8646291207c46fa737da968156a3a",
+    "services/agent-api/src/dataset-loader.ts": "81c25dd35117cd89b4fdead32d06afe595afe0175794ef028506a4ab97c69b79",
+    "services/agent-api/src/dataset-worker.ts": "ab4ec2a9c18e146045f3a070259ea783261730a5b13a5355a6f989a1eb8aa574",
+    "services/agent-api/src/dataset.ts": "4f75b9747cafc234faa5918997e98d6d7c4e910909a57ed53820fce0c7d2a246",
+    "services/agent-api/src/http.ts": "08c8e17db577bbf79d2a6392c19c797d07c191b71cb0e630ba73c7ee9093e563",
+    "services/agent-api/src/mcp-tools.ts": "fa0b5b557f6672f2ef8a85f80fe055692f3a00b01316f834dfb8dc80521a42a3",
+    "services/agent-api/src/mcp.ts": "85bdad01b9ab8d2e9eb7b8508a6a319ae2ef9b298b51d6585f4e38b3de555cd1",
+    "services/agent-api/src/observability.ts": "063591601f123d23c5def60722f1159a0422c7a336f3f082388522c4e55ae0af",
+    "services/agent-api/src/public-consts.ts": "aa227fa136d62de6b486417a9af27e51a8e7641517aa94b068d32d2ccf3ea79e",
+    "services/agent-api/src/public-contract/entities.ts": "765c9d995057b3d22eb03828344925a9cb6d02f36e0ff37b8fb4a402a14c873b",
+    "services/agent-api/src/public-contract/node-reader.ts": "a37fa04d8f364225f33c804dc8565d97d88705ee058bb56089a3de313831a0b2",
+    "services/agent-api/src/public-contract/schema-dto.ts": "fd1e1c5849c161d2b39334c84044eaaca944e7c68516121166b11bfa3ebc054a",
+    "services/agent-api/src/public-contract/validation.ts": "198876257877b27ad68142253edd6859c8cd1faee9599f0029d577d0a1b1980b",
+    "services/agent-api/src/query.ts": "3962c9656dd1d6150e082e1820a9699c43452c18be53f2926e74d35f5cea4652",
+    "services/agent-api/src/rate-limit.ts": "e7d48db06ddfdf055c4726a0cc2777fca9fc4cefb93ead8f26a6bc859f4d2781",
+    "services/agent-api/src/server.ts": "6e352adba964c055c383f336f6925aed32396192ba418424f14f8dba916c70bb",
+    "services/agent-api/src/tests/contracts.test.ts": "50675f3c95830e272727c0d933dabae3b533bbfba59a6ad1c17ef655ef88280b",
+    "services/agent-api/src/tests/country.test.ts": "e3670cd1e07665a23cfb8dd9253e87c66e5ec7197addaa33c1c9e8f8d851da6c",
+    "services/agent-api/src/tests/fixture.ts": "da8860076e4f234fb56207b516d841ea47a97ee95055576159d91dbc29e9fa7b",
+    "services/agent-api/src/tests/http.test.ts": "6f6695335014708a834ebe1252c4576741418e7d29c4a7d130858c87143ca373",
+    "services/agent-api/src/tests/mcp-real.test.ts": "a80b6f7d83a9c306aabef4f9b987494804333b224adb86ba7744ec2ab9af99af",
+    "services/agent-api/src/tests/mcp.test.ts": "483c6a196a9878494efed3900c5304998db3a65973cc116822b5aa8ee15d4fbb",
+    "services/agent-api/src/tests/model-identity.test.ts": "ff3dc3a16fd52aa7b2ac12b67fe5eabb333c8f8e057fb68aa86b7a618bc00568",
+    "services/agent-api/src/tests/observability.test.ts": "8b0a2c0355b07f44e24af5dc6e7eeb539cc2f41f642746f690b8142ce80cd541",
+    "services/agent-api/src/tests/openapi.test.ts": "9aa4ca67b083920da50e8d06eabd355ad1d838413936d7c4c89fbbfdcd072d43",
+    "services/agent-api/src/tests/p1-fixes.test.ts": "866c4d570401224bdacf9d3325ec9a14b02089ca2fa69a100b3b458f242daa1b",
+    "services/agent-api/src/tests/real.test.ts": "93e475b66554a2fc07acb19e16d4047c13ec60493d3243f91443c75aa28dea43",
+    "services/agent-api/src/tests/runtime.test.ts": "9add65cb580a9e0a9756e5c192564f3dec42cb8afe721371c587d186c3f25f44",
+    "services/agent-api/src/tests/versioning.test.ts": "98677e015cfde9d29eb056813d78f546f1d72ca6b17abd0a0609f11e2416dab4"
+  },
+  "commit": "e19a13649700fe56e2f23c48f71afe01e9919750",
+  "environment": {
+    "node": "v22.22.3",
+    "os": "darwin 27.0.0",
+    "arch": "arm64",
+    "cpus": 10,
+    "cpu": "Apple M1 Max",
+    "totalMemory": 34359738368
+  },
+  "method": {
+    "rounds": 3,
+    "requestsPerRound": 60,
+    "syntheticSeed": "ar-capacity-v1",
+    "scope": "local HTTP; 5x/10x unique remapped IDs; unchanged model catalog; no production traffic; 8 original REST queries + 2 nonmatching scans; MCP SDK; maxRSS whole child"
+  },
+  "budgets": {
+    "concurrency": 10,
+    "queryP95Ms": 200,
+    "eventLoopP99Ms": 50,
+    "sameVersionBusinessParses": 0
+  },
+  "results": [
+    {
+      "factor": 1,
+      "synthetic": false,
+      "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+      "dataThrough": "2026-10-01",
+      "counts": {
+        "changes": 7459,
+        "prices": 1435,
+        "evidence": 11651
+      },
+      "loader": "worker-stream-200",
+      "sameVersionParseDelta": 0,
+      "peakRssKiB": 616080,
+      "peakScope": "entire child, includes GeoIP import, synthetic generation, worker loads, historical and limiter fixture",
+      "mcp": {
+        "concurrency": 10,
+        "requests": 60,
+        "p95Ms": 24.453292000000147,
+        "p99Ms": 25.363667000000078
+      },
+      "holderMetrics": {
+        "businessLoads": 4,
+        "unchangedPolls": 1,
+        "cacheHits": 0,
+        "cacheMisses": 1
+      },
+      "cacheState": {
+        "entries": 1,
+        "bytes": 49580880,
+        "inFlight": 0
+      },
+      "load": {
+        "medianMs": 397.939833,
+        "minMs": 386.0022080000001,
+        "maxMs": 400.8054159999999
+      },
+      "sameVersionReload": {
+        "medianMs": 0.16708300000004783,
+        "minMs": 0.11170900000001893,
+        "maxMs": 0.29937500000005457
+      },
+      "reloadEventLoop": {
+        "elapsedMs": 400.8822080000002,
+        "maxMs": 12.689407
+      },
+      "reloadTraffic": {
+        "requests": 33,
+        "p95Ms": 3.76299999999992,
+        "p99Ms": 4.025083999999879,
+        "allSuccessful": true
+      },
+      "diagnostics": {
+        "enabled": false,
+        "output": "discard writable; serialization and queue active",
+        "logger": null
+      },
+      "historicalLoad": {
+        "version": "ds_1925cbc6adaf0abb87106064c314e7b3d3bc513de2635b5e0aa2cf5bb5147207",
+        "elapsedMs": 373.1267499999999,
+        "reloadWhileHistoricalHeldMs": 385.4222500000001,
+        "memoryAfterReload": {
+          "rss": 567197696,
+          "heapTotal": 304267264,
+          "heapUsed": 275947672,
+          "external": 12782181,
+          "arrayBuffers": 8986094
+        }
+      },
+      "throughput": [
+        {
+          "concurrency": 1,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 66.15599999999995,
+              "p50Ms": 0.6636249999999109,
+              "p95Ms": 1.4592079999999896,
+              "p99Ms": 1.5335829999999078,
+              "eventLoopP99Ms": 12.034047
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 59.900499999999965,
+              "p50Ms": 0.6153329999999642,
+              "p95Ms": 1.162458000000015,
+              "p99Ms": 1.4799579999998969,
+              "eventLoopP99Ms": 10.960895
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 60.69229199999995,
+              "p50Ms": 0.5954169999999976,
+              "p95Ms": 1.1590830000000096,
+              "p99Ms": 1.5289999999999964,
+              "eventLoopP99Ms": 12.025855
+            }
+          ]
+        },
+        {
+          "concurrency": 10,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 57.22275000000013,
+              "p50Ms": 5.278792000000067,
+              "p95Ms": 14.264957999999979,
+              "p99Ms": 15.208000000000084,
+              "eventLoopP99Ms": 12.419071
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 55.34024999999997,
+              "p50Ms": 5.0618339999998625,
+              "p95Ms": 6.681458999999904,
+              "p99Ms": 11.504541999999901,
+              "eventLoopP99Ms": 12.443647
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 53.401541999999836,
+              "p50Ms": 5.134458999999879,
+              "p95Ms": 6.187208000000055,
+              "p99Ms": 6.208208999999897,
+              "eventLoopP99Ms": 12.263423
+            }
+          ]
+        },
+        {
+          "concurrency": 30,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 57.48245900000006,
+              "p50Ms": 11.13675000000012,
+              "p95Ms": 25.195874999999887,
+              "p99Ms": 26.596875000000182,
+              "eventLoopP99Ms": 10.993663
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 53.31320800000003,
+              "p50Ms": 13.246874999999818,
+              "p95Ms": 16.758833000000095,
+              "p99Ms": 17.21420799999987,
+              "eventLoopP99Ms": 12.738559
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 51.846708000000035,
+              "p50Ms": 14.623959000000013,
+              "p95Ms": 16.100625000000036,
+              "p99Ms": 16.482541999999967,
+              "eventLoopP99Ms": 16.056319
+            }
+          ]
+        }
+      ],
+      "paging": {
+        "changes": {
+          "pages": 75,
+          "items": 7459,
+          "elapsedMs": 15.547083999999813,
+          "duplicateOrMissing": false
+        },
+        "prices": {
+          "pages": 15,
+          "items": 1435,
+          "elapsedMs": 2.648666999999932,
+          "duplicateOrMissing": false
+        }
+      },
+      "limiterStatuses": [
+        200,
+        200,
+        429
+      ],
+      "steadyMemory": {
+        "rss": 289456128,
+        "heapTotal": 129400832,
+        "heapUsed": 75826160,
+        "external": 11934086,
+        "arrayBuffers": 8241658
+      },
+      "finalMemory": {
+        "rss": 538869760,
+        "heapTotal": 366788608,
+        "heapUsed": 337938760,
+        "external": 12920347,
+        "arrayBuffers": 9124260
+      }
+    },
+    {
+      "sourceVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+      "seed": "ar-capacity-v1",
+      "factor": 5,
+      "synthetic": true,
+      "identityCatalogExpanded": false,
+      "datasetVersion": "ds_85497c4e19fe1573b0f253f0985acdaa6203bd7189192a38a36904e005be2bd6",
+      "dataThrough": "2026-10-01",
+      "counts": {
+        "changes": 37295,
+        "prices": 7175,
+        "evidence": 58255
+      },
+      "loader": "worker-stream-200",
+      "sameVersionParseDelta": 0,
+      "peakRssKiB": 1958896,
+      "peakScope": "entire child, includes GeoIP import, synthetic generation, worker loads, historical and limiter fixture",
+      "mcp": {
+        "concurrency": 10,
+        "requests": 60,
+        "p95Ms": 25.356832999999824,
+        "p99Ms": 27.05708400000003
+      },
+      "holderMetrics": {
+        "businessLoads": 2,
+        "unchangedPolls": 1,
+        "cacheHits": 0,
+        "cacheMisses": 0
+      },
+      "cacheState": {
+        "entries": 0,
+        "bytes": 0,
+        "inFlight": 0
+      },
+      "load": {
+        "medianMs": 1776.9737920000007,
+        "minMs": 1760.5567499999997,
+        "maxMs": 1783.5059579999997
+      },
+      "sameVersionReload": {
+        "medianMs": 0.17787500000031287,
+        "minMs": 0.14550000000053842,
+        "maxMs": 0.2800420000003214
+      },
+      "reloadEventLoop": {
+        "elapsedMs": 1831.130541999999,
+        "maxMs": 12.787711
+      },
+      "reloadTraffic": {
+        "requests": 152,
+        "p95Ms": 3.3956249999991996,
+        "p99Ms": 3.7825840000004973,
+        "allSuccessful": true
+      },
+      "diagnostics": {
+        "enabled": false,
+        "output": "discard writable; serialization and queue active",
+        "logger": null
+      },
+      "historicalLoad": null,
+      "throughput": [
+        {
+          "concurrency": 1,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 95.42912499999875,
+              "p50Ms": 1.1040000000011787,
+              "p95Ms": 2.5029579999991256,
+              "p99Ms": 3.06775000000016,
+              "eventLoopP99Ms": 12.025855
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 88.18225000000166,
+              "p50Ms": 1.0068749999991269,
+              "p95Ms": 2.23529199999939,
+              "p99Ms": 3.087666999999783,
+              "eventLoopP99Ms": 11.542527
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 85.30133399999977,
+              "p50Ms": 1.018459000000803,
+              "p95Ms": 2.2370000000009895,
+              "p99Ms": 3.2038329999995767,
+              "eventLoopP99Ms": 12.042239
+            }
+          ]
+        },
+        {
+          "concurrency": 10,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 82.89516600000024,
+              "p50Ms": 8.734749999999622,
+              "p95Ms": 24.610208000000057,
+              "p99Ms": 28.778041999999914,
+              "eventLoopP99Ms": 14.098431
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 81.92670799999905,
+              "p50Ms": 8.98016700000153,
+              "p95Ms": 13.01983300000029,
+              "p99Ms": 24.130750000000262,
+              "eventLoopP99Ms": 12.754943
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 76.55854100000033,
+              "p50Ms": 8.926917000000685,
+              "p95Ms": 10.234250000001339,
+              "p99Ms": 10.263166000000638,
+              "eventLoopP99Ms": 14.032895
+            }
+          ]
+        },
+        {
+          "concurrency": 30,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 80.79029099999934,
+              "p50Ms": 20.84320900000057,
+              "p95Ms": 38.38204200000109,
+              "p99Ms": 42.27762499999881,
+              "eventLoopP99Ms": 12.025855
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 81.12383299999965,
+              "p50Ms": 25.75629200000003,
+              "p95Ms": 29.20349999999962,
+              "p99Ms": 29.58154099999956,
+              "eventLoopP99Ms": 21.102591
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 74.95933299999888,
+              "p50Ms": 25.97124999999869,
+              "p95Ms": 27.51629200000025,
+              "p99Ms": 27.76379199999974,
+              "eventLoopP99Ms": 25.837567
+            }
+          ]
+        }
+      ],
+      "paging": {
+        "changes": {
+          "pages": 373,
+          "items": 37295,
+          "elapsedMs": 70.17249999999876,
+          "duplicateOrMissing": false
+        },
+        "prices": {
+          "pages": 72,
+          "items": 7175,
+          "elapsedMs": 5.073957999999038,
+          "duplicateOrMissing": false
+        }
+      },
+      "limiterStatuses": [
+        200,
+        200,
+        429
+      ],
+      "steadyMemory": {
+        "rss": 1266188288,
+        "heapTotal": 415170560,
+        "heapUsed": 313828064,
+        "external": 11925284,
+        "arrayBuffers": 8241658
+      },
+      "finalMemory": {
+        "rss": 1922039808,
+        "heapTotal": 991887360,
+        "heapUsed": 948531552,
+        "external": 23749499,
+        "arrayBuffers": 19958952
+      }
+    },
+    {
+      "sourceVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+      "seed": "ar-capacity-v1",
+      "factor": 10,
+      "synthetic": true,
+      "identityCatalogExpanded": false,
+      "datasetVersion": "ds_2c9ab9917b0790dd58b036d99283e75180e6ace63a427ae7bb6c5c4febe71918",
+      "dataThrough": "2026-10-01",
+      "counts": {
+        "changes": 74590,
+        "prices": 14350,
+        "evidence": 116510
+      },
+      "loader": "worker-stream-200",
+      "sameVersionParseDelta": 0,
+      "peakRssKiB": 3181536,
+      "peakScope": "entire child, includes GeoIP import, synthetic generation, worker loads, historical and limiter fixture",
+      "mcp": {
+        "concurrency": 10,
+        "requests": 60,
+        "p95Ms": 30.258374999997613,
+        "p99Ms": 39.5893750000032
+      },
+      "holderMetrics": {
+        "businessLoads": 2,
+        "unchangedPolls": 1,
+        "cacheHits": 0,
+        "cacheMisses": 0
+      },
+      "cacheState": {
+        "entries": 0,
+        "bytes": 0,
+        "inFlight": 0
+      },
+      "load": {
+        "medianMs": 3680.3756669999984,
+        "minMs": 3663.7065829999992,
+        "maxMs": 3714.017667000002
+      },
+      "sameVersionReload": {
+        "medianMs": 0.15833400000155962,
+        "minMs": 0.1147080000009737,
+        "maxMs": 0.3297080000011192
+      },
+      "reloadEventLoop": {
+        "elapsedMs": 3867.685540999999,
+        "maxMs": 14.598143
+      },
+      "reloadTraffic": {
+        "requests": 318,
+        "p95Ms": 3.3614159999997355,
+        "p99Ms": 4.759708999998111,
+        "allSuccessful": true
+      },
+      "diagnostics": {
+        "enabled": false,
+        "output": "discard writable; serialization and queue active",
+        "logger": null
+      },
+      "historicalLoad": null,
+      "throughput": [
+        {
+          "concurrency": 1,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 125.32724999999846,
+              "p50Ms": 0.8772080000017013,
+              "p95Ms": 4.975500000000466,
+              "p99Ms": 6.336332999999286,
+              "eventLoopP99Ms": 12.705791
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 122.7322920000006,
+              "p50Ms": 1.1205419999969308,
+              "p95Ms": 4.356332999999722,
+              "p99Ms": 5.625166999998328,
+              "eventLoopP99Ms": 12.771327
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 119.82329200000095,
+              "p50Ms": 0.8025830000005953,
+              "p95Ms": 5.039084000000003,
+              "p99Ms": 5.68854100000317,
+              "eventLoopP99Ms": 13.205503
+            }
+          ]
+        },
+        {
+          "concurrency": 10,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 117.29804199999853,
+              "p50Ms": 13.718458999999712,
+              "p95Ms": 35.410415999998804,
+              "p99Ms": 41.50683299999946,
+              "eventLoopP99Ms": 19.431423
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 107.76841699999932,
+              "p50Ms": 13.06275000000096,
+              "p95Ms": 18.774167000003217,
+              "p99Ms": 36.12379200000214,
+              "eventLoopP99Ms": 18.399231
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 105.37629200000083,
+              "p50Ms": 14.045500000000175,
+              "p95Ms": 14.463500000001659,
+              "p99Ms": 14.474292000002606,
+              "eventLoopP99Ms": 16.048127
+            }
+          ]
+        },
+        {
+          "concurrency": 30,
+          "rounds": [
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 108.78520800000115,
+              "p50Ms": 29.102582999999868,
+              "p95Ms": 57.826374999996915,
+              "p99Ms": 61.440332999998645,
+              "eventLoopP99Ms": 12.730367
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 103.78558299999713,
+              "p50Ms": 37.636083999997936,
+              "p95Ms": 40.85329199999978,
+              "p99Ms": 41.33387500000026,
+              "eventLoopP99Ms": 30.507007
+            },
+            {
+              "requests": 60,
+              "statuses": {
+                "200": 60
+              },
+              "elapsedMs": 105.10875000000306,
+              "p50Ms": 39.47741699999824,
+              "p95Ms": 42.950582999998005,
+              "p99Ms": 43.17729099999997,
+              "eventLoopP99Ms": 39.485439
+            }
+          ]
+        }
+      ],
+      "paging": {
+        "changes": {
+          "pages": 746,
+          "items": 74590,
+          "elapsedMs": 137.74704199999906,
+          "duplicateOrMissing": false
+        },
+        "prices": {
+          "pages": 144,
+          "items": 14350,
+          "elapsedMs": 10.486207999998442,
+          "duplicateOrMissing": false
+        }
+      },
+      "limiterStatuses": [
+        200,
+        200,
+        429
+      ],
+      "steadyMemory": {
+        "rss": 1836204032,
+        "heapTotal": 659243008,
+        "heapUsed": 612857832,
+        "external": 11925292,
+        "arrayBuffers": 8241658
+      },
+      "finalMemory": {
+        "rss": 3185836032,
+        "heapTotal": 1919303680,
+        "heapUsed": 1864173352,
+        "external": 26520696,
+        "arrayBuffers": 22730149
+      }
+    }
+  ]
+}
