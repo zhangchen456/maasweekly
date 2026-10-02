@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-02T08:32:38.150921 -->
+<!-- fetched: 2026-10-02T21:48:49.951052+08:00 -->
 
 模型推理价格说明 - Kimi API 开放平台
 Documentation Index

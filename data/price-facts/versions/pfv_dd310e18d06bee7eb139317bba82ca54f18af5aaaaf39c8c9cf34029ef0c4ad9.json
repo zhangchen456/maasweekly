@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "version_id": "pfv_dd310e18d06bee7eb139317bba82ca54f18af5aaaaf39c8c9cf34029ef0c4ad9",
+  "fact_key": "7549d0f87208412f277f14ccda26b24b0d28f46a249d478873b05ec2c64af9da",
+  "provider_id": "deepseek",
+  "model_key": "deepseek-v4-pro",
+  "component": "input",
+  "billing_mode": "realtime",
+  "amount": "1.32",
+  "amountRaw": "1.320000",
+  "currency": "USD",
+  "unit_quantity": 1000000,
+  "unit_name": "token",
+  "region": "cn",
+  "service_tier": "standard",
+  "context_band": null,
+  "time_condition": {
+    "period": "peak",
+    "tz": "UTC",
+    "schedule": "(2) Off-peak rates are half of the peak rates. Peak hours are 01:00 - 04:00 and 06:00 - 10:00 UTC, Monday through Friday, excluding Chinese public holidays. All other hours are off-peak, including weekends and Chinese public holidays in full."
+  },
+  "effective_at": null,
+  "observed_at": 1790949090.4374976,
+  "observedAt": "2026-10-02T13:51:30+00:00",
+  "source_key": "deepseek:pricing",
+  "evidence_id": "ev_281be79dcb02ea992b4adeb7c8187d4f1258a7e73ac1166e1514e50347c4a6f1",
+  "evidence_status": "complete",
+  "field_state": "confirmed",
+  "stale_reason": null
+}

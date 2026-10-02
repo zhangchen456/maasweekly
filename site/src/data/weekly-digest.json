@@ -5,12 +5,12 @@
     "end": "2026-10-04",
     "days": {
       "2026-10-02": {
-        "substantive": 16,
+        "substantive": 17,
         "jitter": 2,
         "failed": 3,
-        "releases": 6,
-        "pricings": 4,
-        "sunsets": 1
+        "releases": 7,
+        "pricings": 7,
+        "sunsets": 0
       },
       "2026-10-01": {
         "substantive": 21,
@@ -46,83 +46,101 @@
       }
     },
     "totals": {
-      "substantive": 63,
-      "releases": 25,
-      "pricings": 11,
-      "sunsets": 5
+      "substantive": 64,
+      "releases": 26,
+      "pricings": 14,
+      "sunsets": 4
     },
     "highlights": [
       {
         "platform": "Kimi",
         "date": "2026-10-02",
-        "text": "Kimi K3 旗舰模型正式发布，新增 K2.6、K2.7 Code、K3 模型介绍页面",
+        "text": "Kimi K3 旗舰模型正式发布，新增 K3 系列模型介绍页及定价说明",
         "type": "release"
       },
       {
         "platform": "Kimi",
         "date": "2026-10-02",
-        "text": "K3 系列模型缓存写入按 TTL（5min/1h）单独计费，缓存命中仅按命中价格计费",
+        "text": "新增 Kimi K2.6 与 K2.7 Code 模型介绍页，模型矩阵扩充",
+        "type": "release"
+      },
+      {
+        "platform": "Kimi",
+        "date": "2026-10-02",
+        "text": "定价页明确 K3 系列缓存写入按 TTL（5min/1h）单独计费，缓存命中价不再叠加写入费",
         "type": "pricing"
       },
       {
         "platform": "Google Vertex AI",
         "date": "2026-10-02",
-        "text": "新增 Gemini 3.8 Flash TTS 和 Gemini 3.8 Flash-Lite TTS 文本转语音模型",
+        "text": "新增 Gemini 3.8 Flash TTS 与 Gemini 3.8 Flash-Lite TTS 两款语音合成模型",
         "type": "release"
       },
       {
         "platform": "Google Vertex AI",
         "date": "2026-10-02",
-        "text": "Gemini 3.7 Flash、Gemini 3.8 Flash 输入价格调整为 $1.50/$3.00 每百万 tokens，输出及思考 tokens 价格为 $7.50/$15.00",
+        "text": "Gemini 3.7 Flash 与 3.8 Flash 定价更新：输入 $1.50/$3.00 每百万 tokens，输出及思考 $7.50/$15.00",
         "type": "pricing"
       },
       {
         "platform": "xAI",
         "date": "2026-10-02",
-        "text": "xAI 视频生成（480p/720p/1080p）起始价格从 $0.05/秒 下调至 $0.02/秒",
+        "text": "xAI 视频生成起始价从 $0.05/秒降至 $0.02/秒，降幅达 60%",
+        "type": "pricing"
+      },
+      {
+        "platform": "豆包",
+        "date": "2026-10-02",
+        "text": "doubao-seed-2.1-pro 输入价格从 3.0 涨至 6.0 CNY/百万 tokens，输出从 15.0 涨至 30.0",
+        "type": "pricing"
+      },
+      {
+        "platform": "豆包",
+        "date": "2026-10-02",
+        "text": "doubao-seed-2.0 系列（pro/lite/mini）输入输出价格均翻倍，涉及多个计费档位",
+        "type": "pricing"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-02",
+        "text": "新增 Grok 4.7 (Low) 与 JT-4.1 Flash 236B A21B (Reasoning) 评测条目",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-02",
+        "text": "移除 MiMo-V2.6-Flash 与 JT-4.1 Flash 236B A21B 旧条目，模型列表更新",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-02",
+        "text": "Claude Fable 5.1 (Max) 价格从 $4.17/task 涨至 $4.66/task",
         "type": "pricing"
       },
       {
         "platform": "LMArena",
         "date": "2026-10-02",
-        "text": "新增 GPT 6 Luna (Max) $0.06/task、GPT 6 Sol (Max) $0.90/task、Gemini 4 Argon (High) $0.64/task 等模型",
+        "text": "新增 GLM 5.3 (Max)、MiMo V2.6 Flash/Pro、Hy4 preview 等模型条目",
         "type": "release"
       },
       {
         "platform": "LMArena",
         "date": "2026-10-02",
-        "text": "Claude Fable 5.1 (Max) 价格从 $4.17/task 上调至 $4.38/task，Deepseek V4.1 Flash (Max) 从 $0.09/task 上调至 $0.10/task",
+        "text": "Gemini 4 Argon (High) 价格从 $0.63 涨至 $0.66/task，Claude Opus 5.5 (High) 价格微调至 $1.58/task",
         "type": "pricing"
       },
       {
         "platform": "Google Gemini API",
         "date": "2026-10-02",
-        "text": "发布 Nano Banana 2 和 Gemini 3.1 Flash Image 预览版",
+        "text": "发布 Nano Banana 2 与 Gemini 3.1 Flash Image Preview 图像模型",
         "type": "release"
-      },
-      {
-        "platform": "OpenAI",
-        "date": "2026-10-02",
-        "text": "OpenAI 新增 Hotel Feeds 功能，处于限量测试阶段",
-        "type": "other"
       },
       {
         "platform": "Cohere",
         "date": "2026-10-02",
-        "text": "Cohere 发布 Embed 5 前沿嵌入模型系列",
+        "text": "发布 Embed 5 前沿嵌入模型系列，标题更新为小写风格",
         "type": "release"
-      },
-      {
-        "platform": "Artificial Analysis",
-        "date": "2026-10-02",
-        "text": "新增 Grok 4.7 (Low)、JT-4.1 Flash 236B A21B (Reasoning) 等模型评估",
-        "type": "release"
-      },
-      {
-        "platform": "Artificial Analysis",
-        "date": "2026-10-02",
-        "text": "移除 MiMo-V2.6-Flash 和 JT-4.1 Flash 236B A21B 旧条目",
-        "type": "sunset"
       },
       {
         "platform": "OpenAI",
