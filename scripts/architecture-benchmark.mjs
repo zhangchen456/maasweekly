@@ -11,6 +11,8 @@ import { performance, monitorEventLoopDelay } from 'node:perf_hooks';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Dataset, DatasetHolder } from '../services/agent-api/dist/dataset.js';
+import { countryHandler } from '../services/agent-api/dist/country.js';
+import { createMcpHandler, DEFAULT_MCP_CONFIG } from '../services/agent-api/dist/mcp.js';
 import { createHandler } from '../services/agent-api/dist/http.js';
 import { runListQueryAsync, setCursorSecret } from '../services/agent-api/dist/query.js';
 
@@ -67,21 +69,24 @@ function makeSample(source, target, factor) {
 async function sample(factor) {
   const source = path.join(repo, 'data/public/v1');
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'maas-capacity-'));
-  let server, logger;
+  let server, logger, holder;
   try {
     const sampleMeta = factor === 1 ? { factor, synthetic: false } : makeSample(source, temp, factor);
     const root = factor === 1 ? source : temp;
     global.gc?.();
     const loads = [], reloads = [];
-    let holder;
+    let sameVersionParseDelta = 0;
     for (let round = 0; round < 3; round++) {
+      holder?.close();
       holder = new DatasetHolder(root);
       const start = performance.now();
       if (await holder.reloadAsync() !== 'changed') throw new Error(holder.lastReloadError);
       loads.push(performance.now() - start);
+      const parsesBefore = holder.metrics.businessLoads;
       const again = performance.now();
       await holder.reloadAsync();
       reloads.push(performance.now() - again);
+      sameVersionParseDelta += holder.metrics.businessLoads - parsesBefore;
       global.gc?.();
     }
     const ds = holder.current;
@@ -94,9 +99,12 @@ async function sample(factor) {
       `/api/v1/changes?modelId=${encodeURIComponent(model)}&limit=100`, '/api/v1/changes?q=pricing&limit=100',
       '/api/v1/prices?limit=100', `/api/v1/prices?provider=${provider}&component=input&limit=100`,
       `/api/v1/prices?modelId=${encodeURIComponent(model)}&limit=100`, '/api/v1/prices?q=pro&limit=100',
+      '/api/v1/changes?q=nonmatchingcapacityquery&limit=100', '/api/v1/prices?q=nonmatchingcapacityquery&limit=100',
     ];
     logger = args.includes('--diagnostics') ? new JsonlLogger(new Writable({ write(_chunk, _enc, done) { done(); } })) : undefined;
-    server = http.createServer(instrumentRequest(createHandler(holder, { rateLimit: { capacity: 1000000, refillPerMinute: 1000000 } }), holder, 'local', logger?.emit));
+    const rest = createHandler(holder, { rateLimit: { capacity: 1000000, refillPerMinute: 1000000 } });
+    const mcp = createMcpHandler(holder, { ...DEFAULT_MCP_CONFIG, rateLimit: { capacity: 1000000, refillPerMinute: 1000000 } });
+    server = http.createServer(instrumentRequest((req, res) => req.url === '/_locale/country' ? countryHandler(req, res) : req.url === '/api/mcp' ? mcp(req, res) : rest(req, res), holder, 'local', logger?.emit));
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
     const base = `http://127.0.0.1:${server.address().port}`;
     for (const query of queries) await (await fetch(base + query)).arrayBuffer();
@@ -163,9 +171,23 @@ async function sample(factor) {
       if (seen.size !== observedExpected) throw new Error(`paging mismatch ${seen.size}/${observedExpected}`);
       paging[endpoint] = { pages, items: seen.size, elapsedMs: performance.now() - started, duplicateOrMissing: false };
     }
+    const mcpTimings = [];
+    await Promise.all(Array.from({ length: 10 }, async (_, worker) => {
+      for (let round = 0; round < 6; round++) {
+        const start = performance.now();
+        const response = await fetch(base + '/api/mcp', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json, text/event-stream' },
+          body: JSON.stringify({ jsonrpc: '2.0', id: worker * 6 + round, method: 'tools/call', params: { name: 'maas_get_prices', arguments: { limit: 100 } } }) });
+        const body = await response.text();
+        if (response.status !== 200 || body.includes('"isError":true') || body.includes('"error":')) throw new Error('MCP capacity request failed');
+        mcpTimings.push(performance.now() - start);
+      }
+    }));
     const historical = JSON.parse(fs.readFileSync(path.join(source, 'manifest.json'))).retainedVersions.find(v => v.datasetVersion !== ds.version);
     let historicalLoad = null;
-    if (factor === 1 && historical) { const t = performance.now(); const old = await holder.getOrLoadAsync(historical.datasetVersion); historicalLoad = { version: old.version, elapsedMs: performance.now() - t }; }
+    if (factor === 1 && historical) { const t = performance.now(); const old = await holder.getOrLoadAsync(historical.datasetVersion); historicalLoad = { version: old.version, elapsedMs: performance.now() - t };
+      const started = performance.now(); await holder.reloadAsync({ force: true });
+      historicalLoad.reloadWhileHistoricalHeldMs = performance.now() - started;
+      historicalLoad.memoryAfterReload = process.memoryUsage(); }
     const low = new DatasetHolder(root); await low.reloadAsync();
     const limiter = http.createServer(createHandler(low, { rateLimit: { capacity: 2, refillPerMinute: 1 } }));
     await new Promise(resolve => limiter.listen(0, '127.0.0.1', resolve));
@@ -174,11 +196,14 @@ async function sample(factor) {
     finally { low.close(); limiter.closeAllConnections(); await new Promise(resolve => limiter.close(resolve)); }
     return { ...sampleMeta, datasetVersion: ds.version, dataThrough: ds.dataThrough,
       counts: { changes: ds.changes.length, prices: ds.prices.length, evidence: ds.evidenceById.size },
-      loader: 'worker-stream-200', holderMetrics: holder.metrics, cacheState: holder.cacheState, load: stats(loads), sameVersionReload: stats(reloads), reloadEventLoop: { elapsedMs: reloadMs, maxMs: delay.max / 1e6 },
+      loader: 'worker-stream-200', sameVersionParseDelta,
+      peakRssKiB: process.resourceUsage().maxRSS, peakScope: 'entire child, includes GeoIP import, synthetic generation, worker loads, historical and limiter fixture',
+      mcp: { concurrency: 10, requests: mcpTimings.length, p95Ms: percentile(mcpTimings, .95), p99Ms: percentile(mcpTimings, .99) }, holderMetrics: holder.metrics, cacheState: holder.cacheState, load: stats(loads), sameVersionReload: stats(reloads), reloadEventLoop: { elapsedMs: reloadMs, maxMs: delay.max / 1e6 },
       reloadTraffic: { requests: reloadTraffic.length, p95Ms: percentile(reloadTraffic, .95), p99Ms: percentile(reloadTraffic, .99), allSuccessful: true },
       diagnostics: { enabled: Boolean(logger), output: 'discard writable; serialization and queue active', logger: logger?.state ?? null }, historicalLoad, throughput, paging, limiterStatuses: rateStatuses, steadyMemory, finalMemory: process.memoryUsage() };
   } finally {
     if (server) { server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); }
+    holder?.close();
     await logger?.close();
     fs.rmSync(temp, { recursive: true, force: true });
   }
@@ -188,12 +213,13 @@ if (args.includes('--factor')) {
   console.log(JSON.stringify(await sample(Number(arg('--factor', '1')))));
 } else {
   const output = path.resolve(arg('--output', 'docs/architecture/refactoring-2026-10/baseline.json'));
-  const results = [1, 5, 10].map(factor => JSON.parse(execFileSync(process.execPath, ['--expose-gc', fileURLToPath(import.meta.url), '--factor', String(factor)], { maxBuffer: 8 * 1024 * 1024 })));
-  const sourceFiles = ['scripts/architecture-benchmark.mjs', ...fs.readdirSync(path.join(repo, 'services/agent-api/src')).filter(name => name.endsWith('.ts')).map(name => `services/agent-api/src/${name}`)];
+  const results = [1, 5, 10].map(factor => JSON.parse(execFileSync(process.execPath, ['--expose-gc', fileURLToPath(import.meta.url), '--factor', String(factor), ...(args.includes('--diagnostics') ? ['--diagnostics'] : [])], { maxBuffer: 8 * 1024 * 1024 })));
+  const walk = dir => fs.readdirSync(path.join(repo, dir), { withFileTypes: true }).flatMap(entry => entry.isDirectory() ? walk(`${dir}/${entry.name}`) : [`${dir}/${entry.name}`]);
+  const sourceFiles = ['scripts/architecture-benchmark.mjs', 'services/agent-api/package-lock.json', ...walk('services/agent-api/src'), ...walk('services/agent-api/dist')].sort();
   const sourceSha256 = Object.fromEntries(sourceFiles.map(file => [file, hash(fs.readFileSync(path.join(repo, file)))]));
   const report = { measuredAt: new Date().toISOString(), sourceSha256, commit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim(),
     environment: { node: process.version, os: `${os.platform()} ${os.release()}`, arch: os.arch(), cpus: os.cpus().length, cpu: os.cpus()[0].model, totalMemory: os.totalmem() },
-    method: { rounds: 3, requestsPerRound: 60, syntheticSeed: 'ar-capacity-v1', scope: 'local HTTP; 5x/10x unique remapped IDs; unchanged model catalog; no production traffic' },
+    method: { rounds: 3, requestsPerRound: 60, syntheticSeed: 'ar-capacity-v1', scope: 'local HTTP; 5x/10x unique remapped IDs; unchanged model catalog; no production traffic; 8 original REST queries + 2 nonmatching scans; MCP SDK; maxRSS whole child'  },
     budgets: { concurrency: 10, queryP95Ms: 200, eventLoopP99Ms: 50, sameVersionBusinessParses: 0 }, results };
   fs.mkdirSync(path.dirname(output), { recursive: true }); fs.writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
   console.log(`Saved ${output}`);

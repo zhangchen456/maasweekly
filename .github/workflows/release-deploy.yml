@@ -74,10 +74,28 @@ jobs:
         env:
           MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
           CANDIDATE_SHA: ${{ inputs.commit }}
-        run: ops/deploy-release.sh --commit "$CANDIDATE_SHA"
+        run: |
+          set -o pipefail
+          ops/deploy-release.sh --commit "$CANDIDATE_SHA" 2>&1 | tee "$RUNNER_TEMP/release-build.txt"
       - name: Online verify (four surfaces)
         if: steps.deploy.outputs.deployed == 'true'
         env:
           MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
           RELEASE_ID: ${{ steps.deploy.outputs.rid }}
         run: ops/verify-release.sh --online --expect-release "$RELEASE_ID"
+      - name: Summarize release diagnostics
+        if: always() && steps.candidate.outputs.eligible == 'true'
+        run: |
+          if [ -f "$RUNNER_TEMP/release-build.txt" ]; then
+            python3 scripts/architecture-observability.py "$RUNNER_TEMP/release-build.txt" --mixed > "$RUNNER_TEMP/release-diagnostics.json"
+          fi
+      - name: Archive release diagnostics
+        if: always() && steps.candidate.outputs.eligible == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-diagnostics-${{ inputs.commit }}
+          path: |
+            ${{ runner.temp }}/release-build.txt
+            ${{ runner.temp }}/release-diagnostics.json
+          if-no-files-found: ignore
+          retention-days: 14

@@ -41,7 +41,9 @@ for (const mode of ['enabled', 'disabled', 'unready']) {
       assert.equal(request.datasetVersion, body.datasetVersion ?? null);
       assert.equal(request.route, '/api/v1/status');
       assert.equal(events.find(e => e.kind === 'runtime.sample').health.ready, mode !== 'unready');
-      assert.equal(events.find(e => e.kind === 'dataset.load').result, mode === 'unready' ? 'failed' : 'changed');
+      const load = events.find(e => e.kind === 'dataset.load');
+      assert.equal(load.result, mode === 'unready' ? 'failed' : 'changed');
+      if (mode === 'enabled') { assert.ok(load.dataCounts.prices > 0); assert.equal(load.evidenceIntegrity, 'validated'); }
     }
     reports.push({ mode, statusCode: response.status, datasetVersion: body.datasetVersion ?? null, events });
   } finally { if (child.exitCode === null) { child.kill('SIGKILL'); await once(child, 'exit'); } }

@@ -60,6 +60,7 @@ ensure_layout() {
 
 # flock：所有发布通道（CI 与本地）的最终互斥。
 # macOS（本地测试）无 flock → 退化为 mkdir 原子锁（生产 Linux 一律 flock）
+LOCK_HELD=0
 acquire_lock() {
   if command -v flock >/dev/null 2>&1; then
     exec 9>"$ROOT/locks/release.lock"
@@ -72,9 +73,47 @@ acquire_lock() {
       sleep 0.05
     done
   fi
+  LOCK_HELD=1
 }
-release_lock() { rmdir "$ROOT/locks/release.lockdir" 2>/dev/null || true; }
-trap release_lock EXIT 2>/dev/null || true
+release_lock() { [ "$LOCK_HELD" = 1 ] || return 0; rmdir "$ROOT/locks/release.lockdir" 2>/dev/null || true; }
+# Root-owned, bounded diagnostics; no URLs, reasons or environment values.
+DIAG_START=$SECONDS
+activation_result() {
+  [ "${MAAS_RELEASE_DIAGNOSTICS:-1}" != 0 ] || return 0
+  [ "$LOCK_HELD" = 1 ] || return 0
+  case "${cmd:-}" in activate|rollback) ;; *) return 0 ;; esac
+  "$PYTHON3" - "$ROOT" "${cmd:-}" "${rid:-}" "$1" "$((SECONDS-DIAG_START))" <<'PYDIAG' 2>/dev/null || true
+import json, re, sys
+from datetime import datetime, timezone
+from pathlib import Path
+root, operation, rid, rc, elapsed = sys.argv[1:]
+e = dict(timestamp=datetime.now(timezone.utc).isoformat(), kind='release.result', operation=operation,
+         outcome='success' if int(rc)==0 else 'failed', exitCode=int(rc), elapsedMs=int(elapsed)*1000, timingResolutionMs=1000)
+if re.fullmatch(r'rl_[0-9a-f]{10}_[0-9a-f]{12}', rid):
+    e['releaseId']=rid
+    for location in ('releases', 'incoming'):
+        try:
+            m=json.loads((Path(root)/location/rid/'metadata/release-manifest.json').read_text())
+            for k, pattern in [('gitCommit', r'[0-9a-f]{40}'), ('datasetVersion', r'ds_[0-9a-f]{64}')]:
+                if re.fullmatch(pattern, str(m.get(k,''))): e[k]=m[k]
+            break
+        except (OSError, ValueError): pass
+line=json.dumps(e, separators=(',', ':'))+'\n'
+p=Path(root)/'shared/state/release-diagnostics.jsonl'
+# Serialized by activation lock; retain current + previous, at most ~2MiB.
+if p.exists() and p.stat().st_size+len(line)>1048576: p.replace(p.with_suffix('.jsonl.1'))
+with p.open('a') as f: f.write(line)
+p.chmod(0o640)
+PYDIAG
+}
+finish_activation() {
+  local rc=$?
+  trap - EXIT
+  activation_result "$rc"
+  release_lock
+  exit "$rc"
+}
+trap finish_activation EXIT
 
 current_release() { readlink "$ROOT/current" 2>/dev/null | sed 's|^releases/||' || true; }
 

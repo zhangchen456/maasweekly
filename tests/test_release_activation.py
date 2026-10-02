@@ -1035,5 +1035,29 @@ class TestUnitV8AndPermissions(unittest.TestCase):
             self.assertNotIn("chmod 0755", l, f"指令行含 0755: {l}")
             self.assertNotIn("chmod 0644", l, f"指令行含 0644: {l}")
 
+
+class ReleaseDiagnostics(ActivateFixture):
+    def test_real_failed_activation_dedupe_recovery_and_bounded_log(self):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('ar08', BASE/'scripts/architecture-observability.py')
+        diag=importlib.util.module_from_spec(spec); spec.loader.exec_module(diag)
+        rid='rl_aaaaaaaaaa_bbbbbbbbbbbb'
+        log=self.root/'shared/state/release-diagnostics.jsonl'
+        for _ in range(2): self.activate('activate', rid, expect_rc=2)
+        events=[json.loads(line) for line in log.read_text().splitlines()]
+        self.assertEqual(events[-1]['outcome'],'failed'); self.assertEqual(events[-1]['exitCode'],2)
+        state=diag.aggregate(events); self.assertEqual(diag.aggregate(events,state)['transitions'],[])
+        make_release(self.root,rid,100)
+        self.activate('activate',rid)
+        good=json.loads(log.read_text().splitlines()[-1])
+        self.assertEqual(good['outcome'],'success'); self.assertIn('datasetVersion',good); self.assertIn('gitCommit',good)
+        self.assertEqual(diag.aggregate([good],state)['transitions'],[{'key':'release:activate','state':'recovered'}])
+        self.assertNotIn(str(self.root),str(good))
+        log.write_text('x'*1048576)
+        self.activate('activate',rid)
+        self.assertTrue(log.with_suffix('.jsonl.1').exists()); self.assertLess(log.stat().st_size,8192)
+        before=log.read_bytes(); self.env_base['MAAS_RELEASE_DIAGNOSTICS']='0'
+        self.activate('activate',rid); self.assertEqual(log.read_bytes(),before)
+
 if __name__ == "__main__":
     unittest.main()
