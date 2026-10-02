@@ -92,9 +92,15 @@ for (const page of [...featured, modelPage('anthropic:claude-sonnet-4.5')]) {
 }
 const empty = release.modelIdentities.models.find(m => !release.prices.some(p => p.modelId === m.modelId)
   && modelPage(m.modelId).changes.length === 0);
-assert(empty);
-assert.match(docFor(`model/${empty.modelId}`).querySelector('meta[name=robots]').content, /noindex/);
-assert(!urls.includes(canonicalUrl(`/model/${empty.modelId}/`)));
+if (empty) {
+  assert.match(docFor(`model/${empty.modelId}`).querySelector('meta[name=robots]').content, /noindex/);
+  assert(!urls.includes(canonicalUrl(`/model/${empty.modelId}/`)));
+} else {
+  for (const model of release.modelIdentities.models) {
+    assert(!docFor(`model/${model.modelId}`).querySelector('meta[name=robots]')?.content.includes('noindex'));
+    assert(urls.includes(canonicalUrl(`/model/${model.modelId}/`)));
+  }
+}
 assert(!existsSync(path.join(dist, 'model/unknown:ghost/index.html')));
 for (const route of ['', 'pricing', 'models']) {
   const doc = docFor(route);

@@ -4,6 +4,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
+import { build } from 'esbuild';
 
 const root = new URL('../../', import.meta.url);
 
@@ -54,12 +55,14 @@ const ghostPath = new URL('site/dist/model/anthropic:ghost-model/index.html', ro
 ok('C unknown model 不生成 route', !existsSync(ghostPath), 'ghost-model 生成了 route');
 
 // ---- D. Empty state（合法 model 无 changes/prices）----
-// 找一个 catalog 有但 changes/prices 无记录的 model
-const changesModelIds = new Set(allChanges.filter((c) => c.modelId).map((c) => c.modelId));
-const pricesModelIds = new Set(allPrices.filter((p) => p.modelId).map((p) => p.modelId));
-const emptyModel = catalog.models.find((m) =>
-  !changesModelIds.has(m.modelId) && !pricesModelIds.has(m.modelId));
-ok('D 存在合法但无记录的 model', !!emptyModel, '无 empty model 可测');
+// Test the empty-data contract using a fixture, rather than requiring a
+// production model to remain unpriced after the coverage is repaired.
+const compiledIndex = await build({absWorkingDir:new URL('site/',root).pathname,entryPoints:['src/lib/model-pages.ts'],bundle:true,write:false,format:'esm',platform:'node'});
+const {createModelIndex} = await import('data:text/javascript;base64,'+Buffer.from(compiledIndex.outputFiles[0].text).toString('base64'));
+const emptyModel = catalog.models[0];
+const emptyIndex = createModelIndex({dataThrough:manifest.dataThrough,modelIdentities:catalog,prices:[],changes:[],evidence:[]});
+ok('D fixture 合法 model 身份保留',emptyIndex.models.has(emptyModel.modelId));
+ok('D fixture 无价格与变化',!emptyIndex.prices.has(emptyModel.modelId) && !emptyIndex.changes.has(emptyModel.modelId));
 
 // ---- E. API query（runtime fetch，不全量注入）----
 // 页面 HTML 不应含全量 changes/prices

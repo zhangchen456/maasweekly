@@ -24,6 +24,12 @@ const dom = new JSDOM(html, {
   },
 });
 const { window } = dom;
+// Exercise a known-but-empty identity with explicit fixture data. Real quotes
+// may become available later; their arrival must not invalidate this contract.
+const payload = window.document.getElementById('goal-data');
+const fixture = JSON.parse(payload.textContent);
+fixture.prices = fixture.prices.filter(p => p.modelId !== 'deepseek:deepseek-flash');
+payload.textContent = JSON.stringify(fixture);
 const source = readFileSync(new URL('site/src/scripts/price-workspace.ts', root), 'utf8');
 const compiled = await transform(source, {loader:'ts', format:'iife'});
 window.eval(compiled.code);
@@ -111,7 +117,7 @@ if (clearBtn) {
 }
 
 // ---- T11: known-but-empty → 正常空状态（非 error）----
-// deepseek:deepseek-flash 是 catalog 有但 ledger 无记录的 model
+// Fixture retains the catalog identity while removing its observed prices.
 setUrl('/pricing/?modelId=deepseek:deepseek-flash');
 firePopstate();
 await new Promise((r) => setTimeout(r, 50));
