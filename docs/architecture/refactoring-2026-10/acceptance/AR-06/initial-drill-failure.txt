@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/zhangchen/Work/maasweekly/scripts/architecture-storage-drill.py", line 106, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/zhangchen/Work/maasweekly/scripts/architecture-storage-drill.py", line 51, in main
+    if not member.name.startswith(('.claude/','.agents/')):raise ValueError('unexpected code symlink in recovery bundle')
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: unexpected code symlink in recovery bundle
