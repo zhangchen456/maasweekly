@@ -134,6 +134,7 @@ def load_view(root: Path):
 
 
 def assert_no_pending(root: Path):
+    if safe(root, 'data/storage-restore-pending.json').exists(): raise ValueError('storage restore pending; candidate build blocked')
     if safe(root, PENDING).exists(): raise ValueError('pipeline run pending; recover or discard before building a candidate')
 
 

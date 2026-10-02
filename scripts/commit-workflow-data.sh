@@ -2,8 +2,8 @@
 # Called only after staging deterministic projections. Never rebase/force push.
 set -euo pipefail
 MESSAGE="${1:?commit message required}"
-[ ! -e data/pipeline-pending.json ] || {
-  echo 'pipeline inputs are pending; recover or discard before committing data' >&2
+[ ! -e data/pipeline-pending.json ] && [ ! -e data/storage-restore-pending.json ] || {
+  echo 'input recovery is pending; complete recovery before committing data' >&2
   exit 76
 }
 git fetch --no-tags origin main
