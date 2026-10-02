@@ -1,0 +1,119 @@
+.....== OpenRouter 榜单抓取 2026-10-02 ==
+[session-cost]
+  [dry-run] openrouter_session_cost.json: 跳过写盘
+== 完成：1/1 数据集成功 ==
+== OpenRouter 榜单抓取 2026-10-02 ==
+[session-cost]
+{"timestamp": "2026-10-02T08:38:43.331129+00:00", "kind": "pipeline.source", "runId": "lb_cli", "sourceId": "openrouter-session-cost", "attemptId": "attempt_d888c069eb6e4931b47918623d3f444d", "extractorVersion": "leaderboard-json-1", "outcome": "success", "elapsedMs": 0.7387919758912176, "retries": 0, "parsedCount": 1, "lastSuccessAt": 1790930323.329485, "successAgeHours": 2.7749273512098526e-07, "countRatio": null, "freshnessBudgetHours": 48}
+  写入 openrouter_session_cost.json
+== 完成：1/1 数据集成功 ==
+== OpenRouter 榜单抓取 2026-10-02 ==
+[session-cost]
+{"timestamp": "2026-10-02T08:38:43.346224+00:00", "kind": "pipeline.source", "runId": "lb_cli", "sourceId": "openrouter-session-cost", "attemptId": "attempt_d888c069eb6e4931b47918623d3f444d", "extractorVersion": "leaderboard-json-1", "outcome": "success", "elapsedMs": 0.7387919758912176, "retries": 0, "parsedCount": 1, "lastSuccessAt": 1790930323.329485, "successAgeHours": 4.4067038430107964e-06, "countRatio": null, "freshnessBudgetHours": 48}
+.  写入 openrouter_session_cost.json
+== 完成：1/1 数据集成功 ==
+{"timestamp": "2026-10-02T08:38:43.376050+00:00", "kind": "pipeline.source", "runId": "invalid_schema", "sourceId": "openrouter-session-cost", "attemptId": "attempt_730425de53194a2e8ee11fd139f67cbd", "extractorVersion": "leaderboard-json-1", "outcome": "failed", "elapsedMs": 2.162584016332403, "retries": 0, "parsedCount": 0, "lastSuccessAt": null, "successAgeHours": null, "countRatio": null, "freshnessBudgetHours": 48}
+{"timestamp": "2026-10-02T08:38:43.392776+00:00", "kind": "pipeline.source", "runId": "invalid_schema", "sourceId": "openrouter-session-cost", "attemptId": "attempt_730425de53194a2e8ee11fd139f67cbd", "extractorVersion": "leaderboard-json-1", "outcome": "failed", "elapsedMs": 2.162584016332403, "retries": 0, "parsedCount": 0, "lastSuccessAt": null, "successAgeHours": null, "countRatio": null, "freshnessBudgetHours": 48}
+.[anthropic:pricing]
+  ✓ 75 facts / 15 models
+{"timestamp": "2026-10-02T08:38:43.778750+00:00", "kind": "pipeline.source", "runId": "cli_crash", "sourceId": "anthropic-pricing", "attemptId": "attempt_4e86771f2e91401c971e452b65f105c7", "extractorVersion": "anthropic-2", "outcome": "success", "elapsedMs": 29.857332992833108, "retries": 0, "parsedCount": 75, "lastSuccessAt": 1790930323.5260549, "successAgeHours": 6.179696983761258e-05, "countRatio": null, "freshnessBudgetHours": 48}
+无历史存档，跳过 diff（首轮）
+ledger.json 已更新：75 条价格 · ['anthropic'] 家
+RUN-STATUS: ok 1/1 来源成功
+[anthropic:pricing]
+  ✓ 75 facts / 15 models
+{"timestamp": "2026-10-02T08:38:44.274678+00:00", "kind": "pipeline.source", "runId": "offline_0", "sourceId": "anthropic-pricing", "attemptId": "attempt_c2306d1a41614d179dbf3330cd953faa", "extractorVersion": "anthropic-2", "outcome": "not_run", "elapsedMs": 84.94354100548662, "retries": 0, "parsedCount": 75, "lastSuccessAt": 1790930323.5260549, "successAgeHours": 0.00018133534325493706, "countRatio": 1.0, "freshnessBudgetHours": 48}
+无历史存档，跳过 diff（首轮）
+离线归档完成：75 条价格 · ['anthropic'] 家
+RUN-STATUS: ok 1/1 来源成功
+[anthropic:pricing]
+  ✓ 75 facts / 15 models
+{"timestamp": "2026-10-02T08:38:44.790225+00:00", "kind": "pipeline.source", "runId": "offline_1", "sourceId": "anthropic-pricing", "attemptId": "attempt_0ead4f79760648919dbb553be7452f88", "extractorVersion": "anthropic-2", "outcome": "not_run", "elapsedMs": 28.227916976902634, "retries": 0, "parsedCount": 75, "lastSuccessAt": 1790930323.5260549, "successAgeHours": 0.0003450116846296522, "countRatio": 1.0, "freshnessBudgetHours": 48}
+.无历史存档，跳过 diff（首轮）
+离线归档完成：75 条价格 · ['anthropic'] 家
+RUN-STATUS: ok 1/1 来源成功
+[anthropic:pricing]
+  ✓ 75 facts / 15 models
+{"timestamp": "2026-10-02T08:38:45.000247+00:00", "kind": "pipeline.source", "runId": "same_prices_0", "sourceId": "anthropic-pricing", "attemptId": "attempt_dbfb6f1468fc46aabeccda8a7f2b57ef", "extractorVersion": "anthropic-2", "outcome": "success", "elapsedMs": 30.25520802475512, "retries": 0, "parsedCount": 75, "lastSuccessAt": 1790930325.940001, "successAgeHours": 0, "countRatio": null, "freshnessBudgetHours": 48}
+无历史存档，跳过 diff（首轮）
+ledger.json 已更新：75 条价格 · ['anthropic'] 家
+RUN-STATUS: ok 1/1 来源成功
+[anthropic:pricing]
+  ✓ 75 facts / 15 models
+{"timestamp": "2026-10-02T08:38:45.325742+00:00", "kind": "pipeline.source", "runId": "same_prices_1", "sourceId": "anthropic-pricing", "attemptId": "attempt_05846094e07744f1a011f42e8f8007e8", "extractorVersion": "anthropic-2", "outcome": "unchanged", "elapsedMs": 29.89354101009667, "retries": 0, "parsedCount": 75, "lastSuccessAt": 1790930326.940001, "successAgeHours": 0, "countRatio": 1.0, "freshnessBudgetHours": 48}
+无历史存档，跳过 diff（首轮）
+ledger.json 已更新：75 条价格 · ['anthropic'] 家
+RUN-STATUS: ok 1/1 来源成功
+[anthropic:pricing]
+  ✓ 75 facts / 15 models
+{"timestamp": "2026-10-02T08:38:45.769573+00:00", "kind": "pipeline.source", "runId": "old_observation_replay", "sourceId": "anthropic-pricing", "attemptId": "attempt_a965ed00d52e4024a041f89380710e61", "extractorVersion": "anthropic-2", "outcome": "not_run", "elapsedMs": 29.262915981234983, "retries": 0, "parsedCount": 75, "lastSuccessAt": 1790930325.940001, "successAgeHours": 0, "countRatio": 1.0, "freshnessBudgetHours": 48}
+....无历史存档，跳过 diff（首轮）
+离线归档完成：75 条价格 · ['anthropic'] 家
+RUN-STATUS: ok 1/1 来源成功
+=== MaaS 信源每日抓取 2026-10-02 ===
+
+--- OpenAI ---
+  [pricing] https://openai.com/api/pricing/...
+{"timestamp": "2026-10-02T08:38:46.184604+00:00", "kind": "pipeline.source", "runId": "source_cli", "sourceId": "http_3e6ab04e9fc3f2258dfa6159", "attemptId": "attempt_fbdc86fc3b94474d97a90180fdaf0c2b", "extractorVersion": "source-text-1", "outcome": "success", "elapsedMs": 0.6417499971576035, "retries": 0, "parsedCount": 2, "lastSuccessAt": 1790930326.182301, "successAgeHours": 3.002749549018012e-07, "countRatio": null, "freshnessBudgetHours": 48}
+    ✓ 保存: OpenAI__pricing__2026-10-02.md (53 chars)
+    ○ 首次抓取，无历史对比
+
+--- 行业数据源 ---
+
+=== 完成 ===
+统计: {'total': 1, 'success': 1, 'failed': 0, 'changed': 1, 'unchanged': 0}
+Diff 报告: /private/var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T/t03-fixture-9b9szjut/data/diff/2026-10-02.md
+JSON 数据: /private/var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T/t03-fixture-9b9szjut/data/diff/2026-10-02.json
+{"files": 16, "bytes": 2724, "pendingRun": "source_cli"}
+=== MaaS 信源每日抓取 2026-10-02 ===
+
+--- OpenAI ---
+  [pricing] https://openai.com/api/pricing/...
+{"timestamp": "2026-10-02T08:38:46.238098+00:00", "kind": "pipeline.source", "runId": "source_cli", "sourceId": "http_3e6ab04e9fc3f2258dfa6159", "attemptId": "attempt_fbdc86fc3b94474d97a90180fdaf0c2b", "extractorVersion": "source-text-1", "outcome": "success", "elapsedMs": 0.6417499971576035, "retries": 0, "parsedCount": 2, "lastSuccessAt": 1790930326.182301, "successAgeHours": 1.528779665629069e-05, "countRatio": null, "freshnessBudgetHours": 48}
+.    ✓ 保存: OpenAI__pricing__2026-10-02.md (53 chars)
+    ○ 首次抓取，无历史对比
+
+--- 行业数据源 ---
+
+=== 完成 ===
+统计: {'total': 1, 'success': 1, 'failed': 0, 'changed': 1, 'unchanged': 0}
+Diff 报告: /private/var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T/t03-fixture-9b9szjut/data/diff/2026-10-02.md
+JSON 数据: /private/var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T/t03-fixture-9b9szjut/data/diff/2026-10-02.json
+=== MaaS 信源每日抓取 2026-10-02 ===
+
+--- OpenAI ---
+  [pricing] https://openai.com/api/pricing/...
+{"timestamp": "2026-10-02T08:38:46.266269+00:00", "kind": "pipeline.source", "runId": "preview_original", "sourceId": "http_3e6ab04e9fc3f2258dfa6159", "attemptId": "attempt_0ae64fa16b084525a1e9892c175707da", "extractorVersion": "source-text-1", "outcome": "success", "elapsedMs": 0.5207909853197634, "retries": 0, "parsedCount": 1, "lastSuccessAt": 1790930326.264595, "successAgeHours": 2.547105153401693e-07, "countRatio": null, "freshnessBudgetHours": 48}
+    ✓ 保存: OpenAI__pricing__2026-10-02.md (40 chars)
+    ⚡ 有变化: +1 行, -1 行
+
+--- 行业数据源 ---
+
+=== 完成 ===
+统计: {'total': 1, 'success': 1, 'failed': 0, 'changed': 1, 'unchanged': 0}
+Diff 报告: /private/var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T/t03-fixture-hoydmgw4/data/diff/2026-10-02.md
+JSON 数据: /private/var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T/t03-fixture-hoydmgw4/data/diff/2026-10-02.json
+=== MaaS 信源每日抓取 2026-10-02 ===
+
+--- OpenAI ---
+  [pricing] https://openai.com/api/pricing/...
+{"timestamp": "2026-10-02T08:38:46.286660+00:00", "kind": "pipeline.source", "runId": "preview_replay", "sourceId": "http_3e6ab04e9fc3f2258dfa6159", "attemptId": "attempt_0ae64fa16b084525a1e9892c175707da", "extractorVersion": "source-text-1", "outcome": "not_run", "elapsedMs": 0.5207909853197634, "retries": 0, "parsedCount": 1, "lastSuccessAt": 1790930326.264595, "successAgeHours": 6.127489937676324e-06, "countRatio": null, "freshnessBudgetHours": 48}
+..    ✓ 保存: OpenAI__pricing__2026-10-02.md (40 chars)
+    ⚡ 有变化: +1 行, -1 行
+
+--- 行业数据源 ---
+
+=== 完成 ===
+统计: {'total': 1, 'success': 1, 'failed': 0, 'changed': 1, 'unchanged': 0}
+Diff 报告: /private/var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T/t03-fixture-hoydmgw4/data/pipeline-runs/staging/preview_replay/offline-preview/diff/2026-10-02.md
+JSON 数据: /private/var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T/t03-fixture-hoydmgw4/data/pipeline-runs/staging/preview_replay/offline-preview/diff/2026-10-02.json
+{"timestamp": "2026-10-02T08:38:46.376790+00:00", "kind": "pipeline.source", "runId": "source_crash", "sourceId": "http_100680ad546ce6a577f42f52", "attemptId": "attempt_9b03f1b5c19d4b7cac7ce82bc8494a49", "extractorVersion": "text-1", "outcome": "success", "elapsedMs": 0.5046669975854456, "retries": 0, "parsedCount": 1, "lastSuccessAt": 1790930326.3750021, "successAgeHours": 2.8577115800645615e-07, "countRatio": null, "freshnessBudgetHours": 48}
+{"timestamp": "2026-10-02T08:38:46.384679+00:00", "kind": "pipeline.source", "runId": "source_crash", "sourceId": "http_100680ad546ce6a577f42f52", "attemptId": "attempt_9b03f1b5c19d4b7cac7ce82bc8494a49", "extractorVersion": "text-1", "outcome": "success", "elapsedMs": 0.5046669975854456, "retries": 0, "parsedCount": 1, "lastSuccessAt": 1790930326.3750021, "successAgeHours": 2.497169706556532e-06, "countRatio": null, "freshnessBudgetHours": 48}
+.{"timestamp": "2026-10-02T08:38:46.415107+00:00", "kind": "pipeline.source", "runId": "fetched_no_result", "sourceId": "http_42c47cbe3f0bd44c20311d0b", "attemptId": "attempt_223cc6d2d59b44c595082f73df624236", "extractorVersion": "text-1", "outcome": "success", "elapsedMs": null, "retries": 0, "parsedCount": 1, "lastSuccessAt": 1790930326.406063, "successAgeHours": 2.3314025666978624e-06, "countRatio": null, "freshnessBudgetHours": 48}
+.{"timestamp": "2026-10-02T08:38:46.437605+00:00", "kind": "pipeline.source", "runId": "same_content_0", "sourceId": "http_7f990fcdbeae6adc433cd481", "attemptId": "attempt_9e2cc57c40864b6a82b9bed8f1a316b4", "extractorVersion": "text-1", "outcome": "success", "elapsedMs": 0.4879580228589475, "retries": 0, "parsedCount": 1, "lastSuccessAt": 1790930326.43555, "successAgeHours": 3.569655948215061e-07, "countRatio": null, "freshnessBudgetHours": 48}
+{"timestamp": "2026-10-02T08:38:46.455451+00:00", "kind": "pipeline.source", "runId": "same_content_1", "sourceId": "http_7f990fcdbeae6adc433cd481", "attemptId": "attempt_11d1b49e3ed747179da169ff414121b4", "extractorVersion": "text-1", "outcome": "unchanged", "elapsedMs": 0.5987079930491745, "retries": 0, "parsedCount": 1, "lastSuccessAt": 1790930326.45344, "successAgeHours": 3.122621112399631e-07, "countRatio": 1.0, "freshnessBudgetHours": 48}
+.
+----------------------------------------------------------------------
+Ran 18 tests in 3.596s
+
+OK

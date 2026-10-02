@@ -1,0 +1,157 @@
+· deploy-mode: release
+· 构建 release（commit=f3e2da7bc97e4091a684353640cba1b26ee808d6）
+[0/6] preflight
+  ✓ commit f3e2da7bc，工作区干净
+{"timestamp":"2026-10-02T12:07:39.980843+00:00","kind":"release.stage","operation":"build","stage":"preflight","outcome":"success","exitCode":0,"elapsedMs":0,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6"}
+[1/6] 公开数据投影
+datasetVersion ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2 已发布且内容一致，零写入（幂等）
+✓ 发布 ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2（changes=8203 items=8203 prices=1792 evidence=12791 weekly=23）dataThrough=2026-10-02
+✓ 公开数据校验通过：ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2 · 7 文件 · dataThrough 2026-10-02
+{"timestamp":"2026-10-02T12:08:22.886602+00:00","kind":"release.stage","operation":"build","stage":"projection","outcome":"success","exitCode":0,"elapsedMs":43000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6"}
+[2/6] 统一全量回归（Task 01–06）
+══ Task 01–06 统一回归 ══
+── site dependency cache
+   ✓ site dependency cache
+── agent-api dependency cache
+   ✓ agent-api dependency cache
+── export-public-data --check
+   ✓ export-public-data --check
+── validate-archive（Task 01）
+   ✓ validate-archive（Task 01）
+── validate-price-archive（Task 02）
+   ✓ validate-price-archive（Task 02）
+── build-skill-package --check
+   ✓ build-skill-package --check
+── test_current_pricing（official table drift）
+   ✓ test_current_pricing（official table drift）
+── test_record_archive（Task 01）
+   ✓ test_record_archive（Task 01）
+── test_price_archive（Task 02）
+   ✓ test_price_archive（Task 02）
+── test_public_export（Task 03）
+   ✓ test_public_export（Task 03）
+── test_skill_package（Task 04）
+   ✓ test_skill_package（Task 04）
+── test_release_build（Task 06）
+   ✓ test_release_build（Task 06）
+── test_release_activation（Task 06）
+   ✓ test_release_activation（Task 06）
+── test_deploy_mode（Task 06 M7）
+   ✓ test_deploy_mode（Task 06 M7）
+── test_model_identity_audit（Task 07）
+   ✓ test_model_identity_audit（Task 07）
+── test_model_public_projection（Task 07）
+   ✓ test_model_public_projection（Task 07）
+── test_model_registry（Task 07）
+   ✓ test_model_registry（Task 07）
+── validate-model-registry（Task 07）
+   ✓ validate-model-registry（Task 07）
+── audit-model-registry-coverage（Task 07）
+   ✓ audit-model-registry-coverage（Task 07）
+── test_architecture_workflows（AR-05）
+   ✓ test_architecture_workflows（AR-05）
+── test_architecture_observability（AR-08）
+   ✓ test_architecture_observability（AR-08）
+── test_blob_storage（AR-06）
+   ✓ test_blob_storage（AR-06）
+── test_pipeline_runtime（AR-04）
+   ✓ test_pipeline_runtime（AR-04）
+── test_standard_inputs（AR-03）
+   ✓ test_standard_inputs（AR-03）
+── test_workflow_release_contract（incident 2026-09）
+   ✓ test_workflow_release_contract（incident 2026-09）
+── validate-developer-registry（T07-5.2）
+   ✓ validate-developer-registry（T07-5.2）
+── test_developer_platform_registry（T07-5.2）
+   ✓ test_developer_platform_registry（T07-5.2）
+── test_analytics_foundation（T08-1A）
+   ✓ test_analytics_foundation（T08-1A）
+── test_umami_postgres_preflight（T08-1A）
+   ✓ test_umami_postgres_preflight（T08-1A）
+── test_umami_prerequisites（T08-1A）
+   ✓ test_umami_prerequisites（T08-1A）
+── test_inventory_capability（T08-1A Gate B Preflight）
+   ✓ test_inventory_capability（T08-1A Gate B Preflight）
+── site build（含 prebuild 门禁）
+   ✓ site build（含 prebuild 门禁）
+── site: access-pages（Task 05）
+   ✓ site: access-pages（Task 05）
+── site: rss（Task 05）
+   ✓ site: rss（Task 05）
+── site: page ViewModel types
+   ✓ site: page ViewModel types
+── site: page ViewModel parity
+   ✓ site: page ViewModel parity
+── site: pricing
+   ✓ site: pricing
+── site: model-identity-ui（T07-4A）
+   ✓ site: model-identity-ui（T07-4A）
+── site: model-identity-ui-contract（T07-4A）
+   ✓ site: model-identity-ui-contract（T07-4A）
+── site: changes-browser-contract（T07-4A.2）
+   ✓ site: changes-browser-contract（T07-4A.2）
+── site: changes-browser-ui（T07-4A.2）
+   ✓ site: changes-browser-ui（T07-4A.2）
+── site: model-detail（T07-4B.2）
+   ✓ site: model-detail（T07-4B.2）
+── site: analytics（T08 lightweight）
+   ✓ site: analytics（T08 lightweight）
+── site: agent-interactions（copy regression）
+   ✓ site: agent-interactions（copy regression）
+── site: platform-logos
+   ✓ site: platform-logos
+── site: leaderboards
+   ✓ site: leaderboards
+── site: records（含残留检测）
+   ✓ site: records（含残留检测）
+── site: SEO（canonical / sitemap / model content）
+   ✓ site: SEO（canonical / sitemap / model content）
+── site: multilingual
+   ✓ site: multilingual
+── agent-api: build
+   ✓ agent-api: build
+── agent-api: country
+   ✓ agent-api: country
+── agent-api: REST 测试
+   ✓ agent-api: REST 测试
+── agent-api: MCP 测试
+   ✓ agent-api: MCP 测试
+── agent-api: MCP 真实数据
+   ✓ agent-api: MCP 真实数据
+══════════════════════════
+通过: 54 | 失败: 0
+全部通过 ✓
+{"timestamp":"2026-10-02T12:16:22.984568+00:00","kind":"release.stage","operation":"build","stage":"regression","outcome":"success","exitCode":0,"elapsedMs":480000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6"}
+[3/6] tracked diff 复查
+{"timestamp":"2026-10-02T12:16:23.504512+00:00","kind":"release.stage","operation":"build","stage":"clean-tree","outcome":"success","exitCode":0,"elapsedMs":1000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6"}
+[4/6] agent-api 生产包（已验编译产物 + omit=dev 安装）
+{"timestamp":"2026-10-02T12:16:25.278750+00:00","kind":"release.stage","operation":"build","stage":"runtime-package","outcome":"success","exitCode":0,"elapsedMs":2000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6"}
+[5/6] 组装 release
+{"timestamp":"2026-10-02T12:16:28.634691+00:00","kind":"release.stage","operation":"build","stage":"assembly","outcome":"success","exitCode":0,"elapsedMs":3000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6","releaseId":"rl_f3e2da7bc9_a032da03d915","datasetVersion":"ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2"}
+[6/6] manifest
+✓ manifest: rl_f3e2da7bc9_a032da03d915（26282 文件，804311486 字节）
+✓ release 校验通过
+✓ release rl_f3e2da7bc9_a032da03d915 → dist-release/rl_f3e2da7bc9_a032da03d915
+  datasetVersion=ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2 dataThrough=2026-10-02 commit=f3e2da7bc
+{"timestamp":"2026-10-02T12:16:37.250937+00:00","kind":"release.stage","operation":"build","stage":"manifest","outcome":"success","exitCode":0,"elapsedMs":9000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6","releaseId":"rl_f3e2da7bc9_a032da03d915","datasetVersion":"ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2"}
+{"timestamp":"2026-10-02T12:16:37.277464+00:00","kind":"release.result","operation":"build","stage":"manifest","outcome":"success","exitCode":0,"elapsedMs":538000,"timingResolutionMs":1000,"gitCommit":"f3e2da7bc97e4091a684353640cba1b26ee808d6","releaseId":"rl_f3e2da7bc9_a032da03d915","datasetVersion":"ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2","totals":{"files":26282,"bytes":804311486}}
+· release: rl_f3e2da7bc9_a032da03d915
+· release 通道（运行时注入）：上传 incoming → 激活 → 公网冒烟
+From https://github.com/zhangchen456/maasweekly
+ * branch                main       -> FETCH_HEAD
+{"eligible": true, "reason": "exact main candidate; later documentation is harmless"}
+· ✓ 上传完成: rl_f3e2da7bc9_a032da03d915 → incoming
+From https://github.com/zhangchen456/maasweekly
+ * branch                main       -> FETCH_HEAD
+{"eligible": true, "reason": "exact main candidate; later documentation is harmless"}
+2026/10/02 20:17:39 [warn] 2424925#2424925: conflicting server name "www.zhangchen456.xyz" on 0.0.0.0:80, ignored
+2026/10/02 20:17:39 [warn] 2424925#2424925: conflicting server name "www.zhangchen456.xyz" on 0.0.0.0:443, ignored
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+2026/10/02 20:17:40 [warn] 2424926#2424926: conflicting server name "www.zhangchen456.xyz" on 0.0.0.0:80, ignored
+2026/10/02 20:17:40 [warn] 2424926#2424926: conflicting server name "www.zhangchen456.xyz" on 0.0.0.0:443, ignored
+2026/10/02 20:17:40 [notice] 2424926#2424926: signal process started
+✓ activated rl_f3e2da7bc9_a032da03d915
+· ✓ 激活完成: rl_f3e2da7bc9_a032da03d915
+· 公网冒烟: https://daily.maas.click/api/v1/status（expect datasetVersion: ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2）
+✓ release 通道发布完成: rl_f3e2da7bc9_a032da03d915（datasetVersion: ds_a032da03d915eac53cd75f6fa93c5fd5cb5b4b3bdb856d546cce16d12ab45ad2）
