@@ -42,6 +42,7 @@ export function validateIdentityCatalog(raw: unknown): ModelIdentityCatalog {
       }
       models.add(m.modelId);
     }
+    validatePlatformCatalog(catalog, models);
     return catalog;}
 export function validateCollections(changes: ChangeEntity[], items: ItemEntity[], prices: PriceEntity[], evidence: EvidenceEntity[], weekly: WeeklyEntity[], status: StatusEntity): void {
     if (!Array.isArray(changes) || !Array.isArray(prices) || changes.length === 0 && prices.length === 0) {
@@ -85,4 +86,48 @@ export function validateCollections(changes: ChangeEntity[], items: ItemEntity[]
       }
     }
     for (const p of prices) if (p.evidenceId != null && !evidenceIds.has(p.evidenceId)) throw new DatasetError('prices evidence 引用缺失');
+}
+
+
+function validatePlatformCatalog(catalog: ModelIdentityCatalog, models: Set<string>): void {
+  const keys = ['developers', 'platforms', 'upstreamModels', 'availabilities'] as const;
+  if (keys.every(k => catalog[k] === undefined)) return;
+  const fail = (): never => { throw new DatasetError('cross-platform catalog 结构或引用非法'); };
+  if (keys.some(k => !Array.isArray(catalog[k]))) return fail();
+  const named = (rows: {displayName: string}[], field: string) => {
+    const ids = new Set<string>();
+    for (const row of rows) {
+      const id = (row as unknown as Record<string, unknown>)?.[field];
+      if (typeof id !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id) || ids.has(id) || typeof row.displayName !== 'string' || !row.displayName.trim()) return fail();
+      ids.add(id);
+    }
+    return ids;
+  };
+  const developers = named(catalog.developers!, 'developerId');
+  const platforms = named(catalog.platforms!, 'platformId');
+  const upstream = new Map<string, string>();
+  const legacy = new Set<string>();
+  const evidence = (value: {url: string; verifiedAt: string}) => {
+    if (!value || typeof value.url !== 'string' || typeof value.verifiedAt !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value.verifiedAt)) return fail();
+    try { if (new URL(value.url).protocol !== 'https:') return fail(); } catch { return fail(); }
+  };
+  for (const row of catalog.upstreamModels!) {
+    if (!row || typeof row.upstreamModelId !== 'string' || !/^[a-z0-9-]+:[a-z0-9.-]+$/.test(row.upstreamModelId) || upstream.has(row.upstreamModelId) || !models.has(row.modelId) || legacy.has(row.modelId) || !developers.has(row.developerId) || typeof row.modelName !== 'string' || !row.modelName.trim()) return fail();
+    evidence(row.evidence); upstream.set(row.upstreamModelId, row.modelId); legacy.add(row.modelId);
+  }
+  const ids = new Set<string>(), pairs = new Set<string>();
+  for (const row of catalog.availabilities!) {
+    const pair = row?.upstreamModelId + '@' + row?.platformId;
+    if (!row || row.availabilityId !== pair || ids.has(row.availabilityId) || pairs.has(pair) || upstream.get(row.upstreamModelId) !== row.modelId || !platforms.has(row.platformId) || !Array.isArray(row.apiModelIds) || !row.apiModelIds.length || row.apiModelIds.some(id => typeof id !== 'string' || !id.trim()) || new Set(row.apiModelIds).size !== row.apiModelIds.length || typeof row.sourceId !== 'string' || !row.sourceId) return fail();
+    evidence(row.evidence); ids.add(row.availabilityId); pairs.add(pair);
+  }
+}
+
+export function validatePricePlatforms(catalog: ModelIdentityCatalog, prices: PriceEntity[]): void {
+  const avail = new Map((catalog.availabilities ?? []).map(a => [a.availabilityId, a]));
+  for (const price of prices) {
+    if (price.platformId === undefined && price.upstreamModelId === undefined && price.availabilityId === undefined) continue;
+    const relation = price.availabilityId ? avail.get(price.availabilityId) : undefined;
+    if (!relation || relation.platformId !== price.platformId || relation.upstreamModelId !== price.upstreamModelId || relation.modelId !== price.modelId || relation.sourceId !== price.sourceId) throw new DatasetError('price platform 引用非法');
+  }
 }

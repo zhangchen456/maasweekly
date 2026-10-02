@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "version_id": "pfv_f5e2acc124ea1f440b4d0c4dd2e5d29eef15ef0226c9b4dd70d8fd1c23447212",
+  "fact_key": "502a46508f93c79f7bcff819f410e5f36b6822cf851aeb49821d71686edf9dad",
+  "provider_id": "vertex-anthropic",
+  "model_key": "claude-sonnet-5.5",
+  "component": "cache_write",
+  "billing_mode": "batch",
+  "amount": "1.375",
+  "amountRaw": "1.375000",
+  "currency": "USD",
+  "unit_quantity": 1000000,
+  "unit_name": "token",
+  "region": "eu",
+  "service_tier": "standard",
+  "context_band": {
+    "min": 0,
+    "max": 200000
+  },
+  "time_condition": {
+    "period": "cache_ttl",
+    "tz": "UTC",
+    "schedule": "PT5M"
+  },
+  "effective_at": null,
+  "observed_at": 1790961511.258657,
+  "observedAt": "2026-10-02T17:18:31+00:00",
+  "source_key": "vertex-anthropic:pricing",
+  "evidence_id": "ev_10891ce71e2c32506a985114975a4e0ea016e9ea8a93f7cc99e714cf2aa42803",
+  "evidence_status": "complete",
+  "field_state": "confirmed",
+  "stale_reason": null
+}

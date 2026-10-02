@@ -278,6 +278,13 @@ def verify_evidence_for_fact(excerpt_text: str, fact: dict) -> tuple[str, list[s
         model_norm = _norm_for_match(model_key)
         if model_norm and model_norm in _norm_for_match(text):
             model_hit = True
+    # Cloud tables place the Claude family in the section heading and the exact
+    # Sonnet/Opus version in a row. Require both source tokens, never a fuzzy alias.
+    if not model_hit and fact.get("provider_id") == "vertex-anthropic":
+        exact = re.fullmatch(r"claude-(sonnet|opus)-(5\.5)", model_key.lower())
+        if exact:
+            model_hit = ("claude" in _norm_for_match(text)
+                         and _norm_for_match("-".join(exact.groups())) in _norm_for_match(text))
     if not model_hit:
         reasons.append("model_not_in_excerpt")
 

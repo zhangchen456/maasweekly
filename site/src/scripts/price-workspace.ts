@@ -56,7 +56,7 @@ export function startPriceWorkspace() {
         throw new Error('Missing price control: ' + id); return element as WorkspaceElements[K]; };
     const data: WorkspaceData = JSON.parse($('goal-data').textContent ?? '{}');
     const rows = Array.isArray(data.prices) ? data.prices : [];
-    const brands: Record<string, string[]> = { openai: ['OpenAI', 'OpenAI', 'O'], anthropic: ['Anthropic', 'Claude', 'A'], google: ['Google', 'Gemini', 'G'], deepseek: ['DeepSeek', '深度求索', 'D'], qwen: ['通义千问', 'Qwen', 'Q'], glm: ['智谱', 'GLM', 'Z'], kimi: ['Kimi', '月之暗面', 'K'], doubao: ['豆包', '火山引擎', '豆'] };
+    const brands: Record<string, string[]> = { 'vertex-google': ['Google Cloud / Gemini', 'Gemini', 'G'], 'vertex-anthropic': ['Google Cloud / Claude', 'Claude', 'G'], openai: ['OpenAI', 'OpenAI', 'O'], anthropic: ['Anthropic', 'Claude', 'A'], google: ['Google', 'Gemini', 'G'], deepseek: ['DeepSeek', '深度求索', 'D'], qwen: ['通义千问', 'Qwen', 'Q'], glm: ['智谱', 'GLM', 'Z'], kimi: ['Kimi', '月之暗面', 'K'], doubao: ['豆包', '火山引擎', '豆'] };
     function providerMark(p: string) { const wrap = el('span', 'monogram'), src = data.provider_logos?.[p], fallback = brands[p]?.[2] || p.slice(0, 1); if (!src) {
         wrap.textContent = fallback;
         return wrap;

@@ -17,9 +17,9 @@
 import { readFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 
-import { validateManifest, validateIdentityCatalog, validateCollections } from './public-contract/validation.ts';
+import { validateManifest, validateIdentityCatalog, validatePricePlatforms, validateCollections } from './public-contract/validation.ts';
 import { readVerified } from './public-contract/node-reader.ts';
-import type { Manifest, ChangeEntity, ItemEntity, PriceEntity, EvidenceEntity, WeeklyEntity, StatusEntity } from './public-contract/entities.ts';
+import type { Manifest, ModelIdentityCatalog, ChangeEntity, ItemEntity, PriceEntity, EvidenceEntity, WeeklyEntity, StatusEntity } from './public-contract/entities.ts';
 export type ChangeRecord = ChangeEntity;
 export type WeeklyRecord = WeeklyEntity;
 export type PriceRecord = PriceEntity;
@@ -47,7 +47,7 @@ export interface PublicRelease {
   prices?: PriceRecord[];
   evidence?: EvidenceRecord[];
   /** T07-4A.2：model identity catalog（从 model-identities.json 经 manifest 校验加载） */
-  modelIdentities?: { models: { modelId: string; modelName: string; familyId?: string; familyName?: string }[]; families: { familyId: string; familyName: string }[] };
+  modelIdentities?: ModelIdentityCatalog;
 }
 
 const COLLECTION_FILE = {
@@ -90,7 +90,8 @@ export function loadVerifiedRelease(
   for (const entry of fullManifest.files) {
     parsed[path.basename(entry.path, '.json')] = JSON.parse(readVerified(path.resolve(root), entry));
   }
-  validateIdentityCatalog(parsed['model-identities']);
+  const catalog = validateIdentityCatalog(parsed['model-identities']);
+  validatePricePlatforms(catalog, parsed.prices as PriceEntity[]);
   validateCollections(parsed.changes as ChangeEntity[], parsed.items as ItemEntity[], parsed.prices as PriceEntity[],
     parsed.evidence as EvidenceEntity[], parsed.weekly as WeeklyEntity[], parsed.status as StatusEntity);
   const out: PublicRelease = { datasetVersion: version, dataThrough: manifest.dataThrough, coverage: manifest.coverage };

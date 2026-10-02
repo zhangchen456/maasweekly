@@ -1,0 +1,37 @@
+  kimi 子页 0 个: []
+[anthropic:pricing]
+  ✓ 95 facts / 19 models
+{"timestamp": "2026-10-02T14:47:04.182852+00:00", "kind": "pipeline.source", "runId": "prices_3ea8e22a3d8748d899cadf962b5ac643", "sourceId": "anthropic-pricing", "attemptId": "attempt_1ba59500c8eb464fb14a858d94a63019", "extractorVersion": "anthropic-2", "outcome": "unchanged", "elapsedMs": 9152.265290991636, "retries": 0, "parsedCount": 95, "lastSuccessAt": 1790952392.102252, "successAgeHours": 2.8100874688890245e-05, "countRatio": 1.0, "freshnessBudgetHours": 48}
+[deepseek:pricing]
+  ✓ 12 facts / 2 models
+{"timestamp": "2026-10-02T14:47:04.192578+00:00", "kind": "pipeline.source", "runId": "prices_3ea8e22a3d8748d899cadf962b5ac643", "sourceId": "deepseek-pricing", "attemptId": "attempt_b021e13c07b94760a068b45714d1befb", "extractorVersion": "deepseek-2", "outcome": "unchanged", "elapsedMs": 4322.747124999296, "retries": 0, "parsedCount": 12, "lastSuccessAt": 1790952387.3777962, "successAgeHours": 6.297164493136936e-06, "countRatio": 1.0, "freshnessBudgetHours": 48}
+[doubao:pricing]
+  ✓ 180 facts / 64 models
+{"timestamp": "2026-10-02T14:47:04.395621+00:00", "kind": "pipeline.source", "runId": "prices_3ea8e22a3d8748d899cadf962b5ac643", "sourceId": "volcengine-pricing", "attemptId": "attempt_4ce2de207e0b4f7b999ab36cf534ebbd", "extractorVersion": "doubao-3", "outcome": "unchanged", "elapsedMs": 10968.982958002016, "retries": 0, "parsedCount": 180, "lastSuccessAt": 1790952397.343831, "successAgeHours": 0.0002852941221661038, "countRatio": 1.0, "freshnessBudgetHours": 48}
+/Users/zhangchen/.codex/worktrees/cross-platform-models/maasweekly/pipeline/pricing/archive.py:202: MarkupResemblesLocatorWarning: The input looks more like a filename than markup. You may want to open this file and pass the filehandle into Beautiful Soup.
+  soup = BeautifulSoup(excerpt or "", "html.parser")
+[glm:pricing]
+  ✓ 27 facts / 8 models
+{"timestamp": "2026-10-02T14:47:04.409306+00:00", "kind": "pipeline.source", "runId": "prices_3ea8e22a3d8748d899cadf962b5ac643", "sourceId": "zhipu-pricing", "attemptId": "attempt_7f1a627c2ae34deaae3cc8a05f27372e", "extractorVersion": "glm-2", "outcome": "unchanged", "elapsedMs": 6309.646042005625, "retries": 0, "parsedCount": 27, "lastSuccessAt": 1790952398.425163, "successAgeHours": 2.4715330865648057e-05, "countRatio": 1.0, "freshnessBudgetHours": 48}
+[google:pricing]
+  ✓ 82 facts / 30 models
+{"timestamp": "2026-10-02T14:47:04.448019+00:00", "kind": "pipeline.source", "runId": "prices_3ea8e22a3d8748d899cadf962b5ac643", "sourceId": "google-gemini-pricing", "attemptId": "attempt_07bbdf6c34734c24893b1a4cbc167adb", "extractorVersion": "google-3", "outcome": "unchanged", "elapsedMs": 7965.212624985725, "retries": 0, "parsedCount": 82, "lastSuccessAt": 1790952406.22365, "successAgeHours": 3.1640860769483775e-05, "countRatio": 1.0, "freshnessBudgetHours": 48}
+[kimi:pricing]
+  ✓ 14 facts / 4 models
+{"timestamp": "2026-10-02T14:47:04.455782+00:00", "kind": "pipeline.source", "runId": "prices_3ea8e22a3d8748d899cadf962b5ac643", "sourceId": "kimi-pricing", "attemptId": "attempt_726ee3bd4bbb49c0a03529945b250067", "extractorVersion": "kimi-3", "outcome": "unchanged", "elapsedMs": 7424.0002919978, "retries": 0, "parsedCount": 14, "lastSuccessAt": 1790952405.924278, "successAgeHours": 4.106097751193576e-06, "countRatio": 1.0, "freshnessBudgetHours": 48}
+[openai:pricing]
+  ✓ 181 facts / 41 models
+{"timestamp": "2026-10-02T14:47:04.490243+00:00", "kind": "pipeline.source", "runId": "prices_3ea8e22a3d8748d899cadf962b5ac643", "sourceId": "openai-pricing", "attemptId": "attempt_14ee747a6fdd453bb5017df30a84d115", "extractorVersion": "openai-3", "outcome": "unchanged", "elapsedMs": 4970.890249998774, "retries": 0, "parsedCount": 181, "lastSuccessAt": 1790952410.664078, "successAgeHours": 6.861004564497206e-05, "countRatio": 1.0, "freshnessBudgetHours": 48}
+[qwen:pricing]
+  ✓ 2088 facts / 213 models
+{"timestamp": "2026-10-02T14:47:05.795082+00:00", "kind": "pipeline.source", "runId": "prices_3ea8e22a3d8748d899cadf962b5ac643", "sourceId": "alibaba-pricing", "attemptId": "attempt_53c9e1ec13f1412fb446df7da217025f", "extractorVersion": "qwen-2", "outcome": "unchanged", "elapsedMs": 6239.901458000531, "retries": 0, "parsedCount": 2088, "lastSuccessAt": 1790952411.6133099, "successAgeHours": 0.0002685575352774726, "countRatio": 1.0, "freshnessBudgetHours": 48}
+[vertex-anthropic:pricing]
+  ✓ 86 facts / 2 models
+{"timestamp": "2026-10-02T14:47:06.021521+00:00", "kind": "pipeline.source", "runId": "prices_3ea8e22a3d8748d899cadf962b5ac643", "sourceId": "google-vertex-pricing", "attemptId": "attempt_e09d057c27da49dfbb0be409df0115ec", "extractorVersion": "vertex-1", "outcome": "unchanged", "elapsedMs": 6567.6926659944, "retries": 0, "parsedCount": 86, "lastSuccessAt": 1790952416.875778, "successAgeHours": 0.0001679041650560167, "countRatio": 1.0, "freshnessBudgetHours": 48}
+[vertex-google:pricing]
+  ✓ 36 facts / 1 models
+{"timestamp": "2026-10-02T14:47:06.131402+00:00", "kind": "pipeline.source", "runId": "prices_3ea8e22a3d8748d899cadf962b5ac643", "sourceId": "google-vertex-pricing", "attemptId": "attempt_3c46beadb51d42319825bee8dca182ed", "extractorVersion": "vertex-1", "outcome": "unchanged", "elapsedMs": 11520.572541019646, "retries": 0, "parsedCount": 36, "lastSuccessAt": 1790952423.428326, "successAgeHours": 0.00018734753131866456, "countRatio": 1.0, "freshnessBudgetHours": 48}
+diff: 479 新增 / 41 变更 / 1084 不变 / 85 缺失
+价格变化事件 520 条 → daily_changes.json
+ledger.json 已更新：2801 条价格 · ['anthropic', 'deepseek', 'doubao', 'glm', 'google', 'kimi', 'openai', 'qwen', 'vertex-anthropic', 'vertex-google'] 家
+RUN-STATUS: ok 10/10 来源成功

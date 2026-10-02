@@ -80,7 +80,7 @@ function timingSafeEqualStr(a: string, b: string): boolean {
 
 const KNOWN_PARAMS: Record<Endpoint, Set<string>> = {
   changes: new Set(['provider', 'type', 'q', 'from', 'to', 'limit', 'cursor', 'includeWithdrawn', 'modelId', 'familyId']),
-  prices: new Set(['provider', 'model', 'component', 'region', 'billingMode', 'q', 'limit', 'cursor', 'modelId', 'familyId']),
+  prices: new Set(['provider', 'model', 'component', 'region', 'billingMode', 'q', 'limit', 'cursor', 'modelId', 'familyId', 'platformId']),
   weekly: new Set(['limit', 'cursor']),
 };
 
@@ -192,6 +192,11 @@ export function normalizeQuery(
   }
 
   if (endpoint === 'prices') {
+    const platformId = raw.get('platformId');
+    if (platformId !== null) {
+      if (!(ds.modelIdentities.platforms ?? []).some(p => p.platformId === platformId)) problems.push(bad('invalid_platformId', '未知 platformId', '使用 /models 返回的已核验平台 ID'));
+      else params.platformId = platformId;
+    }
     for (const [key, enumSet] of [
       ['component', ds.enums.components],
       ['billingMode', ds.enums.billingModes],
@@ -455,6 +460,7 @@ export function listPrices(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPayl
     const e = candidates[i]!;
     if (p.provider !== undefined && e.providerId !== p.provider) continue;
     if (p.model !== undefined && e.modelKey.toLowerCase() !== p.model) continue;
+    if (p.platformId !== undefined && e.platformId !== p.platformId) continue;
     if (p.modelId !== undefined && e.modelId !== p.modelId) continue;
     if (p.familyId !== undefined && e.familyId !== p.familyId) continue;
     if (p.component !== undefined && e.component !== p.component) continue;

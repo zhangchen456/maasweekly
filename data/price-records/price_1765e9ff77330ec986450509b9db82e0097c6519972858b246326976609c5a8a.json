@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_1765e9ff77330ec986450509b9db82e0097c6519972858b246326976609c5a8a",
+  "date": "2026-10-02",
+  "recordType": "price_change",
+  "fact_key": "34ee99e9a9bea93a30089e8d8a523c66047372cf7b915dd63dd01513846c4c50",
+  "provider": "vertex-anthropic",
+  "model": "claude-opus-5.5",
+  "component": "cache_write",
+  "currency": "USD",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "eu",
+  "billingMode": "batch",
+  "serviceTier": "standard",
+  "contextBand": {
+    "min": 0,
+    "max": 200000
+  },
+  "timeCondition": {
+    "period": "cache_ttl",
+    "tz": "UTC",
+    "schedule": "PT1H"
+  },
+  "beforeVersionId": null,
+  "afterVersionId": "pfv_5d59effaf3d7de736c954415fc6d7fd6df8b8b543f62e8698c7b9cb8f8897357",
+  "beforeEvidenceId": null,
+  "afterEvidenceId": "ev_21394dc901020293e4a052ea7601f9945857c21ffb798c7dff5ba791916fa939",
+  "beforeObservedAt": null,
+  "afterObservedAt": "2026-10-02T14:46:56+00:00",
+  "changeType": "newly_observed",
+  "changedFields": [],
+  "comparison": null,
+  "revision": 2,
+  "status": "active",
+  "revisedAt": "2026-10-02T14:47:19+00:00",
+  "revisionReason": "事件内容更新",
+  "permalink": "/item/price_1765e9ff77330ec986450509b9db82e0097c6519972858b246326976609c5a8a/",
+  "provenance": {}
+}
