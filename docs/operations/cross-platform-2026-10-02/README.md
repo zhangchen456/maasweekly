@@ -1,8 +1,16 @@
 # 跨平台同模型比较验收
 
-状态：实现、最终采集与本地回归完成，等待 CI 完整回归与线上验收。
+状态：已上线，最终 CI 60/60，生产四入口及跨平台接口验收通过。
 
-本地完整回归第二轮 59/60，唯一失败为站点投影覆盖了图标别名；已修正规范来源并通过 final-logo-regression.txt 针对性复验。final-regression.txt 保留真实失败，不能写成 60/60。发布工作流须对最终提交执行全部 60 组检查。
+- Commit：45b0f13b190b11df6ec529217a9a8bce76fad619
+- CI：https://github.com/zhangchen456/maasweekly/actions/runs/37042182687
+- Release：rl_45b0f13b19_7ce1e40d78d2
+- Dataset：ds_7ce1e40d78d251d919041ba58cece40283086450f7e5aa9498ce4964e64f1501
+- 页面：https://daily.maas.click/compare/
+- 生产平台过滤查询返回 41 条 Sonnet 云平台报价，6 个可用关系与版本一致。
+- 浏览器验收：1440px 和 390px；19 行条件报价，无整体溢出，手机首行高约 127px。
+
+本地完整回归第二轮 59/60，唯一失败为站点投影覆盖了图标别名；已修正规范来源并通过 final-logo-regression.txt 针对性复验。final-regression.txt 保留真实失败，不能写成 60/60。最终发布工作流已对固定提交执行全部 60 组检查，60 通过、0 失败，原始凭据见 ci-artifacts/*/release-build.txt。
 
 ## 范围
 
