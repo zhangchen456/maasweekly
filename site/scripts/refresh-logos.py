@@ -5,7 +5,7 @@ Only run deliberately when refreshing branding; daily reports use the local regi
 """
 import base64, argparse, concurrent.futures, datetime, hashlib, html, json, pathlib, re, subprocess, xml.etree.ElementTree as ET
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-REGISTRY = ROOT / 'src/data/platform-logos.json'
+REGISTRY = ROOT.parent / 'data/normalized/platform-logos.json'
 DEST = ROOT / 'public/logos/official'
 
 def image_extension(data):
@@ -80,4 +80,15 @@ def main():
     print(f'{sum(results)}/{len(results)} refreshed; failed entries keep existing assets')
     return 0 if all(results) else 1
 
-if __name__ == '__main__': raise SystemExit(main())
+def configure_root(root):
+    global ROOT, REGISTRY, DEST
+    ROOT = root / 'site'; REGISTRY = root / 'data/normalized/platform-logos.json'; DEST = ROOT / 'public/logos/official'
+
+if __name__ == '__main__':
+    import sys
+    sys.path.insert(0, str(ROOT.parent / 'pipeline'))
+    from run_protocol import managed_entry
+    from data_store import project_site
+    def execute():
+        code = main(); project_site(ROOT.parent); return code
+    raise SystemExit(managed_entry(execute, ROOT.parent, 'logos', configure_root))

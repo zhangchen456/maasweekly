@@ -24,13 +24,18 @@ def migrate(root):
     assert compose_weekly(root) == weeks, 'weekly projection differs'
     files = {}
     for src, dst in [('site/src/data/pricing', PRICING), ('site/src/content/weekly', EDITORIAL),
-                     ('site/src/content/weekly-structured', STRUCTURED)]:
+                     ('site/src/content/weekly-structured', STRUCTURED),
+                     ('site/src/data/leaderboards', 'data/derived/leaderboards')]:
         for p in sorted((root / src).rglob('*')):
             if not p.is_file() or p.suffix not in (".json", ".md"): continue
             if p.is_symlink(): raise ValueError('migration input symlink')
             out = root / dst / p.relative_to(root / src); out.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(p, out)
             files[str(out.relative_to(root))] = hashlib.sha256(p.read_bytes()).hexdigest()
+    logos = root / 'site/src/data/platform-logos.json'
+    if logos.exists():
+        out = root / 'data/normalized/platform-logos.json'; shutil.copyfile(logos, out)
+        files[str(out.relative_to(root))] = hashlib.sha256(logos.read_bytes()).hexdigest()
     timeline = root / 'site/src/content/timeline.json'
     if timeline.exists():
         target = root / 'data/derived/timeline.json'; target.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(timeline, target)

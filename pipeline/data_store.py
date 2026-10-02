@@ -18,7 +18,12 @@ EDITORIAL = 'data/editorial/weekly'
 STRUCTURED = 'data/derived/weekly-structured'
 
 
-def read(root: Path, rel: str, default=None):
+def read(root: Path, rel: str, default=None, view=None):
+    if view:
+        if rel not in view.files:
+            if default is not None: return default
+            raise FileNotFoundError('committed input missing: ' + rel)
+        return json.loads(view.path(rel).read_text(encoding='utf-8'))
     p = root / rel
     if not p.exists():
         if default is not None: return default
@@ -39,10 +44,10 @@ def write(root: Path, rel: str, value):
     os.replace(temp, p)
 
 
-def compose_daily(root: Path):
-    data = read(root, DAILY)
-    summaries = read(root, SUMMARIES, {})
-    prices = read(root, PRICE_EVENTS, {})
+def compose_daily(root: Path, view=None):
+    data = read(root, DAILY, view=view)
+    summaries = read(root, SUMMARIES, {}, view=view)
+    prices = read(root, PRICE_EVENTS, {}, view=view)
     days = {d['date']: dict(d) for d in data.get('days', [])}
     oldest = min(days) if days else None
     for date, events in prices.items():
@@ -135,6 +140,13 @@ def project_site(root: Path):
             out = root / target / p.relative_to(source); out.parent.mkdir(parents=True, exist_ok=True)
             if p.is_symlink(): raise ValueError('projection symlink rejected')
             out.write_bytes(p.read_bytes())
+    boards = root / 'data/derived/leaderboards'
+    for p in sorted(boards.glob('*.json')):
+        out = root / 'site/src/data/leaderboards' / p.name; out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_bytes(p.read_bytes())
+    registry = root / 'data/normalized/platform-logos.json'
+    if registry.exists():
+        out = root / 'site/src/data/platform-logos.json'; out.parent.mkdir(parents=True, exist_ok=True); out.write_bytes(registry.read_bytes())
     timeline = root / 'data/derived/timeline.json'
     if timeline.exists():
         (root / 'site/src/content/timeline.json').write_bytes(timeline.read_bytes())

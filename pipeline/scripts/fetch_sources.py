@@ -19,6 +19,7 @@ import os
 import sys
 import hashlib
 from datetime import datetime, date, timedelta
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 # 路径配置（以仓库根目录为基准，脚本可从任意位置运行）
@@ -26,6 +27,35 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent  # repo root
 SOURCES_FILE = BASE_DIR / "pipeline" / "config" / "maas_official_sources.json"
 SNAPSHOT_DIR = BASE_DIR / "data" / "snapshots"
 DIFF_DIR = BASE_DIR / "data" / "diff"
+
+sys.path.insert(0, str(BASE_DIR / 'pipeline'))
+from run_protocol import current_journal, managed_entry
+from staged_fetch import fetch as staged_fetch, wanted, source_key
+
+
+def configure_root(root):
+    global BASE_DIR, SOURCES_FILE, SNAPSHOT_DIR, DIFF_DIR
+    BASE_DIR = root; SOURCES_FILE = root / 'pipeline/config/maas_official_sources.json'
+    SNAPSHOT_DIR = root / 'data/snapshots'; DIFF_DIR = root / 'data/diff'
+
+
+def run_timestamp():
+    run = current_journal()
+    return datetime.fromisoformat(run.data['startedAt']).astimezone(ZoneInfo('Asia/Shanghai')).replace(tzinfo=None) if run else datetime.now(ZoneInfo('Asia/Shanghai')).replace(tzinfo=None)
+
+
+def observed_at(url):
+    run = current_journal()
+    state = run.data['sources'].get(source_key(url), {}) if run else {}
+    stamp = state.get('snapshot', {}).get('fetched_at')
+    return datetime.fromtimestamp(stamp, ZoneInfo('Asia/Shanghai')).isoformat() if stamp else run_timestamp().isoformat()
+
+
+def fetch_page(url):
+    registry = json.loads((BASE_DIR / 'pipeline/config/source_registry.json').read_text())
+    source_id = next((row['source_id'] for row in registry['sources'] if url in row.get('url_aliases', []) or row.get('primary_url') == url), None)
+    return staged_fetch(url, lambda: _fetch_page(url), version='source-text-1', source_id=source_id)
+
 
 # 抓取优先级: P0 必抓
 P0_KEYS = ["model_list", "pricing", "changelog"]
@@ -39,7 +69,7 @@ def load_sources():
         return json.load(f)
 
 
-def fetch_page(url):
+def _fetch_page(url):
     """
     抓取页面内容。curl 抓取 + HTML 文本提取。
     返回 (content, error)
@@ -250,15 +280,17 @@ def content_hash(content):
     return hashlib.sha256(content.strip().encode("utf-8")).hexdigest()[:16]
 
 
-def save_snapshot(platform_name, source_type, content, today):
+def save_snapshot(platform_name, source_type, content, today, fetched_at=None):
     """保存单页快照"""
     # 文件名: 平台名_信源类型_日期.md
     safe_name = platform_name.replace("/", "-").replace(" ", "_")
     filename = f"{safe_name}__{source_type}__{today}.md"
     filepath = SNAPSHOT_DIR / today / filename
+    journal = current_journal()
+    if journal: journal.backup_raw(str(filepath.relative_to(BASE_DIR)))
     filepath.parent.mkdir(parents=True, exist_ok=True)
     with open(filepath, "w", encoding="utf-8") as f:
-        f.write(f"<!-- url: see sources config -->\n<!-- fetched: {datetime.now().isoformat()} -->\n\n")
+        f.write(f"<!-- url: see sources config -->\n<!-- fetched: {fetched_at or run_timestamp().isoformat()} -->\n\n")
         f.write(content)
     return filepath
 
@@ -315,7 +347,8 @@ def main():
         else:
             i += 1
 
-    today = date.today().strftime("%Y-%m-%d")
+    journal = current_journal()
+    today = journal.data["runDate"] if journal else datetime.now(ZoneInfo("Asia/Shanghai")).strftime("%Y-%m-%d")
     print(f"=== MaaS 信源每日抓取 {today} ===")
 
     config = load_sources()
@@ -339,7 +372,7 @@ def main():
             if max_sources is not None and stats["total"] >= max_sources:
                 break
             url = sources.get(source_type)
-            if not url:
+            if not url or not wanted(url):
                 continue
             
             stats["total"] += 1
@@ -361,7 +394,7 @@ def main():
             stats["success"] += 1
             
             # 保存快照
-            snapshot_path = save_snapshot(name, source_type, content, today)
+            snapshot_path = save_snapshot(name, source_type, content, today, observed_at(url))
             print(f"    ✓ 保存: {snapshot_path.name} ({len(content)} chars)")
             
             # 与昨天对比
@@ -414,7 +447,7 @@ def main():
             break
         name = src["name"]
         url = src.get("api_url") or src.get("url")
-        if not url:
+        if not url or not wanted(url):
             continue
         stats["total"] += 1
         print(f"  [{name}] {url[:80]}...")
@@ -431,7 +464,7 @@ def main():
             })
             continue
         stats["success"] += 1
-        snapshot_path = save_snapshot(name, "industry", content, today)
+        snapshot_path = save_snapshot(name, "industry", content, today, observed_at(url))
         print(f"    ✓ 保存: {snapshot_path.name} ({len(content)} chars)")
         
         yesterday_path = find_yesterday_snapshot(name, "industry", today)
@@ -479,7 +512,7 @@ def main():
     
     with open(diff_report_path, "w", encoding="utf-8") as f:
         f.write(f"# MaaS 信源变化报告 - {today}\n\n")
-        f.write(f"**抓取时间**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} UTC+8\n")
+        f.write(f"**抓取时间**: {run_timestamp().strftime('%Y-%m-%d %H:%M:%S')} UTC+8\n")
         f.write(f"**抓取统计**: 总计 {stats['total']} 个信源 | 成功 {stats['success']} | 失败 {stats['failed']} | 有变化 {stats['changed']} | 无变化 {stats['unchanged']}\n\n")
         f.write("---\n\n")
         
@@ -533,7 +566,7 @@ def main():
         with open(json_path, "w", encoding="utf-8") as jf:
             json.dump({
                 "date": today,
-                "fetched_at": datetime.now().isoformat(),
+                "fetched_at": run_timestamp().isoformat(),
                 "stats": stats,
                 "changes": changes_summary
             }, jf, ensure_ascii=False, indent=2)
@@ -549,4 +582,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    def execute():
+        stats = main()
+        return 2 if stats["total"] and not stats["success"] else 0
+    sys.exit(managed_entry(execute, BASE_DIR, "sources", configure_root))

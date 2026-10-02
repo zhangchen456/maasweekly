@@ -13,16 +13,16 @@
   六、已报道事件索引 -> event_index (- [date] ... 列表)
 """
 import json
+import hashlib
 import sys
 import re
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE.parent / 'pipeline'))
-from data_store import EDITORIAL, STRUCTURED, project_site
+from data_store import EDITORIAL, STRUCTURED, project_site, write, read
 SRC_DIR = BASE.parent / EDITORIAL
 DST_DIR = BASE.parent / STRUCTURED
-DST_DIR.mkdir(parents=True, exist_ok=True)
 
 # 状态 emoji -> 语义
 STATUS_MAP = {
@@ -366,9 +366,15 @@ def parse_report(md_text):
 
 
 def main():
+    DST_DIR.mkdir(parents=True, exist_ok=True)
     count = 0
+    input_hashes = {}
+    previous_hashes = read(BASE.parent, 'data/derived/weekly-inputs.json', {})
     for md_file in sorted(SRC_DIR.glob("*.md")):
         text = md_file.read_text(encoding="utf-8")
+        checksum = hashlib.sha256(md_file.read_bytes()).hexdigest()
+        if '--force' not in sys.argv and previous_hashes.get(md_file.stem) == checksum and (DST_DIR / f'{md_file.stem}.json').exists():
+            input_hashes[md_file.stem] = checksum; count += 1; continue
         try:
             data = parse_report(text)
         except Exception as e:
@@ -379,6 +385,7 @@ def main():
         out_path.write_text(
             json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
         )
+        input_hashes[md_file.stem] = hashlib.sha256(md_file.read_bytes()).hexdigest()
         count += 1
 
         # 简要统计
@@ -393,6 +400,7 @@ def main():
 
     print(f"\nDone: {count} reports extracted to {DST_DIR}")
 
+    write(BASE.parent, 'data/derived/weekly-inputs.json', input_hashes)
     build_timeline()
     project_site(BASE.parent)
 
@@ -500,5 +508,11 @@ def build_timeline():
     print(f"Timeline: {len(timeline)} days, {total} events -> {out_path.name}")
 
 
+def configure_root(root):
+    global BASE, SRC_DIR, DST_DIR
+    BASE = root / 'site'; SRC_DIR = root / EDITORIAL; DST_DIR = root / STRUCTURED
+
+
 if __name__ == "__main__":
-    main()
+    from run_protocol import managed_entry
+    sys.exit(managed_entry(main, BASE.parent, 'weekly-structured', configure_root))

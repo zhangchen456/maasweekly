@@ -372,5 +372,13 @@ def main() -> int:
     return 0
 
 
+def configure_root(root):
+    global BASE, HISTORY_DIR, SNAPSHOT_DIR, ARCHIVE_ROOT, SITE_INDEX_DIR
+    BASE = root; HISTORY_DIR = root / 'data/derived/pricing/ledger_history'; SNAPSHOT_DIR = root / 'data/snapshots'
+    ARCHIVE_ROOT = root / 'data'; SITE_INDEX_DIR = root / 'data/derived/archive-indexes'
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.path.insert(0, str(BASE / 'pipeline'))
+    from run_protocol import managed_entry
+    sys.exit(managed_entry(main, BASE, 'price-backfill', configure_root, allow_dry=True))

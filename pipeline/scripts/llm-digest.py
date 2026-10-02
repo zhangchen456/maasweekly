@@ -285,5 +285,12 @@ def main():
     print(f"\ndaily_changes.json 已更新 -> {DST_FILE}")
 
 
+def configure_root(root):
+    global BASE, DIFF_DIR, DST_FILE, DAILY_FILE, WEEKLY_FILE
+    BASE = root; DIFF_DIR = root / 'data/diff'; DST_FILE = root / 'data/normalized/source-streams.json'
+    DAILY_FILE = DST_FILE; WEEKLY_FILE = root / 'data/derived/weekly-rollup.json'
+
+
 if __name__ == "__main__":
-    main()
+    from run_protocol import managed_entry
+    sys.exit(managed_entry(main, BASE, 'daily-summary', configure_root))
