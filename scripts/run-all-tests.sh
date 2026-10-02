@@ -18,7 +18,9 @@ QUICK=false
 FAILED=()
 PASS=0
 
-SUITE_LOG_DIR="$(mktemp -d "${TMPDIR:-/tmp}/maas-regression.XXXXXX")"
+SUITE_LOG_PARENT="${MAAS_REGRESSION_LOG_ROOT:-${TMPDIR:-/tmp}}"
+mkdir -p "$SUITE_LOG_PARENT" || exit 2
+SUITE_LOG_DIR="$(mktemp -d "$SUITE_LOG_PARENT/maas-regression.XXXXXX")" || exit 2
 SUITE_FINISHED=false
 TEST_INDEX=0
 cleanup() {
@@ -43,8 +45,9 @@ run() {  # run <名称> <命令...>
     rm -f "$log"
   else
     FAILED+=("$name")
-    echo "   ✗ ${name}（退出码 ${code}）——日志关键内容："
-    tail -25 "$log" | sed 's/^/     /'
+    echo "   ✗ ${name}（退出码 ${code}）——完整失败日志："
+    printf 'suite=%s\nexitCode=%s\n' "$name" "$code" > "$log.meta"
+    sed 's/^/     /' "$log"
     echo "   （完整日志: ${log}）"
   fi
 }
@@ -64,6 +67,7 @@ run "validate-price-archive（Task 02）" python3 pipeline/scripts/validate-pric
 run "build-skill-package --check" python3 site/scripts/build-skill-package.py --check
 
 # ---- Python 测试 ----
+run "test_regression_diagnostics（CI failure evidence）" python3 -m unittest discover -s tests -p 'test_regression_diagnostics.py'
 run "test_current_pricing（official table drift）" python3 -m unittest discover -s tests -p 'test_current_pricing.py'
 run "test_record_archive（Task 01）" python3 -m unittest discover -s tests -p 'test_record_archive.py'
 run "test_price_archive（Task 02）" python3 -m unittest discover -s tests -p 'test_price_archive.py'

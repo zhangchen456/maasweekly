@@ -27,6 +27,7 @@ jobs:
       DEPLOY_USER: maasdeploy
       MAAS_DEPLOY_MODE: release
       MAAS_VERIFY_MAIN_CANDIDATE: '1'
+      MAAS_REGRESSION_LOG_ROOT: ${{ runner.temp }}/regression-failures
     steps:
       - name: Checkout exact candidate
         uses: actions/checkout@v4
@@ -97,5 +98,6 @@ jobs:
           path: |
             ${{ runner.temp }}/release-build.txt
             ${{ runner.temp }}/release-diagnostics.json
+            ${{ runner.temp }}/regression-failures/
           if-no-files-found: ignore
           retention-days: 14

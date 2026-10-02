@@ -1,0 +1,56 @@
+══ Task 01–06 统一回归 ══
+── site dependency cache
+   ✓ site dependency cache
+── agent-api dependency cache
+   ✓ agent-api dependency cache
+── export-public-data --check
+   ✓ export-public-data --check
+── validate-archive（Task 01）
+   ✓ validate-archive（Task 01）
+── validate-price-archive（Task 02）
+   ✓ validate-price-archive（Task 02）
+── build-skill-package --check
+   ✓ build-skill-package --check
+── test_regression_diagnostics（CI failure evidence）
+   ✓ test_regression_diagnostics（CI failure evidence）
+── test_current_pricing（official table drift）
+   ✓ test_current_pricing（official table drift）
+── test_record_archive（Task 01）
+   ✓ test_record_archive（Task 01）
+── test_price_archive（Task 02）
+   ✓ test_price_archive（Task 02）
+── test_public_export（Task 03）
+   ✓ test_public_export（Task 03）
+── test_skill_package（Task 04）
+   ✓ test_skill_package（Task 04）
+── test_release_build（Task 06）
+   ✓ test_release_build（Task 06）
+── test_release_activation（Task 06）
+   ✓ test_release_activation（Task 06）
+── test_deploy_mode（Task 06 M7）
+   ✓ test_deploy_mode（Task 06 M7）
+── test_model_identity_audit（Task 07）
+   ✓ test_model_identity_audit（Task 07）
+── test_model_public_projection（Task 07）
+   ✓ test_model_public_projection（Task 07）
+── test_model_registry（Task 07）
+   ✓ test_model_registry（Task 07）
+── validate-model-registry（Task 07）
+   ✓ validate-model-registry（Task 07）
+── audit-model-registry-coverage（Task 07）
+   ✓ audit-model-registry-coverage（Task 07）
+── test_architecture_workflows（AR-05）
+   ✓ test_architecture_workflows（AR-05）
+── test_architecture_observability（AR-08）
+   ✓ test_architecture_observability（AR-08）
+── test_blob_storage（AR-06）
+   ✓ test_blob_storage（AR-06）
+── test_pipeline_runtime（AR-04）
+   ✓ test_pipeline_runtime（AR-04）
+── test_standard_inputs（AR-03）
+   ✓ test_standard_inputs（AR-03）
+── test_workflow_release_contract（incident 2026-09）
+   ✓ test_workflow_release_contract（incident 2026-09）
+scripts/run-all-tests.sh: line 128: unexpected EOF while looking for matching `''
+scripts/run-all-tests.sh: line 141: syntax error: unexpected end of file
+回归未通过或中断，日志保留: /var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T//maas-regression.98t8l3
