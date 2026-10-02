@@ -39,7 +39,7 @@ from .common import (
     stable_identity
 )
 
-_EXTRACTOR_VERSION_GOOGLE = "google-1"
+_EXTRACTOR_VERSION_GOOGLE = "google-3"
 
 class GooglePricingExtractor:
     """解析 Google Gemini 价格页（M6：真实 HTML 表格）。
@@ -63,6 +63,7 @@ class GooglePricingExtractor:
 
     def _extract_html(self, snapshot: ContentSnapshot, html: str) -> ExtractionResult:
         from bs4 import BeautifulSoup
+        from datetime import datetime, timezone
 
         soup = BeautifulSoup(html, "html.parser")
         models: list[ModelProfile] = []
@@ -124,14 +125,35 @@ class GooglePricingExtractor:
                     comp = "cache_read"
                 if not comp or paid_col >= len(cells):
                     continue
-                # 价格含时效文本，取第一个价格（当前生效，2026-08 落在 through 段内）
-                p = _parse_price_html(cells[paid_col])
+                # Resolve dated prices against the snapshot observation date.
+                value = cells[paid_col]
+                # Cache storage is priced per hour, never a token read charge.
+                value = re.split(r"\$[\d.]+\s*/\s*1[,\d]*\s*tokens?\s+per\s+hour", value, flags=re.I)[0]
+                if not value.strip():
+                    continue
+                promo = None
+                dated = list(re.finditer(r"(\$[\d.]+).*?(through|starting)\s+([A-Z][a-z]+ \d{1,2}, \d{4})", value))
+                if dated:
+                    observed = datetime.fromtimestamp(snapshot.fetched_at, timezone.utc).date()
+                    active = [m for m in dated if (observed <= datetime.strptime(m.group(3), "%B %d, %Y").date() if m.group(2) == "through" else observed >= datetime.strptime(m.group(3), "%B %d, %Y").date())]
+                    if not active:
+                        continue
+                    current = active[-1]
+                    value = current.group(1)
+                    if current.group(2) == "through":
+                        promo = TimeCondition(period="promotional", tz="UTC", schedule="through " + current.group(3))
+                p = _parse_price_html(value)
                 if not p:
                     continue
-                facts.append(_make_fact(
-                    snapshot, ev.evidence_id, "google", model_name,
-                    comp, "realtime", p, region=_region_for("google"),
-                ))
+                bands = list(re.finditer(r"(\$[\d.]+),?\s*prompts\s*(<=|>|≤)\s*(\d+)k", value))
+                prices = [(p, None)]
+                if bands:
+                    prices = [(_parse_price_html(m.group(1)), ContextBand(
+                        min_input_tokens=int(m.group(3))*1000 + 1 if m.group(2) == ">" else 0,
+                        max_input_tokens=None if m.group(2) == ">" else int(m.group(3))*1000)) for m in bands]
+                for price, band in prices:
+                    facts.append(_make_fact(snapshot, ev.evidence_id, "google", model_name,
+                        comp, "realtime", price, region=_region_for("google"), context_band=band, time_condition=promo))
                 has_fact = True
             if has_fact:
                 seen_models.add(model_key)

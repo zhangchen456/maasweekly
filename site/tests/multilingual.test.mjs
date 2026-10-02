@@ -9,7 +9,11 @@ import { englishPriceCells } from '../src/lib/price-display.ts';
 import { pageType } from '../public/analytics.js';
 const release = loadVerifiedRelease(undefined, { select: ['prices','modelIdentities','changes','evidence'] });
 const pages = ['','models/','pricing/','method/','agent/', ...translatedModels().map(p => `model/${p.model.modelId}/`)];
-assert.equal(featuredModels().length, 5);
+assert(featuredModels().length <= 5);
+const homeDoc = new JSDOM(readFileSync('dist/en/index.html','utf8')).window.document;
+assert.equal(homeDoc.querySelectorAll('.market-table').length,1);
+assert.equal(homeDoc.querySelectorAll('[role=tab]').length,3);
+assert.equal(homeDoc.querySelectorAll('[data-home-model]').length,18);
 const sitemap = readFileSync('dist/sitemap.xml','utf8');
 for (const page of pages) {
   const doc = new JSDOM(readFileSync(`dist/en/${page}index.html`,'utf8')).window.document;

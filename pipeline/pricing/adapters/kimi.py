@@ -39,7 +39,7 @@ from .common import (
     stable_identity
 )
 
-_EXTRACTOR_VERSION_KIMI = "kimi-1"
+_EXTRACTOR_VERSION_KIMI = "kimi-3"
 
 class KimiPricingExtractor:
     """解析 Kimi（Moonshot）价格页（M6：真实 JS bundle 数据）。
@@ -59,10 +59,49 @@ class KimiPricingExtractor:
 
     def extract(self, snapshot: ContentSnapshot) -> ExtractionResult:
         raw = snapshot.content
+        if "<table" in raw:
+            return self._extract_tables(snapshot, raw)
         # Kimi 渲染后 HTML 含 rows:[[ 标志（JS bundle 表格数据）
         if "rows:[[" in raw:
             return self._extract_html(snapshot, raw)
         return self._extract_markdown(snapshot, raw)
+
+    def _extract_tables(self, snapshot, html):
+        models, facts, evidence = [], [], []
+        ev_idx = 0
+        for table in _parse_html_tables(html):
+            header = table.rows[0]
+            if not any("缓存未命中" in h for h in header):
+                continue
+            ev, ev_idx = _evidence_for_html(snapshot, ev_idx, table, self.version)
+            evidence.append(ev)
+            for row in table.data_rows():
+                name = _clean_model_name(row[0])
+                if not name.startswith(("kimi-", "moonshot-")):
+                    continue
+                for ci, label in enumerate(header):
+                    comp, tc = None, None
+                    if "缓存写入" in label:
+                        comp = "cache_write"
+                        duration = "1h" if "1h" in label else "5m"
+                        tc = TimeCondition(period="cache_write_" + duration, tz="UTC", schedule=duration)
+                    elif "缓存未命中" in label:
+                        comp = "input"
+                    elif "缓存命中" in label:
+                        comp = "cache_read"
+                    elif "输出" in label:
+                        comp = "output"
+                    if not comp or ci >= len(row):
+                        continue
+                    price = _parse_price_html(row[ci])
+                    if price:
+                        facts.append(_make_fact(snapshot, ev.evidence_id, "kimi", name, comp,
+                            "realtime", price, region=_region_for("kimi"), time_condition=tc))
+                models.append(ModelProfile(provider_id="kimi", model_key=name,
+                    display_name=name, model_class="flagship", lifecycle_status="active",
+                    context_window_tokens=_parse_tokens(row[-1]), evidence_id=ev.evidence_id))
+        return ExtractionResult(snapshot_id=snapshot.snapshot_id, extractor_version=self.version,
+            models=models, price_facts=facts, evidence=evidence, warnings=_drift_warnings("kimi", facts))
 
     def _extract_html(self, snapshot: ContentSnapshot, html: str) -> ExtractionResult:
         models: list[ModelProfile] = []

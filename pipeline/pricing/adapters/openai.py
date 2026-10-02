@@ -39,7 +39,7 @@ from .common import (
     stable_identity
 )
 
-_EXTRACTOR_VERSION_OPENAI = "openai-1"
+_EXTRACTOR_VERSION_OPENAI = "openai-3"
 
 class OpenAIPricingExtractor:
     """解析 OpenAI 价格页（M6：真实 HTML 表格）。
@@ -62,6 +62,10 @@ class OpenAIPricingExtractor:
         return self._extract_markdown(snapshot, raw)
 
     def _extract_html(self, snapshot: ContentSnapshot, html: str) -> ExtractionResult:
+        from bs4 import BeautifulSoup
+        from html import escape
+        soup = BeautifulSoup(html, "html.parser")
+        dom_tables = soup.find_all("table")
         tables = _parse_html_tables(html)
         models: list[ModelProfile] = []
         facts: list[PriceFact] = []
@@ -72,7 +76,13 @@ class OpenAIPricingExtractor:
         for table in tables:
             if not table.rows or len(table.rows) < 2:
                 continue
-            header = table.rows[1] if len(table.rows) > 1 else table.rows[0]
+            dom_table = dom_tables[table.table_index]
+            pane = dom_table.find_parent(attrs={"data-content-switcher-pane": True})
+            tier = pane.get("data-value", "standard") if pane else "standard"
+            billing = "batch" if tier == "batch" else "realtime"
+            service = "standard" if tier == "batch" else tier
+            header = table.rows[table.header_rows - 1] if table.header_rows else table.rows[0]
+            context_header = table.rows[0] if table.header_rows > 1 else []
             # 找 Model 列与各价格列
             model_col = None
             cols: list[tuple[int, str, bool]] = []  # (col_idx, component, is_long_ctx)
@@ -95,9 +105,16 @@ class OpenAIPricingExtractor:
                 elif hl == "output" or "output" in hl and "cost" not in hl:
                     comp = "output"
                 if comp:
-                    cols.append((ci, comp, ctx_band_active))
+                    is_long = "long context" in context_header[ci].lower() if ci < len(context_header) else ctx_band_active
+                    cols.append((ci, comp, is_long))
             if model_col is None:
                 continue
+            tooltip = soup.find(attrs={"role": "tooltip"})
+            if tooltip:
+                table.html_fragment = "<p>" + escape(tooltip.get_text(" ", strip=True)) + "</p>" + table.html_fragment
+            unit_note = dom_table.find_previous(string=lambda x: x and "Prices per 1M tokens" in x)
+            if unit_note:
+                table.html_fragment = "<p>" + escape(str(unit_note).strip()) + "</p>" + table.html_fragment
             ev, ev_idx = _evidence_for_html(snapshot, ev_idx, table, self.version)
             evidence.append(ev)
             for row in table.data_rows():
@@ -117,11 +134,12 @@ class OpenAIPricingExtractor:
                     p = _parse_price_html(row[ci])
                     if not p:
                         continue
-                    band = ContextBand(min_input_tokens=200_000, max_input_tokens=None) if is_long else None
+                    band = (ContextBand(min_input_tokens=272_001, max_input_tokens=None) if is_long
+                            else ContextBand(min_input_tokens=0, max_input_tokens=272_000)) if context_header and any("context" in h.lower() for h in context_header) else None
                     facts.append(_make_fact(
                         snapshot, ev.evidence_id, "openai", model_name,
-                        comp, "realtime", p, region=_region_for("openai"),
-                        context_band=band,
+                        comp, billing, p, region=_region_for("openai"),
+                        context_band=band, service_tier=service,
                     ))
                     has_fact = True
                 if has_fact:
