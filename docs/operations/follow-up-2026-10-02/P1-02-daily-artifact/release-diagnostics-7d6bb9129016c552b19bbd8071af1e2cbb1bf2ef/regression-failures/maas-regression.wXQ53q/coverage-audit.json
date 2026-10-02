@@ -1,0 +1,4190 @@
+{
+  "meta": {
+    "readme": "只读 unresolved 分层审计——suggestedClass 是补录建议非结论",
+    "resolverStatusCounts": {
+      "family": 15,
+      "resolved": 259,
+      "unresolved": 316
+    }
+  },
+  "totals": {
+    "unresolvedRows": 316,
+    "byClass": {
+      "long_tail": 185,
+      "needs_source_check": 7,
+      "pointer": 5,
+      "safe_manual_add": 48,
+      "snapshot": 71
+    },
+    "byProvider": {
+      "alibaba": 133,
+      "anthropic": 4,
+      "deepseek": 2,
+      "doubao": 9,
+      "glm": 1,
+      "google": 19,
+      "openai": 15,
+      "qwen": 120,
+      "volcengine": 12,
+      "zhipu": 1
+    }
+  },
+  "unresolved": [
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-omni-turbo-latest",
+      "displayName": [],
+      "count": 122,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "rolling-pointer,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-omni-turbo-latest'）",
+      "suggestedClass": "pointer"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-omni-turbo-latest",
+      "displayName": [],
+      "count": 122,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "rolling-pointer,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-omni-turbo-latest'）",
+      "suggestedClass": "pointer"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-omni-turbo-realtime-2025-05-08",
+      "displayName": [],
+      "count": 116,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-omni-turbo-realtime-2025-05-08'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-omni-turbo-realtime-2025-05-08",
+      "displayName": [],
+      "count": 116,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-omni-turbo-realtime-2025-05-08'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen2.5-omni-7b",
+      "displayName": [],
+      "count": 114,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen2.5-omni-7b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen2.5-omni-7b",
+      "displayName": [],
+      "count": 114,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen2.5-omni-7b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-omni-turbo",
+      "displayName": [],
+      "count": 112,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-omni-turbo'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-omni-turbo-2025-03-26",
+      "displayName": [],
+      "count": 112,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-omni-turbo-2025-03-26'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-omni-turbo",
+      "displayName": [],
+      "count": 112,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-omni-turbo'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-omni-turbo-2025-03-26",
+      "displayName": [],
+      "count": 112,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-omni-turbo-2025-03-26'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-omni-turbo-realtime",
+      "displayName": [],
+      "count": 106,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-omni-turbo-realtime'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "gpt-6-luna",
+      "displayName": [],
+      "count": 106,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=openai, raw='gpt-6-luna'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-omni-turbo-realtime",
+      "displayName": [],
+      "count": 106,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-omni-turbo-realtime'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.0-realtime-flash",
+      "displayName": [],
+      "count": 96,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-realtime-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.0-realtime-flash",
+      "displayName": [],
+      "count": 96,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-realtime-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.5-omni-plus-realtime-2026-03-15",
+      "displayName": [],
+      "count": 92,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.5-omni-plus-realtime-2026-03-15'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.5-omni-plus-realtime-2026-03-15",
+      "displayName": [],
+      "count": 92,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.5-omni-plus-realtime-2026-03-15'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.0-realtime-plus",
+      "displayName": [],
+      "count": 86,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-realtime-plus'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.0-realtime-plus",
+      "displayName": [],
+      "count": 86,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-realtime-plus'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.8-omni-flash",
+      "displayName": [],
+      "count": 82,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-omni-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.8-omni-flash",
+      "displayName": [],
+      "count": 82,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-omni-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-3.0-pro",
+      "displayName": [],
+      "count": 80,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-3.0-pro'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.8-livetranslate-flash-realtime",
+      "displayName": [],
+      "count": 80,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-livetranslate-flash-realtime'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-3.0-pro",
+      "displayName": [],
+      "count": 80,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-3.0-pro'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.8-livetranslate-flash-realtime",
+      "displayName": [],
+      "count": 80,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-livetranslate-flash-realtime'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-235b-a22b",
+      "displayName": [],
+      "count": 78,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-235b-a22b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-235b-a22b",
+      "displayName": [],
+      "count": 78,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-235b-a22b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-30b-a3b",
+      "displayName": [],
+      "count": 72,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-30b-a3b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-30b-a3b",
+      "displayName": [],
+      "count": 72,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-30b-a3b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-omni-turbo-2025-01-19",
+      "displayName": [],
+      "count": 64,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-omni-turbo-2025-01-19'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-omni-turbo-2025-01-19",
+      "displayName": [],
+      "count": 64,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-omni-turbo-2025-01-19'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.1-realtime-plus",
+      "displayName": [],
+      "count": 60,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.1-realtime-plus'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "doubao",
+      "rawModel": "doubao-seed-2.1-lite",
+      "displayName": [],
+      "count": 60,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seed-2.1-lite'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.1-realtime-plus",
+      "displayName": [],
+      "count": 60,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.1-realtime-plus'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "volcengine",
+      "rawModel": "doubao-seed-2.1-lite",
+      "displayName": [],
+      "count": 60,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seed-2.1-lite'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-flash-character",
+      "displayName": [],
+      "count": 52,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-flash-character'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-next-80b-a3b-thinking",
+      "displayName": [],
+      "count": 52,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-next-80b-a3b-thinking'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-flash-character",
+      "displayName": [],
+      "count": 52,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-flash-character'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-next-80b-a3b-thinking",
+      "displayName": [],
+      "count": 52,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-next-80b-a3b-thinking'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-30b-a3b-instruct-2507",
+      "displayName": [],
+      "count": 50,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-30b-a3b-instruct-2507'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "doubao",
+      "rawModel": "doubao-seed-translation",
+      "displayName": [],
+      "count": 50,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seed-translation'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-30b-a3b-instruct-2507",
+      "displayName": [],
+      "count": 50,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-30b-a3b-instruct-2507'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "volcengine",
+      "rawModel": "doubao-seed-translation",
+      "displayName": [],
+      "count": 50,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seed-translation'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-3.0",
+      "displayName": [],
+      "count": 46,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-3.0'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-3.0",
+      "displayName": [],
+      "count": 46,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-3.0'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-mt-lite",
+      "displayName": [],
+      "count": 44,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-mt-lite'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-vl-8b-instruct",
+      "displayName": [],
+      "count": 44,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-8b-instruct'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.6-35b-a3b",
+      "displayName": [],
+      "count": 44,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.6-35b-a3b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-mt-lite",
+      "displayName": [],
+      "count": 44,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-mt-lite'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-vl-8b-instruct",
+      "displayName": [],
+      "count": 44,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-8b-instruct'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.6-35b-a3b",
+      "displayName": [],
+      "count": 44,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.6-35b-a3b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.5-122b-a10b",
+      "displayName": [],
+      "count": 41,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.5-122b-a10b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.5-27b",
+      "displayName": [],
+      "count": 41,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.5-27b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.5-35b-a3b",
+      "displayName": [],
+      "count": 41,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.5-35b-a3b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.5-397b-a17b",
+      "displayName": [],
+      "count": 41,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.5-397b-a17b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.5-122b-a10b",
+      "displayName": [],
+      "count": 41,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.5-122b-a10b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.5-27b",
+      "displayName": [],
+      "count": 41,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.5-27b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.5-35b-a3b",
+      "displayName": [],
+      "count": 41,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.5-35b-a3b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.5-397b-a17b",
+      "displayName": [],
+      "count": 41,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.5-397b-a17b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-30b-a3b-thinking-2507",
+      "displayName": [],
+      "count": 40,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-30b-a3b-thinking-2507'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-vl-30b-a3b-thinking",
+      "displayName": [],
+      "count": 40,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-30b-a3b-thinking'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-vl-8b-thinking",
+      "displayName": [],
+      "count": 40,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-8b-thinking'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-30b-a3b-thinking-2507",
+      "displayName": [],
+      "count": 40,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-30b-a3b-thinking-2507'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-vl-30b-a3b-thinking",
+      "displayName": [],
+      "count": 40,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-30b-a3b-thinking'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-vl-8b-thinking",
+      "displayName": [],
+      "count": 40,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-8b-thinking'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-vl-235b-a22b-instruct",
+      "displayName": [],
+      "count": 38,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-235b-a22b-instruct'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-vl-235b-a22b-instruct",
+      "displayName": [],
+      "count": 38,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-235b-a22b-instruct'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-vl-ocr-2025-11-20",
+      "displayName": [],
+      "count": 36,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-ocr-2025-11-20'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-vl-30b-a3b-instruct",
+      "displayName": [],
+      "count": 36,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-30b-a3b-instruct'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-vl-ocr-2025-11-20",
+      "displayName": [],
+      "count": 36,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-ocr-2025-11-20'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-vl-30b-a3b-instruct",
+      "displayName": [],
+      "count": 36,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-30b-a3b-instruct'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-vl-ocr",
+      "displayName": [],
+      "count": 34,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-ocr'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-vl-235b-a22b-thinking",
+      "displayName": [],
+      "count": 34,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-235b-a22b-thinking'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.8-flash",
+      "displayName": [],
+      "count": 34,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-flash'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-embedding-2",
+      "displayName": [
+        "Gemini Embedding 2"
+      ],
+      "count": 34,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-embedding-2'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-vl-ocr",
+      "displayName": [],
+      "count": 34,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-ocr'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-vl-235b-a22b-thinking",
+      "displayName": [],
+      "count": 34,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-235b-a22b-thinking'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.8-flash",
+      "displayName": [],
+      "count": 34,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-flash'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "gpt-6-sol",
+      "displayName": [],
+      "count": 32,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=openai, raw='gpt-6-sol'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.8-max-0902",
+      "displayName": [],
+      "count": 28,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-max-0902'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.8-max-0902",
+      "displayName": [],
+      "count": 28,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-max-0902'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.6-max-preview",
+      "displayName": [],
+      "count": 24,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "preview(provider 语义待判)",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.6-max-preview'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.6-max-preview",
+      "displayName": [],
+      "count": 24,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "preview(provider 语义待判)",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.6-max-preview'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "volcengine",
+      "rawModel": "doubao-1.5-lite-32k",
+      "displayName": [],
+      "count": 24,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-1.5-lite-32k'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-mt-uni",
+      "displayName": [],
+      "count": 21,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-mt-uni'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-mt-uni",
+      "displayName": [],
+      "count": 21,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-mt-uni'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "glm",
+      "rawModel": "glm-4.6v",
+      "displayName": [
+        "GLM-4.6V"
+      ],
+      "count": 20,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=zhipu, raw='glm-4.6v'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "zhipu",
+      "rawModel": "glm-4.6v",
+      "displayName": [
+        "GLM-4.6V"
+      ],
+      "count": 20,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=zhipu, raw='glm-4.6v'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen2.5-vl-embedding",
+      "displayName": [],
+      "count": 18,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen2.5-vl-embedding'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "doubao",
+      "rawModel": "doubao-seed-character",
+      "displayName": [],
+      "count": 18,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seed-character'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-robotics-er-2-preview",
+      "displayName": [
+        "Gemini Robotics ER 2 Preview"
+      ],
+      "count": 18,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "preview(provider 语义待判),modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-robotics-er-2-preview'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen2.5-vl-embedding",
+      "displayName": [],
+      "count": 18,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen2.5-vl-embedding'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "volcengine",
+      "rawModel": "doubao-seed-character",
+      "displayName": [],
+      "count": 18,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seed-character'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "volcengine",
+      "rawModel": "doubao-seed-code",
+      "displayName": [],
+      "count": 18,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seed-code'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-235b-a22b-instruct-2507",
+      "displayName": [],
+      "count": 16,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-235b-a22b-instruct-2507'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-235b-a22b-thinking-2507",
+      "displayName": [],
+      "count": 16,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-235b-a22b-thinking-2507'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-vl-32b-instruct",
+      "displayName": [],
+      "count": 16,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-32b-instruct'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-vl-32b-thinking",
+      "displayName": [],
+      "count": 16,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-32b-thinking'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "gpt-5.6-cyber",
+      "displayName": [],
+      "count": 16,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=openai, raw='gpt-5.6-cyber'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "gpt-image-2.5-flare",
+      "displayName": [],
+      "count": 16,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=openai, raw='gpt-image-2.5-flare'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "gpt-image-2.5-sunburst",
+      "displayName": [],
+      "count": 16,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=openai, raw='gpt-image-2.5-sunburst'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-235b-a22b-instruct-2507",
+      "displayName": [],
+      "count": 16,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-235b-a22b-instruct-2507'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-235b-a22b-thinking-2507",
+      "displayName": [],
+      "count": 16,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-235b-a22b-thinking-2507'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-vl-32b-instruct",
+      "displayName": [],
+      "count": 16,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-32b-instruct'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-vl-32b-thinking",
+      "displayName": [],
+      "count": 16,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-32b-thinking'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-plus-2025-12-01-us",
+      "displayName": [],
+      "count": 14,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-plus-2025-12-01-us'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-plus-us",
+      "displayName": [],
+      "count": 14,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-plus-us'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-vl-flash-2025-10-15-us",
+      "displayName": [],
+      "count": 14,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-flash-2025-10-15-us'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-vl-flash-us",
+      "displayName": [],
+      "count": 14,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-flash-us'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.6-27b",
+      "displayName": [],
+      "count": 14,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.6-27b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.6-27b",
+      "displayName": [],
+      "count": 14,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.6-27b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-mt-turbo",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-mt-turbo'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-vl-max",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-max'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-vl-plus",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-plus'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-omni-30b-a3b-captioner",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-omni-30b-a3b-captioner'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-vl-flash-2026-01-22-us",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-flash-2026-01-22-us'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.8-2.4t-a95b",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-2.4t-a95b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.8-27b",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-27b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-robotics-er-2-streaming-preview",
+      "displayName": [
+        "Gemini Robotics ER 2 Streaming Preview"
+      ],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "preview(provider 语义待判),modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-robotics-er-2-streaming-preview'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "gpt-5.3-codex",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=openai, raw='gpt-5.3-codex'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "o4-mini-2025-04-16",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix",
+      "reason": "未匹配 registry（provider=openai, raw='o4-mini-2025-04-16'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "o4-mini-2025-04-16-with-data-sharing",
+      "displayName": [
+        "o4-mini-2025-04-16 with data sharing"
+      ],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=openai, raw='o4-mini-2025-04-16-with-data-sharing'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-mt-turbo",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-mt-turbo'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-vl-max",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-max'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-vl-plus",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-plus'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-omni-30b-a3b-captioner",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-omni-30b-a3b-captioner'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.8-2.4t-a95b",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-2.4t-a95b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.8-27b",
+      "displayName": [],
+      "count": 12,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "spec-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-27b'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "anthropic",
+      "rawModel": "claude-haiku-3.5-",
+      "displayName": [
+        "Claude Haiku 3.5 "
+      ],
+      "count": 10,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=anthropic, raw='claude-haiku-3.5-\\ue0f0'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "anthropic",
+      "rawModel": "claude-opus-4-",
+      "displayName": [
+        "Claude Opus 4 "
+      ],
+      "count": 10,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=anthropic, raw='claude-opus-4-\\ue0f0'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "anthropic",
+      "rawModel": "claude-opus-4.1-",
+      "displayName": [
+        "Claude Opus 4.1 "
+      ],
+      "count": 10,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=anthropic, raw='claude-opus-4.1-\\ue0f0'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "anthropic",
+      "rawModel": "claude-sonnet-4-",
+      "displayName": [
+        "Claude Sonnet 4 "
+      ],
+      "count": 10,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=anthropic, raw='claude-sonnet-4-\\ue0f0'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-3.8-flash-lite-tts",
+      "displayName": [
+        "Gemini 3.8 Flash-Lite TTS"
+      ],
+      "count": 10,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-3.8-flash-lite-tts'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-3.8-flash-tts",
+      "displayName": [
+        "Gemini 3.8 Flash TTS"
+      ],
+      "count": 10,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-3.8-flash-tts'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "doubao",
+      "rawModel": "doubao-seed-evolving",
+      "displayName": [],
+      "count": 9,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seed-evolving'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "volcengine",
+      "rawModel": "doubao-seed-evolving",
+      "displayName": [],
+      "count": 9,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seed-evolving'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.1-asr-flash",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.1-asr-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.1-asr-flash-filetrans",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.1-asr-flash-filetrans'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.1-asr-flash-message",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.1-asr-flash-message'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.1-asr-flash-streaming",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.1-asr-flash-streaming'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-flash-2025-07-28-us",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-flash-2025-07-28-us'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-flash-us",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-flash-us'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-2.0",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-2.0'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-2.0-2026-03-03",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-2.0-2026-03-03'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-2.0-pro",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-2.0-pro'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-2.0-pro-2026-03-03",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-2.0-pro-2026-03-03'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-2.0-pro-2026-04-22",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-2.0-pro-2026-04-22'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-2.0-pro-2026-06-22",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-2.0-pro-2026-06-22'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-asr-flash",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-asr-flash-2025-09-08",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-2025-09-08'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.6-flash-us",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.6-flash-us'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.7-plus-us",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.7-plus-us'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "gpt-image-2",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=openai, raw='gpt-image-2'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "gpt-realtime-2.1",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=openai, raw='gpt-realtime-2.1'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "gpt-realtime-2.1-mini",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=openai, raw='gpt-realtime-2.1-mini'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.1-asr-flash",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.1-asr-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.1-asr-flash-filetrans",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.1-asr-flash-filetrans'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.1-asr-flash-message",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.1-asr-flash-message'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.1-asr-flash-streaming",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.1-asr-flash-streaming'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-2.0",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-2.0'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-2.0-2026-03-03",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-2.0-2026-03-03'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-2.0-pro",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-2.0-pro'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-2.0-pro-2026-03-03",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-2.0-pro-2026-03-03'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-2.0-pro-2026-04-22",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-2.0-pro-2026-04-22'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-2.0-pro-2026-06-22",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-2.0-pro-2026-06-22'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-asr-flash",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-asr-flash-2025-09-08",
+      "displayName": [],
+      "count": 8,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-2025-09-08'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.0-asr-flash",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-asr-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.0-asr-flash-filetrans",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-asr-flash-filetrans'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.0-asr-flash-streaming",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-asr-flash-streaming'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.0-tts-flash",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-tts-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.0-tts-plus",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-tts-plus'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-audio-3.1-tts-flash",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.1-tts-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-flash-character-2026-02-26",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-flash-character-2026-02-26'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-edit",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-edit'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-edit-max",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-edit-max'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-edit-max-2026-01-16",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-edit-max-2026-01-16'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-edit-plus",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-edit-plus'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-edit-plus-2025-10-30",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-edit-plus-2025-10-30'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-edit-plus-2025-12-15",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-edit-plus-2025-12-15'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-max",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-max'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-max-2025-12-30",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-max-2025-12-30'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-plus",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-plus'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-image-plus-2026-01-09",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-plus-2026-01-09'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-long",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-long'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-long-2025-01-25",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-long-2025-01-25'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-mt-image-2.0",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-mt-image-2.0'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-plus-character-ja",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-plus-character-ja'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-tts-2025-04-10",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-tts-2025-04-10'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-tts-2025-05-22",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-tts-2025-05-22'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-tts-flash",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-tts-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-tts-realtime",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-tts-realtime'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-tts-realtime-2025-07-15",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-tts-realtime-2025-07-15'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-tts-realtime-latest",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "rolling-pointer,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-tts-realtime-latest'）",
+      "suggestedClass": "pointer"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-vl-ocr-2024-10-28",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-ocr-2024-10-28'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-vl-ocr-2025-04-13",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-ocr-2025-04-13'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-vl-ocr-2025-08-28",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-ocr-2025-08-28'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-asr-flash-2026-02-10",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-2026-02-10'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-asr-flash-filetrans",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-filetrans'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-asr-flash-filetrans-2025-11-17",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-filetrans-2025-11-17'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-asr-flash-realtime",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-realtime'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-asr-flash-realtime-2025-10-27",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-realtime-2025-10-27'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-asr-flash-realtime-2026-02-10",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-realtime-2026-02-10'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-rerank",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-rerank'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-tts-flash-realtime",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-flash-realtime'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-tts-instruct-flash",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-instruct-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-tts-instruct-flash-2026-01-26",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-instruct-flash-2026-01-26'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-tts-instruct-flash-realtime",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-instruct-flash-realtime'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-tts-instruct-flash-realtime-2026-01-22",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-instruct-flash-realtime-2026-01-22'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-tts-vc-2026-01-22",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-vc-2026-01-22'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-tts-vc-realtime-2025-11-27",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-vc-realtime-2025-11-27'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-tts-vc-realtime-2026-01-15",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-vc-realtime-2026-01-15'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-tts-vd-2026-01-26",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-vd-2026-01-26'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-tts-vd-realtime-2025-12-16",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-vd-realtime-2025-12-16'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-tts-vd-realtime-2026-01-15",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-vd-realtime-2026-01-15'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.5-ocr",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.5-ocr'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.7-max-preview",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "preview(provider 语义待判)",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.7-max-preview'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.7-text-embedding",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.7-text-embedding'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.8-max-prime",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-max-prime'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "deepseek",
+      "rawModel": "deepseek-flash-(1)",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "index-noise",
+      "reason": "未匹配 registry（provider=deepseek, raw='deepseek-flash-(1)'）",
+      "suggestedClass": "needs_source_check"
+    },
+    {
+      "providerId": "deepseek",
+      "rawModel": "deepseek-v4-pro-(2)",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "index-noise",
+      "reason": "未匹配 registry（provider=deepseek, raw='deepseek-v4-pro-(2)'）",
+      "suggestedClass": "needs_source_check"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-2.5-flash-image-🍌",
+      "displayName": [
+        "Gemini 2.5 Flash Image 🍌"
+      ],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "emoji,modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-2.5-flash-image-🍌'）",
+      "suggestedClass": "needs_source_check"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-2.5-flash-native-audio",
+      "displayName": [
+        "Gemini 2.5 Flash Native Audio"
+      ],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-2.5-flash-native-audio'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-2.5-flash-preview-tts",
+      "displayName": [
+        "Gemini 2.5 Flash Preview TTS"
+      ],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-2.5-flash-preview-tts'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-2.5-pro-preview-tts",
+      "displayName": [
+        "Gemini 2.5 Pro Preview TTS"
+      ],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-2.5-pro-preview-tts'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-3-pro-image-🍌",
+      "displayName": [
+        "Gemini 3 Pro Image 🍌"
+      ],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "emoji,modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-3-pro-image-🍌'）",
+      "suggestedClass": "needs_source_check"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-3.1-flash-image-🍌",
+      "displayName": [
+        "Gemini 3.1 Flash Image 🍌"
+      ],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "emoji,modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-3.1-flash-image-🍌'）",
+      "suggestedClass": "needs_source_check"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-3.1-flash-lite-image-🍌",
+      "displayName": [
+        "Gemini 3.1 Flash Lite Image 🍌"
+      ],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "emoji,modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-3.1-flash-lite-image-🍌'）",
+      "suggestedClass": "needs_source_check"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-3.1-flash-tts-preview",
+      "displayName": [
+        "Gemini 3.1 Flash TTS Preview"
+      ],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "preview(provider 语义待判),modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-3.1-flash-tts-preview'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-3.5-live-translate",
+      "displayName": [
+        "Gemini 3.5 Live Translate"
+      ],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-3.5-live-translate'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-3.5-transcribe",
+      "displayName": [
+        "Gemini 3.5 Transcribe"
+      ],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-3.5-transcribe'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-3.5-transcribe-live",
+      "displayName": [
+        "Gemini 3.5 Transcribe Live"
+      ],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-3.5-transcribe-live'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "chat-latest",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "rolling-pointer",
+      "reason": "未匹配 registry（provider=openai, raw='chat-latest'）",
+      "suggestedClass": "pointer"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "gpt-rosalind-research",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=openai, raw='gpt-rosalind-research'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.0-asr-flash",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-asr-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.0-asr-flash-filetrans",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-asr-flash-filetrans'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.0-asr-flash-streaming",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-asr-flash-streaming'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.0-tts-flash",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-tts-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.0-tts-plus",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.0-tts-plus'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-audio-3.1-tts-flash",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-audio-3.1-tts-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-flash-character-2026-02-26",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-flash-character-2026-02-26'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-edit",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-edit'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-edit-max",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-edit-max'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-edit-max-2026-01-16",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-edit-max-2026-01-16'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-edit-plus",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-edit-plus'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-edit-plus-2025-10-30",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-edit-plus-2025-10-30'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-edit-plus-2025-12-15",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-edit-plus-2025-12-15'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-max",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-max'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-max-2025-12-30",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-max-2025-12-30'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-plus",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-plus'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-image-plus-2026-01-09",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-image-plus-2026-01-09'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-long",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-long'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-long-2025-01-25",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-long-2025-01-25'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-mt-image-2.0",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-mt-image-2.0'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-plus-character-ja",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-plus-character-ja'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-tts-2025-04-10",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-tts-2025-04-10'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-tts-2025-05-22",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-tts-2025-05-22'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-tts-flash",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-tts-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-tts-realtime",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-tts-realtime'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-tts-realtime-2025-07-15",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-tts-realtime-2025-07-15'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-tts-realtime-latest",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "rolling-pointer,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-tts-realtime-latest'）",
+      "suggestedClass": "pointer"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-vl-ocr-2024-10-28",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-ocr-2024-10-28'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-vl-ocr-2025-04-13",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-ocr-2025-04-13'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-vl-ocr-2025-08-28",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-vl-ocr-2025-08-28'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-asr-flash-2026-02-10",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-2026-02-10'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-asr-flash-filetrans",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-filetrans'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-asr-flash-filetrans-2025-11-17",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-filetrans-2025-11-17'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-asr-flash-realtime",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-realtime'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-asr-flash-realtime-2025-10-27",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-realtime-2025-10-27'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-asr-flash-realtime-2026-02-10",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-realtime-2026-02-10'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-rerank",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-rerank'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-tts-flash-realtime",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-flash-realtime'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-tts-instruct-flash",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-instruct-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-tts-instruct-flash-2026-01-26",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-instruct-flash-2026-01-26'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-tts-instruct-flash-realtime",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-instruct-flash-realtime'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-tts-instruct-flash-realtime-2026-01-22",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-instruct-flash-realtime-2026-01-22'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-tts-vc-2026-01-22",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-vc-2026-01-22'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-tts-vc-realtime-2025-11-27",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-vc-realtime-2025-11-27'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-tts-vc-realtime-2026-01-15",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-vc-realtime-2026-01-15'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-tts-vd-2026-01-26",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-vd-2026-01-26'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-tts-vd-realtime-2025-12-16",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-vd-realtime-2025-12-16'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-tts-vd-realtime-2026-01-15",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "date-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-tts-vd-realtime-2026-01-15'）",
+      "suggestedClass": "snapshot"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.5-ocr",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.5-ocr'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.7-max-preview",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "preview(provider 语义待判)",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.7-max-preview'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.7-text-embedding",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.7-text-embedding'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.8-max-prime",
+      "displayName": [],
+      "count": 6,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.8-max-prime'）",
+      "suggestedClass": "safe_manual_add"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-mt-lite-us",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-mt-lite-us'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.7-max-us",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.7-max-us'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "doubao",
+      "rawModel": "doubao-seed3d-2.0",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seed3d-2.0'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "doubao",
+      "rawModel": "doubao-seedream-4-0",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seedream-4-0'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "doubao",
+      "rawModel": "doubao-seedream-4-5",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seedream-4-5'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "doubao",
+      "rawModel": "doubao-seedream-5-0-lite",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seedream-5-0-lite'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-3.1-flash-live-preview",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "preview(provider 语义待判),modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-3.1-flash-live-preview'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-3.8-live,-gemini-3.8-live-extended-thinking,-and-gemini-3.1-flash-live-preview",
+      "displayName": [
+        "Gemini 3.8 Live, Gemini 3.8 Live Extended Thinking, and Gemini 3.1 Flash Live Preview"
+      ],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "multi-value-comma",
+      "reason": "未匹配 registry（provider=google, raw='gemini-3.8-live,-gemini-3.8-live-extended-thinking,-and-gemini-3.1-flash-live-preview'）",
+      "suggestedClass": "needs_source_check"
+    },
+    {
+      "providerId": "google",
+      "rawModel": "gemini-robotics-er-1.6-preview",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "preview(provider 语义待判),modal-word",
+      "reason": "未匹配 registry（provider=google, raw='gemini-robotics-er-1.6-preview'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "gpt-4o-mini-transcribe",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=openai, raw='gpt-4o-mini-transcribe'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "openai",
+      "rawModel": "gpt-4o-transcribe",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=openai, raw='gpt-4o-transcribe'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "volcengine",
+      "rawModel": "doubao-1.5-vision-pro",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-1.5-vision-pro'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "volcengine",
+      "rawModel": "doubao-seed3d-2.0",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seed3d-2.0'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "volcengine",
+      "rawModel": "doubao-seedream-4-0",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seedream-4-0'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "volcengine",
+      "rawModel": "doubao-seedream-4-5",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seedream-4-5'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "volcengine",
+      "rawModel": "doubao-seedream-5-0-lite",
+      "displayName": [],
+      "count": 4,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seedream-5-0-lite'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen-mt-image",
+      "displayName": [],
+      "count": 3,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-mt-image'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-vl-rerank",
+      "displayName": [],
+      "count": 3,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-rerank'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.7-text-embedding-flash",
+      "displayName": [],
+      "count": 3,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.7-text-embedding-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3.7-text-rerank",
+      "displayName": [],
+      "count": 3,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.7-text-rerank'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "doubao",
+      "rawModel": "doubao-seedream-5-0-flash",
+      "displayName": [],
+      "count": 3,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seedream-5-0-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen-mt-image",
+      "displayName": [],
+      "count": 3,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen-mt-image'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3-vl-rerank",
+      "displayName": [],
+      "count": 3,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-vl-rerank'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.7-text-embedding-flash",
+      "displayName": [],
+      "count": 3,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.7-text-embedding-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "qwen",
+      "rawModel": "qwen3.7-text-rerank",
+      "displayName": [],
+      "count": 3,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3.7-text-rerank'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "volcengine",
+      "rawModel": "doubao-seedream-5-0-flash",
+      "displayName": [],
+      "count": 3,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "modal-word",
+      "reason": "未匹配 registry（provider=volcengine, raw='doubao-seedream-5-0-flash'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-asr-flash-2025-09-08-us",
+      "displayName": [],
+      "count": 2,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-2025-09-08-us'）",
+      "suggestedClass": "long_tail"
+    },
+    {
+      "providerId": "alibaba",
+      "rawModel": "qwen3-asr-flash-us",
+      "displayName": [],
+      "count": 2,
+      "sources": [
+        "prices",
+        "price_changes"
+      ],
+      "hints": "region-suffix,modal-word",
+      "reason": "未匹配 registry（provider=alibaba, raw='qwen3-asr-flash-us'）",
+      "suggestedClass": "long_tail"
+    }
+  ]
+}
