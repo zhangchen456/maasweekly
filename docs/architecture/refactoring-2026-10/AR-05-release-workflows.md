@@ -1,6 +1,6 @@
 # AR-05：工作流与发布构建
 
-状态：DONE_LOCAL / WORKFLOW_ROLLOUT_PENDING（47/47回归、标准构建及独立运行包通过）。优先级：P1。依赖：AR-01。
+状态：RELEASED（2026-10-02），见[线上验收](./release-2026-10-02.md)。
 
 ## 目标与交付
 

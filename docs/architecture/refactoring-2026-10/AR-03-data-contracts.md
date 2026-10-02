@@ -1,6 +1,6 @@
 # AR-03：标准数据层与共享契约
 
-状态：LOCAL_VERIFIED；49/49 与标准 release/仓库外运行通过，见 AR-03-result.md。优先级：P1。依赖：AR-01。
+状态：RELEASED（2026-10-02），见[线上验收](./release-2026-10-02.md)。
 
 ## 目标与交付
 

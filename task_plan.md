@@ -32,3 +32,5 @@
 
 ## 已授权线上发布（2026-10-02）
 用户同意按计划上线。整合 origin/main 6efd666e1 的今日数据；七集合新旧逐字节一致。接下来标准全量构建 → 服务器非公开候选与资源验证 → 安装候选helper/config → 正式workflow蓝绿发布 → 四入口/限流/诊断验收与回退资料归档。远端存储继续DEFERRED。
+
+2026-10-02正式上线完成：commit8ebc6b9e4e，RID rl_8ebc6b9e4e_0da7f0c0f2bc；本地和Linux CI均53/53，蓝绿/四入口/旧游标/真实代理链/线上浏览器通过。完整证据、资源边界及回退见 docs/architecture/refactoring-2026-10/release-2026-10-02.md。远端存储DEFERRED。

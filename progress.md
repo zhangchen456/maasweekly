@@ -54,3 +54,5 @@ AR-08 最终实现 a4b4d263e：构建阶段/终态、激活/回滚终态与有�
 AR-08 最终 6a78846238：53/53 全量标准 release 359.087s、仓库外四入口与七集合相等通过。容量 1/5/10x C10 P95 14.3/24.6/35.4ms、loop P99≤19.5ms；10x稳态1.71GiB/进程峰3.03GiB，生产RAM/RTO待冻结。全部八项本地完成；候选保留于root dist-release，未推送部署；AR06远端DEFERRED。验收/维护/容量决策索引已归档。
 
 发布准备：合并今日数据，唯一冲突为已移除的 price-ledger.rendered.html，保留 Astro 实现。9份标准输入显式最终切入，原迁移标记保留；七集合新旧/当前数据完全相同，DS0da7/dataThrough20261002。服务器root既有密钥可用，maasdeploy本地密钥不可用；正式CI有既有部署凭据，采用非公开候选预验后CI发布，避免并发切换。
+
+2026-10-02正式上线完成：commit8ebc6b9e4e，RID rl_8ebc6b9e4e_0da7f0c0f2bc；本地和Linux CI均53/53，蓝绿/四入口/旧游标/真实代理链/线上浏览器通过。完整证据、资源边界及回退见 docs/architecture/refactoring-2026-10/release-2026-10-02.md。远端存储DEFERRED。

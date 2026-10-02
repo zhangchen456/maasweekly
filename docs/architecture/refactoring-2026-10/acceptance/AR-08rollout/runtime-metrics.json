@@ -1,0 +1,149 @@
+{
+  "kinds": [
+    "api.request",
+    "dataset.load",
+    "runtime.sample",
+    "runtime.started"
+  ],
+  "runtimeSamples": [
+    {
+      "timestamp": "2026-10-02T04:34:48.683Z",
+      "kind": "runtime.sample",
+      "releaseId": "rl_8ebc6b9e4e_0da7f0c0f2bc",
+      "datasetVersion": "ds_0da7f0c0f2bcd5df62281a262539b65a1742e3fbd710a14724359b58675c1b13",
+      "rssBytes": 277585920,
+      "heapUsedBytes": 79117888,
+      "eventLoopP99Ms": 0,
+      "health": {
+        "alive": true,
+        "ready": true,
+        "freshness": "stale",
+        "fresh": 35,
+        "stale": 22,
+        "unknown": 19
+      },
+      "cache": {
+        "entries": 0,
+        "bytes": 0,
+        "inFlight": 0
+      },
+      "logger": {
+        "queuedBytes": 720,
+        "dropped": 0,
+        "failedWrites": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-02T04:35:48.676Z",
+      "kind": "runtime.sample",
+      "releaseId": "rl_8ebc6b9e4e_0da7f0c0f2bc",
+      "datasetVersion": "ds_0da7f0c0f2bcd5df62281a262539b65a1742e3fbd710a14724359b58675c1b13",
+      "rssBytes": 162021376,
+      "heapUsedBytes": 79651376,
+      "eventLoopP99Ms": 21.250047,
+      "health": {
+        "alive": true,
+        "ready": true,
+        "freshness": "stale",
+        "fresh": 35,
+        "stale": 22,
+        "unknown": 19
+      },
+      "cache": {
+        "entries": 0,
+        "bytes": 0,
+        "inFlight": 0
+      },
+      "logger": {
+        "queuedBytes": 0,
+        "dropped": 0,
+        "failedWrites": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-02T04:36:48.677Z",
+      "kind": "runtime.sample",
+      "releaseId": "rl_8ebc6b9e4e_0da7f0c0f2bc",
+      "datasetVersion": "ds_0da7f0c0f2bcd5df62281a262539b65a1742e3fbd710a14724359b58675c1b13",
+      "rssBytes": 162283520,
+      "heapUsedBytes": 79872720,
+      "eventLoopP99Ms": 21.250047,
+      "health": {
+        "alive": true,
+        "ready": true,
+        "freshness": "stale",
+        "fresh": 35,
+        "stale": 22,
+        "unknown": 19
+      },
+      "cache": {
+        "entries": 0,
+        "bytes": 0,
+        "inFlight": 0
+      },
+      "logger": {
+        "queuedBytes": 0,
+        "dropped": 0,
+        "failedWrites": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-02T04:37:48.677Z",
+      "kind": "runtime.sample",
+      "releaseId": "rl_8ebc6b9e4e_0da7f0c0f2bc",
+      "datasetVersion": "ds_0da7f0c0f2bcd5df62281a262539b65a1742e3fbd710a14724359b58675c1b13",
+      "rssBytes": 164642816,
+      "heapUsedBytes": 80014824,
+      "eventLoopP99Ms": 21.250047,
+      "health": {
+        "alive": true,
+        "ready": true,
+        "freshness": "stale",
+        "fresh": 35,
+        "stale": 22,
+        "unknown": 19
+      },
+      "cache": {
+        "entries": 0,
+        "bytes": 0,
+        "inFlight": 0
+      },
+      "logger": {
+        "queuedBytes": 0,
+        "dropped": 0,
+        "failedWrites": 0
+      }
+    }
+  ],
+  "loads": [
+    {
+      "timestamp": "2026-10-02T04:34:48.673Z",
+      "kind": "dataset.load",
+      "releaseId": "rl_8ebc6b9e4e_0da7f0c0f2bc",
+      "datasetVersion": "ds_0da7f0c0f2bcd5df62281a262539b65a1742e3fbd710a14724359b58675c1b13",
+      "result": "changed",
+      "force": false,
+      "elapsedMs": 1900.5095350000001,
+      "errorCode": null,
+      "dataCounts": {
+        "changes": 7734,
+        "prices": 1435,
+        "evidence": 12014,
+        "unresolvedPrices": 576
+      },
+      "evidenceIntegrity": "validated",
+      "cache": {
+        "entries": 0,
+        "bytes": 0,
+        "inFlight": 0
+      },
+      "counters": {
+        "businessLoads": 1,
+        "unchangedPolls": 0,
+        "cacheHits": 0,
+        "cacheMisses": 0
+      }
+    }
+  ],
+  "requestCount": 83
+}
