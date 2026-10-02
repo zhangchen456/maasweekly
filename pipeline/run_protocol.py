@@ -202,8 +202,8 @@ def managed_entry(callback, root, family, configure=None, *, allow_dry=False):
             if args.retry_failed and not journal.data['selectedSources']:
                 journal.finish('not_run'); return 0
             if args.offline_snapshot:
-                journal.data.update({'offline': True, 'sources': record['sources'], 'runDate': record['runDate'], 'startedAt': record['startedAt']})
+                journal.data.update({'offline': True, 'sources': record['sources'], 'runDate': record['runDate'], 'startedAt': record['startedAt'], 'comparisonPaths': record.get('comparisonPaths', {})})
         journal.save()
         value = callback(); code = int(value or 0)
-        journal.finish(journal.data.get('outcome') or ('failed' if code else 'partial' if any(s.get('outcome') == 'failed' for s in journal.data['sources'].values()) else 'success'))
+        journal.finish(journal.data.get('outcome') or ('failed' if code else 'partial' if any(s.get('outcome') == 'failed' for s in journal.data['sources'].values()) else 'unchanged' if journal.data['sources'] and all(s.get('outcome') == 'unchanged' for s in journal.data['sources'].values()) else 'success'))
         return code

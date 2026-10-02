@@ -19,8 +19,9 @@ class DiagnosticsTests(unittest.TestCase):
         report = module.aggregate(failed)
         self.assertEqual(report['activeAlerts'], {'source:test': 'two_failed_attempts'})
         self.assertEqual(module.aggregate(failed, report)['transitions'], [])
-        recovered = module.aggregate(failed + [source(4, 'success')], report)
-        self.assertEqual(recovered['transitions'], [{'key': 'source:test', 'state': 'recovered'}])
+        for outcome in ('success', 'unchanged'):
+            recovered = module.aggregate(failed + [source(4, outcome)], report)
+            self.assertEqual(recovered['transitions'], [{'key': 'source:test', 'state': 'recovered'}])
     def test_health_load_candidate_and_drop(self):
         events = [{'kind': 'runtime.sample', 'health': {'ready': True, 'freshness': 'stale'}}, {'kind': 'dataset.load', 'result': 'failed'}, {'kind': 'release.result', 'outcome': 'failed'}, {'kind': 'pipeline.source', 'sourceId': 'test', 'attemptId': 1, 'outcome': 'success', 'countRatio': 0.3}]
         report = module.aggregate(events)

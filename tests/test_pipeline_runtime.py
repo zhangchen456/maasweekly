@@ -242,3 +242,98 @@ with patch('pricing.runner.provider_for',return_value=Provider()): m.main()
         self.assertEqual(json.loads(previous.path('data/normalized/cache-test.json').read_text()), {'round': 2})
         self.assertTrue(load_all(self.root, BASE / 'pipeline/config/public_providers.json').current['facts'])
         self.assertTrue((self.root / 'data/record-revisions' / record['id'] / '1.json').exists())
+    def test_unchanged_new_http_observation_preserves_health_and_changes_observation_time(self):
+        import time
+        from staged_fetch import fetch
+        from data_store import read
+        for index in range(2):
+            with RunJournal(self.root, 'sources', 'same_content_' + str(index)) as run:
+                self.assertEqual(fetch('https://example.com/same', lambda: ('same document', None), version='text-1')[0], 'same document')
+                state = next(iter(run.data['sources'].values()))
+                self.assertEqual(state['outcome'], 'success' if index == 0 else 'unchanged')
+                observed = state['lastSuccessAt']
+                if index: self.assertGreater(observed, previous)
+                previous = observed; run.finish(state['outcome'])
+            time.sleep(.001)
+        latest = next(iter(read(self.root, 'data/normalized/source-runtime.json').values()))
+        self.assertEqual(latest['outcome'], 'unchanged'); self.assertEqual(latest['lastSuccessAt'], previous)
+    def test_price_cli_new_http_same_prices_is_unchanged_with_new_observation(self):
+        import time
+        shutil.copytree(BASE / 'pipeline/config', self.root / 'pipeline/config', dirs_exist_ok=True)
+        spec = importlib.util.spec_from_file_location('prices_same', BASE / 'pipeline/scripts/fetch-prices.py')
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+        observed = time.time()
+        class Provider:
+            async def fetch(self, spec): return snapshot(spec.source_key, observed)
+        for index in range(2):
+            observed += 1
+            with patch.object(sys, 'argv', ['prices', '--input-root', str(self.root), '--only', 'anthropic', '--run-id', 'same_prices_' + str(index)]), patch('pricing.runner.provider_for', return_value=Provider()):
+                self.assertEqual(module.main(), 0)
+            current = json.loads((self.root / 'data/price-facts/current.json').read_text())
+            self.assertEqual(current['sources']['anthropic:pricing']['last_success_at'], observed)
+            record = next((self.root / 'data/price-runs').glob('*/same_prices_' + str(index) + '.json'))
+            state = json.loads(record.read_text())
+            self.assertEqual(state['outcome'], 'success' if index == 0 else 'unchanged')
+            self.assertEqual(state['sources']['anthropic:pricing']['outcome'], state['outcome'])
+            self.assertTrue(all(value['observed_at'] == observed for value in current['facts'].values()))
+            event_ids = sorted(p.name for p in (self.root / 'data/price-records').glob('*.json'))
+            if index: self.assertEqual(event_ids, first_ids)
+            else: first_ids = event_ids; first_run = record
+        before = {str(p.relative_to(self.root)): p.read_bytes() for folder in ('data/price-records', 'data/price-record-revisions', 'data/derived/pricing', 'data/price-facts') for p in (self.root / folder).rglob('*.json')}
+        input_version = load_view(self.root).version
+        with patch.object(sys, 'argv', ['prices', '--input-root', str(self.root), '--offline-snapshot', str(first_run), '--run-id', 'old_observation_replay']), patch('pricing.runner.provider_for', side_effect=AssertionError('offline cannot fetch')):
+            self.assertEqual(module.main(), 0)
+        for relative, raw in before.items(): self.assertEqual((self.root / relative).read_bytes(), raw, relative)
+        self.assertEqual(load_view(self.root).version, input_version)
+    def test_source_offline_preview_uses_frozen_comparison_without_replacing_diff(self):
+        import time
+        from staged_fetch import source_key
+        spec = importlib.util.spec_from_file_location('source_preview', BASE / 'pipeline/scripts/fetch_sources.py')
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module); module.configure_root(self.root)
+        shutil.copytree(BASE / 'pipeline/config', self.root / 'pipeline/config', dirs_exist_ok=True)
+        url='https://openai.com/api/pricing/'
+        (self.root / 'pipeline/config/maas_official_sources.json').write_text(json.dumps({'platforms': [{'name': 'OpenAI', 'sources': {'pricing': url}}]}))
+        with RunJournal(self.root, 'sources', 'preview_original') as run, patch.object(sys, 'argv', ['sources']), patch.object(module, '_fetch_page', return_value=('New pricing document longer than minimum', None)):
+            from datetime import datetime, timedelta
+            yesterday = (datetime.strptime(run.data['runDate'], '%Y-%m-%d') - timedelta(days=1)).strftime('%Y-%m-%d')
+            old = self.root / 'data/snapshots' / yesterday / f'OpenAI__pricing__{yesterday}.md'; old.parent.mkdir(parents=True)
+            old.write_text('Previous pricing document longer than minimum')
+            module.main(); original_diff = json.loads((self.root / 'data/diff' / (run.data['runDate'] + '.json')).read_text())
+            run.finish('success'); saved = json.loads(run.path.read_text())
+        old.write_text('A later alteration to the legacy comparison slot')
+        current_diff = self.root / 'data/diff' / (saved['runDate'] + '.json'); current_diff.write_text('{"newer":true}')
+        canonical_before = current_diff.read_bytes()
+        with RunJournal(self.root, 'sources', 'preview_replay') as run, patch.object(sys, 'argv', ['sources']), patch.object(module, '_fetch_page', side_effect=AssertionError('offline network')):
+            run.data.update({'offline': True, 'sources': saved['sources'], 'runDate': saved['runDate'], 'startedAt': saved['startedAt'], 'comparisonPaths': saved['comparisonPaths'], 'selectedSources': [source_key(url)]})
+            module.main(); preview = run.path.parent / 'offline-preview/diff' / (saved['runDate'] + '.json')
+            self.assertEqual(json.loads(preview.read_text()), original_diff)
+            self.assertEqual(current_diff.read_bytes(), canonical_before); run.finish('success')
+    def test_transport_crash_immediately_after_snapshot_recovers_before_result(self):
+        from staged_fetch import fetch
+        try:
+            with RunJournal(self.root, 'sources', 'fetched_no_result') as run:
+                original = run.stage_snapshot
+                def interrupted(*args):
+                    original(*args); raise RuntimeError('after snapshot before result')
+                with patch.object(run, 'stage_snapshot', side_effect=interrupted):
+                    fetch('https://example.com/fetched', lambda: ('captured source content', None), version='text-1')
+        except RuntimeError: pass
+        with RunJournal(self.root, 'sources', 'fetched_no_result', recover=True) as run:
+            self.assertEqual(fetch('https://example.com/fetched', lambda: self.fail('recover network'), version='text-1')[0], 'captured source content')
+            state = next(iter(run.data['sources'].values()))
+            self.assertEqual(state['outcome'], 'success'); self.assertEqual(state['phase'], 'parsed'); run.finish('success')
+    def test_leaderboard_invalid_schema_is_saved_and_not_transport_retried(self):
+        from types import SimpleNamespace
+        spec = importlib.util.spec_from_file_location('boards_invalid', BASE / 'pipeline/scripts/fetch-leaderboards.py')
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module); module.configure_root(self.root)
+        raw='{invalid JSON response'
+        try:
+            with RunJournal(self.root, 'leaderboards', 'invalid_schema') as run:
+                with patch.object(module.subprocess, 'run', return_value=SimpleNamespace(returncode=0, stdout=raw, stderr='')) as request:
+                    value, error = module.fetch_json('https://openrouter.ai/api/v1/datasets/session-cost', 'test')
+                self.assertIsNone(value); self.assertIsNotNone(error); self.assertEqual(request.call_count, 1)
+                key=next(iter(run.data['sources'])); self.assertEqual(run.snapshot(key).content, raw)
+                self.assertEqual(run.data['sources'][key]['errorCode'], 'schema_failed'); raise RuntimeError('interrupt')
+        except RuntimeError: pass
+        with RunJournal(self.root, 'leaderboards', 'invalid_schema', recover=True) as run, patch.object(module.subprocess, 'run', side_effect=AssertionError('retry parser by network')):
+            self.assertIsNone(module.fetch_json('https://openrouter.ai/api/v1/datasets/session-cost', 'test')[0]); run.finish('failed')

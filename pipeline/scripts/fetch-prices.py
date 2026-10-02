@@ -215,11 +215,17 @@ async def run(only: list[str] | None, dry_run: bool, *, journal=None, concurrenc
             for model in result.models: profiles[f"{model.provider_id}:{model.model_key}"] = model.display_name
             for evidence in result.evidence: source_urls[evidence.evidence_id] = snap.url
             facts = [fact_to_dict(f) for f in report.accepted]; all_facts.extend(facts)
+            def semantic(values):
+                ignored = {'observed_at', 'evidence_id', 'field_state', 'stale_reason'}
+                return sorted(json.dumps({k: v for k, v in fact.items() if k not in ignored}, sort_keys=True) for fact in values)
+            if prev_facts.get(entry.provider_id) and semantic(facts) == semantic(prev_facts[entry.provider_id]):
+                diagnostic['outcome'] = 'unchanged'
             print(f"  ✓ {len(facts)} facts / {len(result.models)} models")
             if not dry_run:
-                raw_relative = f'data/snapshots/{today}/pricing__{entry.provider_id}.html'
-                if journal: journal.backup_raw(raw_relative)
-                (snap_dir / f"pricing__{entry.provider_id}.html").write_text(snap.content, encoding='utf-8')
+                if not offline:
+                    raw_relative = f'data/snapshots/{today}/pricing__{entry.provider_id}.html'
+                    if journal: journal.backup_raw(raw_relative)
+                    (snap_dir / f"pricing__{entry.provider_id}.html").write_text(snap.content, encoding='utf-8')
                 _plan_provider_archive(entry, snap, result, report, today, observed, archive_plan, evidence_links)
             source_states.append(pa.make_source_state(entry.source_key, status="ok", latest_attempt_at=observed,
                 last_success_at=observed, coverage="full"))
@@ -340,8 +346,9 @@ async def run(only: list[str] | None, dry_run: bool, *, journal=None, concurrenc
         atomic_write(HISTORY_DIR / f"{today}.json", {"date": today, "facts": all_facts})
 
     # 事件合并（归档提交后；事件自身有修订链恢复）
-    for event in events_plan:
-        pa.merge_price_event(records_root, revisions_root, event)
+    if not offline:
+        for event in events_plan:
+            pa.merge_price_event(records_root, revisions_root, event)
 
     current = pa.load_current(current_file)
     if not offline:
@@ -648,7 +655,7 @@ def main() -> int:
         for entry in all_entries():
             if entry.source_key not in journal.data['sources']:
                 journal.source_result(entry.source_key, {'outcome': 'not_run', 'lastSuccessAt': _last_success_at(ARCHIVE_ROOT / pa.DIR_CURRENT, entry.source_key)})
-        journal.finish('failed' if code else 'partial' if any(s.get('outcome') == 'failed' for s in journal.data['sources'].values()) else 'success', journal.data.get('accepted_versions', []))
+        journal.finish('failed' if code else 'partial' if any(s.get('outcome') == 'failed' for s in journal.data['sources'].values()) else 'unchanged' if all(s.get('outcome') in ('unchanged', 'not_run') for s in journal.data['sources'].values()) else 'success', journal.data.get('accepted_versions', []))
         return code
 
 

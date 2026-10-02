@@ -35,6 +35,7 @@ from staged_fetch import fetch as staged_fetch, wanted, source_key
 
 def configure_root(root):
     global BASE_DIR, SOURCES_FILE, SNAPSHOT_DIR, DIFF_DIR
+    root = root.resolve()
     BASE_DIR = root; SOURCES_FILE = root / 'pipeline/config/maas_official_sources.json'
     SNAPSHOT_DIR = root / 'data/snapshots'; DIFF_DIR = root / 'data/diff'
 
@@ -297,6 +298,11 @@ def save_snapshot(platform_name, source_type, content, today, fetched_at=None):
 
 def find_yesterday_snapshot(platform_name, source_type, today_str):
     """查找昨天的同源快照文件"""
+    journal = current_journal()
+    key = platform_name + ':' + source_type
+    if journal and key in journal.data.get('comparisonPaths', {}):
+        relative = journal.data['comparisonPaths'][key]
+        return BASE_DIR / relative if relative else None
     yesterday = (datetime.strptime(today_str, "%Y-%m-%d") - timedelta(days=1)).strftime("%Y-%m-%d")
     safe_name = platform_name.replace("/", "-").replace(" ", "_")
     # 也检查前2天（防止隔天漏抓）
@@ -305,7 +311,14 @@ def find_yesterday_snapshot(platform_name, source_type, today_str):
         filename = f"{safe_name}__{source_type}__{check_date}.md"
         filepath = SNAPSHOT_DIR / check_date / filename
         if filepath.exists():
+            if journal:
+                relative = str(filepath.relative_to(BASE_DIR)); journal.backup_raw(relative)
+                frozen = journal.data['rawBackups'][relative]
+                journal.data.setdefault('comparisonPaths', {})[key] = frozen; journal.save()
+                return BASE_DIR / frozen
             return filepath
+    if journal:
+        journal.data.setdefault('comparisonPaths', {})[key] = None; journal.save()
     return None
 
 
@@ -332,6 +345,7 @@ def simple_diff(old_content, new_content, platform_name, source_type):
 
 
 def main():
+    global DIFF_DIR, SNAPSHOT_DIR
     # 命令行参数: --max-sources N（调试限流）、--platform 名称（只跑单个平台）
     max_sources = None
     only_platform = None
@@ -348,6 +362,9 @@ def main():
             i += 1
 
     journal = current_journal()
+    if journal and journal.data.get('offline'):
+        preview = journal.path.parent / 'offline-preview'
+        DIFF_DIR = preview / 'diff'; SNAPSHOT_DIR = preview / 'snapshots'
     today = journal.data["runDate"] if journal else datetime.now(ZoneInfo("Asia/Shanghai")).strftime("%Y-%m-%d")
     print(f"=== MaaS 信源每日抓取 {today} ===")
 
