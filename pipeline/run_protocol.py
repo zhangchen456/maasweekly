@@ -34,6 +34,7 @@ class RunJournal:
         lock = safe(self.root, 'data/.pipeline.lock'); lock.parent.mkdir(parents=True, exist_ok=True)
         self.lock = lock.open('a+b'); fcntl.flock(self.lock, fcntl.LOCK_EX)
         try:
+            if safe(self.root, 'data/storage-restore-pending.json').exists(): raise ValueError('storage restore pending; pipeline writer blocked')
             pending = safe(self.root, PENDING)
             if pending.exists():
                 active = json.loads(pending.read_text())
