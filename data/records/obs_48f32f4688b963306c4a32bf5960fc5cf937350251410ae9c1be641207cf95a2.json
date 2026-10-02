@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_48f32f4688b963306c4a32bf5960fc5cf937350251410ae9c1be641207cf95a2",
+  "sourceId": "anthropic-changelog",
+  "date": "2026-10-02",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.anthropic.com/en/release-notes/api",
+  "title": "Anthropic · 更新日志来源更新",
+  "summary": "变更日志中关于 Claude Managed Agents 的说明文本有细微变化，但核心内容（自托管沙箱可附加 memory stores）未变，可能为措辞调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-02T13:54:53+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "self-hosted",
+        "before": "Claude Managed Agents sessions that run in a self-hosted sandbox can now attach memory stores. The Python, TypeScript, and Go SDK workers download each attached store into the sandbox at its mount_path and sync the agent's changes back to the store. See Use memory stores.",
+        "after": "Claude Managed Agents sessions that run in a self-hosted sandbox can now attach memory stores. The Python, TypeScript, and Go SDK workers download each attached store into the sandbox at its mount_path and sync the agent's changes back to the store. See Memory stores in self-hosted sandboxes."
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [],
+    "added_count": 0,
+    "removed_count": 0,
+    "raw_added_count": 1,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-02.json"
+  },
+  "permalink": "/item/obs_48f32f4688b963306c4a32bf5960fc5cf937350251410ae9c1be641207cf95a2/"
+}

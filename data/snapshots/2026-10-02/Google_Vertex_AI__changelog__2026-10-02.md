@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-02T08:33:01.999143 -->
+<!-- fetched: 2026-10-02T21:49:13.985951+08:00 -->
 
 Vertex AI release notes  |  Generative AI on Vertex AI  |  Google Cloud Documentation
 Skip to main content

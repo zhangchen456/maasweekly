@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-02T08:32:55.737356 -->
+<!-- fetched: 2026-10-02T21:49:07.890721+08:00 -->
 
 Pricing | OpenAI API
 For the complete documentation index, see llms.txt. Markdown versions of documentation pages are available by appending
@@ -222,6 +222,7 @@ Safety checks
 Safety classifiers
 Cybersecurity checks
 Misalignment monitoring
+Enforcement notifications
 Under-18 guidance
 CSAM guidance
 Content provenance

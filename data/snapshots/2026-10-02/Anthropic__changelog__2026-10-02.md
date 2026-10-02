@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-02T08:32:57.761666 -->
+<!-- fetched: 2026-10-02T21:49:09.996950+08:00 -->
 
 Claude Platform release notes - Claude Platform Docs
 Claude Platform Docs
@@ -85,7 +85,7 @@ Agent Skills and the Skills API (/v1/skills) are out of beta on the Claude API. 
 To move an existing integration off the header, see Migrate from skills-2025-10-02.
 The Admin API user-management endpoints for Claude Enterprise (claude.ai) organizations (members, invites, groups, and custom roles) are out of beta. The anthropic-beta: ce-user-management-2026-07-13 header is no longer required on group and custom-role requests; requests that still send it are accepted unchanged. See User management.
 You can now restrict which sites a Claude Managed Agents agent's web_search and web_fetch tools can reach. Set allowed_domains or blocked_domains on the tool's entry in the agent_toolset_20260401 configs array; web_fetch also accepts max_content_tokens and web_search accepts user_location. Each configs entry is identified by its name and typed by an optional type, and requests that pass only name, enabled, and permission_policy continue to work; in the typed SDKs, configs entries become per-tool types. See Restrict web search and web fetch domains.
-Claude Managed Agents sessions that run in a self-hosted sandbox can now attach memory stores. The Python, TypeScript, and Go SDK workers download each attached store into the sandbox at its mount_path and sync the agent's changes back to the store. See Use memory stores.
+Claude Managed Agents sessions that run in a self-hosted sandbox can now attach memory stores. The Python, TypeScript, and Go SDK workers download each attached store into the sandbox at its mount_path and sync the agent's changes back to the store. See Memory stores in self-hosted sandboxes.
 The session viewer in the Claude Console has been redesigned with a timeline minimap, a transcript grouped by model request, and an Inspector panel for session details and cost, raw events, per-tool statistics, mounted resources, and per-thread activity. See Console observability.
 August 18, 2026
 Workbench is now playground in the Claude Console. Playground supports every Messages API parameter and includes templates that demonstrate API features such as code execution and web search. It shows the full SDK request and the API response for each run, to help you understand the API and build with it. For more, see the Claude Help Center or try it at platform.claude.com/playground.

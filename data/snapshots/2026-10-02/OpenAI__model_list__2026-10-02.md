@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-02T08:32:55.500581 -->
+<!-- fetched: 2026-10-02T21:49:07.664085+08:00 -->
 
 Models | OpenAI API
 For the complete documentation index, see llms.txt. Markdown versions of documentation pages are available by appending
@@ -222,6 +222,7 @@ Safety checks
 Safety classifiers
 Cybersecurity checks
 Misalignment monitoring
+Enforcement notifications
 Under-18 guidance
 CSAM guidance
 Content provenance

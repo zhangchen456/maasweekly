@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-02T08:33:08.591444 -->
+<!-- fetched: 2026-10-02T21:49:19.206191+08:00 -->
 
 Arena Leaderboard | Compare & Benchmark the Best Frontier AI Models
 New Chat
@@ -9,7 +9,7 @@ Log In
 Terms of UsePrivacy PolicyCookies
 Measuring AIin the real-world
 Our leaderboards are powered by real people doing real work on Arena from across the globe
-357,986,159357,986,159Total Sessions
+358,219,103358,219,103Total Sessions
 New Release Rankings
 Gemini 4 Argon
 is #1 in
@@ -62,30 +62,30 @@ Claude Opus 4.8 (High)
 6.92%View all
 Live Agent Sessions
 Best Overall
-GPT 6 Luna (Max)·
-OpenAI
+Private Model·
+Anonymous
 Session complete
-Qwen3.8 Flash Next·
-Alibaba
+Gemini 3.7 Flash (High)·
+Google
 Session complete
-GPT 6 Luna (Max)·
-OpenAI
-Reading files
+GLM 5.3 (Max)·
+Z.ai
+Session complete
+GLM 5.3 (Max)·
+Z.ai
+Session complete
+Private Model·
+Anonymous
+Session complete
+Private Model·
+Anonymous
+Session complete
 Deepseek V4.1 Flash (Max)·
 DeepSeek
-Running bash
-GPT 6 Luna (Max)·
-OpenAI
-Editing a file
-Deepseek V4.1 Flash (Max)·
-DeepSeek
-Searching the web
-GPT 6 Luna (Max)·
-OpenAI
-Reading files
-Deepseek V4.1 Flash (Max)·
-DeepSeek
-Running bash
+Session complete
+Private Model·
+Anonymous
+Writing a file
 Start a chat
 Pareto Frontier
 Best Overall
@@ -94,23 +94,23 @@ View details
 Pareto Optimal Models
 Best Overall
 Anthropic
-Claude Fable 5.1 (Max)$4.38/task
+Claude Fable 5.1 (Max)$4.66/task
 14.55%
 Anthropic
-Claude Opus 5.5 (High)$1.56/task
+Claude Opus 5.5 (High)$1.58/task
 13.78%
-GPT 6 Sol (Max)$0.90/task
+GPT 6 Sol (Max)$0.91/task
 10.65%
-Gemini 4 Argon (High)$0.64/task
+Gemini 4 Argon (High)$0.66/task
 7.92%
 Tencent
-Hy4 preview$0.29/task
+Hy4 preview$0.30/task
 4.24%
 Deepseek V4.1 Flash (Max)$0.10/task
 4.01%
 MiMo V2.6 Pro$0.10/task
 3.17%
-GPT 6 Luna (Max)$0.06/task
+GPT 6 Luna (Max)$0.07/task
 1.68%
 MiMo V2.6 Flash$0.04/task
 0.57%

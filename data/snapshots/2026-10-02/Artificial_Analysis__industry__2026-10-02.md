@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-02T08:33:07.690941 -->
+<!-- fetched: 2026-10-02T21:49:18.677556+08:00 -->
 
 AI Model & API Providers Analysis | Artificial Analysis
 Artificial Analysis
@@ -242,7 +242,7 @@ AA-Briefcase is a frontier agentic evaluation for long-horizon knowledge work, t
 AA-Briefcase EloAA-Briefcase Rubric Score (%)Analytical Quality & Presentation EloAA-Briefcase Elo vs. Cost per Task
 AA-Briefcase Elo
 AA-Briefcase v1.1 is an agentic knowledge work benchmark developed by Artificial Analysis. AA-Briefcase Elo is a combined metric that aggregates rubric pass rate, analytical quality Elo and presentation Elo · Higher is better
-25 of 215 models
+25 of 216 models
 Add model from specific provider
 Not publicly available
 AA-Briefcase Elo
@@ -261,7 +261,7 @@ GDPval-AA v2.1Updated
 GDPval-AA v2.1 evaluates AI models on real-world, economically valuable tasks across a wide range of occupations
 GDPval-AA v2.1 Leaderboard
 Elo rating for performance on real-world work tasks · Anchored to DeepSeek V4.1 Flash (max) at 1600 · Higher is better
-25 of 278 models
+25 of 279 models
 Add model from specific provider
 Not publicly available
 Openness Index

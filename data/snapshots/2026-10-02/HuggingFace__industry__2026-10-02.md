@@ -1,13 +1,13 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-02T08:33:07.495958 -->
+<!-- fetched: 2026-10-02T21:49:18.552740+08:00 -->
 
 [
   {
     "_id": "621ffdc136468d709f180294",
     "id": "sentence-transformers/all-MiniLM-L6-v2",
-    "likes": 6159,
+    "likes": 6162,
     "private": false,
-    "downloads": 242249202,
+    "downloads": 240958074,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -67,7 +67,7 @@
     "id": "cross-encoder/ms-marco-MiniLM-L6-v2",
     "likes": 354,
     "private": false,
-    "downloads": 85835476,
+    "downloads": 85435603,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -96,9 +96,9 @@
   {
     "_id": "64fff537d522560505ad6567",
     "id": "BAAI/bge-small-en-v1.5",
-    "likes": 596,
+    "likes": 597,
     "private": false,
-    "downloads": 63277870,
+    "downloads": 63079743,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -133,7 +133,7 @@
     "id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
     "likes": 1417,
     "private": false,
-    "downloads": 48901305,
+    "downloads": 50234270,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -213,7 +213,7 @@
     "id": "google/electra-base-discriminator",
     "likes": 189,
     "private": false,
-    "downloads": 46162532,
+    "downloads": 46138086,
     "tags": [
       "transformers",
       "pytorch",
@@ -235,9 +235,9 @@
   {
     "_id": "621ffdc036468d709f174338",
     "id": "google-bert/bert-base-uncased",
-    "likes": 3382,
+    "likes": 3385,
     "private": false,
-    "downloads": 40586031,
+    "downloads": 39963393,
     "tags": [
       "transformers",
       "pytorch",
@@ -268,9 +268,9 @@
   {
     "_id": "65b53851e602b6c2c96e78da",
     "id": "BAAI/bge-m3",
-    "likes": 3783,
+    "likes": 3786,
     "private": false,
-    "downloads": 35387749,
+    "downloads": 35073646,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -299,9 +299,9 @@
   {
     "_id": "680da718233834890aa01f51",
     "id": "Qwen/Qwen3-0.6B",
-    "likes": 1716,
+    "likes": 1717,
     "private": false,
-    "downloads": 29423291,
+    "downloads": 29565215,
     "tags": [
       "transformers",
       "safetensors",
@@ -328,7 +328,7 @@
     "id": "google-t5/t5-small",
     "likes": 646,
     "private": false,
-    "downloads": 24194730,
+    "downloads": 24474682,
     "tags": [
       "transformers",
       "pytorch",
@@ -369,9 +369,9 @@
   {
     "_id": "69037c2ff37fdfe285722818",
     "id": "amazon/chronos-2",
-    "likes": 501,
+    "likes": 503,
     "private": false,
-    "downloads": 22709690,
+    "downloads": 22865413,
     "tags": [
       "chronos-forecasting",
       "safetensors",
@@ -397,9 +397,9 @@
   {
     "_id": "6a6bd1dc7034404148ec9107",
     "id": "Comfy-Org/MiniMax-H3",
-    "likes": 2085,
+    "likes": 2093,
     "private": false,
-    "downloads": 22461562,
+    "downloads": 22813102,
     "tags": [
       "diffusion-single-file",
       "comfyui",
@@ -413,11 +413,34 @@
     "modelId": "Comfy-Org/MiniMax-H3"
   },
   {
+    "_id": "639c045c34967bcf4564bdc5",
+    "id": "timm/mobilenetv3_small_100.lamb_in1k",
+    "likes": 124,
+    "private": false,
+    "downloads": 21610288,
+    "tags": [
+      "timm",
+      "pytorch",
+      "safetensors",
+      "image-classification",
+      "transformers",
+      "dataset:imagenet-1k",
+      "arxiv:2110.00476",
+      "arxiv:1905.02244",
+      "license:apache-2.0",
+      "region:us"
+    ],
+    "pipeline_tag": "image-classification",
+    "library_name": "timm",
+    "createdAt": "2022-12-16T05:38:36.000Z",
+    "modelId": "timm/mobilenetv3_small_100.lamb_in1k"
+  },
+  {
     "_id": "621ffdc136468d709f17ea62",
     "id": "openai/clip-vit-base-patch32",
-    "likes": 1575,
+    "likes": 1576,
     "private": false,
-    "downloads": 21352825,
+    "downloads": 21219227,
     "tags": [
       "transformers",
       "pytorch",
@@ -437,34 +460,11 @@
     "modelId": "openai/clip-vit-base-patch32"
   },
   {
-    "_id": "639c045c34967bcf4564bdc5",
-    "id": "timm/mobilenetv3_small_100.lamb_in1k",
-    "likes": 123,
-    "private": false,
-    "downloads": 21296713,
-    "tags": [
-      "timm",
-      "pytorch",
-      "safetensors",
-      "image-classification",
-      "transformers",
-      "dataset:imagenet-1k",
-      "arxiv:2110.00476",
-      "arxiv:1905.02244",
-      "license:apache-2.0",
-      "region:us"
-    ],
-    "pipeline_tag": "image-classification",
-    "library_name": "timm",
-    "createdAt": "2022-12-16T05:38:36.000Z",
-    "modelId": "timm/mobilenetv3_small_100.lamb_in1k"
-  },
-  {
     "_id": "621ffdc136468d709f180297",
     "id": "sentence-transformers/all-mpnet-base-v2",
     "likes": 1381,
     "private": false,
-    "downloads": 20112349,
+    "downloads": 19890733,
     "tags": [
       "sentence-transformers",
       "pytorch",
@@ -520,7 +520,7 @@
     "id": "BAAI/bge-reranker-v2-m3",
     "likes": 1223,
     "private": false,
-    "downloads": 17114851,
+    "downloads": 17103286,
     "tags": [
       "sentence-transformers",
       "safetensors",
@@ -542,11 +542,40 @@
     "modelId": "BAAI/bge-reranker-v2-m3"
   },
   {
+    "_id": "621ffdc136468d709f17cdba",
+    "id": "jonatasgrosman/wav2vec2-large-xlsr-53-japanese",
+    "likes": 88,
+    "private": false,
+    "downloads": 16382951,
+    "tags": [
+      "transformers",
+      "pytorch",
+      "jax",
+      "wav2vec2",
+      "automatic-speech-recognition",
+      "audio",
+      "speech",
+      "xlsr-fine-tuning-week",
+      "ja",
+      "dataset:common_voice",
+      "doi:10.57967/hf/3568",
+      "license:apache-2.0",
+      "model-index",
+      "endpoints_compatible",
+      "region:us",
+      "deploy:azure"
+    ],
+    "pipeline_tag": "automatic-speech-recognition",
+    "library_name": "transformers",
+    "createdAt": "2022-03-02T23:29:05.000Z",
+    "modelId": "jonatasgrosman/wav2vec2-large-xlsr-53-japanese"
+  },
+  {
     "_id": "621ffdc036468d709f174364",
     "id": "FacebookAI/xlm-roberta-base",
     "likes": 926,
     "private": false,
-    "downloads": 16518912,
+    "downloads": 16167820,
     "tags": [
       "transformers",
       "pytorch",
@@ -663,40 +692,11 @@
     "modelId": "FacebookAI/xlm-roberta-base"
   },
   {
-    "_id": "621ffdc136468d709f17cdba",
-    "id": "jonatasgrosman/wav2vec2-large-xlsr-53-japanese",
-    "likes": 88,
-    "private": false,
-    "downloads": 16308645,
-    "tags": [
-      "transformers",
-      "pytorch",
-      "jax",
-      "wav2vec2",
-      "automatic-speech-recognition",
-      "audio",
-      "speech",
-      "xlsr-fine-tuning-week",
-      "ja",
-      "dataset:common_voice",
-      "doi:10.57967/hf/3568",
-      "license:apache-2.0",
-      "model-index",
-      "endpoints_compatible",
-      "region:us",
-      "deploy:azure"
-    ],
-    "pipeline_tag": "automatic-speech-recognition",
-    "library_name": "transformers",
-    "createdAt": "2022-03-02T23:29:05.000Z",
-    "modelId": "jonatasgrosman/wav2vec2-large-xlsr-53-japanese"
-  },
-  {
     "_id": "68ea05fb43df37d95ad2491d",
     "id": "Qwen/Qwen3-VL-8B-Instruct",
-    "likes": 1159,
+    "likes": 1160,
     "private": false,
-    "downloads": 16099617,
+    "downloads": 15794638,
     "tags": [
       "transformers",
       "safetensors",
@@ -724,7 +724,7 @@
     "id": "openai-community/gpt2",
     "likes": 4193,
     "private": false,
-    "downloads": 15697858,
+    "downloads": 15740994,
     "tags": [
       "transformers",
       "pytorch",
@@ -755,7 +755,7 @@
     "id": "nomic-ai/nomic-embed-text-v1.5",
     "likes": 943,
     "private": false,
-    "downloads": 13391095,
+    "downloads": 13233366,
     "tags": [
       "sentence-transformers",
       "onnx",
