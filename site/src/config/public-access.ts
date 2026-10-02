@@ -80,12 +80,8 @@ export const PUBLIC_ACCESS = {
       surface: 'mcp',
     },
   ],
-  pendingClients: [
-    {
-      name: 'Codex',
-      unblockCondition: '无真实 OpenAI 认证环境（Task 04 T18 起持续阻断；未以 curl/SDK 冒充验证）。解除条件：取得认证环境后完成新会话工具发现与「变化→条目、价格→证据、最新周报」链路验收',
-    },
-  ],
+  // Codex 已由用户确认验证；不展示客户端版本/日期状态徽标。
+  pendingClients: [] as { name: string; unblockCondition: string }[],
 } as const;
 
 /** 构建门禁：返回违规清单（空 = 通过）。页面/feed frontmatter 调用，非空即 throw。 */

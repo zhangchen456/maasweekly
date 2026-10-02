@@ -97,10 +97,8 @@ console.log('[4] T02/T03/T05：/agent/ 页面内容');
   // 数据快照声明
   check('观察快照声明', html.includes('观察快照'));
   check('无结果语义', html.includes('未记录到匹配项') || html.includes('不代表供应商实时官网'));
-  // T03 客户端列表
-  check('Claude Code 标为已验证', /Claude Code · MCP 已验证/.test(html) && html.includes('2.1.259'));
-  check('Codex 标为待验证', html.includes('Codex · 待验证'));
-  check('Codex 无「已支持」徽标', !/已支持[^<]*Codex|Codex[^<]*已支持/.test(html));
+  check('接入页不展示客户端验证状态块', !html.includes('客户端验证') && !html.includes('client-status'));
+  check('Codex 配置保留且无过时验收说明', html.includes('[mcp_servers.maas-daily]') && !html.includes('真实客户端验收仍待完成') && !html.includes('Codex · 待验证'));
   // T05 示例一致性
   // M7 合同修正：--dir 是最终 Skill 目录（示例用真实形态，不再是尖括号占位符）
   check('Skill 安装命令 --dir 最终目录', html.includes('--dir ~/.claude/skills/maas-daily'));
@@ -108,13 +106,11 @@ console.log('[4] T02/T03/T05：/agent/ 页面内容');
   check('REST base URL 正确', html.includes(`${PUBLIC_ACCESS.canonicalBaseUrl}/api/v1`));
   check('feed 双地址', html.includes('/feed.xml') && html.includes('/feed/weekly.xml'));
   // M10 GA（2026-09-20）：四入口已上线——状态与真实证据同步翻转（T23 断言）
-  // Codex 仍待验证（无真实认证环境，保持 pending——不为全绿强翻）
   check('四入口显示已上线（T23）', (html.match(/已上线/g) || []).length >= 4);
   check('RSS 卡显示已上线（GA 后状态真实）',
     /id="method-rss"[\s\S]*?已上线/.test(html));
   check('RSS 卡含上线证据说明（2026-09-20 验收）',
     html.includes(PUBLIC_ACCESS.surfaces.rss.reason));
-  check('Codex 保持待验证（未伪造通过）', /Codex[\s\S]{0,300}?待验证/.test(html));
   check('changelog 含 GA 日期 2026-09-20', html.includes('2026-09-20') || read('changelog/index.html').includes('2026-09-20'));
   // CopyBlock aria
   check('复制反馈 aria-live', html.includes('aria-live="polite"'));
