@@ -78,7 +78,7 @@ flowchart TD
 
 ## 4. 每个任务的完成与发布
 
-状态统一使用：`TODO → IN_PROGRESS → LOCAL_VERIFIED → RELEASED`。不涉及运行时发布的任务用 `DONE`；存储评估允许以有证据的 `DEFERRED` 收尾。AR-01 为 DONE，AR-02/03/04/05/07 及 AR-08 基础已本地验收；AR-06 本地迁移演练已验收、远端 DEFERRED；AR-08 容量复核继续实施。每项最新状态以对应任务书和结果文档为准。
+状态统一使用：`TODO → IN_PROGRESS → LOCAL_VERIFIED → RELEASED`。不涉及运行时发布的任务用 `DONE`；存储评估允许以有证据的 `DEFERRED` 收尾。AR-01 为 DONE，AR-02/03/04/05/07/08 已本地验收；AR-06 本地迁移演练已验收、远端 DEFERRED。八项结果与操作入口见 [交付索引](./delivery-index.md)。每项最新状态以对应任务书和结果文档为准。
 
 每个任务新增 `AR-XX-result.md`，至少记录：
 
@@ -97,7 +97,7 @@ flowchart TD
 
 先跑任务相关验证，正式 release 使用现有 `scripts/build-release.sh` 及其全量门禁。不要用 `--skip-tests` 的产物作为生产候选。结果文档区分本地完成与线上完成，任何等待中的决策都不能写成已完成。
 
-本清单是实施任务书，不是本次已经执行改造或生产发布的记录。后续执行按当次授权和项目发布规则推进；如需生产确认，应先准备具体 commit、RID、manifest、配置差异、验证结果和回退方案。
+本清单保留实施任务书，已完成改造的证据以结果文档和交付索引为准。生产尚未发布；后续发布按当次授权和项目规则推进；如需生产确认，应先准备具体 commit、RID、manifest、配置差异、验证结果和回退方案。
 
 ## 5. 可直接交给执行者的指令
 

@@ -64,13 +64,13 @@ OpenAPI、MCP 参数/返回说明继续做契约对照测试；类型生成不�
 
 ## 验收标准
 
-- [ ] 采集器及公开导出不再把 `site/` 文件作为事实权威源；允许独立站点投影器写兼容产物。
-- [ ] 同一输入分别用旧路径与新路径构建，所有公开集合、稳定 ID、版本和公开链接一致；必要偏差逐条登记为明确变更。
-- [ ] 正式周报数量、ID、内容、RSS 与页面一致，滚动摘要没有变成正式周报实体。
-- [ ] 事实与摘要可独立失败/重跑，摘要失败不改变价格/证据和其 freshness。
-- [ ] 站点与 API 校验相同坏 manifest 都拒载；有效历史数据与 catalog 继续可读。
-- [ ] 生成类型无未提交漂移，生产 API 包脱离仓库源码目录也能启动。
-- [ ] T07 registry/identity、public export、API/MCP、RSS、站点价格/记录回归通过。
+- [x] 采集器及公开导出不再把 `site/` 文件作为事实权威源；允许独立站点投影器写兼容产物。
+- [x] 同一输入分别用旧路径与新路径构建，所有公开集合、稳定 ID、版本和公开链接一致；必要偏差逐条登记为明确变更。
+- [x] 正式周报数量、ID、内容、RSS 与页面一致，滚动摘要没有变成正式周报实体。
+- [x] 事实与摘要可独立失败/重跑，摘要失败不改变价格/证据和其 freshness。
+- [x] 站点与 API 校验相同坏 manifest 都拒载；有效历史数据与 catalog 继续可读。
+- [x] 生成类型无未提交漂移，生产 API 包脱离仓库源码目录也能启动。
+- [x] T07 registry/identity、public export、API/MCP、RSS、站点价格/记录回归通过。
 
 关键现有验证：`python3 pipeline/scripts/export-public-data.py --check`、`python3 -m unittest discover -s tests -p 'test_public_export.py'`、T07 测试，以及 AR-02 的 API/MCP 测试。新旧导出对账必须在隔离根目录执行，不能覆盖真实归档来比较。
 

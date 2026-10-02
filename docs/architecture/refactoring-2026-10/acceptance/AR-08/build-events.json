@@ -1,0 +1,100 @@
+[
+  {
+    "timestamp": "2026-10-02T03:37:26.749991+00:00",
+    "kind": "release.stage",
+    "operation": "build",
+    "stage": "preflight",
+    "outcome": "success",
+    "exitCode": 0,
+    "elapsedMs": 0,
+    "timingResolutionMs": 1000,
+    "gitCommit": "6a788462380bb1e6523676a8666604649957cd19"
+  },
+  {
+    "timestamp": "2026-10-02T03:37:44.741706+00:00",
+    "kind": "release.stage",
+    "operation": "build",
+    "stage": "projection",
+    "outcome": "success",
+    "exitCode": 0,
+    "elapsedMs": 18000,
+    "timingResolutionMs": 1000,
+    "gitCommit": "6a788462380bb1e6523676a8666604649957cd19"
+  },
+  {
+    "timestamp": "2026-10-02T03:43:02.175768+00:00",
+    "kind": "release.stage",
+    "operation": "build",
+    "stage": "regression",
+    "outcome": "success",
+    "exitCode": 0,
+    "elapsedMs": 318000,
+    "timingResolutionMs": 1000,
+    "gitCommit": "6a788462380bb1e6523676a8666604649957cd19"
+  },
+  {
+    "timestamp": "2026-10-02T03:43:03.023029+00:00",
+    "kind": "release.stage",
+    "operation": "build",
+    "stage": "clean-tree",
+    "outcome": "success",
+    "exitCode": 0,
+    "elapsedMs": 1000,
+    "timingResolutionMs": 1000,
+    "gitCommit": "6a788462380bb1e6523676a8666604649957cd19"
+  },
+  {
+    "timestamp": "2026-10-02T03:43:04.183186+00:00",
+    "kind": "release.stage",
+    "operation": "build",
+    "stage": "runtime-package",
+    "outcome": "success",
+    "exitCode": 0,
+    "elapsedMs": 1000,
+    "timingResolutionMs": 1000,
+    "gitCommit": "6a788462380bb1e6523676a8666604649957cd19"
+  },
+  {
+    "timestamp": "2026-10-02T03:43:16.223025+00:00",
+    "kind": "release.stage",
+    "operation": "build",
+    "stage": "assembly",
+    "outcome": "success",
+    "exitCode": 0,
+    "elapsedMs": 12000,
+    "timingResolutionMs": 1000,
+    "gitCommit": "6a788462380bb1e6523676a8666604649957cd19",
+    "releaseId": "rl_6a78846238_6fd3cc403bf9",
+    "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f"
+  },
+  {
+    "timestamp": "2026-10-02T03:43:24.929874+00:00",
+    "kind": "release.stage",
+    "operation": "build",
+    "stage": "manifest",
+    "outcome": "success",
+    "exitCode": 0,
+    "elapsedMs": 8000,
+    "timingResolutionMs": 1000,
+    "gitCommit": "6a788462380bb1e6523676a8666604649957cd19",
+    "releaseId": "rl_6a78846238_6fd3cc403bf9",
+    "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f"
+  },
+  {
+    "timestamp": "2026-10-02T03:43:24.953787+00:00",
+    "kind": "release.result",
+    "operation": "build",
+    "stage": "manifest",
+    "outcome": "success",
+    "exitCode": 0,
+    "elapsedMs": 358000,
+    "timingResolutionMs": 1000,
+    "gitCommit": "6a788462380bb1e6523676a8666604649957cd19",
+    "releaseId": "rl_6a78846238_6fd3cc403bf9",
+    "datasetVersion": "ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f",
+    "totals": {
+      "files": 24363,
+      "bytes": 702986268
+    }
+  }
+]

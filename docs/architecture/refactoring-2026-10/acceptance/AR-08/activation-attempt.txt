@@ -1,0 +1,27 @@
+Pre-final attempt: source was updated during Bash execution; discarded and re-run with fixed source.
+./Users/zhangchen/miniconda3/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 16629 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./Users/zhangchen/miniconda3/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 16641 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.........................sF..................
+======================================================================
+FAIL: test_fail_candidate_smoke (test_release_activation.TestT05FailureKeepsCurrent.test_fail_candidate_smoke)
+失败注入 5：候选 status 冒烟失败（服务起在错误端口）。
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/zhangchen/Work/maasweekly/tests/test_release_activation.py", line 329, in test_fail_candidate_smoke
+    old = self._setup_current()
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/zhangchen/Work/maasweekly/tests/test_release_activation.py", line 265, in _setup_current
+    self.activate("activate", good)
+  File "/Users/zhangchen/Work/maasweekly/tests/test_release_activation.py", line 141, in activate
+    self.assertEqual(r.returncode, expect_rc,
+AssertionError: 127 != 0 : rc=127 stderr=/Users/zhangchen/Work/maasweekly/ops/server/maasweekly-activate: line 711: 未知动作: activate（合法：activate|rollback|status|cleanup，退出 2）: command not found
+
+
+----------------------------------------------------------------------
+Ran 46 tests in 62.311s
+
+FAILED (failures=1, skipped=1)
