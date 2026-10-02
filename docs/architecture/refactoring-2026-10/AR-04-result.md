@@ -1,0 +1,17 @@
+# AR-04 管线改造验收
+
+状态：LOCAL_VERIFIED。完成日期：2026-10-02（Asia/Shanghai）。候选 commit `7d7d9d40a6ccb145927d70f1f7a6e91d506223fa`；未推送、未发布。
+
+八家价格来源拆为纯适配器，获取网页与解析分离。17 份冻结 fixture 的事实、证据与 warning 与旧实现一致，原 extractor 版本、Decimal、事实身份及定位规则不变。价格获取默认并发 2、最大 3，同域限速；只对获取失败做一次退避重试，解析失败保留原响应。真实 DeepSeek/Qwen dry-run 获得 12/2088 条报价，未写入正式数据；该冒烟对应先前实现 a0d554c77c，最新修复后的完整验证使用离线回归。
+
+价格、通用信源、榜单、摘要及周报相关入口采用唯一运行记录、单写入锁、独立暂存与已校验输入指针。输入提交前中断可恢复原基线或丢弃；指针提交后恢复只完成记账，禁止丢弃已提交事实。新建但未提交的修订先隔离，避免产生孤立链。候选导出/站点/工作流提交拒绝 pending 运行。榜单与 logo 注册表也移入标准输入，由 projector 单向输出兼容数据。
+
+运行记录关联 runId、attemptId、原 fetchedAt、输入/输出 hash、解析/规则版本及来源健康状态，区分 success、unchanged、partial、failed、not_run。相同网页的新 HTTP 观察可以推进真实观察时间；离线重放保留原时间，不覆盖较新的事实、事件、raw 槽位或健康状态。通用来源和榜单离线结果只生成独立预览。恢复复用已保存快照，包括快照写入后、结果记账前中断；异常榜单 JSON 原始字节保留且不再次联网。
+
+18 项运行恢复测试通过，包含子进程真实退出、提交前后中断、旧观察离线重放、单写入阻断、资源关闭、缓存边界及无 HTTP 恢复。完整标准 release 回归 **50/50，退出码 0，364.821 秒（含打包）**。正式候选 `rl_7d7d9d40a6_6fd3cc403bf9` 在仓库外、仅生产依赖实际运行通过 REST、MCP、两份 RSS 与 Skill 八文件一致性验证。七集合仍逐字节相同，datasetVersion=`ds_6fd3cc403bf9314b2c61286faaf46e98ff27568a47b943af88c75692724a689f`，dataThrough=2026-10-01。
+
+真实全量输入演练包含 95,625 个引用；152 个可变内容对象共 50,628,153 字节，一份 manifest 28,752,026 字节，首次捕获 23.321 秒。不可变事实/证据直接引用，没有复制历史档案。运行输入缓存保留当前和上一检查点，与公开 cursor/发布版本保留期独立；两检查点的最坏存储上界约 159 MB。每次写入的捕获成本与缓存占用继续纳入 AR-06/AR-08，不能据此宣称没有开销。实际工作区尚未初始化新输入指针。
+
+证据：[完整回归](./acceptance/AR-04/regression.json)、[运行恢复](./acceptance/AR-04/runtime-evidence.json)、[测试输出](./acceptance/AR-04/runtime-tests.txt)、[全量输入视图](./acceptance/AR-04/real-input-view.json)、[独立运行包](./acceptance/AR-04/standalone-release.json)。第一次 a0d554c77c 的完整回归作为先前检查点保留，最终结论以上述 7d7d9d40a6 为准。
+
+恢复、失败来源重跑、dry-run、离线重解析及本地 recovery bundle 的可复制命令见 [恢复操作手册](./pipeline-recovery-operations.md)。GitHub pending bundle 上传为候选工作流、保留 14 天，本地打包恢复已验证；未实际运行 GitHub 上传或生产恢复。该协议保证本地单写入进程恢复，不宣称分布式事务或断电级持久性。回退沿用现有 immutable release；合法事实/证据必须保留，未提交运行按手册恢复或隔离。
