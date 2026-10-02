@@ -2,7 +2,7 @@
 
 全球 MaaS 平台追踪站：周度报告 + 每日信源变化（热点每天更新），数据由自动抓取管线驱动。
 
-架构改造：[2026-10 执行任务清单](docs/architecture/refactoring-2026-10/README.md)（8 个任务，含依赖、实施步骤、验收与回退；计划状态，尚未实施）。
+架构改造：[2026-10 执行任务清单](docs/architecture/refactoring-2026-10/README.md)（8 项本地改造及逐项回归已完成；[交付与验收入口](docs/architecture/refactoring-2026-10/delivery-index.md)。生产未发布，远端存储暂缓）。
 
 线上地址：**https://daily.maas.click** （旧域名 `week.maas.click` / `mw.zhangchen456.xyz` 已 301 跳转到新域名）
 
