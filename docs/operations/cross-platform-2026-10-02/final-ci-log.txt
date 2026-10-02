@@ -1,0 +1,289 @@
+changes	Set up job	﻿2026-10-02T17:39:25.0708109Z Current runner version: '2.337.0'
+changes	Set up job	2026-10-02T17:39:25.0735848Z ##[group]Runner Image Provisioner
+changes	Set up job	2026-10-02T17:39:25.0736790Z Hosted Compute Agent
+changes	Set up job	2026-10-02T17:39:25.0737491Z Version: 20260901.588
+changes	Set up job	2026-10-02T17:39:25.0738133Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+changes	Set up job	2026-10-02T17:39:25.0738941Z Build Date: 2026-09-01T19:56:44Z
+changes	Set up job	2026-10-02T17:39:25.0739652Z Worker ID: {06326b74-f33f-4c4d-a047-4a1820af72cc}
+changes	Set up job	2026-10-02T17:39:25.0740375Z Azure Region: westcentralus
+changes	Set up job	2026-10-02T17:39:25.0741469Z ##[endgroup]
+changes	Set up job	2026-10-02T17:39:25.0743250Z ##[group]Operating System
+changes	Set up job	2026-10-02T17:39:25.0743973Z Ubuntu
+changes	Set up job	2026-10-02T17:39:25.0744537Z 24.04.5
+changes	Set up job	2026-10-02T17:39:25.0745061Z LTS
+changes	Set up job	2026-10-02T17:39:25.0745625Z ##[endgroup]
+changes	Set up job	2026-10-02T17:39:25.0746207Z ##[group]Runner Image
+changes	Set up job	2026-10-02T17:39:25.0746793Z Image: ubuntu-24.04
+changes	Set up job	2026-10-02T17:39:25.0747417Z Version: 20260927.320.1
+changes	Set up job	2026-10-02T17:39:25.0748486Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260927.320/images/ubuntu/Ubuntu2404-Readme.md
+changes	Set up job	2026-10-02T17:39:25.0750340Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260927.320
+changes	Set up job	2026-10-02T17:39:25.0751557Z ##[endgroup]
+changes	Set up job	2026-10-02T17:39:25.0752759Z ##[group]GITHUB_TOKEN Permissions
+changes	Set up job	2026-10-02T17:39:25.0755038Z Contents: read
+changes	Set up job	2026-10-02T17:39:25.0755777Z Metadata: read
+changes	Set up job	2026-10-02T17:39:25.0756422Z ##[endgroup]
+changes	Set up job	2026-10-02T17:39:25.0758658Z Secret source: Actions
+changes	Set up job	2026-10-02T17:39:25.0759680Z Cache mode: write
+changes	Set up job	2026-10-02T17:39:25.0760444Z Prepare workflow directory
+changes	Set up job	2026-10-02T17:39:25.1116960Z Prepare all required actions
+changes	Set up job	2026-10-02T17:39:25.1165544Z Getting action download info
+changes	Set up job	2026-10-02T17:39:25.4468296Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+changes	Set up job	2026-10-02T17:39:25.5334891Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+changes	Set up job	2026-10-02T17:39:25.7228694Z Complete job name: changes
+changes	Checkout	﻿2026-10-02T17:39:25.8000481Z ##[group]Run actions/checkout@v4
+changes	Checkout	2026-10-02T17:39:25.8001710Z with:
+changes	Checkout	2026-10-02T17:39:25.8002160Z   fetch-depth: 0
+changes	Checkout	2026-10-02T17:39:25.8002642Z   repository: zhangchen456/maasweekly
+changes	Checkout	2026-10-02T17:39:25.8006706Z   token: ***
+changes	Checkout	2026-10-02T17:39:25.8007148Z   ssh-strict: true
+changes	Checkout	2026-10-02T17:39:25.8007593Z   ssh-user: git
+changes	Checkout	2026-10-02T17:39:25.8008048Z   persist-credentials: true
+changes	Checkout	2026-10-02T17:39:25.8008543Z   clean: true
+changes	Checkout	2026-10-02T17:39:25.8008995Z   sparse-checkout-cone-mode: true
+changes	Checkout	2026-10-02T17:39:25.8009518Z   fetch-tags: false
+changes	Checkout	2026-10-02T17:39:25.8009970Z   show-progress: true
+changes	Checkout	2026-10-02T17:39:25.8010419Z   lfs: false
+changes	Checkout	2026-10-02T17:39:25.8011034Z   submodules: false
+changes	Checkout	2026-10-02T17:39:25.8011498Z   set-safe-directory: true
+changes	Checkout	2026-10-02T17:39:25.8012010Z   allow-unsafe-pr-checkout: false
+changes	Checkout	2026-10-02T17:39:25.8012800Z ##[endgroup]
+changes	Checkout	2026-10-02T17:39:25.9012692Z Syncing repository: zhangchen456/maasweekly
+changes	Checkout	2026-10-02T17:39:25.9015369Z ##[group]Getting Git version info
+changes	Checkout	2026-10-02T17:39:25.9016563Z Working directory is '/home/runner/work/maasweekly/maasweekly'
+changes	Checkout	2026-10-02T17:39:25.9018329Z [command]/usr/bin/git version
+changes	Checkout	2026-10-02T17:39:25.9082874Z git version 2.55.0
+changes	Checkout	2026-10-02T17:39:25.9117173Z ##[endgroup]
+changes	Checkout	2026-10-02T17:39:25.9140214Z Temporarily overriding HOME='/home/runner/work/_temp/196cd564-39d6-4258-b94a-82259c389844' before making global git config changes
+changes	Checkout	2026-10-02T17:39:25.9142610Z Adding repository directory to the temporary git global config as a safe directory
+changes	Checkout	2026-10-02T17:39:25.9144567Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/maasweekly/maasweekly
+changes	Checkout	2026-10-02T17:39:25.9190877Z Deleting the contents of '/home/runner/work/maasweekly/maasweekly'
+changes	Checkout	2026-10-02T17:39:25.9197270Z ##[group]Initializing the repository
+changes	Checkout	2026-10-02T17:39:25.9202855Z [command]/usr/bin/git init /home/runner/work/maasweekly/maasweekly
+changes	Checkout	2026-10-02T17:39:25.9317685Z hint: Using 'master' as the name for the initial branch. This default branch name
+changes	Checkout	2026-10-02T17:39:25.9319037Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+changes	Checkout	2026-10-02T17:39:25.9320487Z hint: to use in all of your new repositories, which will suppress this warning,
+changes	Checkout	2026-10-02T17:39:25.9321766Z hint: call:
+changes	Checkout	2026-10-02T17:39:25.9322316Z hint:
+changes	Checkout	2026-10-02T17:39:25.9323294Z hint: 	git config --global init.defaultBranch <name>
+changes	Checkout	2026-10-02T17:39:25.9324458Z hint:
+changes	Checkout	2026-10-02T17:39:25.9325600Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+changes	Checkout	2026-10-02T17:39:25.9327575Z hint: 'development'. The just-created branch can be renamed via this command:
+changes	Checkout	2026-10-02T17:39:25.9329066Z hint:
+changes	Checkout	2026-10-02T17:39:25.9329856Z hint: 	git branch -m <name>
+changes	Checkout	2026-10-02T17:39:25.9331013Z hint:
+changes	Checkout	2026-10-02T17:39:25.9332221Z hint: Disable this message with "git config set advice.defaultBranchName false"
+changes	Checkout	2026-10-02T17:39:25.9334035Z Initialized empty Git repository in /home/runner/work/maasweekly/maasweekly/.git/
+changes	Checkout	2026-10-02T17:39:25.9338744Z [command]/usr/bin/git remote add origin https://github.com/zhangchen456/maasweekly
+changes	Checkout	2026-10-02T17:39:25.9394744Z ##[endgroup]
+changes	Checkout	2026-10-02T17:39:25.9395990Z ##[group]Disabling automatic garbage collection
+changes	Checkout	2026-10-02T17:39:25.9398511Z [command]/usr/bin/git config --local gc.auto 0
+changes	Checkout	2026-10-02T17:39:25.9448843Z ##[endgroup]
+changes	Checkout	2026-10-02T17:39:25.9450013Z ##[group]Setting up auth
+changes	Checkout	2026-10-02T17:39:25.9451432Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+changes	Checkout	2026-10-02T17:39:25.9481846Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+changes	Checkout	2026-10-02T17:39:25.9844386Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+changes	Checkout	2026-10-02T17:39:25.9903410Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+changes	Checkout	2026-10-02T17:39:26.0137288Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+changes	Checkout	2026-10-02T17:39:26.0174263Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+changes	Checkout	2026-10-02T17:39:26.0411793Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+changes	Checkout	2026-10-02T17:39:26.0471651Z ##[endgroup]
+changes	Checkout	2026-10-02T17:39:26.0487651Z ##[group]Fetching the repository
+changes	Checkout	2026-10-02T17:39:26.0489208Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+changes	Checkout	2026-10-02T17:39:36.7960829Z From https://github.com/zhangchen456/maasweekly
+changes	Checkout	2026-10-02T17:39:36.7963302Z  * [new branch]          codex/multilingual-seo -> origin/codex/multilingual-seo
+changes	Checkout	2026-10-02T17:39:36.7965601Z  * [new branch]          codex/seo-optimization -> origin/codex/seo-optimization
+changes	Checkout	2026-10-02T17:39:36.7968471Z  * [new branch]          docs/t08-0-analytics-architecture -> origin/docs/t08-0-analytics-architecture
+changes	Checkout	2026-10-02T17:39:36.7971384Z  * [new branch]          fix/cursor-logo        -> origin/fix/cursor-logo
+changes	Checkout	2026-10-02T17:39:36.7974146Z  * [new branch]          fix/workflow-public-projection -> origin/fix/workflow-public-projection
+changes	Checkout	2026-10-02T17:39:36.7977020Z  * [new branch]          main                   -> origin/main
+changes	Checkout	2026-10-02T17:39:36.7979710Z  * [new branch]          t08-1a-analytics-foundation -> origin/t08-1a-analytics-foundation
+changes	Checkout	2026-10-02T17:39:36.7982979Z  * [new branch]          task-06-m7-candidate   -> origin/task-06-m7-candidate
+changes	Checkout	2026-10-02T17:39:36.7985918Z  * [new branch]          task-07-model-identity -> origin/task-07-model-identity
+changes	Checkout	2026-10-02T17:39:36.7988338Z  * [new branch]          task-07-t07-4a         -> origin/task-07-t07-4a
+changes	Checkout	2026-10-02T17:39:36.7990788Z  * [new branch]          task-07-t07-4a2        -> origin/task-07-t07-4a2
+changes	Checkout	2026-10-02T17:39:36.7993691Z  * [new branch]          task-07-t07-4b1-model-catalog -> origin/task-07-t07-4b1-model-catalog
+changes	Checkout	2026-10-02T17:39:36.7996127Z  * [new branch]          task-07-t07-4b2-model-detail -> origin/task-07-t07-4b2-model-detail
+changes	Checkout	2026-10-02T17:39:36.7998927Z  * [new branch]          task-07-t07-5-1-ontology-inventory -> origin/task-07-t07-5-1-ontology-inventory
+changes	Checkout	2026-10-02T17:39:36.8002369Z  * [new branch]          task-07-t07-5-2-dev-platform-registry -> origin/task-07-t07-5-2-dev-platform-registry
+changes	Checkout	2026-10-02T17:39:36.8005898Z  * [new branch]          task-07-t07-5-ontology-design -> origin/task-07-t07-5-ontology-design
+changes	Checkout	2026-10-02T17:39:36.8009635Z [command]/usr/bin/git branch --list --remote origin/main
+changes	Checkout	2026-10-02T17:39:36.8016812Z   origin/main
+changes	Checkout	2026-10-02T17:39:36.8026841Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+changes	Checkout	2026-10-02T17:39:36.8053475Z 45b0f13b190b11df6ec529217a9a8bce76fad619
+changes	Checkout	2026-10-02T17:39:36.8061252Z ##[endgroup]
+changes	Checkout	2026-10-02T17:39:36.8064264Z ##[group]Determining the checkout info
+changes	Checkout	2026-10-02T17:39:36.8068370Z ##[endgroup]
+changes	Checkout	2026-10-02T17:39:36.8070144Z [command]/usr/bin/git sparse-checkout disable
+changes	Checkout	2026-10-02T17:39:36.8127707Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+changes	Checkout	2026-10-02T17:39:36.8161489Z ##[group]Checking out the ref
+changes	Checkout	2026-10-02T17:39:36.8164533Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+changes	Checkout	2026-10-02T17:39:37.9629601Z Updating files:   6% (8002/122528)
+changes	Checkout	2026-10-02T17:39:38.0122460Z Updating files:   7% (8577/122528)
+changes	Checkout	2026-10-02T17:39:38.0614424Z Updating files:   8% (9803/122528)
+changes	Checkout	2026-10-02T17:39:38.1103569Z Updating files:   9% (11028/122528)
+changes	Checkout	2026-10-02T17:39:38.1583952Z Updating files:  10% (12253/122528)
+changes	Checkout	2026-10-02T17:39:38.2154519Z Updating files:  11% (13479/122528)
+changes	Checkout	2026-10-02T17:39:38.2747317Z Updating files:  12% (14704/122528)
+changes	Checkout	2026-10-02T17:39:38.3269558Z Updating files:  13% (15929/122528)
+changes	Checkout	2026-10-02T17:39:38.3787857Z Updating files:  14% (17154/122528)
+changes	Checkout	2026-10-02T17:39:38.4299520Z Updating files:  15% (18380/122528)
+changes	Checkout	2026-10-02T17:39:38.4802478Z Updating files:  16% (19605/122528)
+changes	Checkout	2026-10-02T17:39:38.5371273Z Updating files:  17% (20830/122528)
+changes	Checkout	2026-10-02T17:39:38.5871193Z Updating files:  18% (22056/122528)
+changes	Checkout	2026-10-02T17:39:38.6360092Z Updating files:  19% (23281/122528)
+changes	Checkout	2026-10-02T17:39:38.6853229Z Updating files:  20% (24506/122528)
+changes	Checkout	2026-10-02T17:39:38.7339610Z Updating files:  21% (25731/122528)
+changes	Checkout	2026-10-02T17:39:38.7827506Z Updating files:  22% (26957/122528)
+changes	Checkout	2026-10-02T17:39:38.8323676Z Updating files:  23% (28182/122528)
+changes	Checkout	2026-10-02T17:39:38.8815402Z Updating files:  24% (29407/122528)
+changes	Checkout	2026-10-02T17:39:38.9384802Z Updating files:  25% (30632/122528)
+changes	Checkout	2026-10-02T17:39:38.9396571Z Updating files:  26% (31858/122528)
+changes	Checkout	2026-10-02T17:39:38.9886208Z Updating files:  26% (31884/122528)
+changes	Checkout	2026-10-02T17:39:39.0375551Z Updating files:  27% (33083/122528)
+changes	Checkout	2026-10-02T17:39:39.0868426Z Updating files:  28% (34308/122528)
+changes	Checkout	2026-10-02T17:39:39.1356288Z Updating files:  29% (35534/122528)
+changes	Checkout	2026-10-02T17:39:39.1848089Z Updating files:  30% (36759/122528)
+changes	Checkout	2026-10-02T17:39:39.2342497Z Updating files:  31% (37984/122528)
+changes	Checkout	2026-10-02T17:39:39.2832039Z Updating files:  32% (39209/122528)
+changes	Checkout	2026-10-02T17:39:39.3321068Z Updating files:  33% (40435/122528)
+changes	Checkout	2026-10-02T17:39:39.3811379Z Updating files:  34% (41660/122528)
+changes	Checkout	2026-10-02T17:39:39.4371449Z Updating files:  35% (42885/122528)
+changes	Checkout	2026-10-02T17:39:39.4862412Z Updating files:  36% (44111/122528)
+changes	Checkout	2026-10-02T17:39:39.5347284Z Updating files:  37% (45336/122528)
+changes	Checkout	2026-10-02T17:39:39.5833178Z Updating files:  38% (46561/122528)
+changes	Checkout	2026-10-02T17:39:39.6322548Z Updating files:  39% (47786/122528)
+changes	Checkout	2026-10-02T17:39:39.6807004Z Updating files:  40% (49012/122528)
+changes	Checkout	2026-10-02T17:39:39.7292530Z Updating files:  41% (50237/122528)
+changes	Checkout	2026-10-02T17:39:39.7773575Z Updating files:  42% (51462/122528)
+changes	Checkout	2026-10-02T17:39:39.8259198Z Updating files:  43% (52688/122528)
+changes	Checkout	2026-10-02T17:39:39.8916391Z Updating files:  44% (53913/122528)
+changes	Checkout	2026-10-02T17:39:39.9397388Z Updating files:  45% (55138/122528)
+changes	Checkout	2026-10-02T17:39:39.9403056Z Updating files:  45% (56350/122528)
+changes	Checkout	2026-10-02T17:39:39.9944773Z Updating files:  46% (56363/122528)
+changes	Checkout	2026-10-02T17:39:40.0425090Z Updating files:  47% (57589/122528)
+changes	Checkout	2026-10-02T17:39:40.0907134Z Updating files:  48% (58814/122528)
+changes	Checkout	2026-10-02T17:39:40.1391160Z Updating files:  49% (60039/122528)
+changes	Checkout	2026-10-02T17:39:40.1894664Z Updating files:  50% (61264/122528)
+changes	Checkout	2026-10-02T17:39:40.2384405Z Updating files:  51% (62490/122528)
+changes	Checkout	2026-10-02T17:39:40.2875751Z Updating files:  52% (63715/122528)
+changes	Checkout	2026-10-02T17:39:40.3366124Z Updating files:  53% (64940/122528)
+changes	Checkout	2026-10-02T17:39:40.3854692Z Updating files:  54% (66166/122528)
+changes	Checkout	2026-10-02T17:39:40.4334649Z Updating files:  55% (67391/122528)
+changes	Checkout	2026-10-02T17:39:40.4808484Z Updating files:  56% (68616/122528)
+changes	Checkout	2026-10-02T17:39:40.5287841Z Updating files:  57% (69841/122528)
+changes	Checkout	2026-10-02T17:39:40.5765699Z Updating files:  58% (71067/122528)
+changes	Checkout	2026-10-02T17:39:40.6243085Z Updating files:  59% (72292/122528)
+changes	Checkout	2026-10-02T17:39:40.6721030Z Updating files:  60% (73517/122528)
+changes	Checkout	2026-10-02T17:39:40.7205152Z Updating files:  61% (74743/122528)
+changes	Checkout	2026-10-02T17:39:40.7685309Z Updating files:  62% (75968/122528)
+changes	Checkout	2026-10-02T17:39:40.8165253Z Updating files:  63% (77193/122528)
+changes	Checkout	2026-10-02T17:39:40.8646743Z Updating files:  64% (78418/122528)
+changes	Checkout	2026-10-02T17:39:40.9124977Z Updating files:  65% (79644/122528)
+changes	Checkout	2026-10-02T17:39:40.9397200Z Updating files:  66% (80869/122528)
+changes	Checkout	2026-10-02T17:39:40.9608172Z Updating files:  66% (81557/122528)
+changes	Checkout	2026-10-02T17:39:41.0083716Z Updating files:  67% (82094/122528)
+changes	Checkout	2026-10-02T17:39:41.0558019Z Updating files:  68% (83320/122528)
+changes	Checkout	2026-10-02T17:39:41.1036733Z Updating files:  69% (84545/122528)
+changes	Checkout	2026-10-02T17:39:41.1513847Z Updating files:  70% (85770/122528)
+changes	Checkout	2026-10-02T17:39:41.1998531Z Updating files:  71% (86995/122528)
+changes	Checkout	2026-10-02T17:39:41.2483893Z Updating files:  72% (88221/122528)
+changes	Checkout	2026-10-02T17:39:41.2961815Z Updating files:  73% (89446/122528)
+changes	Checkout	2026-10-02T17:39:41.3449061Z Updating files:  74% (90671/122528)
+changes	Checkout	2026-10-02T17:39:41.3933122Z Updating files:  75% (91896/122528)
+changes	Checkout	2026-10-02T17:39:41.4415296Z Updating files:  76% (93122/122528)
+changes	Checkout	2026-10-02T17:39:41.4899632Z Updating files:  77% (94347/122528)
+changes	Checkout	2026-10-02T17:39:41.5849959Z Updating files:  78% (95572/122528)
+changes	Checkout	2026-10-02T17:39:41.6620402Z Updating files:  79% (96798/122528)
+changes	Checkout	2026-10-02T17:39:41.7383499Z Updating files:  80% (98023/122528)
+changes	Checkout	2026-10-02T17:39:41.8116322Z Updating files:  81% (99248/122528)
+changes	Checkout	2026-10-02T17:39:41.8863559Z Updating files:  82% (100473/122528)
+changes	Checkout	2026-10-02T17:39:41.9398297Z Updating files:  83% (101699/122528)
+changes	Checkout	2026-10-02T17:39:41.9609333Z Updating files:  83% (102583/122528)
+changes	Checkout	2026-10-02T17:39:42.0798172Z Updating files:  84% (102924/122528)
+changes	Checkout	2026-10-02T17:39:42.1522520Z Updating files:  85% (104149/122528)
+changes	Checkout	2026-10-02T17:39:42.2253841Z Updating files:  86% (105375/122528)
+changes	Checkout	2026-10-02T17:39:42.2982861Z Updating files:  87% (106600/122528)
+changes	Checkout	2026-10-02T17:39:42.3702041Z Updating files:  88% (107825/122528)
+changes	Checkout	2026-10-02T17:39:42.6970505Z Updating files:  89% (109050/122528)
+changes	Checkout	2026-10-02T17:39:42.7452988Z Updating files:  90% (110276/122528)
+changes	Checkout	2026-10-02T17:39:42.7921415Z Updating files:  91% (111501/122528)
+changes	Checkout	2026-10-02T17:39:42.8387126Z Updating files:  92% (112726/122528)
+changes	Checkout	2026-10-02T17:39:42.8853634Z Updating files:  93% (113952/122528)
+changes	Checkout	2026-10-02T17:39:42.9331588Z Updating files:  94% (115177/122528)
+changes	Checkout	2026-10-02T17:39:42.9397203Z Updating files:  95% (116402/122528)
+changes	Checkout	2026-10-02T17:39:43.8521119Z Updating files:  95% (116560/122528)
+changes	Checkout	2026-10-02T17:39:43.9564959Z Updating files:  96% (117627/122528)
+changes	Checkout	2026-10-02T17:39:44.2045185Z Updating files:  96% (117631/122528)
+changes	Checkout	2026-10-02T17:39:44.3483376Z Updating files:  97% (118853/122528)
+changes	Checkout	2026-10-02T17:39:44.6689521Z Updating files:  98% (120078/122528)
+changes	Checkout	2026-10-02T17:39:44.9718901Z Updating files:  99% (121303/122528)
+changes	Checkout	2026-10-02T17:39:45.0560939Z Updating files:  99% (122358/122528)
+changes	Checkout	2026-10-02T17:39:45.0561470Z Updating files: 100% (122528/122528)
+changes	Checkout	2026-10-02T17:39:45.0561793Z Updating files: 100% (122528/122528), done.
+changes	Checkout	2026-10-02T17:39:45.2145329Z Switched to a new branch 'main'
+changes	Checkout	2026-10-02T17:39:45.2148132Z branch 'main' set up to track 'origin/main'.
+changes	Checkout	2026-10-02T17:39:45.2233904Z ##[endgroup]
+changes	Checkout	2026-10-02T17:39:45.2294568Z [command]/usr/bin/git log -1 --format=%H
+changes	Checkout	2026-10-02T17:39:45.2322037Z 45b0f13b190b11df6ec529217a9a8bce76fad619
+changes	Setup Python	﻿2026-10-02T17:39:45.2761405Z ##[group]Run actions/setup-python@v5
+changes	Setup Python	2026-10-02T17:39:45.2761787Z with:
+changes	Setup Python	2026-10-02T17:39:45.2762006Z   python-version: 3.12
+changes	Setup Python	2026-10-02T17:39:45.2762265Z   check-latest: false
+changes	Setup Python	2026-10-02T17:39:45.2765782Z   token: ***
+changes	Setup Python	2026-10-02T17:39:45.2766176Z   update-environment: true
+changes	Setup Python	2026-10-02T17:39:45.2766618Z   allow-prereleases: false
+changes	Setup Python	2026-10-02T17:39:45.2767032Z   freethreaded: false
+changes	Setup Python	2026-10-02T17:39:45.2767405Z ##[endgroup]
+changes	Setup Python	2026-10-02T17:39:45.4477943Z ##[group]Installed versions
+changes	Setup Python	2026-10-02T17:39:45.4597030Z (node:2372) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+changes	Setup Python	2026-10-02T17:39:45.4598353Z (Use `node --trace-deprecation ...` to show where the warning was created)
+changes	Setup Python	2026-10-02T17:39:45.4599218Z Successfully set up CPython (3.12.14)
+changes	Setup Python	2026-10-02T17:39:45.4600286Z ##[endgroup]
+changes	Detect deployable changes	﻿2026-10-02T17:39:45.4801649Z ##[group]Run SHA="${REQUESTED_SHA:-$TRIGGER_SHA}"
+changes	Detect deployable changes	2026-10-02T17:39:45.4802396Z [36;1mSHA="${REQUESTED_SHA:-$TRIGGER_SHA}"[0m
+changes	Detect deployable changes	2026-10-02T17:39:45.4802995Z [36;1mif [ "$EVENT_NAME" = workflow_dispatch ]; then[0m
+changes	Detect deployable changes	2026-10-02T17:39:45.4803616Z [36;1m  RESULT='{"deploy":true,"importWeekly":false}'[0m
+changes	Detect deployable changes	2026-10-02T17:39:45.4804137Z [36;1melse[0m
+changes	Detect deployable changes	2026-10-02T17:39:45.4804890Z [36;1m  RESULT=$(python3 scripts/workflow-policy.py trigger --before "$BEFORE_SHA" --after "$TRIGGER_SHA")[0m
+changes	Detect deployable changes	2026-10-02T17:39:45.4805755Z [36;1mfi[0m
+changes	Detect deployable changes	2026-10-02T17:39:45.4806074Z [36;1mecho "$RESULT"[0m
+changes	Detect deployable changes	2026-10-02T17:39:45.4806488Z [36;1mecho "sha=$SHA" >> "$GITHUB_OUTPUT"[0m
+changes	Detect deployable changes	2026-10-02T17:39:45.4807533Z [36;1mecho "deploy=$(echo "$RESULT" | python3 -c 'import json,sys; print(str(json.load(sys.stdin)["deploy"]).lower())')" >> "$GITHUB_OUTPUT"[0m
+changes	Detect deployable changes	2026-10-02T17:39:45.4809173Z [36;1mecho "import_weekly=$(echo "$RESULT" | python3 -c 'import json,sys; print(str(json.load(sys.stdin)["importWeekly"]).lower())')" >> "$GITHUB_OUTPUT"[0m
+changes	Detect deployable changes	2026-10-02T17:39:45.5173023Z shell: /usr/bin/bash -e {0}
+changes	Detect deployable changes	2026-10-02T17:39:45.5173346Z env:
+changes	Detect deployable changes	2026-10-02T17:39:45.5173646Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+changes	Detect deployable changes	2026-10-02T17:39:45.5174116Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+changes	Detect deployable changes	2026-10-02T17:39:45.5174557Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+changes	Detect deployable changes	2026-10-02T17:39:45.5174969Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+changes	Detect deployable changes	2026-10-02T17:39:45.5175374Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+changes	Detect deployable changes	2026-10-02T17:39:45.5175765Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+changes	Detect deployable changes	2026-10-02T17:39:45.5176092Z   EVENT_NAME: push
+changes	Detect deployable changes	2026-10-02T17:39:45.5176339Z   BEFORE_SHA: 35372657c69b802ef0428fba916306687997d519
+changes	Detect deployable changes	2026-10-02T17:39:45.5176678Z   TRIGGER_SHA: 45b0f13b190b11df6ec529217a9a8bce76fad619
+changes	Detect deployable changes	2026-10-02T17:39:45.5176978Z   REQUESTED_SHA: 
+changes	Detect deployable changes	2026-10-02T17:39:45.5177176Z ##[endgroup]
+changes	Detect deployable changes	2026-10-02T17:39:45.7514690Z {"deploy": true, "importWeekly": false}
+changes	Post Setup Python	﻿2026-10-02T17:39:45.8128587Z Post job cleanup.
+changes	Post Setup Python	2026-10-02T17:39:45.9491691Z (node:2389) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+changes	Post Setup Python	2026-10-02T17:39:45.9493242Z (Use `node --trace-deprecation ...` to show where the warning was created)
+changes	Post Checkout	﻿2026-10-02T17:39:45.9728734Z Post job cleanup.
+changes	Post Checkout	2026-10-02T17:39:46.0918556Z [command]/usr/bin/git version
+changes	Post Checkout	2026-10-02T17:39:46.0979797Z git version 2.55.0
+changes	Post Checkout	2026-10-02T17:39:46.1033871Z Temporarily overriding HOME='/home/runner/work/_temp/0d6d67f1-dc57-4cfa-a688-da428b2e8c8a' before making global git config changes
+changes	Post Checkout	2026-10-02T17:39:46.1035834Z Adding repository directory to the temporary git global config as a safe directory
+changes	Post Checkout	2026-10-02T17:39:46.1061682Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/maasweekly/maasweekly
+changes	Post Checkout	2026-10-02T17:39:46.1111048Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+changes	Post Checkout	2026-10-02T17:39:46.1164988Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+changes	Post Checkout	2026-10-02T17:39:46.1716666Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+changes	Post Checkout	2026-10-02T17:39:46.1772264Z http.https://github.com/.extraheader
+changes	Post Checkout	2026-10-02T17:39:46.1802493Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+changes	Post Checkout	2026-10-02T17:39:46.1882189Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+changes	Post Checkout	2026-10-02T17:39:46.2452189Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+changes	Post Checkout	2026-10-02T17:39:46.2476804Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+changes	Complete job	﻿2026-10-02T17:39:46.3981947Z Evaluate and set job outputs
+changes	Complete job	2026-10-02T17:39:46.3989746Z Set output 'deploy'
+changes	Complete job	2026-10-02T17:39:46.3991922Z Set output 'import_weekly'
+changes	Complete job	2026-10-02T17:39:46.3992635Z Set output 'sha'
+changes	Complete job	2026-10-02T17:39:46.3993417Z Cleaning up orphan processes
+changes	Complete job	2026-10-02T17:39:46.4433142Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
