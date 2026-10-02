@@ -38,3 +38,5 @@ AR-03全量收尾：候选0ba9ee17ad、干净clone标准release49/49通过302.16
 - 两家官方网页 deepseek/qwen dry-run 成功：12/2088 facts，退出 0；未写业务数据，不把真实网页漂移当 fixture 合同。
 
 - 增补 unchanged 成功状态、旧观察离线重放不覆盖 current/事件/原始槽位、通用来源冻结对比快照与 offline-preview；畸形榜单 JSON 保留原响应且不再次 HTTP 重试。先前 50/50 通过，最终改动将重新执行全量标准 release。
+
+AR-04 最终 7d7d9d40a6：50/50 完整标准 release 回归 364.821s，仓库外四入口通过；结果与恢复手册已归档。继续 AR-07。
