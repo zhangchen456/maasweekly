@@ -48,6 +48,8 @@ def main():
         for member in archive:
             if member.name=='data/snapshots' or member.name.startswith('data/snapshots/'):continue
             if member.issym() or member.islnk():
+                if member.name=='site/CLAUDE.md' and member.linkname=='AGENTS.md':
+                    link=safe_path(destination,member.name);link.parent.mkdir(parents=True,exist_ok=True);link.symlink_to('AGENTS.md');continue
                 if not member.name.startswith(('.claude/','.agents/')):raise ValueError('unexpected code symlink in recovery bundle')
                 skipped_links.append(member.name);continue
             path=safe_path(destination,member.name)
