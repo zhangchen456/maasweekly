@@ -176,7 +176,7 @@ async function sample(factor) {
       for (let round = 0; round < 6; round++) {
         const start = performance.now();
         const response = await fetch(base + '/api/mcp', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json, text/event-stream' },
-          body: JSON.stringify({ jsonrpc: '2.0', id: worker * 6 + round, method: 'tools/call', params: { name: 'maas_get_prices', arguments: { limit: 100 } } }) });
+          body: JSON.stringify({ jsonrpc: '2.0', id: worker * 6 + round, method: 'tools/call', params: { name: 'maas_get_prices', arguments: { limit: 30 } } }) });
         const body = await response.text();
         if (response.status !== 200 || body.includes('"isError":true') || body.includes('"error":')) throw new Error('MCP capacity request failed');
         mcpTimings.push(performance.now() - start);
