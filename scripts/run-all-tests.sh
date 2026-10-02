@@ -67,6 +67,8 @@ run "validate-price-archive（Task 02）" python3 pipeline/scripts/validate-pric
 run "build-skill-package --check" python3 site/scripts/build-skill-package.py --check
 
 # ---- Python 测试 ----
+run "test_release_retention（live references）" python3 -m unittest discover -s tests -p 'test_release_retention.py'
+run "test_operations_budget（production resource thresholds）" python3 -m unittest discover -s tests -p 'test_operations_budget.py'
 run "test_regression_diagnostics（CI failure evidence）" python3 -m unittest discover -s tests -p 'test_regression_diagnostics.py'
 run "test_current_pricing（official table drift）" python3 -m unittest discover -s tests -p 'test_current_pricing.py'
 run "test_record_archive（Task 01）" python3 -m unittest discover -s tests -p 'test_record_archive.py'
