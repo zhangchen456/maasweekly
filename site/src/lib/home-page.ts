@@ -1,5 +1,6 @@
 import { readPageProjection, readPageJson } from './page-data';
-import { featuredModels, modelRelease } from './model-pages';
+import { modelRelease } from './model-pages';
+import { homeModelGroups } from './home-models';
 import type { PriceRecord } from './release';
 export interface HighlightItem {text:string;type:string}
 export interface PlatformHighlight {platform:string;logo_summary:string;items:HighlightItem[]}
@@ -91,15 +92,8 @@ for (const type of ['sunset','pricing','release']) {
   if(item) picks.push(item);
 }
 for(const item of all) if(picks.length<3 && !picks.some(p=>p.platform===item.platform)) picks.push(item);
-const models=featuredModels().map(page=>{
-  // One explicitly disclosed source scenario, never choose a cheapest price.
-  const input=page.prices.find(p=>p.component==='input' && p.billingMode==='realtime' && p.serviceTier==='standard') ?? page.prices.find(p=>p.component==='input');
-  const scenario=(p: PriceRecord)=>JSON.stringify([p.providerId,p.sourceId,p.modelKey,p.currency,p.unitName,p.unitQuantity,p.region,p.billingMode,p.serviceTier,p.contextBand,p.timeCondition]);
-  const same=input?page.prices.filter(p=>scenario(p)===scenario(input)):[];
-  const condition=input ? [input.region, input.billingMode==='realtime'?'实时':input.billingMode,input.serviceTier, input.contextBand?`上下文 ${input.contextBand.min ?? 0}–${input.contextBand.max ?? '不限'} tokens`:null,input.timeCondition?`时段 ${input.timeCondition.period === 'peak' ? '高峰' : input.timeCondition.period === 'off_peak' ? '非高峰' : input.timeCondition.period ?? JSON.stringify(input.timeCondition)}（${input.timeCondition.tz ?? '来源时区'}）`:null].filter(Boolean).join(' · ') : '暂无输入报价';
-  return {...page,input,output:same.find(p=>p.component==='output'),cache:same.find(p=>p.component==='cache_read'),condition};
-});
+const modelGroups=homeModelGroups();
 const quote=(p: PriceRecord | undefined)=>p?`${p.amount} ${p.currency}`:'未单列';
 const release=modelRelease();
-return {ledger,fxRate,displayAmount,updateLabel,labels,picks,models,quote,release};
+return {ledger,fxRate,displayAmount,updateLabel,labels,picks,modelGroups,quote,release};
 }

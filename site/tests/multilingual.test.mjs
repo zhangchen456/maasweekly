@@ -4,11 +4,11 @@ import { stripTypeScriptTypes } from 'node:module';
 import { JSDOM } from 'jsdom';
 import { preferredLanguage, readPreference, savePreference, startLanguage, switchUrl } from '../public/language.js';
 import { loadVerifiedRelease } from '../src/lib/release.ts';
-import { featuredModels } from '../src/lib/model-pages.ts';
+import { featuredModels, translatedModels } from '../src/lib/model-pages.ts';
 import { englishPriceCells } from '../src/lib/price-display.ts';
 import { pageType } from '../public/analytics.js';
 const release = loadVerifiedRelease(undefined, { select: ['prices','modelIdentities','changes','evidence'] });
-const pages = ['','models/','pricing/','method/','agent/', ...featuredModels().map(p => `model/${p.model.modelId}/`)];
+const pages = ['','models/','pricing/','method/','agent/', ...translatedModels().map(p => `model/${p.model.modelId}/`)];
 assert.equal(featuredModels().length, 5);
 const sitemap = readFileSync('dist/sitemap.xml','utf8');
 for (const page of pages) {
@@ -19,7 +19,8 @@ for (const page of pages) {
   assert(doc.querySelector('h1').textContent.trim());
   assert(doc.querySelector('meta[name=description]').content.trim());
   assert.equal(doc.querySelectorAll('script[data-maas-analytics]').length,1);
-  assert(sitemap.includes(`https://daily.maas.click/en/${page}`));
+  const noindex = doc.querySelector('meta[name=robots]')?.content.includes('noindex') ?? false;
+  assert.equal(sitemap.includes(`https://daily.maas.click/en/${page}`), !noindex, 'empty model pages stay reachable but excluded from sitemap');
   const zh = new JSDOM(readFileSync(`dist/${page}index.html`,'utf8')).window.document;
   assert.equal(zh.querySelector('link[hreflang=en]').href, `https://daily.maas.click/en/${page}`);
   for (const link of doc.querySelectorAll('a[href^="/en/"]')) assert(existsSync(`dist${new URL(link.href,'https://daily.maas.click').pathname.replace(/\/$/,'')}/index.html`), `Missing English link: ${link.href}`);

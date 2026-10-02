@@ -1,3 +1,4 @@
+import { HOME_MODEL_GROUPS } from '../config/home-model-selection.ts';
 import { loadVerifiedRelease } from './release.ts';
 import { safeWebUrl } from './seo.ts';
 
@@ -60,10 +61,17 @@ export function modelPage(modelId: string) {
     dataThrough: release.dataThrough, datasetVersion: release.datasetVersion };
 }
 
+// Historical SEO regression sample; homepage curation lives in home-model-selection.ts.
 const featuredIds = ['deepseek:deepseek-v4-pro', 'alibaba:qwen-plus',
   'alibaba:qwen3-coder-plus', 'google:gemini-2.5-pro', 'zhipu:glm-5.2'];
 export function featuredModels() {
   return featuredIds.filter(id => modelIndex().models.has(id))
     .map(modelPage).filter(page => page.prices.length > 0
       && page.prices.every(p => p.quality.state === 'fresh' && p.evidenceStatus === 'complete'));
+}
+
+/** Retain old translated URLs and add catalog-backed homepage picks. */
+export function translatedModels() {
+  const ids = [...new Set([...featuredIds, ...HOME_MODEL_GROUPS.flatMap(g => g.models.map(p => p.modelId))])];
+  return ids.filter(id => modelIndex().models.has(id)).map(modelPage);
 }

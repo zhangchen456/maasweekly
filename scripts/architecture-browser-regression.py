@@ -106,9 +106,9 @@ def main():
             report['mobileWidth'] = page.evaluate('({viewport:innerWidth, document:document.documentElement.scrollWidth})')
             page.goto(base+'/')
             page.wait_for_selector('.market-table tbody tr')
-            report['home'] = {'prices':page.locator('.market-table').inner_text()}
+            report['home'] = {'prices':page.locator('.market-section').inner_text()}
             page.locator('[data-currency="USD"]').click()
-            report['home']['usd'] = page.locator('.market-table').inner_text()
+            report['home']['usd'] = page.locator('.market-section').inner_text()
             page.locator('#copy-brief').click()
             page.wait_for_function("document.querySelector('#copy-status').textContent.includes('已复制')")
             report['home']['copyStatus'] = page.locator('#copy-status').inner_text()

@@ -10,6 +10,7 @@ import { JSDOM } from 'jsdom';
 import { canonicalUrl } from '../src/lib/seo.ts';
 import { loadVerifiedRelease } from '../src/lib/release.ts';
 import { modelPage, featuredModels } from '../src/lib/model-pages.ts';
+import { homeModelGroups } from '../src/lib/home-models.ts';
 import { priceCells, priceUnit } from '../src/lib/price-display.ts';
 import { priceChangeLink } from '../src/lib/record-links.ts';
 
@@ -90,7 +91,11 @@ assert(!urls.includes(canonicalUrl(`/model/${empty.modelId}/`)));
 assert(!existsSync(path.join(dist, 'model/unknown:ghost/index.html')));
 for (const route of ['', 'pricing', 'models']) {
   const doc = docFor(route);
-  for (const page of featured) assert(doc.querySelector(`a[href="/model/${page.model.modelId}/"]`));
+  if (route === '') for (const group of homeModelGroups()) for (const page of group.models) {
+    assert(doc.querySelector(`[data-home-model="${page.pick.modelId}"]`));
+    if (page.modelHref) assert(doc.querySelector(`a[href="${page.modelHref}"]`));
+  }
+  else for (const page of featured) assert(doc.querySelector(`a[href="/model/${page.model.modelId}/"]`));
 }
 
 // Exercise the actual refresh implementation, including cursor pagination and failure fallback.

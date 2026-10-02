@@ -1,8 +1,8 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-import { featuredModels } from '../../../lib/model-pages';
+import { translatedModels } from '../../../lib/model-pages';
 import EnglishPriceTable from '../../../components/EnglishPriceTable.astro';
-export function getStaticPaths() { return featuredModels().map(page => ({ params: { modelId: page.model.modelId }, props: { page } })); }
+export function getStaticPaths() { return translatedModels().map(page => ({ params: { modelId: page.model.modelId }, props: { page } })); }
 const { page } = Astro.props; const { model, prices, changes, sources, keys, from, to, dataThrough, datasetVersion } = page;
 ---
 <Layout locale="en" title={`${model.modelName} API prices and billing conditions — MaaS Daily`} description={`Check ${model.modelName} API prices, input/output and cache charges, original units, evidence and official sources. Data through ${dataThrough}.`} noindex={!prices.length}>
