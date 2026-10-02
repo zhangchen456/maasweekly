@@ -2,46 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import ModelPriceLinks from '../components/ModelPriceLinks.astro';
 import '../styles/pricing.css';
-import fs from 'node:fs';
-import path from 'node:path';
-
-function readJson(p) {
-  try { return JSON.parse(fs.readFileSync(path.join(process.cwd(), p), 'utf-8')); }
-  catch { return null; }
-}
-
-function readFile(p) {
-  try { return fs.readFileSync(path.join(process.cwd(), p), 'utf-8'); }
-  catch { return null; }
-}
-
-function priceRange(value) {
-  const numbers = String(value).match(/[\d.]+/g)?.map(Number).filter(Number.isFinite) ?? [];
-  return { low: numbers[0] ?? 0, high: numbers.at(-1) ?? numbers[0] ?? 0 };
-}
-
-const ledger = readJson('src/data/pricing/ledger.json');
-const gpu = readJson('src/data/pricing/gpu.json');
-const chips = readJson('src/data/pricing/chips.json');
-const ledgerHtml = readFile('src/data/pricing/price-ledger.rendered.html');
-
-const ledgerDate = ledger?.meta?.published_at
-  ? new Date(ledger.meta.published_at * 1000).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }).replace(/\//g, '.')
-  : '—';
-const modelCount = new Set(ledger?.prices?.map((item) => `${item.provider}/${item.model}`) ?? []).size;
-const providerCount = ledger?.providers?.length ?? 0;
-const maxMonthly = Math.max(...(gpu?.gpu_list ?? []).map((item) => priceRange(item.monthly_cny).high), 1);
-const gpuRows = (gpu?.gpu_list ?? []).map((item) => {
-  const range = priceRange(item.monthly_cny);
-  const start = range.low ? Math.sqrt(range.low / maxMonthly) * 100 : 0;
-  const end = range.high ? Math.sqrt(range.high / maxMonthly) * 100 : 0;
-  return { ...item, start, width: Math.max(end - start, range.high ? 2.2 : 0) };
-});
-const chipGroups = Object.values((chips?.chips ?? []).reduce((groups, item) => {
-  groups[item.vendor] ??= { vendor: item.vendor, entries: [] };
-  groups[item.vendor].entries.push(item);
-  return groups;
-}, {}));
+import PriceWorkspace from '../components/PriceWorkspace.astro';
+import { pricingPage } from '../lib/page-data';
+const { ledger, gpu, chips, ledgerDate, modelCount, providerCount, gpuRows, chipGroups } = pricingPage();
 ---
 
 <Layout title="大模型 API 价格比较与 GPU 租赁行情 — MaaS Daily" description="查询大模型 API 价格与成本估算，查看模型原币种报价、计费条件和价格变化，追踪 GPU 租赁行情与国产 AI 芯片动态。">
@@ -72,8 +35,8 @@ const chipGroups = Object.values((chips?.chips ?? []).reduce((groups, item) => {
         <h2>模型 API 价格台账</h2>
         <p class="section-note">统一折算为人民币与每百万 tokens；可按厂商浏览、搜索模型，并把 2–5 个模型放入用量计算器比较。</p>
       </div>
-      {ledgerHtml ? (
-        <div class="ledger-embed" set:html={ledgerHtml} />
+      {ledger ? (
+        <div class="ledger-embed"><PriceWorkspace data={ledger} /></div>
       ) : (
         <div class="pricing-empty">价格台账正在生成。数据抓取完成后，这里会自动显示最新报价。</div>
       )}

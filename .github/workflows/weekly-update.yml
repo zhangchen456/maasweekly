@@ -110,8 +110,6 @@ jobs:
         if: steps.mode.outputs.mode != 'aggregate'
         run: |
           python3 pipeline/scripts/project-site-data.py
-          node site/scripts/build-price-fragment.mjs
-          node site/scripts/render-price-ledger.mjs
           python3 site/scripts/build-skill-package.py
       - name: Export public data
         if: steps.mode.outputs.mode != 'aggregate'

@@ -116,7 +116,7 @@ export function validatePublicAccessConfig(
       v.push(`surfaces.${key} 非 available 但缺 reason`);
     }
   }
-  const verifiedNames = new Set(cfg.verifiedClients.map((c) => c.name));
+  const verifiedNames = new Set<string>(cfg.verifiedClients.map((c) => c.name));
   for (const c of cfg.verifiedClients) {
     if (!c.name || !c.version || !c.verifiedAt) {
       v.push(`verifiedClients 项缺字段: ${c.name}`);

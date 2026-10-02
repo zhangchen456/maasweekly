@@ -45,22 +45,23 @@ export const englishProviderLabels: Record<string, string> = { ...providerLabels
 export const englishPriceHeaders = ['Platform', 'API model name', 'Billing component', 'Price / original unit', 'Region',
   'Billing mode / service tier', 'Context condition (source value)', 'Time condition (source value)',
   'Official effective time', 'Observed at', 'Data and evidence status'];
-export function englishPriceCells(price: PriceRecord): string[] {
-  const components: Record<string, string> = { input: 'Input', output: 'Output', cache_read: 'Cache read',
+const englishComponents: Record<string, string> = { input: 'Input', output: 'Output', cache_read: 'Cache read',
     cache_write: 'Cache write', cache_write_5m: 'Cache write (5 minutes)', cache_write_1h: 'Cache write (1 hour)' };
-  const quality: Record<string, string> = { fresh: 'Latest fetch succeeded', stale: 'Update failed; previous data retained', unknown: 'Update status unknown' };
-  const evidence: Record<string, string> = { complete: 'Complete evidence', partial: 'Partial evidence', unavailable: 'Evidence unavailable' };
+const englishQuality: Record<string, string> = { fresh: 'Latest fetch succeeded', stale: 'Update failed; previous data retained', unknown: 'Update status unknown' };
+const englishEvidence: Record<string, string> = { complete: 'Complete evidence', partial: 'Partial evidence', unavailable: 'Evidence unavailable' };
+
+export function englishPriceCells(price: PriceRecord): string[] {
   const reason = price.quality.reason === '门禁全拒（0 条），疑似结构漂移'
     ? 'Validation rejected all records (0 accepted); possible source structure change'
     : price.quality.reason;
   return [englishProviderLabels[price.providerId] ?? price.providerId, price.modelKey,
-    components[price.component] ?? price.component,
+    englishComponents[price.component] ?? price.component,
     `${price.amount} ${price.currency} / ${price.unitQuantity.toLocaleString('en-US')} ${price.unitName}`,
     price.region, `${price.billingMode} / ${price.serviceTier}`,
     price.contextBand ? JSON.stringify(price.contextBand) : 'Not separately specified by source',
     price.timeCondition ? JSON.stringify(price.timeCondition) : 'Not separately specified by source',
     price.effectiveAt ?? 'Not stated by source', price.observedAt,
-    [quality[price.quality.state] ?? price.quality.state, reason,
+    [englishQuality[price.quality.state] ?? price.quality.state, reason,
       price.quality.lastSuccessAt ? `Last success: ${price.quality.lastSuccessAt}` : null,
-      evidence[price.evidenceStatus] ?? price.evidenceStatus].filter(Boolean).join('; ')];
+      englishEvidence[price.evidenceStatus] ?? price.evidenceStatus].filter(Boolean).join('; ')];
 }

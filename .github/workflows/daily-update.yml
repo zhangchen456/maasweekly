@@ -123,13 +123,11 @@ jobs:
       # ---- 4. 生成由数据驱动的 tracked 产物（§5.2：所有数据驱动的 tracked 文件
       #      必须在 commit 前生成并提交，否则 build-release.sh [3/6] tracked diff
       #      gate 拒载。含 public projection + site prebuild 产物）----
-      # 4a. site prebuild 产物（price-ledger.fragment/rendered.html、maas-skill/）
+      # 4a. site prebuild 产物（maas-skill/；价格组件由 Astro 构建）
       - name: Prebuild site artifacts
         id: prebuild
         run: |
           python3 pipeline/scripts/project-site-data.py
-          node site/scripts/build-price-fragment.mjs
-          node site/scripts/render-price-ledger.mjs
           python3 site/scripts/build-skill-package.py
       # 4b. 公开数据投影（skip_fetch=true 时也跑——把仓库已有新数据重新生成
       # projection，用于故障恢复）

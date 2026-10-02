@@ -4,21 +4,18 @@
 // 支持 modelId/familyId 筛选 + 可点击标签 + URL 状态。
 // invalid/empty/unresolved 三种语义与 pricing 页完全一致。
 import Layout from '../layouts/Layout.astro';
-import { loadVerifiedRelease } from '../lib/release';
+import { modelRelease } from '../lib/model-pages';
+import { providerLabels } from '../lib/price-display';
+import { safeJson } from '../lib/page-data';
 import { PUBLIC_ACCESS } from '../config/public-access';
 
 // 构建期只读 catalog（selector options 来源，经 manifest 校验）+ 元数据
 // catalog missing/corrupt → build fail（不静默容错——release integrity contract）
-const release = loadVerifiedRelease(undefined, { select: ['modelIdentities'] });
+const release = modelRelease();
 const catalog = release.modelIdentities!;
 const apiBase = PUBLIC_ACCESS.paths.apiBase; // /api/v1
 
-const providerLabels: Record<string, string> = {
-  openai: 'OpenAI', anthropic: 'Anthropic', google: 'Google', deepseek: 'DeepSeek',
-  alibaba: '阿里百炼', volcengine: '火山引擎', zhipu: '智谱', kimi: 'Kimi',
-  baidu: '百度', xai: 'xAI', mistral: 'Mistral', cohere: 'Cohere',
-  minimax: 'MiniMax', siliconflow: 'SiliconFlow', tencent: '腾讯', xfyun: '讯飞',
-};
+
 ---
 <Layout title="变化浏览 — MaaS Daily" description="MaaS 平台变化流：来源观察与价格事件，按模型筛选">
   <section class="hero">
@@ -54,9 +51,9 @@ const providerLabels: Record<string, string> = {
     </div>
   </div>
 
-  <script id="catalog-data" type="application/json" set:html={JSON.stringify(catalog)}></script>
-  <script id="provider-labels" type="application/json" set:html={JSON.stringify(providerLabels)}></script>
-  <script id="api-base" type="application/json" set:html={JSON.stringify(apiBase)}></script>
+  <script id="catalog-data" type="application/json" set:html={safeJson(catalog)}></script>
+  <script id="provider-labels" type="application/json" set:html={safeJson(providerLabels)}></script>
+  <script id="api-base" type="application/json" set:html={safeJson(apiBase)}></script>
 
   <script is:inline>
     (function(){

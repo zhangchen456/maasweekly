@@ -1,0 +1,9 @@
+---
+import DataFreshness from './DataFreshness.astro';
+interface Props { headers: string[]; cells: string[] }
+const { headers, cells } = Astro.props;
+---
+<details class="quote-details"><summary>查看报价条件</summary><dl class="price-facts">
+  {cells.slice(4,9).map((value,index)=><div><dt>{headers[index+4]}</dt><dd>{value}</dd></div>)}
+  <DataFreshness observedLabel={headers[9]} observed={cells[9]} statusLabel={headers[10]} status={cells[10]} />
+</dl></details>

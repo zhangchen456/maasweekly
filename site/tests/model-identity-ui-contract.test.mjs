@@ -4,19 +4,16 @@
 import { readFileSync, existsSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
+import { transform } from 'esbuild';
 
 const root = new URL('../../', import.meta.url);
-const renderedPath = new URL('site/src/data/pricing/price-ledger.rendered.html', root);
-if (!existsSync(renderedPath)) {
-  console.log('⚠ rendered.html 不存在，跳过 UI contract 测试');
-  process.exit(0);
-}
-
+const renderedPath = new URL('site/dist/pricing/index.html', root);
+assert.ok(existsSync(renderedPath), 'build pricing page before running UI contract');
 const html = readFileSync(renderedPath, 'utf-8');
 
 // jsdom 不支持 matchMedia，polyfill（beforeParse 在 script 执行前注入）
 const dom = new JSDOM(html, {
-  runScripts: 'dangerously',
+  runScripts: 'outside-only',
   url: 'http://localhost/pricing/',
   pretendToBeVisual: true,
   beforeParse(window) {
@@ -27,6 +24,10 @@ const dom = new JSDOM(html, {
   },
 });
 const { window } = dom;
+const source = readFileSync(new URL('site/src/scripts/price-workspace.ts', root), 'utf8');
+const compiled = await transform(source, {loader:'ts', format:'iife'});
+window.eval(compiled.code);
+window.eval(compiled.code); // Initialization guard must preserve one mounted workspace.
 // 等待 script 执行
 await new Promise((r) => setTimeout(r, 100));
 

@@ -1,0 +1,11 @@
+---
+import type { ChangeRecord } from '../lib/release';
+interface Props { changes: ChangeRecord[] }
+const { changes } = Astro.props;
+---
+{changes.length ? changes.map(change => <article class="change-card">
+  <div class="change-head"><time class="change-date" datetime={change.observationDate}>{change.observationDate}</time>
+  <span class="change-type">{change.recordType === 'price_change' ? '价格事件' : '来源观察'}</span></div>
+  <a class="change-title" href={change.links.permalink}>{change.title}</a>
+  {change.summary && <p class="change-summary">{change.summary.slice(0,160)}</p>}
+</article>) : <p class="empty-state">当前数据窗口内暂无变化记录。</p>}
