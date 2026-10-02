@@ -171,7 +171,7 @@ run "sentinel" bash -c 'echo sentinel-failure; exit 23'
 SUITE_FINISHED=true
 exit 1
 """)
-            result = subprocess.run(['bash', str(script)], env={**os.environ, 'TMPDIR': directory}, capture_output=True, text=True)
+            result = subprocess.run(['bash', str(script)], env={**os.environ, 'TMPDIR': directory, 'MAAS_REGRESSION_LOG_ROOT': directory}, capture_output=True, text=True)
             self.assertEqual(result.returncode, 1)
             self.assertIn('退出码 23', result.stdout)
             logs = list(root.glob('maas-regression.*/1.txt'))
@@ -179,7 +179,7 @@ exit 1
             self.assertIn('sentinel-failure', logs[0].read_text())
             subprocess.run(['rm', '-rf', str(logs[0].parent)], check=True)
             script.write_text(prefix + '\nrun "sentinel" true\nSUITE_FINISHED=true\nexit 0\n')
-            result = subprocess.run(['bash', str(script)], env={**os.environ, 'TMPDIR': directory}, capture_output=True, text=True)
+            result = subprocess.run(['bash', str(script)], env={**os.environ, 'TMPDIR': directory, 'MAAS_REGRESSION_LOG_ROOT': directory}, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0)
             self.assertEqual(list(root.glob('maas-regression.*')), [])
 
