@@ -78,7 +78,7 @@ flowchart TD
 
 ## 4. 每个任务的完成与发布
 
-状态统一使用：`TODO → IN_PROGRESS → LOCAL_VERIFIED → RELEASED`。不涉及运行时发布的任务用 `DONE`；存储评估允许以有证据的 `DEFERRED` 收尾。AR-01 为 DONE，AR-02/03/04/05/07 及 AR-08 基础已本地验收；AR-06 和 AR-08 容量复核继续实施。每项最新状态以对应任务书和结果文档为准。
+状态统一使用：`TODO → IN_PROGRESS → LOCAL_VERIFIED → RELEASED`。不涉及运行时发布的任务用 `DONE`；存储评估允许以有证据的 `DEFERRED` 收尾。AR-01 为 DONE，AR-02/03/04/05/07 及 AR-08 基础已本地验收；AR-06 本地迁移演练已验收、远端 DEFERRED；AR-08 容量复核继续实施。每项最新状态以对应任务书和结果文档为准。
 
 每个任务新增 `AR-XX-result.md`，至少记录：
 
