@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_6936bd43933719fab7789d4917e4faf8cc30f4e7a8a08ce05980a978e1a6e8cf",
+  "sourceId": "google-vertex-pricing",
+  "date": "2026-10-02",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Vertex AI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+  "title": "Google Vertex AI · 定价来源更新",
+  "summary": "Google Vertex AI 定价页面新增了 Gemini 3.7 Flash 和 Gemini 3.8 Flash 的定价行，输入价格分别为 $1.50 和 $3.00 每百万 tokens，输出及思考 tokens 价格为 $7.50 和 $15.00，对应新模型上架。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-02T00:34:30+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "price per",
+        "before": "Price per 1M input tokens",
+        "after": "Price per 1M input tokens | $1.50 | $3.00"
+      }
+    ],
+    "added_lines": [
+      "Gemini 3.7 Flash, Gemini 3.8 Flash |",
+      "Price per 1M output and thinking tokens | $7.50 | $15.00"
+    ],
+    "removed_lines": [],
+    "added_count": 2,
+    "removed_count": 0,
+    "raw_added_count": 3,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-02.json"
+  },
+  "permalink": "/item/obs_6936bd43933719fab7789d4917e4faf8cc30f4e7a8a08ce05980a978e1a6e8cf/"
+}
