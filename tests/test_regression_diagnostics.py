@@ -44,6 +44,10 @@ SUITE_FINISHED=true
     def test_workflow_archives_failure_logs_even_after_failed_build(self):
         workflow = (ROOT / '.github/workflows/release-deploy.yml').read_text()
         self.assertIn('MAAS_REGRESSION_LOG_ROOT: ${{ runner.temp }}/regression-failures', workflow)
+        job_env = workflow.split('    steps:')[0]
+        self.assertNotIn('runner.temp', job_env)
+        build = workflow.split('- name: Build release and deploy')[1].split('- name: Online verify')[0]
+        self.assertIn('MAAS_REGRESSION_LOG_ROOT:', build)
         archive = workflow.split('- name: Archive release diagnostics')[1]
         self.assertIn('if: always()', archive)
         self.assertIn('${{ runner.temp }}/regression-failures/', archive)
