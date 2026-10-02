@@ -11,6 +11,7 @@
 #                                              #   只读 metadata（datasetVersion/
 #                                              #   dataThrough/gitCommit，M7）
 #   cleanup                                    # retention 清理
+#   cleanup-plan                               # 同规则只读预览
 #
 # 蓝绿切换完整事务（复验 P0b）：
 #   1. 候选在非公开槽位起服务并冒烟（status 200）
@@ -555,34 +556,57 @@ restore_incoming_deploy_ownership() {  # <rid>：失败恢复路径专用——i
 }
 
 retention_cleanup() {
-  "$PYTHON3" - "$ROOT" <<'PYEOF'
-import json, shutil, sys, time
+  "$PYTHON3" - "$ROOT" "${1:-apply}" <<'PYEOF'
+import json, re, shutil, sys, time
 from pathlib import Path
 root = Path(sys.argv[1])
 cur = (root / 'current').resolve()
 prev = (root / 'previous').resolve() if (root / 'previous').exists() else None
 now = time.time()
 keep_ds = set()
-for m in (root / 'releases').glob('*/data/public/v1/manifest.json'):
+# Only live pointers define needed historical datasets. Expired packages
+# cannot retain one another forever through their old manifest references.
+for release in (cur, prev):
+    if release is None:
+        continue
+    if release.parent != (root / 'releases').resolve():
+        print('[cleanup] skipped: protected pointer outside releases')
+        sys.exit(0)
     try:
-        keep_ds |= {r['datasetVersion'] for r in json.load(open(m)).get('retainedVersions', [])}
-    except Exception:
-        pass
+        manifest = json.load(open(release / 'data/public/v1/manifest.json'))
+        needed = {manifest['datasetVersion']} | {r['datasetVersion'] for r in manifest.get('retainedVersions', [])}
+        if not all(isinstance(ds, str) and re.fullmatch(r'ds_[0-9a-f]{64}', ds) for ds in needed):
+            raise ValueError('invalid protected dataset reference')
+        keep_ds |= needed
+    except (OSError, ValueError, KeyError, TypeError):
+        print('[cleanup] skipped: protected public manifest unreadable')
+        sys.exit(0)
+keep, remove = [], []
 for d in (root / 'releases').iterdir():
-    if not d.is_dir():
+    if not d.is_dir() or d.is_symlink() or not re.fullmatch(r'rl_[0-9a-f]{10}_[0-9a-f]{12}', d.name):
         continue
     if d.resolve() in (cur, prev):
+        keep.append({'rid': d.name, 'reason': 'protected_pointer'})
         continue
     ds = None
     try:
         ds = json.load(open(d / 'data' / 'public' / 'v1' / 'manifest.json'))['datasetVersion']
-    except Exception:
-        pass
-    if ds in keep_ds:
+    except (OSError, ValueError, KeyError, TypeError):
+        keep.append({'rid': d.name, 'reason': 'manifest_unreadable'})
         continue
-    if now - d.stat().st_mtime > 7 * 86400:
-        shutil.rmtree(d)
-        print(f"[cleanup] 过期清理: {d.name}")
+    if ds in keep_ds:
+        keep.append({'rid': d.name, 'reason': 'live_dataset_reference'})
+        continue
+    if now - d.stat().st_mtime <= 7 * 86400:
+        keep.append({'rid': d.name, 'reason': 'within_seven_days'})
+        continue
+    remove.append({'rid': d.name, 'datasetVersion': ds})
+if sys.argv[2] == 'dry-run':
+    print(json.dumps({'keep': keep, 'remove': remove}, sort_keys=True))
+else:
+    for row in remove:
+        shutil.rmtree(root / 'releases' / row['rid'])
+        print(f"[cleanup] 过期清理: {row['rid']}")
 PYEOF
 }
 
@@ -702,12 +726,17 @@ import sys; sys.exit(0 if cur_ds in retained + [m['datasetVersion']] else 1)" \
     echo "--- 最近激活 ---"
     tail -5 "$ROOT/shared/state/activations.log" 2>/dev/null || echo 无
     ;;
+  cleanup-plan)
+    [ $# -eq 0 ] || die "用法: cleanup-plan" 2
+    acquire_lock
+    retention_cleanup dry-run
+    ;;
   cleanup)
     acquire_lock
     retention_cleanup
     echo "✓ cleanup 完成"
     ;;
   *)
-    die "未知动作: ${cmd}（合法：activate|rollback|status|cleanup，退出 2）" 2
+    die "未知动作: ${cmd}（合法：activate|rollback|status|cleanup|cleanup-plan，退出 2）" 2
     ;;
 esac

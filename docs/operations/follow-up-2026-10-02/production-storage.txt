@@ -1,0 +1,112 @@
+20396572	/srv/maasweekly/releases
+4	/srv/maasweekly/incoming
+84	/srv/maasweekly/shared
+203904	/var/log
+168048	/var/cache
+1167564	/tmp
+352276	/srv/maasweekly/releases/rl_0c3f66089e_24f83f7ea886
+409232	/srv/maasweekly/releases/rl_12692c5951_0d06b4202336
+409232	/srv/maasweekly/releases/rl_1399074a8a_0d06b4202336
+745580	/srv/maasweekly/releases/rl_1b44dae2f5_6fd3cc403bf9
+745580	/srv/maasweekly/releases/rl_1d65039673_6fd3cc403bf9
+832516	/srv/maasweekly/releases/rl_1de1eedaef_6fd3cc403bf9
+699444	/srv/maasweekly/releases/rl_30593edc54_27a267f0ce08
+352268	/srv/maasweekly/releases/rl_31c918e04d_24f83f7ea886
+521812	/srv/maasweekly/releases/rl_3619aed4e5_23022902ffc5
+699444	/srv/maasweekly/releases/rl_4428186735_27a267f0ce08
+858488	/srv/maasweekly/releases/rl_4e2496d2f8_0da7f0c0f2bc
+654472	/srv/maasweekly/releases/rl_5df49ba3c2_ad2f4eb32b99
+298904	/srv/maasweekly/releases/rl_65fe566e50_8b9fb7b09ead
+858524	/srv/maasweekly/releases/rl_6efd666e1f_0da7f0c0f2bc
+456404	/srv/maasweekly/releases/rl_72457f6cc2_795f17baf749
+758040	/srv/maasweekly/releases/rl_75b8a1d8c7_1925cbc6adaf
+352268	/srv/maasweekly/releases/rl_77f48c7b53_24f83f7ea886
+749864	/srv/maasweekly/releases/rl_880e8ccff1_1925cbc6adaf
+858040	/srv/maasweekly/releases/rl_8ebc6b9e4e_0da7f0c0f2bc
+572880	/srv/maasweekly/releases/rl_8f22cd3877_57b98d96fe9b
+831588	/srv/maasweekly/releases/rl_97afdbdf80_6fd3cc403bf9
+352276	/srv/maasweekly/releases/rl_9b81a07f52_24f83f7ea886
+352276	/srv/maasweekly/releases/rl_a3d1a460b1_24f83f7ea886
+572880	/srv/maasweekly/releases/rl_b138dbb8d2_57b98d96fe9b
+832512	/srv/maasweekly/releases/rl_b29035eef9_6fd3cc403bf9
+757656	/srv/maasweekly/releases/rl_c982644810_03c2bf0b968d
+699440	/srv/maasweekly/releases/rl_d825af8793_27a267f0ce08
+494972	/srv/maasweekly/releases/rl_df4f2f0b24_3911a1c6cde3
+858772	/srv/maasweekly/releases/rl_e8388dbcd5_0da7f0c0f2bc
+943064	/srv/maasweekly/releases/rl_f3e2da7bc9_a032da03d915
+767500	/srv/maasweekly/releases/rl_f5fb68b323_6fd3cc403bf9
+748364	/srv/maasweekly/releases/rl_f684fc186c_1925cbc6adaf
+# /etc/systemd/journald.conf
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it under the
+#  terms of the GNU Lesser General Public License as published by the Free
+#  Software Foundation; either version 2.1 of the License, or (at your option)
+#  any later version.
+#
+# Entries in this file show the compile time defaults. Local configuration
+# should be created by either modifying this file (or a copy of it placed in
+# /etc/ if the original file is shipped in /usr/), or by creating "drop-ins" in
+# the /etc/systemd/journald.conf.d/ directory. The latter is generally
+# recommended. Defaults can be restored by simply deleting the main
+# configuration file and all drop-ins located in /etc/.
+#
+# Use 'systemd-analyze cat-config systemd/journald.conf' to display the full config.
+#
+# See journald.conf(5) for details.
+
+[Journal]
+#Storage=persistent
+#Compress=yes
+#Seal=yes
+#SplitMode=uid
+#SyncIntervalSec=5m
+#RateLimitIntervalSec=30s
+#RateLimitBurst=10000
+#SystemMaxUse=
+#SystemKeepFree=
+#SystemMaxFileSize=
+#SystemMaxFiles=100
+#RuntimeMaxUse=
+#RuntimeKeepFree=
+#RuntimeMaxFileSize=
+#RuntimeMaxFiles=100
+#MaxRetentionSec=0
+#MaxFileSec=1month
+#ForwardToSyslog=no
+#ForwardToKMsg=no
+#ForwardToConsole=no
+#ForwardToWall=yes
+#TTYPath=/dev/console
+#MaxLevelStore=debug
+#MaxLevelSyslog=debug
+#MaxLevelKMsg=notice
+#MaxLevelConsole=info
+#MaxLevelWall=emerg
+#MaxLevelSocket=debug
+#LineMax=48K
+#ReadKMsg=yes
+#Audit=yes
+
+# /usr/lib/systemd/journald.conf.d/syslog.conf
+# Undo upstream commit 46b131574fdd7d77 for now. For details see
+#  http://lists.freedesktop.org/archives/systemd-devel/2014-November/025550.html
+
+[Journal]
+ForwardToSyslog=yes
+COMMAND           RSS
+dockerd         230296
+node            118248
+node            58904
+AliYunDunMonito 35468
+AliYunDun       27876
+containerd      23412
+tuned           22568
+postgres        20688
+networkd-dispat 16772
+unattended-upgr 16244
+sui             13280
+systemd         11000
+fwupd           10156
+nginx           10100
+nginx           10068

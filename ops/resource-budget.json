@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "mode": "advisory",
+  "metrics": {
+    "diskUsedPercent": {"direction": "high", "warning": 80, "critical": 90},
+    "diskAvailableBytes": {"direction": "low", "warning": 3221225472, "critical": 1073741824},
+    "memoryAvailableBytes": {"direction": "low", "warning": 805306368, "critical": 402653184},
+    "serviceMemoryPeakBytes": {"direction": "high", "warning": 536870912, "critical": 805306368},
+    "journalBytes": {"direction": "high", "warning": 268435456, "critical": 536870912},
+    "eventLoopP99Ms": {"direction": "high", "warning": 50, "critical": 100},
+    "releaseBuildSeconds": {"direction": "high", "warning": 900, "critical": 1800}
+  },
+  "retention": {"releaseDays": 7, "protectCurrentAndPrevious": true, "protectLiveDatasetReferences": true, "journalTargetDays": 14},
+  "recoveryTargetSeconds": 180,
+  "notes": "Advisory thresholds; no automatic deletion, scaling, memory limits or shared journald configuration changes. Recovery target is not a measured production rollback result."
+}
