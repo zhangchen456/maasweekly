@@ -4,4 +4,4 @@
 
 生产页面、验证标签、robots、sitemap 和埋点兼容性继续独立检查。已知百度 meta 验证值已上线；平台验证和链接提交仍需可用后台会话。Google TXT/meta 验证值尚未提供。不发送密码或私钥。
 
-状态：账号内验证/提交/真实看板核对等待可用浏览器会话；网站侧检查继续实施。
+网站侧 6 项检查全部通过：canonical、百度验证标签唯一、首页单表三 Tab、robots、sitemap 和 models/pricing/agent 入口。证据为 public-site-check.json/txt。账号内验证/提交/真实看板核对仍等待可用浏览器会话。
