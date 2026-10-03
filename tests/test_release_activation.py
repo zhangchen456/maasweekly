@@ -113,6 +113,7 @@ exit 0
         self.env_base = {
             **os.environ,
             "MAAS_RELEASE_ROOT": str(self.root),
+            "MAAS_CANDIDATE_START_TIMEOUT_SECONDS": "3",
             "MAAS_NGINX_TEST": str(nginx_hook),
             "MAAS_RELEASE_OWNER": _user,
             "MAAS_AGENT_GROUP": _group,
@@ -273,6 +274,34 @@ class TestT05FailureKeepsCurrent(ActivateFixture):
     def _retry_same_rid(self, bad_rid):
         r = self.activate("activate", bad_rid, expect_rc=0)
         self.assertIn("activated", r.stdout)
+
+    def test_delayed_candidate_is_allowed_to_finish_dataset_loading(self):
+        old = self._setup_current()
+        candidate = self.rid("c")
+        make_release(self.root, candidate, git_ts=1789000200)
+        hook = self.root / "shared" / "activate-hook"
+        hook.write_text(hook.read_text().replace("srv = http.server.HTTPServer", "import time; time.sleep(4)\nsrv = http.server.HTTPServer"))
+        self.env_base["MAAS_CANDIDATE_START_TIMEOUT_SECONDS"] = "8"
+        self.activate("activate", candidate)
+        self.assertEqual(self.current(), candidate)
+        self.assertIn(old, (self.root / "previous").readlink().as_posix())
+
+    def test_failed_candidate_stops_slot_even_if_registry_still_names_previous_release(self):
+        old = self._setup_current()
+        previous = self.rid("b")
+        candidate = self.rid("c")
+        slots_path = self.root / "shared" / "state" / "slots.json"
+        slots = json.loads(slots_path.read_text())
+        slots["slot_to_rid"]["green"] = previous
+        slots["rid_to_slot"][previous] = "green"
+        slots_path.write_text(json.dumps(slots))
+        make_release(self.root, candidate, git_ts=1789000200)
+        hook = self.root / "shared" / "activate-hook"
+        hook.write_text(hook.read_text().replace("self.send_response(200)", "self.send_response(503)"))
+        self.activate("activate", candidate, expect_rc=5)
+        self._assert_old_alive(old)
+        self.assertIn("stop green", (self.root / "shared" / "state" / "hook.log").read_text())
+        self.assertFalse((self.root / "shared" / "slots" / "green.env").exists())
 
     def test_fail_candidate_start(self):
         """失败注入 1：候选服务起不来（同 RID 重试场景重建）。"""

@@ -1,16 +1,5 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { PUBLIC_ACCESS, SITE_CANONICAL, validatePublicAccessConfig } from '../../config/public-access';
-if (validatePublicAccessConfig(PUBLIC_ACCESS).length) throw new Error('Invalid public access config');
-const paths = PUBLIC_ACCESS.paths;
+// Shared page; English differs only in translation, never in functionality.
+import Page from '../agent.astro';
 ---
-<Layout locale="en" title="Connect through REST, MCP, RSS and Agent Skill — MaaS Daily" description="Read MaaS Daily pricing and observations through the existing public REST API, MCP endpoint, RSS feeds and Agent Skill package.">
-  <article><h1>Connect to MaaS Daily</h1><p>The English pages share the existing read-only public interfaces. Identifiers, original currency amounts, field names and contract versions are unchanged. Observation and evidence bodies may be in Chinese.</p>
-    <h2>REST API</h2><p>Start with <a href={`${paths.apiBase}/status`}>dataset status</a> and inspect the <a href={paths.openapi}>OpenAPI specification</a>. Read <code>{SITE_CANONICAL}{paths.apiBase}/prices</code> to query accepted pricing records. Follow fixed-version cursors for pagination.</p>
-    <h2>MCP</h2><p>The Streamable HTTP endpoint is <code>{SITE_CANONICAL}{paths.mcpEndpoint}</code>. Five read-only tools expose changes, items, prices, evidence and weekly reports. See the <a href="/agent/">connection configurations and verified clients (Chinese)</a>.</p>
-    <h2>Agent Skill</h2><p>Inspect the <a href={paths.skillManifest}>package manifest</a> and <a href={paths.skillInstaller}>installer</a> before installation. Copying a configuration or downloading a file does not establish a successful installation.</p>
-    <h2>RSS</h2><p><a href={paths.feedChanges}>Recent observations feed (Chinese)</a> · <a href={paths.feedWeekly}>Weekly reports feed (Chinese)</a>. Feeds preserve stable item identities and disclose generated summaries.</p>
-    <h2>Availability</h2><ul>{Object.entries(PUBLIC_ACCESS.surfaces).map(([name, surface]) => <li>{name.toUpperCase()}: {surface.status}</li>)}</ul><p>For billing conditions, timestamps and evidence limitations, read the <a href="/en/method/">data method</a>. Overseas platform account, payment and API access remain unverified.</p>
-  </article>
-</Layout>
-<style>article{padding:36px 0;max-width:900px}p,li{line-height:1.8;color:var(--muted)}code{overflow-wrap:anywhere}h2{margin-top:30px}</style>
+<Page />

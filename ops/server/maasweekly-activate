@@ -363,7 +363,7 @@ EOF
     # 下一次激活等锁直到服务退出（Ubuntu 实测踩坑）
     "$ROOT/shared/activate-hook" start "$1" "$2" "$3" 9>&-
   else
-    systemctl start "maas-agent@$1" 2>/dev/null 9>&- \
+    systemctl restart "maas-agent@$1" 2>/dev/null 9>&- \
       || echo "[warn] systemd 不可用（测试模式），跳过服务启动" >&2
   fi
 }
@@ -378,8 +378,9 @@ stop_slot() {  # <slot>：停槽位服务 + 清 env
 }
 
 candidate_smoke() {  # <port>：候选冒烟（异步启动重试窗口；返回码，不 exit）
-  local i
-  for i in 1 2 3 4 5 6 7 8 9 10; do
+  # Cold dataset validation can exceed the old three-second startup window.
+  local deadline=$((SECONDS + ${MAAS_CANDIDATE_START_TIMEOUT_SECONDS:-30}))
+  while [ "$SECONDS" -lt "$deadline" ]; do
     if curl -sf --max-time 3 "http://127.0.0.1:$1/api/v1/status" >/dev/null 2>&1; then
       return 0
     fi
@@ -464,11 +465,12 @@ switch_service_tx() {  # <rid>：成功 0；候选失败 5；nginx 失败 7
 
 # ---- 失败恢复（复验 P1b：所有失败阶段统一恢复，同 RID 可重试）----
 recover_failed_activation() {  # <rid> <rc> [keep_release]
-  local rid="$1" rc="$2" keep="${3:-}" slot slot_rid
+  local rid="$1" rc="$2" keep="${3:-}" slot slot_rid slot_env_rid
   # 停止属于本次候选的槽（旧槽服务旧 release 不动）
   for slot in blue green; do
     slot_rid="$(rid_of_slot "$slot")"
-    if [ "$slot_rid" = "$rid" ] || [ -z "$slot_rid" ]; then
+    slot_env_rid="$(sed -n 's|^MAAS_RELEASE_DIR=.*/releases/||p' "$ROOT/shared/slots/$slot.env" 2>/dev/null || true)"
+    if [ "$slot_rid" = "$rid" ] || [ "$slot_env_rid" = "$rid" ] || [ -z "$slot_rid" ]; then
       stop_slot "$slot" || true
     fi
   done

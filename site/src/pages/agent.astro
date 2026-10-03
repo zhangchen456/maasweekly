@@ -7,6 +7,7 @@ const violations = validatePublicAccessConfig(P);
 if (violations.length) throw new Error(`[agent] ${violations.join('；')}`);
 const release = loadVerifiedRelease(undefined, { select: ['changes'] });
 const base = P.canonicalBaseUrl;
+const en = Astro.url.pathname.startsWith('/en/');
 const methods = [
   { key: 'skill', name: 'Agent Skill', hint: '让 Agent 帮你安装', mark: '01' },
   { key: 'mcp', name: 'MCP', hint: '连接你的 AI 客户端', mark: '02' },
@@ -14,13 +15,13 @@ const methods = [
   { key: 'rest', name: 'REST API', hint: '接入代码与工作流', mark: '04' },
 ] as const;
 const statusLabel = (status: string) => status === 'available' ? '已上线' : status === 'pending' ? '待部署' : '不可用';
-const verify = '用 maas-daily 查询最近 7 天 OpenAI 的变化，最多列出 5 条中文摘要和站内详情链接。注明数据截至日期与覆盖范围；不足 5 条或没有匹配记录时如实说明。';
-const installPrompt = `请帮我安装 MaaS Daily Skill：${base}/maas-skill/README.md\n\n先阅读安装说明，确认当前客户端支持的 Skill 目录，将 maas-daily 安装到该目录下；--dir 必须指向最终的 maas-daily 目录。若已安装，请更新原目录，不创建重复副本。\n安装完成后告诉我安装位置、是否需要开启新会话，以及如何验证。\n\n新会话中的验证问题：\n${verify}`;
-const updatePrompt = `请更新我已安装的 MaaS Daily Skill：${base}/maas-skill/README.md\n先确认当前正在使用的安装目录和是否有重复副本，再使用安装器更新同一目录。若发现未知文件或安装器拒绝覆盖，请说明原因，不强行覆盖。\n更新后告诉我是否需要开启新会话，并用以下问题验证：\n${verify}`;
+const verify = en ? 'Use maas-daily to query OpenAI changes from the last 7 days. Return up to 5 English summaries with site detail links. Include the data-through date and coverage; say clearly if fewer or no records match.' : '用 maas-daily 查询最近 7 天 OpenAI 的变化，最多列出 5 条中文摘要和站内详情链接。注明数据截至日期与覆盖范围；不足 5 条或没有匹配记录时如实说明。';
+const installPrompt = en ? `Please install the MaaS Daily Skill: ${base}/maas-skill/README.md\n\nRead the installation guide first and identify this client’s supported Skills directory. Install maas-daily there; --dir must point to the final maas-daily folder. If already installed, update the existing directory without creating a duplicate.\nAfter installation, report the directory, whether a new session is needed, and how to verify it.\n\nVerification question in a new session:\n${verify}` : `请帮我安装 MaaS Daily Skill：${base}/maas-skill/README.md\n\n先阅读安装说明，确认当前客户端支持的 Skill 目录，将 maas-daily 安装到该目录下；--dir 必须指向最终的 maas-daily 目录。若已安装，请更新原目录，不创建重复副本。\n安装完成后告诉我安装位置、是否需要开启新会话，以及如何验证。\n\n新会话中的验证问题：\n${verify}`;
+const updatePrompt = en ? `Please update my existing MaaS Daily Skill: ${base}/maas-skill/README.md\nFind the active installation directory and any duplicates, then update the same directory with the installer. If unknown files exist or the installer refuses to overwrite them, explain why and do not force it.\nReport whether a new session is required and verify with:\n${verify}` : `请更新我已安装的 MaaS Daily Skill：${base}/maas-skill/README.md\n先确认当前正在使用的安装目录和是否有重复副本，再使用安装器更新同一目录。若发现未知文件或安装器拒绝覆盖，请说明原因，不强行覆盖。\n更新后告诉我是否需要开启新会话，并用以下问题验证：\n${verify}`;
 const questions = [
   { title: '追踪平台变化', text: verify },
-  { title: '核对模型价格', text: '用 maas-daily 查询 gpt-4o 当前记录的输入价格。逐项列出全部匹配候选的币种、单位、适用条件、观察时间、证据 ID 和链接，不合并不同条件的价格；没有匹配记录时如实说明。' },
-  { title: '读最新周报', text: '用 maas-daily 获取最新一期正式周报，提炼主要变化并附周报链接、期号和数据截至日期。没有正式周报时如实说明，不用滚动 7 天摘要代替。' },
+  { title: '核对模型价格', text: en ? 'Use maas-daily to query the currently recorded gpt-4o input prices. List every matching candidate with currency, unit, conditions, observation time, evidence ID and links. Do not merge incompatible prices; say if no record matches.' : '用 maas-daily 查询 gpt-4o 当前记录的输入价格。逐项列出全部匹配候选的币种、单位、适用条件、观察时间、证据 ID 和链接，不合并不同条件的价格；没有匹配记录时如实说明。' },
+  { title: '读最新周报', text: en ? 'Use maas-daily to fetch the latest published weekly report, summarize its main changes, and include the report link, issue ID and data-through date. Say if no published report exists; do not substitute a rolling seven-day summary.' : '用 maas-daily 获取最新一期正式周报，提炼主要变化并附周报链接、期号和数据截至日期。没有正式周报时如实说明，不用滚动 7 天摘要代替。' },
 ];
 const mcpConfig = JSON.stringify({ mcpServers: { 'maas-daily': { type: 'http', url: `${base}${P.paths.mcpEndpoint}` } } }, null, 2);
 ---

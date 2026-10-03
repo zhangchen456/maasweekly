@@ -6,6 +6,7 @@ const button = document.getElementById('refresh-model') as HTMLButtonElement | n
 const status = document.getElementById('refresh-status');
 if (root && button && status) {
   const en = root.dataset.locale === 'en';
+  const compact = !en || root.dataset.priceLayout === 'compact';
   const t = (zh: string, english: string) => en ? english : zh;
   const cells = en ? englishPriceCells : priceCells;
   const headers = en ? englishPriceHeaders : priceHeaders;
@@ -36,14 +37,14 @@ if (root && button && status) {
       const changes: ChangeRecord[] = data.items;
       const table = document.createElement('table'); table.className = 'price-table';
       const head = table.createTHead().insertRow();
-      for (const label of (en ? [...headers, 'Evidence / record'] : ['平台 / API 模型', '计费项', '价格 / 原始单位', '条件与依据'])) {
+      for (const label of (!compact ? [...headers, 'Evidence / record'] : ['平台 / API 模型', '计费项', '价格 / 原始单位', '条件与依据'])) {
         const th = document.createElement('th'); th.scope = 'col'; th.textContent = label; head.append(th);
       }
       const body = table.createTBody();
       for (const price of prices) {
         const row = body.insertRow(); row.dataset.priceId = price.id;
         const values = cells(price);
-        if (en) {
+        if (!compact) {
           for (const value of values) row.insertCell().textContent = value;
         } else {
           const identity = row.insertCell();
@@ -54,7 +55,7 @@ if (root && button && status) {
           const unit = document.createElement('small'); unit.className = 'price-subline'; unit.textContent = `每 ${priceUnit(price.unitQuantity, price.unitName)}`; row.insertCell().append(amount, unit);
         }
         const cell = row.insertCell();
-        if (!en) {
+        if (compact) {
           const details = document.createElement('details'); details.className = 'quote-details';
           const summary = document.createElement('summary'); summary.textContent = '查看报价条件';
           const facts = document.createElement('dl'); facts.className = 'price-facts';

@@ -8,6 +8,7 @@ import { validateAnalyticsConfig } from '../../public/analytics.js';
 import { SITE_CANONICAL } from '../config/public-access';
 import { canonicalUrl } from '../lib/seo';
 import { languageRoute } from '../lib/locales';
+import { englishHtml, englishUi } from '../lib/ui-translation';
 validateAnalyticsConfig(analytics);
 interface Props {
   title: string;
@@ -18,12 +19,14 @@ interface Props {
 
 const activePath = Astro.url.pathname;
 const { title, description = "全球 MaaS 平台每日追踪 — 模型发布、定价变更、API 更新", noindex = false } = Astro.props;
-const locale = Astro.props.locale ?? 'zh';
+const locale = Astro.props.locale ?? (activePath.startsWith('/en/') ? 'en' : 'zh');
 const en = locale === 'en';
 const t = (zh: string, english: string) => en ? english : zh;
 const zhRoute = languageRoute(activePath, 'zh');
 const enRoute = languageRoute(activePath, 'en');
 const canonical = canonicalUrl(Astro.url.pathname);
+const content = await Astro.slots.render('default');
+const localizedContent = en ? englishHtml(content) : content;
 ---
 
 <!doctype html>
@@ -40,16 +43,16 @@ const canonical = canonicalUrl(Astro.url.pathname);
     <meta name="theme-color" content="#172724" />
     <meta name="apple-mobile-web-app-title" content="MaaS Daily" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
+    <meta name="description" content={en ? englishUi(description) : description} />
     {activePath === '/' && <meta name="baidu-site-verification" content="codeva-UXsh2qWgbK" />}
-    <title>{title}</title>
+    <title>{en ? englishUi(title) : title}</title>
     <link rel="canonical" href={canonical} />
     {zhRoute && enRoute && <><link rel="alternate" hreflang="zh-CN" href={canonicalUrl(zhRoute)} /><link rel="alternate" hreflang="en" href={canonicalUrl(enRoute)} /></>}
     <script is:inline type="module" src="/language.js"></script>
     {noindex && <meta name="robots" content="noindex, follow" />}
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={en ? englishUi(title) : title} />
+    <meta property="og:description" content={en ? englishUi(description) : description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="MaaS Daily" />
     <meta property="og:image" content={`${SITE_CANONICAL}/brand/social-card.png`} />
@@ -79,7 +82,7 @@ const canonical = canonicalUrl(Astro.url.pathname);
       <div class="shell topbar-inner">
         <a href={en ? "/en/" : "/?lang=zh"} class="brand" aria-label="MaaS Daily"><BrandLogo /></a>
         <nav class="nav" aria-label={t('页面导航', 'Main navigation')}>
-          {(en ? [['/en/', 'Home'], ['/en/models/', 'Models'], ['/en/pricing/', 'Prices'], ['/en/method/', 'Method'], ['/en/agent/', 'Connect']] : [['/?lang=zh', '今日'], ['/leaderboards', '榜单'], ['/pricing/', '价格'], ['/changes', '变化'], ['/sources', '信源'], ['/weekly', '归档'], ['/agent/', '接入']]).map(([href, label]) => <a href={href} aria-current={activePath === href.split('?')[0] ? 'page' : undefined}>{label}</a>)}
+          {[['/', t('今日', 'Today')], ['/leaderboards/', t('榜单', 'Rankings')], ['/pricing/', t('价格', 'Prices')], ['/changes/', t('变化', 'Changes')], ['/sources/', t('信源', 'Sources')], ['/weekly/', t('归档', 'Archive')], ['/agent/', t('接入', 'Connect')]].map(([href, label]) => <a href={en ? `/en${href}` : href === '/' ? '/?lang=zh' : href} aria-current={activePath.replace(/^\/en/, '') === href.split('?')[0] ? 'page' : undefined}>{label}</a>)}
         </nav>
         <nav class="language-switch" aria-label={t('语言', 'Language')}>
           <a href={zhRoute === '/' ? '/?lang=zh' : zhRoute ?? '/?lang=zh&untranslated=1'} data-language="zh" data-translated={Boolean(zhRoute)} lang="zh-CN" aria-current={!en ? 'true' : undefined}>中文</a>
@@ -96,20 +99,20 @@ const canonical = canonicalUrl(Astro.url.pathname);
     <main id="main-content">
       <div class="shell">
         <p id="language-note" role="status" hidden></p>
-        <slot />
+        <Fragment set:html={localizedContent} />
       </div>
     </main>
     <footer>
       <div class="shell footer-inner">
         <div><div class="footer-title">MaaS Daily Intelligence</div><div>{t("模型 × 平台 × 价格 × 生态", "Models × Platforms × Prices × Ecosystem")}</div></div>
         <div class="footer-meta">
-          {!en && <><a href="/about">关于</a> · <a href="/changelog/">变更</a> · </>}<a href={en ? '/en/models/' : '/models/'}>{t('模型价格', 'Model prices')}</a> · <a href={en ? '/en/agent/' : '/agent/'}>{t('接入', 'Connect')}</a> · <a href={en ? '/en/method/' : '/method/'}>{t('方法', 'Method')}</a> · <a href="/feed.xml">RSS {en && '(Chinese)'}</a>
+          <a href={en ? '/en/about/' : '/about/'}>{t('关于', 'About')}</a> · <a href={en ? '/en/changelog/' : '/changelog/'}>{t('变更', 'Changelog')}</a> · <a href={en ? '/en/models/' : '/models/'}>{t('模型价格', 'Model prices')}</a> · <a href={en ? '/en/agent/' : '/agent/'}>{t('接入', 'Connect')}</a> · <a href={en ? '/en/method/' : '/method/'}>{t('方法', 'Method')}</a> · <a href="mailto:zhangchen3508@gmail.com" class="contact-link">{t("联系我", "Contact me")} · zhangchen3508@gmail.com</a> · <a href="/feed.xml">RSS {en && '(Chinese)'}</a>
 
         </div>
       </div>
     </footer>
 
-    <script>import '../scripts/account-preferences';</script>
+    <script>import '../scripts/account-preferences'; import '../scripts/ui-translation';</script>
     <script is:inline>
       document.querySelector('.theme-toggle')?.addEventListener('click', () => {
         const cur = document.documentElement.getAttribute('data-theme');
@@ -276,7 +279,7 @@ const canonical = canonicalUrl(Astro.url.pathname);
       footer { padding: 36px 0 50px; border-top: 1px solid var(--line); color: var(--muted); margin-top: 60px; }
       .footer-inner { display: flex; justify-content: space-between; gap: 30px; align-items: end; }
       .footer-title { color: var(--paper); font: 700 17px/1 "Songti SC", serif; }
-      .footer-meta { text-align: right; font: 10px/1.8 "SF Mono", monospace; letter-spacing: .06em; }
+      .contact-link{overflow-wrap:anywhere}.footer-meta { text-align: right; font: 10px/1.8 "SF Mono", monospace; letter-spacing: .06em; }
       .footer-meta a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
       @media (max-width: 480px) {
         .nav { gap: 14px; flex-wrap: wrap; }

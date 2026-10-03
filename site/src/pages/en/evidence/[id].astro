@@ -1,0 +1,5 @@
+---
+import Page, { getStaticPaths as sharedPaths } from '../../evidence/[id].astro';
+export function getStaticPaths() { return sharedPaths(); }
+---
+<Page {...Astro.props} />

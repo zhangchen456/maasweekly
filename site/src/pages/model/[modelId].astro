@@ -2,7 +2,7 @@
 import BillingConditions from '../../components/BillingConditions.astro';
 import EvidenceLinks from '../../components/EvidenceLinks.astro';
 import ChangeList from '../../components/ChangeList.astro';
-import { priceUnit } from '../../lib/price-display';
+import { englishPriceCells, englishPriceHeaders, priceUnit } from '../../lib/price-display';
 import Layout from '../../layouts/Layout.astro';
 import ModelFollow from '../../components/ModelFollow.astro';
 import { modelRelease, modelPage, priceCells, priceHeaders, providerLabels } from '../../lib/model-pages';
@@ -20,7 +20,8 @@ const upstream = catalog.upstreamModels?.find(u => u.modelId === model.modelId);
 const developer = catalog.developers?.find(d => d.developerId === upstream?.developerId);
 const availability = catalog.availabilities?.filter(a => a.modelId === model.modelId) ?? [];
 const platformName = (id: string) => catalog.platforms?.find(p => p.platformId === id)?.displayName ?? id;
-const rows = prices.map(price => ({price, cells: priceCells(price)}));
+const locale = Astro.url.pathname.startsWith('/en/') ? 'en' : 'zh';
+const rows = prices.map(price => ({price, cells: (locale === 'en' ? englishPriceCells : priceCells)(price)}));
 const providerId = model.modelId.split(':')[0];
 const providerLabel = providerLabels[providerId] ?? providerId;
 const hasContent = prices.length > 0 || changes.length > 0;
@@ -32,7 +33,7 @@ const hasContent = prices.length > 0 || changes.length > 0;
     <div class="shell">
       <nav class="model-breadcrumb" aria-label="面包屑"><a href="/">首页</a> / <a href="/models/">模型 API 价格</a> / {model.modelName}</nav>
       <h1>{model.modelName} API 价格与变化</h1>
-      <ModelFollow modelId={model.modelId} locale="zh" />
+      <ModelFollow modelId={model.modelId} locale={locale} />
       <div class="model-meta">
         <span class="model-id">{model.modelId}</span>
         {model.familyId && <span class="model-family">系列：<a href={`/changes/?familyId=${model.familyId}`}>{model.familyName}</a></span>}
@@ -42,7 +43,7 @@ const hasContent = prices.length > 0 || changes.length > 0;
     </div>
   </section>
 
-  <div class="shell model-detail" data-model-id={model.modelId} data-api-base={PUBLIC_ACCESS.paths.apiBase}
+  <div class="shell model-detail" data-locale={locale} data-price-layout="compact" data-model-id={model.modelId} data-api-base={PUBLIC_ACCESS.paths.apiBase}
     data-dataset-version={datasetVersion} data-from={from} data-to={to}>
     {upstream && <section class="model-section">
       <h2>开发者与调用平台</h2>
@@ -66,7 +67,7 @@ const hasContent = prices.length > 0 || changes.length > 0;
             <td><strong>{cells[0]}</strong><small class="price-subline">{price.modelKey}</small></td>
             <td><span class="billing-badge">{cells[2]}</span></td>
             <td><strong class="detail-amount">{price.amount} <small>{price.currency}</small></strong><small class="price-subline">每 {priceUnit(price.unitQuantity, price.unitName)}</small></td>
-            <td><BillingConditions headers={priceHeaders} cells={cells} /><EvidenceLinks price={price} /></td>
+            <td><BillingConditions headers={locale === 'en' ? englishPriceHeaders : priceHeaders} cells={cells} /><EvidenceLinks price={price} /></td>
           </tr>)}</tbody>
         </table> : <p class="empty-state">当前公开数据范围内暂无价格记录。不能据此判断该模型免费或平台未提供服务。</p>}
       </div>

@@ -189,6 +189,17 @@ def main():
                 isolated=guest.request.get(base+'/api/account/me').json()
                 assert isolated['state']=={} and isolated['watches']==[] and isolated['user']['displayName']==''
                 report['states'].append('english-global-login-and-second-account-isolation')
+                guest_page.goto(base+'/en/pricing/')
+                guest_page.locator('#search').fill('DeepSeek')
+                guest_page.wait_for_timeout(1100)
+                assert guest.request.get(base+'/api/account/me').json()['state']['priceWorkspace']['query']=='DeepSeek'
+                guest_page.goto(base+'/pricing/?lang=zh')
+                assert guest_page.locator('#search').input_value()=='DeepSeek'
+                assert guest_page.locator('footer a[href="mailto:zhangchen3508@gmail.com"]').count()==1
+                guest_page.goto(base+'/en/')
+                guest_page.set_viewport_size({'width':390,'height':844})
+                assert guest_page.evaluate('document.documentElement.scrollWidth<=innerWidth')
+                report['states'].append('english-price-workspace-shares-settings-with-chinese-and-contact-link')
                 page.locator('.watch-row button').click()
                 page.wait_for_function("document.querySelector('#watch-count').textContent==='0'")
                 with page.expect_response(lambda response: response.url.endswith('/api/account/logout-all')) as logout_response:
