@@ -12,3 +12,5 @@
 - [RSS 周度报告](https://daily.maas.click/feed/weekly.xml)
 
 数据使用边界: 本站为公共测试期数据，使用前请核验证据与官方来源；许可条款待产品确认后在此更新。
+
+会员接入：公开 /api/mcp 与 /api/v1/ 保持匿名免费，周报仅目录/摘要（公开样例除外）。Plus 全文使用 /api/pro/mcp 与 Authorization: Bearer 个人通用凭证；maas_pro_weekly 可读取指定期号或最新一期完整周报。权限错误不得以公开摘要冒充全文。开通及凭证配置见 /agent/#plus-access 。

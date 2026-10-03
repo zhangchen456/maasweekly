@@ -113,7 +113,7 @@ export function createMcpHandler(holder: DatasetHolder, config: McpConfig, pro?:
     // 5. 每请求全新 McpServer + stateless transport（官方范式；
     //    工具闭包持有 holder，单次调用单 datasetVersion）
     const mcp = new McpServer({ name: 'maas-daily', version: '1.0.0' });
-    if (pro) registerProTools(mcp, pro.store, req, pro.config);
+    if (pro) registerProTools(mcp, pro.store, req, pro.config, holder);
     else registerMaasTools(mcp, holder);
     const transport = new StreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
