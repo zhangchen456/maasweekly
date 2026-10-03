@@ -37,7 +37,7 @@ export const ROUTES: RouteMeta[] = [
   { method: 'GET', path: '/api/v1/items/{id}', params: [],
     statusCodes: [200, 304, 404, 429, 503] },
   { method: 'GET', path: '/api/v1/prices',
-    params: ['provider', 'model', 'modelId', 'familyId', 'component', 'region', 'billingMode', 'q', 'limit', 'cursor'],
+    params: ['provider', 'model', 'modelId', 'familyId', 'platformId', 'component', 'region', 'billingMode', 'q', 'limit', 'cursor'],
     statusCodes: [200, 304, 400, 409, 413, 429, 503] },
   { method: 'GET', path: '/api/v1/evidence/{id}', params: [],
     statusCodes: [200, 304, 404, 429, 503] },
@@ -289,8 +289,7 @@ export function createHandler(holder: DatasetHolder, config: ServerConfig) {
             const dsModels = ds!;
             return sendJson(req, res, requestId, 200, {
               ...envelope(dsModels, {}, dsModels.coverage),
-              models: dsModels.modelIdentities.models,
-              families: dsModels.modelIdentities.families,
+              ...dsModels.modelIdentities,
             });
           }
           default:

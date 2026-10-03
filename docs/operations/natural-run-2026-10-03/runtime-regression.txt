@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: worker verifies candidates; ten unchanged polls parse zero business files; force failure retains current
+ok 1 - worker verifies candidates; ten unchanged polls parse zero business files; force failure retains current
+  ---
+  duration_ms: 100.814083
+  type: 'test'
+  ...
+# Subtest: historical first reads single-flight; zero cache budget reloads retained cursor and genuine deletion returns 409
+ok 2 - historical first reads single-flight; zero cache budget reloads retained cursor and genuine deletion returns 409
+  ---
+  duration_ms: 120.18575
+  type: 'test'
+  ...
+# Subtest: a superseded candidate never replaces current and closed loader cannot publish
+ok 3 - a superseded candidate never replaces current and closed loader cannot publish
+  ---
+  duration_ms: 9.44775
+  type: 'test'
+  ...
+# Subtest: no valid startup yields 503; aborted worker settles without publishing
+ok 4 - no valid startup yields 503; aborted worker settles without publishing
+  ---
+  duration_ms: 3.19375
+  type: 'test'
+  ...
+# Subtest: valid hashes cannot conceal broken references; historical LRU obeys its version budget
+ok 5 - valid hashes cannot conceal broken references; historical LRU obeys its version budget
+  ---
+  duration_ms: 300.697416
+  type: 'test'
+  ...
+# Subtest: indexed queries match reference scans through all pages, filters and date boundaries
+ok 6 - indexed queries match reference scans through all pages, filters and date boundaries
+  ---
+  duration_ms: 13.44425
+  type: 'test'
+  ...
+# Subtest: client normalization and proxy trust reject spoofing and scoped/multiple IP headers
+ok 7 - client normalization and proxy trust reject spoofing and scoped/multiple IP headers
+  ---
+  duration_ms: 3.578167
+  type: 'test'
+  ...
+# Subtest: per-client quotas, bounded TTL state and independent global guards
+ok 8 - per-client quotas, bounded TTL state and independent global guards
+  ---
+  duration_ms: 0.498125
+  type: 'test'
+  ...
+# Subtest: worker terminal messages wait for parent acknowledgement before exit
+ok 9 - worker terminal messages wait for parent acknowledgement before exit
+  ---
+  duration_ms: 159.805625
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 767.904625

@@ -6,7 +6,8 @@ import type { HomeModelPick } from '../config/home-model-selection.ts';
 export const quoteScenario = (p: PriceRecord) => JSON.stringify([p.providerId, p.sourceId, p.modelKey, p.currency, p.unitName, p.unitQuantity, p.region, p.billingMode, p.serviceTier, p.contextBand, p.timeCondition]);
 /** A disclosed domestic standard scenario; never rank by amount or mix output conditions. */
 export function selectHomeQuote(prices: PriceRecord[], providerId: string) {
-  const providerPrices = prices.filter(p => p.providerId === providerId);
+  const preferredSource = ({ google: 'google-gemini-pricing', anthropic: 'anthropic-pricing' } as Record<string, string>)[providerId];
+  const providerPrices = prices.filter(p => p.providerId === providerId && (!preferredSource || p.sourceId === preferredSource));
   const latestObserved = Math.max(...providerPrices.map(p => Date.parse(p.observedAt)));
   const eligible = providerPrices.filter(p => Date.parse(p.observedAt) === latestObserved && p.quality.state === 'fresh' && p.evidenceStatus === 'complete' && p.billingMode === 'realtime' && p.serviceTier === 'standard');
   const score = (p: PriceRecord): number[] => [p.region === 'cn' ? 0 : p.region === 'global' ? 1 : 2, !p.timeCondition ? 0 : p.timeCondition.period === 'peak' ? 1 : 2, Number(p.contextBand?.min ?? 0), Number(p.contextBand?.max ?? Number.MAX_SAFE_INTEGER)];

@@ -19,8 +19,12 @@ try {
     }
   }
   port.postMessage({ kind: 'done' });
+  // Keep the port alive until the parent hydrates the terminal message and
+  // terminates us. Otherwise exit can overtake its setImmediate callback.
+  await once(port, 'message');
 } catch (error) {
   port.postMessage({ kind: 'error', message: (error as Error).message });
+  await once(port, 'message');
 } finally {
   port.close();
 }

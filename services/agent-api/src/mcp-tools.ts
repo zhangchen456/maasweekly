@@ -29,7 +29,7 @@ import type {
 // ---------------------------------------------------------------------------
 
 const providerField = z.string().optional().describe(
-  '平台 ID（providerId），如 openai、alibaba。有效值以 status.providers 为准；未知值返回错误而非空列表');
+  '历史查询命名空间（providerId），如 openai、alibaba；不等同于调用平台。有效值以 status.providers 为准；未知值返回错误而非空列表');
 
 const modelIdField = z.string().optional().describe(
   '稳定模型实体 ID（精确匹配），如 alibaba:qwen3-coder-plus。与 model（原始 modelKey 字符串）语义不同；来源：价格记录的 modelId 字段');
@@ -66,6 +66,7 @@ const CHANGES_SCHEMA = {
 } as const;
 
 const PRICES_SCHEMA = {
+  platformId: z.string().optional().describe("精确调用平台 ID，如 google-vertex-ai、google-gemini-api、anthropic-api。与 provider 命名空间分开；取自 /models 的 platforms"),
   model: z.string().optional().describe(
     '模型名精确匹配（原始 modelKey 字符串，大小写不敏感），无别名推断。要「找类似名字的模型」请改用 q'),
   modelId: modelIdField,

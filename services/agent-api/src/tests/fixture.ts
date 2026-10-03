@@ -28,6 +28,10 @@ export interface FixturePrice {
   factKey: string;
   providerId: string;
   modelKey: string;
+  sourceId?: string;
+  platformId?: string;
+  upstreamModelId?: string;
+  availabilityId?: string;
   /** Task 07 T07-3：可选 model identity 字段（fixture 直写——测试投影后的过滤） */
   modelId?: string;
   modelName?: string;
@@ -52,6 +56,7 @@ export class ReleaseFixture {
   /** 写一套完整 release（覆盖指定版本目录），并更新 manifest。 */
   writeRelease(version: string, opts: {
     modelIdentities?: ModelIdentityCatalog;
+    providers?: {providerId:string;displayName:string;region:string}[];
     changes?: FixtureChange[];
     prices?: FixturePrice[];
     weekly?: string[];
@@ -108,7 +113,8 @@ export class ReleaseFixture {
       id: 'pfv_' + createHash('sha256').update(p.factKey).digest('hex'),
       factKey: p.factKey,
       providerId: p.providerId,
-      sourceId: `${p.providerId}-pricing`,
+      sourceId: p.sourceId ?? `${p.providerId}-pricing`,
+      ...(p.platformId ? {platformId:p.platformId,upstreamModelId:p.upstreamModelId,availabilityId:p.availabilityId} : {}),
       modelKey: p.modelKey,
       ...(p.modelId ? { modelId: p.modelId, modelName: p.modelName ?? p.modelKey } : {}),
       ...(p.familyId ? { familyId: p.familyId, familyName: p.familyName } : {}),
@@ -162,7 +168,7 @@ export class ReleaseFixture {
       trends: [], watchpoints: null, event_index: null,
     }));
     const status = {
-      providers: [
+      providers: opts.providers ?? [
         { providerId: 'openai', displayName: 'OpenAI', region: 'overseas' },
         { providerId: 'alibaba', displayName: '阿里百炼', region: 'china' },
       ],

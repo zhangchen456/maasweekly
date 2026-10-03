@@ -1,0 +1,9 @@
+
+> @maasweekly/agent-api@1.0.0 prebuild
+> python3 ../../scripts/generate-public-contract.py --check
+
+public contract generation checked
+
+> @maasweekly/agent-api@1.0.0 build
+> tsc -p tsconfig.json
+

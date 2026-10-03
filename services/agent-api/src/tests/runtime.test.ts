@@ -1,4 +1,6 @@
 import { test } from 'node:test';
+import { Worker } from 'node:worker_threads';
+import { once } from 'node:events';
 import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync, readFileSync, rmSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -157,4 +159,32 @@ test('per-client quotas, bounded TTL state and independent global guards', () =>
   for (let i = 3; i < 100; i++) rest.take(req(`192.0.2.${i}`));
   assert.equal(rest.size, 2); assert.equal(rest.take(b).allowed, false);
   now = 60000; assert.ok(rest.take(b).allowed); assert.equal(rest.size, 1);
+});
+
+// Reproduce the terminal-message ordering without relying on scheduler luck.
+// The worker must not exit while the parent's next-turn hydration is pending.
+test('worker terminal messages wait for parent acknowledgement before exit', async () => {
+  const { fx } = fixture();
+  try {
+    for (const valid of [true, false]) {
+      const manifest = JSON.parse(readFileSync(path.join(fx.root, 'manifest.json'), 'utf8'));
+      const worker = new Worker(new URL('../dataset-worker.js', import.meta.url),
+        {workerData:{root:valid ? fx.root : path.join(fx.root,'missing'), manifest}});
+      let exited = false;
+      worker.on('exit', () => { exited = true; });
+      try {
+        while (true) {
+          const [message] = await once(worker, 'message');
+          if (message.kind === 'done' || message.kind === 'error') {
+            assert.equal(message.kind, valid ? 'done' : 'error');
+            await new Promise(resolve => setTimeout(resolve, 50));
+            assert.equal(exited, false, 'terminal event must survive delayed hydration');
+            const exit = once(worker, 'exit'); worker.postMessage('ack'); await exit;
+            break;
+          }
+          worker.postMessage('ack');
+        }
+      } finally { await worker.terminate(); }
+    }
+  } finally { fx.cleanup(); }
 });

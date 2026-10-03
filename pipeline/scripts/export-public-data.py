@@ -33,6 +33,7 @@ BASE = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(BASE / "pipeline"))
 
 from public_export import canonical, loaders, projector, validator  # noqa: E402
+from public_export import cross_platform, retention
 from public_export.loaders import ExportError  # noqa: E402
 
 REPO_ROOT = BASE
@@ -42,6 +43,7 @@ BUSINESS_FILES = ("changes.json", "items.json", "prices.json",
                   "evidence.json", "weekly.json", "status.json",
                   "model-identities.json")
 RETENTION_DAYS = 7
+RETENTION_EXCLUSIONS = BASE / "pipeline/config/public_retention_exclusions.json"
 
 
 def _build_model_identities(identity_projector) -> dict:
@@ -79,6 +81,8 @@ def build_release(input_root: Path) -> dict:
             load_registry(input_root / "data/model-registry/models.json"))
         projector._mi_gate_errors.clear()
         model_identities = _build_model_identities(projector._mi_projector)
+        relations, availability_mapping = cross_platform.load(input_root, model_identities)
+        model_identities.update(relations)
     except (OSError, ValueError, KeyError, TypeError) as exc:
         raise ExportError(f"model identity registry/catalog 加载失败: {exc}") from exc
     li = loaders.load_all(input_root, PROVIDER_MAP)
@@ -99,6 +103,7 @@ def build_release(input_root: Path) -> dict:
         (projector.project_price_fact(li.fact_versions[e["version_id"]], pm, ps, le)
          for e in (li.current.get("facts") or {}).values()),
         key=canonical.prices_sort_key)
+    cross_platform.annotate(prices, availability_mapping)
     rev = projector.build_evidence_reverse_index(li.fact_versions)
     reachable = {e["version_id"] for e in (li.current.get("facts") or {}).values()} | \
         {v for r in li.price_records
@@ -116,6 +121,7 @@ def build_release(input_root: Path) -> dict:
 
     errs = validator.validate_entities(changes, prices, evidence, weekly, status)
     errs += validator.validate_references(changes, prices, evidence)
+    errs += cross_platform.validate_prices(model_identities, prices)
     # Task 07 §十五：model identity build gate（违规 → fail closed 零写入）
     import public_export.projector as _pp
     if _pp._mi_gate_errors:
@@ -195,6 +201,20 @@ def publish(output_root: Path, rel: dict) -> int:
     target = releases_root / version
     manifest_file = output_root / "manifest.json"
 
+    # Validate the planned pointer before any business directory is created/modified.
+    now = _now_iso()
+    previous = json.loads(manifest_file.read_text()) if manifest_file.exists() else {}
+    candidates = [{"datasetVersion": version, "generatedAt": now}] + [
+        r for r in previous.get("retainedVersions", []) if r.get("datasetVersion") != version]
+    if previous:
+        retention.checked_references(output_root, [{"datasetVersion": previous["datasetVersion"]}], previous["datasetVersion"])
+    candidates, removed_refs = retention.remove_known_missing(output_root, candidates,
+        exclusions=retention.excluded_versions(RETENTION_EXCLUSIONS), protected={version, previous.get("datasetVersion")})
+    planned = _apply_retention(candidates, version, now)
+    retained, _ = retention.checked_references(output_root, planned, version, pending_current=True)
+    for ds in removed_refs:
+        print("[retention] removed missing unpublished reference: " + ds)
+
     # 幂等：目标已存在 → 校验字节一致后零写入
     if target.exists():
         existing = {f.name: f.read_bytes() for f in
@@ -232,18 +252,7 @@ def publish(output_root: Path, rel: dict) -> int:
         if tmp is not None and tmp.exists():
             shutil.rmtree(tmp, ignore_errors=True)
 
-    # manifest
-    prev_retained: list[dict] = []
-    if manifest_file.exists():
-        try:
-            prev = json.loads(manifest_file.read_text(encoding="utf-8"))
-            prev_retained = prev.get("retainedVersions") or []
-        except json.JSONDecodeError:
-            pass
-    now = _now_iso()
-    retained = [{"datasetVersion": version, "generatedAt": now}] + [
-        r for r in prev_retained if r["datasetVersion"] != version]
-    retained = _apply_retention(retained, version, now)
+    # The preflight-validated pointer is committed only after the new release passes.
     manifest = {
         "schemaVersion": "1.0",
         "datasetVersion": version,
@@ -318,6 +327,10 @@ def run_check(output_root: Path) -> int:
         print(f"✗ manifest 损坏: {e}", file=sys.stderr)
         return 1
     errs = validator.validate_release_files(output_root, manifest)
+    try:
+        retention.checked_references(output_root, manifest.get('retainedVersions'), manifest['datasetVersion'])
+    except (ExportError, ValueError, KeyError, OSError) as exc:
+        errs.append(str(exc))
     if errs:
         print(f"✗ 公开数据校验失败（{len(errs)} 项）:", file=sys.stderr)
         for e in errs[:10]:
@@ -329,8 +342,21 @@ def run_check(output_root: Path) -> int:
     return 0
 
 
+def repair_retention(output_root):
+    """Only explicit missing unpublished references; no directory cleanup or data rewriting."""
+    manifest_file = output_root / 'manifest.json'
+    before = json.loads(manifest_file.read_text())
+    rows, removed = retention.checked_references(output_root, before.get('retainedVersions'), before['datasetVersion'],
+        exclusions=retention.excluded_versions(RETENTION_EXCLUSIONS))
+    if removed:
+        _atomic_write_json(manifest_file, {**before, 'retainedVersions': rows})
+    print(json.dumps({'removedMissingReferences': removed, 'kept': len(rows), 'immutableFilesChanged': False}))
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--repair-retention", action="store_true", help="仅修正明确未部署的缺失保留引用，不删除 release")
     ap.add_argument("--check", action="store_true", help="只校验，零写入")
     ap.add_argument("--dry-run", action="store_true",
                     help="完整构建到临时目录，正式目录逐字节不变")
@@ -339,6 +365,9 @@ def main(argv=None) -> int:
     ap.add_argument("--input-root", type=Path, default=REPO_ROOT,
                     help="输入根（默认仓库根；测试注入用）")
     args = ap.parse_args(argv)
+
+    if args.repair_retention:
+        return repair_retention(args.output_dir)
 
     if args.check:
         return run_check(args.output_dir)
