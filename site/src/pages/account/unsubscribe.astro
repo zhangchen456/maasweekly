@@ -1,0 +1,20 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="关闭邮件提醒 — MaaS Daily" noindex={true}>
+  <section class="unsubscribe"><h1>关闭邮件提醒</h1><p>关闭后不再接收模型变化摘要。账号和关注列表仍保留，你可以随时重新开启。</p><button id="unsubscribe-confirm">确认关闭邮件提醒</button><p id="unsubscribe-message" role="status" aria-live="polite"></p><a href="/account/">返回我的关注 →</a></section>
+</Layout>
+<script>
+  import { accountApi } from '../../scripts/account';
+  const token = location.hash.slice(1);
+  history.replaceState(null, '', location.pathname);
+  const button = document.getElementById('unsubscribe-confirm') as HTMLButtonElement;
+  const message = document.getElementById('unsubscribe-message')!;
+  if (!token) { button.disabled = true; message.textContent = '请使用邮件中的完整退订链接。'; }
+  button.addEventListener('click', async () => {
+    button.disabled = true;
+    try { await accountApi('unsubscribe', { token }); message.textContent = '已关闭邮件提醒。'; button.textContent = '已关闭'; }
+    catch (error) { message.textContent = error instanceof Error ? error.message : '退订失败，请重试'; button.disabled = false; }
+  });
+</script>
+<style>.unsubscribe{max-width:640px;padding:64px 0 96px;margin:auto}h1{font-size:2rem}p{line-height:1.8;color:var(--paper-soft)}button{background:var(--acid);color:var(--ink);padding:12px 18px;border:0;border-radius:5px;font:inherit;cursor:pointer}button:disabled{opacity:.6}button:focus-visible{outline:2px solid var(--acid);outline-offset:4px}a{display:inline-block;margin-top:20px}</style>

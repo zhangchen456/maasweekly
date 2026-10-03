@@ -26,6 +26,7 @@ const hasContent = prices.length > 0 || changes.length > 0;
     <div class="shell">
       <nav class="model-breadcrumb" aria-label="面包屑"><a href="/">首页</a> / <a href="/models/">模型 API 价格</a> / {model.modelName}</nav>
       <h1>{model.modelName} API 价格与变化</h1>
+      <p><a class="section-link" href={`/account/?model=${encodeURIComponent(model.modelId)}`}>关注这个模型 →</a></p>
       <div class="model-meta">
         <span class="model-id">{model.modelId}</span>
         {model.familyId && <span class="model-family">系列：<a href={`/changes/?familyId=${model.familyId}`}>{model.familyName}</a></span>}

@@ -1,0 +1,10 @@
+[Unit]
+Description=Retry pending MaaS model-watch emails every 15 minutes
+
+[Timer]
+OnCalendar=*-*-* *:00/15:00 Asia/Shanghai
+Persistent=true
+Unit=maas-account-digest-retry.service
+
+[Install]
+WantedBy=timers.target

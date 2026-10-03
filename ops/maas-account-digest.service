@@ -1,0 +1,22 @@
+# Candidate: install only after mail/domain and account database are configured.
+[Unit]
+Description=MaaS Daily daily model-watch digest
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=maasagent
+Group=maasagent
+EnvironmentFile=/srv/maasweekly/shared/agent.env
+Environment=MAAS_RELEASE_DIR=/srv/maasweekly/current
+Environment=PUBLIC_DATA_ROOT=/srv/maasweekly/current/data/public/v1
+ExecStart=/usr/bin/node /srv/maasweekly/current/agent-api/dist/account-digest-cli.js
+TimeoutStartSec=45min
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/maasweekly/shared/state
+CapabilityBoundingSet=
+AmbientCapabilities=
