@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_b1ce54b53e18763c42efcfe27deebce11c9c946d395437b727e8529892cdef24",
+  "date": "2026-10-03",
+  "recordType": "price_change",
+  "fact_key": "2567df0df4b96f0b970598ae532c80cd53d382d00a57bf34cf2a08413f2815b9",
+  "provider": "qwen",
+  "model": "qwen-omni-turbo-2025-03-26",
+  "component": "input",
+  "currency": "CNY",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "cn",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": null,
+  "timeCondition": null,
+  "beforeVersionId": "pfv_dca3b7fb04616da23f1680c3d39cb0f8ccc417688c76caafcebd5d6363c130bb",
+  "afterVersionId": "pfv_420a8a2640fbf499018815147b752e3e812bb2edf8fc575f344dc0002531ff14",
+  "beforeEvidenceId": "ev_e27988db8323b69db9a8f2e91a08c3c793dbb8bb571bb4053b0d76dbf0e2c4e2",
+  "afterEvidenceId": "ev_433131ea771b7cd1c19e637ac8dd3bc3b4f5fc2bfa60a3cda8e87540045ad961",
+  "beforeObservedAt": "2026-10-02T14:46:51+00:00",
+  "afterObservedAt": "2026-10-02T17:18:26+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "1.5",
+    "current": "0.4",
+    "direction": "down",
+    "percent": "-73.33"
+  },
+  "revision": 2,
+  "status": "withdrawn",
+  "revisedAt": "2026-10-03T00:17:33+00:00",
+  "revisionReason": "重新计算后未识别到变化，撤回收录",
+  "permalink": "/item/price_b1ce54b53e18763c42efcfe27deebce11c9c946d395437b727e8529892cdef24/",
+  "provenance": {}
+}

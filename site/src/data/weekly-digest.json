@@ -4,6 +4,14 @@
     "start": "2026-09-28",
     "end": "2026-10-04",
     "days": {
+      "2026-10-03": {
+        "substantive": 8,
+        "jitter": 2,
+        "failed": 3,
+        "releases": 3,
+        "pricings": 1,
+        "sunsets": 1
+      },
       "2026-10-02": {
         "substantive": 17,
         "jitter": 2,
@@ -46,12 +54,54 @@
       }
     },
     "totals": {
-      "substantive": 64,
-      "releases": 26,
-      "pricings": 14,
-      "sunsets": 4
+      "substantive": 72,
+      "releases": 29,
+      "pricings": 15,
+      "sunsets": 5
     },
     "highlights": [
+      {
+        "platform": "xAI",
+        "date": "2026-10-03",
+        "text": "grok-voice-transcribe-2.0 成为默认语音转写模型，1.0 于 2026-10-02 正式下线并路由至 2.0",
+        "type": "release"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-10-03",
+        "text": "grok-voice-transcribe-1.0 标记为 deprecated，2026-10-02 起所有请求自动切换至 2.0",
+        "type": "sunset"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-03",
+        "text": "Claude Opus 5 (Max) 取代 Claude Opus 4.8 (High) 进入榜单",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-03",
+        "text": "GPT 6.1 Sol (Max) 以 $0.56/task 价格新上榜",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-03",
+        "text": "Claude Fable 5.1 (Max) 价格从 $4.66/task 下调至 $4.56/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-03",
+        "text": "Claude Sonnet 5.5 的 Adaptive Reasoning 档位名称简化为 High/Low/Max/Medium/Xhigh",
+        "type": "other"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-03",
+        "text": "OpenAI 在 model_list、pricing、changelog、blog 中同步新增 Bedrock GovCloud configuration",
+        "type": "other"
+      },
       {
         "platform": "Kimi",
         "date": "2026-10-02",

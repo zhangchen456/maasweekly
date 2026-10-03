@@ -1,6 +1,371 @@
 {
-  "updated_at": "2026-10-02T13:54:53",
+  "updated_at": "2026-10-03T00:21:17",
   "days": [
+    {
+      "date": "2026-10-03",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 10,
+        "unchanged": 55
+      },
+      "changed": [
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Bedrock GovCloud configuration"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bedrock GovCloud configuration",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_a635ae1d32ab6728c974f9ba1af05cbf56cffb92253af79e1e33f566dfff9c74",
+          "permalink": "/item/obs_a635ae1d32ab6728c974f9ba1af05cbf56cffb92253af79e1e33f566dfff9c74/",
+          "llm_summary": "新增 Bedrock GovCloud configuration 条目，表明 OpenAI 模型列表中加入政府云部署配置，可能对应新区域或合规选项。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Bedrock GovCloud configuration"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bedrock GovCloud configuration",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_36c65b0b21c1fe318ab4d70c6e60d076a6816e0dc345ac37a3c779c330b624ed",
+          "permalink": "/item/obs_36c65b0b21c1fe318ab4d70c6e60d076a6816e0dc345ac37a3c779c330b624ed/",
+          "llm_summary": "新增 Bedrock GovCloud configuration 定价行，与模型列表同步，暗示该配置已正式可购买。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Bedrock GovCloud configuration"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bedrock GovCloud configuration",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_de067486741edb6f210890dd674fb3e8fa60876e76a0812e4f3db6651c26f170",
+          "permalink": "/item/obs_de067486741edb6f210890dd674fb3e8fa60876e76a0812e4f3db6651c26f170/",
+          "llm_summary": "新增 Bedrock GovCloud configuration 变更记录，说明该配置是近期发布的新功能。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Bedrock GovCloud configuration"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bedrock GovCloud configuration",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_7043699283af7875a1cb7ac29bbf0d715fd8a8981d4dd1a7a755df5e7625543e",
+          "permalink": "/item/obs_7043699283af7875a1cb7ac29bbf0d715fd8a8981d4dd1a7a755df5e7625543e/",
+          "llm_summary": "新增 Bedrock GovCloud configuration 博客文章，作为官方公告渠道确认该配置的可用性。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "grok-voice-transcribe-1.0 end of life",
+            "grok-voice-transcribe-1.0 is deprecated and reaches end of life on October 2, 2026. All requests to that slug are routed to grok-voice-transcribe-2.0 at the same price, with higher accuracy. See the Speech to Text docs."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: September 28, 2026",
+              "after": "Last updated: October 2, 2026"
+            },
+            {
+              "key": "grok-voice-transcribe-2.0",
+              "before": "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-1.0. See the Speech to Text docs.",
+              "after": "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-2.0. See the Speech to Text docs."
+            }
+          ],
+          "signal_preview": "grok-voice-transcribe-1.0 end of life",
+          "raw_added_count": 4,
+          "raw_removed_count": 2,
+          "id": "obs_3db8a4529be6c9c1a08d2fb870476b85a26ebbfe86f2607b04aa92dc515f2d0d",
+          "permalink": "/item/obs_3db8a4529be6c9c1a08d2fb870476b85a26ebbfe86f2607b04aa92dc515f2d0d/",
+          "llm_summary": "更新日期至 10 月 2 日，默认语音转写模型从 1.0 切换为 2.0，并新增 1.0 的 EOL 说明，表示 2.0 成为唯一维护版本。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "grok-voice-transcribe-1.0 end of life",
+            "grok-voice-transcribe-1.0 is deprecated and reaches end of life on October 2, 2026. All requests to that slug are routed to grok-voice-transcribe-2.0 at the same price, with higher accuracy. See the Speech to Text docs."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: September 28, 2026",
+              "after": "Last updated: October 2, 2026"
+            },
+            {
+              "key": "grok-voice-transcribe-2.0",
+              "before": "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-1.0. See the Speech to Text docs.",
+              "after": "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-2.0. See the Speech to Text docs."
+            }
+          ],
+          "signal_preview": "grok-voice-transcribe-1.0 end of life",
+          "raw_added_count": 4,
+          "raw_removed_count": 2,
+          "id": "obs_bde1e66c7b96b7ae845d4ef7fe885c515450dc9986d9e1f549acefdda7467899",
+          "permalink": "/item/obs_bde1e66c7b96b7ae845d4ef7fe885c515450dc9986d9e1f549acefdda7467899/",
+          "llm_summary": "与 changelog 内容一致，博客同步更新，确认 grok-voice-transcribe-2.0 发布及 1.0 退役。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+              "after": "Claude Sonnet 5.5 (High, Default Fallback)"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+              "after": "Claude Sonnet 5.5 (Low, Default Fallback)"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)See more",
+              "after": "Claude Sonnet 5.5 (Max, Default Fallback)See more"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+              "after": "Claude Sonnet 5.5 (Medium, Default Fallback)"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+              "after": "Claude Sonnet 5.5 (Xhigh, Default Fallback)"
+            }
+          ],
+          "signal_preview": "Claude Sonnet 5.5 (High, Default Fallback)",
+          "raw_added_count": 6,
+          "raw_removed_count": 6,
+          "id": "obs_b82011a2c3267a2869906ee292251a2f998efd0934eb5cc253edbdf2a2f44d9d",
+          "permalink": "/item/obs_b82011a2c3267a2869906ee292251a2f998efd0934eb5cc253edbdf2a2f44d9d/",
+          "llm_summary": "Claude Sonnet 5.5 的推理档位名称从 Adaptive Reasoning + 描述改为简洁的 High/Low/Max/Medium/Xhigh，属于命名规范化，不影响模型能力。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 14,
+          "removed_count": 8,
+          "added_lines": [
+            "358,428,651358,428,651Total Sessions",
+            "7.52%View details",
+            "7.57%View all",
+            "Claude Sonnet 5.5 (Max)",
+            "Editing a file",
+            "GPT 5.6 Terra (xHigh)·",
+            "GPT 6 Luna (Max)·",
+            "GPT 6.1 Sol (Max)",
+            "GPT 6.1 Sol (Max)$0.56/task",
+            "GPT 6.1 Sol (Max)·",
+            "Gemini 4 Argon (High)·",
+            "How to Post-Train Text-to-Image Models: Combining Preference and Rubric Rewards",
+            "Reading files",
+            "Searching the web"
+          ],
+          "removed_lines": [
+            "10Anthropic",
+            "Deepseek V4.1 Flash (Max)·",
+            "358,219,103358,219,103Total Sessions",
+            "6.92%View all",
+            "7.23%View details",
+            "GLM 5.3 (Max)·",
+            "GPT 5.6 Sol (xHigh)",
+            "GPT 6 Sol (Max)$0.91/task"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5.1 (Max)$4.66/task",
+              "after": "Claude Fable 5.1 (Max)$4.56/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 4.8 (High)",
+              "after": "Claude Opus 5 (Max)·"
+            }
+          ],
+          "signal_preview": "Claude Sonnet 5.5 (Max)",
+          "raw_added_count": 17,
+          "raw_removed_count": 16,
+          "id": "obs_8e446b206098b854974686425a9b87e590d29fc8c7e528d3c1b4d251d41625d4",
+          "permalink": "/item/obs_8e446b206098b854974686425a9b87e590d29fc8c7e528d3c1b4d251d41625d4/",
+          "llm_summary": "榜单新增多个新模型（Claude Opus 5、GPT 6.1 Sol 等），移除 Deepseek V4.1 Flash，同时 Claude Fable 5.1 价格下调，反映竞技场模型更新和价格竞争。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_30431b557e72329ef153902e4d44bbb565324f9a9ed6f28728b72a62556919d5",
+          "permalink": "/item/obs_30431b557e72329ef153902e4d44bbb565324f9a9ed6f28728b72a62556919d5/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 7,
+          "raw_removed_count": 7,
+          "id": "obs_d70454ed498fee917d65c223766c8333ac9af4fa815ffbe050aba414be165706",
+          "permalink": "/item/obs_d70454ed498fee917d65c223766c8333ac9af4fa815ffbe050aba414be165706/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "xAI",
+          "logo_summary": "语音转写模型2.0上线，1.0退役",
+          "items": [
+            {
+              "text": "grok-voice-transcribe-2.0 成为默认语音转写模型，1.0 于 2026-10-02 正式下线并路由至 2.0",
+              "type": "release"
+            },
+            {
+              "text": "grok-voice-transcribe-1.0 标记为 deprecated，2026-10-02 起所有请求自动切换至 2.0",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "榜单新增多款旗舰模型，价格微调",
+          "items": [
+            {
+              "text": "Claude Opus 5 (Max) 取代 Claude Opus 4.8 (High) 进入榜单",
+              "type": "release"
+            },
+            {
+              "text": "GPT 6.1 Sol (Max) 以 $0.56/task 价格新上榜",
+              "type": "release"
+            },
+            {
+              "text": "Claude Fable 5.1 (Max) 价格从 $4.66/task 下调至 $4.56/task",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "Claude Sonnet 5.5 推理档位命名简化",
+          "items": [
+            {
+              "text": "Claude Sonnet 5.5 的 Adaptive Reasoning 档位名称简化为 High/Low/Max/Medium/Xhigh",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "新增 Bedrock GovCloud 配置信息",
+          "items": [
+            {
+              "text": "OpenAI 在 model_list、pricing、changelog、blog 中同步新增 Bedrock GovCloud configuration",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-10-02",
       "stats": {

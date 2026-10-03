@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_0d7ea805547a9d32b804e7427a33d296a9346632199484cd4bd990c08fcb0b31",
+  "date": "2026-10-03",
+  "recordType": "price_change",
+  "fact_key": "c53bb5d517fdd07b91aba20b20cb118cb6979422e07acbcac75da48d94d37ad2",
+  "provider": "qwen",
+  "model": "qwen3-omni-flash-realtime-2025-12-01",
+  "component": "output",
+  "currency": "CNY",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "cn",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": null,
+  "timeCondition": null,
+  "beforeVersionId": "pfv_5a171824c8f8c6dfa84027d7e1199acfa7bcaa92a643711228de34a1c4c1a9aa",
+  "afterVersionId": "pfv_156f9cf845fd1ac2a37e73de48c1128d1dde88668d40ac4399341e7c583a3ad7",
+  "beforeEvidenceId": "ev_d44986e140b6e04c6dbccbc087b1b2b5fb4698cbd21c8cc8a08d6eff22b7b567",
+  "afterEvidenceId": "ev_156241c4d2455c0677d7c4a782b00c429153319b0fc71f38d0a70e106bc16b67",
+  "beforeObservedAt": "2026-10-02T14:46:51+00:00",
+  "afterObservedAt": "2026-10-02T17:18:26+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "75.1",
+    "current": "8.3",
+    "direction": "down",
+    "percent": "-88.95"
+  },
+  "revision": 2,
+  "status": "withdrawn",
+  "revisedAt": "2026-10-03T00:17:33+00:00",
+  "revisionReason": "重新计算后未识别到变化，撤回收录",
+  "permalink": "/item/price_0d7ea805547a9d32b804e7427a33d296a9346632199484cd4bd990c08fcb0b31/",
+  "provenance": {}
+}
