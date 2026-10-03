@@ -70,20 +70,68 @@ def main():
                 context=browser.new_context(viewport={'width':1440,'height':1000},locale='zh-CN')
                 page=context.new_page();page.on('pageerror',lambda error:report['errors'].append(str(error)))
                 page.route('**/*',lambda route:route.continue_() if route.request.url.startswith(base+'/') else route.abort())
-                page.goto(base+'/account/');page.locator('#login-panel').wait_for(state='visible')
-                page.screenshot(path=str(args.output/'login-desktop.png'),full_page=True);report['states'].append('login')
-                page.locator('#email').fill('preview@example.test');page.locator('#send-code').click()
-                page.locator('#code-fields').wait_for(state='visible')
-                mail=json.loads(next((private/'outbox').glob('*.json')).read_text())
-                code=re.search(r'\b\d{6}\b',mail['text'])[0]
-                page.locator('#code').fill(code);page.locator('#login-form button[type=submit]').click()
+                def login(page, address):
+                    page.locator('#account-login-open').click()
+                    page.locator('#account-login-email').fill(address)
+                    page.locator('#account-global-send').click()
+                    page.locator('#account-global-code-fields').wait_for(state='visible')
+                    mails=[json.loads(f.read_text()) for f in (private/'outbox').glob('*.json')]
+                    mail=next(m for m in reversed(mails) if address in str(m['to']))
+                    code=re.search(r'\b\d{6}\b',mail['text'])[0]
+                    page.locator('#account-login-code').fill(code)
+                    page.locator('#account-global-verify').click()
+                    page.locator('#account-user-menu').wait_for(state='visible')
+                page.goto(base+'/')
+                page.locator('#account-login-open').wait_for(state='visible')
+                page.locator('#account-login-open').click()
+                page.screenshot(path=str(args.output/'login-desktop.png'),full_page=True)
+                page.locator('#account-login-close').click()
+                login(page,'preview@example.test')
+                assert page.url == base+'/'
+                report['states'].append('global-email-login-keeps-current-page')
+                page.locator('[data-currency="USD"]').click()
+                page.locator('.theme-toggle').click()
+                page.locator('[data-follow]').first.click()
+                page.locator('#signal-search').fill('OpenAI')
+                page.locator('#account-user-menu summary').click()
+                page.locator('#account-user-menu a').click()
                 page.locator('#workspace').wait_for(state='visible')
+                state=context.request.get(base+'/api/account/me').json()['state']
+                assert state['homePrices']['currency']=='USD'
+                assert state['appearance']['theme']=='dark'
+                report['states'].append('immediate-navigation-flushes-pending-settings')
+                page.locator('#profile-name').fill('Preview User')
+                page.locator('#profile-save').click()
+                page.wait_for_function("document.querySelector('#account-user-name').textContent === 'Preview User'")
+                with page.expect_download() as download:
+                    page.locator('#account-export').click()
+                exported=json.loads(Path(download.value.path()).read_text())
+                assert 'session' not in json.dumps(exported).lower()
+                report['states'].append('profile-and-safe-data-export')
+                page.route('**/api/account/state',lambda route:route.fulfill(status=503,content_type='application/json',body='{"message":"Temporary test outage"}'))
+                page.locator('.theme-toggle').click()
+                page.locator('#account-sync-retry').wait_for(state='visible')
+                page.unroute('**/api/account/state')
+                page.locator('#account-sync-retry').click()
+                page.wait_for_function("document.querySelector('#account-sync-status').textContent==='已同步'")
+                assert context.request.get(base+'/api/account/me').json()['state']['appearance']['theme']=='light'
+                page.locator('.theme-toggle').click()
+                page.wait_for_function("document.querySelector('#account-sync-status').textContent==='已同步'")
+                report['states'].append('failed-save-remains-pending-and-retry-persists')
                 page.locator('.model-result button').first.wait_for(state='visible')
                 page.locator('.model-result button').first.click();page.locator('.watch-row').wait_for(state='visible')
                 assert page.locator('#watch-count').inner_text()=='1'
                 model=page.locator('.watch-row a').inner_text()
                 page.reload();page.locator('.watch-row').wait_for(state='visible');assert page.locator('.watch-row a').inner_text()==model
                 report['states'].append('watch-persists-after-refresh')
+                page.locator('.watch-row a').click()
+                page.locator('[data-model-follow][aria-pressed=true]').wait_for(state='visible')
+                page.locator('[data-model-follow]').click()
+                page.locator('[data-model-follow][aria-pressed=false]').wait_for(state='visible')
+                page.locator('[data-model-follow]').click()
+                page.locator('[data-model-follow][aria-pressed=true]').wait_for(state='visible')
+                page.goto(base+'/account/');page.locator('.watch-row').wait_for(state='visible')
+                report['states'].append('model-detail-follow-and-unfollow-sync-to-account')
                 page.locator('#email-enabled').check()
                 page.wait_for_function("document.querySelector('#account-message').textContent.includes('已开启')")
                 page.wait_for_function("!document.querySelector('#logout').disabled")
@@ -102,11 +150,47 @@ def main():
                 page.wait_for_function("document.querySelector('#unsubscribe-message').textContent==='已关闭邮件提醒。'")
                 page.goto(base+'/account/');page.locator('.watch-row').wait_for(state='visible')
                 assert not page.locator('#email-enabled').is_checked();report['states'].append('unsubscribe-keeps-watch')
+                page.goto(base+'/pricing/')
+                page.locator('#search').fill('gpt')
+                page.locator('[data-preset="5,1"]').click()
+                page.wait_for_function("document.querySelector('#account-sync-status').textContent==='已同步'")
+                page.reload()
+                page.wait_for_function("document.querySelector('#search').value==='gpt'")
+                assert page.locator('#input-volume').input_value()=='5'
+                persisted=context.request.get(base+'/api/account/me').json()['state']
+                assert persisted['priceWorkspace']['input']==5 and persisted['priceWorkspace']['query']=='gpt'
+                report['states'].append('price-search-comparison-and-volumes-persist')
+                page.goto(base+'/account/');page.locator('.watch-row').wait_for(state='visible')
+                device=browser.new_context(viewport={'width':1440,'height':1000},locale='zh-CN')
+                device.add_cookies(context.cookies())
+                other=device.new_page()
+                other.goto(base+'/')
+                other.wait_for_function("document.querySelector('#account-user-name').textContent === 'Preview User'")
+                other.wait_for_function("document.querySelector('[data-currency=USD]').getAttribute('aria-pressed') === 'true'")
+                assert other.evaluate("document.documentElement.dataset.theme")=='dark'
+                assert other.locator('#signal-search').input_value()=='OpenAI'
+                assert other.locator('[data-follow][aria-pressed=true]').count()==1
+                assert other.evaluate("localStorage.getItem('maas-guest-homePrices')") is None
+                report['states'].append('fresh-browser-restores-account-preferences-without-local-storage')
+                guest=browser.new_context()
+                guest_page=guest.new_page();guest_page.goto(base+'/en/')
+                assert guest_page.locator('#account-login-open').inner_text()=='Sign in'
+                login(guest_page,'second@example.test')
+                isolated=guest.request.get(base+'/api/account/me').json()
+                assert isolated['state']=={} and isolated['watches']==[] and isolated['user']['displayName']==''
+                report['states'].append('english-global-login-and-second-account-isolation')
                 page.locator('.watch-row button').click()
                 page.wait_for_function("document.querySelector('#watch-count').textContent==='0'")
-                page.locator('#logout').click();page.locator('#login-panel').wait_for(state='visible')
+                with page.expect_response(lambda response: response.url.endswith('/api/account/logout-all')) as logout_response:
+                    page.locator('#account-logout-all').click()
+                assert logout_response.value.status==200,logout_response.value.json()
+                page.locator('#login-panel').wait_for(state='visible')
                 assert page.locator('#user-email').inner_text()==''
-                report['states'].append('unwatch-and-logout')
+                other.reload();other.locator('#account-login-open').wait_for(state='visible')
+                assert device.request.get(base+'/api/account/me').status==401
+                assert guest.request.get(base+'/api/account/me').status==200
+                report['states'].append('logout-all-revokes-other-devices-without-affecting-other-users')
+                device.close();guest.close()
                 assert not report['errors'],report['errors']
                 context.close();browser.close()
         finally:

@@ -1,3 +1,4 @@
+import { savedState } from './account-client';
 import type { WorkspaceData, LedgerPrice, WorkspaceModel, PriceVariant, SourceCondition } from '../lib/pricing-workspace';
 interface WorkspaceElements {
     'currency-shortcut': HTMLButtonElement;
@@ -375,6 +376,30 @@ export function startPriceWorkspace() {
     renderCatalog();
     renderCompare();
     renderHero();
-    window.addEventListener('popstate', () => { parseUrlFilter(); initSelectors(); renderProviders(); renderCatalog(); renderFilterSummary(); renderFilterError(); });
+    type SavedWorkspace = { provider: string; query: string; sort: string; modelId: string | null; familyId: string | null; selected: string[]; variants: [string, string][]; component: string; input: number; output: number; fx: number | null };
+    const initialFilter = { modelId: modelIdFilter, familyId: familyIdFilter, error: filterError };
+    const defaultSelection = [...selected]; const defaultFx = fx;
+    const snapshot = (): SavedWorkspace => ({ provider, query, sort, modelId: modelIdFilter, familyId: familyIdFilter, selected: [...selected], variants: models.filter(m => selected.has(m.key)).map(m => [m.key, m.options[m.variant].key]), component, input, output, fx: fxManual ? fx : null });
+    const defaults: SavedWorkspace = { provider: providers[0] || '', query: '', sort: 'name', modelId: null, familyId: null, selected: defaultSelection, variants: [], component: 'total', input: 1, output: .25, fx: null };
+    const save = savedState<SavedWorkspace>('priceWorkspace', defaults, value => {
+      provider = providers.includes(value.provider) ? value.provider : providers[0] || ''; query = value.query; sort = value.sort;
+      modelIdFilter = catalogModels.some(m => m.modelId === value.modelId) ? value.modelId : null;
+      familyIdFilter = modelIdFilter ? null : catalogFamilies.some(f => f.familyId === value.familyId) ? value.familyId : null;
+      filterError = null;
+      if (initialFilter.modelId || initialFilter.familyId || initialFilter.error) { modelIdFilter = initialFilter.modelId; familyIdFilter = initialFilter.familyId; filterError = initialFilter.error; }
+      selected.clear(); value.selected.filter(key => models.some(m => m.key === key)).slice(0,5).forEach(key => selected.add(key));
+      models.forEach(m => { const variant = value.variants.find(v => v[0] === m.key)?.[1]; const index = m.options.findIndex(v => v.key === variant); m.variant = index < 0 ? 0 : index; });
+      component = value.component; input = value.input; output = value.output; fx = value.fx ?? defaultFx; fxManual = value.fx !== null;
+      $('search').value = query; $('sort').value = sort; $('input-volume').value = String(input); $('output-volume').value = String(output); $('input-value').textContent = fmt(input); $('output-value').textContent = fmt(output); $('fx').value = String(fx); page = 0;
+      $('components').querySelectorAll<HTMLButtonElement>('button').forEach(button => button.classList.toggle('active', button.dataset.component === component));
+      updateFxLabel(); initSelectors(); renderProviders(); renderCatalog(); renderCompare(); renderHero(); renderFilterSummary(); renderFilterError();
+    });
+    const persist = () => save(snapshot());
+    root.addEventListener('input', persist); root.addEventListener('change', persist);
+    root.addEventListener('click', event => { if ((event.target as HTMLElement).closest('button') && !(event.target as HTMLElement).closest('#theme')) persist(); });
+    $('search').maxLength = 200;
+    document.addEventListener('maas:appearance-restored', event => { root.dataset.theme = (event as CustomEvent<string>).detail; userToggledTheme = true; });
+    $('theme').addEventListener('click', () => document.dispatchEvent(new CustomEvent('maas:theme-change', { detail: root.dataset.theme })));
+    window.addEventListener('popstate', () => { parseUrlFilter(); initSelectors(); renderProviders(); renderCatalog(); renderFilterSummary(); renderFilterError(); persist(); });
 }
 startPriceWorkspace();

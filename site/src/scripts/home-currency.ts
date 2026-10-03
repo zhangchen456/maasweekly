@@ -1,7 +1,11 @@
+import { savedState } from './account-client';
 const toolbar = document.querySelector<HTMLElement>('[data-home-fx]');
 if (toolbar) {
   let rate = Number(toolbar.dataset.homeFx);
   let currency = 'CNY';
+  const defaultRate = rate;
+  let customRate = false;
+  let save = (_value: { currency: string; fx: number | null }) => {};
   const input = document.getElementById('home-fx-rate') as HTMLInputElement;
   const status = document.getElementById('home-fx-status')!;
   const format = new Intl.NumberFormat('zh-CN', { maximumSignificantDigits: 6 });
@@ -18,7 +22,7 @@ if (toolbar) {
   }
   toolbar.querySelectorAll<HTMLButtonElement>('[data-currency]').forEach(button => button.addEventListener('click', () => {
     currency = button.dataset.currency!;
-    render();
+    render(); save({ currency, fx: customRate ? rate : null });
   }));
   input.addEventListener('change', () => {
     const next = Number(input.value);
@@ -27,9 +31,13 @@ if (toolbar) {
       status.textContent = '请输入 0.01–1000 之间的汇率';
       return;
     }
-    rate = next;
+    rate = next; customRate = true;
     status.textContent = '';
     document.getElementById('home-fx-note')!.textContent = '自定义汇率 · 非实时';
-    render();
+    render(); save({ currency, fx: rate });
+  });
+  save = savedState('homePrices', { currency: 'CNY', fx: null as number | null }, value => {
+    currency = value.currency; customRate = value.fx !== null; rate = value.fx ?? defaultRate; input.value = String(rate); render();
+    document.getElementById('home-fx-note')!.textContent = customRate ? '自定义汇率 · 非实时' : '系统参考汇率 · 非实时';
   });
 }

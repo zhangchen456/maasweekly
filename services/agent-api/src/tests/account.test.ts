@@ -176,3 +176,36 @@ test('retry-only run retries existing job and leaves new changes for daily diges
     assert.equal((await deliverDigests(store,{async send(mail){mails.push(mail);}},[first,second],'https://daily.maas.click')).sent,1);
   } finally {store.close();}
 });
+
+test('account profile and workspace data persist, isolate users, export safely, and revoke all sessions', async () => {
+  const directory = mkdtempSync(path.join(tmpdir(),'maas-account-state-'));
+  const filename = path.join(directory,'accounts.sqlite');
+  let now = start;
+  let store = new AccountStore(filename,()=>now,SECRET);
+  const a=login(store,'profile-a@example.com'), b=login(store,'profile-b@example.com');
+  now += 61000; const another=login(store,'profile-a@example.com');
+  store.updateProfile(a.user,'工作账户');
+  store.saveState(a.user.id,'homePrices',{currency:'USD',fx:7.2});
+  store.close(); store=new AccountStore(filename,()=>now,SECRET);
+  const holder={current:{modelIdentities:catalog,changes:[],dataThrough:'2026-10-03'}} as unknown as DatasetHolder;
+  const server=http.createServer(createAccountHandler(store,{async send(){}},holder,{origin:'https://daily.maas.click',secure:true}));
+  await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));
+  const base=`http://127.0.0.1:${(server.address() as {port:number}).port}/api/account/`;
+  const cookie=(session:string)=>`__Host-maas_session=${session}`;
+  const post=(route:string,data:unknown,session=a.session)=>fetch(base+route,{method:'POST',headers:{Origin:'https://daily.maas.click','Content-Type':'application/json',Cookie:cookie(session)},body:JSON.stringify(data)});
+  try {
+    const me=await(await fetch(base+'me',{headers:{Cookie:cookie(a.session)}})).json() as {user:{displayName:string};state:Record<string,unknown>};
+    assert.equal(me.user.displayName,'工作账户');assert.deepEqual(me.state.homePrices,{currency:'USD',fx:7.2});
+    assert.equal((await post('state',{key:'admin',value:{role:'admin'}})).status,400);
+    assert.equal((await post('state',{key:'homePrices',value:{currency:'USD',fx:0}})).status,400);
+    assert.equal((await post('profile',{displayName:'x'.repeat(61)})).status,400);
+    assert.equal((await post('state',{key:'appearance',value:{theme:['dark']}})).status,400);
+    assert.equal((await post('state',{key:'appearance',value:{theme:'dark'},userId:a.user.id},b.session)).status,200);
+    const other=await(await fetch(base+'me',{headers:{Cookie:cookie(b.session)}})).json() as {state:Record<string,unknown>};
+    assert.deepEqual(other.state,{appearance:{theme:'dark'}});assert.equal(store.state(a.user.id).appearance,undefined);
+    const exported=JSON.stringify(await(await fetch(base+'export',{headers:{Cookie:cookie(a.session)}})).json());
+    assert.ok(exported.includes('工作账户'));assert.ok(!exported.includes('unsubscribeToken'));assert.ok(!exported.includes(a.session));
+    assert.equal((await post('logout-all',{})).status,200);assert.equal(store.user(a.session),undefined);assert.equal(store.user(another.session),undefined);assert.ok(store.user(b.session));
+    assert.deepEqual(store.state(a.user.id).homePrices,{currency:'USD',fx:7.2});
+  } finally {server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));store.close();rmSync(directory,{recursive:true,force:true});}
+});
