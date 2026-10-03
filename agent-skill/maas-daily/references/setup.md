@@ -73,14 +73,16 @@ Skill 安装完成后，建议在新会话中执行自检：
 3. 如果报"没有可用的 maas_get_changes 工具" → MCP 未配置，按上面"如何配置 MCP server"配置
 4. 如果报"网页查询也无法访问" → 网络问题，按"代理配置"处理
 
-## 四、专业情报接入（开发完成，生产待发布）
+## 五、Plus 接入
 
-现有匿名查询保持不变。专业情报需单独配置服务端和网站生成的通用凭证；不要向用户索要模型厂商API Key，不把凭证粘贴进对话、提示词或Skill正文。生产发布后才启用下列入口，404/503时说明暂不可用，不用模型知识补出专业全文。
+现有匿名查询保持不变。Plus 全文需单独配置网站生成的 Agent / MCP 通用凭证；不要向用户索要模型厂商API Key，不把凭证粘贴进对话、提示词或Skill正文。原有 Free 连接不会因网页登录或升级自动获得全文权限。下列入口返回404/503时说明暂不可用，不用模型知识补出专业全文。
 
 专业MCP端点：`https://daily.maas.click/api/pro/mcp`。客户端使用其安全配置/环境变量功能设置`Authorization: Bearer <MAAS_PRO_TOKEN>`请求头；环境变量插值语法按各客户端文档配置，不能假定`${...}`在所有客户端通用。
 
+深度周报全文：`maas_pro_weekly`，省略 `id` 返回最新一期，或传入日期型期号（例如 `2026-09-01`）。结果包含完整结构化周报、datasetVersion、dataThrough 和原文链接。每次读取校验 Plus 权益；公开 `maas_get_weekly` 仅供目录/摘要查询，不得把摘要称为全文。
+
 工具：`maas_pro_catalog`返回预览，`maas_pro_read`读取指定内容，`maas_pro_reports`读取自己的报告索引或指定报告。响应含版本、条件与来源；遇到更正/撤回需明确说明。
 
-REST入口：`/api/pro/catalog`、`/api/pro/content/{id}`、`/api/pro/me`、`/api/pro/report/{id}`。授权头由客户端注入，不出现在URL。网站管理页是`/pro/`。
+REST入口：`/api/pro/catalog`、`/api/pro/content/{id}`、`/api/pro/me`、`/api/pro/report/{id}`。授权头由客户端注入，不出现在URL。周报 REST 全文入口：`GET /api/pro/weekly/{id}`（返回 HTML）；先用公开 `/api/v1/weekly?limit=1` 取得期号。网站管理页是`/pro/`，开通 Plus 后生成 Agent / MCP 用途凭证，默认有效30天。私有RSS只提供匹配的已发布分析摘要/链接，不包含周报全文。配置示例见网站 `/agent/#plus-access`。
 
 401：检查凭证是否到期/撤销，回网站重新生成；403：检查当前服务权益及凭证用途；404：核对内容ID或撤回状态，不能改用他人的报告ID；503：稍后重试。RSS私有地址只有RSS用途，不能替代通用Token。专业权限错误不影响匿名免费查询。

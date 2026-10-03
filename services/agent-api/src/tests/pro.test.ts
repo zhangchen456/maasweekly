@@ -65,3 +65,35 @@ test('weekly full text requires Plus; anonymous query hides analysis',async()=>{
  assert.ok(!JSON.stringify(publicWeekly(raw)).includes('SECRET'));assert.equal(publicWeekly({...raw,id:'2026-05-03'}).trends[0],'SECRET');
  }finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));if(previous===undefined)delete process.env.PRIVATE_WEEKLY_ROOT;else process.env.PRIVATE_WEEKLY_ROOT=previous;s.account.close();rmSync(root,{recursive:true,force:true});}
 });
+
+test('Plus MCP weekly returns full structured report only with current entitlement',async()=>{
+ const s=setup();
+ const raw={id:'2026-09-01',date:'2026-09-01',title:'Weekly',headline:[{title:'Headline',detail_markdown:'PRIVATE_WEEKLY_MCP'}],platforms:[],trends:['PRIVATE_TREND']};
+ const fixture={current:{version:'test-dataset',dataThrough:'2026-10-03',weekly:[raw],weeklyDescending:[raw]} as any};
+ const holder=fixture as DatasetHolder;
+ const handler=createMcpHandler(holder,DEFAULT_MCP_CONFIG,{store:s.pro,config:{origin:'http://localhost',secure:false}});
+ const server=http.createServer((req,res)=>void handler(req,res));
+ await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));
+ const origin=`http://127.0.0.1:${(server.address() as {port:number}).port}`;
+ const rpc=async(token?:string,args:Record<string,unknown>={},name='maas_pro_weekly',cookie?:string)=>{
+  const r=await fetch(origin+'/api/pro/mcp',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json, text/event-stream',...(token?{Authorization:`Bearer ${token}`}:{Cookie:cookie ?? ''})},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/call',params:{name,arguments:args}})});
+  assert.match(r.headers.get('cache-control')!,/no-store/);return await r.json() as any;
+ };
+ const denied=async(token?:string,args:Record<string,unknown>={},code?:string)=>{const result=await rpc(token,args);assert.equal(result.result.isError,true);assert.ok(!JSON.stringify(result).includes('PRIVATE_WEEKLY_MCP'));if(code)assert.match(JSON.stringify(result),new RegExp(code));};
+ try {
+  await denied(undefined,{},'unauthenticated');
+  const free=await rpc(undefined,{},'maas_pro_weekly',`maas_session=${s.b.session}`);assert.equal(free.result.isError,true);assert.ok(!JSON.stringify(free).includes('PRIVATE_WEEKLY_MCP'));
+  const malformed=await rpc('not-a-valid-token');assert.equal(malformed.result.isError,true);
+  const api=s.pro.mint(s.a.user.id,'agent','api'),rss=s.pro.mint(s.a.user.id,'feed','rss');
+  await denied(rss.token,{},'invalid_token');
+  let result=await rpc(api.token);assert.ok(JSON.stringify(result).includes('PRIVATE_WEEKLY_MCP'));assert.ok(JSON.stringify(result).includes('PRIVATE_TREND'));assert.ok(JSON.stringify(result).includes('test-dataset'));
+  result=await rpc(api.token,{id:raw.id});assert.equal(result.result.isError,undefined);
+  await denied(api.token,{id:'2026-01-01'},'not_found');
+  const dataset=fixture.current;fixture.current=null;await denied(api.token,{},'data_unavailable');fixture.current=dataset;
+  const invalid=await rpc(api.token,{id:'../../secret'});assert.ok(invalid.error || invalid.result.isError);
+  s.pro.revoke(s.a.user.id,api.id);await denied(api.token);
+  s.pro.activateBeta(s.b.user.id);const beta=s.pro.mint(s.b.user.id,'beta-agent','api');assert.ok(JSON.stringify(await rpc(beta.token)).includes('PRIVATE_WEEKLY_MCP'));
+  s.pro.grant(s.b.user.id,start-1,start+86400000,'operator','revoked',true);await denied(beta.token);
+  const expiring=s.pro.mint(s.a.user.id,'expiry','api');s.setNow(start+31*86400000);await denied(expiring.token);
+ } finally {server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));s.account.close();}
+});
