@@ -1,0 +1,13 @@
+{
+  "scope": "Production Chromium + real Resend email + server account state",
+  "checks": [
+    "production global sign-in entry",
+    "new production verification email received",
+    "on-page login and secure HttpOnly session",
+    "account center and server workspace persistence",
+    "fresh browser restores server preferences",
+    "logout and fixture preference restoration",
+    "English shared price controls, contact link and mobile sign-in"
+  ],
+  "errors": []
+}
