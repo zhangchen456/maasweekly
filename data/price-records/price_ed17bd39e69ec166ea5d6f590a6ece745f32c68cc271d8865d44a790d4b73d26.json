@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "price_ed17bd39e69ec166ea5d6f590a6ece745f32c68cc271d8865d44a790d4b73d26",
+  "date": "2026-10-03",
+  "recordType": "price_change",
+  "fact_key": "49b896bf30bb9d9548fa0c117891d9cabc36c2e96f076a55b565e9c4d11dc259",
+  "provider": "qwen",
+  "model": "qwen3.6-plus-2026-04-02",
+  "component": "input",
+  "currency": "CNY",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "global",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": {
+    "min": 0,
+    "max": 256000
+  },
+  "timeCondition": null,
+  "beforeVersionId": "pfv_9d215c18f7e1cd4e45ac2f8d0648b17450636f4e8c61175bdc6528bc39b4b523",
+  "afterVersionId": "pfv_3c9faf29824d26ea18de8b430707ff2d9e2db69d3238d1a8631527843a4e82d9",
+  "beforeEvidenceId": "ev_dc455df4c980eccf21c13eace8d98e7ed0c00241dbdc95eb002fe0490e675e19",
+  "afterEvidenceId": "ev_84ffcc5c868e6e340eaa759461635d6deaaa837fe228434774cc274e2d5d1e37",
+  "beforeObservedAt": "2026-10-02T14:46:51+00:00",
+  "afterObservedAt": "2026-10-02T17:18:26+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "3.7471",
+    "current": "2",
+    "direction": "down",
+    "percent": "-46.63"
+  },
+  "revision": 2,
+  "status": "withdrawn",
+  "revisedAt": "2026-10-03T00:17:33+00:00",
+  "revisionReason": "重新计算后未识别到变化，撤回收录",
+  "permalink": "/item/price_ed17bd39e69ec166ea5d6f590a6ece745f32c68cc271d8865d44a790d4b73d26/",
+  "provenance": {}
+}

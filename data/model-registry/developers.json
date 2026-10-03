@@ -7,24 +7,32 @@
       "developerId": "anthropic",
       "displayName": "Anthropic",
       "organization": "Anthropic",
-      "brands": ["claude"],
+      "brands": [
+        "claude"
+      ],
       "region": "overseas",
-      "providerIds": ["anthropic"],
-      "verificationStatus": "candidate",
+      "providerIds": [
+        "anthropic"
+      ],
+      "verificationStatus": "verified",
       "evidence": {
-        "sourceType": "maas-official-sources",
-        "sourceUrl": "pipeline/config/maas_official_sources.json",
-        "verifiedAt": "2026-09-24",
-        "verificationNote": "maas_official_sources vendor=anthropic + registry 含 claude 品牌 model；developer relation candidate（repo 无独立 developer-entity evidence）"
+        "sourceType": "official-model-documentation",
+        "sourceUrl": "https://platform.claude.com/docs/en/models/overview",
+        "verifiedAt": "2026-10-02",
+        "verificationNote": "官方模型文档核验开发方；不从 legacy providerId 推断。"
       }
     },
     {
       "developerId": "openai",
       "displayName": "OpenAI",
       "organization": "OpenAI",
-      "brands": ["gpt"],
+      "brands": [
+        "gpt"
+      ],
       "region": "overseas",
-      "providerIds": ["openai"],
+      "providerIds": [
+        "openai"
+      ],
       "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -37,24 +45,32 @@
       "developerId": "google",
       "displayName": "Google",
       "organization": "Google",
-      "brands": ["gemini"],
+      "brands": [
+        "gemini"
+      ],
       "region": "overseas",
-      "providerIds": ["google"],
-      "verificationStatus": "candidate",
+      "providerIds": [
+        "google"
+      ],
+      "verificationStatus": "verified",
       "evidence": {
-        "sourceType": "maas-official-sources",
-        "sourceUrl": "pipeline/config/maas_official_sources.json",
-        "verifiedAt": "2026-09-24",
-        "verificationNote": "maas_official_sources vendor=google + registry 含 gemini 品牌 model；developer relation candidate"
+        "sourceType": "official-model-documentation",
+        "sourceUrl": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash",
+        "verifiedAt": "2026-10-02",
+        "verificationNote": "官方模型文档核验开发方；不从 legacy providerId 推断。"
       }
     },
     {
       "developerId": "deepseek",
       "displayName": "DeepSeek",
       "organization": "DeepSeek",
-      "brands": ["deepseek"],
+      "brands": [
+        "deepseek"
+      ],
       "region": "china",
-      "providerIds": ["deepseek"],
+      "providerIds": [
+        "deepseek"
+      ],
       "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -67,9 +83,13 @@
       "developerId": "moonshot-kimi",
       "displayName": "Moonshot AI",
       "organization": "Moonshot AI",
-      "brands": ["kimi"],
+      "brands": [
+        "kimi"
+      ],
       "region": "china",
-      "providerIds": ["kimi"],
+      "providerIds": [
+        "kimi"
+      ],
       "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -82,9 +102,13 @@
       "developerId": "zhipu",
       "displayName": "智谱AI",
       "organization": "智谱AI",
-      "brands": ["glm"],
+      "brands": [
+        "glm"
+      ],
       "region": "china",
-      "providerIds": ["zhipu"],
+      "providerIds": [
+        "zhipu"
+      ],
       "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -97,9 +121,17 @@
       "developerId": "alibaba-qwen",
       "displayName": "阿里通义",
       "organization": "阿里巴巴",
-      "brands": ["qwen", "qwen3", "qwen3.5", "qwen3.6", "qwen3.7"],
+      "brands": [
+        "qwen",
+        "qwen3",
+        "qwen3.5",
+        "qwen3.6",
+        "qwen3.7"
+      ],
       "region": "china",
-      "providerIds": ["alibaba"],
+      "providerIds": [
+        "alibaba"
+      ],
       "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -112,9 +144,13 @@
       "developerId": "bytedance-doubao",
       "displayName": "字节跳动",
       "organization": "字节跳动",
-      "brands": ["doubao"],
+      "brands": [
+        "doubao"
+      ],
       "region": "china",
-      "providerIds": ["volcengine"],
+      "providerIds": [
+        "volcengine"
+      ],
       "verificationStatus": "candidate",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -129,7 +165,9 @@
       "organization": "百度",
       "brands": [],
       "region": "china",
-      "providerIds": ["baidu"],
+      "providerIds": [
+        "baidu"
+      ],
       "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -144,7 +182,9 @@
       "organization": "腾讯",
       "brands": [],
       "region": "china",
-      "providerIds": ["tencent"],
+      "providerIds": [
+        "tencent"
+      ],
       "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -159,7 +199,9 @@
       "organization": "MiniMax",
       "brands": [],
       "region": "china",
-      "providerIds": ["minimax"],
+      "providerIds": [
+        "minimax"
+      ],
       "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -174,7 +216,9 @@
       "organization": "Mistral AI",
       "brands": [],
       "region": "overseas",
-      "providerIds": ["mistral"],
+      "providerIds": [
+        "mistral"
+      ],
       "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -189,7 +233,9 @@
       "organization": "Cohere",
       "brands": [],
       "region": "overseas",
-      "providerIds": ["cohere"],
+      "providerIds": [
+        "cohere"
+      ],
       "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -204,7 +250,9 @@
       "organization": "硅基流动",
       "brands": [],
       "region": "china",
-      "providerIds": ["siliconflow"],
+      "providerIds": [
+        "siliconflow"
+      ],
       "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -219,7 +267,9 @@
       "organization": "xAI",
       "brands": [],
       "region": "overseas",
-      "providerIds": ["xai"],
+      "providerIds": [
+        "xai"
+      ],
       "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",
@@ -234,7 +284,9 @@
       "organization": "科大讯飞",
       "brands": [],
       "region": "china",
-      "providerIds": ["xfyun"],
+      "providerIds": [
+        "xfyun"
+      ],
       "verificationStatus": "unresolved",
       "evidence": {
         "sourceType": "maas-official-sources",

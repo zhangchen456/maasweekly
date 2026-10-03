@@ -1,6 +1,371 @@
 {
-  "updated_at": "2026-10-02T13:54:53",
+  "updated_at": "2026-10-03T00:21:17",
   "days": [
+    {
+      "date": "2026-10-03",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 10,
+        "unchanged": 55
+      },
+      "changed": [
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Bedrock GovCloud configuration"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bedrock GovCloud configuration",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_a635ae1d32ab6728c974f9ba1af05cbf56cffb92253af79e1e33f566dfff9c74",
+          "permalink": "/item/obs_a635ae1d32ab6728c974f9ba1af05cbf56cffb92253af79e1e33f566dfff9c74/",
+          "llm_summary": "新增 Bedrock GovCloud configuration 条目，表明 OpenAI 模型列表中加入政府云部署配置，可能对应新区域或合规选项。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Bedrock GovCloud configuration"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bedrock GovCloud configuration",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_36c65b0b21c1fe318ab4d70c6e60d076a6816e0dc345ac37a3c779c330b624ed",
+          "permalink": "/item/obs_36c65b0b21c1fe318ab4d70c6e60d076a6816e0dc345ac37a3c779c330b624ed/",
+          "llm_summary": "新增 Bedrock GovCloud configuration 定价行，与模型列表同步，暗示该配置已正式可购买。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Bedrock GovCloud configuration"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bedrock GovCloud configuration",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_de067486741edb6f210890dd674fb3e8fa60876e76a0812e4f3db6651c26f170",
+          "permalink": "/item/obs_de067486741edb6f210890dd674fb3e8fa60876e76a0812e4f3db6651c26f170/",
+          "llm_summary": "新增 Bedrock GovCloud configuration 变更记录，说明该配置是近期发布的新功能。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Bedrock GovCloud configuration"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bedrock GovCloud configuration",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_7043699283af7875a1cb7ac29bbf0d715fd8a8981d4dd1a7a755df5e7625543e",
+          "permalink": "/item/obs_7043699283af7875a1cb7ac29bbf0d715fd8a8981d4dd1a7a755df5e7625543e/",
+          "llm_summary": "新增 Bedrock GovCloud configuration 博客文章，作为官方公告渠道确认该配置的可用性。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "grok-voice-transcribe-1.0 end of life",
+            "grok-voice-transcribe-1.0 is deprecated and reaches end of life on October 2, 2026. All requests to that slug are routed to grok-voice-transcribe-2.0 at the same price, with higher accuracy. See the Speech to Text docs."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: September 28, 2026",
+              "after": "Last updated: October 2, 2026"
+            },
+            {
+              "key": "grok-voice-transcribe-2.0",
+              "before": "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-1.0. See the Speech to Text docs.",
+              "after": "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-2.0. See the Speech to Text docs."
+            }
+          ],
+          "signal_preview": "grok-voice-transcribe-1.0 end of life",
+          "raw_added_count": 4,
+          "raw_removed_count": 2,
+          "id": "obs_3db8a4529be6c9c1a08d2fb870476b85a26ebbfe86f2607b04aa92dc515f2d0d",
+          "permalink": "/item/obs_3db8a4529be6c9c1a08d2fb870476b85a26ebbfe86f2607b04aa92dc515f2d0d/",
+          "llm_summary": "更新日期至 10 月 2 日，默认语音转写模型从 1.0 切换为 2.0，并新增 1.0 的 EOL 说明，表示 2.0 成为唯一维护版本。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "grok-voice-transcribe-1.0 end of life",
+            "grok-voice-transcribe-1.0 is deprecated and reaches end of life on October 2, 2026. All requests to that slug are routed to grok-voice-transcribe-2.0 at the same price, with higher accuracy. See the Speech to Text docs."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: September 28, 2026",
+              "after": "Last updated: October 2, 2026"
+            },
+            {
+              "key": "grok-voice-transcribe-2.0",
+              "before": "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-1.0. See the Speech to Text docs.",
+              "after": "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-2.0. See the Speech to Text docs."
+            }
+          ],
+          "signal_preview": "grok-voice-transcribe-1.0 end of life",
+          "raw_added_count": 4,
+          "raw_removed_count": 2,
+          "id": "obs_bde1e66c7b96b7ae845d4ef7fe885c515450dc9986d9e1f549acefdda7467899",
+          "permalink": "/item/obs_bde1e66c7b96b7ae845d4ef7fe885c515450dc9986d9e1f549acefdda7467899/",
+          "llm_summary": "与 changelog 内容一致，博客同步更新，确认 grok-voice-transcribe-2.0 发布及 1.0 退役。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+              "after": "Claude Sonnet 5.5 (High, Default Fallback)"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+              "after": "Claude Sonnet 5.5 (Low, Default Fallback)"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)See more",
+              "after": "Claude Sonnet 5.5 (Max, Default Fallback)See more"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+              "after": "Claude Sonnet 5.5 (Medium, Default Fallback)"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+              "after": "Claude Sonnet 5.5 (Xhigh, Default Fallback)"
+            }
+          ],
+          "signal_preview": "Claude Sonnet 5.5 (High, Default Fallback)",
+          "raw_added_count": 6,
+          "raw_removed_count": 6,
+          "id": "obs_b82011a2c3267a2869906ee292251a2f998efd0934eb5cc253edbdf2a2f44d9d",
+          "permalink": "/item/obs_b82011a2c3267a2869906ee292251a2f998efd0934eb5cc253edbdf2a2f44d9d/",
+          "llm_summary": "Claude Sonnet 5.5 的推理档位名称从 Adaptive Reasoning + 描述改为简洁的 High/Low/Max/Medium/Xhigh，属于命名规范化，不影响模型能力。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 14,
+          "removed_count": 8,
+          "added_lines": [
+            "358,428,651358,428,651Total Sessions",
+            "7.52%View details",
+            "7.57%View all",
+            "Claude Sonnet 5.5 (Max)",
+            "Editing a file",
+            "GPT 5.6 Terra (xHigh)·",
+            "GPT 6 Luna (Max)·",
+            "GPT 6.1 Sol (Max)",
+            "GPT 6.1 Sol (Max)$0.56/task",
+            "GPT 6.1 Sol (Max)·",
+            "Gemini 4 Argon (High)·",
+            "How to Post-Train Text-to-Image Models: Combining Preference and Rubric Rewards",
+            "Reading files",
+            "Searching the web"
+          ],
+          "removed_lines": [
+            "10Anthropic",
+            "Deepseek V4.1 Flash (Max)·",
+            "358,219,103358,219,103Total Sessions",
+            "6.92%View all",
+            "7.23%View details",
+            "GLM 5.3 (Max)·",
+            "GPT 5.6 Sol (xHigh)",
+            "GPT 6 Sol (Max)$0.91/task"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5.1 (Max)$4.66/task",
+              "after": "Claude Fable 5.1 (Max)$4.56/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 4.8 (High)",
+              "after": "Claude Opus 5 (Max)·"
+            }
+          ],
+          "signal_preview": "Claude Sonnet 5.5 (Max)",
+          "raw_added_count": 17,
+          "raw_removed_count": 16,
+          "id": "obs_8e446b206098b854974686425a9b87e590d29fc8c7e528d3c1b4d251d41625d4",
+          "permalink": "/item/obs_8e446b206098b854974686425a9b87e590d29fc8c7e528d3c1b4d251d41625d4/",
+          "llm_summary": "榜单新增多个新模型（Claude Opus 5、GPT 6.1 Sol 等），移除 Deepseek V4.1 Flash，同时 Claude Fable 5.1 价格下调，反映竞技场模型更新和价格竞争。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_30431b557e72329ef153902e4d44bbb565324f9a9ed6f28728b72a62556919d5",
+          "permalink": "/item/obs_30431b557e72329ef153902e4d44bbb565324f9a9ed6f28728b72a62556919d5/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 7,
+          "raw_removed_count": 7,
+          "id": "obs_d70454ed498fee917d65c223766c8333ac9af4fa815ffbe050aba414be165706",
+          "permalink": "/item/obs_d70454ed498fee917d65c223766c8333ac9af4fa815ffbe050aba414be165706/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "xAI",
+          "logo_summary": "语音转写模型2.0上线，1.0退役",
+          "items": [
+            {
+              "text": "grok-voice-transcribe-2.0 成为默认语音转写模型，1.0 于 2026-10-02 正式下线并路由至 2.0",
+              "type": "release"
+            },
+            {
+              "text": "grok-voice-transcribe-1.0 标记为 deprecated，2026-10-02 起所有请求自动切换至 2.0",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "榜单新增多款旗舰模型，价格微调",
+          "items": [
+            {
+              "text": "Claude Opus 5 (Max) 取代 Claude Opus 4.8 (High) 进入榜单",
+              "type": "release"
+            },
+            {
+              "text": "GPT 6.1 Sol (Max) 以 $0.56/task 价格新上榜",
+              "type": "release"
+            },
+            {
+              "text": "Claude Fable 5.1 (Max) 价格从 $4.66/task 下调至 $4.56/task",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "Claude Sonnet 5.5 推理档位命名简化",
+          "items": [
+            {
+              "text": "Claude Sonnet 5.5 的 Adaptive Reasoning 档位名称简化为 High/Low/Max/Medium/Xhigh",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "新增 Bedrock GovCloud 配置信息",
+          "items": [
+            {
+              "text": "OpenAI 在 model_list、pricing、changelog、blog 中同步新增 Bedrock GovCloud configuration",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-10-02",
       "stats": {
@@ -6553,6 +6918,1836 @@
             "amount"
           ],
           "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_c3ddb1022dd7ba4a4bb92bd2a201c6835749bcfe0909d6b142f61094ad7e60ac",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "input",
+          "current": "2.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_ab1e6e2d17487c00cae1847e4a4f8c11a67a06d7d5180427ec544eabd4dba940",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "input",
+          "current": "2.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_e234cff21f6781b0cca840e5777739032343ea84646a8c561448ee22496d36cf",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "output",
+          "current": "10.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_d1e5ac1c48ce49f384f03697e53591177aee1eaa2817133a9117c44257587cf5",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "output",
+          "current": "10.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_075a96ce29faea48d109d7cd7c4a2731e85e6caa13d6fc055dea0b9e7413a9a3",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "input",
+          "current": "1.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_d0418345698a0981dae0b6db57f051367ec897db3aa2486d9f7dab44f85f8179",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "output",
+          "current": "5.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_4d6acd2cb47e7b969822881d2462b2677aa4948b2cc5cabee8764f3732a2e57c",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "2.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_3d7536ba0e7007b0f360d500f89845aa4ebe9a7b7dcd6953913d51ed8c5399f4",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "2.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_cb55df662e5237983c3500014894936b39df9a931e785f5d99c708d608391dc9",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "4.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_e4602e33cb1f2031f5a9bbe0095c850f61092ecdd630b88e37f9ab3ee66aec52",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "4.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_920677ea4a8e078eeccfc9f8abd5b25692fce03867b3bc7e45021eac1a46e359",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_read",
+          "current": "0.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_859d8f1fa25509f9a05eaebe290a01c2f0f9392df698d2426423b8b26375fd54",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_read",
+          "current": "0.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_a2be7ee5bbd49792f0002451586f030b7aa695ebb987be2847ae400ad1ce5d28",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "1.250000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_41109a5a3e87778fef110f9dcf25ab31febaea350652cb4e123421ee7810c288",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "2.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_7a2090019f2ea94e47e7a4e03fab9e0a52762a47c3211c0d3feb0b7768fc1430",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_read",
+          "current": "0.100000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_4b4b26b6c8fa0074c7acb614ed45f2372ff90a9e04ae2a9de8ca7aab913d5148",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "input",
+          "current": "4.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_0621416a66c4cc67412de8223629689b31abfe43ddc8f5910beb52df593914f3",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "input",
+          "current": "4.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_ea0ae7cfdc119b583746c6cbdcdb9cce8721c3b6050243ecc9a9d9233e460bb1",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "output",
+          "current": "20.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_220699d44c23e2f022929d2ad63e671d0bb9fee1b08d9ac58697ee710093d92c",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "output",
+          "current": "20.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_292bcb8cfaaa73d387530e3a13cb4049e0792d793ea9df86a56fab461c413c6c",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "input",
+          "current": "2.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_abc0b4edae2739a4b5639fde6c0c9efb0bee642a873ceb71ac751498d254d820",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "output",
+          "current": "12.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_fed46e6c3cc8e8f377f9aa013d9c844ae7df55308fd8b521b425c08e234ab805",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "5.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_2377b56926512f16b7961644066535b47d7ff249e49243d8e277e02ae0f58911",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "5.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_75b3ea4fbb1375a2a9920c7e3819c6de1ed30ecefe61e292ca6cc89ba28ebd1b",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "8.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_83d1123b64701e3ec88fabcf733183af2160f69a26935fedd5872bc054e76a8f",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "8.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_04213a10b29c91156e8465a0be300d53bef93ccd51adfa1f55d645e056126871",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_read",
+          "current": "0.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_9ca855e06d4d724c592fd0d30face117be87b140883016aa47a9c3a59e129b1f",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_read",
+          "current": "0.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_0f25b9371c13e5ab91cb36a2a3a1511a54375517b37f1089b7370be526974e45",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "2.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_f54bd7c5040ba8c9e2fb6537daddb3e8bedfd26dee115a4617391e60c864f4df",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "4.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_944250e927fb2e965a136476faf1de536760b5619ccfd0322eb59006dcb9ce00",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_read",
+          "current": "0.100000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_517735b40e07f460decab8ec960472c4ce88bc3e286ccce6fd4d8f171cd54132",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "input",
+          "current": "2.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_682c78799f04e6693501e26e3afe0a5fc663ce2216db21d251dcdd7511a81893",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "input",
+          "current": "2.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_b45d269c3c265cff026a5560b5031aa4cae3ec091f958070928dd65007bfafbe",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "output",
+          "current": "11.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_7c2876c94b62c88afdd23978eebe734d23e0960ac0993c25f1015a3b0e071e25",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "output",
+          "current": "11.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_eecbe5cb7ee7d13b80f4852dba4359166e9702fad8360d0a89685260719bdde4",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "input",
+          "current": "1.100000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_11ab84807b0bb6df7548c8e53e1358dd179d8a09a8f31822c49782e2e0988f8c",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "output",
+          "current": "5.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_a89597c0f5dddddff4a35978a6afc0d5069602d1311ca1d61abf3772f82bb9cd",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "2.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_9c24b23231dc81849a3302c2a2da83ba3a572b382a99b44d503692d29454d79b",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "4.400000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_f850dcac0cedf9dc8bf142ce9d8247fd0cf79877ef51a5759645a1ebab3c9465",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_read",
+          "current": "0.220000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_cc6435ad83cabd3ebe969223fb73ceccfdf25cf275c69fe84fc86b56d23418ad",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "1.375000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_651527c6fa95be59d2ed864905cbcd508e2eb88cd8430aa9ba21531454ab694c",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "2.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_6fd2117489797f15980e7061e018a879129022ab6bcd241f262417f794f0e6f5",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_read",
+          "current": "0.110000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_87091cb1d81c09f4eeee0546a627b7bf6a9bb70948017fada52dfdaff5c8e67c",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_read",
+          "current": "0.110000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_5c1e7de0f813ea2c978930ed24ba9feb400409774f9cd69c34ebb080e87796f3",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "input",
+          "current": "4.400000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_87791aa54f035f2cb95ca13900abd70fb1b89a7c804f4b4cfbdf12711a93b59b",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "input",
+          "current": "4.400000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_255fa3b29df1f130e3b25331f9e02231ad75b5e0c962c5c6202c7561a1020b1e",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "output",
+          "current": "22.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_79a9eebef4c45607763200131d7054b3f2e122c9d116c357a0fc0b39cc2ac841",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "output",
+          "current": "22.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_8bee51f1281ba924a16c75b593626975c018dbfea9258a480feeb661889a7448",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "input",
+          "current": "2.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_14780ce6821d090c4381e01205d9e98057fb7f1e3d80fc11457191b5386eaede",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "output",
+          "current": "11.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_fb614da6b3d3b50a9a6395ba6a7bbb96807a63bdffabfa8fb48e562ca911eba4",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "5.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_8f5b579fd5ec99b522fdd328e18940654e255e4dad3b587030eaeaa705bddd06",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "8.800000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_093b3e3fac71c328a9bd322da4f90a6985f23a6e0478155c0345212a59a67e8b",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_read",
+          "current": "0.220000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_6e7e86f95153a621d9403007c055550d973a56a3310d8acedfc93c129f5455ec",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "2.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_47864d21591ec3972ce5ec593233f6ba6331af154e3d8f90959807fb6d0ec477",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "2.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_1a491575045bc1ab0c14993ac6f634790a1c9507c943eb545177dca311bc57e5",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "4.400000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_486173feb69057548afe3604462432dd4a19e254e86050a171581ea857889704",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "4.400000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_52ec4a3aa83b9e252886c5552aaf19ee7d5437fa1f9626239e98f887589c2745",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_read",
+          "current": "0.110000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_559393b579284f56031a7dedaa12f09aef55197ba0d0dbc961b8c16a44a7af16",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_read",
+          "current": "0.110000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_27c92425ca3f7774312c8e59410afdbe854e7ded58a19bfeb459874f7e83b827",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "input",
+          "current": "2.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_170652ac85457418bc5d52daa079090fa08f62cd29d8c5a52e2fcbd362d8a846",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "input",
+          "current": "2.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_8dc292371be83d8ef0885f923aef7b45dff041e52ec9da399f2c6c2085b1d178",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "output",
+          "current": "11.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_05c4162d5b1265027cf1ff2f9937649ae019aee791f674f98fff0e7f1a0d0471",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "output",
+          "current": "11.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_a553c59462710823caea317c7b2ccbcde35f32cb3c7f5ed1d94c280df4baea31",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "input",
+          "current": "1.100000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_3cbb191b42da0a302378d5a41b5b973b37ba2686a2391b6223a6be6277042035",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "output",
+          "current": "5.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_47d290bdb031f7d0aeed427718d02d85c34ecf928e622cd550084d69805e72a9",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "2.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_57ca62e6a4d8ea786e3c08c0b8cd5a086808ee744a1f45804d23454f03e383c2",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "4.400000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_6cb68a0fcae6418ae85d63f7f1cc3fb2b4fc4ba5331c7ea4b9f39d5c4e9237b2",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_read",
+          "current": "0.220000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_60021383e35da186179b123c015e02cb5ac491636201a0032b117d3f1c809ac1",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "1.375000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_29dda69fc27aa681492647c4f630e76976cdf7e4d02cac3a311ef2d1c8293665",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_write",
+          "current": "2.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_1a50ed7045f1c33d29a6aba89da9d49d40ddf73f7a71ba24490060bda9568c86",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_read",
+          "current": "0.110000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_0c61147b98f5347badf3b420a2e59f7ac1829d83bda5c58b24e38b14563793be",
+          "provider": "vertex-anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_read",
+          "current": "0.110000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_7433a9dbf37d4be33204f9c30d073a6429807a4543dfa31c76cb7d4cee1eaa33",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "input",
+          "current": "4.400000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_f810329e85e8d62ca8f7a604242abf3225a12f4cb47a85a9df16182e3baa9f16",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "input",
+          "current": "4.400000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_0078a8da4f7a6c8daa56e323c9077ec711ead2366d3a23031e2aa5f5faa0522d",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "output",
+          "current": "22.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_15c00ef76cb44b67465b01f7d5856ad66bb247c3b705b46d3e0b1d67ac615e2e",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "output",
+          "current": "22.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_578c72310e557cb8d89b331c7149fdd0564a0df84c5099f30cfd5b7a8727f916",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "input",
+          "current": "2.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_73c8a609ef2e6e9c9622b27eaf885aabd650c4fc8b27a02604d55f175a3cb8c6",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "output",
+          "current": "11.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_a0ce7163312b400f3246744a98626993581ac32678758cfc90301657fcf81f53",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "5.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_4e3bcd6c2edd83ed24badbb7e001b9f0bac959a09424068924a976d153fc0686",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "8.800000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_b83abee78a6fd8e275cac22dca718578d46c6d8b6195e934cd9b8ef6cc07c01d",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_read",
+          "current": "0.220000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_509cda9d5cc0c1de5405a8c53ef7980f64190cb84b1c884d4f6b30d1bc87c0b2",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "2.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_1865b2de106603ed97443c114af31ea4ea9820eaed585da0b67aaed565fd1790",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "2.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_1765e9ff77330ec986450509b9db82e0097c6519972858b246326976609c5a8a",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "4.400000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_75455f6289407aded0d6c7f969b5d1b043c5e5058c04efeebc3d3e7d7c366220",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_write",
+          "current": "4.400000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_545c5cfdf38b0e2e4aa7113224ff27a675f24fbf16b62aad55a063efd8be680b",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_read",
+          "current": "0.110000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_6c0cc6513cb5730b5b27f99a9214cafd77f67ade52e8fcdb5123e3b13b471ccd",
+          "provider": "vertex-anthropic",
+          "model": "claude-opus-5.5",
+          "component": "cache_read",
+          "current": "0.110000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_19cf20896adac290cd78e81e08e292f1f768cc1f877905882f4f856189bf8cab",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "input",
+          "current": "0.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_70b4633d3cf4ff8bcb8c1e45a36fe005f26585c9b902b28cee89daf11be8c7ce",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "input",
+          "current": "0.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_4f726ff984650df19c33ec2f9220c4a18828e70f8b6abf8a3b5666edc8a19338",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "cache_read",
+          "current": "0.075000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_61e6dddfa34d8a1ae2197519d23754121faa97a23ace93f1ca4bb72dc839ca02",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "cache_read",
+          "current": "0.075000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_25ee20f18ed71c0f4dabb7aca2850ac9610347cb4c9ea337ffb7a0a10bbf2d20",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "input",
+          "current": "0.825000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_9f8aa8b4f8ab0bfde57f4bbba662866165e19676d036513e153714e6a534d89f",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "input",
+          "current": "0.825000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_ee42456110966793890b2050594bc5f8d4ecad437c436175549d87647547383e",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "cache_read",
+          "current": "0.082500",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_c2f08e15c5e5c6e58c0054f5ae10668bb696f9f8eca0aba732fafe8f5be71989",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "cache_read",
+          "current": "0.082500",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_4b25532af7f34c9bcece71b60de822f6d99b16c9626e5ec30a50ac19c3c71096",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "output",
+          "current": "3.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_c4d2bfb3cea6346784873c798c6607af208afe58cbeed4f9d4455ae4796a4df9",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "output",
+          "current": "3.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_e911b3528b645267371858af2008ae8f212c9746ff8236ba79ab9a3e047406b6",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "output",
+          "current": "4.125000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_2dfec40e7b0c996968d8bfab3bc806e361b649873e8443dd199902ec202bc63b",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "output",
+          "current": "4.125000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_40eb097d937a827a00630de6a9dd6fe897d988361d65feee6e62024cc7f0ce7d",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "input",
+          "current": "1.350000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_130c449f86414f226b09f883e78822a154ba1a00ef4fffcfeae278d6676f2739",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "input",
+          "current": "1.350000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_d9cc73778fd6d9309a209585093b59d60a3bc7757632138db042f73294048beb",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "cache_read",
+          "current": "0.135000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_b669e55fd8a2c9bd6c612a01bb90b7447769c43a6e36a25b586dc52af14e4d6b",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "cache_read",
+          "current": "0.135000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_efc736adfbb4fd77e34de436ebdb074e2557e1022148943d966a1411cb057f32",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "input",
+          "current": "1.485000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_82bb0cbcd8562ec37902ff55584f56d907678abf691482542624b0787e70bdee",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "input",
+          "current": "1.485000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_5237011a956a03c95348ac313b107bb343c1fc80b79b37f243bd6b5e57a9aaee",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "cache_read",
+          "current": "0.148500",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_0479c10481daea668a94aa5be5a5e518c2646fc20f29a9e267277c00ea9f882f",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "cache_read",
+          "current": "0.148500",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_081d4c636afb19fccd530432b5d158799ee01f4b390c24e007ebd75d7db71f41",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "output",
+          "current": "6.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_0960dc4f3fdd3ab7fbdd86324178501fefae3f1359ffe32747217ca6c8a03e86",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "output",
+          "current": "6.750000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_de173017f0a8d4ab892df8ca368bdb62e2f9a0e7733e84464cdb201bedf06733",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "output",
+          "current": "7.425000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_00cf03b10b4f3b8677c2b52826914a777257605d5b506efdbb27311e548042c2",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "output",
+          "current": "7.425000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_1668999bf6cc67603e606b8de52dba8af5585f03f4770b5e75b66deb9ec2d1dc",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "input",
+          "current": "0.375000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_f95c578dc752f8d3f7230c7fdf19d580280fde3e68232087eb7a0a3aa9c2201d",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "input",
+          "current": "0.375000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_8ca9a768e6f54e668f640b79eed8eca779e2a62c77ac3e53d1cbac496ebd149d",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "cache_read",
+          "current": "0.037500",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_37c015c9cb4a094c0e573bc96ac7a07ffa090d56151656bcb1c258edff43698f",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "cache_read",
+          "current": "0.037500",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_8bec781443d40d632394a76a803a22294fd2fdce5038eb752caead2577c94e3b",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "input",
+          "current": "0.412500",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_ed5ffd8696edbc2c6d988d0476ab1e054445a18449715c53526c949a5556ca16",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "input",
+          "current": "0.412500",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_2d71fee3e87e720351870b744a2879d4e13f987148db47c3c56c5d8de409e76a",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "cache_read",
+          "current": "0.041250",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_c12e6c53d64aff7c2ad9b560b7895cf2b52a4b80b7c2f36844ad2cbb30e372ad",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "cache_read",
+          "current": "0.041250",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_d906b6d75d9b950ebe50523a6276c51c8f3e78e2578a386ca30cf7493175d3e2",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "output",
+          "current": "1.875000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_e745fd061781619e5521917bc5e995a4130865ed44105696ca27ddb34b80d5c6",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "output",
+          "current": "1.875000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_fdfde1cc07f816d15b75fb694397660a22d60e7d090b2343039c0aeaeae21481",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "output",
+          "current": "2.062500",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        {
+          "id": "price_a72ac00d6931095314b59243d760ff54d7cbbdb0a980f8d8489089d175e22441",
+          "provider": "vertex-google",
+          "model": "gemini-3.8-flash",
+          "component": "output",
+          "current": "2.062500",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
         }
       ],
       "highlights": [

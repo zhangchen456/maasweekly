@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "version_id": "pfv_a1d6fcb73d1c825f50222cea7b0990c3e3f431d60e0d48d2e1437ef1d6b11abb",
+  "fact_key": "05bc21eb0a6fa6803ab69dda53f2e1a3468c4638fc56e624118b8cd31c74e770",
+  "provider_id": "vertex-anthropic",
+  "model_key": "claude-opus-5.5",
+  "component": "cache_write",
+  "billing_mode": "realtime",
+  "amount": "5",
+  "amountRaw": "5.000000",
+  "currency": "USD",
+  "unit_quantity": 1000000,
+  "unit_name": "token",
+  "region": "global",
+  "service_tier": "standard",
+  "context_band": {
+    "min": 200001,
+    "max": null
+  },
+  "time_condition": {
+    "period": "cache_ttl",
+    "tz": "UTC",
+    "schedule": "PT5M"
+  },
+  "effective_at": null,
+  "observed_at": 1790952416.875778,
+  "observedAt": "2026-10-02T14:46:56+00:00",
+  "source_key": "vertex-anthropic:pricing",
+  "evidence_id": "ev_b7785c63d5eec6c2d5a8385af568f1fecc158e994b0e742b57720379c14c3cbd",
+  "evidence_status": "partial",
+  "field_state": "confirmed",
+  "stale_reason": null
+}

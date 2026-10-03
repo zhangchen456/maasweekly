@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_341ccaef1b8b9d6639b41612cad9a303c21472b23b40feadf956d495dd97f181",
+  "date": "2026-10-03",
+  "recordType": "price_change",
+  "fact_key": "bc836c56564351fb837ab2d16f9a5cc0b352e9eef786a666fa40e1fc93592505",
+  "provider": "openai",
+  "model": "gpt-image-2",
+  "component": "cache_read",
+  "currency": "USD",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "global",
+  "billingMode": "batch",
+  "serviceTier": "standard",
+  "contextBand": null,
+  "timeCondition": null,
+  "beforeVersionId": "pfv_a951957ebcab75338177d10579243d226c03f54fcc21b2a4548b9b773954a5a4",
+  "afterVersionId": "pfv_eba380d2d1ae1b5c554857662cea6cf61b0b23627d651440a28e1b6c72a63c98",
+  "beforeEvidenceId": "ev_c8496c7642362cc4e4c94f9e722777358120e01f70f224a01d547101007ae126",
+  "afterEvidenceId": "ev_26bb4ef83c06aada614224f9bb1724aabd9d20b891917714e59f9df7798cff18",
+  "beforeObservedAt": "2026-10-02T14:46:50+00:00",
+  "afterObservedAt": "2026-10-03T00:17:05+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "0.625",
+    "current": "1",
+    "direction": "up",
+    "percent": "60.00"
+  },
+  "revision": 3,
+  "status": "active",
+  "revisedAt": "2026-10-03T00:17:39+00:00",
+  "revisionReason": "重新计算后再次确认变化，恢复收录",
+  "permalink": "/item/price_341ccaef1b8b9d6639b41612cad9a303c21472b23b40feadf956d495dd97f181/",
+  "provenance": {}
+}

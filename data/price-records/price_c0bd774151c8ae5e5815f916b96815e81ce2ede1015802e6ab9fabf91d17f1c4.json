@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_c0bd774151c8ae5e5815f916b96815e81ce2ede1015802e6ab9fabf91d17f1c4",
+  "date": "2026-10-03",
+  "recordType": "price_change",
+  "fact_key": "ddb8250ea24a020fa90e80fa16823e6578bab9d903445836d9eadc4d0e74fee0",
+  "provider": "qwen",
+  "model": "qwen3-vl-8b-thinking",
+  "component": "input",
+  "currency": "CNY",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "global",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": null,
+  "timeCondition": null,
+  "beforeVersionId": "pfv_085f00ea59d1fddd9e797e3d4be75517e37ee50dcff8abbb363ceb57cf0bf4b0",
+  "afterVersionId": "pfv_90027af343d123df72f9d26a918a0529b70378f01913d9f73af758b42c51c3a8",
+  "beforeEvidenceId": "ev_8066dc4c006c741d66c48881b9e584f75bf8a6965b3074a47d8ce2855b6c610e",
+  "afterEvidenceId": "ev_e218a2abc6d1c2ecb689d7e264bf613ace6449d312f97e9bba4eec95fd4701bf",
+  "beforeObservedAt": "2026-10-02T14:46:51+00:00",
+  "afterObservedAt": "2026-10-02T17:18:26+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "1.321",
+    "current": "0.5",
+    "direction": "down",
+    "percent": "-62.15"
+  },
+  "revision": 2,
+  "status": "withdrawn",
+  "revisedAt": "2026-10-03T00:17:33+00:00",
+  "revisionReason": "重新计算后未识别到变化，撤回收录",
+  "permalink": "/item/price_c0bd774151c8ae5e5815f916b96815e81ce2ede1015802e6ab9fabf91d17f1c4/",
+  "provenance": {}
+}

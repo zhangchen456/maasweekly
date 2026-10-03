@@ -186,6 +186,8 @@ def validate_identity_catalog(catalog) -> list[str]:
             if (not valid_id(fid) or not valid_name(name) or fid not in families
                     or families[fid] != name or mid.split(":")[0] != fid.split(":")[0]):
                 errors.append("identity catalog model 引用非正式 family")
+    from .cross_platform import validate
+    errors.extend(validate(catalog))
     return errors
 
 
@@ -231,4 +233,15 @@ def validate_release_files(root: Path, manifest: dict) -> list[str]:
     # manifest 自身
     if not re.match(r"^ds_[0-9a-f]{64}$", manifest.get("datasetVersion") or ""):
         _err(errors, "manifest datasetVersion 非法")
+    try:
+        catalog_file = root / f"releases/{manifest.get('datasetVersion')}/model-identities.json"
+        prices_file = root / f"releases/{manifest.get('datasetVersion')}/prices.json"
+        if catalog_file.is_file() and prices_file.is_file():
+            from .cross_platform import validate_prices
+            catalog = json.loads(catalog_file.read_text())
+            prices = json.loads(prices_file.read_text())
+            if isinstance(catalog, dict) and isinstance(prices, list):
+                errors.extend(validate_prices(catalog, prices))
+    except (ValueError, TypeError, KeyError, OSError) as exc:
+        errors.append('price platform validation failed: ' + str(exc))
     return errors

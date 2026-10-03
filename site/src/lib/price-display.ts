@@ -6,6 +6,8 @@ export const providerLabels: Record<string, string> = {
   baidu: '百度', xai: 'xAI', mistral: 'Mistral', cohere: 'Cohere',
   minimax: 'MiniMax', siliconflow: 'SiliconFlow', tencent: '腾讯', xfyun: '讯飞',
 };
+const platformLabels: Record<string, string> = { 'google-gemini-api': 'Gemini API', 'anthropic-api': 'Anthropic API', 'google-vertex-ai': 'Google Cloud' };
+export const platformLabel = (price: PriceRecord) => price.platformId ? platformLabels[price.platformId] ?? price.platformId : providerLabels[price.providerId] ?? price.providerId;
 export const componentLabels: Record<string, string> = {
   input: '输入', output: '输出', cache_read: '缓存读取',
   cache_write: '缓存写入', cache_write_5m: '缓存写入（5 分钟）', cache_write_1h: '缓存写入（1 小时）',
@@ -20,7 +22,7 @@ export function priceUnit(quantity: number, name: string): string {
 
 export function priceCells(price: PriceRecord): string[] {
   return [
-    providerLabels[price.providerId] ?? price.providerId,
+    platformLabel(price),
     price.modelKey,
     componentLabels[price.component] ?? price.component,
     `${price.amount} ${price.currency} / ${priceUnit(price.unitQuantity, price.unitName)}`,
@@ -54,7 +56,7 @@ export function englishPriceCells(price: PriceRecord): string[] {
   const reason = price.quality.reason === '门禁全拒（0 条），疑似结构漂移'
     ? 'Validation rejected all records (0 accepted); possible source structure change'
     : price.quality.reason;
-  return [englishProviderLabels[price.providerId] ?? price.providerId, price.modelKey,
+  return [price.platformId ? platformLabel(price) : englishProviderLabels[price.providerId] ?? price.providerId, price.modelKey,
     englishComponents[price.component] ?? price.component,
     `${price.amount} ${price.currency} / ${price.unitQuantity.toLocaleString('en-US')} ${price.unitName}`,
     price.region, `${price.billingMode} / ${price.serviceTier}`,

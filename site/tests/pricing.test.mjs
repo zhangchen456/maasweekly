@@ -16,6 +16,7 @@ assert.ok(ageDays <= 4, `数据过期（${ageDays.toFixed(1)} 天前），抓取
 
 // providers：八家（partial 时允许缺，但 failed_sources 必须显式声明）
 const EXPECTED = ['anthropic', 'deepseek', 'doubao', 'glm', 'google', 'kimi', 'openai', 'qwen'];
+const ALLOWED = [...EXPECTED, 'vertex-google', 'vertex-anthropic'];
 const failed = new Set(ledger.meta.failed_sources || []);
 for (const p of EXPECTED) {
   if (!ledger.providers.includes(p)) {
@@ -29,7 +30,7 @@ assert.ok(ledger.providers.length >= 6, `可用厂商过少: ${ledger.providers.
 assert.ok(Array.isArray(ledger.prices) && ledger.prices.length >= 50, 'prices 条目过少');
 const COMPONENTS = new Set(['input', 'output', 'cache_read', 'cache_write']);
 for (const p of ledger.prices) {
-  assert.ok(p.provider && EXPECTED.includes(p.provider), `未知 provider: ${p.provider}`);
+  assert.ok(p.provider && ALLOWED.includes(p.provider), `未知 provider: ${p.provider}`);
   assert.ok(p.model, '缺 model');
   assert.ok(COMPONENTS.has(p.component), `未知 component: ${p.component}`);
   assert.ok(['USD', 'CNY'].includes(p.currency), `未知币种: ${p.currency}`);

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_72685d989eeaec340f315f4b5f5e9de0939580cb0ddc530d269e815648078def",
+  "date": "2026-10-03",
+  "recordType": "price_change",
+  "fact_key": "25676d5e930ea280728f239ed724d72f8c2c9b23927b273e7607866a7f5b881a",
+  "provider": "qwen",
+  "model": "qwen-audio-3.0-realtime-plus",
+  "component": "output",
+  "currency": "CNY",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "cn",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": null,
+  "timeCondition": null,
+  "beforeVersionId": "pfv_f7ce3762c30bed3d534b35f39f2d66315eb9eb41e5e1ed92854f03416ff0d30e",
+  "afterVersionId": "pfv_de3b433d777a914b8c02403afbf6b75e6bc4c9118bbd232ad85920023caff744",
+  "beforeEvidenceId": "ev_8d22e2398ce2d56bc7d4f1bc93d0c9867e16d99144d1afb7069f413eef3fc629",
+  "afterEvidenceId": "ev_97ab07591243bdf2b4c6aa3d87d2913872a61988c108213f6f86466ae47471e7",
+  "beforeObservedAt": "2026-10-02T14:46:51+00:00",
+  "afterObservedAt": "2026-10-02T17:18:26+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "150",
+    "current": "40",
+    "direction": "down",
+    "percent": "-73.33"
+  },
+  "revision": 2,
+  "status": "withdrawn",
+  "revisedAt": "2026-10-03T00:17:33+00:00",
+  "revisionReason": "重新计算后未识别到变化，撤回收录",
+  "permalink": "/item/price_72685d989eeaec340f315f4b5f5e9de0939580cb0ddc530d269e815648078def/",
+  "provenance": {}
+}

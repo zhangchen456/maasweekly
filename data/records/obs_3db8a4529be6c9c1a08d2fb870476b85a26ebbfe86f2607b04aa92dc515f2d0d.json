@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_3db8a4529be6c9c1a08d2fb870476b85a26ebbfe86f2607b04aa92dc515f2d0d",
+  "sourceId": "xai-changelog",
+  "date": "2026-10-03",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "xAI",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.x.ai/docs/release-notes",
+  "title": "xAI · 更新日志来源更新",
+  "summary": "更新日期至 10 月 2 日，默认语音转写模型从 1.0 切换为 2.0，并新增 1.0 的 EOL 说明，表示 2.0 成为唯一维护版本。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-03T00:21:17+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated: September 28, 2026",
+        "after": "Last updated: October 2, 2026"
+      },
+      {
+        "key": "grok-voice-transcribe-2.0",
+        "before": "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-1.0. See the Speech to Text docs.",
+        "after": "grok-voice-transcribe-2.0 is now available. Use grok-voice-transcribe-1.0 or grok-voice-transcribe-2.0; the default is grok-voice-transcribe-2.0. See the Speech to Text docs."
+      }
+    ],
+    "added_lines": [
+      "grok-voice-transcribe-1.0 end of life",
+      "grok-voice-transcribe-1.0 is deprecated and reaches end of life on October 2, 2026. All requests to that slug are routed to grok-voice-transcribe-2.0 at the same price, with higher accuracy. See the Speech to Text docs."
+    ],
+    "removed_lines": [],
+    "added_count": 2,
+    "removed_count": 0,
+    "raw_added_count": 4,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-03.json"
+  },
+  "permalink": "/item/obs_3db8a4529be6c9c1a08d2fb870476b85a26ebbfe86f2607b04aa92dc515f2d0d/"
+}

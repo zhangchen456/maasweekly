@@ -1,0 +1,92 @@
+{
+  "datasetVersion": "ds_12fdc567c7d3e70fd11f64bd2c28fe27a56c40744950e9ab2185e4ebb4723bf5",
+  "dataThrough": "2026-10-03",
+  "states": {
+    "ok": 45,
+    "unknown": 13,
+    "failing": 10
+  },
+  "unhealthy": [
+    {
+      "sourceId": "kimi-modellist",
+      "providerId": "kimi",
+      "state": "failing",
+      "lastAttemptDate": "2026-10-01",
+      "lastSuccessDate": "2026-09-16",
+      "reason": null
+    },
+    {
+      "sourceId": "openai-blog",
+      "providerId": "openai",
+      "state": "failing",
+      "lastAttemptDate": "2026-09-07",
+      "lastSuccessDate": null,
+      "reason": null
+    },
+    {
+      "sourceId": "volcengine-blog",
+      "providerId": "volcengine",
+      "state": "failing",
+      "lastAttemptDate": "2026-09-16",
+      "lastSuccessDate": null,
+      "reason": null
+    },
+    {
+      "sourceId": "volcengine-changelog",
+      "providerId": "volcengine",
+      "state": "failing",
+      "lastAttemptDate": "2026-10-03",
+      "lastSuccessDate": "2026-09-26",
+      "reason": null
+    },
+    {
+      "sourceId": "volcengine-modellist",
+      "providerId": "volcengine",
+      "state": "failing",
+      "lastAttemptDate": "2026-10-03",
+      "lastSuccessDate": "2026-09-11",
+      "reason": null
+    },
+    {
+      "sourceId": "volcengine-pricing",
+      "providerId": "volcengine",
+      "state": "failing",
+      "lastAttemptDate": "2026-10-03",
+      "lastSuccessDate": "2026-09-27",
+      "reason": null
+    },
+    {
+      "sourceId": "tencent-blog",
+      "providerId": "tencent",
+      "state": "failing",
+      "lastAttemptDate": "2026-09-07",
+      "lastSuccessDate": null,
+      "reason": null
+    },
+    {
+      "sourceId": "tencent-changelog",
+      "providerId": "tencent",
+      "state": "failing",
+      "lastAttemptDate": "2026-09-07",
+      "lastSuccessDate": null,
+      "reason": null
+    },
+    {
+      "sourceId": "tencent-modellist",
+      "providerId": "tencent",
+      "state": "failing",
+      "lastAttemptDate": "2026-09-07",
+      "lastSuccessDate": null,
+      "reason": null
+    },
+    {
+      "sourceId": "tencent-pricing",
+      "providerId": "tencent",
+      "state": "failing",
+      "lastAttemptDate": "2026-09-07",
+      "lastSuccessDate": null,
+      "reason": null
+    }
+  ],
+  "unknownCount": 13
+}

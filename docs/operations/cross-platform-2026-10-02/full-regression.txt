@@ -1,0 +1,226 @@
+══ Task 01–06 统一回归 ══
+── site dependency cache
+   ✓ site dependency cache
+── agent-api dependency cache
+   ✓ agent-api dependency cache
+── export-public-data --check
+   ✓ export-public-data --check
+── validate-archive（Task 01）
+   ✓ validate-archive（Task 01）
+── validate-price-archive（Task 02）
+   ✓ validate-price-archive（Task 02）
+── build-skill-package --check
+   ✓ build-skill-package --check
+── test_release_retention（live references）
+   ✓ test_release_retention（live references）
+── test_operations_budget（production resource thresholds）
+   ✓ test_operations_budget（production resource thresholds）
+── test_public_retention（公开历史引用完整性）
+   ✓ test_public_retention（公开历史引用完整性）
+── test_cross_platform（关系与官方价格）
+   ✓ test_cross_platform（关系与官方价格）
+── test_regression_diagnostics（CI failure evidence）
+   ✓ test_regression_diagnostics（CI failure evidence）
+── test_current_pricing（official table drift）
+   ✓ test_current_pricing（official table drift）
+── test_record_archive（Task 01）
+   ✓ test_record_archive（Task 01）
+── test_price_archive（Task 02）
+   ✓ test_price_archive（Task 02）
+── test_public_export（Task 03）
+   ✓ test_public_export（Task 03）
+── test_skill_package（Task 04）
+   ✓ test_skill_package（Task 04）
+── test_release_build（Task 06）
+   ✓ test_release_build（Task 06）
+── test_release_activation（Task 06）
+   ✓ test_release_activation（Task 06）
+── test_deploy_mode（Task 06 M7）
+   ✓ test_deploy_mode（Task 06 M7）
+── test_model_identity_audit（Task 07）
+   ✓ test_model_identity_audit（Task 07）
+── test_model_public_projection（Task 07）
+   ✓ test_model_public_projection（Task 07）
+── test_model_registry（Task 07）
+   ✓ test_model_registry（Task 07）
+── validate-model-registry（Task 07）
+   ✓ validate-model-registry（Task 07）
+── audit-model-registry-coverage（Task 07）
+   ✓ audit-model-registry-coverage（Task 07）
+── test_architecture_workflows（AR-05）
+   ✓ test_architecture_workflows（AR-05）
+── test_architecture_observability（AR-08）
+   ✓ test_architecture_observability（AR-08）
+── test_blob_storage（AR-06）
+   ✓ test_blob_storage（AR-06）
+── test_pipeline_runtime（AR-04）
+   ✓ test_pipeline_runtime（AR-04）
+── test_standard_inputs（AR-03）
+   ✓ test_standard_inputs（AR-03）
+── test_workflow_release_contract（incident 2026-09）
+   ✓ test_workflow_release_contract（incident 2026-09）
+── validate-developer-registry（T07-5.2）
+   ✓ validate-developer-registry（T07-5.2）
+── test_developer_platform_registry（T07-5.2）
+   ✓ test_developer_platform_registry（T07-5.2）
+── test_analytics_foundation（T08-1A）
+   ✓ test_analytics_foundation（T08-1A）
+── test_umami_postgres_preflight（T08-1A）
+   ✓ test_umami_postgres_preflight（T08-1A）
+── test_umami_prerequisites（T08-1A）
+   ✓ test_umami_prerequisites（T08-1A）
+── test_inventory_capability（T08-1A Gate B Preflight）
+   ✓ test_inventory_capability（T08-1A Gate B Preflight）
+── site build（含 prebuild 门禁）
+   ✓ site build（含 prebuild 门禁）
+── site: access-pages（Task 05）
+   ✓ site: access-pages（Task 05）
+── site: rss（Task 05）
+   ✗ site: rss（Task 05）（退出码 1）——完整失败日志：
+     [0] 前置：dist feed 存在
+       ✓ dist/feed.xml 存在
+       ✓ dist/feed/weekly.xml 存在
+     [1] T06：feed.xml 合规 RSS 2.0 + 100 条 + 顺序 + GUID + 链接实存
+       ✓ RSS 2.0 根
+       ✓ channel 三要素
+       ✓ 条数 ≤ 100（实得 100）
+       ✓ GUID 唯一
+       ✓ GUID 全为稳定 record ID
+       ✓ GUID 不含 datasetVersion/构建日期
+       ✓ 顺序与公开排序一致
+       ✓ 全部链接的详情页在 dist 实存
+       ✓ link 全为 canonical HTTPS
+     [2] T07：weekly.xml ≤30 期 + GUID + 链接实存 + 倒序
+       ✓ 期数 ≤ 30（实得 23）
+       ✓ GUID 唯一且为日期 ID
+       ✓ 最新在前（倒序）
+       ✓ 周报链接 dist 实存
+       ✓ weekly 无 pubDate（日期精度不合成午夜）
+     [3] T10（真实数据半项）：时间精度混合
+       ✗ 存在混合形态（有/无 pubDate 并存） — 有 100 无 0
+       ✓ pubDate 全为 RFC822 UTC（GMT 结尾）
+       ✓ 无 pubDate 条目的描述含日期精度说明
+       ✓ channel 无 lastBuildDate（不用构建时间冒充）
+     [4] T09：修订保 GUID / withdrawn 退出（单元 fixture）
+       ✓ 修订后 GUID 不变
+       ✓ 修订后内容更新
+       ✓ withdrawn 退出默认 feed
+     [5] T10（单元）：date/datetime 混合
+       ✓ datetime → pubDateIso 有值
+       ✓ date → pubDateIso null（不合成午夜）
+       ✓ rfc2822Utc 固定 UTC（+08:00 → UTC 同时区换算）
+     [6] T11：注入攻击（XML/HTML/控制字符/超长）
+       ✓ 注入后 feed 仍可解析
+       ✓ 无未转义 <script>
+       ✓ 控制字符被剥离
+       ✓ 超长截断（XML 内 title ≤ 200 码点+省略号）
+       ✓ 超长 description 截断
+       ✓ 错误信息不含本机路径
+     [7] T08（单元级）：确定性
+       ✓ 同输入双调用逐字节相同
+       ✓ 生成器源码（非注释）无 Date.now/Math.random
+     [8] T16 + 复验 P1-1：release 校验链（6 类反例）
+       ✓ 目录缺失 → throw
+       ✓ 合法迷你 release 通过
+       ✓ 清单删除后 select 文件 → 拒（防 TAMPERED 绕过）
+       ✓ 清单条目重复 → 拒
+       ✓ ../ 路径逃逸 → 拒
+       ✓ 其他版本目录 → 拒（版本错位）
+       ✓ bytes 篡改 → 拒
+       ✓ sha256 篡改 → 拒
+       ✓ datasetVersion 格式非法 → 拒
+       ✓ 合法 changes+weekly 双集合加载
+       ✓ 所有错误不泄露本机路径
+     [9] T12：链接遍历（feed + 页面 + llms.txt）
+       ✓ 外部 URL 全为 canonical HTTPS
+       ✓ 内部链接 dist 实存
+     
+     1 项失败 ✗
+   （完整日志: /var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T//maas-regression.vRO3vy/39.txt）
+── site: page ViewModel types
+   ✓ site: page ViewModel types
+── site: page ViewModel parity
+   ✓ site: page ViewModel parity
+── site: cross-platform
+   ✓ site: cross-platform
+── site: pricing
+   ✗ site: pricing（退出码 1）——完整失败日志：
+     node:internal/modules/run_main:123
+         triggerUncaughtException(
+         ^
+     
+     AssertionError [ERR_ASSERTION]: 未知 provider: vertex-anthropic
+         at file:///Users/zhangchen/.codex/worktrees/cross-platform-models/maasweekly/site/tests/pricing.test.mjs:32:10
+         at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+         at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+         at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+       generatedMessage: false,
+       code: 'ERR_ASSERTION',
+       actual: false,
+       expected: true,
+       operator: '==',
+       diff: 'simple'
+     }
+     
+     Node.js v22.22.3
+   （完整日志: /var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T//maas-regression.vRO3vy/43.txt）
+── site: model-identity-ui（T07-4A）
+   ✓ site: model-identity-ui（T07-4A）
+── site: model-identity-ui-contract（T07-4A）
+   ✓ site: model-identity-ui-contract（T07-4A）
+── site: changes-browser-contract（T07-4A.2）
+   ✓ site: changes-browser-contract（T07-4A.2）
+── site: changes-browser-ui（T07-4A.2）
+   ✓ site: changes-browser-ui（T07-4A.2）
+── site: model-detail（T07-4B.2）
+   ✓ site: model-detail（T07-4B.2）
+── site: analytics（T08 lightweight）
+   ✓ site: analytics（T08 lightweight）
+── site: agent-interactions（copy regression）
+   ✓ site: agent-interactions（copy regression）
+── site: platform-logos
+   ✗ site: platform-logos（退出码 1）——完整失败日志：
+     node:internal/modules/run_main:123
+         triggerUncaughtException(
+         ^
+     
+     AssertionError [ERR_ASSERTION]: pricing: missing logo for vertex-anthropic
+         at file:///Users/zhangchen/.codex/worktrees/cross-platform-models/maasweekly/site/tests/platform-logos.test.mjs:11:50
+         at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+         at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+         at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+       generatedMessage: false,
+       code: 'ERR_ASSERTION',
+       actual: undefined,
+       expected: true,
+       operator: '==',
+       diff: 'simple'
+     }
+     
+     Node.js v22.22.3
+   （完整日志: /var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T//maas-regression.vRO3vy/51.txt）
+── site: leaderboards
+   ✓ site: leaderboards
+── site: records（含残留检测）
+   ✓ site: records（含残留检测）
+── site: SEO（canonical / sitemap / model content）
+   ✓ site: SEO（canonical / sitemap / model content）
+── site: multilingual
+   ✓ site: multilingual
+── agent-api: build
+   ✓ agent-api: build
+── agent-api: country
+   ✓ agent-api: country
+── agent-api: REST 测试
+   ✓ agent-api: REST 测试
+── agent-api: MCP 测试
+   ✓ agent-api: MCP 测试
+── agent-api: MCP 真实数据
+   ✓ agent-api: MCP 真实数据
+══════════════════════════
+通过: 57 | 失败: 3
+失败项：
+  ✗ site: rss（Task 05）
+  ✗ site: pricing
+  ✗ site: platform-logos
+回归未通过或中断，日志保留: /var/folders/rt/8yq4nwg130lcb9mqf3p5rb6m0000gn/T//maas-regression.vRO3vy

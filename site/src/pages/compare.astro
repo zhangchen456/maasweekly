@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import EvidenceLinks from '../components/EvidenceLinks.astro';
+import { modelRelease } from '../lib/model-pages.ts';
+import { crossPlatformGroups } from '../lib/cross-platform.ts';
+import { priceUnit } from '../lib/price-display.ts';
+const release = modelRelease();
+const groups = crossPlatformGroups(release);
+const amount = (p) => p ? `${p.amount} ${p.currency}` : '报价待补齐';
+const context = (p) => !p?.contextBand ? '来源未单列' : `${p.contextBand.min ?? 0}–${p.contextBand.max ?? '不限'} tokens`;
+const region = (p) => ({global:'全球',us:'美国多区域',eu:'欧盟多区域','non-global':'非全球端点'})[p?.region] ?? p?.region ?? '—';
+---
+<Layout title="同一模型，不同平台怎么收费？ — MaaS Daily" description="按官方模型标识核验同一上游模型，比较不同调用平台的标准实时 API 报价、区域和上下文条件。">
+  <section class="shell compare-hero">
+    <nav aria-label="面包屑"><a href="/">首页</a> / <a href="/models/">模型价格</a> / 跨平台比较</nav>
+    <h1>同一模型，不同平台怎么收费？</h1>
+    <p>开发者与调用平台分别标注。以下展示标准实时档的已核验报价，保留区域、上下文和优惠条件；没有报价不代表免费。</p>
+    <p class="muted">数据截至 {release.dataThrough}。相同上游模型不代表服务限制、地域或计费条件相同。</p>
+    <nav class="model-links" aria-label="选择模型">{groups.map(g => <a href={`#${g.model.modelId}`}>{g.model.modelName}</a>)}</nav>
+  </section>
+  <div class="shell">
+    {groups.map(group => <section class="compare-group" id={group.model.modelId} data-upstream-model={group.model.upstreamModelId}>
+      <div class="group-head"><div><h2>{group.model.modelName}</h2><p>开发者：{group.developerName} · <a href={group.model.evidence.url} target="_blank" rel="noopener noreferrer">官方模型关系</a> · 核验于 {group.model.evidence.verifiedAt}</p></div><a href={`/model/${group.model.modelId}/`}>价格详情与变化 →</a></div>
+      <div class="table-scroll"><table>
+        <thead><tr><th scope="col">调用平台 / API 标识</th><th scope="col">地区与条件</th><th scope="col">输入</th><th scope="col">输出</th><th scope="col">缓存读取</th><th scope="col">报价依据</th></tr></thead>
+        <tbody>{group.rows.map(row => <tr data-platform-id={row.availability.platformId}>
+          <td><strong>{row.platformName}</strong><small>{row.availability.apiModelIds.join(' / ')}</small><a href={row.availability.evidence.url} target="_blank" rel="noopener noreferrer">可用关系 ↗</a></td>
+          <td>{region(row.input)}<small>实时 · 标准档</small><small>上下文：{context(row.input)}</small>{row.input?.timeCondition && <small>{row.input.timeCondition.schedule}</small>}</td>
+          <td>{amount(row.input)}{row.input && <small>每{priceUnit(row.input.unitQuantity,row.input.unitName)}</small>}</td>
+          <td>{amount(row.output)}{row.output && <small>每{priceUnit(row.output.unitQuantity,row.output.unitName)}</small>}</td>
+          <td>{amount(row.cache)}{row.cache && <small>每{priceUnit(row.cache.unitQuantity,row.cache.unitName)}</small>}</td>
+          <td>{row.input ? <><small>观察于 {row.input.observedAt}</small><div>输入：<EvidenceLinks price={row.input} /></div>{row.output && <div>输出：<EvidenceLinks price={row.output} /></div>}</> : <span class="muted">等待完整、最新的价格证据</span>}</td>
+        </tr>)}</tbody>
+      </table></div>
+    </section>)}
+    {!groups.length && <p>当前公开版本尚未收录经核验的跨平台关系。</p>}
+    <p class="muted methodology"><a href="/method/">数据方法</a> · 批处理、优先档、缓存写入和其他条件报价见模型详情；此页不把不同条件混合成最低价排名。</p>
+  </div>
+</Layout>
+<style>
+  .compare-hero{padding:40px 0 24px}.compare-hero h1{font-size:clamp(26px,4vw,42px);line-height:1.2;margin:18px 0}.compare-hero p{max-width:850px;line-height:1.8}.compare-hero nav{font-size:13px}.muted{color:var(--muted)}a{color:var(--cyan)}.model-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.model-links a{padding:9px 14px;border:1px solid var(--line);text-decoration:none}.compare-group{padding:30px 0;scroll-margin-top:24px;border-top:1px solid var(--line)}.group-head{display:flex;gap:20px;justify-content:space-between;align-items:center}.group-head h2{font-size:24px;margin:0 0 8px}.group-head p{font-size:12px;color:var(--muted)}.table-scroll{overflow-x:auto;margin-top:18px}table{width:100%;min-width:1000px;border-collapse:collapse;font-size:13px}th{text-align:left;color:var(--muted);font-weight:500}th,td{padding:16px 12px;border:1px solid var(--line);vertical-align:top}td:first-child{min-width:190px}td:nth-child(2){min-width:190px}small{display:block;margin-top:7px;font-size:11px;color:var(--muted);overflow-wrap:anywhere}td a{font-size:11px}.methodology{font-size:12px;line-height:1.8;padding:12px 0 36px}@media(max-width:640px){.group-head{align-items:flex-start;flex-direction:column;gap:4px}th,td{padding:12px 10px}.compare-hero{padding-top:24px}}
+</style>

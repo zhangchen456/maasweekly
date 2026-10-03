@@ -1,0 +1,600 @@
+· deploy-mode: release
+· 构建 release（commit=696e2c196939a87b963f08371be91f4447331261）
+[0/6] preflight
+  ✓ commit 696e2c196，工作区干净
+{"timestamp":"2026-10-03T00:26:02.637579+00:00","kind":"release.stage","operation":"build","stage":"preflight","outcome":"success","exitCode":0,"elapsedMs":2000,"timingResolutionMs":1000,"gitCommit":"696e2c196939a87b963f08371be91f4447331261"}
+[1/6] 公开数据投影
+datasetVersion ds_12fdc567c7d3e70fd11f64bd2c28fe27a56c40744950e9ab2185e4ebb4723bf5 已发布且内容一致，零写入（幂等）
+✓ 发布 ds_12fdc567c7d3e70fd11f64bd2c28fe27a56c40744950e9ab2185e4ebb4723bf5（changes=8663 items=8663 prices=1914 evidence=14276 weekly=23）dataThrough=2026-10-03
+✓ 公开数据校验通过：ds_12fdc567c7d3e70fd11f64bd2c28fe27a56c40744950e9ab2185e4ebb4723bf5 · 7 文件 · dataThrough 2026-10-03
+{"timestamp":"2026-10-03T00:26:53.853175+00:00","kind":"release.stage","operation":"build","stage":"projection","outcome":"success","exitCode":0,"elapsedMs":51000,"timingResolutionMs":1000,"gitCommit":"696e2c196939a87b963f08371be91f4447331261"}
+[2/6] 统一全量回归（Task 01–06）
+══ Task 01–06 统一回归 ══
+── site dependency cache
+   ✓ site dependency cache
+── agent-api dependency cache
+   ✓ agent-api dependency cache
+── export-public-data --check
+   ✓ export-public-data --check
+── validate-archive（Task 01）
+   ✓ validate-archive（Task 01）
+── validate-price-archive（Task 02）
+   ✓ validate-price-archive（Task 02）
+── build-skill-package --check
+   ✓ build-skill-package --check
+── test_release_retention（live references）
+   ✓ test_release_retention（live references）
+── test_operations_budget（production resource thresholds）
+   ✓ test_operations_budget（production resource thresholds）
+── test_public_retention（公开历史引用完整性）
+   ✓ test_public_retention（公开历史引用完整性）
+── test_cross_platform（关系与官方价格）
+   ✓ test_cross_platform（关系与官方价格）
+── test_regression_diagnostics（CI failure evidence）
+   ✓ test_regression_diagnostics（CI failure evidence）
+── test_current_pricing（official table drift）
+   ✓ test_current_pricing（official table drift）
+── test_record_archive（Task 01）
+   ✓ test_record_archive（Task 01）
+── test_price_archive（Task 02）
+   ✓ test_price_archive（Task 02）
+── test_public_export（Task 03）
+   ✓ test_public_export（Task 03）
+── test_skill_package（Task 04）
+   ✓ test_skill_package（Task 04）
+── test_release_build（Task 06）
+   ✓ test_release_build（Task 06）
+── test_release_activation（Task 06）
+   ✓ test_release_activation（Task 06）
+── test_deploy_mode（Task 06 M7）
+   ✓ test_deploy_mode（Task 06 M7）
+── test_model_identity_audit（Task 07）
+   ✓ test_model_identity_audit（Task 07）
+── test_model_public_projection（Task 07）
+   ✓ test_model_public_projection（Task 07）
+── test_model_registry（Task 07）
+   ✓ test_model_registry（Task 07）
+── validate-model-registry（Task 07）
+   ✓ validate-model-registry（Task 07）
+── audit-model-registry-coverage（Task 07）
+   ✓ audit-model-registry-coverage（Task 07）
+── test_architecture_workflows（AR-05）
+   ✓ test_architecture_workflows（AR-05）
+── test_architecture_observability（AR-08）
+   ✓ test_architecture_observability（AR-08）
+── test_blob_storage（AR-06）
+   ✓ test_blob_storage（AR-06）
+── test_pipeline_runtime（AR-04）
+   ✓ test_pipeline_runtime（AR-04）
+── test_standard_inputs（AR-03）
+   ✓ test_standard_inputs（AR-03）
+── test_workflow_release_contract（incident 2026-09）
+   ✓ test_workflow_release_contract（incident 2026-09）
+── validate-developer-registry（T07-5.2）
+   ✓ validate-developer-registry（T07-5.2）
+── test_developer_platform_registry（T07-5.2）
+   ✓ test_developer_platform_registry（T07-5.2）
+── test_analytics_foundation（T08-1A）
+   ✓ test_analytics_foundation（T08-1A）
+── test_umami_postgres_preflight（T08-1A）
+   ✓ test_umami_postgres_preflight（T08-1A）
+── test_umami_prerequisites（T08-1A）
+   ✓ test_umami_prerequisites（T08-1A）
+── test_inventory_capability（T08-1A Gate B Preflight）
+   ✓ test_inventory_capability（T08-1A Gate B Preflight）
+── site build（含 prebuild 门禁）
+   ✓ site build（含 prebuild 门禁）
+── site: access-pages（Task 05）
+   ✓ site: access-pages（Task 05）
+── site: rss（Task 05）
+   ✓ site: rss（Task 05）
+── site: page ViewModel types
+   ✓ site: page ViewModel types
+── site: page ViewModel parity
+   ✓ site: page ViewModel parity
+── site: cross-platform
+   ✓ site: cross-platform
+── site: pricing
+   ✓ site: pricing
+── site: model-identity-ui（T07-4A）
+   ✓ site: model-identity-ui（T07-4A）
+── site: model-identity-ui-contract（T07-4A）
+   ✓ site: model-identity-ui-contract（T07-4A）
+── site: changes-browser-contract（T07-4A.2）
+   ✓ site: changes-browser-contract（T07-4A.2）
+── site: changes-browser-ui（T07-4A.2）
+   ✓ site: changes-browser-ui（T07-4A.2）
+── site: model-detail（T07-4B.2）
+   ✓ site: model-detail（T07-4B.2）
+── site: analytics（T08 lightweight）
+   ✓ site: analytics（T08 lightweight）
+── site: agent-interactions（copy regression）
+   ✓ site: agent-interactions（copy regression）
+── site: platform-logos
+   ✓ site: platform-logos
+── site: leaderboards
+   ✓ site: leaderboards
+── site: records（含残留检测）
+   ✓ site: records（含残留检测）
+── site: SEO（canonical / sitemap / model content）
+   ✓ site: SEO（canonical / sitemap / model content）
+── site: multilingual
+   ✓ site: multilingual
+── agent-api: build
+   ✓ agent-api: build
+── agent-api: country
+   ✓ agent-api: country
+── agent-api: REST 测试
+   ✗ agent-api: REST 测试（退出码 1）——完整失败日志：
+     
+     > @maasweekly/agent-api@1.0.0 test:compiled
+     > node --test --test-force-exit "dist/tests/http.test.js" "dist/tests/versioning.test.js" "dist/tests/openapi.test.js" "dist/tests/p1-fixes.test.js" "dist/tests/model-identity.test.js" "dist/tests/runtime.test.js" "dist/tests/observability.test.js" "dist/tests/contracts.test.js" "dist/tests/cross-platform.test.js"
+     
+     TAP version 13
+     # Subtest: site and API reject identical malformed manifests, hashes, references and catalogs
+     ok 1 - site and API reject identical malformed manifests, hashes, references and catalogs
+       ---
+       duration_ms: 36.969924
+       type: 'test'
+       ...
+     # Subtest: legacy catalogs remain valid; dangling/ambiguous relations are rejected
+     ok 2 - legacy catalogs remain valid; dangling/ambiguous relations are rejected
+       ---
+       duration_ms: 2.45288
+       type: 'test'
+       ...
+     # Subtest: platform filter is exact and optional; provider/modelId continue across platforms
+     ok 3 - platform filter is exact and optional; provider/modelId continue across platforms
+       ---
+       duration_ms: 7.330909
+       type: 'test'
+       ...
+     # Subtest: /models publishes frozen relation catalog with the same dataset envelope
+     ok 4 - /models publishes frozen relation catalog with the same dataset envelope
+       ---
+       duration_ms: 47.526547
+       type: 'test'
+       ...
+     # Subtest: T06 changes 默认查询（dataThrough 锚定 7 天窗口）
+     ok 5 - T06 changes 默认查询（dataThrough 锚定 7 天窗口）
+       ---
+       duration_ms: 49.612321
+       type: 'test'
+       ...
+     # Subtest: T06 provider/type/q/from/to 组合
+     ok 6 - T06 provider/type/q/from/to 组合
+       ---
+       duration_ms: 26.868562
+       type: 'test'
+       ...
+     # Subtest: T07 prices 条件完整（contextBand/timeCondition/原币种/Decimal 字符串）
+     ok 7 - T07 prices 条件完整（contextBand/timeCondition/原币种/Decimal 字符串）
+       ---
+       duration_ms: 10.708195
+       type: 'test'
+       ...
+     # Subtest: T08a withdrawn 默认隐藏
+     ok 8 - T08a withdrawn 默认隐藏
+       ---
+       duration_ms: 6.215125
+       type: 'test'
+       ...
+     # Subtest: T08b includeWithdrawn=true 返回 withdrawn
+     ok 9 - T08b includeWithdrawn=true 返回 withdrawn
+       ---
+       duration_ms: 4.905219
+       type: 'test'
+       ...
+     # Subtest: T09 item/evidence/weekly 实体与未知 404
+     ok 10 - T09 item/evidence/weekly 实体与未知 404
+       ---
+       duration_ms: 16.582555
+       type: 'test'
+       ...
+     # Subtest: T10 参数校验 400 Problem JSON
+     ok 11 - T10 参数校验 400 Problem JSON
+       ---
+       duration_ms: 26.13386
+       type: 'test'
+       ...
+     # Subtest: T11 同版本翻完全部页（limit=1，无重复无遗漏）
+     ok 12 - T11 同版本翻完全部页（limit=1，无重复无遗漏）
+       ---
+       duration_ms: 18.177644
+       type: 'test'
+       ...
+     # Subtest: T11b cursor 与其他参数冲突 → 400
+     ok 13 - T11b cursor 与其他参数冲突 → 400
+       ---
+       duration_ms: 4.244646
+       type: 'test'
+       ...
+     # Subtest: T13 ETag / 304
+     ok 14 - T13 ETag / 304
+       ---
+       duration_ms: 19.749959
+       type: 'test'
+       ...
+     # Subtest: T14 HEAD/OPTIONS/CORS/超长 cursor 413
+     ok 15 - T14 HEAD/OPTIONS/CORS/超长 cursor 413
+       ---
+       duration_ms: 18.511628
+       type: 'test'
+       ...
+     # Subtest: T16 恶意 excerpt 原样返回 / 路径编码不越界
+     ok 16 - T16 恶意 excerpt 原样返回 / 路径编码不越界
+       ---
+       duration_ms: 7.219861
+       type: 'test'
+       ...
+     # Subtest: T16b 未知路径 404（无通配）
+     ok 17 - T16b 未知路径 404（无通配）
+       ---
+       duration_ms: 2.791553
+       type: 'test'
+       ...
+     # Subtest: T14b 无数据版本 503
+     ok 18 - T14b 无数据版本 503
+       ---
+       duration_ms: 6.890496
+       type: 'test'
+       ...
+     # Subtest: T08: modelId 精确过滤
+     ok 19 - T08: modelId 精确过滤
+       ---
+       duration_ms: 45.903857
+       type: 'test'
+       ...
+     # Subtest: T09: familyId 返回明确成员集合
+     ok 20 - T09: familyId 返回明确成员集合
+       ---
+       duration_ms: 13.8166
+       type: 'test'
+       ...
+     # Subtest: T10: model 与 modelId 语义不同
+     ok 21 - T10: model 与 modelId 语义不同
+       ---
+       duration_ms: 7.616513
+       type: 'test'
+       ...
+     # Subtest: T11: unknown modelId → 400
+     ok 22 - T11: unknown modelId → 400
+       ---
+       duration_ms: 3.049845
+       type: 'test'
+       ...
+     # Subtest: T12: unknown familyId → 400
+     ok 23 - T12: unknown familyId → 400
+       ---
+       duration_ms: 3.203622
+       type: 'test'
+       ...
+     # Subtest: T23: 无 modelId 客户端不回归（旧字段照常）
+     ok 24 - T23: 无 modelId 客户端不回归（旧字段照常）
+       ---
+       duration_ms: 3.843988
+       type: 'test'
+       ...
+     # Subtest: T11a: malformed modelId → 400
+     ok 25 - T11a: malformed modelId → 400
+       ---
+       duration_ms: 5.506052
+       type: 'test'
+       ...
+     # Subtest: T11b: well-formed unknown modelId → 400
+     ok 26 - T11b: well-formed unknown modelId → 400
+       ---
+       duration_ms: 3.509543
+       type: 'test'
+       ...
+     # Subtest: T11c: known modelId but no records → 200 empty
+     ok 27 - T11c: known modelId but no records → 200 empty
+       ---
+       duration_ms: 4.39138
+       type: 'test'
+       ...
+     # Subtest: T12a: malformed familyId → 400
+     ok 28 - T12a: malformed familyId → 400
+       ---
+       duration_ms: 3.078439
+       type: 'test'
+       ...
+     # Subtest: T12b: well-formed unknown familyId → 400
+     ok 29 - T12b: well-formed unknown familyId → 400
+       ---
+       duration_ms: 3.008177
+       type: 'test'
+       ...
+     # Subtest: T12c: known familyId but no records → 200 empty
+     ok 30 - T12c: known familyId but no records → 200 empty
+       ---
+       duration_ms: 2.68818
+       type: 'test'
+       ...
+     # Subtest: T11d: changes endpoint known-but-zero-record → 200 empty
+     ok 31 - T11d: changes endpoint known-but-zero-record → 200 empty
+       ---
+       duration_ms: 6.687608
+       type: 'test'
+       ...
+     # Subtest: T11e: changes endpoint modelId 正向过滤生效（顶层 modelId，非 price.modelId）
+     ok 32 - T11e: changes endpoint modelId 正向过滤生效（顶层 modelId，非 price.modelId）
+       ---
+       duration_ms: 4.611712
+       type: 'test'
+       ...
+     # Subtest: T12d: changes endpoint known familyId → 200
+     ok 33 - T12d: changes endpoint known familyId → 200
+       ---
+       duration_ms: 4.32684
+       type: 'test'
+       ...
+     # Subtest: T13: old cursor 从磁盘加载历史 catalog，current 删除 identity 不影响续页
+     ok 34 - T13: old cursor 从磁盘加载历史 catalog，current 删除 identity 不影响续页
+       ---
+       duration_ms: 14.800787
+       type: 'test'
+       ...
+     # Subtest: T14: current 新增 identity 不污染旧 cursor 的 query 校验
+     ok 35 - T14: current 新增 identity 不污染旧 cursor 的 query 校验
+       ---
+       duration_ms: 7.282549
+       type: 'test'
+       ...
+     # Subtest: T15: catalog missing-file → current/history load fail，reload 保留旧数据
+     ok 36 - T15: catalog missing-file → current/history load fail，reload 保留旧数据
+       ---
+       duration_ms: 7.575054
+       type: 'test'
+       ...
+     # Subtest: T15: catalog missing-entry → current/history load fail，reload 保留旧数据
+     ok 37 - T15: catalog missing-entry → current/history load fail，reload 保留旧数据
+       ---
+       duration_ms: 4.165548
+       type: 'test'
+       ...
+     # Subtest: T15: catalog bytes → current/history load fail，reload 保留旧数据
+     ok 38 - T15: catalog bytes → current/history load fail，reload 保留旧数据
+       ---
+       duration_ms: 6.743011
+       type: 'test'
+       ...
+     # Subtest: T15: catalog hash → current/history load fail，reload 保留旧数据
+     ok 39 - T15: catalog hash → current/history load fail，reload 保留旧数据
+       ---
+       duration_ms: 6.486191
+       type: 'test'
+       ...
+     # Subtest: T15: catalog malformed → current/history load fail，reload 保留旧数据
+     ok 40 - T15: catalog malformed → current/history load fail，reload 保留旧数据
+       ---
+       duration_ms: 6.904893
+       type: 'test'
+       ...
+     # Subtest: T15: catalog shape → current/history load fail，reload 保留旧数据
+     ok 41 - T15: catalog shape → current/history load fail，reload 保留旧数据
+       ---
+       duration_ms: 5.885841
+       type: 'test'
+       ...
+     # Subtest: T15: catalog dangling-family → current/history load fail，reload 保留旧数据
+     ok 42 - T15: catalog dangling-family → current/history load fail，reload 保留旧数据
+       ---
+       duration_ms: 5.917179
+       type: 'test'
+       ...
+     # Subtest: T18/T19: MCP unknown identity 与 REST 一致 / known-but-empty 一致
+     ok 43 - T18/T19: MCP unknown identity 与 REST 一致 / known-but-empty 一致
+       ---
+       duration_ms: 94.16759
+       type: 'test'
+       ...
+     # Subtest: T20: GET /api/v1/models → 200，返回 catalog + datasetVersion
+     ok 44 - T20: GET /api/v1/models → 200，返回 catalog + datasetVersion
+       ---
+       duration_ms: 5.447902
+       type: 'test'
+       ...
+     # Subtest: T20a: GET /api/v1/models 与 release catalog 逐项一致
+     ok 45 - T20a: GET /api/v1/models 与 release catalog 逐项一致
+       ---
+       duration_ms: 1.634021
+       type: 'test'
+       ...
+     # Subtest: T20b: GET /api/v1/models 走 verified release loader（catalog 与 fixture 一致）
+     ok 46 - T20b: GET /api/v1/models 走 verified release loader（catalog 与 fixture 一致）
+       ---
+       duration_ms: 1.528264
+       type: 'test'
+       ...
+     # Subtest: fixed routes never retain private query, entity or arbitrary path
+     ok 47 - fixed routes never retain private query, entity or arbitrary path
+       ---
+       duration_ms: 3.596576
+       type: 'test'
+       ...
+     # Subtest: concurrent request contexts report their actual dataset; disabled instrumentation preserves handler
+     ok 48 - concurrent request contexts report their actual dataset; disabled instrumentation preserves handler
+       ---
+       duration_ms: 12.010796
+       type: 'test'
+       ...
+     # Subtest: logger bounds queued bytes, rejects oversized/cyclic events and tolerates broken streams
+     ok 49 - logger bounds queued bytes, rejects oversized/cyclic events and tolerates broken streams
+       ---
+       duration_ms: 1008.629424
+       type: 'test'
+       ...
+     # Subtest: readiness is independent of stale freshness
+     ok 50 - readiness is independent of stale freshness
+       ---
+       duration_ms: 0.612444
+       type: 'test'
+       ...
+     # Subtest: an unchanged poll cannot invalidate an in-flight forced audit
+     ok 51 - an unchanged poll cannot invalidate an in-flight forced audit
+       ---
+       duration_ms: 13.252657
+       type: 'test'
+       ...
+     # Subtest: T17 OpenAPI 路径与真实路由一致
+     ok 52 - T17 OpenAPI 路径与真实路由一致
+       ---
+       duration_ms: 1.961342
+       type: 'test'
+       ...
+     # Subtest: P1-1 篡改历史 release 文件 → cursor 读取被拒（409）
+     ok 53 - P1-1 篡改历史 release 文件 → cursor 读取被拒（409）
+       ---
+       duration_ms: 40.847965
+       type: 'test'
+       ...
+     # Subtest: P1-1 历史版本保留原版元数据（generatedAt/dataThrough/coverage）
+     ok 54 - P1-1 历史版本保留原版元数据（generatedAt/dataThrough/coverage）
+       ---
+       duration_ms: 1.050431
+       type: 'test'
+       ...
+     # Subtest: P1-2 伪造 cursor（改 limit 后重算 qh，无密钥）→ 400
+     ok 55 - P1-2 伪造 cursor（改 limit 后重算 qh，无密钥）→ 400
+       ---
+       duration_ms: 12.731062
+       type: 'test'
+       ...
+     # Subtest: P1-2b 若 MAC 被绕过（密钥泄露），恢复校验仍拦截非法参数
+     ok 56 - P1-2b 若 MAC 被绕过（密钥泄露），恢复校验仍拦截非法参数
+       ---
+       duration_ms: 13.13178
+       type: 'test'
+       ...
+     # Subtest: P1-2c 合法翻页不受影响
+     ok 57 - P1-2c 合法翻页不受影响
+       ---
+       duration_ms: 6.891058
+       type: 'test'
+       ...
+     # Subtest: worker verifies candidates; ten unchanged polls parse zero business files; force failure retains current
+     ok 58 - worker verifies candidates; ten unchanged polls parse zero business files; force failure retains current
+       ---
+       duration_ms: 193.903029
+       type: 'test'
+       ...
+     # Subtest: historical first reads single-flight; zero cache budget reloads retained cursor and genuine deletion returns 409
+     not ok 59 - historical first reads single-flight; zero cache budget reloads retained cursor and genuine deletion returns 409
+       ---
+       duration_ms: 77.672526
+       type: 'test'
+       location: '/home/runner/work/maasweekly/maasweekly/services/agent-api/dist/tests/runtime.test.js:47:1'
+       failureType: 'testCodeFailure'
+       error: |-
+         Expected values to be strictly equal:
+         + actual - expected
+         
+         + 'failed'
+         - 'changed'
+         
+       code: 'ERR_ASSERTION'
+       name: 'AssertionError'
+       expected: 'changed'
+       actual: 'failed'
+       operator: 'strictEqual'
+       stack: |-
+         TestContext.<anonymous> (file:///home/runner/work/maasweekly/maasweekly/services/agent-api/dist/tests/runtime.test.js:51:16)
+         process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+         async Test.run (node:internal/test_runner/test:1054:7)
+         async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+       ...
+     # Subtest: a superseded candidate never replaces current and closed loader cannot publish
+     ok 60 - a superseded candidate never replaces current and closed loader cannot publish
+       ---
+       duration_ms: 14.076835
+       type: 'test'
+       ...
+     # Subtest: no valid startup yields 503; aborted worker settles without publishing
+     ok 61 - no valid startup yields 503; aborted worker settles without publishing
+       ---
+       duration_ms: 4.480727
+       type: 'test'
+       ...
+     # Subtest: valid hashes cannot conceal broken references; historical LRU obeys its version budget
+     ok 62 - valid hashes cannot conceal broken references; historical LRU obeys its version budget
+       ---
+       duration_ms: 381.133764
+       type: 'test'
+       ...
+     # Subtest: indexed queries match reference scans through all pages, filters and date boundaries
+     ok 63 - indexed queries match reference scans through all pages, filters and date boundaries
+       ---
+       duration_ms: 23.306249
+       type: 'test'
+       ...
+     # Subtest: client normalization and proxy trust reject spoofing and scoped/multiple IP headers
+     ok 64 - client normalization and proxy trust reject spoofing and scoped/multiple IP headers
+       ---
+       duration_ms: 6.577673
+       type: 'test'
+       ...
+     # Subtest: per-client quotas, bounded TTL state and independent global guards
+     ok 65 - per-client quotas, bounded TTL state and independent global guards
+       ---
+       duration_ms: 0.810133
+       type: 'test'
+       ...
+     # Subtest: T12 翻页期间发布新版本：旧 cursor 继续读旧 release
+     ok 66 - T12 翻页期间发布新版本：旧 cursor 继续读旧 release
+       ---
+       duration_ms: 141.966683
+       type: 'test'
+       ...
+     # Subtest: T12b 篡改 cursor（含 ds 字段）→ 400 invalid_cursor（MAC 拦截）
+     ok 67 - T12b 篡改 cursor（含 ds 字段）→ 400 invalid_cursor（MAC 拦截）
+       ---
+       duration_ms: 10.630529
+       type: 'test'
+       ...
+     # Subtest: T12b2 真实清理后的版本 → 409 dataset_version_expired
+     ok 68 - T12b2 真实清理后的版本 → 409 dataset_version_expired
+       ---
+       duration_ms: 9.175173
+       type: 'test'
+       ...
+     # Subtest: T12c 篡改 cursor → 400 invalid_cursor
+     ok 69 - T12c 篡改 cursor → 400 invalid_cursor
+       ---
+       duration_ms: 11.093194
+       type: 'test'
+       ...
+     # Subtest: T15 热重载：成功原子切换 / 损坏版本续服旧版 / 单请求不混版
+     ok 70 - T15 热重载：成功原子切换 / 损坏版本续服旧版 / 单请求不混版
+       ---
+       duration_ms: 9.273096
+       type: 'test'
+       ...
+     # Subtest: T15b manifest 损坏 → 不加载半成品
+     ok 71 - T15b manifest 损坏 → 不加载半成品
+       ---
+       duration_ms: 3.069802
+       type: 'test'
+       ...
+     1..71
+     # tests 71
+     # suites 0
+     # pass 70
+     # fail 1
+     # cancelled 0
+     # skipped 0
+     # todo 0
+     # duration_ms 1466.52879
+   （完整日志: /home/runner/work/_temp/regression-failures/maas-regression.cul5lo/58.txt）
+── agent-api: MCP 测试
+   ✓ agent-api: MCP 测试
+── agent-api: MCP 真实数据
+   ✓ agent-api: MCP 真实数据
+══════════════════════════
+通过: 59 | 失败: 1
+失败项：
+  ✗ agent-api: REST 测试
+回归未通过或中断，日志保留: /home/runner/work/_temp/regression-failures/maas-regression.cul5lo
+✗ 全量回归失败（见上方失败项）——生产 release 拒绝
+{"timestamp":"2026-10-03T00:36:04.289896+00:00","kind":"release.stage","operation":"build","stage":"regression","outcome":"failed","exitCode":1,"elapsedMs":551000,"timingResolutionMs":1000,"gitCommit":"696e2c196939a87b963f08371be91f4447331261"}
+{"timestamp":"2026-10-03T00:36:04.316368+00:00","kind":"release.result","operation":"build","stage":"regression","outcome":"failed","exitCode":1,"elapsedMs":604000,"timingResolutionMs":1000,"gitCommit":"696e2c196939a87b963f08371be91f4447331261"}

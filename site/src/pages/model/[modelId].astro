@@ -14,6 +14,11 @@ export function getStaticPaths() {
 }
 const { page } = Astro.props;
 const { model, prices, changes, sources, keys, from, to, dataThrough, datasetVersion } = page;
+const catalog = modelRelease().modelIdentities!;
+const upstream = catalog.upstreamModels?.find(u => u.modelId === model.modelId);
+const developer = catalog.developers?.find(d => d.developerId === upstream?.developerId);
+const availability = catalog.availabilities?.filter(a => a.modelId === model.modelId) ?? [];
+const platformName = (id: string) => catalog.platforms?.find(p => p.platformId === id)?.displayName ?? id;
 const rows = prices.map(price => ({price, cells: priceCells(price)}));
 const providerId = model.modelId.split(':')[0];
 const providerLabel = providerLabels[providerId] ?? providerId;
@@ -38,6 +43,11 @@ const hasContent = prices.length > 0 || changes.length > 0;
 
   <div class="shell model-detail" data-model-id={model.modelId} data-api-base={PUBLIC_ACCESS.paths.apiBase}
     data-dataset-version={datasetVersion} data-from={from} data-to={to}>
+    {upstream && <section class="model-section">
+      <h2>开发者与调用平台</h2>
+      <p>开发者：{developer?.displayName ?? upstream.developerId} · <a href={`/compare/#${model.modelId}`}>比较不同平台报价 →</a></p>
+      <ul>{availability.map(a => <li><strong>{platformName(a.platformId)}</strong> · <code>{a.apiModelIds.join(' / ')}</code> · <a href={a.evidence.url} target="_blank" rel="noopener noreferrer">官方可用关系</a>（核验于 {a.evidence.verifiedAt}）</li>)}</ul>
+    </section>}
     <section class="model-section">
       <h2>API 模型名</h2>
       <p class="muted small">以下名称来自实际价格记录。调用时请核对对应平台的 API 文档。</p>

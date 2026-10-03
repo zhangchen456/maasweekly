@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_5fdd2de8364cca739e88d7b50a96247a86e6f343ece38366f16c3b1fe495bae7",
+  "date": "2026-10-03",
+  "recordType": "price_change",
+  "fact_key": "d7d8385f4114b30a0c12567d41bdacec87c69ffe48b5d72b55e27ab36184e2d0",
+  "provider": "openai",
+  "model": "gpt-image-2.5-sunburst",
+  "component": "cache_read",
+  "currency": "USD",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "global",
+  "billingMode": "batch",
+  "serviceTier": "standard",
+  "contextBand": null,
+  "timeCondition": null,
+  "beforeVersionId": "pfv_241c263ad3f6b60f1db353ce9a7557ce45a6e90bf2cf46c50fe76c5a7d11a573",
+  "afterVersionId": "pfv_d6f6be56682ded5bcc280a4ccfd6d6be83c8cc6572ba868ab95a7b3dcf481de8",
+  "beforeEvidenceId": "ev_c8496c7642362cc4e4c94f9e722777358120e01f70f224a01d547101007ae126",
+  "afterEvidenceId": "ev_26bb4ef83c06aada614224f9bb1724aabd9d20b891917714e59f9df7798cff18",
+  "beforeObservedAt": "2026-10-02T14:46:50+00:00",
+  "afterObservedAt": "2026-10-03T00:17:05+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "0.625",
+    "current": "1",
+    "direction": "up",
+    "percent": "60.00"
+  },
+  "revision": 3,
+  "status": "active",
+  "revisedAt": "2026-10-03T00:17:39+00:00",
+  "revisionReason": "重新计算后再次确认变化，恢复收录",
+  "permalink": "/item/price_5fdd2de8364cca739e88d7b50a96247a86e6f343ece38366f16c3b1fe495bae7/",
+  "provenance": {}
+}

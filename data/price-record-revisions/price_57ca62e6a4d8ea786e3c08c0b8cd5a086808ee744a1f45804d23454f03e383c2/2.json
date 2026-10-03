@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_57ca62e6a4d8ea786e3c08c0b8cd5a086808ee744a1f45804d23454f03e383c2",
+  "date": "2026-10-02",
+  "recordType": "price_change",
+  "fact_key": "ed69bd70473e32c9c0d0a18b1813bc9c51aac27792b1b052aafbd9d88317cae9",
+  "provider": "vertex-anthropic",
+  "model": "claude-sonnet-5.5",
+  "component": "cache_write",
+  "currency": "USD",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "eu",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": {
+    "min": 0,
+    "max": 200000
+  },
+  "timeCondition": {
+    "period": "cache_ttl",
+    "tz": "UTC",
+    "schedule": "PT1H"
+  },
+  "beforeVersionId": null,
+  "afterVersionId": "pfv_6d17dbabbd9f00b080890d8d30e6ed1248ca1f91367e061f8aac340428575be6",
+  "beforeEvidenceId": null,
+  "afterEvidenceId": "ev_21394dc901020293e4a052ea7601f9945857c21ffb798c7dff5ba791916fa939",
+  "beforeObservedAt": null,
+  "afterObservedAt": "2026-10-02T14:46:56+00:00",
+  "changeType": "newly_observed",
+  "changedFields": [],
+  "comparison": null,
+  "revision": 2,
+  "status": "active",
+  "revisedAt": "2026-10-02T14:47:19+00:00",
+  "revisionReason": "事件内容更新",
+  "permalink": "/item/price_57ca62e6a4d8ea786e3c08c0b8cd5a086808ee744a1f45804d23454f03e383c2/",
+  "provenance": {}
+}

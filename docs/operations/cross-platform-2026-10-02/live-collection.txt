@@ -1,0 +1,18 @@
+[vertex-anthropic:pricing]
+  ✓ 86 facts / 2 models
+{"timestamp": "2026-10-02T14:36:05.898736+00:00", "kind": "pipeline.source", "runId": "prices_50917d78c36342368b19ad931e00fe03", "sourceId": "google-vertex-pricing", "attemptId": "attempt_274ad8641978494187185db8318dec61", "extractorVersion": "vertex-1", "outcome": "success", "elapsedMs": 7690.654665988404, "retries": 0, "parsedCount": 86, "lastSuccessAt": 1790951728.77474, "successAgeHours": 0.0001670286390516493, "countRatio": null, "freshnessBudgetHours": 48}
+[vertex-google:pricing]
+  ✓ 36 facts / 1 models
+{"timestamp": "2026-10-02T14:36:05.972090+00:00", "kind": "pipeline.source", "runId": "prices_50917d78c36342368b19ad931e00fe03", "sourceId": "google-vertex-pricing", "attemptId": "attempt_c61fb604690043708b3f4c871190aa77", "extractorVersion": "vertex-1", "outcome": "success", "elapsedMs": 43954.644374985946, "retries": 0, "parsedCount": 36, "lastSuccessAt": 1790951765.067233, "successAgeHours": 0.00017044140232933892, "countRatio": null, "freshnessBudgetHours": 48}
+  [not_run] anthropic:pricing 保留既有 95 条事实
+  [not_run] deepseek:pricing 保留既有 12 条事实
+  [not_run] doubao:pricing 保留既有 180 条事实
+  [not_run] glm:pricing 保留既有 27 条事实
+  [not_run] google:pricing 保留既有 82 条事实
+  [not_run] kimi:pricing 保留既有 14 条事实
+  [not_run] openai:pricing 保留既有 181 条事实
+  [not_run] qwen:pricing 保留既有 2088 条事实
+diff: 122 新增 / 0 变更 / 0 不变 / 0 缺失
+价格变化事件 122 条 → daily_changes.json
+ledger.json 已更新：2801 条价格 · ['anthropic', 'deepseek', 'doubao', 'glm', 'google', 'kimi', 'openai', 'qwen', 'vertex-anthropic', 'vertex-google'] 家
+RUN-STATUS: ok 2/2 来源成功

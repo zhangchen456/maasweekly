@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_eb381f968da578c110858d7cfa617e328b53257d38e0b0fd69b7b2f80b687a09",
+  "date": "2026-10-03",
+  "recordType": "price_change",
+  "fact_key": "ff92de49a34963224f27d42974e82ff3079485b556a22f88c5120e61969a7532",
+  "provider": "qwen",
+  "model": "qwen3-next-80b-a3b-thinking",
+  "component": "output",
+  "currency": "CNY",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "global",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": null,
+  "timeCondition": null,
+  "beforeVersionId": "pfv_d64123b6fe43326088b1c3f249da5cfc180bc9af4fbca0909d7b7aa367918746",
+  "afterVersionId": "pfv_054821a487214a2efb77a19721fd89df0756db798824f13076396faa2a5d3592",
+  "beforeEvidenceId": "ev_3e77e46d79ce83932f1f9e13b7d7e7898ba255346b2f8a8bccc851d4032da42d",
+  "afterEvidenceId": "ev_5847f4cdc9c71b2bfeca273eff39eeb2d8a2233324b0543fec975eb50f76a1cb",
+  "beforeObservedAt": "2026-10-02T14:46:51+00:00",
+  "afterObservedAt": "2026-10-02T17:18:26+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "8.807",
+    "current": "10",
+    "direction": "up",
+    "percent": "13.55"
+  },
+  "revision": 2,
+  "status": "withdrawn",
+  "revisedAt": "2026-10-03T00:17:33+00:00",
+  "revisionReason": "重新计算后未识别到变化，撤回收录",
+  "permalink": "/item/price_eb381f968da578c110858d7cfa617e328b53257d38e0b0fd69b7b2f80b687a09/",
+  "provenance": {}
+}
