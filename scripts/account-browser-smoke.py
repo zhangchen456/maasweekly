@@ -84,8 +84,18 @@ def main():
                 page.goto(base+'/')
                 page.locator('#account-login-open').wait_for(state='visible')
                 page.locator('#account-login-open').click()
-                page.screenshot(path=str(args.output/'login-desktop.png'),full_page=True)
+                bounds=page.locator('#account-login-dialog').bounding_box()
+                assert abs(bounds['x']+bounds['width']/2-720)<2 and abs(bounds['y']+bounds['height']/2-500)<2
+                page.screenshot(path=str(args.output/'login-desktop.png'),full_page=False)
                 page.locator('#account-login-close').click()
+                page.set_viewport_size({'width':390,'height':844})
+                page.locator('#account-login-open').click()
+                bounds=page.locator('#account-login-dialog').bounding_box()
+                assert abs(bounds['x']+bounds['width']/2-195)<2 and bounds['y']>=0
+                assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
+                page.screenshot(path=str(args.output/'login-mobile.png'),full_page=False)
+                page.locator('#account-login-close').click()
+                page.set_viewport_size({'width':1440,'height':1000})
                 login(page,'preview@example.test')
                 assert page.url == base+'/'
                 report['states'].append('global-email-login-keeps-current-page')
