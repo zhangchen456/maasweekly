@@ -9,12 +9,8 @@ const t = (zh: string, english: string) => en ? english : zh;
     <header class="account-heading"><p class="eyebrow">YOUR ACCOUNT</p><h1>{t("你的账户，你的工作空间。", "Your account. Your workspace.")}</h1><p>{t("管理个人信息与模型关注。登录后，平台上的关注、对比与偏好会随账户保存。", "Manage your profile and watchlist. Your follows, comparisons and preferences are saved to your account.")}</p></header>
     <p id="account-message" role="status" aria-live="polite">{t('正在连接账号服务…', 'Connecting to your account…')}</p>
     <section id="login-panel" class="login-layout" hidden>
-      <div><h2>{t('用邮箱开始', 'Start with your email')}</h2><p>{t('首次登录会自动创建个人空间。', 'Your first sign-in creates a personal account.')}<br />{t('邮箱用于登录和你主动开启的变化提醒。', 'Your email is used for sign-in and updates you opt into.')}</p><p class="small">{t('无需设置密码，验证码 10 分钟内有效。', 'No password needed. Codes expire in 10 minutes.')}</p></div>
-      <form id="login-form">
-        <label for="email">{t('邮箱', 'Email')}</label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@company.com" />
-        <button id="send-code" type="button">{t('发送验证码', 'Send code')}</button>
-        <div id="code-fields" hidden><label for="code">{t('六位验证码', 'Six-digit code')}</label><input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" /><button type="submit">{t('登录 / 创建账号', 'Sign in / Create account')}</button></div>
-      </form>
+      <div><h2>{t('登录或注册', 'Sign in or register')}</h2><p>{t('首次使用请验证邮箱注册，并设置密码。已有账号使用邮箱和密码登录。', 'Verify your email to register and set a password. Sign in with your email and password.')}</p></div>
+      <button id="account-center-login" type="button">{t('登录 / 注册', 'Sign in / Register')}</button>
     </section>
     <section id="account-settings" hidden>
       <div class="settings-heading"><h2>{t('账户信息', 'Account details')}</h2><span>{t('个人账户', 'Personal account')}</span></div>
@@ -22,6 +18,7 @@ const t = (zh: string, english: string) => en ? english : zh;
         <form id="profile-form"><label for="profile-name">{t('昵称', 'Display name')}</label><div class="profile-name-row"><input id="profile-name" type="text" maxlength="60" autocomplete="nickname" placeholder={t('输入你的昵称', 'Your display name')} /><button id="profile-save" type="submit">{t('保存', 'Save')}</button></div><p class="small">{t('昵称会显示在右上角的账户菜单中。', 'Your name appears in the account menu.')}</p></form>
         <dl class="profile-meta"><div><dt>{t('登录邮箱', 'Sign-in email')}</dt><dd id="profile-email"></dd></div><div><dt>{t('资料建立日期', 'Profile created')}</dt><dd id="profile-created"></dd></div></dl>
       </div>
+      <p><button id="account-center-password" type="button">{t("设置 / 重置密码", "Set / Reset password")}</button></p>
       <div class="account-plan-summary"><span>{t("当前套餐", "Current plan")}</span><strong data-account-plan>—</strong><a href={en ? "/en/subscription/" : "/subscription/"}>{t("查看 Free / Plus →", "Compare Free / Plus →")}</a></div>
       <p><a href="/pro/">{t("专业情报与服务权益 →", "Professional intelligence and entitlement →")}</a></p>
       <div class="account-data-actions"><span>{t('关注、价格筛选、模型对比与显示偏好会在登录后同步。', 'Follows, price filters, comparisons and appearance sync when signed in.')}</span><button id="account-export" class="quiet" type="button">{t('导出我的数据', 'Export my data')}</button><button id="account-logout-all" class="quiet" type="button">{t('退出所有设备', 'Sign out everywhere')}</button></div><p id="profile-status" role="status" aria-live="polite"></p>

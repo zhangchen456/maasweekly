@@ -131,6 +131,9 @@ run "agent-api: REST 测试" bash -c 'cd services/agent-api && npm run test:comp
 run "agent-api: MCP 测试" bash -c 'cd services/agent-api && npm run test:mcp:compiled'
 run "agent-api: MCP 真实数据" bash -c 'cd services/agent-api && npm run test:mcp:real:compiled'
 
+run "site: password login interaction" bash -c 'cd site && node --test tests/account-password.test.mjs'
+run "site: scope checkbox interaction" bash -c 'cd site && node --test tests/pro-scope.test.mjs'
+
 # ---- 汇总 ----
 echo "══════════════════════════"
 echo "通过: $PASS | 失败: ${#FAILED[@]}"

@@ -26,16 +26,22 @@ const t = (zh: string, english: string) => en ? english : zh;
   <form id="account-global-login">
     <label for="account-login-email">{t('邮箱地址', 'Email address')}</label>
     <input id="account-login-email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com" />
+    <div id="account-password-fields">
+      <label for="account-login-password">{t('密码', 'Password')}</label>
+      <input id="account-login-password" type="password" autocomplete="current-password" required maxlength="128" />
+      <div id="account-password-confirm-fields" hidden><label for="account-password-confirm">{t('确认密码', 'Confirm password')}</label><input id="account-password-confirm" type="password" autocomplete="new-password" maxlength="128" /></div>
+    </div>
     <div id="account-global-code-fields" hidden>
       <label for="account-login-code">{t('六位验证码', 'Six-digit code')}</label>
       <input id="account-login-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" />
       <p class="account-code-hint">{t('验证码10分钟内有效。未收到时请检查垃圾邮件。', 'The code expires in 10 minutes. Check your spam folder if needed.')}</p>
     </div>
     <p id="account-login-feedback" class="account-feedback" role="status" aria-live="polite"></p>
-    <button id="account-global-send" class="account-primary" type="button">{t('发送验证码', 'Send code')}</button>
-    <button id="account-global-verify" class="account-primary" type="submit" hidden>{t('登录 / 创建账户', 'Sign in / Create account')}</button>
+    <button id="account-global-send" class="account-primary" type="button" hidden>{t('发送验证码', 'Send code')}</button>
+    <button id="account-global-verify" class="account-primary" type="submit">{t('登录', 'Sign in')}</button>
   </form>
-  <p class="account-dialog-note">{t('首次登录自动创建账户，无需设置密码。', 'Your first sign-in creates an account. No password needed.')}</p>
+  <p><button id="account-mode-register" type="button">{t('注册账号', 'Create account')}</button> · <button id="account-mode-recover" type="button">{t('忘记密码 / 老账号设置密码', 'Forgot password / Set password')}</button> · <button id="account-mode-login" type="button" hidden>{t('返回登录', 'Back to sign in')}</button></p>
+  <p class="account-dialog-note">{t('注册时验证邮箱，完成后设置密码。后续使用邮箱和密码登录。', 'Verify your email to register, then set a password for future sign-ins.')}</p>
 </dialog>
 <script>import '../scripts/account-access'; import '../scripts/account-plan';</script>
 <style is:global>
@@ -44,4 +50,8 @@ const t = (zh: string, english: string) => en ? english : zh;
 
 <style is:global>
 .account-dropdown .account-plan-link{display:flex;align-items:center;gap:9px;background:var(--acid-dim);padding:12px 10px}.account-plan-link strong{color:var(--acid)}.account-plan-link span:last-child{margin-left:auto;font-size:10px}.account-plan-summary{display:flex;align-items:center;gap:14px;margin:18px 0;font-size:13px}.account-plan-summary strong{color:var(--acid)}
+</style>
+
+<style is:global>
+.account-login-dialog [hidden]{display:none!important}.account-login-dialog p>button{background:none;border:0;color:var(--cyan);font:inherit;font-size:12px;cursor:pointer;padding:3px}
 </style>

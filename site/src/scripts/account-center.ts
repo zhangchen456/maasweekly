@@ -18,6 +18,7 @@ if (root) {
     catch (error) { status.textContent = error instanceof Error ? error.message : 'Could not save'; }
     finally { button.disabled = false; }
   });
+  el('account-center-password').addEventListener('click', () => document.dispatchEvent(new CustomEvent('maas:password-setup')));
   el('account-export').addEventListener('click', async () => {
     try {
       const value = await accountApi('export'); const url = URL.createObjectURL(new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' }));

@@ -64,6 +64,13 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
         res.setHeader('Set-Cookie', cookie(result.session, 30 * 86400));
         reply(res, 200, { authenticated: true }); return;
       }
+      if (route === 'login' && req.method === 'POST') {
+        if (!authLimiter.take(req).allowed) throw new AccountError(429, 'rate_limited', '尝试频繁，请稍后再试');
+        const result = await store.loginPassword(email(input.email), input.password);
+        if (session) store.logout(session);
+        res.setHeader('Set-Cookie', cookie(result.session, 30 * 86400));
+        reply(res, 200, { authenticated: true }); return;
+      }
       if (route === 'unsubscribe' && req.method === 'POST') {
         if (typeof input.token !== 'string' || input.token.length > 100 || !store.unsubscribe(input.token)) throw new AccountError(400, 'invalid_token', '退订链接无效');
         reply(res, 200, { message: '已关闭邮件提醒，关注列表仍保留' }); return;
@@ -71,7 +78,12 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
       const user = store.user(session);
       if (!user) throw new AccountError(401, 'unauthenticated', '请先登录');
       if (route === 'me' && req.method === 'GET') {
-        reply(res, 200, { user: { id: user.id, email: user.email, organizationId: user.organizationId, plan: user.plan, ...store.profile(user) }, preferences: { emailEnabled: Boolean(user.emailEnabled) }, watches: store.watches(user.id), state: store.state(user.id) }); return;
+        reply(res, 200, { user: { id: user.id, email: user.email, organizationId: user.organizationId, plan: user.plan, hasPassword: store.hasPassword(user.id), ...store.profile(user) }, preferences: { emailEnabled: Boolean(user.emailEnabled) }, watches: store.watches(user.id), state: store.state(user.id) }); return;
+      }
+      if (route === 'password' && req.method === 'POST') {
+        if (!authLimiter.take(req).allowed) throw new AccountError(429, 'rate_limited', '尝试频繁，请稍后再试');
+        await store.setPassword(session, input.password);
+        reply(res, 200, { saved: true }); return;
       }
       if (route === 'profile' && req.method === 'POST') {
         if (typeof input.displayName !== 'string' || input.displayName.trim().length > 60 || /[\u0000-\u001f]/.test(input.displayName)) throw new AccountError(400, 'invalid_profile', '昵称需在60个字符以内');
