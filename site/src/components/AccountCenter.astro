@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+const { locale = 'zh' } = Astro.props;
+const en = locale === 'en';
+const t = (zh: string, english: string) => en ? english : zh;
+---
+<Layout title={t("账户中心 — MaaS Daily", "Your account — MaaS Daily")} description={t("管理账户、关注与保存的偏好。", "Manage your account, watchlist and saved preferences.")} noindex={true} locale={locale}>
+  <div class="account-page" data-account-page data-account-center>
+    <header class="account-heading"><p class="eyebrow">YOUR ACCOUNT</p><h1>{t("你的账户，你的工作空间。", "Your account. Your workspace.")}</h1><p>{t("管理个人信息与模型关注。登录后，平台上的关注、对比与偏好会随账户保存。", "Manage your profile and watchlist. Your follows, comparisons and preferences are saved to your account.")}</p></header>
+    <p id="account-message" role="status" aria-live="polite">{t('正在连接账号服务…', 'Connecting to your account…')}</p>
+    <section id="login-panel" class="login-layout" hidden>
+      <div><h2>{t('用邮箱开始', 'Start with your email')}</h2><p>{t('首次登录会自动创建个人空间。', 'Your first sign-in creates a personal account.')}<br />{t('邮箱用于登录和你主动开启的变化提醒。', 'Your email is used for sign-in and updates you opt into.')}</p><p class="small">{t('无需设置密码，验证码 10 分钟内有效。', 'No password needed. Codes expire in 10 minutes.')}</p></div>
+      <form id="login-form">
+        <label for="email">{t('邮箱', 'Email')}</label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@company.com" />
+        <button id="send-code" type="button">{t('发送验证码', 'Send code')}</button>
+        <div id="code-fields" hidden><label for="code">{t('六位验证码', 'Six-digit code')}</label><input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" /><button type="submit">{t('登录 / 创建账号', 'Sign in / Create account')}</button></div>
+      </form>
+    </section>
+    <section id="account-settings" hidden>
+      <div class="settings-heading"><h2>{t('账户信息', 'Account details')}</h2><span>{t('个人账户 · 免费版', 'Personal account · Free')}</span></div>
+      <div class="settings-grid">
+        <form id="profile-form"><label for="profile-name">{t('昵称', 'Display name')}</label><div class="profile-name-row"><input id="profile-name" type="text" maxlength="60" autocomplete="nickname" placeholder={t('输入你的昵称', 'Your display name')} /><button id="profile-save" type="submit">{t('保存', 'Save')}</button></div><p class="small">{t('昵称会显示在右上角的账户菜单中。', 'Your name appears in the account menu.')}</p></form>
+        <dl class="profile-meta"><div><dt>{t('登录邮箱', 'Sign-in email')}</dt><dd id="profile-email"></dd></div><div><dt>{t('资料建立日期', 'Profile created')}</dt><dd id="profile-created"></dd></div></dl>
+      </div>
+      <div class="account-data-actions"><span>{t('关注、价格筛选、模型对比与显示偏好会在登录后同步。', 'Follows, price filters, comparisons and appearance sync when signed in.')}</span><button id="account-export" class="quiet" type="button">{t('导出我的数据', 'Export my data')}</button><button id="account-logout-all" class="quiet" type="button">{t('退出所有设备', 'Sign out everywhere')}</button></div><p id="profile-status" role="status" aria-live="polite"></p>
+    </section>
+    <section id="workspace" hidden>
+      <div class="workspace-bar"><span><b id="user-email"></b><small>{t('个人空间 · 免费版', 'Personal account · Free')}</small></span><button id="logout" class="quiet">{t('退出登录', 'Sign out')}</button></div>
+      <div class="watch-layout">
+        <section class="watch-main">
+          <div class="section-title"><h2>{t('我的模型 ', 'My models ')}<span id="watch-count">0</span></h2><span class="small">{t('最多 50 个', 'Up to 50 models')}</span></div>
+          <div id="watch-list"></div>
+        </section>
+        <section class="changes-main">
+          <h2 class="changes-title">{t('关注模型的近期变化', 'Recent changes to your models')}</h2><p id="changes-asof" class="small"></p><div id="watch-changes"></div>
+        </section>
+        <aside>
+          <section class="search-panel"><h2>{t('添加关注', 'Follow a model')}</h2><label for="model-search">{t('搜索模型或系列', 'Search models or families')}</label><input id="model-search" type="search" placeholder={t("例如 DeepSeek、GPT", "DeepSeek, GPT, …")} autocomplete="off" /><p id="search-note" class="small"></p><div id="model-results"></div></section>
+          <section class="preference-panel"><h2>{t('每日邮件摘要', 'Daily email digest')}</h2><label class="check-label"><input id="email-enabled" type="checkbox" /><span>{t('有变化时发送到我的邮箱', 'Email me when there are changes')}</span></label><p>{t('默认关闭。开启后，只发送后续观察到的变化，不补发历史。邮件里可随时退订。', 'Off by default. Only new changes are sent after opting in. You can unsubscribe in any email.')}</p></section>
+          <p class="coverage-note">{t('仅匹配已明确关联模型的记录。平台级动态可能没有模型归属；没有提醒不代表供应商没有变化。', 'Only records explicitly linked to a model are included. Platform updates may not be linked, so no alert does not mean no changes.')}<a href="/changes">{t('查看全部平台变化 →', 'View all platform changes →')}</a></p>
+        </aside>
+      </div>
+    </section>
+    <noscript><p>登录和关注需要 JavaScript；你仍可访问<a href="/pricing/">价格页</a>和<a href="/changes">全部变化</a>。</p></noscript>
+  </div>
+</Layout>
+<script>
+  import '../scripts/account';
+  import '../scripts/account-center';
+</script>
+<style>
+  .account-page{padding:48px 0 72px;max-width:1120px;margin:auto}.account-heading{max-width:760px;margin-bottom:32px}.eyebrow{font-size:.75rem;letter-spacing:.15em;color:var(--muted)}h1{font-size:clamp(2rem,4vw,3.2rem);line-height:1.15;letter-spacing:-.04em;margin:12px 0 20px;text-wrap:balance}.account-heading>p:last-child{color:var(--paper-soft);line-height:1.8}h2{font-size:1.12rem;margin:0 0 16px}p{line-height:1.75}#account-message{min-height:28px;color:var(--paper-soft);margin-bottom:24px}#account-message[data-error="true"]{color:var(--red)}.login-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;padding:36px 0;border-top:1px solid var(--line)}.login-layout p{color:var(--muted)}form{max-width:380px}label{display:block;font-size:.88rem;margin-bottom:8px}input[type="email"],input[type="text"],input[type="search"],input[inputmode="numeric"]{display:block;width:100%;padding:13px 14px;border:1px solid var(--line-strong);border-radius:6px;background:var(--panel-solid);color:var(--paper);font:inherit;margin-bottom:16px}:global(.account-page button){border:0;border-radius:5px;padding:11px 16px;background:var(--acid);color:var(--ink);font:inherit;cursor:pointer;transition:opacity .18s,transform .18s}:global(.account-page button:hover){opacity:.85}:global(.account-page button:active){transform:translateY(1px)}:global(.account-page button:disabled){opacity:.5;cursor:wait}:global(.account-page .quiet){background:transparent;color:var(--paper-soft);border:1px solid var(--line-strong)}input:focus-visible,:global(.account-page button:focus-visible){outline:2px solid var(--acid);outline-offset:3px}#code-fields{margin-top:24px}.small,small{font-size:.78rem;color:var(--muted)}.workspace-bar{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0;margin-bottom:32px}.workspace-bar b{overflow-wrap:anywhere}.workspace-bar small{display:block;margin-top:6px}.watch-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:32px 48px;grid-template-rows:auto 1fr}.watch-layout aside{grid-column:2;grid-row:1 / span 2}.section-title{display:flex;justify-content:space-between;align-items:baseline}.section-title h2 span{margin-left:8px;font-variant-numeric:tabular-nums;color:var(--muted)}.search-panel,.preference-panel{padding:24px;background:var(--ink-2);border-radius:8px;margin-bottom:20px}.check-label{display:flex;align-items:start;gap:10px;line-height:1.6}.check-label input{margin-top:5px;accent-color:var(--acid)}.preference-panel p,.coverage-note{font-size:.8rem;color:var(--muted)}.coverage-note a{display:block;margin-top:12px}.changes-title{margin-top:0}[hidden]{display:none!important}@media(max-width:760px){.account-page{padding-top:32px}.login-layout,.watch-layout{grid-template-columns:1fr;gap:28px}.watch-layout aside{grid-column:1;grid-row:2}.changes-main{grid-row:3}.workspace-bar{gap:16px}.search-panel,.preference-panel{padding:20px}}
+</style>
+<style is:global>
+  .watch-row,.model-result{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid var(--line)}.watch-row a,.model-result span{overflow-wrap:anywhere}.model-result button{padding:7px 11px;font-size:.8rem;flex-shrink:0}.watch-empty{padding:28px 0;color:var(--muted);line-height:1.8}.watch-change{padding:20px 0;border-bottom:1px solid var(--line)}.watch-change a{font-weight:600}.watch-change p{font-size:.88rem;color:var(--paper-soft);margin:10px 0}.watch-change small{color:var(--muted)}
+</style>
+<style>
+#account-settings{padding:28px 0;margin-bottom:32px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.settings-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}.settings-heading span{font-size:12px;color:var(--muted)}.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin:20px 0}.profile-name-row{display:flex;gap:10px;align-items:start}.profile-name-row input{margin-bottom:0;min-width:0}.profile-name-row button{white-space:nowrap;flex-shrink:0}.profile-meta{margin:0;display:grid;gap:18px}.profile-meta dt{font-size:11px;color:var(--muted);margin-bottom:8px}.profile-meta dd{font-size:13px;margin:0;overflow-wrap:anywhere}.account-data-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px}.account-data-actions span{font-size:12px;color:var(--muted);flex:1;min-width:240px}#profile-status{font-size:12px;color:var(--paper-soft)}@media(max-width:650px){.settings-grid{grid-template-columns:1fr;gap:24px}.settings-heading{align-items:start}.account-data-actions{align-items:start}}
+</style>

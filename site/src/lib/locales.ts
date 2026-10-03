@@ -2,7 +2,7 @@ import { translatedModels } from './model-pages';
 export type Locale = 'zh' | 'en';
 let paths: string[] | undefined;
 export function translatedPaths() {
-  return paths ??= ['/', '/models/', '/pricing/', '/method/', '/agent/',
+  return paths ??= ['/', '/models/', '/pricing/', '/method/', '/agent/', '/account/',
     ...translatedModels().map(p => `/model/${p.model.modelId}/`)];
 }
 export function languageRoute(path: string, locale: Locale) {

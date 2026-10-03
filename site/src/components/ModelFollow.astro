@@ -1,0 +1,6 @@
+---
+const { modelId, locale = 'zh' } = Astro.props;
+---
+<div class="model-follow-control"><button class="model-follow-button" type="button" data-model-follow={modelId} aria-pressed="false">{locale === 'en' ? 'Follow model' : '关注模型'}</button><span data-model-follow-status role="status"></span></div>
+<script>import '../scripts/model-follow';</script>
+<style>.model-follow-control{display:flex;align-items:center;gap:12px;margin:16px 0}.model-follow-button{padding:10px 16px;background:var(--panel-solid);border:1px solid var(--line-strong);border-radius:5px;color:var(--paper);font:inherit;font-size:12px;cursor:pointer}.model-follow-button[aria-pressed=true]{border-color:var(--cyan);color:var(--cyan)}.model-follow-button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}.model-follow-control span{font-size:12px;color:var(--muted)}</style>

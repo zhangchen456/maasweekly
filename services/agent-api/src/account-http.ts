@@ -4,6 +4,7 @@ import type { DatasetHolder } from './dataset.js';
 import { AccountError, AccountStore } from './account-store.js';
 import type { Mailer } from './account-mail.js';
 import { ClientRateLimiter } from './rate-limit.js';
+import { validateAccountState } from './account-state.js';
 
 export interface AccountConfig { origin: string; secure: boolean; trustProxy?: boolean }
 const PREFIX = '/api/account/';
@@ -30,7 +31,8 @@ function reply(res: ServerResponse, status: number, value: unknown) {
   res.end(JSON.stringify(value));
 }
 export function createAccountHandler(store: AccountStore | null, mailer: Mailer | null, holder: DatasetHolder, config: AccountConfig) {
-  const limiter = new ClientRateLimiter({ capacity: 40, refillPerMinute: 20, globalCapacity: 1000, globalRefillPerMinute: 300, trustLoopbackProxy: config.trustProxy });
+  // A normal account session loads several views and saves workspace settings; OTP has its own stricter budget.
+  const limiter = new ClientRateLimiter({ capacity: 120, refillPerMinute: 60, globalCapacity: 1000, globalRefillPerMinute: 300, trustLoopbackProxy: config.trustProxy });
   const authLimiter = new ClientRateLimiter({ capacity: 6, refillPerMinute: 1, globalCapacity: 100, globalRefillPerMinute: 20, trustLoopbackProxy: config.trustProxy });
   const cookieName = config.secure ? '__Host-maas_session' : 'maas_session';
   const cookie = (value: string, age: number) => `${cookieName}=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${age}${config.secure ? '; Secure' : ''}`;
@@ -69,7 +71,21 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
       const user = store.user(session);
       if (!user) throw new AccountError(401, 'unauthenticated', '请先登录');
       if (route === 'me' && req.method === 'GET') {
-        reply(res, 200, { user: { id: user.id, email: user.email, organizationId: user.organizationId, plan: user.plan }, preferences: { emailEnabled: Boolean(user.emailEnabled) }, watches: store.watches(user.id) }); return;
+        reply(res, 200, { user: { id: user.id, email: user.email, organizationId: user.organizationId, plan: user.plan, ...store.profile(user) }, preferences: { emailEnabled: Boolean(user.emailEnabled) }, watches: store.watches(user.id), state: store.state(user.id) }); return;
+      }
+      if (route === 'profile' && req.method === 'POST') {
+        if (typeof input.displayName !== 'string' || input.displayName.trim().length > 60 || /[\u0000-\u001f]/.test(input.displayName)) throw new AccountError(400, 'invalid_profile', '昵称需在60个字符以内');
+        reply(res, 200, store.updateProfile(user, input.displayName.trim())); return;
+      }
+      if (route === 'state' && req.method === 'POST') {
+        const state = validateAccountState(input.key, input.value);
+        store.saveState(user.id, state.key, state.value); reply(res, 200, { saved: true }); return;
+      }
+      if (route === 'export' && req.method === 'GET') {
+        reply(res, 200, { user: { email: user.email, ...store.profile(user) }, preferences: { emailEnabled: Boolean(user.emailEnabled) }, watches: store.watches(user.id), state: store.state(user.id) }); return;
+      }
+      if (route === 'logout-all' && req.method === 'POST') {
+        store.logoutAll(user.id); res.setHeader('Set-Cookie', cookie('', 0)); reply(res, 200, { authenticated: false }); return;
       }
       if (route === 'logout' && req.method === 'POST') {
         store.logout(session); res.setHeader('Set-Cookie', cookie('', 0)); reply(res, 200, { authenticated: false }); return;

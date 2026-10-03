@@ -1,16 +1,12 @@
 type Model = { modelId: string; modelName: string; familyName?: string };
 type Watch = { modelId: string; since: number };
-type Me = { user: { email: string }; preferences: { emailEnabled: boolean }; watches: Watch[] };
-class ApiError extends Error { constructor(message: string, readonly status: number) { super(message); } }
-export async function accountApi<T>(route: string, payload?: unknown): Promise<T> {
-  const response = await fetch(`/api/account/${route}`, { credentials: 'same-origin', cache: 'no-store',
-    ...(payload === undefined ? {} : { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }) });
-  let value; try { value = await response.json(); } catch { throw new ApiError('服务暂不可用，请稍后重试', response.status); }
-  if (!response.ok) throw new ApiError(value.message ?? '操作失败，请稍后重试', response.status);
-  return value;
-}
+type Me = { user: { id: string; email: string }; preferences: { emailEnabled: boolean }; watches: Watch[] };
+import { accountApi, AccountApiError as ApiError, announceAccountChange, onAccountChange, logoutAccount } from './account-client';
+export { accountApi } from './account-client';
 const root = document.querySelector('[data-account-page]');
 if (root) {
+  const en = document.documentElement.lang === 'en';
+  const t = (zh: string, english: string) => en ? english : zh;
   const el = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
   const message = el('account-message');
   const show = (text: string, error = false) => { message.textContent = text; message.dataset.error = String(error); };
@@ -25,7 +21,7 @@ if (root) {
     root.querySelectorAll<HTMLButtonElement>('button').forEach(b => b.disabled = true);
     enabled.disabled = true;
     try { await fn(); } catch (error) {
-      show(error instanceof Error ? error.message : '连接失败，请稍后再试', true);
+      show(error instanceof Error ? error.message : t('连接失败，请稍后再试', 'Connection failed. Please try again.'), true);
       if (error instanceof ApiError && error.status === 401) { me = null; el('workspace').hidden = true; el('login-panel').hidden = false; }
     } finally {
       busy = false; root.querySelectorAll<HTMLButtonElement>('button').forEach(b => b.disabled = false);
@@ -38,27 +34,27 @@ if (root) {
     const results = el('model-results'); results.replaceChildren();
     const term = search.value.trim().toLowerCase();
     const choices = models.filter(m => `${m.modelName} ${m.familyName ?? ''}`.toLowerCase().includes(term)).filter(m => !me?.watches.some(w => w.modelId === m.modelId));
-    el('search-note').textContent = !models.length ? '目录暂不可用，请刷新重试' : !choices.length ? '没有匹配的未关注模型' : `显示 ${Math.min(choices.length, 8)} / ${choices.length} 个模型${term ? '' : '，输入名称缩小范围'}`;
+    el('search-note').textContent = !models.length ? t('目录暂不可用，请刷新重试', 'Catalog unavailable. Please reload.') : !choices.length ? t('没有匹配的未关注模型', 'No matching models to follow.') : `显示 ${Math.min(choices.length, 8)} / ${choices.length} 个模型${term ? '' : '，输入名称缩小范围'}`;
     for (const model of choices.slice(0, 8)) {
       const row = document.createElement('div'); row.className = 'model-result';
       const name = document.createElement('span'); name.textContent = model.modelName;
-      const add = document.createElement('button'); add.type = 'button'; add.disabled = busy; add.textContent = '关注'; add.setAttribute('aria-label', `关注 ${model.modelName}`);
+      const add = document.createElement('button'); add.type = 'button'; add.disabled = busy; add.textContent = t('关注', 'Follow'); add.setAttribute('aria-label', t(`关注 ${model.modelName}`, `Follow ${model.modelName}`));
       add.addEventListener('click', () => void action(async () => {
         const value = await accountApi<{ watches: Watch[] }>('watch', { modelId: model.modelId });
-        me!.watches = value.watches; renderWatches(); await loadChanges(); show(`已关注 ${model.modelName}`);
+        me!.watches = value.watches; renderWatches(); await loadChanges(); show(t(`已关注 ${model.modelName}`, `Following ${model.modelName}`));
       }));
       row.append(name, add); results.append(row);
     }
   };
   const renderWatches = () => {
     const list = el('watch-list'); list.replaceChildren(); el('watch-count').textContent = String(me?.watches.length ?? 0);
-    if (!me?.watches.length) { const empty = document.createElement('p'); empty.className = 'watch-empty'; empty.textContent = '还没有关注模型。从“添加关注”开始，保存你正在使用的模型。'; list.append(empty); }
+    if (!me?.watches.length) { const empty = document.createElement('p'); empty.className = 'watch-empty'; empty.textContent = t('还没有关注模型。从“添加关注”开始，保存你正在使用的模型。', 'No followed models yet. Add a model to get started.'); list.append(empty); }
     for (const watch of me?.watches ?? []) {
       const model = models.find(m => m.modelId === watch.modelId);
       const row = document.createElement('div'); row.className = 'watch-row';
-      const name = document.createElement('a'); name.textContent = model?.modelName ?? watch.modelId; name.href = `/model/${encodeURIComponent(watch.modelId)}/`;
-      const remove = document.createElement('button'); remove.type = 'button'; remove.disabled = busy; remove.className = 'quiet'; remove.textContent = '取消关注'; remove.setAttribute('aria-label', `取消关注 ${name.textContent}`);
-      remove.addEventListener('click', () => void action(async () => { const value = await accountApi<{ watches: Watch[] }>('unwatch', { modelId: watch.modelId }); me!.watches = value.watches; renderWatches(); await loadChanges(); show('已取消关注'); }));
+      const name = document.createElement('a'); name.textContent = model?.modelName ?? watch.modelId; name.href = `${en ? '/en' : ''}/model/${encodeURIComponent(watch.modelId)}/`;
+      const remove = document.createElement('button'); remove.type = 'button'; remove.disabled = busy; remove.className = 'quiet'; remove.textContent = t('取消关注', 'Unfollow'); remove.setAttribute('aria-label', t(`取消关注 ${name.textContent}`, `Unfollow ${name.textContent}`));
+      remove.addEventListener('click', () => void action(async () => { const value = await accountApi<{ watches: Watch[] }>('unwatch', { modelId: watch.modelId }); me!.watches = value.watches; renderWatches(); await loadChanges(); show(t('已取消关注', 'Unfollowed')); }));
       row.append(name, remove); list.append(row);
     }
     renderSearch();
@@ -66,8 +62,8 @@ if (root) {
   const loadChanges = async () => {
     const value = await accountApi<{ items: { id: string; title: string; summary: string | null; observationDate: string; status: string }[]; dataThrough: string }>('changes');
     const list = el('watch-changes'); list.replaceChildren();
-    el('changes-asof').textContent = `数据截至 ${value.dataThrough} · 最多展示 100 条历史记录`;
-    if (!value.items.length) { const p = document.createElement('p'); p.className = 'watch-empty'; p.textContent = '当前没有匹配的变化记录。新变化被采集并关联后会出现在这里。'; list.append(p); }
+    el('changes-asof').textContent = t(`数据截至 ${value.dataThrough} · 最多展示 100 条历史记录`, `Data through ${value.dataThrough} · Up to 100 historical changes`);
+    if (!value.items.length) { const p = document.createElement('p'); p.className = 'watch-empty'; p.textContent = t('当前没有匹配的变化记录。新变化被采集并关联后会出现在这里。', 'No matching changes yet. New changes will appear here.'); list.append(p); }
     for (const item of value.items) {
       const article = document.createElement('article'); article.className = 'watch-change';
       const link = document.createElement('a'); link.href = `/item/${encodeURIComponent(item.id)}/`; link.textContent = `${item.status === 'withdrawn' ? '[已撤回] ' : ''}${item.title}`;
@@ -86,24 +82,26 @@ if (root) {
     } catch { models = []; }
     const requested = new URL(location.href).searchParams.get('model');
     if (requested) search.value = models.find(m => m.modelId === requested)?.modelName ?? '';
-    renderWatches(); await loadChanges(); show('关注列表已同步');
+    renderWatches(); await loadChanges(); show(t('关注列表已同步', 'Followed models synced'));
   };
   send.addEventListener('click', () => void action(async () => {
     if (!email.reportValidity()) return;
     await accountApi('request-code', { email: email.value }); el('code-fields').hidden = false;
     el<HTMLInputElement>('code').required = true; el<HTMLInputElement>('code').focus();
-    let seconds = 60; send.textContent = `${seconds} 秒后重发`;
-    cooldown = setInterval(() => { seconds--; send.textContent = seconds > 0 ? `${seconds} 秒后重发` : '重新发送验证码'; if (seconds <= 0) { clearInterval(cooldown); cooldown = undefined; send.disabled = busy || !mailAvailable; } }, 1000);
-    show('验证码已发送，请查看邮箱和垃圾邮件');
+    let seconds = 60; send.textContent = t(`${seconds} 秒后重发`, `Resend in ${seconds}s`);
+    cooldown = setInterval(() => { seconds--; send.textContent = seconds > 0 ? t(`${seconds} 秒后重发`, `Resend in ${seconds}s`) : t('重新发送验证码', 'Resend code'); if (seconds <= 0) { clearInterval(cooldown); cooldown = undefined; send.disabled = busy || !mailAvailable; } }, 1000);
+    show(t('验证码已发送，请查看邮箱和垃圾邮件', 'Code sent. Check your inbox and spam folder.'));
   }));
-  el<HTMLFormElement>('login-form').addEventListener('submit', event => { event.preventDefault(); void action(async () => { await accountApi('verify', { email: email.value, code: el<HTMLInputElement>('code').value }); el<HTMLInputElement>('code').value = ''; await loadWorkspace(); }); });
-  el('logout').addEventListener('click', () => void action(async () => { await accountApi('logout', {}); me = null; el('workspace').hidden = true; el('login-panel').hidden = false; el('watch-list').replaceChildren(); el('watch-changes').replaceChildren(); el('user-email').textContent = ''; show('已退出登录'); }));
-  enabled.addEventListener('change', () => void action(async () => { const result = await accountApi<{ emailEnabled: boolean }>('preferences', { emailEnabled: enabled.checked }); me!.preferences.emailEnabled = result.emailEnabled; show(result.emailEnabled ? '已开启每日邮件摘要，有变化时发送' : '已关闭邮件提醒'); }));
+  el<HTMLFormElement>('login-form').addEventListener('submit', event => { event.preventDefault(); void action(async () => { await accountApi('verify', { email: email.value, code: el<HTMLInputElement>('code').value }); await announceAccountChange(); el<HTMLInputElement>('code').value = ''; await loadWorkspace(); }); });
+  el('logout').addEventListener('click', () => void action(async () => { await logoutAccount(); me = null; el('workspace').hidden = true; el('login-panel').hidden = false; el('watch-list').replaceChildren(); el('watch-changes').replaceChildren(); el('user-email').textContent = ''; show(t('已退出登录', 'Signed out')); }));
+  enabled.addEventListener('change', () => void action(async () => { const result = await accountApi<{ emailEnabled: boolean }>('preferences', { emailEnabled: enabled.checked }); me!.preferences.emailEnabled = result.emailEnabled; show(result.emailEnabled ? t('已开启每日邮件摘要，有变化时发送', 'Daily email enabled. We email you when there are changes.') : t('已关闭邮件提醒', 'Email notifications disabled')); }));
   search.addEventListener('input', renderSearch);
+  onAccountChange(user => { if (!user) { me = null; el('workspace').hidden = true; el('login-panel').hidden = false; el('watch-list').replaceChildren(); el('watch-changes').replaceChildren(); el('user-email').textContent = ''; } else if (me?.user.id !== user.user.id) { void action(loadWorkspace); } });
+  document.addEventListener('maas:signed-in', () => void action(loadWorkspace));
   void action(async () => {
     const status = await accountApi<{ enabled: boolean; mailAvailable: boolean }>('status'); mailAvailable = status.mailAvailable;
-    if (!status.enabled) { show('账号服务尚未启用。你仍可浏览价格和全部变化。'); return; }
+    if (!status.enabled) { show(t('账号服务尚未启用。你仍可浏览价格和全部变化。', 'Account service unavailable. You can still browse prices and changes.')); return; }
     try { await loadWorkspace(); }
-    catch (error) { if (!(error instanceof ApiError) || error.status !== 401) throw error; el('login-panel').hidden = false; show(mailAvailable ? '登录后保存你的模型关注' : '邮件服务尚未配置，暂时无法发送验证码'); }
+    catch (error) { if (!(error instanceof ApiError) || error.status !== 401) throw error; el('login-panel').hidden = false; show(mailAvailable ? t('登录后保存你的模型关注', 'Sign in to save your followed models') : t('邮件服务尚未配置，暂时无法发送验证码', 'Email delivery unavailable. Please try later.')); }
   });
 }

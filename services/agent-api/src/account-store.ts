@@ -26,6 +26,8 @@ export class AccountStore {
       CREATE TABLE IF NOT EXISTS challenges(email TEXT PRIMARY KEY, hash TEXT NOT NULL, expires INTEGER NOT NULL, attempts INTEGER NOT NULL DEFAULT 0);
       CREATE TABLE IF NOT EXISTS send_limits(email TEXT PRIMARY KEY, lastSent INTEGER NOT NULL, windowStart INTEGER NOT NULL, count INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS sessions(hash TEXT PRIMARY KEY, userId TEXT NOT NULL REFERENCES users(id), expires INTEGER NOT NULL);
+      CREATE TABLE IF NOT EXISTS account_profiles(userId TEXT PRIMARY KEY REFERENCES users(id), displayName TEXT NOT NULL DEFAULT '', created INTEGER NOT NULL);
+      CREATE TABLE IF NOT EXISTS account_state(userId TEXT NOT NULL REFERENCES users(id), key TEXT NOT NULL, value TEXT NOT NULL, updated INTEGER NOT NULL, PRIMARY KEY(userId,key));
       CREATE TABLE IF NOT EXISTS watches(userId TEXT NOT NULL REFERENCES users(id), modelId TEXT NOT NULL, since INTEGER NOT NULL, PRIMARY KEY(userId, modelId));
       CREATE TABLE IF NOT EXISTS mail_jobs(id TEXT PRIMARY KEY, userId TEXT NOT NULL REFERENCES users(id), payload TEXT NOT NULL, created INTEGER NOT NULL, lease INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'pending', mail TEXT);
       CREATE TABLE IF NOT EXISTS mail_items(userId TEXT NOT NULL REFERENCES users(id), eventKey TEXT NOT NULL, jobId TEXT NOT NULL REFERENCES mail_jobs(id), PRIMARY KEY(userId,eventKey));
@@ -69,6 +71,7 @@ export class AccountStore {
         this.db.prepare('INSERT INTO users(id,email,organizationId,unsubscribeToken) VALUES(?,?,?,?)').run(id, email, org, token());
         user = this.db.prepare('SELECT * FROM users WHERE id=?').get(id) as unknown as User;
       }
+      this.profile(user);
       const session = token();
       this.db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hash(session), user.id, this.now() + 30 * 24 * 60 * MINUTE);
       // Limit live sessions per user without changing the current session.
@@ -82,6 +85,23 @@ export class AccountStore {
     return this.db.prepare('SELECT u.* FROM users u JOIN sessions s ON s.userId=u.id WHERE s.hash=? AND s.expires>?').get(hash(session), this.now()) as unknown as User | undefined;
   }
   logout(session: string) { this.db.prepare('DELETE FROM sessions WHERE hash=?').run(hash(session)); }
+  logoutAll(id: string) { this.db.prepare('DELETE FROM sessions WHERE userId=?').run(id); }
+  profile(user: User) {
+    this.db.prepare('INSERT OR IGNORE INTO account_profiles VALUES(?,?,?)').run(user.id, '', this.now());
+    return this.db.prepare('SELECT displayName,created FROM account_profiles WHERE userId=?').get(user.id) as { displayName: string; created: number };
+  }
+  updateProfile(user: User, displayName: string) {
+    this.profile(user);
+    this.db.prepare('UPDATE account_profiles SET displayName=? WHERE userId=?').run(displayName, user.id);
+    return this.profile(user);
+  }
+  state(id: string): Record<string, unknown> {
+    const rows = this.db.prepare('SELECT key,value FROM account_state WHERE userId=?').all(id) as { key: string; value: string }[];
+    return Object.fromEntries(rows.map(row => [row.key, JSON.parse(row.value)]));
+  }
+  saveState(id: string, key: string, value: unknown) {
+    this.db.prepare('INSERT INTO account_state VALUES(?,?,?,?) ON CONFLICT(userId,key) DO UPDATE SET value=excluded.value,updated=excluded.updated').run(id, key, JSON.stringify(value), this.now());
+  }
   watches(id: string) { return this.db.prepare('SELECT modelId,since FROM watches WHERE userId=? ORDER BY since DESC,modelId').all(id) as unknown as {modelId: string; since: number}[]; }
   watch(id: string, modelId: string, catalog: ModelIdentityCatalog) {
     if (!catalog.models.some(m => m.modelId === modelId)) throw new AccountError(400, 'unknown_model', '请选择目录中的模型');

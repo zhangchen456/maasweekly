@@ -1,3 +1,4 @@
+import { savedState, currentAccount } from './account-client';
 const search = document.querySelector<HTMLInputElement>('#signal-search')!;
 const platform = document.querySelector<HTMLSelectElement>('#platform-filter')!;
 const following = document.querySelector<HTMLButtonElement>('#following-filter')!;
@@ -51,28 +52,31 @@ function update() {
     group.hidden = visible === 0;
     sourceCount += visible;
   });
-  document.querySelector('#filter-status')!.textContent = `${count} 条要点 · ${sourceCount} 项变化依据${onlyFollowing ? ' · 关注已保存在此浏览器' : ''}`;
+  document.querySelector('#filter-status')!.textContent = `${count} 条要点 · ${sourceCount} 项变化依据${onlyFollowing ? (currentAccount() ? ' · 已同步账户关注' : ' · 关注保存在此浏览器，登录后可同步') : ''}`;
   (document.querySelector('#filter-empty') as HTMLElement).hidden = count > 0 || sourceCount > 0;
   (document.querySelector('#digest') as HTMLElement).hidden = count === 0;
   (document.querySelector('#signals') as HTMLElement).hidden = sourceCount === 0;
   filters.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.filter === selectedType)));
   following.setAttribute('aria-pressed', String(onlyFollowing));
 }
-search.addEventListener('input', update);
-platform.addEventListener('change', update);
-filters.forEach((button) => button.addEventListener('click', () => { selectedType = button.dataset.filter!; update(); }));
-following.addEventListener('click', () => { onlyFollowing = !onlyFollowing; update(); });
+search.maxLength = 200;
+let save = (_value: ExploreState) => {};
+type ExploreState = { followed: string[]; query: string; platform: string; type: string; onlyFollowing: boolean };
+const persist = () => save({ followed: [...followed], query: search.value, platform: platform.value, type: selectedType, onlyFollowing });
+search.addEventListener('input', () => { update(); persist(); });
+platform.addEventListener('change', () => { update(); persist(); });
+filters.forEach((button) => button.addEventListener('click', () => { selectedType = button.dataset.filter!; update(); persist(); }));
+following.addEventListener('click', () => { onlyFollowing = !onlyFollowing; update(); persist(); });
 followButtons.forEach((button) => button.addEventListener('click', () => {
   const name = button.dataset.follow!;
   followed.has(name) ? followed.delete(name) : followed.add(name);
-  try { localStorage.setItem('maas-followed', JSON.stringify([...followed])); } catch {}
-  updateFollowButtons(); update();
+  updateFollowButtons(); update(); persist();
 }));
-document.querySelector('#reset-filters')?.addEventListener('click', () => { search.value = ''; platform.value = ''; selectedType = 'all'; onlyFollowing = false; update(); search.focus(); });
+document.querySelector('#reset-filters')?.addEventListener('click', () => { search.value = ''; platform.value = ''; selectedType = 'all'; onlyFollowing = false; update(); persist(); search.focus(); });
 document.addEventListener('keydown', (event) => {
   const target = event.target as HTMLElement;
   if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !target.closest('input, textarea, select, [contenteditable="true"]')) { event.preventDefault(); search.focus(); }
-  if (event.key === 'Escape' && document.activeElement === search) { search.value = ''; update(); search.blur(); }
+  if (event.key === 'Escape' && document.activeElement === search) { search.value = ''; update(); persist(); search.blur(); }
 });
 document.querySelector('#copy-brief')?.addEventListener('click', async () => {
   const visible = cards.filter((card) => !card.hidden);
@@ -82,3 +86,9 @@ document.querySelector('#copy-brief')?.addEventListener('click', async () => {
   try { await navigator.clipboard.writeText(text); document.dispatchEvent(new CustomEvent('maas:copy-success', { detail: { kind: 'brief' } })); status.textContent = '已复制当前筛选的简报'; } catch { status.textContent = '浏览器未允许复制，请选中文字复制'; }
 });
 updateFollowButtons(); update();
+
+save = savedState<ExploreState>('explore', { followed: [], query: '', platform: '', type: 'all', onlyFollowing: false }, value => {
+  followed = new Set(value.followed); search.value = value.query; platform.value = value.platform;
+  selectedType = filters.some(b => b.dataset.filter === value.type) ? value.type : 'all'; onlyFollowing = value.onlyFollowing;
+  updateFollowButtons(); update();
+});
