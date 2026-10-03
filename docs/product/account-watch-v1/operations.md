@@ -25,7 +25,7 @@ npm run build --prefix site
 python3 scripts/account-browser-smoke.py --output docs/product/account-watch-v1/acceptance
 ```
 
-## 生产启用候选
+## 生产启用
 
 1. 核对 Node 至少 22.13、`/usr/bin/node` 与当前部署实际 Node 路径一致；如不一致调整 digest unit。现有 read-only systemd 已允许写 `/srv/maasweekly/shared/state`。
 2. 以 maasagent 可写、其他用户不可读的权限建立持久目录；`accounts.sqlite` 和 WAL/SHM 放此处，跨两个槽位共享。不得写 release 内部。运行时创建 schema，不包含破坏性迁移。
@@ -48,6 +48,6 @@ python3 scripts/account-browser-smoke.py --output docs/product/account-watch-v1/
 
 ## 当前部署状态
 
-本任务仅完成本地实现与候选配置。真实邮件域名/凭据及生产发信尚待配置与验收；没有自动安装 systemd timer 或发布生产。
+2026-10-03 已配置并启用生产。当前账号版本 `rl_07d7ce23bd_12fdc567c7d3`；Resend 域名 `notify.maas.click`、真实验证码收信和浏览器流程验收通过；两个 systemd timer 已启用。每日任务北京时间 09:15、每15分钟仅重试，首次执行均 queued/sent/failed/review=0。详细证据与恢复方法见 [生产上线记录](production-2026-10-03.md)。
 
 邮件去重依据：[Resend 幂等键官方说明](https://resend.com/docs/dashboard/emails/idempotency-keys)。
