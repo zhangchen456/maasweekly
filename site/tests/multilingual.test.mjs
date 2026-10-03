@@ -2,19 +2,31 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { stripTypeScriptTypes } from 'node:module';
 import { JSDOM } from 'jsdom';
+import { build } from 'esbuild';
 import { preferredLanguage, readPreference, savePreference, startLanguage, switchUrl } from '../public/language.js';
 import { loadVerifiedRelease } from '../src/lib/release.ts';
 import { featuredModels, translatedModels } from '../src/lib/model-pages.ts';
-import { englishPriceCells } from '../src/lib/price-display.ts';
 import { pageType } from '../public/analytics.js';
+const translationBundle = await build({ entryPoints:['src/lib/ui-translation.ts'], bundle:true, write:false, format:'cjs', platform:'node' });
+const translationModule = { exports:{} };
+new Function('module','exports',translationBundle.outputFiles[0].text)(translationModule,translationModule.exports);
+const { englishHtml, englishHref } = translationModule.exports;
+assert.equal(englishHref('/pricing/?modelId=a%3Ab#api-pricing'), '/en/pricing/?modelId=a%3Ab#api-pricing');
+assert.equal(englishHref('/api/account/me'), '/api/account/me');
+assert.equal(englishHref('mailto:zhangchen3508@gmail.com'), 'mailto:zhangchen3508@gmail.com');
+const original = '<script>{"title":"价格"}</script><pre>价格</pre><blockquote>价格</blockquote>';
+assert.equal(englishHtml(original), original);
+assert.equal(new JSDOM(englishHtml('<p>COST &amp; COMPUTE / 价格观察</p>')).window.document.querySelector('p').textContent, 'COST & COMPUTE / PRICE OBSERVATIONS');
 const release = loadVerifiedRelease(undefined, { select: ['prices','modelIdentities','changes','evidence'] });
-const pages = ['','models/','pricing/','method/','agent/', ...translatedModels().map(p => `model/${p.model.modelId}/`)];
+const pages = ['','models/','pricing/','method/','agent/','changes/','leaderboards/','weekly/','about/', ...translatedModels().map(p => `model/${p.model.modelId}/`)];
 assert(featuredModels().length <= 5);
 const homeDoc = new JSDOM(readFileSync('dist/en/index.html','utf8')).window.document;
 assert.equal(homeDoc.querySelectorAll('.market-table').length,1);
 assert.equal(homeDoc.querySelectorAll('[role=tab]').length,3);
 assert.equal(homeDoc.querySelectorAll('[data-home-model]').length,18);
 const sitemap = readFileSync('dist/sitemap.xml','utf8');
+const sitemapUrls = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]));
+for (const url of sitemapUrls) { const path = new URL(url).pathname; const counterpart = path.startsWith('/en/') ? path.replace(/^\/en(?=\/)/,'') : `/en${path}`; assert(sitemapUrls.has(`https://daily.maas.click${counterpart}`), `Sitemap language parity: ${path}`); }
 for (const page of pages) {
   const doc = new JSDOM(readFileSync(`dist/en/${page}index.html`,'utf8')).window.document;
   assert.equal(doc.documentElement.lang,'en');
@@ -31,10 +43,16 @@ for (const page of pages) {
 }
 assert(new JSDOM(readFileSync('dist/index.html','utf8')).window.document.querySelector('meta[name=baidu-site-verification]'));
 const pricesDoc = new JSDOM(readFileSync('dist/en/pricing/index.html','utf8')).window.document;
-assert.equal(pricesDoc.querySelectorAll('tbody tr').length, release.prices.length);
-for (const price of release.prices) {
-  const row = pricesDoc.querySelector(`[data-price-id="${price.id}"]`);
-  assert.deepEqual([...row.cells].slice(0,11).map(c => c.textContent.trim()), englishPriceCells(price));
+const zhPricesDoc = new JSDOM(readFileSync('dist/pricing/index.html','utf8')).window.document;
+assert.deepEqual(JSON.parse(pricesDoc.querySelector('#goal-data').textContent), JSON.parse(zhPricesDoc.querySelector('#goal-data').textContent));
+for (const path of ['', 'pricing/', 'models/', 'changes/', 'leaderboards/', 'sources/', 'weekly/', 'method/', 'agent/', 'about/', 'compare/']) {
+  const en = new JSDOM(readFileSync(`dist/en/${path}index.html`,'utf8')).window.document;
+  const zh = new JSDOM(readFileSync(`dist/${path}index.html`,'utf8')).window.document;
+  const controls = doc => [...doc.querySelectorAll('main input[id], main select[id], main button[id]')].map(el => [el.id,el.tagName,el.getAttribute('type')]);
+  assert.deepEqual(controls(en), controls(zh), `Shared controls: ${path}`);
+  const nav = doc => [...doc.querySelectorAll('header nav a')].map(a => new URL(a.href,'https://daily.maas.click').pathname.replace(/^\/en(?=\/)/,''));
+  assert.deepEqual(nav(en), nav(zh), `Shared navigation: ${path}`);
+  for (const doc of [en, zh]) assert(doc.querySelector('footer a[href="mailto:zhangchen3508@gmail.com"]'));
 }
 for (const model of featuredModels()) {
   const doc = new JSDOM(readFileSync(`dist/en/model/${model.model.modelId}/index.html`,'utf8')).window.document;

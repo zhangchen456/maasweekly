@@ -1,5 +1,5 @@
 ---
-import Page, { getStaticPaths as sharedPaths } from '../../model/[modelId].astro';
+import Page, { getStaticPaths as sharedPaths } from '../../item/[id].astro';
 export function getStaticPaths() { return sharedPaths(); }
 ---
 <Page {...Astro.props} />
