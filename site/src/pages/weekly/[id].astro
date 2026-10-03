@@ -16,6 +16,7 @@ const { report } = Astro.props;
 // 取结构化数据
 const structured = await getCollection('weeklyStructured', (e) => e.id === report.id);
 const data = structured[0]?.data;
+const sample=report.id==='2026-05-03';
 ---
 
 <Layout title={`${report.data.title} — MaaS Daily`} description={`${report.data.period || report.data.date} 大模型与 MaaS 平台周报：模型发布、API 定价变化、平台更新及官方来源。`}>
@@ -28,14 +29,21 @@ const data = structured[0]?.data;
         {report.data.period && <span class="report-period">{report.data.period}</span>}
       </div>
       <h1 class="report-title">MaaS 平台周度追踪</h1>
-      <p class="report-sub">第 {report.data.date} 期 · 完整周报归档</p>
+      <p class="report-sub">第 {report.data.date} 期 · {sample ? '完整公开样例' : 'Plus 深度周报'}</p>
     </header>
 
-    {data && <ReportBody data={data} />}
+    {sample ? (data && <ReportBody data={data} />) : <>
+      <p class="weekly-preview">{data?.headline?.slice(0,3).map((h:any)=>h.title).join('；')}</p>
+      <section data-weekly-gate data-weekly-id={report.id}><span class="plus-badge">Plus</span><h2>深入理解本周变化</h2><p>完整分析、趋势与观察要点仅向 Plus 用户开放。公测期间免费，无需支付方式。</p><button id="weekly-enable" type="button">登录并免费开启 Plus</button><p id="weekly-status" role="status">正在查询权益…</p></section>
+      <div id="weekly-content" hidden></div>
+      <template data-private-weekly>{data && <ReportBody data={data} />}</template>
+    </>}
   </article>
 </Layout>
 
+<script>import '../../scripts/weekly-access';</script>
 <style>
+  [data-weekly-gate]{padding:28px;border:1px solid var(--line-strong);border-radius:12px;background:var(--panel);margin:24px 0} [data-weekly-gate] button{padding:12px 20px;background:var(--acid);color:var(--ink);border:0;border-radius:6px;cursor:pointer} .weekly-preview{line-height:1.9;color:var(--muted)} .plus-badge{font:600 11px/1.4 monospace;padding:4px 8px;border-radius:4px;background:var(--acid);color:var(--ink)}
   .back-link {
     display: inline-block;
     color: var(--color-text-muted);

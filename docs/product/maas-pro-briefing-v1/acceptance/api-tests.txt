@@ -1,0 +1,560 @@
+
+> @maasweekly/agent-api@1.0.0 test:compiled
+> node --test --test-force-exit "dist/tests/http.test.js" "dist/tests/versioning.test.js" "dist/tests/openapi.test.js" "dist/tests/p1-fixes.test.js" "dist/tests/model-identity.test.js" "dist/tests/runtime.test.js" "dist/tests/observability.test.js" "dist/tests/contracts.test.js" "dist/tests/cross-platform.test.js" "dist/tests/account.test.js" "dist/tests/pro.test.js"
+
+TAP version 13
+# (node:16129) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: codes expire, persist failed attempts, cannot replay, and preserve identity
+ok 1 - codes expire, persist failed attempts, cannot replay, and preserve identity
+  ---
+  duration_ms: 3.079833
+  type: 'test'
+  ...
+# Subtest: SQLite sessions and watches survive restart; two connections share state
+ok 2 - SQLite sessions and watches survive restart; two connections share state
+  ---
+  duration_ms: 17.143542
+  type: 'test'
+  ...
+# Subtest: digest opt-in, baseline, exact identity, revision dedup, unsubscribe and re-enable
+ok 3 - digest opt-in, baseline, exact identity, revision dedup, unsubscribe and re-enable
+  ---
+  duration_ms: 4.51275
+  type: 'test'
+  ...
+# Subtest: failed email retries with identical payload and key; lease blocks concurrent sends
+ok 4 - failed email retries with identical payload and key; lease blocks concurrent sends
+  ---
+  duration_ms: 1.645291
+  type: 'test'
+  ...
+# Subtest: uncertain delivery beyond idempotency window requires review
+ok 5 - uncertain delivery beyond idempotency window requires review
+  ---
+  duration_ms: 1.189834
+  type: 'test'
+  ...
+# Subtest: private HTTP: cookie security, CSRF, isolation, no-store, no leaked codes, logout
+ok 6 - private HTTP: cookie security, CSRF, isolation, no-store, no leaked codes, logout
+  ---
+  duration_ms: 73.116958
+  type: 'test'
+  ...
+# Subtest: unconfigured account/mail status is honest; production refuses local outbox
+ok 7 - unconfigured account/mail status is honest; production refuses local outbox
+  ---
+  duration_ms: 6.492958
+  type: 'test'
+  ...
+# Subtest: queued superseded revisions and cancelled model watches do not generate stale alerts
+ok 8 - queued superseded revisions and cancelled model watches do not generate stale alerts
+  ---
+  duration_ms: 1.466084
+  type: 'test'
+  ...
+# Subtest: retry-only run retries existing job and leaves new changes for daily digest
+ok 9 - retry-only run retries existing job and leaves new changes for daily digest
+  ---
+  duration_ms: 1.428125
+  type: 'test'
+  ...
+# Subtest: account profile and workspace data persist, isolate users, export safely, and revoke all sessions
+ok 10 - account profile and workspace data persist, isolate users, export safely, and revoke all sessions
+  ---
+  duration_ms: 27.826792
+  type: 'test'
+  ...
+# Subtest: site and API reject identical malformed manifests, hashes, references and catalogs
+ok 11 - site and API reject identical malformed manifests, hashes, references and catalogs
+  ---
+  duration_ms: 62.872291
+  type: 'test'
+  ...
+# Subtest: legacy catalogs remain valid; dangling/ambiguous relations are rejected
+ok 12 - legacy catalogs remain valid; dangling/ambiguous relations are rejected
+  ---
+  duration_ms: 1.126417
+  type: 'test'
+  ...
+# Subtest: platform filter is exact and optional; provider/modelId continue across platforms
+ok 13 - platform filter is exact and optional; provider/modelId continue across platforms
+  ---
+  duration_ms: 12.591959
+  type: 'test'
+  ...
+# Subtest: /models publishes frozen relation catalog with the same dataset envelope
+ok 14 - /models publishes frozen relation catalog with the same dataset envelope
+  ---
+  duration_ms: 37.172334
+  type: 'test'
+  ...
+# Subtest: T06 changes 默认查询（dataThrough 锚定 7 天窗口）
+ok 15 - T06 changes 默认查询（dataThrough 锚定 7 天窗口）
+  ---
+  duration_ms: 23.427667
+  type: 'test'
+  ...
+# Subtest: T06 provider/type/q/from/to 组合
+ok 16 - T06 provider/type/q/from/to 组合
+  ---
+  duration_ms: 11.337333
+  type: 'test'
+  ...
+# Subtest: T07 prices 条件完整（contextBand/timeCondition/原币种/Decimal 字符串）
+ok 17 - T07 prices 条件完整（contextBand/timeCondition/原币种/Decimal 字符串）
+  ---
+  duration_ms: 10.047708
+  type: 'test'
+  ...
+# Subtest: T08a withdrawn 默认隐藏
+ok 18 - T08a withdrawn 默认隐藏
+  ---
+  duration_ms: 3.187417
+  type: 'test'
+  ...
+# Subtest: T08b includeWithdrawn=true 返回 withdrawn
+ok 19 - T08b includeWithdrawn=true 返回 withdrawn
+  ---
+  duration_ms: 1.559792
+  type: 'test'
+  ...
+# Subtest: T09 item/evidence/weekly 实体与未知 404
+ok 20 - T09 item/evidence/weekly 实体与未知 404
+  ---
+  duration_ms: 7.931208
+  type: 'test'
+  ...
+# Subtest: T10 参数校验 400 Problem JSON
+ok 21 - T10 参数校验 400 Problem JSON
+  ---
+  duration_ms: 12.72575
+  type: 'test'
+  ...
+# Subtest: T11 同版本翻完全部页（limit=1，无重复无遗漏）
+ok 22 - T11 同版本翻完全部页（limit=1，无重复无遗漏）
+  ---
+  duration_ms: 8.548875
+  type: 'test'
+  ...
+# Subtest: T11b cursor 与其他参数冲突 → 400
+ok 23 - T11b cursor 与其他参数冲突 → 400
+  ---
+  duration_ms: 2.784542
+  type: 'test'
+  ...
+# Subtest: T13 ETag / 304
+ok 24 - T13 ETag / 304
+  ---
+  duration_ms: 2.080792
+  type: 'test'
+  ...
+# Subtest: T14 HEAD/OPTIONS/CORS/超长 cursor 413
+ok 25 - T14 HEAD/OPTIONS/CORS/超长 cursor 413
+  ---
+  duration_ms: 8.619958
+  type: 'test'
+  ...
+# Subtest: T16 恶意 excerpt 原样返回 / 路径编码不越界
+ok 26 - T16 恶意 excerpt 原样返回 / 路径编码不越界
+  ---
+  duration_ms: 4.432666
+  type: 'test'
+  ...
+# Subtest: T16b 未知路径 404（无通配）
+ok 27 - T16b 未知路径 404（无通配）
+  ---
+  duration_ms: 1.275083
+  type: 'test'
+  ...
+# Subtest: T14b 无数据版本 503
+ok 28 - T14b 无数据版本 503
+  ---
+  duration_ms: 5.328084
+  type: 'test'
+  ...
+# (node:16133) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: T08: modelId 精确过滤
+ok 29 - T08: modelId 精确过滤
+  ---
+  duration_ms: 18.792042
+  type: 'test'
+  ...
+# Subtest: T09: familyId 返回明确成员集合
+ok 30 - T09: familyId 返回明确成员集合
+  ---
+  duration_ms: 6.228458
+  type: 'test'
+  ...
+# Subtest: T10: model 与 modelId 语义不同
+ok 31 - T10: model 与 modelId 语义不同
+  ---
+  duration_ms: 4.580667
+  type: 'test'
+  ...
+# Subtest: T11: unknown modelId → 400
+ok 32 - T11: unknown modelId → 400
+  ---
+  duration_ms: 2.683833
+  type: 'test'
+  ...
+# Subtest: T12: unknown familyId → 400
+ok 33 - T12: unknown familyId → 400
+  ---
+  duration_ms: 1.20675
+  type: 'test'
+  ...
+# Subtest: T23: 无 modelId 客户端不回归（旧字段照常）
+ok 34 - T23: 无 modelId 客户端不回归（旧字段照常）
+  ---
+  duration_ms: 1.137875
+  type: 'test'
+  ...
+# Subtest: T11a: malformed modelId → 400
+ok 35 - T11a: malformed modelId → 400
+  ---
+  duration_ms: 2.356542
+  type: 'test'
+  ...
+# Subtest: T11b: well-formed unknown modelId → 400
+ok 36 - T11b: well-formed unknown modelId → 400
+  ---
+  duration_ms: 1.873
+  type: 'test'
+  ...
+# Subtest: T11c: known modelId but no records → 200 empty
+ok 37 - T11c: known modelId but no records → 200 empty
+  ---
+  duration_ms: 1.196417
+  type: 'test'
+  ...
+# Subtest: T12a: malformed familyId → 400
+ok 38 - T12a: malformed familyId → 400
+  ---
+  duration_ms: 0.816
+  type: 'test'
+  ...
+# Subtest: T12b: well-formed unknown familyId → 400
+ok 39 - T12b: well-formed unknown familyId → 400
+  ---
+  duration_ms: 0.633291
+  type: 'test'
+  ...
+# Subtest: T12c: known familyId but no records → 200 empty
+ok 40 - T12c: known familyId but no records → 200 empty
+  ---
+  duration_ms: 1.160042
+  type: 'test'
+  ...
+# Subtest: T11d: changes endpoint known-but-zero-record → 200 empty
+ok 41 - T11d: changes endpoint known-but-zero-record → 200 empty
+  ---
+  duration_ms: 1.152916
+  type: 'test'
+  ...
+# Subtest: T11e: changes endpoint modelId 正向过滤生效（顶层 modelId，非 price.modelId）
+ok 42 - T11e: changes endpoint modelId 正向过滤生效（顶层 modelId，非 price.modelId）
+  ---
+  duration_ms: 1.670375
+  type: 'test'
+  ...
+# Subtest: T12d: changes endpoint known familyId → 200
+ok 43 - T12d: changes endpoint known familyId → 200
+  ---
+  duration_ms: 0.728791
+  type: 'test'
+  ...
+# Subtest: T13: old cursor 从磁盘加载历史 catalog，current 删除 identity 不影响续页
+ok 44 - T13: old cursor 从磁盘加载历史 catalog，current 删除 identity 不影响续页
+  ---
+  duration_ms: 16.245709
+  type: 'test'
+  ...
+# Subtest: T14: current 新增 identity 不污染旧 cursor 的 query 校验
+ok 45 - T14: current 新增 identity 不污染旧 cursor 的 query 校验
+  ---
+  duration_ms: 9.268125
+  type: 'test'
+  ...
+# Subtest: T15: catalog missing-file → current/history load fail，reload 保留旧数据
+ok 46 - T15: catalog missing-file → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 8.373916
+  type: 'test'
+  ...
+# Subtest: T15: catalog missing-entry → current/history load fail，reload 保留旧数据
+ok 47 - T15: catalog missing-entry → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 6.213583
+  type: 'test'
+  ...
+# Subtest: T15: catalog bytes → current/history load fail，reload 保留旧数据
+ok 48 - T15: catalog bytes → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 7.522666
+  type: 'test'
+  ...
+# Subtest: T15: catalog hash → current/history load fail，reload 保留旧数据
+ok 49 - T15: catalog hash → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 5.9875
+  type: 'test'
+  ...
+# Subtest: T15: catalog malformed → current/history load fail，reload 保留旧数据
+ok 50 - T15: catalog malformed → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 6.348541
+  type: 'test'
+  ...
+# Subtest: T15: catalog shape → current/history load fail，reload 保留旧数据
+ok 51 - T15: catalog shape → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 8.084875
+  type: 'test'
+  ...
+# Subtest: T15: catalog dangling-family → current/history load fail，reload 保留旧数据
+ok 52 - T15: catalog dangling-family → current/history load fail，reload 保留旧数据
+  ---
+  duration_ms: 7.220458
+  type: 'test'
+  ...
+# Subtest: T18/T19: MCP unknown identity 与 REST 一致 / known-but-empty 一致
+ok 53 - T18/T19: MCP unknown identity 与 REST 一致 / known-but-empty 一致
+  ---
+  duration_ms: 35.740292
+  type: 'test'
+  ...
+# Subtest: T20: GET /api/v1/models → 200，返回 catalog + datasetVersion
+ok 54 - T20: GET /api/v1/models → 200，返回 catalog + datasetVersion
+  ---
+  duration_ms: 2.967042
+  type: 'test'
+  ...
+# Subtest: T20a: GET /api/v1/models 与 release catalog 逐项一致
+ok 55 - T20a: GET /api/v1/models 与 release catalog 逐项一致
+  ---
+  duration_ms: 0.625583
+  type: 'test'
+  ...
+# Subtest: T20b: GET /api/v1/models 走 verified release loader（catalog 与 fixture 一致）
+ok 56 - T20b: GET /api/v1/models 走 verified release loader（catalog 与 fixture 一致）
+  ---
+  duration_ms: 0.634292
+  type: 'test'
+  ...
+# Subtest: fixed routes never retain private query, entity or arbitrary path
+ok 57 - fixed routes never retain private query, entity or arbitrary path
+  ---
+  duration_ms: 2.904542
+  type: 'test'
+  ...
+# Subtest: concurrent request contexts report their actual dataset; disabled instrumentation preserves handler
+ok 58 - concurrent request contexts report their actual dataset; disabled instrumentation preserves handler
+  ---
+  duration_ms: 4.338166
+  type: 'test'
+  ...
+# Subtest: logger bounds queued bytes, rejects oversized/cyclic events and tolerates broken streams
+ok 59 - logger bounds queued bytes, rejects oversized/cyclic events and tolerates broken streams
+  ---
+  duration_ms: 1019.991416
+  type: 'test'
+  ...
+# Subtest: readiness is independent of stale freshness
+ok 60 - readiness is independent of stale freshness
+  ---
+  duration_ms: 0.31725
+  type: 'test'
+  ...
+# Subtest: an unchanged poll cannot invalidate an in-flight forced audit
+ok 61 - an unchanged poll cannot invalidate an in-flight forced audit
+  ---
+  duration_ms: 8.10075
+  type: 'test'
+  ...
+# Subtest: T17 OpenAPI 路径与真实路由一致
+ok 62 - T17 OpenAPI 路径与真实路由一致
+  ---
+  duration_ms: 4.847958
+  type: 'test'
+  ...
+# Subtest: P1-1 篡改历史 release 文件 → cursor 读取被拒（409）
+ok 63 - P1-1 篡改历史 release 文件 → cursor 读取被拒（409）
+  ---
+  duration_ms: 31.250167
+  type: 'test'
+  ...
+# Subtest: P1-1 历史版本保留原版元数据（generatedAt/dataThrough/coverage）
+ok 64 - P1-1 历史版本保留原版元数据（generatedAt/dataThrough/coverage）
+  ---
+  duration_ms: 3.421666
+  type: 'test'
+  ...
+# Subtest: P1-2 伪造 cursor（改 limit 后重算 qh，无密钥）→ 400
+ok 65 - P1-2 伪造 cursor（改 limit 后重算 qh，无密钥）→ 400
+  ---
+  duration_ms: 5.307083
+  type: 'test'
+  ...
+# Subtest: P1-2b 若 MAC 被绕过（密钥泄露），恢复校验仍拦截非法参数
+ok 66 - P1-2b 若 MAC 被绕过（密钥泄露），恢复校验仍拦截非法参数
+  ---
+  duration_ms: 6.799416
+  type: 'test'
+  ...
+# Subtest: P1-2c 合法翻页不受影响
+ok 67 - P1-2c 合法翻页不受影响
+  ---
+  duration_ms: 7.904792
+  type: 'test'
+  ...
+# (node:16137) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: review required, monotonic immutable versions, audit, withdrawal never falls back
+ok 68 - review required, monotonic immutable versions, audit, withdrawal never falls back
+  ---
+  duration_ms: 9.032917
+  type: 'test'
+  ...
+# Subtest: object union with topic intersection; unresolved model never matches model-only scope
+ok 69 - object union with topic intersection; unresolved model never matches model-only scope
+  ---
+  duration_ms: 2.987667
+  type: 'test'
+  ...
+# Subtest: expiry and revocation checked per request; scoped hashed credentials and encrypted RSS rotation
+ok 70 - expiry and revocation checked per request; scoped hashed credentials and encrypted RSS rotation
+  ---
+  duration_ms: 2.184583
+  type: 'test'
+  ...
+# Subtest: reports freeze scope and selected versions; corrections use latest, account isolation and independent unsubscribe
+ok 71 - reports freeze scope and selected versions; corrections use latest, account isolation and independent unsubscribe
+  ---
+  duration_ms: 4.610583
+  type: 'test'
+  ...
+# Subtest: normal empty and failed coverage distinguished; expired users cannot receive pending mail
+ok 72 - normal empty and failed coverage distinguished; expired users cannot receive pending mail
+  ---
+  duration_ms: 1.678958
+  type: 'test'
+  ...
+# Subtest: retry preserves idempotency and freezes message; uncertain attempts older than 23h require review
+ok 73 - retry preserves idempotency and freezes message; uncertain attempts older than 23h require review
+  ---
+  duration_ms: 1.849208
+  type: 'test'
+  ...
+# Subtest: HTTP and MCP protected content, previews, exports, private RSS, same origin management
+ok 74 - HTTP and MCP protected content, previews, exports, private RSS, same origin management
+  ---
+  duration_ms: 59.392916
+  type: 'test'
+  ...
+# Subtest: additive schema survives restart, free account data remains usable, snapshots exclude public samples
+ok 75 - additive schema survives restart, free account data remains usable, snapshots exclude public samples
+  ---
+  duration_ms: 14.428583
+  type: 'test'
+  ...
+# Subtest: worker verifies candidates; ten unchanged polls parse zero business files; force failure retains current
+ok 76 - worker verifies candidates; ten unchanged polls parse zero business files; force failure retains current
+  ---
+  duration_ms: 123.615792
+  type: 'test'
+  ...
+# Subtest: historical first reads single-flight; zero cache budget reloads retained cursor and genuine deletion returns 409
+ok 77 - historical first reads single-flight; zero cache budget reloads retained cursor and genuine deletion returns 409
+  ---
+  duration_ms: 135.4
+  type: 'test'
+  ...
+# Subtest: a superseded candidate never replaces current and closed loader cannot publish
+ok 78 - a superseded candidate never replaces current and closed loader cannot publish
+  ---
+  duration_ms: 12.051042
+  type: 'test'
+  ...
+# Subtest: no valid startup yields 503; aborted worker settles without publishing
+ok 79 - no valid startup yields 503; aborted worker settles without publishing
+  ---
+  duration_ms: 4.025667
+  type: 'test'
+  ...
+# Subtest: valid hashes cannot conceal broken references; historical LRU obeys its version budget
+ok 80 - valid hashes cannot conceal broken references; historical LRU obeys its version budget
+  ---
+  duration_ms: 220.122917
+  type: 'test'
+  ...
+# Subtest: indexed queries match reference scans through all pages, filters and date boundaries
+ok 81 - indexed queries match reference scans through all pages, filters and date boundaries
+  ---
+  duration_ms: 10.4765
+  type: 'test'
+  ...
+# Subtest: client normalization and proxy trust reject spoofing and scoped/multiple IP headers
+ok 82 - client normalization and proxy trust reject spoofing and scoped/multiple IP headers
+  ---
+  duration_ms: 3.352541
+  type: 'test'
+  ...
+# Subtest: per-client quotas, bounded TTL state and independent global guards
+ok 83 - per-client quotas, bounded TTL state and independent global guards
+  ---
+  duration_ms: 0.474
+  type: 'test'
+  ...
+# Subtest: worker terminal messages wait for parent acknowledgement before exit
+ok 84 - worker terminal messages wait for parent acknowledgement before exit
+  ---
+  duration_ms: 160.124
+  type: 'test'
+  ...
+# Subtest: T12 翻页期间发布新版本：旧 cursor 继续读旧 release
+ok 85 - T12 翻页期间发布新版本：旧 cursor 继续读旧 release
+  ---
+  duration_ms: 58.535833
+  type: 'test'
+  ...
+# Subtest: T12b 篡改 cursor（含 ds 字段）→ 400 invalid_cursor（MAC 拦截）
+ok 86 - T12b 篡改 cursor（含 ds 字段）→ 400 invalid_cursor（MAC 拦截）
+  ---
+  duration_ms: 4.375041
+  type: 'test'
+  ...
+# Subtest: T12b2 真实清理后的版本 → 409 dataset_version_expired
+ok 87 - T12b2 真实清理后的版本 → 409 dataset_version_expired
+  ---
+  duration_ms: 10.094958
+  type: 'test'
+  ...
+# Subtest: T12c 篡改 cursor → 400 invalid_cursor
+ok 88 - T12c 篡改 cursor → 400 invalid_cursor
+  ---
+  duration_ms: 7.141083
+  type: 'test'
+  ...
+# Subtest: T15 热重载：成功原子切换 / 损坏版本续服旧版 / 单请求不混版
+ok 89 - T15 热重载：成功原子切换 / 损坏版本续服旧版 / 单请求不混版
+  ---
+  duration_ms: 8.317083
+  type: 'test'
+  ...
+# Subtest: T15b manifest 损坏 → 不加载半成品
+ok 90 - T15b manifest 损坏 → 不加载半成品
+  ---
+  duration_ms: 4.1415
+  type: 'test'
+  ...
+1..90
+# tests 90
+# suites 0
+# pass 90
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1136.714334

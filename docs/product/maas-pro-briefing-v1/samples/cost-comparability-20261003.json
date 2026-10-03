@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "models": [],
+  "families": [],
+  "period": {
+    "from": "2026-09-28T00:00:00+08:00",
+    "to": "2026-10-05T00:00:00+08:00"
+  },
+  "dataThrough": "2026-10-03",
+  "coverage": "partial",
+  "coverageNote": "截至10月3日的开发样例，统计周尚未结束；仅覆盖所引用的官方记录。",
+  "sample": false,
+  "correction": "",
+  "critical": false,
+  "limitations": "没有实际请求、账单或独立性能测试。只标厂商范围，不根据名称猜测模型归属。未覆盖对象不能认定为没有变化。",
+  "id": "cost-comparability-20261003",
+  "kind": "comparison",
+  "providers": [
+    "xai",
+    "kimi"
+  ],
+  "topics": [
+    "price",
+    "billing"
+  ],
+  "title": "费用对照前：价格声明与计费条件不能混算",
+  "preview": "音频转写的价格一致声明与文本缓存的TTL说明，没有共同单位，不能算跨厂商价差。",
+  "body": "比较目的：展示条件核对步骤，不做最低价排名。\n\nxAI价格一致针对转写版本转路由；Kimi的TTL与写入说明针对文本缓存。计费对象不同，没有共同单位，不能计算跨厂商价差。\n\n实际费用对比前检查：模型和调用平台、模态、区域、币种、单位、输入输出、缓存写入与命中、TTL、上下文分档、生效时间。缺失字段保持未知。\n\n只有同条件、且旧值大于零，才输出变化百分比。官方价格相同不保证每种工作负载账单相同。",
+  "conditions": "对照信息完整性，不对照两个产品的实际成本高低。",
+  "rows": [
+    {
+      "对照项": "计费对象",
+      "xAI案例": "音频转写",
+      "Kimi案例": "文本缓存",
+      "是否可比": "否"
+    },
+    {
+      "对照项": "证据类型",
+      "xAI案例": "价格一致声明",
+      "Kimi案例": "TTL与写入说明",
+      "是否可比": "不能计算百分比"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "obs_3db8a4529be6c9c1a08d2fb870476b85a26ebbfe86f2607b04aa92dc515f2d0d",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "observedAt": "2026-10-03",
+      "note": "依据平台归档的官方来源差异。观察时间精度为日，未实时验证。"
+    },
+    {
+      "id": "obs_7ba0a774145370c258ee481336212b7c0da224b37edc87956cd4d20db03ce6f4",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
+      "observedAt": "2026-10-02",
+      "note": "依据平台归档的官方来源差异。观察时间精度为日，未实时验证。"
+    }
+  ]
+}

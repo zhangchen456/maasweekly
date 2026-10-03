@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: site and API reject identical malformed manifests, hashes, references and catalogs
+ok 1 - site and API reject identical malformed manifests, hashes, references and catalogs
+  ---
+  duration_ms: 18.943667
+  type: 'test'
+  ...
+# Subtest: T06 changes 默认查询（dataThrough 锚定 7 天窗口）
+ok 2 - T06 changes 默认查询（dataThrough 锚定 7 天窗口）
+  ---
+  duration_ms: 16.992083
+  type: 'test'
+  ...
+# Subtest: T06 provider/type/q/from/to 组合
+ok 3 - T06 provider/type/q/from/to 组合
+  ---
+  duration_ms: 7.625375
+  type: 'test'
+  ...
+# Subtest: T07 prices 条件完整（contextBand/timeCondition/原币种/Decimal 字符串）
+ok 4 - T07 prices 条件完整（contextBand/timeCondition/原币种/Decimal 字符串）
+  ---
+  duration_ms: 3.412458
+  type: 'test'
+  ...
+# Subtest: T08a withdrawn 默认隐藏
+ok 5 - T08a withdrawn 默认隐藏
+  ---
+  duration_ms: 2.912959
+  type: 'test'
+  ...
+# Subtest: T08b includeWithdrawn=true 返回 withdrawn
+ok 6 - T08b includeWithdrawn=true 返回 withdrawn
+  ---
+  duration_ms: 1.290542
+  type: 'test'
+  ...
+# Subtest: T09 item/evidence/weekly 实体与未知 404
+ok 7 - T09 item/evidence/weekly 实体与未知 404
+  ---
+  duration_ms: 4.904458
+  type: 'test'
+  ...
+# Subtest: T10 参数校验 400 Problem JSON
+ok 8 - T10 参数校验 400 Problem JSON
+  ---
+  duration_ms: 6.526125
+  type: 'test'
+  ...
+# Subtest: T11 同版本翻完全部页（limit=1，无重复无遗漏）
+ok 9 - T11 同版本翻完全部页（limit=1，无重复无遗漏）
+  ---
+  duration_ms: 3.430375
+  type: 'test'
+  ...
+# Subtest: T11b cursor 与其他参数冲突 → 400
+ok 10 - T11b cursor 与其他参数冲突 → 400
+  ---
+  duration_ms: 1.488666
+  type: 'test'
+  ...
+# Subtest: T13 ETag / 304
+ok 11 - T13 ETag / 304
+  ---
+  duration_ms: 1.990083
+  type: 'test'
+  ...
+# Subtest: T14 HEAD/OPTIONS/CORS/超长 cursor 413
+ok 12 - T14 HEAD/OPTIONS/CORS/超长 cursor 413
+  ---
+  duration_ms: 5.111
+  type: 'test'
+  ...
+# Subtest: T16 恶意 excerpt 原样返回 / 路径编码不越界
+ok 13 - T16 恶意 excerpt 原样返回 / 路径编码不越界
+  ---
+  duration_ms: 1.66275
+  type: 'test'
+  ...
+# Subtest: T16b 未知路径 404（无通配）
+ok 14 - T16b 未知路径 404（无通配）
+  ---
+  duration_ms: 1.144041
+  type: 'test'
+  ...
+# Subtest: T14b 无数据版本 503
+ok 15 - T14b 无数据版本 503
+  ---
+  duration_ms: 3.725791
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 143.479333

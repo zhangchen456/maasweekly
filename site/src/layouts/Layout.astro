@@ -82,7 +82,7 @@ const localizedContent = en ? englishHtml(content) : content;
       <div class="shell topbar-inner">
         <a href={en ? "/en/" : "/?lang=zh"} class="brand" aria-label="MaaS Daily"><BrandLogo /></a>
         <nav class="nav" aria-label={t('页面导航', 'Main navigation')}>
-          {[['/', t('今日', 'Today')], ['/leaderboards/', t('榜单', 'Rankings')], ['/pricing/', t('价格', 'Prices')], ['/changes/', t('变化', 'Changes')], ['/sources/', t('信源', 'Sources')], ['/weekly/', t('归档', 'Archive')], ['/agent/', t('接入', 'Connect')]].map(([href, label]) => <a href={en ? `/en${href}` : href === '/' ? '/?lang=zh' : href} aria-current={activePath.replace(/^\/en/, '') === href.split('?')[0] ? 'page' : undefined}>{label}</a>)}
+          {[['/', t('今日', 'Today')], ['/leaderboards/', t('榜单', 'Rankings')], ['/pricing/', t('价格', 'Prices')], ['/changes/', t('变化', 'Changes')], ['/sources/', t('信源', 'Sources')], ['/weekly/', t('归档', 'Archive')], ['/agent/', t('接入', 'Connect')], ['/subscription/', t('订阅', 'Plans')]].map(([href, label]) => <a href={href === '/pro/' ? href : en ? `/en${href}` : href === '/' ? '/?lang=zh' : href} aria-current={activePath.replace(/^\/en/, '') === href.split('?')[0] ? 'page' : undefined}>{label}</a>)}
         </nav>
         <nav class="language-switch" aria-label={t('语言', 'Language')}>
           <a href={zhRoute === '/' ? '/?lang=zh' : zhRoute ?? '/?lang=zh&untranslated=1'} data-language="zh" data-translated={Boolean(zhRoute)} lang="zh-CN" aria-current={!en ? 'true' : undefined}>中文</a>
@@ -135,6 +135,7 @@ const localizedContent = en ? englishHtml(content) : content;
     </script>
 
     <style is:global>
+      .time-zone-note { font-size: 12px; color: var(--muted); line-height: 1.6; overflow-wrap: anywhere; }
       .language-switch { white-space: nowrap; font-size: 12px; }
       .language-switch a { color: var(--paper); padding: 8px 2px; }
       .language-switch a[aria-current] { color: var(--acid); }

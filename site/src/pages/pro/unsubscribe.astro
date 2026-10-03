@@ -1,0 +1,10 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="关闭专业简报邮件 — MaaS Daily" noindex={true}>
+  <main style="padding:64px 0;max-width:640px"><h1>关闭专业简报邮件</h1><p>仅关闭专业简报邮件，你的范围和免费每日提醒会保留。</p><button id="pro-unsubscribe">确认关闭</button><p id="unsubscribe-status" role="status"></p></main>
+</Layout>
+<script>
+  const token=location.hash.slice(1);history.replaceState(null,'',location.pathname);
+  document.getElementById('pro-unsubscribe')!.onclick=async()=>{const status=document.getElementById('unsubscribe-status')!;try{const r=await fetch('/api/pro/unsubscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token})});const v=await r.json();status.textContent=v.message;if(r.ok)(document.getElementById('pro-unsubscribe') as HTMLButtonElement).disabled=true;}catch{status.textContent='服务暂不可用，请重试';}};
+</script>
