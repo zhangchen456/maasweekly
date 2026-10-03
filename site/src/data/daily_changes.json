@@ -1,6 +1,358 @@
 {
-  "updated_at": "2026-10-03T00:21:17",
+  "updated_at": "2026-10-03T23:42:14",
   "days": [
+    {
+      "date": "2026-10-04",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 6,
+        "unchanged": 59
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 2,
+          "added_lines": [
+            "0.283404元/张",
+            "qwen-image-2.0 系列按张计费，支持文生图与图生图/图像编辑，各地域单价如下。",
+            "qwen-image-2.1-pro |",
+            "千问图像生成与编辑2.0系列"
+          ],
+          "removed_lines": [
+            "当前能力等同于qwen-image-2.0-2026-03-03",
+            "当前能力等同于qwen-image-2.0-pro-2026-04-22"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "qwen-image-2.0",
+              "before": "qwen-image-2.0",
+              "after": "qwen-image-2.0 |"
+            },
+            {
+              "key": "qwen-image-2.0-pro",
+              "before": "qwen-image-2.0-pro",
+              "after": "qwen-image-2.0-pro |"
+            }
+          ],
+          "signal_preview": "qwen-image-2.0 系列按张计费，支持文生图与图生图/图像编辑，各地域单价如下。",
+          "raw_added_count": 6,
+          "raw_removed_count": 4,
+          "id": "obs_fc7492b97072e6e3d3cc793231613f12f0c851e51551f185d21c6862824a453f",
+          "permalink": "/item/obs_fc7492b97072e6e3d3cc793231613f12f0c851e51551f185d21c6862824a453f/",
+          "llm_summary": "新增 qwen-image-2.1-pro 定价行，并明确 qwen-image-2.0 系列按张计费，同时删除旧版本的能力等同说明，对应图像生成2.0系列正式上架。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "model_list",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "STS$0.08 / min"
+          ],
+          "removed_lines": [
+            "Agent$0.08 / min"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "STS$0.08 / min",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_be6f14fe7a9076ce43ae021515c3ad34e8c2358d5261ae081c63d371bd72d0e8",
+          "permalink": "/item/obs_be6f14fe7a9076ce43ae021515c3ad34e8c2358d5261ae081c63d371bd72d0e8/",
+          "llm_summary": "模型列表中删除 Agent 条目，新增 STS 条目，定价 $0.08/min，表明产品线从 Agent 转向 STS。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "pricing",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "STS$0.08 / min"
+          ],
+          "removed_lines": [
+            "Agent$0.08 / min"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "STS$0.08 / min",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_fca8bce4b79a58b5457778b44fe6fa3358271b6f93f42d98bed9d300243eda4d",
+          "permalink": "/item/obs_fca8bce4b79a58b5457778b44fe6fa3358271b6f93f42d98bed9d300243eda4d/",
+          "llm_summary": "定价页同步删除 Agent 定价，新增 STS 定价，与模型列表变更一致。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailSambaNovaScalewayTogether AI",
+            "Ling 3.1 Flash",
+            "New language model evaluation · 3 Oct"
+          ],
+          "removed_lines": [
+            "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailScalewayTogether AI",
+            "Claude Sonnet 5.5 (Xhigh, Default Fallback)"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5.5 (Max, Default Fallback)See more",
+              "after": "Claude Sonnet 5.5 (Xhigh, Default Fallback)See more"
+            }
+          ],
+          "signal_preview": "AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailSambaNovaScalewayTogether AI",
+          "raw_added_count": 10,
+          "raw_removed_count": 9,
+          "id": "obs_90301702e3a87f60c6d5a9d62e2e162da0df07546715748382085028a62003c4",
+          "permalink": "/item/obs_90301702e3a87f60c6d5a9d62e2e162da0df07546715748382085028a62003c4/",
+          "llm_summary": "新增 Ling 3.1 Flash 评测，并更新了 Claude Sonnet 5.5 的推理配置，同时调整了部署商列表（新增 Nebius (Base) 和 Novita，移除 Parasail 等），反映评测覆盖范围变化。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 7,
+          "added_lines": [
+            "358,848,044358,848,044Total Sessions",
+            "Claude Fable 5.1 (Max)$4.86/task",
+            "Deepseek V4.1 Flash (Max)·",
+            "GPT 6.1 Sol (Max)$0.58/task",
+            "Presenting the result",
+            "Qwen 3.8 27B·"
+          ],
+          "removed_lines": [
+            "Claude Opus 5.5 (High)$1.58/task",
+            "Editing a file",
+            "Gemini 4 Argon (High)·",
+            "358,428,651358,428,651Total Sessions",
+            "GPT 5.6 Terra (xHigh)·",
+            "GPT 6.1 Sol (Max)$0.56/task",
+            "GPT 6.1 Sol (Max)·"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5.1 (Max)$4.56/task",
+              "after": "Claude Fable 5 (High)·"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5 (Max)·",
+              "after": "Claude Opus 5.5 (High)$1.56/task"
+            },
+            {
+              "key": "deepseek v",
+              "before": "Deepseek V4.1 Flash (Max)$0.10/task",
+              "after": "Deepseek V4.1 Flash (Max)$0.11/task"
+            }
+          ],
+          "signal_preview": "Claude Fable 5.1 (Max)$4.86/task",
+          "raw_added_count": 9,
+          "raw_removed_count": 13,
+          "id": "obs_cee7791f43d950ce361a613cb03d2366e8d5696be7854c20a8f8d50e38050c25",
+          "permalink": "/item/obs_cee7791f43d950ce361a613cb03d2366e8d5696be7854c20a8f8d50e38050c25/",
+          "llm_summary": "多款模型价格变动，GPT 6.1 Sol 新上榜，Gemini 4 Argon 和 GPT 5.6 Terra 被移除，同时总会话数更新，反映榜单动态调整。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 31,
+          "raw_removed_count": 31,
+          "id": "obs_60781062b11e8eceebb02817a1117f07a74ae37429ed61920591641265f2047a",
+          "permalink": "/item/obs_60781062b11e8eceebb02817a1117f07a74ae37429ed61920591641265f2047a/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_b5f7cf977445e4060cf54eb87c34e460d926fdb8e2d79db9970d4d14d2f1cabc",
+          "provider": "qwen",
+          "model": "qwen3.8-flash",
+          "component": "input",
+          "current": "1.094000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_7646ec2f8b75c7708f31d93698d3709d30a18f70ef223ad47b84fe5c651e07c4",
+          "provider": "qwen",
+          "model": "qwen3.8-flash",
+          "component": "output",
+          "current": "3.427000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_3401523405514229f15b2ef7a1ab7cc6e5449c35e5e8a2065a83622df62cd64f",
+          "provider": "qwen",
+          "model": "qwen-image-2.1-pro",
+          "component": "output",
+          "current": "0.250000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_e86a0d9321e62e38406245a5b760fff60707a307dc5d5f8028de336bf90d1a1c",
+          "provider": "qwen",
+          "model": "qwen-image-2.1-pro",
+          "component": "output",
+          "current": "0.250000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "图像生成2.0系列上架，按张计费",
+          "items": [
+            {
+              "text": "qwen-image-2.1-pro 新增定价 0.283404元/张，支持文生图与图生图/图像编辑",
+              "type": "release"
+            },
+            {
+              "text": "qwen-image-2.0 系列改为按张计费，各地域单价已公布",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "模型列表与定价同步更新，Agent 替换为 STS",
+          "items": [
+            {
+              "text": "xAI 模型列表与定价页中 Agent 条目删除，新增 STS 条目，定价 $0.08/min",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "新增 Ling 3.1 Flash 评测，部署商列表更新",
+          "items": [
+            {
+              "text": "新增 Ling 3.1 Flash 语言模型评测，发布日期为 10月3日",
+              "type": "release"
+            },
+            {
+              "text": "Claude Sonnet 5.5 推理配置从 Max 改为 Xhigh，默认回退保持不变",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "多款模型价格变动，GPT 6.1 Sol 新上榜",
+          "items": [
+            {
+              "text": "GPT 6.1 Sol (Max) 新增，定价 $0.58/task，同时移除 GPT 5.6 Terra (xHigh)",
+              "type": "release"
+            },
+            {
+              "text": "Claude Fable 5.1 (Max) 价格从 $4.56/task 上调至 $4.86/task",
+              "type": "pricing"
+            },
+            {
+              "text": "Claude Opus 5.5 (High) 价格从 $1.58/task 下调至 $1.56/task",
+              "type": "pricing"
+            },
+            {
+              "text": "Deepseek V4.1 Flash (Max) 价格从 $0.10/task 上调至 $0.11/task",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "官方定价页",
+          "logo_summary": "Qwen 3.8 Flash 与图像模型定价更新",
+          "items": [
+            {
+              "text": "qwen3.8-flash input 新定价 1.094000 CNY/百万tokens，output 新定价 3.427000 CNY/百万tokens",
+              "type": "pricing"
+            },
+            {
+              "text": "qwen-image-2.1-pro output 新定价 0.250000 CNY/百万tokens",
+              "type": "pricing"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-10-03",
       "stats": {

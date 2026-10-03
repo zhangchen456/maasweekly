@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_cee7791f43d950ce361a613cb03d2366e8d5696be7854c20a8f8d50e38050c25",
+  "sourceId": "lmarena-industry",
+  "date": "2026-10-04",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "LMArena",
+  "sourceType": "industry",
+  "sourceUrl": "https://lmarena.ai/leaderboard",
+  "title": "LMArena · 行业数据来源更新",
+  "summary": "Claude Fable 5.1 (Max)$4.86/task",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "claude fable",
+        "before": "Claude Fable 5.1 (Max)$4.56/task",
+        "after": "Claude Fable 5 (High)·"
+      },
+      {
+        "key": "claude opus",
+        "before": "Claude Opus 5 (Max)·",
+        "after": "Claude Opus 5.5 (High)$1.56/task"
+      },
+      {
+        "key": "deepseek v",
+        "before": "Deepseek V4.1 Flash (Max)$0.10/task",
+        "after": "Deepseek V4.1 Flash (Max)$0.11/task"
+      }
+    ],
+    "added_lines": [
+      "358,848,044358,848,044Total Sessions",
+      "Claude Fable 5.1 (Max)$4.86/task",
+      "Deepseek V4.1 Flash (Max)·",
+      "GPT 6.1 Sol (Max)$0.58/task",
+      "Presenting the result",
+      "Qwen 3.8 27B·"
+    ],
+    "removed_lines": [
+      "Claude Opus 5.5 (High)$1.58/task",
+      "Editing a file",
+      "Gemini 4 Argon (High)·",
+      "358,428,651358,428,651Total Sessions",
+      "GPT 5.6 Terra (xHigh)·",
+      "GPT 6.1 Sol (Max)$0.56/task",
+      "GPT 6.1 Sol (Max)·"
+    ],
+    "added_count": 6,
+    "removed_count": 7,
+    "raw_added_count": 9,
+    "raw_removed_count": 13
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-04.json"
+  },
+  "permalink": "/item/obs_cee7791f43d950ce361a613cb03d2366e8d5696be7854c20a8f8d50e38050c25/"
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_fc7492b97072e6e3d3cc793231613f12f0c851e51551f185d21c6862824a453f",
+  "sourceId": "alibaba-pricing",
+  "date": "2026-10-04",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "阿里百炼",
+  "sourceType": "pricing",
+  "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+  "title": "阿里百炼 · 定价来源更新",
+  "summary": "qwen-image-2.0 系列按张计费，支持文生图与图生图/图像编辑，各地域单价如下。",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "qwen-image-2.0",
+        "before": "qwen-image-2.0",
+        "after": "qwen-image-2.0 |"
+      },
+      {
+        "key": "qwen-image-2.0-pro",
+        "before": "qwen-image-2.0-pro",
+        "after": "qwen-image-2.0-pro |"
+      }
+    ],
+    "added_lines": [
+      "0.283404元/张",
+      "qwen-image-2.0 系列按张计费，支持文生图与图生图/图像编辑，各地域单价如下。",
+      "qwen-image-2.1-pro |",
+      "千问图像生成与编辑2.0系列"
+    ],
+    "removed_lines": [
+      "当前能力等同于qwen-image-2.0-2026-03-03",
+      "当前能力等同于qwen-image-2.0-pro-2026-04-22"
+    ],
+    "added_count": 4,
+    "removed_count": 2,
+    "raw_added_count": 6,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-04.json"
+  },
+  "permalink": "/item/obs_fc7492b97072e6e3d3cc793231613f12f0c851e51551f185d21c6862824a453f/"
+}
