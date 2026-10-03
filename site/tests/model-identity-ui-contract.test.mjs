@@ -4,7 +4,8 @@
 import { readFileSync, existsSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
-import { transform } from 'esbuild';
+import { build } from 'esbuild';
+import { fileURLToPath } from 'node:url';
 
 const root = new URL('../../', import.meta.url);
 const renderedPath = new URL('site/dist/pricing/index.html', root);
@@ -17,6 +18,8 @@ const dom = new JSDOM(html, {
   url: 'http://localhost/pricing/',
   pretendToBeVisual: true,
   beforeParse(window) {
+    // This contract exercises the public workspace in a guest session, without network access.
+    window.fetch = async () => ({ ok: false, status: 401, json: async () => ({ message: 'Sign in required' }) });
     window.matchMedia = (q) => ({
       matches: false, media: q, addEventListener() {}, removeEventListener() {},
       addListener() {}, removeListener() {}, dispatchEvent() { return false; },
@@ -31,9 +34,10 @@ const fixture = JSON.parse(payload.textContent);
 fixture.prices = fixture.prices.filter(p => p.modelId !== 'deepseek:deepseek-flash');
 payload.textContent = JSON.stringify(fixture);
 const source = readFileSync(new URL('site/src/scripts/price-workspace.ts', root), 'utf8');
-const compiled = await transform(source, {loader:'ts', format:'iife'});
-window.eval(compiled.code);
-window.eval(compiled.code); // Initialization guard must preserve one mounted workspace.
+// Bundle the real dependencies, just as the site does. A source-only transform cannot resolve imports.
+const compiled = await build({ stdin: { contents: source, loader: 'ts', resolveDir: fileURLToPath(new URL('site/src/scripts/', root)) }, bundle: true, format: 'iife', platform: 'browser', write: false });
+window.eval(compiled.outputFiles[0].text);
+window.eval(compiled.outputFiles[0].text); // Initialization guard must preserve one mounted workspace.
 // 等待 script 执行
 await new Promise((r) => setTimeout(r, 100));
 
