@@ -78,7 +78,7 @@ const canonical = canonicalUrl(Astro.url.pathname);
       <div class="shell topbar-inner">
         <a href={en ? "/en/" : "/?lang=zh"} class="brand" aria-label="MaaS Daily"><BrandLogo /></a>
         <nav class="nav" aria-label={t('页面导航', 'Main navigation')}>
-          {(en ? [['/en/', 'Home'], ['/en/models/', 'Models'], ['/en/pricing/', 'Prices'], ['/en/method/', 'Method'], ['/en/agent/', 'Connect']] : [['/?lang=zh', '今日'], ['/leaderboards', '榜单'], ['/pricing/', '价格'], ['/changes', '变化'], ['/sources', '信源'], ['/weekly', '归档'], ['/agent/', '接入']]).map(([href, label]) => <a href={href} aria-current={activePath === href.split('?')[0] ? 'page' : undefined}>{label}</a>)}
+          {(en ? [['/en/', 'Home'], ['/en/models/', 'Models'], ['/en/pricing/', 'Prices'], ['/en/method/', 'Method'], ['/en/agent/', 'Connect']] : [['/?lang=zh', '今日'], ['/leaderboards', '榜单'], ['/pricing/', '价格'], ['/changes', '变化'], ['/sources', '信源'], ['/weekly', '归档'], ['/agent/', '接入'], ['/account/', '我的关注']]).map(([href, label]) => <a href={href} aria-current={activePath === href.split('?')[0] ? 'page' : undefined}>{label}</a>)}
         </nav>
         <nav class="language-switch" aria-label={t('语言', 'Language')}>
           <a href={zhRoute === '/' ? '/?lang=zh' : zhRoute ?? '/?lang=zh&untranslated=1'} data-language="zh" data-translated={Boolean(zhRoute)} lang="zh-CN" aria-current={!en ? 'true' : undefined}>中文</a>

@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily MaaS model-watch email at 09:15 Asia/Shanghai
+
+[Timer]
+OnCalendar=*-*-* 09:15:00 Asia/Shanghai
+Persistent=true
+Unit=maas-account-digest.service
+
+[Install]
+WantedBy=timers.target

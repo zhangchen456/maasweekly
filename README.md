@@ -120,3 +120,9 @@ python3 pipeline/scripts/archive-source-changes.py --check     # 只校验不写
 - 来源注册表：`pipeline/config/source_registry.json`（稳定 source_id ↔ 平台/类型/URL 别名）。**新增信源步骤**：先在 maas_official_sources.json 加信源 → 抓取产生 diff 后，如果 `archive-source-changes.py` 报"来源未映射"，在 source_registry.json 的 sources 数组补一条 `{source_id, display_name, source_type, url_aliases, primary_url}`——source_id 一旦分配不可更改，URL 变化只追加 url_aliases（国内 9 + 海外 7 平台，6 维度信源 + 行业数据源）
 - diff 算法：按行集合对比，过滤 10 字符以下短行，噪声较多的页面（JS 渲染的 SPA）可能误报，后续可换 HTML 结构化 diff
 - 历史周报：53 期（2025-10 ~ 2026-09），完整存于 `data/weekly/` 与 `data/weekly-archive-early/`
+
+## 账号与模型关注 v1（本地实现，待生产启用）
+
+`/account/` 提供邮箱验证码登录、模型关注、近期变化与主动开启的每日邮件摘要；`/account/unsubscribe/` 支持免登录确认退订。用户数据保存在独立 SQLite，不进入公开 API 数据投影。邮件服务和持久库未配置时，账号页面明确展示未启用状态。
+
+计划、开发配置、生产启用候选及验收：[账号与模型关注 v1](docs/product/account-watch-v1/README.md)。生产发信与定时任务尚未启用。
