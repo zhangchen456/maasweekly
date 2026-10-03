@@ -12,7 +12,9 @@ test('all methods remain readable without JavaScript; tabs support deep links, k
   const dom = new JSDOM(html, { url: 'https://daily.maas.click/agent/#method-mcp', runScripts: 'outside-only' });
   const { document, KeyboardEvent, HashChangeEvent } = dom.window;
   const panels = [...document.querySelectorAll('[data-panel]')];
-  assert.equal(panels.length, 4);
+  assert.equal(panels.length, 8);
+  assert.equal(panels.filter(p => p.dataset.tier === 'free').length, 4);
+  assert.equal(panels.filter(p => p.dataset.tier === 'plus').length, 4);
   assert.ok(panels.every(p => !p.hidden));
   dom.window.eval(await script('../src/pages/agent.astro'));
   assert.equal(panels.find(p => !p.hidden).dataset.panel, 'mcp');
@@ -26,7 +28,37 @@ test('all methods remain readable without JavaScript; tabs support deep links, k
   dom.window.location.hash = '#method-rest';
   dom.window.dispatchEvent(new HashChangeEvent('hashchange'));
   assert.equal(panels.find(p => !p.hidden).dataset.panel, 'rest');
+  const selected = () => panels.filter(p => !p.hidden);
+  const plans = [...document.querySelectorAll('[data-access-plan]')];
+  assert.equal(selected().length, 1);
+  plans.find(p => p.dataset.accessPlan === 'plus').click();
+  assert.equal(selected()[0].id, 'plus-method-rest');
+  assert.equal(dom.window.location.hash, '#plus-method-rest');
+  assert.equal(plans.find(p => p.dataset.accessPlan === 'plus').getAttribute('aria-pressed'), 'true');
+  assert.equal(tabs[3].getAttribute('aria-controls'), 'plus-method-rest');
+  for (const tier of ['free', 'plus']) {
+    plans.find(p => p.dataset.accessPlan === tier).click();
+    for (const tab of tabs) {
+      tab.click();
+      assert.equal(selected().length, 1);
+      assert.equal(selected()[0].dataset.tier, tier);
+      assert.equal(selected()[0].dataset.panel, tab.dataset.method);
+    }
+  }
+  dom.window.location.hash = '#plus-method-mcp';
+  dom.window.dispatchEvent(new HashChangeEvent('hashchange'));
+  assert.equal(selected()[0].id, 'plus-method-mcp');
+  tabs[1].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+  assert.equal(selected()[0].id, 'plus-method-rss');
+  assert.equal(dom.window.location.hash, '#plus-method-rss');
+  dom.window.location.hash = '#plus-access';
+  dom.window.dispatchEvent(new HashChangeEvent('hashchange'));
+  assert.equal(selected()[0].id, 'plus-method-skill');
   dom.window.close();
+  const fresh = new JSDOM(html, { url: 'https://daily.maas.click/agent/#plus-method-mcp', runScripts: 'outside-only' });
+  fresh.window.eval(await script('../src/pages/agent.astro'));
+  assert.deepEqual([...fresh.window.document.querySelectorAll('[data-panel]')].filter(p => !p.hidden).map(p => p.id), ['plus-method-mcp']);
+  fresh.window.close();
 });
 test('copy sends the complete local prompt and falls back to manual selection on failure', async () => {
   const dom = new JSDOM(html, { url: 'https://daily.maas.click/agent/', runScripts: 'outside-only' });
