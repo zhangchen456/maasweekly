@@ -17,15 +17,17 @@ const t = (zh: string, english: string) => en ? english : zh;
       </form>
     </section>
     <section id="account-settings" hidden>
-      <div class="settings-heading"><h2>{t('账户信息', 'Account details')}</h2><span>{t('个人账户 · 免费版', 'Personal account · Free')}</span></div>
+      <div class="settings-heading"><h2>{t('账户信息', 'Account details')}</h2><span>{t('个人账户', 'Personal account')}</span></div>
       <div class="settings-grid">
         <form id="profile-form"><label for="profile-name">{t('昵称', 'Display name')}</label><div class="profile-name-row"><input id="profile-name" type="text" maxlength="60" autocomplete="nickname" placeholder={t('输入你的昵称', 'Your display name')} /><button id="profile-save" type="submit">{t('保存', 'Save')}</button></div><p class="small">{t('昵称会显示在右上角的账户菜单中。', 'Your name appears in the account menu.')}</p></form>
         <dl class="profile-meta"><div><dt>{t('登录邮箱', 'Sign-in email')}</dt><dd id="profile-email"></dd></div><div><dt>{t('资料建立日期', 'Profile created')}</dt><dd id="profile-created"></dd></div></dl>
       </div>
+      <div class="account-plan-summary"><span>{t("当前套餐", "Current plan")}</span><strong data-account-plan>—</strong><a href={en ? "/en/subscription/" : "/subscription/"}>{t("查看 Free / Plus →", "Compare Free / Plus →")}</a></div>
+      <p><a href="/pro/">{t("专业情报与服务权益 →", "Professional intelligence and entitlement →")}</a></p>
       <div class="account-data-actions"><span>{t('关注、价格筛选、模型对比与显示偏好会在登录后同步。', 'Follows, price filters, comparisons and appearance sync when signed in.')}</span><button id="account-export" class="quiet" type="button">{t('导出我的数据', 'Export my data')}</button><button id="account-logout-all" class="quiet" type="button">{t('退出所有设备', 'Sign out everywhere')}</button></div><p id="profile-status" role="status" aria-live="polite"></p>
     </section>
     <section id="workspace" hidden>
-      <div class="workspace-bar"><span><b id="user-email"></b><small>{t('个人空间 · 免费版', 'Personal account · Free')}</small></span><button id="logout" class="quiet">{t('退出登录', 'Sign out')}</button></div>
+      <div class="workspace-bar"><span><b id="user-email"></b><small>{t('个人空间', 'Personal account')}</small></span><button id="logout" class="quiet">{t('退出登录', 'Sign out')}</button></div>
       <div class="watch-layout">
         <section class="watch-main">
           <div class="section-title"><h2>{t('我的模型 ', 'My models ')}<span id="watch-count">0</span></h2><span class="small">{t('最多 50 个', 'Up to 50 models')}</span></div>

@@ -1,0 +1,152 @@
+TAP version 13
+# (node:24105) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: T01 协议协商 + 仅五个只读工具 + schema 说明
+ok 1 - T01 协议协商 + 仅五个只读工具 + schema 说明
+  ---
+  duration_ms: 44.976459
+  type: 'test'
+  ...
+# Subtest: T04 changes 默认 limit=10 + 截断 + 翻页无重复遗漏
+ok 2 - T04 changes 默认 limit=10 + 截断 + 翻页无重复遗漏
+  ---
+  duration_ms: 9.30525
+  type: 'test'
+  ...
+# Subtest: T04 组合筛选 + 空结果措辞 + cursor 冲突
+ok 3 - T04 组合筛选 + 空结果措辞 + cursor 冲突
+  ---
+  duration_ms: 9.935875
+  type: 'test'
+  ...
+# Subtest: T05 prices 条件完整 + 不选最低 + 排序声明
+ok 4 - T05 prices 条件完整 + 不选最低 + 排序声明
+  ---
+  duration_ms: 6.14125
+  type: 'test'
+  ...
+# Subtest: T06 item→evidence 闭环 + 恶意摘录原样数据
+ok 5 - T06 item→evidence 闭环 + 恶意摘录原样数据
+  ---
+  duration_ms: 10.572125
+  type: 'test'
+  ...
+# Subtest: T07 weekly 最新/指定/列表/id-limit 互斥
+ok 6 - T07 weekly 最新/指定/列表/id-limit 互斥
+  ---
+  duration_ms: 5.784041
+  type: 'test'
+  ...
+# Subtest: T08 工具错误：稳定 code + 恢复动作
+ok 7 - T08 工具错误：稳定 code + 恢复动作
+  ---
+  duration_ms: 4.063667
+  type: 'test'
+  ...
+# Subtest: T08b 无有效数据 → no_data_available（不用模型知识补答）
+ok 8 - T08b 无有效数据 → no_data_available（不用模型知识补答）
+  ---
+  duration_ms: 8.364292
+  type: 'test'
+  ...
+# Subtest: T09 畸形 JSON / 未知方法 / Content-Type / Accept / 超大 body
+ok 9 - T09 畸形 JSON / 未知方法 / Content-Type / Accept / 超大 body
+  ---
+  duration_ms: 11.272541
+  type: 'test'
+  ...
+# Subtest: T10 Origin 缺省放行 / 白名单命中 / 拒绝无副作用
+ok 10 - T10 Origin 缺省放行 / 白名单命中 / 拒绝无副作用
+  ---
+  duration_ms: 3.759792
+  type: 'test'
+  ...
+# Subtest: T11 新版本切换 + cursor 旧版本 + 损坏旧版拒载
+ok 11 - T11 新版本切换 + cursor 旧版本 + 损坏旧版拒载
+  ---
+  duration_ms: 51.174166
+  type: 'test'
+  ...
+# Subtest: T11b 损坏历史版本 → getOrLoad null（→ 工具错误 dataset_version_expired）
+ok 12 - T11b 损坏历史版本 → getOrLoad null（→ 工具错误 dataset_version_expired）
+  ---
+  duration_ms: 2.414084
+  type: 'test'
+  ...
+# Subtest: 所有 MCP 响应 no-store
+ok 13 - 所有 MCP 响应 no-store
+  ---
+  duration_ms: 2.520625
+  type: 'test'
+  ...
+# (node:24106) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: review required, monotonic immutable versions, audit, withdrawal never falls back
+ok 14 - review required, monotonic immutable versions, audit, withdrawal never falls back
+  ---
+  duration_ms: 8.923625
+  type: 'test'
+  ...
+# Subtest: object union with topic intersection; unresolved model never matches model-only scope
+ok 15 - object union with topic intersection; unresolved model never matches model-only scope
+  ---
+  duration_ms: 1.768041
+  type: 'test'
+  ...
+# Subtest: expiry and revocation checked per request; scoped hashed credentials and encrypted RSS rotation
+ok 16 - expiry and revocation checked per request; scoped hashed credentials and encrypted RSS rotation
+  ---
+  duration_ms: 2.304916
+  type: 'test'
+  ...
+# Subtest: reports freeze scope and selected versions; corrections use latest, account isolation and independent unsubscribe
+ok 17 - reports freeze scope and selected versions; corrections use latest, account isolation and independent unsubscribe
+  ---
+  duration_ms: 4.47
+  type: 'test'
+  ...
+# Subtest: normal empty and failed coverage distinguished; expired users cannot receive pending mail
+ok 18 - normal empty and failed coverage distinguished; expired users cannot receive pending mail
+  ---
+  duration_ms: 1.855625
+  type: 'test'
+  ...
+# Subtest: retry preserves idempotency and freezes message; uncertain attempts older than 23h require review
+ok 19 - retry preserves idempotency and freezes message; uncertain attempts older than 23h require review
+  ---
+  duration_ms: 1.832791
+  type: 'test'
+  ...
+# Subtest: HTTP and MCP protected content, previews, exports, private RSS, same origin management
+ok 20 - HTTP and MCP protected content, previews, exports, private RSS, same origin management
+  ---
+  duration_ms: 49.511416
+  type: 'test'
+  ...
+# Subtest: additive schema survives restart, free account data remains usable, snapshots exclude public samples
+ok 21 - additive schema survives restart, free account data remains usable, snapshots exclude public samples
+  ---
+  duration_ms: 12.791083
+  type: 'test'
+  ...
+# Subtest: beta access is separate, idempotent, switchable and respects revocation
+ok 22 - beta access is separate, idempotent, switchable and respects revocation
+  ---
+  duration_ms: 1.504791
+  type: 'test'
+  ...
+# Subtest: weekly full text requires Plus; anonymous query hides analysis
+ok 23 - weekly full text requires Plus; anonymous query hides analysis
+  ---
+  duration_ms: 10.700708
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 382.7765
