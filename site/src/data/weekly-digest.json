@@ -4,6 +4,14 @@
     "start": "2026-09-28",
     "end": "2026-10-04",
     "days": {
+      "2026-10-04": {
+        "substantive": 5,
+        "jitter": 1,
+        "failed": 3,
+        "releases": 3,
+        "pricings": 6,
+        "sunsets": 1
+      },
       "2026-10-03": {
         "substantive": 8,
         "jitter": 2,
@@ -54,12 +62,78 @@
       }
     },
     "totals": {
-      "substantive": 72,
-      "releases": 29,
-      "pricings": 15,
-      "sunsets": 5
+      "substantive": 77,
+      "releases": 32,
+      "pricings": 21,
+      "sunsets": 6
     },
     "highlights": [
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-04",
+        "text": "qwen-image-2.1-pro 新增定价 0.283404元/张，支持文生图与图生图/图像编辑",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-04",
+        "text": "qwen-image-2.0 系列改为按张计费，各地域单价已公布",
+        "type": "pricing"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-10-04",
+        "text": "xAI 模型列表与定价页中 Agent 条目删除，新增 STS 条目，定价 $0.08/min",
+        "type": "sunset"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-04",
+        "text": "新增 Ling 3.1 Flash 语言模型评测，发布日期为 10月3日",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-04",
+        "text": "Claude Sonnet 5.5 推理配置从 Max 改为 Xhigh，默认回退保持不变",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-04",
+        "text": "GPT 6.1 Sol (Max) 新增，定价 $0.58/task，同时移除 GPT 5.6 Terra (xHigh)",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-04",
+        "text": "Claude Fable 5.1 (Max) 价格从 $4.56/task 上调至 $4.86/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-04",
+        "text": "Claude Opus 5.5 (High) 价格从 $1.58/task 下调至 $1.56/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-04",
+        "text": "Deepseek V4.1 Flash (Max) 价格从 $0.10/task 上调至 $0.11/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "官方定价页",
+        "date": "2026-10-04",
+        "text": "qwen3.8-flash input 新定价 1.094000 CNY/百万tokens，output 新定价 3.427000 CNY/百万tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "官方定价页",
+        "date": "2026-10-04",
+        "text": "qwen-image-2.1-pro output 新定价 0.250000 CNY/百万tokens",
+        "type": "pricing"
+      },
       {
         "platform": "xAI",
         "date": "2026-10-03",

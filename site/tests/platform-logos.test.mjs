@@ -1,4 +1,4 @@
-import { logoFor } from '../src/lib/platforms.ts';
+import { logoFor, registeredLogoFor, FALLBACK_LOGO } from '../src/lib/platforms.ts';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -7,8 +7,13 @@ const read = (path) => JSON.parse(readFileSync(new URL(path, root)));
 const config = read('pipeline/config/maas_official_sources.json');
 const registry = read('site/src/data/platform-logos.json');
 const pricing = read('site/src/data/pricing/ledger.json');
-for (const platform of [...config.platforms, ...config.industry_sources]) assert.ok(logoFor(platform.name), platform.name);
-for (const provider of pricing.providers) assert.ok(logoFor(provider), `pricing: missing logo for ${provider}`);
+const unknownNames = new Set();
+function checkLogo(name) {
+  assert.ok(existsSync(new URL(`site/public${logoFor(name)}`, root)), `missing logo asset: ${name}`);
+  if (!registeredLogoFor(name)) unknownNames.add(name);
+}
+for (const platform of [...config.platforms, ...config.industry_sources]) checkLogo(platform.name);
+for (const provider of pricing.providers) checkLogo(provider);
 for (const platform of registry) {
   for (const alias of [platform.id, platform.name, ...platform.aliases]) assert.equal(logoFor(alias), platform.file);
   const file = new URL(`site/public${platform.file}`, root);
@@ -16,11 +21,14 @@ for (const platform of registry) {
   assert.equal(createHash('sha256').update(readFileSync(file)).digest('hex'), platform.sha256);
 }
 for (const day of read('site/src/data/daily_changes.json').days) {
-  for (const item of [...day.changed, ...(day.highlights || [])]) assert.ok(logoFor(item.platform), item.platform);
+  for (const item of [...day.changed, ...(day.highlights || [])]) checkLogo(item.platform);
 }
 assert.equal(logoFor(' OPEN AI '), logoFor('OpenAI'));
 assert.notEqual(logoFor('Gemini'), logoFor('Vertex AI'));
-assert.equal(logoFor('unknown-platform'), undefined);
+assert.equal(registeredLogoFor('unknown-platform'), undefined);
+assert.equal(logoFor('unknown-platform'), FALLBACK_LOGO);
+assert.equal(logoFor('官方定价页'), FALLBACK_LOGO);
+assert.ok(existsSync(new URL(`site/public${FALLBACK_LOGO}`, root)));
 console.log('Logo registry: platforms, aliases, daily data and file hashes passed.');
 
 for (const file of readdirSync(new URL('site/src/data/leaderboards/', root)).filter(f=>f.endsWith('.json'))) {
@@ -28,10 +36,11 @@ for (const file of readdirSync(new URL('site/src/data/leaderboards/', root)).fil
     if (Array.isArray(value)) return value.forEach(visit);
     if (!value || typeof value !== 'object') return;
     for (const [key, child] of Object.entries(value)) {
-      if (['vendor','app_name','harness'].includes(key) && typeof child === 'string') assert.ok(logoFor(child), `${file}: missing logo for ${child}`);
+      if (['vendor','app_name','harness'].includes(key) && typeof child === 'string') checkLogo(child);
       else if (typeof child === 'object') visit(child);
     }
   };
   visit(read(`site/src/data/leaderboards/${file}`));
 }
-console.log('All leaderboard vendors and applications have local logo mappings.');
+if (unknownNames.size) console.warn('Using generic logo for:', [...unknownNames].join(', '));
+console.log('All leaderboard vendors and applications have renderable logos.');

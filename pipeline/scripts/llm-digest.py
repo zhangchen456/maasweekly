@@ -170,9 +170,30 @@ def parse_llm_json(text: str) -> dict:
     return {"highlights": out_hl, "source_summaries": out_ss}
 
 
+def platform_names(changed, price_changes):
+    registry = json.loads((BASE / "data/normalized/platform-logos.json").read_text())
+    aliases = {name.casefold(): entry["name"] for entry in registry
+               for name in [entry["id"], entry["name"], *entry.get("aliases", [])]}
+    names = {str(c["platform"]) for c in changed}
+    names.update(aliases.get(str(pc["provider"]).casefold(), str(pc["provider"])) for pc in price_changes)
+    return names, aliases
+
+
+def validate_highlight_platforms(result, changed, price_changes):
+    names, aliases = platform_names(changed, price_changes)
+    for highlight in result["highlights"]:
+        name = highlight["platform"].strip()
+        canonical = aliases.get(name.casefold(), name)
+        if canonical not in names and name not in names:
+            raise ValueError(f"摘要平台不在当日输入中: {name}")
+        highlight["platform"] = canonical if canonical in names else name
+    return result
+
+
 def build_day_prompt(date_str: str, changed: list, price_changes: list | None = None) -> str:
     """把当日 substantive 信源 + 价格变化事件组装成喂给 LLM 的文本。"""
-    parts = [f"日期：{date_str}\n"]
+    names, aliases = platform_names(changed, price_changes or [])
+    parts = [f"日期：{date_str}\n", f"platform 只允许以下厂商名称：{'、'.join(sorted(names))}\n"]
     for c in changed[:MAX_SOURCES]:
         if c.get("kind") != "substantive":
             continue
@@ -188,10 +209,10 @@ def build_day_prompt(date_str: str, changed: list, price_changes: list | None = 
         parts.append("\n## 官方定价页价格变化（结构化，已按模型×计费组件归一）")
         for pc in price_changes[:20]:
             if "previous" in pc and pc.get("previous"):
-                parts.append(f"  {pc['provider']}/{pc['model']} {pc['component']}: "
+                parts.append(f"  {aliases.get(str(pc['provider']).casefold(), pc['provider'])}/{pc['model']} {pc['component']}: "
                              f"{pc['previous']} → {pc['current']} {pc.get('currency','')}/百万tokens")
             else:
-                parts.append(f"  {pc['provider']}/{pc['model']} {pc['component']}: "
+                parts.append(f"  {aliases.get(str(pc['provider']).casefold(), pc['provider'])}/{pc['model']} {pc['component']}: "
                              f"新定价 {pc['current']} {pc.get('currency','')}/百万tokens")
     return PROMPT + "\n".join(parts)
 
@@ -208,7 +229,7 @@ def process_day(day: dict, api_key: str, base_url: str, model: str) -> dict | No
     for attempt in (1, 2):  # 瞬态失败（超时/截断/坏 JSON）重试一次
         try:
             raw = llm_call(api_key, base_url, model, prompt)
-            result = parse_llm_json(raw)
+            result = validate_highlight_platforms(parse_llm_json(raw), changed, price_changes)
             return result
         except Exception as e:  # noqa: BLE001 —— 重试后仍失败才降级
             last_err = e

@@ -3066,5 +3066,107 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-04": {
+    "highlights": [
+      {
+        "platform": "阿里百炼",
+        "logo_summary": "图像生成2.0系列上架，按张计费",
+        "items": [
+          {
+            "text": "qwen-image-2.1-pro 新增定价 0.283404元/张，支持文生图与图生图/图像编辑",
+            "type": "release"
+          },
+          {
+            "text": "qwen-image-2.0 系列改为按张计费，各地域单价已公布",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "xAI",
+        "logo_summary": "模型列表与定价同步更新，Agent 替换为 STS",
+        "items": [
+          {
+            "text": "xAI 模型列表与定价页中 Agent 条目删除，新增 STS 条目，定价 $0.08/min",
+            "type": "sunset"
+          }
+        ]
+      },
+      {
+        "platform": "Artificial Analysis",
+        "logo_summary": "新增 Ling 3.1 Flash 评测，部署商列表更新",
+        "items": [
+          {
+            "text": "新增 Ling 3.1 Flash 语言模型评测，发布日期为 10月3日",
+            "type": "release"
+          },
+          {
+            "text": "Claude Sonnet 5.5 推理配置从 Max 改为 Xhigh，默认回退保持不变",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "LMArena",
+        "logo_summary": "多款模型价格变动，GPT 6.1 Sol 新上榜",
+        "items": [
+          {
+            "text": "GPT 6.1 Sol (Max) 新增，定价 $0.58/task，同时移除 GPT 5.6 Terra (xHigh)",
+            "type": "release"
+          },
+          {
+            "text": "Claude Fable 5.1 (Max) 价格从 $4.56/task 上调至 $4.86/task",
+            "type": "pricing"
+          },
+          {
+            "text": "Claude Opus 5.5 (High) 价格从 $1.58/task 下调至 $1.56/task",
+            "type": "pricing"
+          },
+          {
+            "text": "Deepseek V4.1 Flash (Max) 价格从 $0.10/task 上调至 $0.11/task",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "阿里百炼",
+        "logo_summary": "Qwen 3.8 Flash 与图像模型定价更新",
+        "items": [
+          {
+            "text": "qwen3.8-flash input 新定价 1.094000 CNY/百万tokens，output 新定价 3.427000 CNY/百万tokens",
+            "type": "pricing"
+          },
+          {
+            "text": "qwen-image-2.1-pro output 新定价 0.250000 CNY/百万tokens",
+            "type": "pricing"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_fc7492b97072e6e3d3cc793231613f12f0c851e51551f185d21c6862824a453f": "新增 qwen-image-2.1-pro 定价行，并明确 qwen-image-2.0 系列按张计费，同时删除旧版本的能力等同说明，对应图像生成2.0系列正式上架。",
+      "obs_be6f14fe7a9076ce43ae021515c3ad34e8c2358d5261ae081c63d371bd72d0e8": "模型列表中删除 Agent 条目，新增 STS 条目，定价 $0.08/min，表明产品线从 Agent 转向 STS。",
+      "obs_fca8bce4b79a58b5457778b44fe6fa3358271b6f93f42d98bed9d300243eda4d": "定价页同步删除 Agent 定价，新增 STS 定价，与模型列表变更一致。",
+      "obs_90301702e3a87f60c6d5a9d62e2e162da0df07546715748382085028a62003c4": "新增 Ling 3.1 Flash 评测，并更新了 Claude Sonnet 5.5 的推理配置，同时调整了部署商列表（新增 Nebius (Base) 和 Novita，移除 Parasail 等），反映评测覆盖范围变化。",
+      "obs_cee7791f43d950ce361a613cb03d2366e8d5696be7854c20a8f8d50e38050c25": "多款模型价格变动，GPT 6.1 Sol 新上榜，Gemini 4 Argon 和 GPT 5.6 Terra 被移除，同时总会话数更新，反映榜单动态调整。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "54286540955acfa89bff3abe25513a770e165f351a257c63064cf21e44bfc76c",
+      "inputRefs": [
+        "obs_90301702e3a87f60c6d5a9d62e2e162da0df07546715748382085028a62003c4",
+        "obs_be6f14fe7a9076ce43ae021515c3ad34e8c2358d5261ae081c63d371bd72d0e8",
+        "obs_cee7791f43d950ce361a613cb03d2366e8d5696be7854c20a8f8d50e38050c25",
+        "obs_fc7492b97072e6e3d3cc793231613f12f0c851e51551f185d21c6862824a453f",
+        "obs_fca8bce4b79a58b5457778b44fe6fa3358271b6f93f42d98bed9d300243eda4d",
+        "price_3401523405514229f15b2ef7a1ab7cc6e5449c35e5e8a2065a83622df62cd64f",
+        "price_7646ec2f8b75c7708f31d93698d3709d30a18f70ef223ad47b84fe5c651e07c4",
+        "price_b5f7cf977445e4060cf54eb87c34e460d926fdb8e2d79db9970d4d14d2f1cabc",
+        "price_e86a0d9321e62e38406245a5b760fff60707a307dc5d5f8028de336bf90d1a1c"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }
