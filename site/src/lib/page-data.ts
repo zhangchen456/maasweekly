@@ -27,7 +27,7 @@ export function pricingPage() {
       const file=lookup.get(normalize(p)); return file?[[p,file]]:[];
     }))} : null;
   const ledgerDate = ledger?.meta?.published_at
-    ? new Date(ledger.meta.published_at*1000).toLocaleDateString('zh-CN',{month:'2-digit',day:'2-digit'}).replace(/\//g,'.') : '—';
+    ? new Date(ledger.meta.published_at*1000).toISOString() : '—';
   const modelCount = new Set(ledger?.prices.map(p=>`${p.provider}/${p.model}`)??[]).size;
   const providerCount = ledger?.providers?.length ?? 0;
   const range=(value:string)=> { const numbers=String(value).match(/[\d.]+/g)?.map(Number).filter(Number.isFinite)??[];return {low:numbers[0]??0,high:numbers.at(-1)??numbers[0]??0}; };

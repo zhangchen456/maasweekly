@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily MaaS Daily release cleanup
+
+[Timer]
+OnCalendar=*-*-* 04:00:00 Asia/Shanghai
+Persistent=true
+Unit=maas-release-cleanup.service
+
+[Install]
+WantedBy=timers.target

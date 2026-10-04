@@ -35,7 +35,7 @@ weekly-digest.json 结构（按周倒序）:
 """
 import json
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent.parent  # repo root
@@ -221,7 +221,7 @@ def main():
         sys.exit(1)
 
     out = {
-        "updated_at": datetime.now().isoformat(timespec="seconds"),
+        "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "days": days,
     }
     save_observations(BASE, out)

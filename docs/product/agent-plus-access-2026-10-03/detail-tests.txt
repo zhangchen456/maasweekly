@@ -1,0 +1,88 @@
+[1] T01：配置门禁（含违规样本逐项拒）
+  ✓ 当前配置零违规
+  ✓ 违规样本被拒（）
+  ✓ 违规样本被拒（http://daily.maas.click）
+  ✓ 违规样本被拒（https://localhost:3000）
+  ✓ 违规样本被拒（https://x.local）
+  ✓ 违规样本被拒（file:///Users/x）
+  ✓ 违规样本被拒（https://x/Users/y）
+  ✓ 违规样本被拒（结构违规）
+  ✓ 违规样本被拒（结构违规）
+  ✓ 违规样本被拒（结构违规）
+  ✓ pending 状态不触发门禁
+  ✓ 客户端同时出现在两边被拒
+[2] T01：漂移检测（openapi/skill-version/llms.txt ↔ config）
+  ✓ openapi servers[0].url === canonical
+  ✓ skill-version publicBaseUrl === canonical
+  ✓ skill-version mcpPath === config
+  ✓ llms.txt URL 集与 config 推导一致
+  ✓ llms.txt 无实时数量
+  ✓ llms.txt 无客户端兼容宣称
+[3] T01：dist 扫描（无 localhost/file/本机路径/sudo）
+  ✓ dist 46198 个 html/xml/txt 无违规内容
+[4] T02/T03/T05：/agent/ 页面内容
+  ✓ 四卡含「Skill」
+  ✓ 四卡含「MCP」
+  ✓ 四卡含「RSS」
+  ✓ 四卡含「REST API」
+  ✓ 观察快照声明
+  ✓ 无结果语义
+  ✓ 接入页不展示客户端验证状态块
+  ✓ Codex 配置保留且无过时验收说明
+  ✓ Skill 安装命令 --dir 最终目录
+  ✓ MCP 配置 URL 来自 config
+  ✓ REST base URL 正确
+  ✓ feed 双地址
+  ✓ 四入口显示已上线（T23）
+  ✓ RSS 卡显示已上线（GA 后状态真实）
+  ✓ RSS 卡含上线证据说明（2026-09-20 验收）
+  ✓ changelog 含 GA 日期 2026-09-20
+  ✓ 复制反馈 aria-live
+  ✓ 示例含 dataThrough
+  ✓ 示例含 datasetVersion 短码
+  ✓ 示例含 coverage count
+[5] T13：/method/ 动态数字与时间语义
+  ✓ 含 dataThrough
+  ✓ 含 changes count
+  ✓ 含 prices facts
+  ✓ 含 weekly count
+  ✓ 无构建时间戳冒充数据时间
+  ✓ 方法节「观察」存在
+  ✓ 方法节「五种时间」存在
+  ✓ 方法节「证据」存在
+  ✓ 方法节「LLM 摘要」存在
+  ✓ 方法节「价格的条件」存在
+  ✓ 方法节「衍生数据」存在
+  ✓ 方法节「健康信号」存在
+  ✓ 方法节「修订、撤回」存在
+[6] T14：/changelog/ 真实性
+  ✓ 首条记录存在
+  ✓ 不倒填日期（待部署措辞）
+  ✓ v1 兼容规则
+  ✓ 无虚构停用公告（Sunset/Deprecation 无日期型预告）
+  ✓ 五 area 齐备
+[7] T12：页面内链 dist 实存
+  ✓ agent 内部链接实存
+  ✓ method 内部链接实存
+  ✓ changelog 内部链接实存
+[8] T15/T22（自动部分）：CSS 与焦点
+  ✓ 抽离 CSS 存在
+  ✓ 代码块 overflow-x 处理
+  ✓ 焦点样式 focus-visible
+  ✓ 四方式切换入口
+  ✓ 入口导航（四锚点）
+  ✓ 安装提示词和后续操作存在
+  ✓ 锚点 #method-skill
+  ✓ 锚点 #method-mcp
+  ✓ 锚点 #method-rss
+  ✓ 锚点 #method-rest
+  ✓ 锚点偏移（防固定导航遮挡）
+  ✓ 复制按钮为原生 button
+  ✓ 五个 MCP 工具名
+  ✓ 六类 REST 端点
+  ✓ REST 查询参数用 provider
+  ✓ Skill 更新=同 --dir 重跑
+  ✓ 无虚构安装器参数
+  ✓ 示例价格查询未宣称实时价格
+
+全部通过 ✓

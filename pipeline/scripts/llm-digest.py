@@ -33,7 +33,7 @@ import os
 import re
 import sys
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent.parent
@@ -279,7 +279,7 @@ def main():
             for item in h["items"]:
                 print(f"  • [{item['type']}] {h['platform']}: {item['text'][:60]}")
 
-    data["updated_at"] = datetime.now().isoformat(timespec="seconds")
+    data["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     save_day_summaries(BASE, days, metadata)
     project_site(BASE)
     print(f"\ndaily_changes.json 已更新 -> {DST_FILE}")

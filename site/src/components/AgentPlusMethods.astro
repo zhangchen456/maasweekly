@@ -1,0 +1,114 @@
+---
+import CopyBlock from './CopyBlock.astro';
+const { en = false, base = 'https://daily.maas.click' } = Astro.props;
+const text = (zh: string, english: string) => en ? english : zh;
+const plusConfig = JSON.stringify({mcpServers:{'maas-daily-plus':{url:`${base}/api/pro/mcp`,headers:{Authorization:'Bearer YOUR_MAAS_PLUS_TOKEN'}}}},null,2);
+---
+<section class="plus-method method-panel" id="plus-method-skill" data-panel="skill" data-tier="plus">
+<span class="eyebrow">{text('从这里开始','START HERE')}</span>
+<h2>{text('复制给 Agent，剩下的交给它','Let your Agent complete the setup')}</h2>
+<ol>
+      <li><a href="/pro/#pro-token-panel">{text('生成 Agent / MCP 通用凭证','Create an Agent / MCP API token')}</a>{text('，在客户端的安全配置中保存。',', and store it in your client’s secure configuration.')}</li>
+      <li>{text('按下方说明完成当前接入方式的配置。','Complete this access method using the instructions below.')}</li>
+    </ol>
+<p>{text('安装或更新同一个 MaaS Daily Skill，再配置 Plus MCP。Skill 会按任务选用公开查询或 Plus 全文工具，凭证只保存在客户端配置中。','Install or update the same MaaS Daily Skill, then configure Plus MCP. The Skill selects public queries or Plus full-text tools for each task; keep credentials in client configuration.')}</p>
+<CopyBlock code={text(`请安装或更新 MaaS Daily Skill：${base}/maas-skill/README.md。保留已有 Free 连接，按接入指南增加 Plus MCP，并使用客户端安全配置保存凭证，不要向我索要或把凭证写入对话。完成后用 maas_pro_weekly 读取最新一期全文，返回期号与来源链接。`,`Install or update the MaaS Daily Skill: ${base}/maas-skill/README.md. Keep the Free connection and add Plus MCP using secure client configuration. Never ask for or place credentials in chat. Verify with maas_pro_weekly and report the issue ID and sources.`)} label={text('安装提示词','Installation prompt')} />
+<p class="note">{text('凭证默认有效 30 天，可随时撤销；每次读取都检查 Plus 权益。401：检查到期或撤销；403：检查会员权益和凭证用途。不要把凭证写入提问、Skill 文件或公开链接。','Tokens last 30 days by default and can be revoked. Each read checks Plus access. For 401, check token expiry or revocation; for 403, check membership and token purpose. Keep credentials out of prompts, Skill files and public links.')}</p>
+</section>
+<section class="plus-method method-panel" id="plus-method-mcp" data-panel="mcp" data-tier="plus">
+<span class="eyebrow">{text('远程工具连接','REMOTE TOOLS')}</span>
+<h2>{text('把 MaaS Daily 加入你的工具列表','Add MaaS Daily to your tools')}</h2>
+<ol>
+      <li><a href="/pro/#pro-token-panel">{text('生成 Agent / MCP 通用凭证','Create an Agent / MCP API token')}</a>{text('，在客户端的安全配置中保存。',', and store it in your client’s secure configuration.')}</li>
+      <li>{text('按下方说明完成当前接入方式的配置。','Complete this access method using the instructions below.')}</li>
+    </ol>
+
+      <CopyBlock code={`${base}/api/pro/mcp`} label="MCP 地址" />
+      <p>{text('请求头：Authorization: Bearer 你的凭证。下方 JSON 的占位符必须替换，不会自动读取环境变量；客户端不支持自定义请求头时，使用 REST。','Header: Authorization: Bearer your token. Replace the placeholder in this JSON; it does not interpolate environment variables. Use REST if your client cannot set request headers.')}</p>
+      <CopyBlock code={plusConfig} label={text('MCP 配置','MCP configuration')} />
+      <ul><li><code>maas_pro_weekly</code> — {text('周报全文；省略 id 读最新一期','Complete weekly report; omit id for the latest issue')}</li><li><code>maas_pro_catalog / maas_pro_read</code> — {text('已发布专业分析的目录 / 全文','Published analysis catalog / full text')}</li><li><code>maas_pro_reports</code> — {text('本人个人简报','Your personal reports')}</li></ul>
+      <CopyBlock code={text('用 maas_pro_weekly 读取最新一期深度周报全文，概括主要变化、趋势和关注点，注明期号、数据截至日期与来源链接。如果权限不足，请说明，不要用公开摘要或模型记忆冒充全文。','Use maas_pro_weekly to read the latest complete weekly report. Summarize changes, trends and watchpoints with issue ID, data-through date and source links. If access is denied, say so; do not substitute public summaries or model memory for the full report.')} label={text('验证问题','Verification prompt')} />
+
+<p class="note">{text('凭证默认有效 30 天，可随时撤销；每次读取都检查 Plus 权益。401：检查到期或撤销；403：检查会员权益和凭证用途。不要把凭证写入提问、Skill 文件或公开链接。','Tokens last 30 days by default and can be revoked. Each read checks Plus access. For 401, check token expiry or revocation; for 403, check membership and token purpose. Keep credentials out of prompts, Skill files and public links.')}</p>
+</section>
+<section class="plus-method method-panel" id="plus-method-rss" data-panel="rss" data-tier="plus">
+<span class="eyebrow">{text('订阅阅读','READ IN YOUR READER')}</span>
+<h2>{text('更新来了，在阅读器里看','Read updates in your feed reader')}</h2>
+<p>{text('按关注的厂商、模型和主题接收已发布专业分析的摘要与链接。复制个人订阅地址，添加到阅读器即可。','Receive summaries and links to published analysis matching your providers, models and topics. Add your personal feed URL to your reader.')}</p>
+<ol class="quick-steps"><li><a href="/pro/#pro-settings-panel">{text('设置关注范围并保存','Set and save your interests')}</a></li><li><a href="/pro/#pro-token-panel">{text('选择 RSS 用途，生成私有订阅地址','Generate a private URL using the RSS credential purpose')}</a></li><li>{text('粘贴到阅读器的「添加订阅」，完成首次刷新','Paste into your reader’s “Add feed” and refresh')}</li></ol>
+<div class="subsection"><h3>{text('我的专业情报订阅','My professional feed')}</h3>
+<p>{text('已生成 RSS 凭证后，可以直接在这里获取并复制当前地址。','After generating an RSS credential, retrieve and copy the current address here.')}</p>
+<button type="button" id="agent-rss-load">{text('获取我的订阅地址','Get my feed URL')}</button>
+<div id="agent-rss-result" hidden><label for="agent-rss-url">{text('个人订阅地址','Personal feed URL')}</label><input id="agent-rss-url" readonly autocomplete="off" /><button type="button" id="agent-rss-copy">{text('复制订阅地址','Copy feed URL')}</button></div>
+<p id="agent-rss-status" class="note" role="status"></p>
+</div>
+<div class="subsection"><h3>{text('订阅后会收到什么','What arrives in your feed')}</h3>
+<ul><li>{text('按关注范围筛选，最多展示 30 条已发布分析','Up to 30 published analyses matching your interests')}</li><li>{text('包含标题、摘要、原文链接和更正提示','Titles, summaries, original links and correction notices')}</li><li>{text('摘要留在阅读器；阅读全文时回到网站登录','Read summaries in your reader; sign in on the website for full text')}</li></ul>
+<p>{text('这里不直接提供深度周报全文。普通变化与周报提醒仍可一起订阅：','This feed does not contain complete weekly reports. You can also keep the public change and weekly feeds:')}</p>
+<CopyBlock code={`${base}/feed.xml`} label={text('变化订阅地址','Change feed URL')} />
+<CopyBlock code={`${base}/feed/weekly.xml`} label={text('周报订阅地址','Weekly feed URL')} />
+</div>
+<div class="subsection"><h3>{text('怎样确认订阅成功','Verify your subscription')}</h3><p>{text('阅读器完成刷新且未报权限错误，即表示连接正常。没有条目时检查关注范围，或确认是否已有匹配的分析发布；空订阅不代表连接失败。','A successful refresh without authorization errors confirms connection. If there are no entries, check your interests and whether matching analysis has been published; an empty feed does not mean connection failure.')}</p></div>
+<details><summary>{text('地址失效或无法刷新？','Expired URL or refresh problems?')}</summary><p>{text('凭证默认有效 30 天。到期或撤销后，在管理页重新生成并更新阅读器地址；轮换 RSS 凭证会使旧地址失效。确认会员权益有效，不要使用 Agent / MCP 凭证拼接 RSS 地址。','Credentials last 30 days by default. After expiry or revocation, generate a new URL and update your reader. RSS rotation invalidates the previous URL. Check membership access and do not use an Agent / MCP token as an RSS credential.')}</p></details>
+<p class="note">{text('个人地址包含访问凭证，请保存在阅读器内。私有 RSS 不使用公共订阅的 ETag / 304 缓存；详情页保留最新更正与撤回状态。','Your personal URL contains an access credential; keep it in your reader. Private RSS does not use public-feed ETag / 304 caching. Detail pages retain the latest corrections and withdrawals.')}</p>
+</section>
+<section class="plus-method method-panel" id="plus-method-rest" data-panel="rest" data-tier="plus">
+<span class="eyebrow">{text('开发者接入','FOR DEVELOPERS')}</span>
+<h2>{text('接入你的脚本与工作流','Connect your scripts and workflows')}</h2>
+<p>{text('使用通用凭证发送只读 GET 请求，读取周报全文、专业分析和自己的个人简报。','Use your API token for read-only GET requests to full weekly reports, analysis and your personal reports.')}</p>
+<ol class="quick-steps"><li><a href="/pro/#pro-token-panel">{text('生成 Agent / MCP 用途凭证','Create an Agent / MCP API token')}</a></li><li>{text('在运行环境中设置 MAAS_PRO_TOKEN','Set MAAS_PRO_TOKEN in your runtime environment')}</li><li>{text('从目录取得真实期号或 ID，再读取全文','Discover a real issue or content ID, then fetch full text')}</li></ol>
+<div class="subsection"><h3>{text('从一次查询开始','Start with one query')}</h3><p>{text('先确认凭证有效。响应包含会员权益与本人的个人简报目录；未生成简报时目录为空。','Check your token first. The response includes access status and your personal report catalog, which is empty until reports have been generated.')}</p>
+<CopyBlock code={`curl -fsS -H "Authorization: Bearer $MAAS_PRO_TOKEN" "${base}/api/pro/me"`} label={text('连接验证命令','Connection check')} />
+</div>
+<div class="subsection"><h3>{text('读取深度周报全文','Read a complete weekly report')}</h3><p>{text('公开目录返回最新期号。将下面的 ISSUE_ID 替换为响应中的真实期号，全文接口返回 HTML。','The public catalog returns the latest issue ID. Replace ISSUE_ID below with the returned ID; the full-text endpoint returns HTML.')}</p>
+<CopyBlock code={`curl -fsS "${base}/api/v1/weekly?limit=1"`} label={text('周报目录查询','Weekly catalog query')} />
+<CopyBlock code={`curl -fsS -H "Authorization: Bearer $MAAS_PRO_TOKEN" "${base}/api/pro/weekly/ISSUE_ID"`} label={text('周报全文查询','Weekly full-text query')} />
+</div>
+<div class="subsection"><h3>{text('专业分析与个人简报','Analysis and personal reports')}</h3>
+<CopyBlock code={`curl -fsS -H "Authorization: Bearer $MAAS_PRO_TOKEN" "${base}/api/pro/catalog"`} label={text('专业分析目录查询','Analysis catalog query')} />
+<p>{text('目录返回已发布内容的 ID；个人简报 ID 从 /me 响应的 reports 获取。将 CONTENT_ID 或 REPORT_ID 替换后调用对应接口。','Use content IDs from the published analysis catalog and report IDs from the reports array in /me. Replace CONTENT_ID or REPORT_ID before calling their endpoints.')}</p>
+<div class="tool-list">{[
+['/api/pro/me',text('权益与本人简报目录 · JSON','Access and personal report catalog · JSON')],
+['/api/pro/catalog',text('已发布分析目录与预览 · JSON','Published analysis catalog and previews · JSON')],
+['/api/pro/content/{id}',text('专业分析全文 · JSON','Full analysis · JSON')],
+['/api/pro/weekly/{id}',text('深度周报全文 · HTML','Complete weekly report · HTML')],
+['/api/pro/report/{id}',text('本人个人简报 · JSON','Your personal report · JSON')],
+].map(([route,description])=><div><code>{route}</code><span>{description}</span></div>)}</div>
+<details><summary>{text('全文与导出命令','Full-text and export commands')}</summary>
+<CopyBlock code={`curl -fsS -H "Authorization: Bearer $MAAS_PRO_TOKEN" "${base}/api/pro/content/CONTENT_ID"
+curl -fsS -H "Authorization: Bearer $MAAS_PRO_TOKEN" "${base}/api/pro/report/REPORT_ID?format=markdown"`} label={text('全文与导出命令','Full-text and export commands')} />
+<p>{text('专业分析与个人简报支持 format=markdown 或 format=csv；周报全文接口返回 HTML，不支持这两个导出参数。','Analysis and personal reports support format=markdown or format=csv. The weekly endpoint returns HTML and does not support those export formats.')}</p>
+</details></div>
+<details><summary>{text('错误处理与凭证管理','Errors and token management')}</summary><p>{text('401：凭证无效、到期或撤销；403：会员权益或凭证用途不符；404：期号或内容不存在；429：按 Retry-After 等待；503：稍后重试。错误响应为 JSON，含 code 和 message。','401: invalid, expired or revoked token; 403: access or token purpose mismatch; 404: missing issue or content; 429: wait for Retry-After; 503: retry later. Errors return JSON with code and message.')}</p><p>{text('凭证默认有效 30 天，仅用于读取。管理凭证需要网站登录，不能用 Bearer 凭证修改账户；不要把凭证放在 URL 中。','API tokens last 30 days by default and are read-only. Token management requires website sign-in; Bearer tokens cannot modify accounts. Keep tokens out of URLs.')}</p></details>
+<p class="note">{text('专业接口使用 private, no-store，不沿用公开 REST 的 ETag / 304 和游标分页协议。内容尚未发布时目录可能为空；读取时保留来源、版本、更正与适用条件。','Professional endpoints use private, no-store rather than the public REST ETag / 304 and cursor protocol. Catalogs can be empty before publication; preserve sources, versions, corrections and conditions.')}</p>
+</section>
+<style>
+.plus-method{padding:32px 0;scroll-margin-top:100px}.eyebrow{font-size:11px;letter-spacing:.12em;color:var(--acid);font-weight:600}h2{font-size:27px;margin:12px 0 16px}p,li{font-size:13px;line-height:1.85;color:var(--paper-soft)}ol,ul{padding-left:20px;margin:16px 0}a{color:var(--acid)}.note{font-size:12px;color:var(--muted);margin-top:24px}code{overflow-wrap:anywhere}.subsection{margin:30px 0 24px}.subsection h3{font-size:16px;margin-bottom:12px}.tool-list{margin:24px 0}.tool-list>div{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:12px}.tool-list span{color:var(--muted)}details{border-bottom:1px solid var(--line)}summary{padding:15px 0;cursor:pointer;font-size:13px}button{background:var(--acid);color:var(--ink);border:0;border-radius:6px;padding:10px 18px;cursor:pointer;font:inherit;font-size:12px}button:focus-visible{outline:2px solid var(--acid);outline-offset:4px}button:disabled{opacity:.6}label{display:block;font-size:12px;margin:16px 0 8px}input{display:block;width:100%;padding:12px;border:1px solid var(--line);border-radius:6px;background:var(--ink-2);color:var(--paper);margin-bottom:10px}#agent-rss-result[hidden]{display:none}@media(max-width:480px){.tool-list>div{flex-direction:column;gap:6px}}
+</style>
+
+<script>
+  import { onAccountChange } from '../scripts/account-client';
+  const load=document.getElementById('agent-rss-load') as HTMLButtonElement;
+  const input=document.getElementById('agent-rss-url') as HTMLInputElement;
+  const result=document.getElementById('agent-rss-result')!;
+  const status=document.getElementById('agent-rss-status')!;
+  const en=location.pathname.startsWith('/en/');
+  let generation=0;
+  onAccountChange(()=>{generation++;input.value='';result.hidden=true;status.textContent='';});
+  load?.addEventListener('click',async()=>{
+    const owner=generation;load.disabled=true;result.hidden=true;input.value='';status.textContent='';
+    try {
+      const response=await fetch('/api/pro/rss-address',{credentials:'same-origin',cache:'no-store'});
+      const data=await response.json();if(owner!==generation)return;
+      if(!response.ok)throw new Error(response.status===401?(en?'Sign in on this website first.':'请先在本站登录。'):response.status===403?(en?'Check your membership access.':'请确认会员权益有效。'):(en?'Unable to retrieve the address. Try again later.':'暂时无法获取地址，请稍后重试。'));
+      if(!data.url){status.textContent=en?'Generate an RSS credential on the management page first.':'还没有 RSS 地址，请先到管理页生成 RSS 用途凭证。';return;}
+      input.value=data.url;result.hidden=false;status.textContent=en?'Add this address to your reader.':'将此地址添加到阅读器即可。';
+    }catch(error){if(owner===generation)status.textContent=error instanceof Error && /^(请|暂时|Sign in|Check your|Unable)/.test(error.message)?error.message:(en?'Unable to retrieve the address. Try again later.':'暂时无法获取地址，请稍后重试。');}
+    finally{load.disabled=false;}
+  });
+  document.getElementById('agent-rss-copy')?.addEventListener('click',async()=>{
+    if(!input.value)return;
+    try{await navigator.clipboard.writeText(input.value);status.textContent=en?'Copied.':'已复制。';}
+    catch{input.select();status.textContent=en?'Address selected. Press Ctrl/⌘+C to copy.':'已选中地址，请按 Ctrl/⌘+C 复制。';}
+  });
+</script>

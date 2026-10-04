@@ -1,3 +1,4 @@
+import { formatTimestamp } from '../../public/time-display.js';
 import { savedState } from './account-client';
 import type { WorkspaceData, LedgerPrice, WorkspaceModel, PriceVariant, SourceCondition } from '../lib/pricing-workspace';
 interface WorkspaceElements {
@@ -72,8 +73,7 @@ export function startPriceWorkspace() {
     function num(v: unknown): number | null { if (v === null || v === undefined || v === '')
         return null; const n = Number(v); return Number.isFinite(n) && n >= 0 ? n : null; }
     function fmt(n: number | null) { return n === null ? '暂无' : n === 0 ? '0' : n < .01 ? n.toLocaleString('zh-CN', { maximumSignificantDigits: 3 }) : n.toLocaleString('zh-CN', { maximumFractionDigits: n < 1 ? 4 : 2 }); }
-    function date(v: number | string | undefined) { if (!v)
-        return '未记录'; const d = new Date(typeof v === 'number' ? v * 1000 : v); return Number.isNaN(+d) ? '未记录' : d.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }); }
+    function date(v: number | string | undefined) { return !v ? '未记录' : formatTimestamp(typeof v === 'number' ? v * 1000 : v, { locale: document.documentElement.lang === 'en' ? 'en-US' : 'zh-CN' }); }
     function parse(v: SourceCondition): SourceCondition { if (!v)
         return null; if (typeof v === 'object')
         return v; try {
@@ -103,7 +103,7 @@ export function startPriceWorkspace() {
     }
     else
         parts.push('上下文未分档'); if (t)
-        parts.push(String(typeof t === 'object' ? (({ peak: '高峰时段', off_peak: '低峰时段' } as Record<string,string>)[String(t.period)] || t.schedule || JSON.stringify(t)) : String(t))); if (r.billing_mode && r.billing_mode !== 'realtime')
+        parts.push(String(typeof t === 'object' ? (({ peak: '高峰时段', off_peak: '低峰时段' } as Record<string,string>)[String(t.period)] || t.schedule || JSON.stringify(t)) + `（${t.tz || '来源时区未注明'}）` : String(t))); if (r.billing_mode && r.billing_mode !== 'realtime')
         parts.push(r.billing_mode); if (r.service_tier && r.service_tier !== 'standard')
         parts.push(r.service_tier); return parts.join(' · '); }
     const map = new Map<string, WorkspaceModel>();

@@ -5,7 +5,7 @@ import { homeOverview } from '../lib/home-page';
 import type { PlatformHighlight } from '../lib/home-page';
 interface Props { highlights: PlatformHighlight[]; platformOrder: string[]; date?: string; updatedAt?: string }
 const { highlights, platformOrder, date, updatedAt } = Astro.props;
-const { ledger, fxRate, displayAmount, updateLabel, labels, picks, modelGroups, quote, release } = homeOverview(highlights, updatedAt);
+const { ledger, fxRate, displayAmount, labels, picks, modelGroups, quote, release } = homeOverview(highlights, updatedAt);
 
 ---
 <header class="home-opening">
@@ -19,7 +19,7 @@ const { ledger, fxRate, displayAmount, updateLabel, labels, picks, modelGroups, 
     {picks.length > 1 && <div class="carousel-controls"><button type="button" data-carousel-prev aria-label="上一条重点">←</button><div class="carousel-pages" role="group" aria-label="选择重点">{picks.map((item,index)=><button type="button" data-carousel-page={index} aria-pressed={index === 0 ? 'true' : 'false'} aria-label={`第 ${index+1} 条：${item.headline}`}>{String(index+1).padStart(2,'0')}</button>)}</div><button type="button" data-carousel-next aria-label="下一条重点">→</button><span class="carousel-status" aria-live="polite">1 / {picks.length}</span></div>}
     <div class="opening-meta"><time datetime={date}>{date?.replaceAll('-','.') ?? '等待更新'}</time><span>官方来源追踪 · AI 摘要</span><a href="#digest">全部动态 ↗</a></div>
   </div>
-  <div class="opening-brand"><div class="opening-mark"><BrandMark /></div><span class="opening-wordmark">MaaS Daily</span>{updatedAt && <div class="brand-update"><span>最近更新</span><time datetime={updatedAt}>{updateLabel}</time></div>}</div>
+  <div class="opening-brand"><div class="opening-mark"><BrandMark /></div><span class="opening-wordmark">MaaS Daily</span>{updatedAt && <div class="brand-update"><span>最近更新</span><time datetime={updatedAt}>{updatedAt}</time></div>}</div>
 </header>
 <section class="market-section" aria-labelledby="market-title">
   <div class="market-heading"><div><p class="home-kicker">当前价格一览</p><h2 id="market-title">各家旗舰与主力模型，怎么选、怎么收费</h2></div><a href="/models/">全部模型 ↗</a></div>
@@ -33,7 +33,7 @@ const { ledger, fxRate, displayAmount, updateLabel, labels, picks, modelGroups, 
       <td><div class="model-identity"><span class="model-sequence">{String(index+1).padStart(2,'0')}</span><div>{page.modelHref ? <a href={page.modelHref}>{page.pick.name}</a> : <strong class="home-model-name">{page.pick.name}</strong>}<small>{providerLabels[page.pick.providerId] ?? page.pick.providerId} · {page.pick.reason}</small><a class="model-selection-source" href={page.pick.source} target="_blank" rel="noopener noreferrer">官方定位 ↗</a></div></div></td>
       <td>{page.input ? <><span class="quote-value" data-quote-amount={page.input.amount} data-quote-currency={page.input.currency}>{displayAmount(page.input)}</span><small><span data-display-currency>{['CNY','USD'].includes(page.input.currency) ? 'CNY' : page.input.currency}</span> / {priceUnit(page.input.unitQuantity,page.input.unitName)}</small><small class="original-quote">原价 {quote(page.input)}</small></> : <span class="home-quote-pending">{page.quoteStatus}</span>}</td>
       <td>{page.output ? <><span class="quote-value" data-quote-amount={page.output.amount} data-quote-currency={page.output.currency}>{displayAmount(page.output)}</span><small><span data-display-currency>{['CNY','USD'].includes(page.output.currency) ? 'CNY' : page.output.currency}</span> / {priceUnit(page.output.unitQuantity,page.output.unitName)}</small><small class="original-quote">原价 {quote(page.output)}</small></> : <span class="home-quote-pending">{page.input ? '该档位未单列' : '—'}</span>}</td>
-      <td>{page.input && <details class="quote-details"><summary>查看条件</summary><p>{page.condition}</p><p>缓存读取：{quote(page.cache)}</p><p>观察于 {page.input.observedAt.slice(0,10)} · 证据完整</p></details>}{page.modelHref && <a class="quote-link" href={page.modelHref}>报价与证据 ↗</a>}</td>
+      <td>{page.input && <details class="quote-details"><summary>查看条件</summary><p>{page.condition}</p><p>缓存读取：{quote(page.cache)}</p><p>观察于 <time datetime={page.input.observedAt}>{page.input.observedAt}</time> · 证据完整</p></details>}{page.modelHref && <a class="quote-link" href={page.modelHref}>报价与证据 ↗</a>}</td>
     </tr>)}</tbody>)}</table></div>
   </div>
   <noscript><style>[data-home-group][hidden]{display:table-row-group!important}[data-model-description][hidden]{display:block!important}.model-group-nav{display:none}</style><p>未启用 JavaScript，以下依次展示全部分组。</p></noscript>

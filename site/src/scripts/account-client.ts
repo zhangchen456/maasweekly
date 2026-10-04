@@ -1,5 +1,5 @@
 export interface AccountMe {
-  user: { id: string; email: string; displayName: string; created: number; plan: string };
+  user: { id: string; email: string; displayName: string; created: number; plan: string; hasPassword: boolean };
   preferences: { emailEnabled: boolean };
   watches: { modelId: string; since: number }[];
   state: Record<string, unknown>;

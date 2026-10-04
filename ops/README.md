@@ -101,3 +101,25 @@ verify 失败 ≠ 一律 rollback。按失败性质分类：
   （会污染 clean worktree，build-release.sh preflight 拒绝生产构建）。
 - 不把 secret 写进 systemd unit、命令行、Actions 参数或日志；
   `CURSOR_SECRET` 只存在于服务器 `shared/agent.env`（root:maasagent 0740）。
+
+## 发布包保留与定时清理
+
+成功激活后自动清理 `/srv/maasweekly/releases`，最多保留 3 个受管理发布包。
+优先保留 `current` 和 `previous`，其余按 `gitCommitTimestamp` 和 release ID 降序补足；
+因此回滚时仍保护正在使用的旧版本。历史 API 数据已内置在各包中，不再按相同数据版本或 7 天期限保留额外包。
+删除前验证保留包内的历史数据清单和文件大小，异常时停止清理并报错。
+清理与激活共用发布锁；清理失败不会把已完成的激活报告为失败。
+
+`maas-release-cleanup.timer` 每天北京时间 04:00 调用同一个 `cleanup`，关机错过后补执行。
+`install-production.sh` 安装并启用该任务。已有服务器仅更新激活器的清理函数并安装这两个单元，
+无需重装其他生产配置。未知目录和符号链接不会删除。
+
+```sh
+/usr/local/sbin/maasweekly-activate cleanup-plan
+systemctl list-timers maas-release-cleanup.timer
+journalctl -u maas-release-cleanup.service
+```
+
+2026-10-04 已在生产安装清理规则并启用 timer，首次手动执行 `Result=success / ExecMainStatus=0`；
+下次计划执行为北京时间 2026-10-05 04:00。旧激活器备份位于服务器
+`/srv/maasweekly/shared/state/activator-before-retention-20261004`。

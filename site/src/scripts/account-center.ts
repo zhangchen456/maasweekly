@@ -10,7 +10,8 @@ if (root) {
     if (!me) return;
     el<HTMLInputElement>('profile-name').value = me.user.displayName || '';
     el('profile-email').textContent = me.user.email;
-    el('profile-created').textContent = new Date(me.user.created).toLocaleDateString(en ? 'en-US' : 'zh-CN');
+    const created = el<HTMLTimeElement>('profile-created-time');
+    created.dateTime = new Date(me.user.created).toISOString(); created.textContent = created.dateTime;
   });
   el<HTMLFormElement>('profile-form').addEventListener('submit', async event => {
     event.preventDefault(); const button = el<HTMLButtonElement>('profile-save'); button.disabled = true;
@@ -18,6 +19,7 @@ if (root) {
     catch (error) { status.textContent = error instanceof Error ? error.message : 'Could not save'; }
     finally { button.disabled = false; }
   });
+  el('account-center-password').addEventListener('click', () => document.dispatchEvent(new CustomEvent('maas:password-setup')));
   el('account-export').addEventListener('click', async () => {
     try {
       const value = await accountApi('export'); const url = URL.createObjectURL(new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' }));

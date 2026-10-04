@@ -241,14 +241,14 @@ const latestReport = reports[0];
       </div>
       <div class="weekly-cta reveal">
         <a href={`/weekly/${latestReport?.id}/`} class="weekly-latest">
-          <span class="wl-tag">LATEST ISSUE</span>
+          <span class="wl-tag">LATEST ISSUE <span class="plus-badge">Plus</span></span>
           <span class="wl-date">{latestReport?.data?.date}</span>
           <span class="wl-title">{latestReport?.data?.title || 'MaaS 平台周度追踪报告'}</span>
           <span class="wl-arrow">阅读全文 →</span>
         </a>
         <div class="weekly-backlist">
           {reports.slice(1, 10).map((r) => (
-            <a href={`/weekly/${r.id}/`} class="back-item">{r.data.date}</a>
+            <a href={`/weekly/${r.id}/`} class="back-item">{r.data.date} <span class="plus-badge">{r.id==='2026-05-03'?'公开样例':'Plus'}</span></a>
           ))}
           {reports.length > 10 && <span class="back-more">…共 {reports.length} 期</span>}
         </div>
@@ -262,6 +262,7 @@ const latestReport = reports[0];
 </Layout>
 
 <style>
+.plus-badge{display:inline-block;font:600 10px/1.4 monospace;letter-spacing:0;padding:3px 6px;border-radius:4px;background:var(--acid);color:var(--ink)}
   /* ===== HERO：MaaS 主体 + 日期强调 ===== */
   .hero { padding: 44px 0 34px; }
   .eyebrow { display: flex; align-items: center; gap: 12px; color: var(--acid); font: 700 12px/1.2 "SF Mono", monospace; letter-spacing: .14em; text-transform: uppercase; }

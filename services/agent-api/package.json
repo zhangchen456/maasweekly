@@ -10,16 +10,20 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
-    "test": "npm run build && node --test --test-force-exit \"dist/tests/http.test.js\" \"dist/tests/versioning.test.js\" \"dist/tests/openapi.test.js\" \"dist/tests/p1-fixes.test.js\" \"dist/tests/model-identity.test.js\" \"dist/tests/runtime.test.js\" \"dist/tests/observability.test.js\" \"dist/tests/contracts.test.js\" \"dist/tests/cross-platform.test.js\" \"dist/tests/account.test.js\"",
+    "test": "npm run build && node --test --test-force-exit \"dist/tests/http.test.js\" \"dist/tests/versioning.test.js\" \"dist/tests/openapi.test.js\" \"dist/tests/p1-fixes.test.js\" \"dist/tests/model-identity.test.js\" \"dist/tests/runtime.test.js\" \"dist/tests/observability.test.js\" \"dist/tests/contracts.test.js\" \"dist/tests/cross-platform.test.js\" \"dist/tests/account.test.js\" \"dist/tests/pro.test.js\" \"dist/tests/feedback.test.js\"",
     "test:real": "npm run build && node --test dist/tests/real.test.js",
     "test:mcp": "npm run build && node --test --test-force-exit dist/tests/mcp.test.js",
     "test:mcp:real": "npm run build && node --test --test-force-exit dist/tests/mcp-real.test.js",
-    "test:compiled": "node --test --test-force-exit \"dist/tests/http.test.js\" \"dist/tests/versioning.test.js\" \"dist/tests/openapi.test.js\" \"dist/tests/p1-fixes.test.js\" \"dist/tests/model-identity.test.js\" \"dist/tests/runtime.test.js\" \"dist/tests/observability.test.js\" \"dist/tests/contracts.test.js\" \"dist/tests/cross-platform.test.js\" \"dist/tests/account.test.js\"",
+    "test:compiled": "node --test --test-force-exit \"dist/tests/http.test.js\" \"dist/tests/versioning.test.js\" \"dist/tests/openapi.test.js\" \"dist/tests/p1-fixes.test.js\" \"dist/tests/model-identity.test.js\" \"dist/tests/runtime.test.js\" \"dist/tests/observability.test.js\" \"dist/tests/contracts.test.js\" \"dist/tests/cross-platform.test.js\" \"dist/tests/account.test.js\" \"dist/tests/pro.test.js\" \"dist/tests/feedback.test.js\"",
     "test:mcp:compiled": "node --test --test-force-exit dist/tests/mcp.test.js",
     "test:mcp:real:compiled": "node --test --test-force-exit dist/tests/mcp-real.test.js",
     "prebuild": "python3 ../../scripts/generate-public-contract.py --check",
     "test:account": "npm run build && node --test dist/tests/account.test.js",
-    "account:digest": "node dist/account-digest-cli.js"
+    "account:digest": "node dist/account-digest-cli.js",
+    "pro": "node dist/pro-cli.js",
+    "test:pro": "npm run build && node --test dist/tests/pro.test.js",
+    "test:feedback": "npm run build && node --test dist/tests/feedback.test.js",
+    "feedback": "node dist/feedback-cli.js"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

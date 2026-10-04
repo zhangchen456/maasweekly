@@ -11,10 +11,7 @@ if (root) {
   const message = el('account-message');
   const show = (text: string, error = false) => { message.textContent = text; message.dataset.error = String(error); };
   let me: Me | null = null, models: Model[] = [], mailAvailable = false, busy = false;
-  let cooldown: ReturnType<typeof setInterval> | undefined;
   const search = el<HTMLInputElement>('model-search');
-  const email = el<HTMLInputElement>('email');
-  const send = el<HTMLButtonElement>('send-code');
   const enabled = el<HTMLInputElement>('email-enabled');
   const action = async (fn: () => Promise<void>) => {
     if (busy) return; busy = true;
@@ -25,7 +22,7 @@ if (root) {
       if (error instanceof ApiError && error.status === 401) { me = null; el('workspace').hidden = true; el('login-panel').hidden = false; }
     } finally {
       busy = false; root.querySelectorAll<HTMLButtonElement>('button').forEach(b => b.disabled = false);
-      send.disabled = Boolean(cooldown) || !mailAvailable; enabled.disabled = !mailAvailable;
+      enabled.disabled = !mailAvailable;
       // Restore preference after a failed save.
       if (me) enabled.checked = me.preferences.emailEnabled;
     }
@@ -60,14 +57,14 @@ if (root) {
     renderSearch();
   };
   const loadChanges = async () => {
-    const value = await accountApi<{ items: { id: string; title: string; summary: string | null; observationDate: string; status: string }[]; dataThrough: string }>('changes');
+    const value = await accountApi<{ items: { id: string; title: string; summary: string | null; observationDate: string; observedAt?: string; timePrecision: 'date' | 'datetime'; status: string }[]; dataThrough: string }>('changes');
     const list = el('watch-changes'); list.replaceChildren();
     el('changes-asof').textContent = t(`数据截至 ${value.dataThrough} · 最多展示 100 条历史记录`, `Data through ${value.dataThrough} · Up to 100 historical changes`);
     if (!value.items.length) { const p = document.createElement('p'); p.className = 'watch-empty'; p.textContent = t('当前没有匹配的变化记录。新变化被采集并关联后会出现在这里。', 'No matching changes yet. New changes will appear here.'); list.append(p); }
     for (const item of value.items) {
       const article = document.createElement('article'); article.className = 'watch-change';
       const link = document.createElement('a'); link.href = `/item/${encodeURIComponent(item.id)}/`; link.textContent = `${item.status === 'withdrawn' ? '[已撤回] ' : ''}${item.title}`;
-      const small = document.createElement('small'); small.textContent = item.observationDate;
+      const small = document.createElement('small'); const time = document.createElement('time'); time.dateTime = item.timePrecision === 'datetime' && item.observedAt ? item.observedAt : item.observationDate; time.textContent = time.dateTime; small.append(time);
       article.append(small, document.createElement('br'), link);
       if (item.summary) { const p = document.createElement('p'); p.textContent = item.summary; article.append(p); }
       list.append(article);
@@ -84,15 +81,7 @@ if (root) {
     if (requested) search.value = models.find(m => m.modelId === requested)?.modelName ?? '';
     renderWatches(); await loadChanges(); show(t('关注列表已同步', 'Followed models synced'));
   };
-  send.addEventListener('click', () => void action(async () => {
-    if (!email.reportValidity()) return;
-    await accountApi('request-code', { email: email.value }); el('code-fields').hidden = false;
-    el<HTMLInputElement>('code').required = true; el<HTMLInputElement>('code').focus();
-    let seconds = 60; send.textContent = t(`${seconds} 秒后重发`, `Resend in ${seconds}s`);
-    cooldown = setInterval(() => { seconds--; send.textContent = seconds > 0 ? t(`${seconds} 秒后重发`, `Resend in ${seconds}s`) : t('重新发送验证码', 'Resend code'); if (seconds <= 0) { clearInterval(cooldown); cooldown = undefined; send.disabled = busy || !mailAvailable; } }, 1000);
-    show(t('验证码已发送，请查看邮箱和垃圾邮件', 'Code sent. Check your inbox and spam folder.'));
-  }));
-  el<HTMLFormElement>('login-form').addEventListener('submit', event => { event.preventDefault(); void action(async () => { await accountApi('verify', { email: email.value, code: el<HTMLInputElement>('code').value }); await announceAccountChange(); el<HTMLInputElement>('code').value = ''; await loadWorkspace(); }); });
+  el('account-center-login').addEventListener('click', () => document.getElementById('account-login-open')?.click());
   el('logout').addEventListener('click', () => void action(async () => { await logoutAccount(); me = null; el('workspace').hidden = true; el('login-panel').hidden = false; el('watch-list').replaceChildren(); el('watch-changes').replaceChildren(); el('user-email').textContent = ''; show(t('已退出登录', 'Signed out')); }));
   enabled.addEventListener('change', () => void action(async () => { const result = await accountApi<{ emailEnabled: boolean }>('preferences', { emailEnabled: enabled.checked }); me!.preferences.emailEnabled = result.emailEnabled; show(result.emailEnabled ? t('已开启每日邮件摘要，有变化时发送', 'Daily email enabled. We email you when there are changes.') : t('已关闭邮件提醒', 'Email notifications disabled')); }));
   search.addEventListener('input', renderSearch);

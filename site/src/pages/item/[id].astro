@@ -111,18 +111,12 @@ const COMPONENT_LABEL: Record<string, string> = {
 const CHANGE_LABEL: Record<string, string> = {
   amount_changed: '价格变化', terms_changed: '计费条件变化', newly_observed: '新收录',
 };
-const fmtIso = (iso: string | null) => {
-  if (!iso) return '未知';
-  const d = new Date(iso);
-  return Number.isNaN(+d) ? '未知'
-    : d.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Shanghai' });
-};
 const priceCondText = () => {
   const parts: string[] = [];
   if (record.region && record.region !== 'global') parts.push(`区域 ${record.region}`);
   if (record.billingMode && record.billingMode !== 'realtime') parts.push(record.billingMode);
   if (record.contextBand) parts.push(`输入 ${record.contextBand.min ?? '?'}–${record.contextBand.max ?? '+'} tokens`);
-  if (record.timeCondition) parts.push(`时段 ${record.timeCondition.schedule || record.timeCondition.period}`);
+  if (record.timeCondition) parts.push(`时段 ${record.timeCondition.schedule || record.timeCondition.period}（${record.timeCondition.tz || '来源时区未注明'}）`);
   return parts.join(' · ') || '标准条件';
 };
 ---
@@ -159,7 +153,7 @@ const priceCondText = () => {
           <div class="pv-label">{COMPONENT_LABEL[record.component] ?? record.component}单价 · 变化前</div>
           <div class="pv-amount number">{record.comparison?.previous ?? '—'}</div>
           <div class="pv-sub">{record.currency} / {record.unitQuantity} {record.unitName}</div>
-          {record.beforeObservedAt && <div class="pv-date">观察 {fmtIso(record.beforeObservedAt)}</div>}
+          {record.beforeObservedAt && <div class="pv-date">观察 <time datetime={record.beforeObservedAt ?? undefined}>{record.beforeObservedAt}</time></div>}
         </div>
         <div class="pv-arrow">→</div>
         <div class="pv-cell">
@@ -168,7 +162,7 @@ const priceCondText = () => {
             {record.comparison?.current ?? '—'}
           </div>
           <div class="pv-sub">{record.currency} / {record.unitQuantity} {record.unitName}</div>
-          {record.afterObservedAt && <div class="pv-date">观察 {fmtIso(record.afterObservedAt)}</div>}
+          {record.afterObservedAt && <div class="pv-date">观察 <time datetime={record.afterObservedAt ?? undefined}>{record.afterObservedAt}</time></div>}
         </div>
         {record.comparison?.percent != null && (
           <div class="pv-cell">
@@ -203,7 +197,7 @@ const priceCondText = () => {
         {record.beforeEvidenceId ? (
           <li class="ev-item">
             <a href={`/evidence/${record.beforeEvidenceId}/`} class="ev-link">变化前证据 ↗</a>
-            <span class="muted">观察 {fmtIso(record.beforeObservedAt)}</span>
+            <span class="muted">观察 <time datetime={record.beforeObservedAt ?? undefined}>{record.beforeObservedAt}</time></span>
           </li>
         ) : (
           <li class="ev-item"><span class="muted">变化前证据不可用（历史记录无法回溯当时的摘录）</span></li>
@@ -211,7 +205,7 @@ const priceCondText = () => {
         {record.afterEvidenceId ? (
           <li class="ev-item">
             <a href={`/evidence/${record.afterEvidenceId}/`} class="ev-link">变化后证据 ↗</a>
-            <span class="muted">观察 {fmtIso(record.afterObservedAt)}</span>
+            <span class="muted">观察 <time datetime={record.afterObservedAt ?? undefined}>{record.afterObservedAt}</time></span>
           </li>
         ) : (
           <li class="ev-item"><span class="muted">变化后证据不可用</span></li>
@@ -237,7 +231,7 @@ const priceCondText = () => {
             <li class="rev-item">
               <span class="rev-no">r{r.revision}</span>
               <span class="rev-meta">
-                {r.revisedAt ?? '初始收录'}
+                {r.revisedAt ? <time datetime={r.revisedAt}>{r.revisedAt}</time> : '初始收录'}
                 {r.revisionReason ? ` · ${r.revisionReason}` : ''}
               </span>
               {r.status === 'withdrawn' && <span class="badge s-wd">已撤回</span>}
@@ -435,7 +429,7 @@ const priceCondText = () => {
             <li class="rev-item">
               <span class="rev-no">r{r.revision}</span>
               <span class="rev-meta">
-                {r.revisedAt ?? '初始收录'}
+                {r.revisedAt ? <time datetime={r.revisedAt}>{r.revisedAt}</time> : '初始收录'}
                 {r.revisionReason ? ` · ${r.revisionReason}` : ''}
               </span>
               {r.status === 'withdrawn' && <span class="badge s-wd">已撤回</span>}

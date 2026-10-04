@@ -4,6 +4,6 @@ interface Props { headers: string[]; cells: string[] }
 const { headers, cells } = Astro.props;
 ---
 <details class="quote-details"><summary>查看报价条件</summary><dl class="price-facts">
-  {cells.slice(4,9).map((value,index)=><div><dt>{headers[index+4]}</dt><dd>{value}</dd></div>)}
+  {cells.slice(4,9).map((value,index)=><div><dt>{headers[index+4]}</dt><dd data-time-value={index === 4 && /^\d{4}-\d{2}-\d{2}/.test(value) ? value : undefined}>{value}</dd></div>)}
   <DataFreshness observedLabel={headers[9]} observed={cells[9]} statusLabel={headers[10]} status={cells[10]} />
 </dl></details>

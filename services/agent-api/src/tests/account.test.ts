@@ -209,3 +209,56 @@ test('account profile and workspace data persist, isolate users, export safely, 
     assert.deepEqual(store.state(a.user.id).homePrices,{currency:'USD',fx:7.2});
   } finally {server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));store.close();rmSync(directory,{recursive:true,force:true});}
 });
+
+test('password setup, login, recovery, throttling and restart preserve legacy account data', async () => {
+  let now = start;
+  const directory = mkdtempSync(path.join(tmpdir(), 'maas-password-'));
+  const filename = path.join(directory, 'account.sqlite');
+  let store = new AccountStore(filename, () => now, SECRET);
+  try {
+    const legacy = login(store); store.watch(legacy.user.id, 'openai:gpt-test', catalog);
+    assert.equal(store.hasPassword(legacy.user.id), false);
+    await assert.rejects(store.setPassword(legacy.session, 'short'), AccountError);
+    await store.setPassword(legacy.session, 'correct horse battery');
+    const stored = store.db.prepare('SELECT * FROM passwords').get()!;
+    assert.ok(!JSON.stringify(stored).includes('correct horse battery'));
+    await assert.rejects(store.setPassword(legacy.session, 'unauthorized overwrite'), AccountError);
+    const first = await store.loginPassword('a@example.com', 'correct horse battery');
+    assert.equal(store.user(first.session)?.id, legacy.user.id);
+    assert.equal(store.watches(legacy.user.id).length, 1);
+    await assert.rejects(store.setPassword(first.session, 'unauthorized overwrite'), AccountError);
+    for (let i = 0; i < 10; i++) await assert.rejects(store.loginPassword('a@example.com', 'wrong password'), AccountError);
+    await assert.rejects(store.loginPassword('a@example.com', 'correct horse battery'), (e: unknown) => e instanceof AccountError && e.status === 429);
+    now += 16 * 60000;
+    const recovered = login(store);
+    await store.setPassword(recovered.session, 'replacement password');
+    assert.equal(store.user(first.session), undefined);
+    await assert.rejects(store.loginPassword('a@example.com', 'correct horse battery'), AccountError);
+    store.close(); store = new AccountStore(filename, () => now, SECRET);
+    const restored = await store.loginPassword('a@example.com', 'replacement password');
+    assert.equal(store.user(restored.session)?.id, legacy.user.id);
+    assert.equal(store.watches(legacy.user.id).length, 1);
+    now += 60000;
+    const expiredProof = login(store, 'new@example.com'); now += 11 * 60000;
+    await assert.rejects(store.setPassword(expiredProof.session, 'long enough password'), AccountError);
+  } finally { store.close(); rmSync(directory, {recursive: true, force: true}); }
+});
+
+test('password HTTP supports email verification then password login without mail', async () => {
+  const store = new AccountStore(':memory:', () => start, SECRET);
+  const verified = login(store);
+  const server = http.createServer(createAccountHandler(store, null, {} as DatasetHolder, {origin: 'https://daily.maas.click', secure: true}));
+  await new Promise<void>(resolve => server.listen(0, '127.0.0.1', resolve));
+  const base = `http://127.0.0.1:${(server.address() as {port:number}).port}/api/account/`;
+  const post = (route: string, body: unknown, cookie = '') => fetch(base + route, {method: 'POST', headers: {Origin: 'https://daily.maas.click', 'Content-Type': 'application/json', Cookie: cookie}, body: JSON.stringify(body)});
+  try {
+    assert.equal((await post('password', {password: 'strong password'})).status, 401);
+    const cookie = `__Host-maas_session=${verified.session}`;
+    assert.equal((await post('password', {password: 'strong password'}, cookie)).status, 200);
+    assert.equal((await post('login', {email: 'a@example.com', password: 'wrong'})).status, 401);
+    const response = await post('login', {email: ' A@EXAMPLE.COM ', password: 'strong password'});
+    assert.equal(response.status, 200); assert.match(response.headers.get('set-cookie')!, /HttpOnly/);
+    const me = await (await fetch(base + 'me', {headers: {Cookie: response.headers.get('set-cookie')!.split(';')[0]!}})).json() as {user: {hasPassword: boolean}};
+    assert.equal(me.user.hasPassword, true); assert.ok(!JSON.stringify(me).includes('digest'));
+  } finally { server.closeAllConnections(); await new Promise<void>(resolve => server.close(() => resolve())); store.close(); }
+});

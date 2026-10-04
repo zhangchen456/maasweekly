@@ -70,3 +70,9 @@ Skill 有两种数据入口：**MCP 工具**（`maas_get_*` 五个）或 **REST 
 ---
 
 字段说明与 REST/MCP 参数全表：[references/api.md](references/api.md) · 错误码与恢复动作：[references/errors.md](references/errors.md) · 安装后可用性配置：[references/setup.md](references/setup.md)
+
+## 专业情报（可选）
+
+用户请求深度周报全文时，使用 Plus MCP `maas_pro_weekly`（省略 id 取最新），保留期号、dataThrough、datasetVersion 和来源；仅有公开工具时明确只能取得摘要。用户请求专业简报或已审核分析，且配置了专业MCP时，使用`maas_pro_catalog`、`maas_pro_read`、`maas_pro_reports`。配置、发布状态和授权恢复见[references/setup.md](references/setup.md)。免费五类入口继续匿名使用。
+
+只引用服务实际返回的内容、证据和条件；保留覆盖缺口、修订、撤回。不要因缺乏权限用模型生成的分析冒充专业内容，不请求用户在聊天中提供凭证。

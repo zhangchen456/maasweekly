@@ -92,16 +92,11 @@ const condText = (v: any) => {
   if (v.region && v.region !== 'global') parts.push(`区域 ${v.region}`);
   if (v.billing_mode && v.billing_mode !== 'realtime') parts.push(v.billing_mode);
   if (v.context_band) parts.push(`输入 ${v.context_band.min ?? '?'}–${v.context_band.max ?? '+'} tokens`);
-  if (v.time_condition) parts.push(`时段条件 ${v.time_condition.schedule || v.time_condition.period}`);
+  if (v.time_condition) parts.push(`时段条件 ${v.time_condition.schedule || v.time_condition.period}（${v.time_condition.tz || '来源时区未注明'}）`);
   return parts.join(' · ') || '标准条件';
 };
 
-const fmtObserved = (iso: string | null) => {
-  if (!iso) return null;
-  const d = new Date(iso);
-  return Number.isNaN(+d) ? null
-    : d.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Shanghai' });
-};
+const fmtObserved = (iso: string | null) => iso;
 // 观察时间取自关联事实（证据是内容身份，自身无观察时间）
 const observedRange = relatedFacts.length > 0
   ? (() => {
@@ -123,7 +118,7 @@ const observedRange = relatedFacts.length > 0
       <div class="record-meta">
         <span class={`badge ${cl.cls}`}>{cl.text}</span>
         {observedRange
-          ? <span class="meta-date">关联事实观察于 {observedRange}</span>
+          ? <span class="meta-date" data-time-text>关联事实观察于 {observedRange}</span>
           : <span class="meta-date">证据内容身份（与观察时间无关）</span>}
       </div>
       {record.completeness !== 'complete' && (
@@ -176,7 +171,7 @@ const observedRange = relatedFacts.length > 0
               <span class="fact-comp">{COMPONENT_LABEL[v.component] ?? v.component}</span>
               <span class="fact-amount number">{v.amount} {v.currency} / {v.unit_quantity} {v.unit_name}</span>
               <span class="fact-cond">{condText(v)}</span>
-              <span class="fact-date">{fmtObserved(v.observedAt ?? null) ? `观察 ${fmtObserved(v.observedAt)}` : ''}</span>
+              <span class="fact-date" data-time-text>{fmtObserved(v.observedAt ?? null) ? `观察 ${fmtObserved(v.observedAt)}` : ''}</span>
             </li>
           ))}
         </ul>

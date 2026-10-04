@@ -1,0 +1,36 @@
+
+> maas-weekly-site@0.0.1 prebuild
+> python3 ../scripts/generate-public-contract.py --check && python3 ../pipeline/scripts/project-site-data.py && python3 ../pipeline/scripts/validate-archive.py && python3 ../pipeline/scripts/validate-price-archive.py
+
+public contract generation checked
+site compatibility projection complete
+✓ 构建门禁通过：426 条记录 / 索引 426 条一致，修订链完整
+✓ 价格归档门禁通过：8237 事件 / 14276 证据，修订链与引用完整
+
+> maas-weekly-site@0.0.1 build
+> python3 scripts/build-skill-package.py && astro build
+
+✓ Skill 包构建: /Users/zhangchen/Work/maasweekly/site/public/maas-skill（8 文件 + install.sh，包版本 1.0.0）
+16:56:18 [content] Syncing content
+16:56:18 [content] Synced content
+16:56:18 [types] Generated 466ms
+16:56:18 [build] output: "static"
+16:56:18 [build] mode: "static"
+16:56:18 [build] directory: /Users/zhangchen/Work/maasweekly/site/dist/
+16:56:18 [build] Collecting build info...
+16:56:18 [build] ✓ Completed in 497ms.
+16:56:30 [build] Building static entrypoints...
+16:56:30 [vite] ✓ built in 437ms
+16:56:30 [vite] ✓ built in 77ms
+16:56:30 [build] Rearranging server assets...
+
+ generating static routes 
+16:57:00   ├─ /about/index.html (+16ms) 
+Final rebuild after browser fix and remaining timestamp annotations:
+17:04:09 ✓ Completed in 1m 1s.
+
+17:04:09 [build] ✓ Completed in 1m 1s.
+17:04:12 [build] Waiting for integration "maas-seo-sitemap", hook "astro:build:done"...
+[seo] sitemap: 16868 built canonical pages
+17:04:14 [build] 46187 page(s) built in 1m 16s
+17:04:14 [build] Complete!

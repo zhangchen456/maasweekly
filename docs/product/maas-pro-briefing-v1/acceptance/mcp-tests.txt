@@ -1,0 +1,94 @@
+
+> @maasweekly/agent-api@1.0.0 test:mcp:compiled
+> node --test --test-force-exit dist/tests/mcp.test.js
+
+TAP version 13
+# (node:16158) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: T01 协议协商 + 仅五个只读工具 + schema 说明
+ok 1 - T01 协议协商 + 仅五个只读工具 + schema 说明
+  ---
+  duration_ms: 44.924459
+  type: 'test'
+  ...
+# Subtest: T04 changes 默认 limit=10 + 截断 + 翻页无重复遗漏
+ok 2 - T04 changes 默认 limit=10 + 截断 + 翻页无重复遗漏
+  ---
+  duration_ms: 8.253875
+  type: 'test'
+  ...
+# Subtest: T04 组合筛选 + 空结果措辞 + cursor 冲突
+ok 3 - T04 组合筛选 + 空结果措辞 + cursor 冲突
+  ---
+  duration_ms: 9.366292
+  type: 'test'
+  ...
+# Subtest: T05 prices 条件完整 + 不选最低 + 排序声明
+ok 4 - T05 prices 条件完整 + 不选最低 + 排序声明
+  ---
+  duration_ms: 5.448167
+  type: 'test'
+  ...
+# Subtest: T06 item→evidence 闭环 + 恶意摘录原样数据
+ok 5 - T06 item→evidence 闭环 + 恶意摘录原样数据
+  ---
+  duration_ms: 11.218667
+  type: 'test'
+  ...
+# Subtest: T07 weekly 最新/指定/列表/id-limit 互斥
+ok 6 - T07 weekly 最新/指定/列表/id-limit 互斥
+  ---
+  duration_ms: 5.829542
+  type: 'test'
+  ...
+# Subtest: T08 工具错误：稳定 code + 恢复动作
+ok 7 - T08 工具错误：稳定 code + 恢复动作
+  ---
+  duration_ms: 4.168
+  type: 'test'
+  ...
+# Subtest: T08b 无有效数据 → no_data_available（不用模型知识补答）
+ok 8 - T08b 无有效数据 → no_data_available（不用模型知识补答）
+  ---
+  duration_ms: 8.679917
+  type: 'test'
+  ...
+# Subtest: T09 畸形 JSON / 未知方法 / Content-Type / Accept / 超大 body
+ok 9 - T09 畸形 JSON / 未知方法 / Content-Type / Accept / 超大 body
+  ---
+  duration_ms: 11.520042
+  type: 'test'
+  ...
+# Subtest: T10 Origin 缺省放行 / 白名单命中 / 拒绝无副作用
+ok 10 - T10 Origin 缺省放行 / 白名单命中 / 拒绝无副作用
+  ---
+  duration_ms: 3.789625
+  type: 'test'
+  ...
+# Subtest: T11 新版本切换 + cursor 旧版本 + 损坏旧版拒载
+ok 11 - T11 新版本切换 + cursor 旧版本 + 损坏旧版拒载
+  ---
+  duration_ms: 46.775625
+  type: 'test'
+  ...
+# Subtest: T11b 损坏历史版本 → getOrLoad null（→ 工具错误 dataset_version_expired）
+ok 12 - T11b 损坏历史版本 → getOrLoad null（→ 工具错误 dataset_version_expired）
+  ---
+  duration_ms: 3.19425
+  type: 'test'
+  ...
+# Subtest: 所有 MCP 响应 no-store
+ok 13 - 所有 MCP 响应 no-store
+  ---
+  duration_ms: 3.078458
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 336.916875

@@ -1,0 +1,181 @@
+· deploy-mode: release
+· 构建 release（commit=91a563a95b1dde0155c9141ce2611ae5a8fb1614）
+[0/6] preflight
+  ✓ commit 91a563a95，工作区干净
+{"timestamp":"2026-10-03T14:25:30.207489+00:00","kind":"release.stage","operation":"build","stage":"preflight","outcome":"success","exitCode":0,"elapsedMs":1000,"timingResolutionMs":1000,"gitCommit":"91a563a95b1dde0155c9141ce2611ae5a8fb1614"}
+[1/6] 公开数据投影
+datasetVersion ds_12fdc567c7d3e70fd11f64bd2c28fe27a56c40744950e9ab2185e4ebb4723bf5 已发布且内容一致，零写入（幂等）
+✓ 发布 ds_12fdc567c7d3e70fd11f64bd2c28fe27a56c40744950e9ab2185e4ebb4723bf5（changes=8663 items=8663 prices=1914 evidence=14276 weekly=23）dataThrough=2026-10-03
+✓ 公开数据校验通过：ds_12fdc567c7d3e70fd11f64bd2c28fe27a56c40744950e9ab2185e4ebb4723bf5 · 7 文件 · dataThrough 2026-10-03
+{"timestamp":"2026-10-03T14:26:21.162586+00:00","kind":"release.stage","operation":"build","stage":"projection","outcome":"success","exitCode":0,"elapsedMs":51000,"timingResolutionMs":1000,"gitCommit":"91a563a95b1dde0155c9141ce2611ae5a8fb1614"}
+[2/6] 统一全量回归（Task 01–06）
+══ Task 01–06 统一回归 ══
+── site dependency cache
+   ✓ site dependency cache
+── agent-api dependency cache
+   ✓ agent-api dependency cache
+── export-public-data --check
+   ✓ export-public-data --check
+── validate-archive（Task 01）
+   ✓ validate-archive（Task 01）
+── validate-price-archive（Task 02）
+   ✓ validate-price-archive（Task 02）
+── build-skill-package --check
+   ✓ build-skill-package --check
+── test_release_retention（live references）
+   ✓ test_release_retention（live references）
+── test_operations_budget（production resource thresholds）
+   ✓ test_operations_budget（production resource thresholds）
+── test_public_retention（公开历史引用完整性）
+   ✓ test_public_retention（公开历史引用完整性）
+── test_cross_platform（关系与官方价格）
+   ✓ test_cross_platform（关系与官方价格）
+── test_regression_diagnostics（CI failure evidence）
+   ✓ test_regression_diagnostics（CI failure evidence）
+── test_current_pricing（official table drift）
+   ✓ test_current_pricing（official table drift）
+── test_record_archive（Task 01）
+   ✓ test_record_archive（Task 01）
+── test_price_archive（Task 02）
+   ✓ test_price_archive（Task 02）
+── test_public_export（Task 03）
+   ✓ test_public_export（Task 03）
+── test_skill_package（Task 04）
+   ✓ test_skill_package（Task 04）
+── test_release_build（Task 06）
+   ✓ test_release_build（Task 06）
+── test_release_activation（Task 06）
+   ✓ test_release_activation（Task 06）
+── test_deploy_mode（Task 06 M7）
+   ✓ test_deploy_mode（Task 06 M7）
+── test_model_identity_audit（Task 07）
+   ✓ test_model_identity_audit（Task 07）
+── test_model_public_projection（Task 07）
+   ✓ test_model_public_projection（Task 07）
+── test_model_registry（Task 07）
+   ✓ test_model_registry（Task 07）
+── validate-model-registry（Task 07）
+   ✓ validate-model-registry（Task 07）
+── audit-model-registry-coverage（Task 07）
+   ✓ audit-model-registry-coverage（Task 07）
+── test_architecture_workflows（AR-05）
+   ✓ test_architecture_workflows（AR-05）
+── test_architecture_observability（AR-08）
+   ✓ test_architecture_observability（AR-08）
+── test_blob_storage（AR-06）
+   ✓ test_blob_storage（AR-06）
+── test_pipeline_runtime（AR-04）
+   ✓ test_pipeline_runtime（AR-04）
+── test_standard_inputs（AR-03）
+   ✓ test_standard_inputs（AR-03）
+── test_workflow_release_contract（incident 2026-09）
+   ✓ test_workflow_release_contract（incident 2026-09）
+── validate-developer-registry（T07-5.2）
+   ✓ validate-developer-registry（T07-5.2）
+── test_developer_platform_registry（T07-5.2）
+   ✓ test_developer_platform_registry（T07-5.2）
+── test_analytics_foundation（T08-1A）
+   ✓ test_analytics_foundation（T08-1A）
+── test_umami_postgres_preflight（T08-1A）
+   ✓ test_umami_postgres_preflight（T08-1A）
+── test_umami_prerequisites（T08-1A）
+   ✓ test_umami_prerequisites（T08-1A）
+── test_inventory_capability（T08-1A Gate B Preflight）
+   ✓ test_inventory_capability（T08-1A Gate B Preflight）
+── site build（含 prebuild 门禁）
+   ✓ site build（含 prebuild 门禁）
+── site: access-pages（Task 05）
+   ✓ site: access-pages（Task 05）
+── site: rss（Task 05）
+   ✓ site: rss（Task 05）
+── site: page ViewModel types
+   ✓ site: page ViewModel types
+── site: page ViewModel parity
+   ✓ site: page ViewModel parity
+── site: cross-platform
+   ✓ site: cross-platform
+── site: pricing
+   ✓ site: pricing
+── site: model-identity-ui（T07-4A）
+   ✓ site: model-identity-ui（T07-4A）
+── site: model-identity-ui-contract（T07-4A）
+   ✓ site: model-identity-ui-contract（T07-4A）
+── site: changes-browser-contract（T07-4A.2）
+   ✓ site: changes-browser-contract（T07-4A.2）
+── site: changes-browser-ui（T07-4A.2）
+   ✓ site: changes-browser-ui（T07-4A.2）
+── site: model-detail（T07-4B.2）
+   ✓ site: model-detail（T07-4B.2）
+── site: analytics（T08 lightweight）
+   ✓ site: analytics（T08 lightweight）
+── site: agent-interactions（copy regression）
+   ✗ site: agent-interactions（copy regression）（退出码 1）——完整失败日志：
+     TAP version 13
+     # Subtest: all methods remain readable without JavaScript; tabs support deep links, keyboard and history
+     not ok 1 - all methods remain readable without JavaScript; tabs support deep links, keyboard and history
+       ---
+       duration_ms: 171.854169
+       type: 'test'
+       location: '/home/runner/work/maasweekly/maasweekly/site/tests/agent-interactions.test.mjs:11:1'
+       failureType: 'testCodeFailure'
+       error: |-
+         Expected values to be strictly equal:
+         
+         8 !== 4
+         
+       code: 'ERR_ASSERTION'
+       name: 'AssertionError'
+       expected: 4
+       actual: 8
+       operator: 'strictEqual'
+       stack: |-
+         TestContext.<anonymous> (file:///home/runner/work/maasweekly/maasweekly/site/tests/agent-interactions.test.mjs:15:10)
+         Test.runInAsyncScope (node:async_hooks:214:14)
+         Test.run (node:internal/test_runner/test:1047:25)
+         Test.start (node:internal/test_runner/test:944:17)
+         startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+       ...
+     # Subtest: copy sends the complete local prompt and falls back to manual selection on failure
+     ok 2 - copy sends the complete local prompt and falls back to manual selection on failure
+       ---
+       duration_ms: 84.473549
+       type: 'test'
+       ...
+     1..2
+     # tests 2
+     # suites 0
+     # pass 1
+     # fail 1
+     # cancelled 0
+     # skipped 0
+     # todo 0
+     # duration_ms 896.892495
+   （完整日志: /home/runner/work/_temp/regression-failures/maas-regression.txiDzQ/50.txt）
+── site: platform-logos
+   ✓ site: platform-logos
+── site: leaderboards
+   ✓ site: leaderboards
+── site: records（含残留检测）
+   ✓ site: records（含残留检测）
+── site: SEO（canonical / sitemap / model content）
+   ✓ site: SEO（canonical / sitemap / model content）
+── site: multilingual
+   ✓ site: multilingual
+── agent-api: build
+   ✓ agent-api: build
+── agent-api: country
+   ✓ agent-api: country
+── agent-api: REST 测试
+   ✓ agent-api: REST 测试
+── agent-api: MCP 测试
+   ✓ agent-api: MCP 测试
+── agent-api: MCP 真实数据
+   ✓ agent-api: MCP 真实数据
+══════════════════════════
+通过: 59 | 失败: 1
+失败项：
+  ✗ site: agent-interactions（copy regression）
+回归未通过或中断，日志保留: /home/runner/work/_temp/regression-failures/maas-regression.txiDzQ
+✗ 全量回归失败（见上方失败项）——生产 release 拒绝
+{"timestamp":"2026-10-03T14:36:46.600106+00:00","kind":"release.stage","operation":"build","stage":"regression","outcome":"failed","exitCode":1,"elapsedMs":625000,"timingResolutionMs":1000,"gitCommit":"91a563a95b1dde0155c9141ce2611ae5a8fb1614"}
+{"timestamp":"2026-10-03T14:36:46.626618+00:00","kind":"release.result","operation":"build","stage":"regression","outcome":"failed","exitCode":1,"elapsedMs":677000,"timingResolutionMs":1000,"gitCommit":"91a563a95b1dde0155c9141ce2611ae5a8fb1614"}

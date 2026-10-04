@@ -1,0 +1,63 @@
+2026-10-04T09:57:48+08:00
+NEXT                            LEFT LAST                              PASSED UNIT                            ACTIVATES
+Sun 2026-10-04 10:00:00 CST 2min 11s Sun 2026-10-04 09:45:10 CST    12min ago maas-account-digest-retry.timer maas-account-digest-retry.service
+Sun 2026-10-04 10:00:00 CST 2min 11s Sun 2026-10-04 09:45:10 CST    12min ago maas-account-health.timer       maas-account-health.service
+Mon 2026-10-05 08:45:00 CST      22h Sun 2026-10-04 08:45:01 CST 1h 12min ago maas-account-backup.timer       maas-account-backup.service
+Mon 2026-10-05 09:15:00 CST      23h Sun 2026-10-04 09:15:07 CST    42min ago maas-account-digest.timer       maas-account-digest.service
+
+4 timers listed.
+Id=maas-account-digest.service
+Result=success
+ExecMainExitTimestamp=Sun 2026-10-04 09:15:09 CST
+ExecMainStatus=0
+
+Id=maas-account-backup.service
+Result=success
+ExecMainExitTimestamp=Sun 2026-10-04 08:45:02 CST
+ExecMainStatus=0
+
+Id=maas-account-health.service
+Result=success
+ExecMainExitTimestamp=Sun 2026-10-04 09:45:10 CST
+ExecMainStatus=0
+
+Id=maas-account-digest-retry.service
+Result=success
+ExecMainExitTimestamp=Sun 2026-10-04 09:45:12 CST
+ExecMainStatus=0
+Oct 04 08:45:01 iZt4n3euaixkc2phwnke64Z systemd[1]: Starting maas-account-backup.service - MaaS Daily account backup...
+Oct 04 08:45:02 iZt4n3euaixkc2phwnke64Z python3[2681284]: {"backup": "accounts-20261004T004502Z-34b11219.sqlite", "integrity": "ok", "restore": "ok", "retained": 2}
+Oct 04 08:45:02 iZt4n3euaixkc2phwnke64Z systemd[1]: maas-account-backup.service: Deactivated successfully.
+Oct 04 08:45:02 iZt4n3euaixkc2phwnke64Z systemd[1]: Finished maas-account-backup.service - MaaS Daily account backup.
+Oct 04 09:15:07 iZt4n3euaixkc2phwnke64Z systemd[1]: Starting maas-account-digest.service - MaaS Daily daily model-watch digest...
+Oct 04 09:15:07 iZt4n3euaixkc2phwnke64Z node[2684718]: (node:2684718) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+Oct 04 09:15:07 iZt4n3euaixkc2phwnke64Z node[2684718]: (Use `node --trace-warnings ...` to show where the warning was created)
+Oct 04 09:15:09 iZt4n3euaixkc2phwnke64Z node[2684718]: {"queued":0,"sent":0,"failed":0,"review":0}
+Oct 04 09:15:09 iZt4n3euaixkc2phwnke64Z systemd[1]: maas-account-digest.service: Deactivated successfully.
+Oct 04 09:15:09 iZt4n3euaixkc2phwnke64Z systemd[1]: Finished maas-account-digest.service - MaaS Daily daily model-watch digest.
+Oct 04 09:15:09 iZt4n3euaixkc2phwnke64Z systemd[1]: maas-account-digest.service: Consumed 2.159s CPU time over 2.545s wall clock time, 223.5M memory peak.
+Oct 04 09:30:04 iZt4n3euaixkc2phwnke64Z systemd[1]: Starting maas-account-digest-retry.service - MaaS Daily model-watch email retry...
+Oct 04 09:30:04 iZt4n3euaixkc2phwnke64Z systemd[1]: Starting maas-account-health.service - MaaS Daily account health...
+Oct 04 09:30:04 iZt4n3euaixkc2phwnke64Z node[2686385]: (node:2686385) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+Oct 04 09:30:04 iZt4n3euaixkc2phwnke64Z node[2686385]: (Use `node --trace-warnings ...` to show where the warning was created)
+Oct 04 09:30:04 iZt4n3euaixkc2phwnke64Z python3[2686386]: {"counts": {}, "alerts": []}
+Oct 04 09:30:04 iZt4n3euaixkc2phwnke64Z systemd[1]: maas-account-health.service: Deactivated successfully.
+Oct 04 09:30:04 iZt4n3euaixkc2phwnke64Z systemd[1]: Finished maas-account-health.service - MaaS Daily account health.
+Oct 04 09:30:06 iZt4n3euaixkc2phwnke64Z node[2686385]: {"queued":0,"sent":0,"failed":0,"review":0}
+Oct 04 09:30:06 iZt4n3euaixkc2phwnke64Z systemd[1]: maas-account-digest-retry.service: Deactivated successfully.
+Oct 04 09:30:06 iZt4n3euaixkc2phwnke64Z systemd[1]: Finished maas-account-digest-retry.service - MaaS Daily model-watch email retry.
+Oct 04 09:30:06 iZt4n3euaixkc2phwnke64Z systemd[1]: maas-account-digest-retry.service: Consumed 2.391s CPU time over 2.080s wall clock time, 252.1M memory peak.
+Oct 04 09:45:10 iZt4n3euaixkc2phwnke64Z systemd[1]: Starting maas-account-digest-retry.service - MaaS Daily model-watch email retry...
+Oct 04 09:45:10 iZt4n3euaixkc2phwnke64Z systemd[1]: Starting maas-account-health.service - MaaS Daily account health...
+Oct 04 09:45:10 iZt4n3euaixkc2phwnke64Z node[2688033]: (node:2688033) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+Oct 04 09:45:10 iZt4n3euaixkc2phwnke64Z node[2688033]: (Use `node --trace-warnings ...` to show where the warning was created)
+Oct 04 09:45:10 iZt4n3euaixkc2phwnke64Z python3[2688034]: {"counts": {}, "alerts": []}
+Oct 04 09:45:10 iZt4n3euaixkc2phwnke64Z systemd[1]: maas-account-health.service: Deactivated successfully.
+Oct 04 09:45:10 iZt4n3euaixkc2phwnke64Z systemd[1]: Finished maas-account-health.service - MaaS Daily account health.
+Oct 04 09:45:12 iZt4n3euaixkc2phwnke64Z node[2688033]: {"queued":0,"sent":0,"failed":0,"review":0}
+Oct 04 09:45:12 iZt4n3euaixkc2phwnke64Z systemd[1]: maas-account-digest-retry.service: Deactivated successfully.
+Oct 04 09:45:12 iZt4n3euaixkc2phwnke64Z systemd[1]: Finished maas-account-digest-retry.service - MaaS Daily model-watch email retry.
+Oct 04 09:45:12 iZt4n3euaixkc2phwnke64Z systemd[1]: maas-account-digest-retry.service: Consumed 2.150s CPU time over 1.766s wall clock time, 209.6M memory peak.
+700 maasagent:maasagent /srv/maasweekly/shared/state/accounts/backups
+600 maasagent:maasagent /srv/maasweekly/shared/state/accounts/backups/accounts-20261003T084150Z-ede65f6e.sqlite
+600 maasagent:maasagent /srv/maasweekly/shared/state/accounts/backups/accounts-20261004T004502Z-34b11219.sqlite

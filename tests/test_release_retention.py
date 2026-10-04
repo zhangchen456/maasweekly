@@ -31,48 +31,65 @@ class ReleaseRetentionTest(unittest.TestCase):
         (public / 'manifest.json').write_text(json.dumps({
             'datasetVersion': f'ds_{ds:064x}',
             'retainedVersions': [{'datasetVersion': f'ds_{v:064x}'} for v in refs]}))
+        metadata = path / 'metadata'
+        metadata.mkdir()
+        (metadata / 'release-manifest.json').write_text(json.dumps({'gitCommitTimestamp': n}))
+        for version in {ds, *refs}:
+            embedded = public / 'releases' / f'ds_{version:064x}'
+            embedded.mkdir(parents=True)
+            file = embedded / 'changes.json'
+            file.write_text('[]')
+            (embedded / 'manifest.json').write_text(json.dumps({'files': [
+                {'path': str(file.relative_to(public)), 'bytes': 2}]}))
         stamp = time.time() - age * 86400
         os.utime(path, (stamp, stamp))
         return path
 
-    def run_cleanup(self, dry=False):
+    def run_cleanup(self, dry=False, code=0):
         result = subprocess.run([sys.executable, '-c', CODE, str(self.root),
                                  'dry-run' if dry else 'apply'], text=True, capture_output=True)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        return result.stdout
+        self.assertEqual(result.returncode, code, result.stderr)
+        return result.stdout + result.stderr if code else result.stdout
 
-    def test_expired_packages_cannot_protect_each_other(self):
-        old_a = self.release(4, 4, age=10, refs=[4, 5])
-        old_b = self.release(5, 5, age=10, refs=[4, 5])
+    def test_twenty_seven_same_dataset_releases_keep_three_even_when_recent(self):
+        packages = [self.current, self.previous] + [self.release(n, 1, age=0) for n in range(3, 28)]
+        (self.root / 'current').unlink(); (self.root / 'current').symlink_to(packages[-1])
+        (self.root / 'previous').unlink(); (self.root / 'previous').symlink_to(packages[-2])
         plan = json.loads(self.run_cleanup(dry=True))
-        self.assertEqual({r['rid'] for r in plan['remove']}, {old_a.name, old_b.name})
-        self.assertTrue(old_a.exists())
+        self.assertEqual(len(plan['remove']), 24)
+        self.assertTrue(all(p.exists() for p in packages))
         self.run_cleanup()
-        self.assertFalse(old_a.exists())
-        self.assertFalse(old_b.exists())
-        self.assertTrue(self.current.exists())
-        self.assertTrue(self.previous.exists())
+        self.assertEqual({p.name for p in (self.root / 'releases').iterdir()}, {p.name for p in packages[-3:]})
+        self.assertEqual(json.loads(self.run_cleanup(dry=True))['remove'], [])
 
-    def test_live_history_recent_packages_unknown_paths_and_symlinks_survive(self):
-        history = self.release(3, 3, age=10)
-        recent = self.release(4, 4, age=2)
+    def test_rollback_pointers_take_priority_and_unknown_paths_survive(self):
+        newest = self.release(9, 9, age=0)
+        old = self.release(8, 8, age=0)
         unknown = self.root / 'releases/unmanaged'; unknown.mkdir()
-        (self.root / 'releases/rl_0000000009_000000000009').symlink_to(unknown)
+        alias = self.root / 'releases/rl_0000000099_000000000099'; alias.symlink_to(unknown)
         self.run_cleanup()
-        self.assertTrue(history.exists())
-        self.assertTrue(recent.exists())
-        self.assertTrue(unknown.exists())
+        self.assertTrue(self.current.exists()); self.assertTrue(self.previous.exists())
+        self.assertTrue(newest.exists()); self.assertFalse(old.exists())
+        self.assertTrue(alias.is_symlink()); self.assertTrue(unknown.exists())
 
-    def test_unreadable_protected_manifest_skips_every_deletion(self):
-        old = self.release(4, 4, age=10)
+    def test_corrupt_protected_data_prevents_all_deletions(self):
+        old = self.release(3, 3, age=10)
+        self.release(4, 4, age=0)
         (self.current / 'data/public/v1/manifest.json').write_text('broken')
-        self.assertIn('skipped', self.run_cleanup())
+        self.assertIn('skipped', self.run_cleanup(code=6))
         self.assertTrue(old.exists())
 
-    def test_unreadable_candidate_manifest_is_kept(self):
-        old = self.release(4, 4, age=10)
-        (old / 'data/public/v1/manifest.json').write_text('broken')
-        self.run_cleanup()
+    def test_missing_embedded_history_prevents_all_deletions(self):
+        old = self.release(3, 3, age=0)
+        self.release(4, 4, age=0)
+        (self.current / 'data/public/v1/releases' / f'ds_{3:064x}' / 'changes.json').unlink()
+        self.run_cleanup(code=6)
+        self.assertTrue(old.exists())
+
+    def test_invalid_release_order_metadata_prevents_deletions(self):
+        old = self.release(3, 3, age=0)
+        (old / 'metadata/release-manifest.json').write_text('broken')
+        self.run_cleanup(code=6)
         self.assertTrue(old.exists())
 
 

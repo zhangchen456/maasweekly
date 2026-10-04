@@ -41,6 +41,8 @@
 
 ## maas_get_weekly / GET /weekly
 
+匿名入口返回周报目录/摘要，深度分析字段不公开（公开样例除外）。Plus 全文使用 `maas_pro_weekly`，见 setup.md；不要把摘要当作完整报告。
+
 - 无参数（MCP）：最新一期正式周报
 - `limit`（+cursor）：周报列表（最新在前）
 - `id`（YYYY-MM-DD）：指定一期

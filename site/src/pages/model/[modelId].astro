@@ -48,7 +48,7 @@ const hasContent = prices.length > 0 || changes.length > 0;
     {upstream && <section class="model-section">
       <h2>开发者与调用平台</h2>
       <p>开发者：{developer?.displayName ?? upstream.developerId} · <a href={`/compare/#${model.modelId}`}>比较不同平台报价 →</a></p>
-      <ul>{availability.map(a => <li><strong>{platformName(a.platformId)}</strong> · <code>{a.apiModelIds.join(' / ')}</code> · <a href={a.evidence.url} target="_blank" rel="noopener noreferrer">官方可用关系</a>（核验于 {a.evidence.verifiedAt}）</li>)}</ul>
+      <ul>{availability.map(a => <li><strong>{platformName(a.platformId)}</strong> · <code>{a.apiModelIds.join(' / ')}</code> · <a href={a.evidence.url} target="_blank" rel="noopener noreferrer">官方可用关系</a>（核验于 <time datetime={a.evidence.verifiedAt}>{a.evidence.verifiedAt}</time>）</li>)}</ul>
     </section>}
     <section class="model-section">
       <h2>API 模型名</h2>

@@ -17,7 +17,7 @@ const { ledger, gpu, chips, ledgerDate, modelCount, providerCount, gpuRows, chip
         <div class="pricing-status" aria-label="数据概况">
           <span><b>{providerCount}</b> 个报价来源</span>
           <span><b>{modelCount}</b> 个模型</span>
-          <span>台账更新于 <b>{ledgerDate}</b></span>
+          <span>台账更新于 <time datetime={ledger?.meta?.published_at ? new Date(ledger.meta.published_at * 1000).toISOString() : undefined}>{ledger?.meta?.published_at ? new Date(ledger.meta.published_at * 1000).toISOString() : ledgerDate}</time></span>
         </div>
       </div>
       <nav class="pricing-index" aria-label="价格页面分区">

@@ -23,7 +23,7 @@ const CYCLE_LABEL: Record<string, string> = { daily: '日更', weekly: '周更',
   <header class="board-head">
     <h3>{title}</h3>
     <span class="board-meta">
-      <span class="snap" title={snapNote || ''}>{snapLabel ?? '快照'} {snap}{snapNote && <em class="snap-note"> · {snapNote}</em>}</span>
+      <span class="snap" title={snapNote || ''}>{snapLabel ?? '快照'} {snap}{snapNote && <em class="snap-note" data-time-text> · {snapNote}</em>}</span>
       {manual && <span class="badge badge-manual">手动维护</span>}
       {cycle && <span class="badge badge-cycle">{CYCLE_LABEL[cycle] ?? cycle}</span>}
     </span>
@@ -32,6 +32,6 @@ const CYCLE_LABEL: Record<string, string> = { daily: '日更', weekly: '周更',
   <div class="board-foot">
     <details class="board-method"><summary>数据口径与更新说明 <span>＋</span></summary><p class="board-note">{note}</p>{manual && <p class="board-note">该榜单由人工维护，数据截至 {snap}。</p>}</details>
     <a class="board-source" href={sourceUrl} target="_blank" rel="noopener">查看原始榜单 ↗</a>
-    {citation && <p class="board-cite">{citation}</p>}
+    {citation && <p class="board-cite" data-time-text>{citation}</p>}
   </div>
 </section>

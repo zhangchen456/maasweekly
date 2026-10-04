@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CopyBlock from '../components/CopyBlock.astro';
+import AgentPlans from '../components/AgentPlans.astro';
+import AgentPlusMethods from '../components/AgentPlusMethods.astro';
 import { PUBLIC_ACCESS as P, validatePublicAccessConfig } from '../config/public-access';
 import { loadVerifiedRelease } from '../lib/release';
 const violations = validatePublicAccessConfig(P);
@@ -25,22 +27,24 @@ const questions = [
 ];
 const mcpConfig = JSON.stringify({ mcpServers: { 'maas-daily': { type: 'http', url: `${base}${P.paths.mcpEndpoint}` } } }, null, 2);
 ---
-<Layout title="Agent 接入 — MaaS Daily" description="复制一段提示词，让 Agent 接入 MaaS Daily。查询平台变化、模型价格与正式周报，无需 API Key。">
+<Layout title="Agent 接入 — MaaS Daily" description="复制一段提示词，让 Agent 接入 MaaS Daily。公开信息匿名查询，Plus 凭证读取深度周报全文。">
   <div class="agent-page">
     <header class="agent-hero">
       <div class="kicker">MAAS DAILY / FOR AGENTS</div>
       <h1>把 MaaS 动态，<br />接进你的 Agent。</h1>
       <p class="intro">平台有什么变化、模型价格是多少、这周值得关注什么。<br class="desktop-break" />让 Agent 带着来源回答你。</p>
-      <div class="hero-meta"><span>匿名只读</span><span>无需 API Key</span><span>数据截至 {release.dataThrough}</span></div>
+      <div class="hero-meta"><span>Free 匿名查询</span><span>Plus 凭证读取全文</span><span>数据截至 {release.dataThrough}</span></div>
     </header>
 
+    <AgentPlans en={en} />
     <div class="access-layout">
-      <div class="access-main">
+      <div class="access-main" id="access-methods">
+        <p class="access-context" id="access-context" aria-live="polite">Free · 公开信息接入</p>
         <nav class="method-tabs" aria-label="选择接入方式">
           {methods.map(({key, name, hint, mark}) => <a href={`#method-${key}`} data-method={key}><span class="tab-top"><span>{name}</span><small>{mark}</small></span><span class="tab-hint">{hint}</span></a>)}
         </nav>
 
-        <section class="method-panel" id="method-skill" data-panel="skill">
+        <section class="method-panel" id="method-skill" data-panel="skill" data-tier="free">
           <div class="panel-heading"><span class="eyebrow">从这里开始</span><span class={`status ${P.surfaces.skill.status}`}>{statusLabel(P.surfaces.skill.status)}</span></div>
           <h2>复制给 Agent，剩下的交给它</h2>
           <p class="description">适合支持 Skills 的 Agent。安装一次，以后直接用中文问。</p>
@@ -52,19 +56,19 @@ const mcpConfig = JSON.stringify({ mcpServers: { 'maas-daily': { type: 'http', u
           <details class="advanced"><summary>手动安装与排查<span>＋</span></summary><p>在当前客户端支持的 skills 目录下安装。以下是 Claude Code 的目录示例；其他客户端请替换路径，保留末尾的 maas-daily。</p><CopyBlock code={`curl -fsSL ${base}${P.paths.skillInstaller} | bash -s -- --dir ~/.claude/skills/maas-daily`} label="安装命令" /><p>更新时使用同一 --dir 重跑命令。安装器会校验完整包；发现未知文件时拒绝覆盖。</p><ol class="help-list"><li>确认最终目录顶层存在 SKILL.md。</li><li>开启新会话，再让 Agent 列出发现的 Skills。</li><li>查询失败时检查网络与服务状态，不用模型记忆补答。</li></ol><a href="/maas-skill/README.md">阅读完整安装说明 ↗</a></details>
         </section>
 
-        <section class="method-panel" id="method-mcp" data-panel="mcp">
+        <section class="method-panel" id="method-mcp" data-panel="mcp" data-tier="free">
           <div class="panel-heading"><span class="eyebrow">远程工具连接</span><span class={`status ${P.surfaces.mcp.status}`}>{statusLabel(P.surfaces.mcp.status)}</span></div>
-          <h2>把 MaaS Daily 加入你的工具列表</h2><p class="description">适合支持远程 Streamable HTTP MCP 的客户端。无需填写 token。</p>
+          <h2>把 MaaS Daily 加入你的工具列表</h2><p class="description">Free 连接适合支持远程 Streamable HTTP MCP 的客户端，无需 token。Plus 全文请使用上方的独立连接。</p>
           <div class="prompt-card"><div class="prompt-heading">服务器地址</div><CopyBlock code={`${base}${P.paths.mcpEndpoint}`} label="MCP 地址" /></div>
           <p class="after-copy">在客户端的 MCP 设置中添加远程服务器，保存后刷新工具列表或开启新会话。</p>
           <details class="advanced"><summary>使用 JSON 配置<span>＋</span></summary><CopyBlock code={mcpConfig} label="MCP 配置" /></details>
           <details class="advanced"><summary>Codex 的 TOML 配置<span>＋</span></summary><CopyBlock code={`[mcp_servers.maas-daily]\nurl = "${base}${P.paths.mcpEndpoint}"`} label="TOML 配置" /></details>
           <div class="subsection"><h3>连接后，发一句验证</h3><CopyBlock code={verify} label="验证问题" /></div>
-          <div class="tool-list">{[['maas_get_changes','平台变化'],['maas_get_prices','模型价格'],['maas_get_item','条目详情'],['maas_get_evidence','证据核验'],['maas_get_weekly','正式周报']].map(([name,use]) => <div><code>{name}</code><span>{use}</span></div>)}</div>
+          <div class="tool-list">{[['maas_get_changes','平台变化'],['maas_get_prices','模型价格'],['maas_get_item','条目详情'],['maas_get_evidence','证据核验'],['maas_get_weekly','周报目录与摘要']].map(([name,use]) => <div><code>{name}</code><span>{use}</span></div>)}</div>
           <p class="after-copy">调用默认 10 条、最多 30 条；更多结果使用 cursor 翻页。遇到 429 按 Retry-After 等待，503 时稍后重试。</p>
         </section>
 
-        <section class="method-panel" id="method-rss" data-panel="rss">
+        <section class="method-panel" id="method-rss" data-panel="rss" data-tier="free">
           <div class="panel-heading"><span class="eyebrow">订阅阅读</span><span class={`status ${P.surfaces.rss.status}`}>{statusLabel(P.surfaces.rss.status)}</span></div>
           <h2>更新来了，在阅读器里看</h2><p class="description">复制订阅地址，粘贴到阅读器的「添加订阅」中。</p>
           <div class="subsection"><h3>平台变化</h3><p>最近的平台变化与价格事件，最多 100 条。</p><CopyBlock code={`${base}${P.paths.feedChanges}`} label="变化订阅地址" /></div>
@@ -72,14 +76,15 @@ const mcpConfig = JSON.stringify({ mcpServers: { 'maas-daily': { type: 'http', u
           <p class="after-copy">{P.surfaces.rss.reason}</p><p class="after-copy">RSS 2.0，支持 ETag / 304。自动化轮询请间隔至少 30 分钟。详情页保留最新修订与撤回状态，阅读器内的旧条目可能不会同步撤回；订阅不包含第三方全文或再分发许可。</p>
         </section>
 
-        <section class="method-panel" id="method-rest" data-panel="rest">
+        <section class="method-panel" id="method-rest" data-panel="rest" data-tier="free">
           <div class="panel-heading"><span class="eyebrow">开发者接入</span><span class={`status ${P.surfaces.rest.status}`}>{statusLabel(P.surfaces.rest.status)}</span></div>
           <h2>接入你的脚本与工作流</h2><p class="description">匿名 GET 请求，从一次真实查询开始。</p>
           <CopyBlock code={`curl "${base}${P.paths.apiBase}/changes?provider=openai&limit=5"`} label="查询命令" />
           <CopyBlock code={`curl ${base}${P.paths.apiBase}/status`} label="状态查询" />
-          <div class="tool-list">{[['/status','数据版本与覆盖范围'],['/changes','平台变化'],['/prices','模型价格'],['/items/{id}','条目详情'],['/evidence/{id}','证据详情'],['/weekly','正式周报']].map(([path,use]) => <div><code>{P.paths.apiBase}{path}</code><span>{use}</span></div>)}</div>
+          <div class="tool-list">{[['/status','数据版本与覆盖范围'],['/changes','平台变化'],['/prices','模型价格'],['/items/{id}','条目详情'],['/evidence/{id}','证据详情'],['/weekly','周报目录与摘要']].map(([path,use]) => <div><code>{P.paths.apiBase}{path}</code><span>{use}</span></div>)}</div>
           <p class="after-copy">列表默认 20 条、最多 100 条；翻页原样传回 cursor，过期后从第一页重查。支持 ETag / 304，错误返回 Problem JSON；429 按 Retry-After 等待。</p><a class="doc-link" href={P.paths.openapi}>查看 OpenAPI 完整定义 ↗</a>
         </section>
+        <AgentPlusMethods en={en} base={base} />
       </div>
 
       <aside class="access-aside">
@@ -93,34 +98,46 @@ const mcpConfig = JSON.stringify({ mcpServers: { 'maas-daily': { type: 'http', u
 </Layout>
 
 <script>
-  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-method]'));
-  const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
-  const activate = (key: string) => {
-    links.forEach(link => { const active = link.dataset.method === key; link.setAttribute('aria-selected', String(active)); link.tabIndex = active ? 0 : -1; });
-    panels.forEach(panel => { panel.hidden = panel.dataset.panel !== key; });
+  const links=Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-method]'));
+  const panels=Array.from(document.querySelectorAll<HTMLElement>('[data-panel][data-tier]'));
+  const plans=Array.from(document.querySelectorAll<HTMLButtonElement>('[data-access-plan]'));
+  const english=location.pathname.startsWith('/en/');
+  let tier='free', method='skill';
+  const activate=()=>{
+    plans.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.accessPlan===tier)));
+    links.forEach(link=>{
+      const active=link.dataset.method===method;
+      link.setAttribute('aria-selected',String(active));link.tabIndex=active?0:-1;
+      link.href=`#${tier==='plus'?'plus-':''}method-${link.dataset.method}`;
+      link.setAttribute('aria-controls',`${tier==='plus'?'plus-':''}method-${link.dataset.method}`);
+    });
+    panels.forEach(panel=>{panel.hidden=panel.dataset.tier!==tier||panel.dataset.panel!==method;});
+    const context=document.getElementById('access-context');
+    if(context)context.textContent=tier==='plus'?(english?'Plus · Connect with your personal token':'Plus · 使用个人凭证接入'):(english?'Free · Public information access':'Free · 公开信息接入');
   };
-  document.querySelector('.method-tabs')?.setAttribute('role', 'tablist');
-  links.forEach((link, index) => {
-    const key = link.dataset.method!;
-    link.id = `tab-${key}`;
-    link.setAttribute('role', 'tab');
-    link.setAttribute('aria-controls', `method-${key}`);
-    panels[index].setAttribute('role', 'tabpanel');
-    panels[index].setAttribute('aria-labelledby', link.id);
-    panels[index].tabIndex = 0;
-    link.addEventListener('click', event => { event.preventDefault(); activate(key); history.replaceState(null, '', `#method-${key}`); });
-    link.addEventListener('keydown', event => {
-      let next = index;
-      if (event.key === 'ArrowRight') next = (index + 1) % links.length;
-      else if (event.key === 'ArrowLeft') next = (index - 1 + links.length) % links.length;
-      else if (event.key === 'Home') next = 0;
-      else if (event.key === 'End') next = links.length - 1;
+  const save=()=>history.replaceState(null,'',`#${tier==='plus'?'plus-':''}method-${method}`);
+  plans.forEach(button=>button.addEventListener('click',()=>{tier=button.dataset.accessPlan!;activate();save();}));
+  document.querySelector('.method-tabs')?.setAttribute('role','tablist');
+  links.forEach((link,index)=>{
+    link.id=`tab-${link.dataset.method}`;link.setAttribute('role','tab');
+    link.addEventListener('click',event=>{event.preventDefault();method=link.dataset.method!;activate();save();});
+    link.addEventListener('keydown',event=>{
+      let next=index;
+      if(event.key==='ArrowRight')next=(index+1)%links.length;
+      else if(event.key==='ArrowLeft')next=(index-1+links.length)%links.length;
+      else if(event.key==='Home')next=0;
+      else if(event.key==='End')next=links.length-1;
       else return;
-      event.preventDefault(); links[next].click(); links[next].focus();
+      event.preventDefault();links[next].click();links[next].focus();
     });
   });
-  const syncHash = () => { const key = location.hash.replace('#method-', ''); activate(links.some(l => l.dataset.method === key) ? key : 'skill'); };
-  syncHash(); window.addEventListener('hashchange', syncHash);
+  panels.forEach(panel=>{panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby',`tab-${panel.dataset.panel}`);panel.tabIndex=0;});
+  const syncHash=()=>{
+    const match=/^#(plus-)?method-(skill|mcp|rss|rest)$/.exec(location.hash);
+    tier=match?.[1]||location.hash==='#plus-access'?'plus':'free';
+    method=match?.[2]??'skill';activate();
+  };
+  syncHash();window.addEventListener('hashchange',syncHash);
 </script>
 
 <style>
@@ -133,6 +150,7 @@ const mcpConfig = JSON.stringify({ mcpServers: { 'maas-daily': { type: 'http', u
   .hero-meta span::before { content:'·'; color:var(--acid); margin-right:8px; }
   .access-layout { display:grid; grid-template-columns:minmax(0,1fr) 250px; gap:48px; align-items:start; }
   .access-main { min-width:0; }
+  .access-context { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap; }
   .method-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-bottom:1px solid var(--line-strong); gap:8px; }
   .method-tabs a { padding:16px 12px; border-bottom:2px solid transparent; text-decoration:none; color:var(--muted); transition:background .2s,color .2s; }
   .method-tabs a:hover { background:var(--acid-dim); color:var(--paper); }

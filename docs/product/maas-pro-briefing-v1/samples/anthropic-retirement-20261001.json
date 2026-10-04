@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "models": [],
+  "families": [],
+  "period": {
+    "from": "2026-09-28T00:00:00+08:00",
+    "to": "2026-10-05T00:00:00+08:00"
+  },
+  "dataThrough": "2026-10-03",
+  "coverage": "partial",
+  "coverageNote": "截至10月3日的开发样例，统计周尚未结束；仅覆盖所引用的官方记录。",
+  "sample": false,
+  "correction": "",
+  "critical": false,
+  "limitations": "没有实际请求、账单或独立性能测试。只标厂商范围，不根据名称猜测模型归属。未覆盖对象不能认定为没有变化。",
+  "id": "anthropic-retirement-20261001",
+  "kind": "explainer",
+  "providers": [
+    "anthropic"
+  ],
+  "topics": [
+    "lifecycle",
+    "capability"
+  ],
+  "title": "Claude API退休计划：把日期变成迁移检查",
+  "preview": "官方归档给出Sonnet 4.5的计划退休时间。迁移仍需核对平台和调用兼容性。",
+  "body": "观察事实：10月1日归档的官方日志宣布Sonnet 4.5弃用，Claude API计划在11月30日退休，并建议迁移至Sonnet 5.5。\n\n影响判断：该日期仅针对明确列出的Claude API，不能推断第三方托管平台同日停止，也不能把推荐版本视为已验证完全兼容。\n\n建议动作：定位旧标识配置和批处理任务；核对目的平台迁移指南；回归工具调用、输出格式与上下文策略。预留验证窗口，不把截止日当作开始迁移的日期。\n\n待确认：目标平台区域、配额和收费条件，本条未完成这些比较。",
+  "conditions": "生命周期日期和建议仅限该Claude API官方归档；后续修订以官方最新说明为准。",
+  "rows": [
+    {
+      "项目": "退休日期",
+      "归档说明": "2026-11-30计划日期",
+      "待核对": "平台及后续修订"
+    },
+    {
+      "项目": "迁移建议",
+      "归档说明": "Sonnet 5.5",
+      "待核对": "业务回归与条件"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "obs_b430bb7e93094c95e3dcbaa684cab49865b04b24715f4529e84542f0661fa5d8",
+      "url": "https://docs.anthropic.com/en/release-notes/api",
+      "observedAt": "2026-10-01",
+      "note": "依据平台归档的官方来源差异。观察时间精度为日，未实时验证。"
+    }
+  ]
+}

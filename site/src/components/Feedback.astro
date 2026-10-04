@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+const { locale = 'zh' } = Astro.props;
+const en = locale === 'en';
+const t = (zh: string, english: string) => en ? english : zh;
+---
+<Layout title={t('反馈产品问题 — MaaS Daily', 'Report a problem — MaaS Daily')} description={t('提交产品问题、复现步骤与截图，查看处理进展。', 'Report a problem with screenshots and track its status.')} locale={locale} noindex={true}>
+  <main class="feedback-page" data-feedback-page data-locale={locale}>
+    <header><p class="eyebrow">PRODUCT FEEDBACK</p><h1>{t('告诉我们，哪里出了问题。', 'Tell us what went wrong.')}</h1><p>{t('描述你遇到的错误，附上复现步骤和截图。提交后可在这里查看处理进度。', 'Describe the issue, add steps and screenshots, and track progress here.')}</p></header>
+    <p id="feedback-status" role="status" aria-live="polite"></p>
+    <div id="feedback-guest"><p>{t('登录后即可提交反馈，方便跟踪同一个问题。', 'Sign in to submit and track your report.')}</p><button id="feedback-login" type="button">{t('登录 / 注册', 'Sign in / Register')}</button></div>
+    <div id="feedback-workspace" hidden>
+      <form id="feedback-form">
+        <label for="feedback-title">{t('问题概述', 'Issue title')}</label><input id="feedback-title" required minlength="5" maxlength="120" placeholder={t('例如：关注范围无法选择多个厂商', 'Example: cannot select multiple providers')} />
+        <label for="feedback-page">{t('发生问题的页面', 'Page with the issue')}</label><input id="feedback-page" maxlength="500" placeholder="/pro/" /><small>{t('填写页面路径即可，不需要包含网址参数。', 'Use a page path without query parameters.')}</small>
+        <label for="feedback-description">{t('问题描述与复现步骤', 'Description and steps to reproduce')}</label><textarea id="feedback-description" required minlength="10" maxlength="5000" rows="7" placeholder={t('你做了什么？预期发生什么？实际出现了什么？', 'What did you do? What did you expect? What happened?')}></textarea>
+        <label for="feedback-files">{t('截图（选填）', 'Screenshots (optional)')}</label><input id="feedback-files" type="file" accept="image/png,image/jpeg,image/webp" multiple /><small>{t('最多3张，每张不超过2MB。支持PNG、JPEG、WebP。提交前请遮住密码、密钥等敏感信息。', 'Up to 3 images, 2 MB each: PNG, JPEG or WebP. Hide passwords and keys before submitting.')}</small>
+        <div id="feedback-previews" class="feedback-previews"></div>
+        <button id="feedback-submit" type="submit">{t('提交问题', 'Submit report')}</button>
+      </form>
+      <section class="feedback-history"><h2>{t('我的反馈', 'My reports')}</h2><button id="feedback-refresh" type="button">{t('刷新处理进度', 'Refresh status')}</button><div id="feedback-history"></div></section>
+    </div>
+  </main>
+</Layout>
+<script>import '../scripts/feedback';</script>
+<style is:global>
+.feedback-page{max-width:860px;margin:auto;padding:48px 0 72px}.feedback-page header{max-width:680px;margin-bottom:28px}.feedback-page .eyebrow{font-size:11px;color:var(--muted);letter-spacing:.12em}.feedback-page h1{font-size:clamp(28px,4vw,42px);letter-spacing:-.04em}.feedback-page p{line-height:1.8;color:var(--paper-soft)}.feedback-page form{max-width:620px}.feedback-page label{display:block;margin:20px 0 8px;font-size:13px}.feedback-page input:not([type=file]),.feedback-page textarea{box-sizing:border-box;width:100%;padding:12px;border:1px solid var(--line-strong);border-radius:5px;background:var(--panel-solid);color:var(--paper);font:inherit}.feedback-page textarea{resize:vertical}.feedback-page small{display:block;color:var(--muted);font-size:11px;line-height:1.8;margin-top:6px}.feedback-page button{margin-top:12px;padding:10px 16px;border:1px solid var(--line-strong);border-radius:5px;background:var(--panel-solid);color:var(--paper);font:inherit;cursor:pointer}.feedback-page button[type=submit]{background:var(--acid);color:var(--ink);border:0}.feedback-page button:disabled{opacity:.5;cursor:wait}.feedback-page :focus-visible{outline:2px solid var(--acid);outline-offset:3px}.feedback-page [hidden]{display:none!important}#feedback-status{min-height:24px}#feedback-status[data-error=true]{color:var(--red)}.feedback-previews{display:flex;gap:12px;flex-wrap:wrap}.feedback-previews figure{width:150px;margin:16px 0 0}.feedback-previews img{width:150px;height:100px;object-fit:contain;border:1px solid var(--line);background:var(--ink-2)}.feedback-previews figcaption{font-size:11px;overflow-wrap:anywhere;color:var(--muted)}.feedback-previews button{font-size:11px;padding:5px 8px;margin-top:5px}.feedback-history{margin-top:48px;border-top:1px solid var(--line);padding-top:24px}.feedback-report{padding:20px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}.feedback-report h3{font-size:16px;margin:0 0 8px}.feedback-report p{white-space:pre-wrap;font-size:13px}.feedback-report a{display:inline-block;margin:10px 16px 0 0;color:var(--acid);font-size:12px}@media(max-width:600px){.feedback-page{padding-top:28px}}
+</style>

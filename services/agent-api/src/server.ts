@@ -17,6 +17,8 @@ import { createHandler, type ServerConfig } from './http.js';
 import { countryHandler } from './country.js';
 import { AccountStore } from './account-store.js';
 import { createMailer } from './account-mail.js';
+import { ProStore } from './pro-store.js';
+import { createProHandler } from './pro-http.js';
 import { createAccountHandler } from './account-http.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -83,14 +85,21 @@ await reload();
 
 // dispatcher：/api/mcp → MCP；其余 → REST（http.ts 行为不变）
 const restHandler = instrumentRequest(createHandler(holder, config), holder, releaseId, logger?.emit);
-const mcpHandler = instrumentRequest(createMcpHandler(holder, mcpConfig), holder, releaseId, logger?.emit);
+
 const accountOrigin = process.env.MAAS_ACCOUNT_ORIGIN ?? 'https://daily.maas.click';
 const accountUrl = new URL(accountOrigin);
 if (accountOrigin !== accountUrl.origin || (accountUrl.protocol !== 'https:' && !['localhost', '127.0.0.1'].includes(accountUrl.hostname))) throw new Error('invalid MAAS_ACCOUNT_ORIGIN');
 const accountStore = process.env.MAAS_ACCOUNT_DB ? new AccountStore(path.resolve(process.env.MAAS_ACCOUNT_DB)) : null;
 const accountHandler = createAccountHandler(accountStore, createMailer(), holder, { origin: accountOrigin, secure: accountUrl.protocol === 'https:', trustProxy: TRUST_PROXY });
+const proStore = accountStore ? new ProStore(accountStore) : null;
+const proConfig = { origin: accountOrigin, secure: accountUrl.protocol === 'https:', trustProxy: TRUST_PROXY };
+const proHandler = createProHandler(proStore, holder, proConfig, Boolean(createMailer()));
+const mcpHandler = instrumentRequest(createMcpHandler(holder, mcpConfig), holder, releaseId, logger?.emit);
+const proMcpHandler = proStore ? createMcpHandler(holder, mcpConfig, {store:proStore,config:proConfig}) : proHandler;
 const server = http.createServer((req, res) => {
   const pathname = (req.url ?? '').split('?')[0] ?? '';
+  if (pathname === '/api/pro/mcp') { void proMcpHandler(req, res); return; }
+  if (pathname.startsWith('/api/pro/')) { void proHandler(req, res); return; }
   if (pathname.startsWith('/api/account/')) { void accountHandler(req, res); return; }
   if (pathname === '/_locale/country') { countryHandler(req, res); return; }
   if (pathname === '/api/mcp') {

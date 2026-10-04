@@ -1,0 +1,10 @@
+[Unit]
+Description=MaaS Daily account backup schedule
+
+[Timer]
+OnCalendar=*-*-* 08:45:00 Asia/Shanghai
+Persistent=true
+Unit=maas-account-backup.service
+
+[Install]
+WantedBy=timers.target
