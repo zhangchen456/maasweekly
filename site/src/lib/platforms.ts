@@ -14,7 +14,12 @@ for (const platform of registry) {
 }
 
 export const PLATFORM_LOGO: Record<string, string> = Object.fromEntries(registry.map((p) => [p.name, p.file]));
-export function logoFor(platform: string): string | undefined {
-  // Unknown names intentionally retain the UI's text fallback, never a wrong logo.
+export const FALLBACK_LOGO = "/logos/platform-generic.svg";
+export function registeredLogoFor(platform: string): string | undefined {
   return lookup.get(normalize(platform))?.file;
+}
+
+// New names must remain renderable while their official logo is being registered.
+export function logoFor(platform: string): string {
+  return registeredLogoFor(platform) ?? FALLBACK_LOGO;
 }

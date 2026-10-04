@@ -117,6 +117,7 @@ run "site: model-detail（T07-4B.2）" bash -c 'cd site && node tests/model-deta
 run "site: browser time zones" bash -c 'cd site && node --test tests/time-display.test.mjs'
 run "site: analytics（T08 lightweight）" bash -c 'cd site && node --test tests/analytics.test.mjs'
 run "site: agent-interactions（copy regression）" bash -c 'cd site && node --test tests/agent-interactions.test.mjs'
+run "digest: platform validation" python3 tests/test_digest_platforms.py
 run "site: platform-logos" bash -c 'cd site && node tests/platform-logos.test.mjs'
 run "site: leaderboards" bash -c 'cd site && node tests/leaderboards.test.mjs'
 run "site: records（含残留检测）" bash -c 'cd site && node tests/records.test.mjs'
@@ -134,6 +135,8 @@ run "agent-api: MCP 测试" bash -c 'cd services/agent-api && npm run test:mcp:c
 run "agent-api: MCP 真实数据" bash -c 'cd services/agent-api && npm run test:mcp:real:compiled'
 
 run "site: feedback interaction" bash -c 'cd site && node --test tests/feedback.test.mjs'
+run "site: password login interaction" bash -c 'cd site && node --test tests/account-password.test.mjs'
+run "site: scope checkbox interaction" bash -c 'cd site && node --test tests/pro-scope.test.mjs'
 
 # ---- 汇总 ----
 echo "══════════════════════════"
