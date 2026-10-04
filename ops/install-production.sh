@@ -95,6 +95,10 @@ run "安装 maas-agent@.service" \
 run "生成 shared/agent.env（若不存在；含现场生成的 CURSOR_SECRET）" \
   "if [ ! -f $RELEASE_ROOT/shared/agent.env ]; then { sed 's/^CURSOR_SECRET=.*/CURSOR_SECRET='\"\$(openssl rand -hex 32)\"'/' '$ENV_EXAMPLE_SRC'; } > $RELEASE_ROOT/shared/agent.env && chown root:$SERVICE_USER $RELEASE_ROOT/shared/agent.env && chmod 0740 $RELEASE_ROOT/shared/agent.env; else echo '    agent.env 已存在（保留既有 CURSOR_SECRET）'; fi"
 
+# 每次发布成功后清理，定时任务补偿未执行或失败的清理。
+run "安装并启用 release 清理定时任务" \
+  "install -m 0644 '$OPS_DIR/maas-release-cleanup.service' '$OPS_DIR/maas-release-cleanup.timer' /etc/systemd/system/ && systemctl daemon-reload && systemctl enable --now maas-release-cleanup.timer"
+
 # ---- 4. nginx 接线（M8-B3 P0：三 include 结构；幂等 + 失败回滚） ----
 # 4a. http context 稳定配置（conf.d）
 run "安装 http 级配置 → $NGINX_HTTP_CONF" \

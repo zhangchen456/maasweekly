@@ -617,6 +617,11 @@ class TestNginxThreeIncludeTx(ActivateFixture):
         self.assertIn("location = /feed.xml", rt)
         self.assertIn("location = /feed/weekly.xml", rt)
         self.assertIn("location /maas-skill/", rt)
+        feedback = rt.split("location = /api/account/feedback {", 1)[1].split("}", 1)[0]
+        account = rt.split("location /api/account/ {", 1)[1].split("}", 1)[0]
+        self.assertIn("client_max_body_size 9m;", feedback)
+        self.assertIn("client_max_body_size 8k;", account)
+        self.assertIn("proxy_cache off;", feedback)
         # 继承 server root：不得硬编码 /srv/.../current 或 releases 路径
         self.assertNotIn("/srv/maasweekly", rt)
         # RSS 缓存 ≥30 分钟

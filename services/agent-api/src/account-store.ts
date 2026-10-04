@@ -1,5 +1,5 @@
 import { DatabaseSync } from 'node:sqlite';
-import { createHash, createHmac, randomBytes, randomInt, randomUUID, timingSafeEqual } from 'node:crypto';
+import { createHash, createHmac, randomBytes, randomInt, randomUUID, timingSafeEqual, scrypt } from 'node:crypto';
 import { mkdirSync, chmodSync } from 'node:fs';
 import path from 'node:path';
 import type { ChangeEntity, ModelIdentityCatalog } from './public-contract/entities.js';
@@ -25,6 +25,9 @@ export class AccountStore {
       CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY, email TEXT NOT NULL UNIQUE, organizationId TEXT NOT NULL REFERENCES organizations(id), plan TEXT NOT NULL DEFAULT 'free', emailEnabled INTEGER NOT NULL DEFAULT 0, emailSince INTEGER NOT NULL DEFAULT 0, unsubscribeToken TEXT NOT NULL UNIQUE);
       CREATE TABLE IF NOT EXISTS challenges(email TEXT PRIMARY KEY, hash TEXT NOT NULL, expires INTEGER NOT NULL, attempts INTEGER NOT NULL DEFAULT 0);
       CREATE TABLE IF NOT EXISTS send_limits(email TEXT PRIMARY KEY, lastSent INTEGER NOT NULL, windowStart INTEGER NOT NULL, count INTEGER NOT NULL);
+      CREATE TABLE IF NOT EXISTS passwords(userId TEXT PRIMARY KEY REFERENCES users(id), salt TEXT NOT NULL, digest TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS password_attempts(email TEXT PRIMARY KEY, count INTEGER NOT NULL, expires INTEGER NOT NULL);
+      CREATE TABLE IF NOT EXISTS email_proofs(sessionHash TEXT PRIMARY KEY REFERENCES sessions(hash) ON DELETE CASCADE, expires INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS sessions(hash TEXT PRIMARY KEY, userId TEXT NOT NULL REFERENCES users(id), expires INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS account_profiles(userId TEXT PRIMARY KEY REFERENCES users(id), displayName TEXT NOT NULL DEFAULT '', created INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS account_state(userId TEXT NOT NULL REFERENCES users(id), key TEXT NOT NULL, value TEXT NOT NULL, updated INTEGER NOT NULL, PRIMARY KEY(userId,key));
@@ -74,12 +77,48 @@ export class AccountStore {
       this.profile(user);
       const session = token();
       this.db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hash(session), user.id, this.now() + 30 * 24 * 60 * MINUTE);
+      this.db.prepare('INSERT INTO email_proofs VALUES(?,?)').run(hash(session), this.now() + 10 * MINUTE);
       // Limit live sessions per user without changing the current session.
       this.db.prepare('DELETE FROM sessions WHERE userId=? AND hash NOT IN (SELECT hash FROM sessions WHERE userId=? ORDER BY expires DESC, rowid DESC LIMIT 10)').run(user.id, user.id);
       return { user, session };
     });
     if (!result) throw new AccountError(400, 'invalid_code', '验证码错误或已过期，请重新获取');
     return result;
+  }
+  hasPassword(id: string) { return Boolean(this.db.prepare('SELECT 1 FROM passwords WHERE userId=?').get(id)); }
+  async derive(password: string, salt: string): Promise<Buffer> {
+    return new Promise((resolve, reject) => scrypt(password, salt, 64, { N: 16384, r: 8, p: 1 }, (error, key) => error ? reject(error) : resolve(key)));
+  }
+  async loginPassword(email: string, password: unknown) {
+    if (typeof password !== 'string' || password.length > 128) throw new AccountError(401, 'invalid_credentials', '邮箱或密码错误');
+    const limit = this.db.prepare('SELECT count,expires FROM password_attempts WHERE email=?').get(email) as {count: number; expires: number} | undefined;
+    if (limit && limit.expires > this.now() && limit.count >= 10) throw new AccountError(429, 'rate_limited', '尝试过多，请15分钟后再试');
+    this.db.prepare('INSERT INTO password_attempts VALUES(?,1,?) ON CONFLICT(email) DO UPDATE SET count=CASE WHEN expires<=? THEN 1 ELSE count+1 END,expires=CASE WHEN expires<=? THEN excluded.expires ELSE expires END').run(email, this.now() + 15 * MINUTE, this.now(), this.now());
+    const row = this.db.prepare('SELECT u.id,p.salt,p.digest FROM users u JOIN passwords p ON p.userId=u.id WHERE u.email=?').get(email) as {id: string; salt: string; digest: string} | undefined;
+    const key = await this.derive(password, row?.salt ?? 'maas-dummy-password-salt');
+    if (!row || !timingSafeEqual(key, Buffer.from(row.digest, 'hex'))) throw new AccountError(401, 'invalid_credentials', '邮箱或密码错误');
+    const session = token();
+    this.transaction(() => {
+      const current = this.db.prepare('SELECT digest FROM passwords WHERE userId=?').get(row.id) as {digest: string} | undefined;
+      if (current?.digest !== row.digest) throw new AccountError(401, 'invalid_credentials', '密码已更新，请重新登录');
+      this.db.prepare('DELETE FROM password_attempts WHERE email=?').run(email);
+      this.db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hash(session), row.id, this.now() + 30 * 24 * 60 * MINUTE);
+      this.db.prepare('DELETE FROM sessions WHERE userId=? AND hash NOT IN (SELECT hash FROM sessions WHERE userId=? ORDER BY expires DESC,rowid DESC LIMIT 10)').run(row.id, row.id);
+    });
+    return { session };
+  }
+  async setPassword(session: string, password: unknown) {
+    if (typeof password !== 'string' || password.length < 8 || password.length > 128) throw new AccountError(400, 'invalid_password', '密码需为8至128个字符');
+    const salt = randomBytes(16).toString('hex'), digest = (await this.derive(password, salt)).toString('hex');
+    return this.transaction(() => {
+      const user = this.user(session);
+      const proof = this.db.prepare('SELECT 1 FROM email_proofs WHERE sessionHash=? AND expires>?').get(hash(session), this.now());
+      if (!user || !proof) throw new AccountError(403, 'verification_required', '请先验证邮箱，再设置密码');
+      this.db.prepare('INSERT INTO passwords VALUES(?,?,?) ON CONFLICT(userId) DO UPDATE SET salt=excluded.salt,digest=excluded.digest').run(user.id, salt, digest);
+      this.db.prepare('DELETE FROM sessions WHERE userId=? AND hash<>?').run(user.id, hash(session));
+      this.db.prepare('DELETE FROM email_proofs WHERE sessionHash=?').run(hash(session));
+      this.db.prepare('DELETE FROM password_attempts WHERE email=?').run(user.email);
+    });
   }
   user(session: string): User | undefined {
     return this.db.prepare('SELECT u.* FROM users u JOIN sessions s ON s.userId=u.id WHERE s.hash=? AND s.expires>?').get(hash(session), this.now()) as unknown as User | undefined;

@@ -1,0 +1,166 @@
+TAP version 13
+# (node:44073) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: codes expire, persist failed attempts, cannot replay, and preserve identity
+ok 1 - codes expire, persist failed attempts, cannot replay, and preserve identity
+  ---
+  duration_ms: 2.7975
+  type: 'test'
+  ...
+# Subtest: SQLite sessions and watches survive restart; two connections share state
+ok 2 - SQLite sessions and watches survive restart; two connections share state
+  ---
+  duration_ms: 10.280708
+  type: 'test'
+  ...
+# Subtest: digest opt-in, baseline, exact identity, revision dedup, unsubscribe and re-enable
+ok 3 - digest opt-in, baseline, exact identity, revision dedup, unsubscribe and re-enable
+  ---
+  duration_ms: 3.276083
+  type: 'test'
+  ...
+# Subtest: failed email retries with identical payload and key; lease blocks concurrent sends
+ok 4 - failed email retries with identical payload and key; lease blocks concurrent sends
+  ---
+  duration_ms: 1.783459
+  type: 'test'
+  ...
+# Subtest: uncertain delivery beyond idempotency window requires review
+ok 5 - uncertain delivery beyond idempotency window requires review
+  ---
+  duration_ms: 1.107209
+  type: 'test'
+  ...
+# Subtest: private HTTP: cookie security, CSRF, isolation, no-store, no leaked codes, logout
+ok 6 - private HTTP: cookie security, CSRF, isolation, no-store, no leaked codes, logout
+  ---
+  duration_ms: 36.424208
+  type: 'test'
+  ...
+# Subtest: unconfigured account/mail status is honest; production refuses local outbox
+ok 7 - unconfigured account/mail status is honest; production refuses local outbox
+  ---
+  duration_ms: 5.166584
+  type: 'test'
+  ...
+# Subtest: queued superseded revisions and cancelled model watches do not generate stale alerts
+ok 8 - queued superseded revisions and cancelled model watches do not generate stale alerts
+  ---
+  duration_ms: 1.3445
+  type: 'test'
+  ...
+# Subtest: retry-only run retries existing job and leaves new changes for daily digest
+ok 9 - retry-only run retries existing job and leaves new changes for daily digest
+  ---
+  duration_ms: 1.306375
+  type: 'test'
+  ...
+# Subtest: account profile and workspace data persist, isolate users, export safely, and revoke all sessions
+ok 10 - account profile and workspace data persist, isolate users, export safely, and revoke all sessions
+  ---
+  duration_ms: 23.229041
+  type: 'test'
+  ...
+# Subtest: password setup, login, recovery, throttling and restart preserve legacy account data
+ok 11 - password setup, login, recovery, throttling and restart preserve legacy account data
+  ---
+  duration_ms: 560.321916
+  type: 'test'
+  ...
+# Subtest: password HTTP supports email verification then password login without mail
+ok 12 - password HTTP supports email verification then password login without mail
+  ---
+  duration_ms: 97.44375
+  type: 'test'
+  ...
+# (node:44074) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: feedback validates inputs, isolates users, stores screenshots privately and tracks reply
+ok 13 - feedback validates inputs, isolates users, stores screenshots privately and tracks reply
+  ---
+  duration_ms: 8.54325
+  type: 'test'
+  ...
+# Subtest: HTTP feedback requires login and same origin; screenshots are private and no-store
+ok 14 - HTTP feedback requires login and same origin; screenshots are private and no-store
+  ---
+  duration_ms: 27.598875
+  type: 'test'
+  ...
+# (node:44075) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: review required, monotonic immutable versions, audit, withdrawal never falls back
+ok 15 - review required, monotonic immutable versions, audit, withdrawal never falls back
+  ---
+  duration_ms: 9.474792
+  type: 'test'
+  ...
+# Subtest: object union with topic intersection; unresolved model never matches model-only scope
+ok 16 - object union with topic intersection; unresolved model never matches model-only scope
+  ---
+  duration_ms: 1.876333
+  type: 'test'
+  ...
+# Subtest: expiry and revocation checked per request; scoped hashed credentials and encrypted RSS rotation
+ok 17 - expiry and revocation checked per request; scoped hashed credentials and encrypted RSS rotation
+  ---
+  duration_ms: 2.177
+  type: 'test'
+  ...
+# Subtest: reports freeze scope and selected versions; corrections use latest, account isolation and independent unsubscribe
+ok 18 - reports freeze scope and selected versions; corrections use latest, account isolation and independent unsubscribe
+  ---
+  duration_ms: 4.309667
+  type: 'test'
+  ...
+# Subtest: normal empty and failed coverage distinguished; expired users cannot receive pending mail
+ok 19 - normal empty and failed coverage distinguished; expired users cannot receive pending mail
+  ---
+  duration_ms: 1.784542
+  type: 'test'
+  ...
+# Subtest: retry preserves idempotency and freezes message; uncertain attempts older than 23h require review
+ok 20 - retry preserves idempotency and freezes message; uncertain attempts older than 23h require review
+  ---
+  duration_ms: 1.886417
+  type: 'test'
+  ...
+# Subtest: HTTP and MCP protected content, previews, exports, private RSS, same origin management
+ok 21 - HTTP and MCP protected content, previews, exports, private RSS, same origin management
+  ---
+  duration_ms: 47.775875
+  type: 'test'
+  ...
+# Subtest: additive schema survives restart, free account data remains usable, snapshots exclude public samples
+ok 22 - additive schema survives restart, free account data remains usable, snapshots exclude public samples
+  ---
+  duration_ms: 17.376417
+  type: 'test'
+  ...
+# Subtest: beta access is separate, idempotent, switchable and respects revocation
+ok 23 - beta access is separate, idempotent, switchable and respects revocation
+  ---
+  duration_ms: 1.551167
+  type: 'test'
+  ...
+# Subtest: weekly full text requires Plus; anonymous query hides analysis
+ok 24 - weekly full text requires Plus; anonymous query hides analysis
+  ---
+  duration_ms: 9.325875
+  type: 'test'
+  ...
+# Subtest: Plus MCP weekly returns full structured report only with current entitlement
+ok 25 - Plus MCP weekly returns full structured report only with current entitlement
+  ---
+  duration_ms: 27.070916
+  type: 'test'
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 25
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 808.385292

@@ -14,6 +14,9 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import type { DatasetHolder } from './dataset.js';
 import { ClientRateLimiter, type RateLimitConfig } from './rate-limit.js';
+import type { ProStore } from './pro-store.js';
+import type { AccountConfig } from './account-http.js';
+import { registerProTools } from './pro-mcp.js';
 import { registerMaasTools } from './mcp-tools.js';
 
 export interface McpConfig {
@@ -29,7 +32,7 @@ export const DEFAULT_MCP_CONFIG: McpConfig = {
   rateLimit: { capacity: 30, refillPerMinute: 30 },
 };
 
-export function createMcpHandler(holder: DatasetHolder, config: McpConfig) {
+export function createMcpHandler(holder: DatasetHolder, config: McpConfig, pro?: {store: ProStore; config: AccountConfig}) {
   const limiter = new ClientRateLimiter(config.rateLimit);
 
   return async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> {
@@ -110,7 +113,8 @@ export function createMcpHandler(holder: DatasetHolder, config: McpConfig) {
     // 5. 每请求全新 McpServer + stateless transport（官方范式；
     //    工具闭包持有 holder，单次调用单 datasetVersion）
     const mcp = new McpServer({ name: 'maas-daily', version: '1.0.0' });
-    registerMaasTools(mcp, holder);
+    if (pro) registerProTools(mcp, pro.store, req, pro.config, holder);
+    else registerMaasTools(mcp, holder);
     const transport = new StreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
       enableJsonResponse: true,

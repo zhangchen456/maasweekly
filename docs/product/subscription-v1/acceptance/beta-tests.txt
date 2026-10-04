@@ -1,0 +1,66 @@
+TAP version 13
+# (node:22774) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: review required, monotonic immutable versions, audit, withdrawal never falls back
+ok 1 - review required, monotonic immutable versions, audit, withdrawal never falls back
+  ---
+  duration_ms: 7.708875
+  type: 'test'
+  ...
+# Subtest: object union with topic intersection; unresolved model never matches model-only scope
+ok 2 - object union with topic intersection; unresolved model never matches model-only scope
+  ---
+  duration_ms: 2.004
+  type: 'test'
+  ...
+# Subtest: expiry and revocation checked per request; scoped hashed credentials and encrypted RSS rotation
+ok 3 - expiry and revocation checked per request; scoped hashed credentials and encrypted RSS rotation
+  ---
+  duration_ms: 2.010458
+  type: 'test'
+  ...
+# Subtest: reports freeze scope and selected versions; corrections use latest, account isolation and independent unsubscribe
+ok 4 - reports freeze scope and selected versions; corrections use latest, account isolation and independent unsubscribe
+  ---
+  duration_ms: 3.723333
+  type: 'test'
+  ...
+# Subtest: normal empty and failed coverage distinguished; expired users cannot receive pending mail
+ok 5 - normal empty and failed coverage distinguished; expired users cannot receive pending mail
+  ---
+  duration_ms: 1.48
+  type: 'test'
+  ...
+# Subtest: retry preserves idempotency and freezes message; uncertain attempts older than 23h require review
+ok 6 - retry preserves idempotency and freezes message; uncertain attempts older than 23h require review
+  ---
+  duration_ms: 1.711291
+  type: 'test'
+  ...
+# Subtest: HTTP and MCP protected content, previews, exports, private RSS, same origin management
+ok 7 - HTTP and MCP protected content, previews, exports, private RSS, same origin management
+  ---
+  duration_ms: 53.223916
+  type: 'test'
+  ...
+# Subtest: additive schema survives restart, free account data remains usable, snapshots exclude public samples
+ok 8 - additive schema survives restart, free account data remains usable, snapshots exclude public samples
+  ---
+  duration_ms: 13.015709
+  type: 'test'
+  ...
+# Subtest: beta access is separate, idempotent, switchable and respects revocation
+ok 9 - beta access is separate, idempotent, switchable and respects revocation
+  ---
+  duration_ms: 1.691416
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 290.63175

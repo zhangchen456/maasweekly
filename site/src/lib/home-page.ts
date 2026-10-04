@@ -83,7 +83,7 @@ const ledger = readPageJson<{fx_snapshot:{rates:{CNY:number};as_of:string}}>('de
 const fxRate = Number(ledger.fx_snapshot.rates.CNY);
 const displayAmount = (p: PriceRecord | undefined) => p && ['USD','CNY'].includes(p.currency) ? new Intl.NumberFormat('zh-CN',{maximumSignificantDigits:6}).format(Number(p.amount) * (p.currency === 'USD' ? fxRate : 1)) : p?.amount ?? '—';
 
-const updateLabel = updatedAt?.replace('T', ' ').slice(0, 16);
+const updateLabel = updatedAt;
 const labels: Record<string,string> = {sunset:'服务下线',pricing:'价格变化',release:'新模型发布',other:'平台更新'};
 const all = highlights.flatMap((h) => h.items.map((item) => ({...item,platform:h.platform,headline:h.logo_summary})));
 const picks: (HighlightItem & {platform:string;headline:string})[] = [];

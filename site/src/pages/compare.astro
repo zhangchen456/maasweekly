@@ -20,16 +20,16 @@ const region = (p) => ({global:'全球',us:'美国多区域',eu:'欧盟多区域
   </section>
   <div class="shell">
     {groups.map(group => <section class="compare-group" id={group.model.modelId} data-upstream-model={group.model.upstreamModelId}>
-      <div class="group-head"><div><h2>{group.model.modelName}</h2><p>开发者：{group.developerName} · <a href={group.model.evidence.url} target="_blank" rel="noopener noreferrer">官方模型关系</a> · 核验于 {group.model.evidence.verifiedAt}</p></div><a href={`/model/${group.model.modelId}/`}>价格详情与变化 →</a></div>
+      <div class="group-head"><div><h2>{group.model.modelName}</h2><p>开发者：{group.developerName} · <a href={group.model.evidence.url} target="_blank" rel="noopener noreferrer">官方模型关系</a> · 核验于 <time datetime={group.model.evidence.verifiedAt}>{group.model.evidence.verifiedAt}</time></p></div><a href={`/model/${group.model.modelId}/`}>价格详情与变化 →</a></div>
       <div class="table-scroll"><table>
         <thead><tr><th scope="col">调用平台 / API 标识</th><th scope="col">地区与条件</th><th scope="col">输入</th><th scope="col">输出</th><th scope="col">缓存读取</th><th scope="col">报价依据</th></tr></thead>
         <tbody>{group.rows.map(row => <tr data-platform-id={row.availability.platformId}>
           <td><strong>{row.platformName}</strong><small>{row.availability.apiModelIds.join(' / ')}</small><a href={row.availability.evidence.url} target="_blank" rel="noopener noreferrer">可用关系 ↗</a></td>
-          <td>{region(row.input)}<small>实时 · 标准档</small><small>上下文：{context(row.input)}</small>{row.input?.timeCondition && <small>{row.input.timeCondition.schedule}</small>}</td>
+          <td>{region(row.input)}<small>实时 · 标准档</small><small>上下文：{context(row.input)}</small>{row.input?.timeCondition && <small>{row.input.timeCondition.schedule}（{row.input.timeCondition.tz ?? '来源时区未注明'}）</small>}</td>
           <td>{amount(row.input)}{row.input && <small>每{priceUnit(row.input.unitQuantity,row.input.unitName)}</small>}</td>
           <td>{amount(row.output)}{row.output && <small>每{priceUnit(row.output.unitQuantity,row.output.unitName)}</small>}</td>
           <td>{amount(row.cache)}{row.cache && <small>每{priceUnit(row.cache.unitQuantity,row.cache.unitName)}</small>}</td>
-          <td>{row.input ? <><small>观察于 {row.input.observedAt}</small><div>输入：<EvidenceLinks price={row.input} /></div>{row.output && <div>输出：<EvidenceLinks price={row.output} /></div>}</> : <span class="muted">等待完整、最新的价格证据</span>}</td>
+          <td>{row.input ? <><small>观察于 <time datetime={row.input.observedAt}>{row.input.observedAt}</time></small><div>输入：<EvidenceLinks price={row.input} /></div>{row.output && <div>输出：<EvidenceLinks price={row.output} /></div>}</> : <span class="muted">等待完整、最新的价格证据</span>}</td>
         </tr>)}</tbody>
       </table></div>
     </section>)}

@@ -105,7 +105,7 @@ const HL_TYPE: Record<string, { label: string; cls: string }> = {
 };
 
 const fmtDate = (d: string) => { const [, m, dd] = d.split('-'); return `${+m}.${+dd}`; };
-const weekday = (d: string) => '周' + '日一二三四五六'[new Date(d).getDay()];
+const weekday = (d: string) => '周' + '日一二三四五六'[new Date(d + 'T00:00:00Z').getUTCDay()];
 
 // Task 01：该周的来源变化记录（从持久索引取，不依赖 KEEP_DAYS 窗口）
 const weekOfItem = (dateStr: string) => {

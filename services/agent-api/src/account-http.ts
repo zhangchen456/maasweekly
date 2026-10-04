@@ -1,3 +1,4 @@
+import { FeedbackStore } from './feedback-store.js';
 import { randomUUID } from 'node:crypto';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { DatasetHolder } from './dataset.js';
@@ -12,12 +13,12 @@ function email(value: unknown): string {
   if (typeof value !== 'string' || value.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) throw new AccountError(400, 'invalid_email', '请输入有效邮箱');
   return value.trim().toLowerCase();
 }
-async function body(req: IncomingMessage): Promise<Record<string, unknown>> {
+async function body(req: IncomingMessage, limit = 8192): Promise<Record<string, unknown>> {
   if (!req.headers['content-type']?.startsWith('application/json')) throw new AccountError(415, 'invalid_content_type', '请求需使用 JSON');
   const chunks: Buffer[] = []; let size = 0;
   for await (const chunk of req) {
     size += Buffer.byteLength(chunk);
-    if (size > 8192) throw new AccountError(413, 'body_too_large', '请求过大');
+    if (size > limit) throw new AccountError(413, 'body_too_large', '请求过大');
     chunks.push(Buffer.from(chunk));
   }
   try {
@@ -31,6 +32,8 @@ function reply(res: ServerResponse, status: number, value: unknown) {
   res.end(JSON.stringify(value));
 }
 export function createAccountHandler(store: AccountStore | null, mailer: Mailer | null, holder: DatasetHolder, config: AccountConfig) {
+  const feedback = store ? new FeedbackStore(store) : null;
+  const feedbackLimiter = new ClientRateLimiter({capacity: 10, refillPerMinute: 1, globalCapacity: 50, globalRefillPerMinute: 5, trustLoopbackProxy: config.trustProxy});
   // A normal account session loads several views and saves workspace settings; OTP has its own stricter budget.
   const limiter = new ClientRateLimiter({ capacity: 120, refillPerMinute: 60, globalCapacity: 1000, globalRefillPerMinute: 300, trustLoopbackProxy: config.trustProxy });
   const authLimiter = new ClientRateLimiter({ capacity: 6, refillPerMinute: 1, globalCapacity: 100, globalRefillPerMinute: 20, trustLoopbackProxy: config.trustProxy });
@@ -47,7 +50,9 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
       if (req.method === 'POST' && req.headers.origin !== config.origin) throw new AccountError(403, 'invalid_origin', '请从本站操作');
       if (req.headers['sec-fetch-site'] === 'cross-site') throw new AccountError(403, 'invalid_origin', '请从本站操作');
       const session = (req.headers.cookie ?? '').split(';').map(s => s.trim()).find(s => s.startsWith(`${cookieName}=`))?.slice(cookieName.length + 1) ?? '';
-      const input = req.method === 'POST' ? await body(req) : {};
+      if (route === 'feedback' && req.method === 'POST' && !feedbackLimiter.take(req).allowed) throw new AccountError(429, 'rate_limited', '提交频繁，请稍后再试');
+      if (route === 'feedback' && req.method === 'POST' && !store.user(session)) throw new AccountError(401, 'unauthenticated', '请先登录后提交反馈');
+      const input = req.method === 'POST' ? await body(req, route === 'feedback' ? 9 * 1024 * 1024 : 8192) : {};
       if (route === 'request-code' && req.method === 'POST') {
         if (!mailer) throw new AccountError(503, 'mail_unavailable', '邮件服务尚未配置，请稍后再试');
         if (!authLimiter.take(req).allowed) throw new AccountError(429, 'rate_limited', '发送频繁，请稍后再试');
@@ -64,14 +69,34 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
         res.setHeader('Set-Cookie', cookie(result.session, 30 * 86400));
         reply(res, 200, { authenticated: true }); return;
       }
+      if (route === 'login' && req.method === 'POST') {
+        if (!authLimiter.take(req).allowed) throw new AccountError(429, 'rate_limited', '尝试频繁，请稍后再试');
+        const result = await store.loginPassword(email(input.email), input.password);
+        if (session) store.logout(session);
+        res.setHeader('Set-Cookie', cookie(result.session, 30 * 86400));
+        reply(res, 200, { authenticated: true }); return;
+      }
       if (route === 'unsubscribe' && req.method === 'POST') {
         if (typeof input.token !== 'string' || input.token.length > 100 || !store.unsubscribe(input.token)) throw new AccountError(400, 'invalid_token', '退订链接无效');
         reply(res, 200, { message: '已关闭邮件提醒，关注列表仍保留' }); return;
       }
       const user = store.user(session);
       if (!user) throw new AccountError(401, 'unauthenticated', '请先登录');
+      if (route === 'feedback' && req.method === 'POST') { reply(res, 201, feedback!.submit(user.id, input)); return; }
+      if (route === 'feedback' && req.method === 'GET') { reply(res, 200, {items: feedback!.list(user.id)}); return; }
+      const screenshot = /^feedback\/([0-9a-f-]{36})\/image\/([0-2])$/.exec(route);
+      if (screenshot && req.method === 'GET') {
+        const result = feedback!.screenshot(screenshot[1]!, Number(screenshot[2]), user.id);
+        if (!result) throw new AccountError(404, 'not_found', '截图不存在');
+        res.writeHead(200, {'Content-Type': result.mime, 'Cache-Control': 'no-store', 'Vary': 'Cookie', 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy': "default-src 'none'; sandbox"}); res.end(Buffer.from(result.bytes)); return;
+      }
       if (route === 'me' && req.method === 'GET') {
-        reply(res, 200, { user: { id: user.id, email: user.email, organizationId: user.organizationId, plan: user.plan, ...store.profile(user) }, preferences: { emailEnabled: Boolean(user.emailEnabled) }, watches: store.watches(user.id), state: store.state(user.id) }); return;
+        reply(res, 200, { user: { id: user.id, email: user.email, organizationId: user.organizationId, plan: user.plan, hasPassword: store.hasPassword(user.id), ...store.profile(user) }, preferences: { emailEnabled: Boolean(user.emailEnabled) }, watches: store.watches(user.id), state: store.state(user.id) }); return;
+      }
+      if (route === 'password' && req.method === 'POST') {
+        if (!authLimiter.take(req).allowed) throw new AccountError(429, 'rate_limited', '尝试频繁，请稍后再试');
+        await store.setPassword(session, input.password);
+        reply(res, 200, { saved: true }); return;
       }
       if (route === 'profile' && req.method === 'POST') {
         if (typeof input.displayName !== 'string' || input.displayName.trim().length > 60 || /[\u0000-\u001f]/.test(input.displayName)) throw new AccountError(400, 'invalid_profile', '昵称需在60个字符以内');

@@ -93,6 +93,7 @@ run "test_standard_inputs（AR-03）" python3 -m unittest discover -s tests -p '
 run "test_workflow_release_contract（incident 2026-09）" python3 -m unittest discover -s tests -p 'test_workflow_release_contract.py'
 run "validate-developer-registry（T07-5.2）" python3 pipeline/scripts/validate-developer-registry.py
 run "test_developer_platform_registry（T07-5.2）" python3 -m unittest discover -s tests -p 'test_developer_platform_registry.py'
+run "account maintenance" python3 -m unittest discover -s tests -p 'test_account_maintenance.py'
 run "test_analytics_foundation（T08-1A）" python3 -m unittest discover -s tests -p 'test_analytics_foundation.py'
 run "test_umami_postgres_preflight（T08-1A）" python3 -m unittest discover -s tests -p 'test_umami_postgres_preflight.py'
 run "test_umami_prerequisites（T08-1A）" python3 -m unittest discover -s tests -p 'test_umami_prerequisites.py'
@@ -113,6 +114,7 @@ run "site: model-identity-ui-contract（T07-4A）" bash -c 'cd site && node test
 run "site: changes-browser-contract（T07-4A.2）" bash -c 'cd site && node tests/changes-browser-contract.test.mjs'
 run "site: changes-browser-ui（T07-4A.2）" bash -c 'cd site && node tests/changes-browser-ui.test.mjs'
 run "site: model-detail（T07-4B.2）" bash -c 'cd site && node tests/model-detail.test.mjs'
+run "site: browser time zones" bash -c 'cd site && node --test tests/time-display.test.mjs'
 run "site: analytics（T08 lightweight）" bash -c 'cd site && node --test tests/analytics.test.mjs'
 run "site: agent-interactions（copy regression）" bash -c 'cd site && node --test tests/agent-interactions.test.mjs'
 run "site: platform-logos" bash -c 'cd site && node tests/platform-logos.test.mjs'
@@ -130,6 +132,8 @@ run "agent-api: country" bash -c 'cd services/agent-api && node --test dist/test
 run "agent-api: REST 测试" bash -c 'cd services/agent-api && npm run test:compiled'
 run "agent-api: MCP 测试" bash -c 'cd services/agent-api && npm run test:mcp:compiled'
 run "agent-api: MCP 真实数据" bash -c 'cd services/agent-api && npm run test:mcp:real:compiled'
+
+run "site: feedback interaction" bash -c 'cd site && node --test tests/feedback.test.mjs'
 
 # ---- 汇总 ----
 echo "══════════════════════════"

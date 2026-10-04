@@ -4,7 +4,7 @@ interface Props { changes: ChangeRecord[] }
 const { changes } = Astro.props;
 ---
 {changes.length ? changes.map(change => <article class="change-card">
-  <div class="change-head"><time class="change-date" datetime={change.observationDate}>{change.observationDate}</time>
+  <div class="change-head"><time class="change-date" datetime={change.timePrecision === 'datetime' && change.observedAt ? change.observedAt : change.observationDate}>{change.timePrecision === 'datetime' && change.observedAt ? change.observedAt : change.observationDate}</time>
   <span class="change-type">{change.recordType === 'price_change' ? '价格事件' : '来源观察'}</span></div>
   <a class="change-title" href={change.links.permalink}>{change.title}</a>
   {change.summary && <p class="change-summary">{change.summary.slice(0,160)}</p>}

@@ -475,6 +475,12 @@ export function listPrices(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPayl
   return { items: page, limit, nextCursor };
 }
 
+/** Anonymous interfaces expose report discovery, never Plus analysis. */
+export function publicWeekly(w: WeeklyEntity): WeeklyEntity {
+  if(w.id==='2026-05-03')return w;
+  return {...w,headline:(w.headline as Record<string,unknown>[]).map(h=>({title:h.title,platform:h.platform,summary:h.summary})),platforms:[],summary_table:null,trends:[],watchpoints:null,event_index:[]};
+}
+
 export function listWeekly(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPayload): Page<WeeklyEntity> {
   // 最新在前
   const sorted = ds.weeklyDescending;
@@ -484,7 +490,7 @@ export function listWeekly(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPayl
     out = out.filter((w) => w.date < kd);
   }
   const limit = nq.params.limit as number;
-  const page = out.slice(0, limit);
+  const page = out.slice(0, limit).map(publicWeekly);
   const last = page.at(-1);
   const nextCursor = out.length > limit && last
     ? encodeCursor({ v: 1, sv: '1.0', ds: ds.version, ep: 'weekly', qh: nq.qh,
@@ -502,7 +508,8 @@ export function getEvidence(ds: Dataset, id: string): EvidenceEntity | null {
 }
 
 export function getWeekly(ds: Dataset, id: string): WeeklyEntity | null {
-  return ds.weekly.find((w) => w.id === id) ?? null;
+  const w=ds.weekly.find((w) => w.id === id);
+  return w ? publicWeekly(w) : null;
 }
 
 // ---------------------------------------------------------------------------

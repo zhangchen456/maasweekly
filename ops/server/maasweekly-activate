@@ -270,6 +270,44 @@ location /api/account/ {
     add_header Referrer-Policy "no-referrer" always;
     limit_except GET POST { deny all; }
 }
+# Screenshot feedback accepts bounded JSON uploads; other account writes stay at 8k.
+location = /api/account/feedback {
+    limit_req zone=api_anon burst=10 nodelay;
+    limit_req_status 429;
+    client_max_body_size 9m;
+    proxy_pass http://agent_api;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Maas-Client-IP $remote_addr;
+    proxy_set_header X-Forwarded-For "";
+    proxy_set_header CF-IPCountry "";
+    proxy_connect_timeout 5s;
+    proxy_read_timeout 30s;
+    proxy_cache off;
+    add_header Cache-Control "no-store" always;
+    add_header Referrer-Policy "no-referrer" always;
+    limit_except GET POST { deny all; }
+}
+# Protected professional content and private RSS: no URL credential logging.
+location /api/pro/ {
+    limit_req zone=api_anon burst=10 nodelay;
+    limit_req_status 429;
+    client_max_body_size 16k;
+    proxy_pass http://agent_api;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Maas-Client-IP $remote_addr;
+    proxy_set_header X-Forwarded-For "";
+    proxy_set_header CF-IPCountry "";
+    proxy_connect_timeout 5s;
+    proxy_read_timeout 30s;
+    proxy_cache off;
+    access_log off;
+    error_log /dev/null crit;
+    add_header Cache-Control "no-store" always;
+    add_header Referrer-Policy "no-referrer" always;
+    limit_except GET POST { deny all; }
+}
 # REST：只代理回环 agent_api；GET/HEAD/OPTIONS；错误不缓存
 location /api/v1/ {
     limit_req zone=api_anon burst=10 nodelay;
@@ -577,56 +615,66 @@ restore_incoming_deploy_ownership() {  # <rid>：失败恢复路径专用——i
 
 retention_cleanup() {
   "$PYTHON3" - "$ROOT" "${1:-apply}" <<'PYEOF'
-import json, re, shutil, sys, time
+import json, re, shutil, sys
 from pathlib import Path
 root = Path(sys.argv[1])
-cur = (root / 'current').resolve()
-prev = (root / 'previous').resolve() if (root / 'previous').exists() else None
-now = time.time()
-keep_ds = set()
-# Only live pointers define needed historical datasets. Expired packages
-# cannot retain one another forever through their old manifest references.
-for release in (cur, prev):
-    if release is None:
-        continue
-    if release.parent != (root / 'releases').resolve():
-        print('[cleanup] skipped: protected pointer outside releases')
-        sys.exit(0)
-    try:
-        manifest = json.load(open(release / 'data/public/v1/manifest.json'))
-        needed = {manifest['datasetVersion']} | {r['datasetVersion'] for r in manifest.get('retainedVersions', [])}
-        if not all(isinstance(ds, str) and re.fullmatch(r'ds_[0-9a-f]{64}', ds) for ds in needed):
-            raise ValueError('invalid protected dataset reference')
-        keep_ds |= needed
-    except (OSError, ValueError, KeyError, TypeError):
-        print('[cleanup] skipped: protected public manifest unreadable')
-        sys.exit(0)
-keep, remove = [], []
-for d in (root / 'releases').iterdir():
-    if not d.is_dir() or d.is_symlink() or not re.fullmatch(r'rl_[0-9a-f]{10}_[0-9a-f]{12}', d.name):
-        continue
-    if d.resolve() in (cur, prev):
-        keep.append({'rid': d.name, 'reason': 'protected_pointer'})
-        continue
-    ds = None
-    try:
-        ds = json.load(open(d / 'data' / 'public' / 'v1' / 'manifest.json'))['datasetVersion']
-    except (OSError, ValueError, KeyError, TypeError):
-        keep.append({'rid': d.name, 'reason': 'manifest_unreadable'})
-        continue
-    if ds in keep_ds:
-        keep.append({'rid': d.name, 'reason': 'live_dataset_reference'})
-        continue
-    if now - d.stat().st_mtime <= 7 * 86400:
-        keep.append({'rid': d.name, 'reason': 'within_seven_days'})
-        continue
-    remove.append({'rid': d.name, 'datasetVersion': ds})
+releases = (root / 'releases').resolve()
+rows = []
+try:
+    for d in releases.iterdir():
+        if not d.is_dir() or d.is_symlink() or not re.fullmatch(r'rl_[0-9a-f]{10}_[0-9a-f]{12}', d.name):
+            continue
+        metadata = json.loads((d / 'metadata/release-manifest.json').read_text())
+        stamp = metadata['gitCommitTimestamp']
+        if not isinstance(stamp, int) or isinstance(stamp, bool):
+            raise ValueError('invalid release timestamp')
+        rows.append((stamp, d.name, d))
+    rows.sort(reverse=True)
+    protected = set()
+    for name in ('current', 'previous'):
+        pointer = root / name
+        if not pointer.exists() and not pointer.is_symlink():
+            continue
+        target = pointer.resolve()
+        if target.parent != releases or target not in {row[2] for row in rows}:
+            raise ValueError('invalid protected pointer')
+        protected.add(target)
+    keep = set(protected)
+    for _, _, d in rows:
+        if len(keep) >= 3:
+            break
+        keep.add(d)
+    # Historical API data is embedded in each package. Validate the retained
+    # copies before deleting sibling deployments, including old cursor data.
+    for d in keep:
+        base = d / 'data/public/v1'
+        manifest = json.loads((base / 'manifest.json').read_text())
+        versions = {manifest['datasetVersion']} | {v['datasetVersion'] for v in manifest.get('retainedVersions', [])}
+        for version in versions:
+            if not isinstance(version, str) or not re.fullmatch(r'ds_[0-9a-f]{64}', version):
+                raise ValueError('invalid dataset version')
+            embedded = json.loads((base / 'releases' / version / 'manifest.json').read_text())
+            for item in embedded['files']:
+                relative = Path(item['path'])
+                if relative.is_absolute() or '..' in relative.parts:
+                    raise ValueError('invalid dataset path')
+                file = base / relative
+                if not file.is_file() or file.stat().st_size != item['bytes']:
+                    raise ValueError('incomplete retained dataset')
+except (OSError, ValueError, KeyError, TypeError):
+    print('[cleanup] skipped: release metadata or retained data invalid', file=sys.stderr)
+    sys.exit(6)
+plan = {
+    'keep': [{'rid': name, 'reason': 'protected_pointer' if d in protected else 'latest_version'} for _, name, d in rows if d in keep],
+    'remove': [{'rid': name} for _, name, d in rows if d not in keep],
+}
 if sys.argv[2] == 'dry-run':
-    print(json.dumps({'keep': keep, 'remove': remove}, sort_keys=True))
+    print(json.dumps(plan, sort_keys=True))
 else:
-    for row in remove:
-        shutil.rmtree(root / 'releases' / row['rid'])
-        print(f"[cleanup] 过期清理: {row['rid']}")
+    for row in plan['remove']:
+        shutil.rmtree(releases / row['rid'])
+        print(f"[cleanup] removed: {row['rid']}")
+
 PYEOF
 }
 
@@ -688,7 +736,7 @@ case "$cmd" in
       recover_failed_activation "$rid" "$switch_rc"
       die "切换失败（已恢复上一版本，候选退回 incoming 可重试；退出 ${switch_rc}）" "$switch_rc"
     fi
-    retention_cleanup
+    retention_cleanup || log "cleanup failed; scheduled retry required"
     log "activate $rid ok (commit=$(manifest_field "$ROOT/releases/$rid" gitCommit | cut -c1-10))"
     echo "✓ activated ${rid}"
     ;;

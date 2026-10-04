@@ -9,23 +9,22 @@ const t = (zh: string, english: string) => en ? english : zh;
     <header class="account-heading"><p class="eyebrow">YOUR ACCOUNT</p><h1>{t("你的账户，你的工作空间。", "Your account. Your workspace.")}</h1><p>{t("管理个人信息与模型关注。登录后，平台上的关注、对比与偏好会随账户保存。", "Manage your profile and watchlist. Your follows, comparisons and preferences are saved to your account.")}</p></header>
     <p id="account-message" role="status" aria-live="polite">{t('正在连接账号服务…', 'Connecting to your account…')}</p>
     <section id="login-panel" class="login-layout" hidden>
-      <div><h2>{t('用邮箱开始', 'Start with your email')}</h2><p>{t('首次登录会自动创建个人空间。', 'Your first sign-in creates a personal account.')}<br />{t('邮箱用于登录和你主动开启的变化提醒。', 'Your email is used for sign-in and updates you opt into.')}</p><p class="small">{t('无需设置密码，验证码 10 分钟内有效。', 'No password needed. Codes expire in 10 minutes.')}</p></div>
-      <form id="login-form">
-        <label for="email">{t('邮箱', 'Email')}</label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@company.com" />
-        <button id="send-code" type="button">{t('发送验证码', 'Send code')}</button>
-        <div id="code-fields" hidden><label for="code">{t('六位验证码', 'Six-digit code')}</label><input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" /><button type="submit">{t('登录 / 创建账号', 'Sign in / Create account')}</button></div>
-      </form>
+      <div><h2>{t('登录或注册', 'Sign in or register')}</h2><p>{t('首次使用请验证邮箱注册，并设置密码。已有账号使用邮箱和密码登录。', 'Verify your email to register and set a password. Sign in with your email and password.')}</p></div>
+      <button id="account-center-login" type="button">{t('登录 / 注册', 'Sign in / Register')}</button>
     </section>
     <section id="account-settings" hidden>
-      <div class="settings-heading"><h2>{t('账户信息', 'Account details')}</h2><span>{t('个人账户 · 免费版', 'Personal account · Free')}</span></div>
+      <div class="settings-heading"><h2>{t('账户信息', 'Account details')}</h2><span>{t('个人账户', 'Personal account')}</span></div>
       <div class="settings-grid">
         <form id="profile-form"><label for="profile-name">{t('昵称', 'Display name')}</label><div class="profile-name-row"><input id="profile-name" type="text" maxlength="60" autocomplete="nickname" placeholder={t('输入你的昵称', 'Your display name')} /><button id="profile-save" type="submit">{t('保存', 'Save')}</button></div><p class="small">{t('昵称会显示在右上角的账户菜单中。', 'Your name appears in the account menu.')}</p></form>
-        <dl class="profile-meta"><div><dt>{t('登录邮箱', 'Sign-in email')}</dt><dd id="profile-email"></dd></div><div><dt>{t('资料建立日期', 'Profile created')}</dt><dd id="profile-created"></dd></div></dl>
+        <dl class="profile-meta"><div><dt>{t('登录邮箱', 'Sign-in email')}</dt><dd id="profile-email"></dd></div><div><dt>{t('资料建立日期', 'Profile created')}</dt><dd id="profile-created"><time id="profile-created-time"></time></dd></div></dl>
       </div>
+      <p><button id="account-center-password" type="button">{t("设置 / 重置密码", "Set / Reset password")}</button></p>
+      <div class="account-plan-summary"><span>{t("当前套餐", "Current plan")}</span><strong data-account-plan>—</strong><a href={en ? "/en/subscription/" : "/subscription/"}>{t("查看 Free / Plus →", "Compare Free / Plus →")}</a></div>
+      <p><a href="/pro/">{t("专业情报与服务权益 →", "Professional intelligence and entitlement →")}</a></p>
       <div class="account-data-actions"><span>{t('关注、价格筛选、模型对比与显示偏好会在登录后同步。', 'Follows, price filters, comparisons and appearance sync when signed in.')}</span><button id="account-export" class="quiet" type="button">{t('导出我的数据', 'Export my data')}</button><button id="account-logout-all" class="quiet" type="button">{t('退出所有设备', 'Sign out everywhere')}</button></div><p id="profile-status" role="status" aria-live="polite"></p>
     </section>
     <section id="workspace" hidden>
-      <div class="workspace-bar"><span><b id="user-email"></b><small>{t('个人空间 · 免费版', 'Personal account · Free')}</small></span><button id="logout" class="quiet">{t('退出登录', 'Sign out')}</button></div>
+      <div class="workspace-bar"><span><b id="user-email"></b><small>{t('个人空间', 'Personal account')}</small></span><button id="logout" class="quiet">{t('退出登录', 'Sign out')}</button></div>
       <div class="watch-layout">
         <section class="watch-main">
           <div class="section-title"><h2>{t('我的模型 ', 'My models ')}<span id="watch-count">0</span></h2><span class="small">{t('最多 50 个', 'Up to 50 models')}</span></div>
@@ -37,6 +36,7 @@ const t = (zh: string, english: string) => en ? english : zh;
         <aside>
           <section class="search-panel"><h2>{t('添加关注', 'Follow a model')}</h2><label for="model-search">{t('搜索模型或系列', 'Search models or families')}</label><input id="model-search" type="search" placeholder={t("例如 DeepSeek、GPT", "DeepSeek, GPT, …")} autocomplete="off" /><p id="search-note" class="small"></p><div id="model-results"></div></section>
           <section class="preference-panel"><h2>{t('每日邮件摘要', 'Daily email digest')}</h2><label class="check-label"><input id="email-enabled" type="checkbox" /><span>{t('有变化时发送到我的邮箱', 'Email me when there are changes')}</span></label><p>{t('默认关闭。开启后，只发送后续观察到的变化，不补发历史。邮件里可随时退订。', 'Off by default. Only new changes are sent after opting in. You can unsubscribe in any email.')}</p></section>
+          <p class="small">{t('摘要每天北京时间 09:15 检查（UTC+08:00），有变化时才发送。', 'Digests are checked daily at 09:15 Asia/Shanghai (UTC+08:00), and sent only when changes exist.')}</p><p class="small">{t('下一次检查（你的时区）：', 'Next check (your time zone): ')}<time data-digest-next>{t('01:15 UTC，下一次日期以浏览器换算为准', '01:15 UTC; your browser shows the next date')}</time></p>
           <p class="coverage-note">{t('仅匹配已明确关联模型的记录。平台级动态可能没有模型归属；没有提醒不代表供应商没有变化。', 'Only records explicitly linked to a model are included. Platform updates may not be linked, so no alert does not mean no changes.')}<a href="/changes">{t('查看全部平台变化 →', 'View all platform changes →')}</a></p>
         </aside>
       </div>

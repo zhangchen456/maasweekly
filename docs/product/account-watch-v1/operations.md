@@ -43,11 +43,13 @@ python3 scripts/account-browser-smoke.py --output docs/product/account-watch-v1/
 - Resend 幂等保护为 24 小时。超过 23 小时且投递结果不确定的任务标为 review，暂停自动重试，需查询邮件服务确认是否已发送；不能直接重发而假定绝对不重复。
 - 退订链接 token 在 URL fragment 中，页面读出后立即移除。GET 不修改状态，点击确认后同源 POST 退订，防邮件扫描器误退订。关闭邮件会取消 pending 任务；已经向邮件服务提交的投递无法撤回。
 - 取消某模型后，未开始发送的任务在领取时剔除该模型；已经冻结正文用于重试的任务可能仍包含该模型，保障邮件服务幂等一致性。
-- 备份使用 SQLite online backup API 或维护窗口停写后备份 DB/WAL，一并保护密钥；不能仅复制运行中的主 DB。暂不提供个人数据删除 UI，后续商业化阶段需补管理员删除/数据导出流程。
+- 备份使用 SQLite online backup API 或维护窗口停写后备份 DB/WAL，一并保护密钥；不能仅复制运行中的主 DB。已提供个人数据导出；暂不提供个人数据删除 UI，后续需补管理员删除流程。
 - 密钥轮换使当前待验证验证码失效，不影响已登录会话。
 
 ## 当前部署状态
 
-2026-10-03 已配置并启用生产。当前账号版本 `rl_07d7ce23bd_12fdc567c7d3`；Resend 域名 `notify.maas.click`、真实验证码收信和浏览器流程验收通过；两个 systemd timer 已启用。每日任务北京时间 09:15、每15分钟仅重试，首次执行均 queued/sent/failed/review=0。详细证据与恢复方法见 [生产上线记录](production-2026-10-03.md)。
+2026-10-03 已配置并启用生产。最新账户体系上线记录的版本为 `rl_3e0563ecfd_12fdc567c7d3`（运行版本以服务器 current 为准）；Resend 域名 `notify.maas.click`、真实验证码收信和浏览器流程验收通过；两个 systemd timer 已启用。每日任务北京时间 09:15、每15分钟仅重试，首次执行均 queued/sent/failed/review=0。详细证据与恢复方法见 [生产上线记录](production-2026-10-03.md)。
 
 邮件去重依据：[Resend 幂等键官方说明](https://resend.com/docs/dashboard/emails/idempotency-keys)。
+
+2026-10-03 已补账号在线备份、隔离恢复验证和健康告警，详见 [上线后运维](operations-follow-up-2026-10-03.md)。每日首次自然运行和实际摘要收信状态在该文档单独跟踪。

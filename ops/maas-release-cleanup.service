@@ -1,0 +1,9 @@
+[Unit]
+Description=MaaS Daily release retention (keep three versions)
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/local/sbin/maasweekly-activate cleanup
+Nice=10
+IOSchedulingClass=idle

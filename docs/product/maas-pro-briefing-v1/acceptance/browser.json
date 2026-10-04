@@ -1,0 +1,25 @@
+{
+  "scope": "Real local API, ephemeral fixture accounts, archived sample content, no production or external mail",
+  "checks": [
+    {
+      "account": "guest",
+      "sampleReadable": true,
+      "protectedContentReadable": false,
+      "mobileOverflow": false
+    },
+    {
+      "account": "free",
+      "sampleReadable": true,
+      "protectedContentReadable": false,
+      "mobileOverflow": false
+    },
+    {
+      "account": "paid",
+      "sampleReadable": true,
+      "protectedContentReadable": true,
+      "mobileOverflow": false
+    }
+  ],
+  "errors": [],
+  "localProReadP95Ms": 2.23
+}

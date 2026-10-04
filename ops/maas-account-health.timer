@@ -1,0 +1,10 @@
+[Unit]
+Description=MaaS Daily account health schedule
+
+[Timer]
+OnCalendar=*:0/15:00
+Persistent=true
+Unit=maas-account-health.service
+
+[Install]
+WantedBy=timers.target

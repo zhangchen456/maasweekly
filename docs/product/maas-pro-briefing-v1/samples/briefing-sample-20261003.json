@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "models": [],
+  "families": [],
+  "period": {
+    "from": "2026-09-28T00:00:00+08:00",
+    "to": "2026-10-05T00:00:00+08:00"
+  },
+  "dataThrough": "2026-10-03",
+  "coverage": "partial",
+  "coverageNote": "截至10月3日的开发样例，统计周尚未结束；仅覆盖所引用的官方记录。",
+  "sample": true,
+  "correction": "",
+  "critical": false,
+  "limitations": "没有实际请求、账单或独立性能测试。只标厂商范围，不根据名称猜测模型归属。未覆盖对象不能认定为没有变化。",
+  "id": "briefing-sample-20261003",
+  "kind": "briefing",
+  "providers": [
+    "xai",
+    "kimi",
+    "anthropic"
+  ],
+  "topics": [
+    "price",
+    "billing",
+    "lifecycle",
+    "capability"
+  ],
+  "title": "专业简报样例：生命周期与缓存计费的三项检查",
+  "preview": "完整结构样例：观察事实、影响、检查动作、条件与证据。统计周未结束，不是正式周报。",
+  "body": "本期为开发样例，截至10月3日，统计周尚未结束，覆盖为部分。\n\n一、xAI转写：归档说明旧标识转向新版本，建议核对旧标识和默认路径的业务验收。准确率提升属于官方声明，未独立验证。\n\n二、Kimi缓存：分开记录写入、命中与普通输入；核对TTL和重复间隔。缺少同条件旧费率，不输出涨跌百分比。\n\n三、Claude API：核对Sonnet 4.5依赖、实际托管平台及计划退休日期，安排调用兼容性回归。不能把第三方平台的日期视为相同。\n\n跨条目判断：配置标识、服务行为、计费条件和时间要同时记录。请求成功不代表行为未变，价格表不变不保证总账单相同。\n\n下一步建议：逐项核对业务依赖与缺失条件，关注后续官方修订。平台没有登录用户业务系统或执行上述检查。",
+  "conditions": "仅覆盖三条指定归档，10月3日至统计周结束尚未覆盖。",
+  "rows": [
+    {
+      "厂商": "xAI",
+      "建议动作": "核对转写路由行为"
+    },
+    {
+      "厂商": "Kimi",
+      "建议动作": "拆分缓存成本项"
+    },
+    {
+      "厂商": "Anthropic",
+      "建议动作": "核对平台并安排迁移"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "obs_3db8a4529be6c9c1a08d2fb870476b85a26ebbfe86f2607b04aa92dc515f2d0d",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "observedAt": "2026-10-03",
+      "note": "依据平台归档的官方来源差异。观察时间精度为日，未实时验证。"
+    },
+    {
+      "id": "obs_7ba0a774145370c258ee481336212b7c0da224b37edc87956cd4d20db03ce6f4",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
+      "observedAt": "2026-10-02",
+      "note": "依据平台归档的官方来源差异。观察时间精度为日，未实时验证。"
+    },
+    {
+      "id": "obs_b430bb7e93094c95e3dcbaa684cab49865b04b24715f4529e84542f0661fa5d8",
+      "url": "https://docs.anthropic.com/en/release-notes/api",
+      "observedAt": "2026-10-01",
+      "note": "依据平台归档的官方来源差异。观察时间精度为日，未实时验证。"
+    }
+  ]
+}

@@ -45,7 +45,7 @@ if (root && button && status) {
         const row = body.insertRow(); row.dataset.priceId = price.id;
         const values = cells(price);
         if (!compact) {
-          for (const value of values) row.insertCell().textContent = value;
+          values.forEach((value, index) => { const cell = row.insertCell(); cell.textContent = value; if ((index === 8 || index === 9) && /^\d{4}-\d{2}-\d{2}/.test(value)) cell.dataset.timeValue = value; if (index === 10) cell.dataset.timeText = ''; });
         } else {
           const identity = row.insertCell();
           const name = document.createElement('strong'); name.textContent = values[0];
@@ -61,7 +61,7 @@ if (root && button && status) {
           const facts = document.createElement('dl'); facts.className = 'price-facts';
           values.slice(4).forEach((value, index) => {
             const pair = document.createElement('div'); const dt = document.createElement('dt'); dt.textContent = headers[index + 4];
-            const dd = document.createElement('dd'); dd.textContent = value; pair.append(dt, dd); facts.append(pair);
+            const dd = document.createElement('dd'); dd.textContent = value; if ((index + 4 === 8 || index + 4 === 9) && /^\d{4}-\d{2}-\d{2}/.test(value)) dd.dataset.timeValue = value; if (index + 4 === 10) dd.dataset.timeText = ''; pair.append(dt, dd); facts.append(pair);
           });
           details.append(summary, facts); cell.append(details);
         }
@@ -77,7 +77,7 @@ if (root && button && status) {
       for (const change of changes) {
         const card = document.createElement('article'); card.className = 'change-card';
         const head = document.createElement('div'); head.className = 'change-head';
-        const date = document.createElement('time'); date.dateTime = change.observationDate; date.textContent = change.observationDate;
+        const date = document.createElement('time'); date.dateTime = change.timePrecision === 'datetime' && change.observedAt ? change.observedAt : change.observationDate; date.textContent = date.dateTime;
         const type = document.createElement('span'); type.className = 'change-type'; type.textContent = change.recordType === 'price_change' ? t('价格事件', 'Pricing observation') : t('来源观察', 'Source observation');
         const a = document.createElement('a'); a.className = 'change-title'; a.href = change.links.permalink; a.textContent = en ? `${change.recordType === 'price_change' ? 'Pricing observation' : 'Source observation'} (Chinese)` : change.title;
         head.append(date, type); card.append(head, a);
