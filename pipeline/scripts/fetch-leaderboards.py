@@ -348,7 +348,7 @@ def _run_logo_check():
     # 重新检查：自动补全后哪些仍缺失
     still_missing, _ = check_vendor_logos()
     if still_missing:
-        print(f"  ⚠ {len(still_missing)} 个 logo 仍缺失（build-release 测试可能失败）: {still_missing}")
+        print(f"  ⚠ {len(still_missing)} 个 logo 仍缺失（使用通用图标，不阻塞发布）: {still_missing}")
         print(f"    手动操作：在 data/normalized/platform-logos.json 添加条目后运行")
         print(f"    python3 site/scripts/refresh-logos.py --platform <name>")
     elif registered:

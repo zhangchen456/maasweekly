@@ -115,6 +115,7 @@ run "site: changes-browser-ui（T07-4A.2）" bash -c 'cd site && node tests/chan
 run "site: model-detail（T07-4B.2）" bash -c 'cd site && node tests/model-detail.test.mjs'
 run "site: analytics（T08 lightweight）" bash -c 'cd site && node --test tests/analytics.test.mjs'
 run "site: agent-interactions（copy regression）" bash -c 'cd site && node --test tests/agent-interactions.test.mjs'
+run "digest: platform validation" python3 tests/test_digest_platforms.py
 run "site: platform-logos" bash -c 'cd site && node tests/platform-logos.test.mjs'
 run "site: leaderboards" bash -c 'cd site && node tests/leaderboards.test.mjs'
 run "site: records（含残留检测）" bash -c 'cd site && node tests/records.test.mjs'
