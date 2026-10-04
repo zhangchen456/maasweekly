@@ -1,4 +1,4 @@
-# 产品问题反馈（本地完成，待授权上线）
+# 产品问题反馈（已上线）
 
 入口：全站页脚「反馈问题」、账户菜单「反馈产品问题」。中文 `/feedback/`，英文 `/en/feedback/`。登录后提交问题概述、发生问题的本站路径、描述和复现步骤。支持最多3张PNG/JPEG/WebP截图，每张2MiB；可预览、移除。不会自动收集查询参数、凭据或日志。
 
@@ -22,3 +22,7 @@ node services/agent-api/dist/feedback-cli.js status FEEDBACK_ID resolved '已修
 上线准备：`ops/server/maasweekly-activate`新增仅 `/api/account/feedback` 的9m上传location，其他账号路径仍8k。此激活器变更目前只在工作区，未修改生产；正式发布时须按现有流程核对并安装该候选激活器，再发布准确候选并验证大于8KiB截图上传。新增功能待用户批准上线；主工作区其他任务改动需继续隔离。
 
 本地体验：http://127.0.0.1:4323/feedback/ 。仍可使用 `demo@example.com` / `MaaS-Demo-2026!`。本地体验账号不进入生产。
+
+## 2026-10-04 统一上线
+
+已随 `rl_ff7ad3a22f_06271d209e3d` 上线。完整回归66组通过，四服务面与线上功能验证通过。详见 `docs/operations/all-local-release-2026-10-04/README.md`。此前本地候选与待授权说明为历史执行记录。
