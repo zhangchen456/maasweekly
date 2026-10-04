@@ -1,0 +1,26 @@
+(node:2706197) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Temporary acceptance accounts, feedback and screenshots removed.
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'no-store, no-store'
+- 'no-store'
+           ^
+
+    at check (file:///tmp/maas-feedback-online-ff7ad3a22.mjs:11:46)
+    at file:///tmp/maas-feedback-online-ff7ad3a22.mjs:25:80
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'no-store, no-store',
+  expected: 'no-store',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.22.3
