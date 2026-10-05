@@ -1,5 +1,76 @@
 [
   {
+    "week": "2026-W41",
+    "start": "2026-10-05",
+    "end": "2026-10-11",
+    "days": {
+      "2026-10-05": {
+        "substantive": 3,
+        "jitter": 0,
+        "failed": 2,
+        "releases": 3,
+        "pricings": 2,
+        "sunsets": 1
+      }
+    },
+    "totals": {
+      "substantive": 3,
+      "releases": 3,
+      "pricings": 2,
+      "sunsets": 1
+    },
+    "highlights": [
+      {
+        "platform": "LMArena",
+        "date": "2026-10-05",
+        "text": "新增 Claude Opus 5 (High)、Claude Sonnet 5 (High) 和 Gemini 3.7 Flash (High) 等模型",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-05",
+        "text": "新增 GPT 6 Luna (Max) 定价 $0.06/task（原 $0.07/task）和 GPT 6.1 Sol (Max) 定价 $0.57/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-05",
+        "text": "Claude Fable 5 升级为 Claude Fable 5.1 (Max)，定价 $5.01/task（原 $4.86/task）",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-05",
+        "text": "移除 Deepseek V4.1 Flash (Max) 和 Qwen 3.8 27B 模型",
+        "type": "sunset"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-05",
+        "text": "新增 Coding Agent Index 评测基准",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-05",
+        "text": "厂商列表更新：新增 SpaceX、AI Meta、Z AI、Kimi、Alibaba、DeepSeek，移除 Moonshot AI 和 Alibaba Cloud",
+        "type": "other"
+      },
+      {
+        "platform": "HuggingFace",
+        "date": "2026-10-05",
+        "text": "新增 google/gemma-4-26B-A4B 作为 base_model 及 finetune 基座",
+        "type": "release"
+      },
+      {
+        "platform": "HuggingFace",
+        "date": "2026-10-05",
+        "text": "更新 arxiv 引用：新增 arxiv:2607.02770，移除 arxiv:2409.12191 和 arxiv:2502.13923",
+        "type": "other"
+      }
+    ]
+  },
+  {
     "week": "2026-W40",
     "start": "2026-09-28",
     "end": "2026-10-04",
@@ -123,13 +194,13 @@
         "type": "pricing"
       },
       {
-        "platform": "官方定价页",
+        "platform": "阿里百炼",
         "date": "2026-10-04",
         "text": "qwen3.8-flash input 新定价 1.094000 CNY/百万tokens，output 新定价 3.427000 CNY/百万tokens",
         "type": "pricing"
       },
       {
-        "platform": "官方定价页",
+        "platform": "阿里百炼",
         "date": "2026-10-04",
         "text": "qwen-image-2.1-pro output 新定价 0.250000 CNY/百万tokens",
         "type": "pricing"
