@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-10-05T00:03:05+00:00",
+  "updated_at": "2026-10-05T06:35:04+00:00",
   "days": [
     {
       "date": "2026-10-05",
       "stats": {
         "total": 68,
-        "success": 66,
-        "failed": 2,
-        "changed": 5,
-        "unchanged": 61
+        "success": 68,
+        "failed": 0,
+        "changed": 6,
+        "unchanged": 62
       },
       "changed": [
         {
@@ -35,8 +35,8 @@
             }
           ],
           "signal_preview": "\"base_model:finetune:google/gemma-4-26B-A4B\",",
-          "raw_added_count": 37,
-          "raw_removed_count": 38,
+          "raw_added_count": 38,
+          "raw_removed_count": 39,
           "id": "obs_aa1fb7b6f33655b2c55025dd9cd0a4502c6f1077a66ec135aa843a244e7aae1d",
           "permalink": "/item/obs_aa1fb7b6f33655b2c55025dd9cd0a4502c6f1077a66ec135aa843a244e7aae1d/",
           "llm_summary": "新增了 google/gemma-4-26B-A4B 作为基础模型和微调基座，同时更新了 arxiv 引用，移除两篇旧论文并新增一篇，反映模型基座和文献引用调整。"
@@ -70,25 +70,24 @@
           "source_type": "industry",
           "url": "https://lmarena.ai/leaderboard",
           "status": "changed",
-          "added_count": 8,
+          "added_count": 7,
           "removed_count": 7,
           "added_lines": [
-            "359,287,019359,287,019Total Sessions",
-            "Claude Opus 5 (High)·",
-            "Claude Sonnet 5 (High)·",
+            "359,375,021359,375,021Total Sessions",
             "GPT 6 Luna (Max)$0.06/task",
             "GPT 6.1 Sol (Max)$0.57/task",
             "Gemini 3.7 Flash (High)·",
-            "Muse Spark 1.1·",
-            "Running bash"
+            "Private Model·",
+            "Running bash",
+            "Searching the web"
           ],
           "removed_lines": [
             "Claude Fable 5.1 (Max)$4.86/task",
-            "Deepseek V4.1 Flash (Max)·",
             "Presenting the result",
             "Qwen 3.8 27B·",
             "358,848,044358,848,044Total Sessions",
             "GPT 6 Luna (Max)$0.07/task",
+            "GPT 6 Luna (Max)·",
             "GPT 6.1 Sol (Max)$0.58/task"
           ],
           "kind": "substantive",
@@ -96,12 +95,17 @@
             {
               "key": "claude fable",
               "before": "Claude Fable 5 (High)·",
-              "after": "Claude Fable 5.1 (Max)$5.01/task"
+              "after": "Claude Fable 5.1 (Max)$5.12/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (High)$1.56/task",
+              "after": "Claude Opus 5.5 (High)$1.58/task"
             }
           ],
-          "signal_preview": "Claude Opus 5 (High)·",
+          "signal_preview": "GPT 6 Luna (Max)$0.06/task",
           "raw_added_count": 9,
-          "raw_removed_count": 8,
+          "raw_removed_count": 9,
           "id": "obs_9f785b372dc92e490ee9940e9b93439f1dd3a05e0549e34a69c6262ae85ff820",
           "permalink": "/item/obs_9f785b372dc92e490ee9940e9b93439f1dd3a05e0549e34a69c6262ae85ff820/",
           "llm_summary": "新增多款模型（Claude Opus 5、Sonnet 5、Gemini 3.7 Flash、GPT 6.1 Sol 等），调整 GPT 6 Luna 定价，升级 Claude Fable 5 至 5.1 并调整价格，同时移除 Deepseek V4.1 Flash 和 Qwen 3.8 27B，反映模型阵容和价格动态。"
@@ -121,24 +125,16 @@
           "url": "https://www.volcengine.com/docs/82379/1544106",
           "status": "first_fetch",
           "content_length": 17850
-        }
-      ],
-      "failed": [
+        },
         {
           "platform": "火山方舟",
           "source_type": "changelog",
           "url": "https://www.volcengine.com/docs/82379/1159177",
-          "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=11902)"
-        },
-        {
-          "platform": "智谱AI",
-          "source_type": "pricing",
-          "url": "https://bigmodel.cn/pricing",
-          "status": "fetch_failed",
-          "error": "curl 返回空 (stderr: )"
+          "status": "first_fetch",
+          "content_length": 7475
         }
       ],
+      "failed": [],
       "highlights": [
         {
           "platform": "LMArena",

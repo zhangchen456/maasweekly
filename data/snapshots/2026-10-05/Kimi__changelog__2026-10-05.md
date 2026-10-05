@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-05T07:54:07.623301+08:00 -->
+<!-- fetched: 2026-10-05T14:32:42.033402+08:00 -->
 
 平台新功能发布记录 - Kimi API 开放平台
 Documentation Index

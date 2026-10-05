@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-05T07:54:39.496192+08:00 -->
+<!-- fetched: 2026-10-05T14:33:14.474050+08:00 -->
 
 Arena Leaderboard | Compare & Benchmark the Best Frontier AI Models
 New Chat
@@ -9,7 +9,7 @@ Log In
 Terms of UsePrivacy PolicyCookies
 Measuring AIin the real-world
 Our leaderboards are powered by real people doing real work on Arena from across the globe
-359,287,019359,287,019Total Sessions
+359,375,021359,375,021Total Sessions
 New Release Rankings
 Gemini 4 Argon
 is #1 in
@@ -62,34 +62,30 @@ Gemini 4 Argon (High)
 7.57%View all
 Live Agent Sessions
 Best Overall
-Meta
-Muse Spark 1.1·
-Meta
+Private Model·
+Anonymous
 Session complete
-GPT 6 Luna (Max)·
-OpenAI
+Private Model·
+Anonymous
 Session complete
-Anthropic
-Claude Sonnet 5 (High)·
-Anthropic
+Private Model·
+Anonymous
 Session complete
-GPT 6 Luna (Max)·
-OpenAI
+Private Model·
+Anonymous
 Session complete
-Anthropic
-Claude Opus 5 (High)·
-Anthropic
+Deepseek V4.1 Flash (Max)·
+DeepSeek
+Session complete
+Private Model·
+Anonymous
+Running bash
+Private Model·
+Anonymous
 Session complete
 Gemini 3.7 Flash (High)·
 Google
-Session complete
-GPT 6 Luna (Max)·
-OpenAI
-Running bash
-Anthropic
-Claude Sonnet 5 (High)·
-Anthropic
-Running bash
+Searching the web
 Start a chat
 Pareto Frontier
 Best Overall
@@ -98,10 +94,10 @@ View details
 Pareto Optimal Models
 Best Overall
 Anthropic
-Claude Fable 5.1 (Max)$5.01/task
+Claude Fable 5.1 (Max)$5.12/task
 14.31%
 Anthropic
-Claude Opus 5.5 (High)$1.56/task
+Claude Opus 5.5 (High)$1.58/task
 13.82%
 GPT 6.1 Sol (Max)$0.57/task
 11.23%

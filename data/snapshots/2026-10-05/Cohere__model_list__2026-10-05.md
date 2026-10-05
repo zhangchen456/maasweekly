@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-05T07:54:35.310838+08:00 -->
+<!-- fetched: 2026-10-05T14:33:10.180622+08:00 -->
 
 An Overview of Cohere's Models | Cohere
 For AI agents: a documentation index is available at the root level at /llms.txt. Append /llms.txt to any URL for a page-level index, or .md for the markdown version of any page.

@@ -1,11 +1,11 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-05T07:54:38.191143+08:00 -->
+<!-- fetched: 2026-10-05T14:33:13.280610+08:00 -->
 
 [
   {
     "_id": "621ffdc136468d709f180294",
     "id": "sentence-transformers/all-MiniLM-L6-v2",
-    "likes": 6182,
+    "likes": 6185,
     "private": false,
     "downloads": 237133386,
     "tags": [
@@ -268,7 +268,7 @@
   {
     "_id": "65b53851e602b6c2c96e78da",
     "id": "BAAI/bge-m3",
-    "likes": 3819,
+    "likes": 3820,
     "private": false,
     "downloads": 34394329,
     "tags": [
@@ -369,7 +369,7 @@
   {
     "_id": "6a6bd1dc7034404148ec9107",
     "id": "Comfy-Org/MiniMax-H3",
-    "likes": 2133,
+    "likes": 2135,
     "private": false,
     "downloads": 23256823,
     "tags": [
@@ -387,7 +387,7 @@
   {
     "_id": "69037c2ff37fdfe285722818",
     "id": "amazon/chronos-2",
-    "likes": 503,
+    "likes": 504,
     "private": false,
     "downloads": 22440681,
     "tags": [
@@ -757,7 +757,7 @@
   {
     "_id": "69b1dde5d77b87bf05eff3f9",
     "id": "google/gemma-4-26B-A4B-it",
-    "likes": 1593,
+    "likes": 1592,
     "private": false,
     "downloads": 12854141,
     "tags": [
