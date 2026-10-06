@@ -1,6 +1,462 @@
 {
-  "updated_at": "2026-10-05T06:35:04+00:00",
+  "updated_at": "2026-10-06T01:47:53+00:00",
   "days": [
+    {
+      "date": "2026-10-06",
+      "stats": {
+        "total": 68,
+        "success": 66,
+        "failed": 2,
+        "changed": 13,
+        "unchanged": 53
+      },
+      "changed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 10,
+          "added_lines": [],
+          "removed_lines": [
+            "0.0015 元/GB/小时​",
+            "0.45 元/CU/小时​",
+            "0.0005 元/千token​",
+            "0.0007 元/千token​",
+            "0.0018 元/千token​",
+            "0.0416 元/知识库/小时​",
+            "10.875 万 token / 次 * 0.80 元/万 token​",
+            "12.6875 万 token / 次 * 0.80 元/万 token​",
+            "13.56~30.13​",
+            "16.3125 万 token / 次 * 0.80 元/万 token​"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 204,
+          "id": "obs_fdb21b9a826d8def620ef2198befe37d1a0e9e1ba9d1604b3c5d1456b374a3bb",
+          "permalink": "/item/obs_fdb21b9a826d8def620ef2198befe37d1a0e9e1ba9d1604b3c5d1456b374a3bb/",
+          "llm_summary": "删除了6项定价条目，涵盖存储、计算、token 单价及知识库费用，未见新增，可能为价格表重构或产品下线。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Added an in-product flow for HIPAA compliance support in API Organization settings > General. Admins of eligible organizations can now accept the standard Business Associate Agreement (BAA) and enable HIPAA compliance support for their organization. See the Help Center for eligibility, covered services, and configuration requirements.",
+            "October, 2026"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Added an in-product flow for HIPAA compliance support in API Organization settings > General. Admins of eligible organizations can now accept the standard Business Associate Agreement (BAA) and enable HIPAA compliance support for their organization. See the Help Center for eligibility, covered services, and configuration requirements.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_690b5b6220f3569dcfd9918467877b87fb02162c35963d7e0fd488f81e327f89",
+          "permalink": "/item/obs_690b5b6220f3569dcfd9918467877b87fb02162c35963d7e0fd488f81e327f89/",
+          "llm_summary": "新增一条 changelog，内容为 API Organization 设置中新增 HIPAA 合规支持流程，日期标注为 2026 年 10 月。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Added an in-product flow for HIPAA compliance support in API Organization settings > General. Admins of eligible organizations can now accept the standard Business Associate Agreement (BAA) and enable HIPAA compliance support for their organization. See the Help Center for eligibility, covered services, and configuration requirements.",
+            "October, 2026"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Added an in-product flow for HIPAA compliance support in API Organization settings > General. Admins of eligible organizations can now accept the standard Business Associate Agreement (BAA) and enable HIPAA compliance support for their organization. See the Help Center for eligibility, covered services, and configuration requirements.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_77e0fd3f76e415497a6b5f329feee4b2731a73c9cf8353e83717d501bbcbb6ed",
+          "permalink": "/item/obs_77e0fd3f76e415497a6b5f329feee4b2731a73c9cf8353e83717d501bbcbb6ed/",
+          "llm_summary": "新增内容与 changelog 相同，均为 HIPAA 合规支持流程的公告，可能为同步发布。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "model_list",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Each model in the response also has a line field, which names the model line it belongs to. Claude Opus 4.5 and Claude Opus 4.6 both report opus. Use line to group models, for example, in a model picker. line is null when a model belongs to no line. Read line instead of inferring it from the model's id. Anthropic might add more lines, so don't treat the set of values as fixed."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Each model in the response also has a line field, which names the model line it belongs to. Claude Opus 4.5 and Claude Opus 4.6 both report opus. Use line to group models, for example, in a model picker. line is null when a model belongs to no line. Read line instead of inferring it from the model's id. Anthropic might add more lines, so don't treat the set of values as fixed.",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_51b56f28fe083d187834e6370d431a922833551983ed821db00132e9fc205301",
+          "permalink": "/item/obs_51b56f28fe083d187834e6370d431a922833551983ed821db00132e9fc205301/",
+          "llm_summary": "新增说明：Models API 响应中每个模型新增 line 字段，用于标识模型所属系列，Claude Opus 4.5 和 4.6 均报告为 opus。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "We've added a line field to the Models API. GET /v1/models and GET /v1/models/{model_id} now return the model line each model belongs to. Claude Opus 4.5 and Claude Opus 4.6 both report opus, for example. Use line to group models without parsing their IDs. line is null for a model that belongs to no line. See Using the Models API."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "We've added a line field to the Models API. GET /v1/models and GET /v1/models/{model_id} now return the model line each model belongs to. Claude Opus 4.5 and Claude Opus 4.6 both report opus, for example. Use line to group models without parsing their IDs. line is null for a model that belongs to no line. See Using the Models API.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_df5e936d72948781d5734db9e38dc5c62bb77b1230530616118b95c2896eb593",
+          "permalink": "/item/obs_df5e936d72948781d5734db9e38dc5c62bb77b1230530616118b95c2896eb593/",
+          "llm_summary": "新增 changelog 条目，宣布 Models API 新增 line 字段，与 model_list 更新一致。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "pricing",
+          "url": "https://mistral.ai/pricing",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 10,
+          "added_lines": [
+            "All customers",
+            "Latest research",
+            "Our products",
+            "Public sector",
+            "Seminal contributions to AI",
+            "Sovereign AI",
+            "Sovereign AI in practice",
+            "Why Sovereign AI"
+          ],
+          "removed_lines": [
+            "AI agent for long-horizon work.",
+            "API Reference",
+            "API pricing",
+            "Build, test, and run AI agents and apps.",
+            "Cloudera and Mistral Partner to Bring Specialized, Sovereign Intelligence to Enterprise Data",
+            "Coding agents in the terminal, IDE, and background.",
+            "Delivery methodology",
+            "Document intelligence",
+            "Engineering",
+            "Featured stories"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 8,
+          "raw_removed_count": 28,
+          "id": "obs_2ef37e12325f7d9289290407c80840850102182196ddb1e06bf1def006f8c487",
+          "permalink": "/item/obs_2ef37e12325f7d9289290407c80840850102182196ddb1e06bf1def006f8c487/",
+          "llm_summary": "新增大量导航类文本（如『All customers』『Sovereign AI』），删除内容涉及产品描述和合作伙伴新闻，可能为页面改版，非定价实质变化。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "changelog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 10,
+          "added_lines": [
+            "All customers",
+            "Latest research",
+            "Our products",
+            "Public sector",
+            "Seminal contributions to AI",
+            "Sovereign AI",
+            "Sovereign AI in practice",
+            "Why Sovereign AI"
+          ],
+          "removed_lines": [
+            "AI agent for long-horizon work.",
+            "API Reference",
+            "API pricing",
+            "Build, test, and run AI agents and apps.",
+            "Coding agents in the terminal, IDE, and background.",
+            "Delivery methodology",
+            "Document intelligence",
+            "Featured stories",
+            "For enterprises",
+            "Frontier-scale infrastructure for training and inference."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 8,
+          "raw_removed_count": 24,
+          "id": "obs_2d79f03c5fbd58f102b505a80813b14d3589db0d26ff814278ee7bc64911ae7a",
+          "permalink": "/item/obs_2d79f03c5fbd58f102b505a80813b14d3589db0d26ff814278ee7bc64911ae7a/",
+          "llm_summary": "新增与删除内容与 pricing 相同，均为导航和页面文案调整，无实质模型或价格变化。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "blog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 10,
+          "added_lines": [
+            "All customers",
+            "Latest research",
+            "Our products",
+            "Public sector",
+            "Seminal contributions to AI",
+            "Sovereign AI",
+            "Sovereign AI in practice",
+            "Why Sovereign AI"
+          ],
+          "removed_lines": [
+            "AI agent for long-horizon work.",
+            "API Reference",
+            "API pricing",
+            "Build, test, and run AI agents and apps.",
+            "Coding agents in the terminal, IDE, and background.",
+            "Delivery methodology",
+            "Document intelligence",
+            "Featured stories",
+            "For enterprises",
+            "Frontier-scale infrastructure for training and inference."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 8,
+          "raw_removed_count": 24,
+          "id": "obs_60559d47d4dccfb6f6a5e7ec04c618658d4d69919d6ab79f8d841ca07f2a61e6",
+          "permalink": "/item/obs_60559d47d4dccfb6f6a5e7ec04c618658d4d69919d6ab79f8d841ca07f2a61e6/",
+          "llm_summary": "同样为导航和页面文案调整，删除内容包含『AI agent for long-horizon work』等，可能为博客聚合页改版。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "pricing",
+          "url": "https://cohere.com/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "Introducing North 2: AI without compromisesLearn more about the updates",
+            "North 2: Enterprise AI without compromises"
+          ],
+          "removed_lines": [
+            "Embed 5 is here: state-of-the-art retrieval - now available in Pro and Fast tiers.Learn more",
+            "Who Gets to Define the Rules for AI?"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Introducing North 2: AI without compromisesLearn more about the updates",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_b9c8e28731bef06b90430d1f5644dde4a37a6bc5866b12952da888882c03bb99",
+          "permalink": "/item/obs_b9c8e28731bef06b90430d1f5644dde4a37a6bc5866b12952da888882c03bb99/",
+          "llm_summary": "新增 North 2 发布信息，删除 Embed 5 相关宣传，表明焦点从 Embed 5 转向 North 2 平台。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 7,
+          "added_lines": [
+            "Bringing together secure, sovereign AI and transformation expertise to help organizations move from pilots to production",
+            "Cohere and PwC partner to accelerate secure enterprise AI adoption",
+            "Introducing North 2: AI without compromisesLearn more about the updates",
+            "North 2 is Cohere’s biggest upgrade yet — unifying enterprise‑grade security, intelligence, cost governance, and full‑stack control into a single agentic AI platform that runs wherever your data lives.",
+            "North 2: Enterprise AI without compromises"
+          ],
+          "removed_lines": [
+            "A day in the life of a wealth manager, with and without AI",
+            "AI Governance",
+            "Cohere signs EU Code of Practice on Transparency of AI-Generated Content",
+            "Embed 5 is here: state-of-the-art retrieval - now available in Pro and Fast tiers.Learn more",
+            "Gain access to our state-of-the-art search and retrieval engine, without worrying about the infrastructure",
+            "Financial ServicesEnterprise AI",
+            "Our most powerful embedding models yet, now available in Pro and Fast tiers."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Bringing together secure, sovereign AI and transformation expertise to help organizations move from pilots to production",
+          "raw_added_count": 6,
+          "raw_removed_count": 9,
+          "id": "obs_b69ec815a48734b2903bfd832fc5a1325c860008c043767a3be5f09e50cfcd1e",
+          "permalink": "/item/obs_b69ec815a48734b2903bfd832fc5a1325c860008c043767a3be5f09e50cfcd1e/",
+          "llm_summary": "新增 North 2 发布及与 PwC 合作公告，删除多篇旧文章（如 AI 治理、财富管理案例），内容重心明显转向企业级 Agent 平台。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 6,
+          "added_lines": [
+            "359,786,420359,786,420Total Sessions",
+            "GPT 5.5 (xHigh)·",
+            "GPT 5.6 Luna (xHigh)·",
+            "GPT 6 Luna (Max)·",
+            "Ideogram 4.5",
+            "Self-Preference of AI Judges"
+          ],
+          "removed_lines": [
+            "Agent Leaderboard Improvements: Categories & Task Cost",
+            "Claude Sonnet 5.5",
+            "Gemini 3.7 Flash (High)·",
+            "Searching the web",
+            "WebDev · xHigh",
+            "359,375,021359,375,021Total Sessions"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "arena leaderboard",
+              "before": "Arena Leaderboard | Compare & Benchmark the Best Frontier AI Models",
+              "after": "Arena Leaderboard: Official AI Model Rankings & Benchmarks"
+            },
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5.1 (Max)$5.12/task",
+              "after": "Claude Fable 5.1 (Max)$5.21/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (High)$1.58/task",
+              "after": "Claude Opus 5.5 (High)$1.57/task"
+            }
+          ],
+          "signal_preview": "GPT 5.6 Luna (xHigh)·",
+          "raw_added_count": 10,
+          "raw_removed_count": 10,
+          "id": "obs_9cb04c0dd759b3874ab48c586f58a186f9a54c55a20a45c49733a6483f53f53a",
+          "permalink": "/item/obs_9cb04c0dd759b3874ab48c586f58a186f9a54c55a20a45c49733a6483f53f53a/",
+          "llm_summary": "榜单名称变更，新增多个模型条目（GPT 5.5/5.6/6 Luna 等）和总会话数，删除旧条目（如 Claude Sonnet 5.5、Gemini 3.7 Flash），并调整了部分模型价格，反映榜单模型库更新。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 31,
+          "raw_removed_count": 31,
+          "id": "obs_9b08aafcb7ad91cba19f60308cd9b3c295966b2c27b901fa433db491a51d2f7f",
+          "permalink": "/item/obs_9b08aafcb7ad91cba19f60308cd9b3c295966b2c27b901fa433db491a51d2f7f/"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_5ce267b341e8815b58741455de1a3a9b6d0cdda20fcf386b9346b4a35392c91e",
+          "permalink": "/item/obs_5ce267b341e8815b58741455de1a3a9b6d0cdda20fcf386b9346b4a35392c91e/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Cohere",
+          "logo_summary": "发布North 2企业级Agent平台，与PwC达成合作",
+          "items": [
+            {
+              "text": "Cohere 发布 North 2，定位企业级 Agent 平台，强调安全、智能、成本治理与全栈控制",
+              "type": "release"
+            },
+            {
+              "text": "Cohere 与 PwC 合作，加速企业安全 AI 采用，聚焦从试点到生产",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "API组织设置新增HIPAA合规支持流程",
+          "items": [
+            {
+              "text": "OpenAI 在 API Organization 设置中新增 HIPAA 合规支持流程，符合条件的组织可接受标准商业协议",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Models API新增line字段，标识模型所属系列",
+          "items": [
+            {
+              "text": "Anthropic 在 Models API 中新增 line 字段，GET /v1/models 返回模型系列信息，Claude Opus 4.5/4.6 均报告为 opus",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "榜单改名并新增GPT-5.5/5.6/6等模型条目",
+          "items": [
+            {
+              "text": "LMArena 榜单更名为『Arena Leaderboard: Official AI Model Rankings & Benchmarks』",
+              "type": "other"
+            },
+            {
+              "text": "LMArena 新增 GPT 5.5 (xHigh)、GPT 5.6 Luna (xHigh)、GPT 6 Luna (Max) 等模型条目",
+              "type": "release"
+            },
+            {
+              "text": "LMArena 中 Claude Fable 5.1 (Max) 价格从 $5.12/task 上调至 $5.21/task，Claude Opus 5.5 (High) 从 $1.58/task 微调至 $1.57/task",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "删除多项定价条目，疑似价格体系调整",
+          "items": [
+            {
+              "text": "火山方舟删除多项定价条目，包括 0.0015 元/GB/小时、0.45 元/CU/小时、0.0005 元/千token 等，可能为价格体系更新",
+              "type": "pricing"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-10-05",
       "stats": {

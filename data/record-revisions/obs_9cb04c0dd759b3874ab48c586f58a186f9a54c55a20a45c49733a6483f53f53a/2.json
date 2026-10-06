@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_9cb04c0dd759b3874ab48c586f58a186f9a54c55a20a45c49733a6483f53f53a",
+  "sourceId": "lmarena-industry",
+  "date": "2026-10-06",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "LMArena",
+  "sourceType": "industry",
+  "sourceUrl": "https://lmarena.ai/leaderboard",
+  "title": "LMArena · 行业数据来源更新",
+  "summary": "榜单名称变更，新增多个模型条目（GPT 5.5/5.6/6 Luna 等）和总会话数，删除旧条目（如 Claude Sonnet 5.5、Gemini 3.7 Flash），并调整了部分模型价格，反映榜单模型库更新。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-06T01:47:53+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "arena leaderboard",
+        "before": "Arena Leaderboard | Compare & Benchmark the Best Frontier AI Models",
+        "after": "Arena Leaderboard: Official AI Model Rankings & Benchmarks"
+      },
+      {
+        "key": "claude fable",
+        "before": "Claude Fable 5.1 (Max)$5.12/task",
+        "after": "Claude Fable 5.1 (Max)$5.21/task"
+      },
+      {
+        "key": "claude opus",
+        "before": "Claude Opus 5.5 (High)$1.58/task",
+        "after": "Claude Opus 5.5 (High)$1.57/task"
+      }
+    ],
+    "added_lines": [
+      "359,786,420359,786,420Total Sessions",
+      "GPT 5.5 (xHigh)·",
+      "GPT 5.6 Luna (xHigh)·",
+      "GPT 6 Luna (Max)·",
+      "Ideogram 4.5",
+      "Self-Preference of AI Judges"
+    ],
+    "removed_lines": [
+      "Agent Leaderboard Improvements: Categories & Task Cost",
+      "Claude Sonnet 5.5",
+      "Gemini 3.7 Flash (High)·",
+      "Searching the web",
+      "WebDev · xHigh",
+      "359,375,021359,375,021Total Sessions"
+    ],
+    "added_count": 6,
+    "removed_count": 6,
+    "raw_added_count": 10,
+    "raw_removed_count": 10
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-06.json"
+  },
+  "permalink": "/item/obs_9cb04c0dd759b3874ab48c586f58a186f9a54c55a20a45c49733a6483f53f53a/"
+}

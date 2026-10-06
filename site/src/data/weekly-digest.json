@@ -4,6 +4,14 @@
     "start": "2026-10-05",
     "end": "2026-10-11",
     "days": {
+      "2026-10-06": {
+        "substantive": 11,
+        "jitter": 2,
+        "failed": 2,
+        "releases": 2,
+        "pricings": 2,
+        "sunsets": 0
+      },
       "2026-10-05": {
         "substantive": 3,
         "jitter": 0,
@@ -14,12 +22,60 @@
       }
     },
     "totals": {
-      "substantive": 3,
-      "releases": 3,
-      "pricings": 2,
+      "substantive": 14,
+      "releases": 5,
+      "pricings": 4,
       "sunsets": 1
     },
     "highlights": [
+      {
+        "platform": "Cohere",
+        "date": "2026-10-06",
+        "text": "Cohere 发布 North 2，定位企业级 Agent 平台，强调安全、智能、成本治理与全栈控制",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-06",
+        "text": "Cohere 与 PwC 合作，加速企业安全 AI 采用，聚焦从试点到生产",
+        "type": "other"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-06",
+        "text": "OpenAI 在 API Organization 设置中新增 HIPAA 合规支持流程，符合条件的组织可接受标准商业协议",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-06",
+        "text": "Anthropic 在 Models API 中新增 line 字段，GET /v1/models 返回模型系列信息，Claude Opus 4.5/4.6 均报告为 opus",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-06",
+        "text": "LMArena 榜单更名为『Arena Leaderboard: Official AI Model Rankings & Benchmarks』",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-06",
+        "text": "LMArena 新增 GPT 5.5 (xHigh)、GPT 5.6 Luna (xHigh)、GPT 6 Luna (Max) 等模型条目",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-06",
+        "text": "LMArena 中 Claude Fable 5.1 (Max) 价格从 $5.12/task 上调至 $5.21/task，Claude Opus 5.5 (High) 从 $1.58/task 微调至 $1.57/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-10-06",
+        "text": "火山方舟删除多项定价条目，包括 0.0015 元/GB/小时、0.45 元/CU/小时、0.0005 元/千token 等，可能为价格体系更新",
+        "type": "pricing"
+      },
       {
         "platform": "LMArena",
         "date": "2026-10-05",
