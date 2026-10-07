@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_c10e20ca44e1a48b1e9e6806641f27db59f244f7e379ff5c088597d91ed7cb6c",
+  "sourceId": "google-vertex-pricing",
+  "date": "2026-10-07",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Vertex AI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+  "title": "Google Vertex AI · 定价来源更新",
+  "summary": "更新了最后修改日期，新增了 Nano Banana 2.1 的定价条目，并调整了部分图像输出价格，表明新模型定价已生效，旧模型价格可能调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-07T00:34:48+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "global",
+        "before": "Global | $0.125 |",
+        "after": "Global | $0.125 | $0.0125"
+      },
+      {
+        "key": "global",
+        "before": "Global | $0.25 |",
+        "after": "Global | $0.25 | $0.025"
+      },
+      {
+        "key": "global",
+        "before": "Global | $0.50 |",
+        "after": "Global | $0.45 | $0.045"
+      },
+      {
+        "key": "global",
+        "before": "Global | $120.00 | $120.00 |",
+        "after": "Global | $0.50 | $0.05"
+      },
+      {
+        "key": "global",
+        "before": "Global | $216.00 | $216.00 |",
+        "after": "Global | $0.75 | $0.075"
+      }
+    ],
+    "added_lines": [
+      "$0.00 (Free) / 1,000 count, per 1 month / account",
+      "$14.00 / 1,000 count, per 1 month / account",
+      "Customers may decide not to display Search Suggestions with Grounded Results in their Customer Applications at standard pricing for under 1 million Grounding Prompts per day. |",
+      "Gemini 3.5 Flash Lite |",
+      "Gemini Nano Banana 2.1 [4] |",
+      "Gemini Nano Banana 2.1 |",
+      "Global | $0.90 | $0.09",
+      "Global | $1.00 |",
+      "Global | $1.50 | $0.15",
+      "Global | $108.00 |",
+      "Global | $12.00 |",
+      "Global | $120.00 |",
+      "Global | $13.50 |",
+      "Global | $2.00 | $0.20",
+      "Global | $2.70 |",
+      "Global | $2.70 | $0.27",
+      "Global | $21.60 |",
+      "Global | $216.00 |",
+      "Global | $3.60 | $0.36",
+      "Global | $3.75 |",
+      "Global | $5.40 |",
+      "Global | $54.00 |",
+      "Global | $6.00 |",
+      "Global | $7.50 |",
+      "Image Output [1] |"
+    ],
+    "removed_lines": [
+      "Image Output** |",
+      "Image Output*** |",
+      "Image Output**** |",
+      "N/A | $0.0125 |",
+      "N/A | $0.025 |"
+    ],
+    "added_count": 25,
+    "removed_count": 5,
+    "raw_added_count": 57,
+    "raw_removed_count": 12
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-07.json"
+  },
+  "permalink": "/item/obs_c10e20ca44e1a48b1e9e6806641f27db59f244f7e379ff5c088597d91ed7cb6c/"
+}

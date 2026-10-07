@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_96db5b99133894b4efd03edaf366b3f94e7c9aa3c73fd360965c5da5ee75c23a",
+  "sourceId": "openai-modellist",
+  "date": "2026-10-07",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "model_list",
+  "sourceUrl": "https://platform.openai.com/docs/models",
+  "title": "OpenAI · 模型列表来源更新",
+  "summary": "新增了 ChatGPT mobile app、Connect voice to Decisions、Decisions API 三个条目，同时删除了两个关于网络安全模型的别名描述以及 Daybreak Blue/Red 模型，表明 OpenAI 正在调整模型列表，移除旧的安全模型别名，并新增与 Decisions API 相关的模型入口。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-07T00:34:48+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "ChatGPT mobile app",
+      "Connect voice to Decisions",
+      "Decisions API"
+    ],
+    "removed_lines": [
+      "An alias for advanced cybersecurity models for authorized vulnerability research and security testing.",
+      "An alias for flagship general-purpose models with safeguards for defensive cybersecurity work.",
+      "Daybreak Blue",
+      "Daybreak Red"
+    ],
+    "added_count": 3,
+    "removed_count": 4,
+    "raw_added_count": 3,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-07.json"
+  },
+  "permalink": "/item/obs_96db5b99133894b4efd03edaf366b3f94e7c9aa3c73fd360965c5da5ee75c23a/"
+}

@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_296686a05d36af0f8d78fa11a7bf6edcd8c5b42bd9e4560a70171aa2ad4b5445",
+  "sourceId": "google-gemini-pricing",
+  "date": "2026-10-07",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "pricing",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+  "title": "Google Gemini API · 定价来源更新",
+  "summary": "$0.0252 per 2K image*,",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-10-01 UTC.",
+        "after": "Last updated 2026-10-06 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-01 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "$0.0252 per 2K image*,",
+      "$0.0504 per 2K image*,",
+      "$0.0756 per image.",
+      "$15 per 1,000,000 tokens (Batch). Output images at 1K (1024x1024px) consume 1120",
+      "(2048x2048px) consume 1680 tokens and are equivalent to $0.0504 per image.",
+      "* Image output is priced at $30 per 1,000,000 tokens (Standard) and",
+      "An update to Nano Banana 2 (Gemini 3.1 Flash Image), built for high-efficiency",
+      "Equivalent to $0.0168 per 1K image*,",
+      "Equivalent to $0.0336 per 1K image*,",
+      "Gemini Nano Banana 2.1 🍌",
+      "Output images at 4K (4096x4096px) consume 2520 tokens and are equivalent to",
+      "and $0.0378 per 4K image*.",
+      "and $0.0756 per 4K image*.",
+      "gemini-nano-banana-2.1",
+      "generation across 1K, 2K, and 4K resolutions.",
+      "image generation and conversational editing with improved visual quality,",
+      "multi-turn character consistency, accurate text rendering, and search-grounded",
+      "tokens and are equivalent to $0.0336 per image. Output images at 2K",
+      "| $0.75 (text, image, video)",
+      "| $1.50 (text/image/video)",
+      "| $3.75 (text and thinking)",
+      "| $7.50 (text and thinking)"
+    ],
+    "removed_lines": [],
+    "added_count": 22,
+    "removed_count": 0,
+    "raw_added_count": 24,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-07.json"
+  },
+  "permalink": "/item/obs_296686a05d36af0f8d78fa11a7bf6edcd8c5b42bd9e4560a70171aa2ad4b5445/"
+}

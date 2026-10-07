@@ -4,6 +4,14 @@
     "start": "2026-10-05",
     "end": "2026-10-11",
     "days": {
+      "2026-10-07": {
+        "substantive": 19,
+        "jitter": 3,
+        "failed": 4,
+        "releases": 6,
+        "pricings": 2,
+        "sunsets": 1
+      },
       "2026-10-06": {
         "substantive": 11,
         "jitter": 2,
@@ -22,12 +30,78 @@
       }
     },
     "totals": {
-      "substantive": 14,
-      "releases": 5,
-      "pricings": 4,
-      "sunsets": 1
+      "substantive": 33,
+      "releases": 11,
+      "pricings": 6,
+      "sunsets": 2
     },
     "highlights": [
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-07",
+        "text": "OpenAI 发布 Decisions API（beta），基于 gpt-6-luna，宣称比 Responses API 快10倍，支持文本和图像输入输出类型化答案。",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-07",
+        "text": "OpenAI 将 API 使用层级从五层简化为三层：Build、Launch、Grow，组织根据累计购买金额自动升级。",
+        "type": "other"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-07",
+        "text": "Google Gemini API 发布 Nano Banana 2.1（gemini-nano-banana-2.1）图像生成/编辑模型，GA，支持1K/2K/4K分辨率，并更新定价。",
+        "type": "release"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-07",
+        "text": "Google Gemini API 弃用 gemini-3.1-flash-image，并计划关闭，用户需迁移至 Nano Banana 2.1。",
+        "type": "sunset"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-07",
+        "text": "Nano Banana 2.1 定价：输入 $1.5/M tokens，输出 $7.5/M tokens，图像输出按 token 计费（1K图约$0.0168，2K约$0.0336，4K约$0.0378）。",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-07",
+        "text": "Google Vertex AI 模型列表新增 Gemini Nano Banana 2.1，移除 3.1 Flash Image。",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-07",
+        "text": "Vertex AI 定价页新增 Nano Banana 2.1 定价（如 $0.90/1K图像等），并调整部分图像输出价格（如 $0.50 → $0.45）。",
+        "type": "pricing"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-07",
+        "text": "Mistral AI 发布 Mistral Large 4，并发布相关博客文章，文章总数从88增至89。",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-07",
+        "text": "Anthropic 在 Models API 中新增 capabilities.thinking.types.disabled 字段，报告模型是否接受 thinking: {type: \"disabled\"}。",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-07",
+        "text": "Artificial Analysis 新增 Mistral Large 4 的语言模型评测，并发布相关文章。",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-07",
+        "text": "LMArena 榜单新增 GPT 6 Luna (Max) 等模型，并更新部分模型价格（如 GPT 6 Luna 从 $0.06/task 降至 $0.05/task）。",
+        "type": "release"
+      },
       {
         "platform": "Cohere",
         "date": "2026-10-06",

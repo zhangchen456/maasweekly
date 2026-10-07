@@ -1,6 +1,847 @@
 {
-  "updated_at": "2026-10-06T01:47:53+00:00",
+  "updated_at": "2026-10-07T00:34:48+00:00",
   "days": [
+    {
+      "date": "2026-10-07",
+      "stats": {
+        "total": 68,
+        "success": 64,
+        "failed": 4,
+        "changed": 22,
+        "unchanged": 42
+      },
+      "changed": [
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 4,
+          "added_lines": [
+            "ChatGPT mobile app",
+            "Connect voice to Decisions",
+            "Decisions API"
+          ],
+          "removed_lines": [
+            "An alias for advanced cybersecurity models for authorized vulnerability research and security testing.",
+            "An alias for flagship general-purpose models with safeguards for defensive cybersecurity work.",
+            "Daybreak Blue",
+            "Daybreak Red"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Connect voice to Decisions",
+          "raw_added_count": 3,
+          "raw_removed_count": 4,
+          "id": "obs_96db5b99133894b4efd03edaf366b3f94e7c9aa3c73fd360965c5da5ee75c23a",
+          "permalink": "/item/obs_96db5b99133894b4efd03edaf366b3f94e7c9aa3c73fd360965c5da5ee75c23a/",
+          "llm_summary": "新增了 ChatGPT mobile app、Connect voice to Decisions、Decisions API 三个条目，同时删除了两个关于网络安全模型的别名描述以及 Daybreak Blue/Red 模型，表明 OpenAI 正在调整模型列表，移除旧的安全模型别名，并新增与 Decisions API 相关的模型入口。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "ChatGPT mobile app",
+            "Connect voice to Decisions",
+            "Decisions API"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Connect voice to Decisions",
+          "raw_added_count": 3,
+          "raw_removed_count": 0,
+          "id": "obs_8149d215a78addb2db015449fb5a5d2650fcbbfa9b91b9f3decb4ec2752f145e",
+          "permalink": "/item/obs_8149d215a78addb2db015449fb5a5d2650fcbbfa9b91b9f3decb4ec2752f145e/",
+          "llm_summary": "新增了 ChatGPT mobile app、Connect voice to Decisions、Decisions API 三个定价条目，与模型列表新增一致，对应新产品的定价信息上架。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 0,
+          "added_lines": [
+            "ChatGPT mobile app",
+            "Connect voice to Decisions",
+            "Decisions API",
+            "Released the Decisions API in beta with gpt-6-luna. Turn text and images into typed answers 10x faster than the Responses API.",
+            "Simplified API usage tiers from five to three: Build, Launch, and Grow. Organizations automatically upgrade as total credit purchases reach tier minimums. See usage tiers for monthly usage limits and how to view rate limits for each model.",
+            "v1/decisions"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Connect voice to Decisions",
+          "raw_added_count": 6,
+          "raw_removed_count": 0,
+          "id": "obs_402deed05035c4d16fb1a0c880734eb73d266a0ce58a63b08d4633931ad27ec9",
+          "permalink": "/item/obs_402deed05035c4d16fb1a0c880734eb73d266a0ce58a63b08d4633931ad27ec9/",
+          "llm_summary": "新增了多个条目，包括 Decisions API 的 beta 发布说明（基于 gpt-6-luna）、API 使用层级简化（从五层到三层）以及 v1/decisions 端点，表明 OpenAI 推出了新的 API 产品并调整了开发者计划结构。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 0,
+          "added_lines": [
+            "ChatGPT mobile app",
+            "Connect voice to Decisions",
+            "Decisions API",
+            "Released the Decisions API in beta with gpt-6-luna. Turn text and images into typed answers 10x faster than the Responses API.",
+            "Simplified API usage tiers from five to three: Build, Launch, and Grow. Organizations automatically upgrade as total credit purchases reach tier minimums. See usage tiers for monthly usage limits and how to view rate limits for each model.",
+            "v1/decisions"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Connect voice to Decisions",
+          "raw_added_count": 6,
+          "raw_removed_count": 0,
+          "id": "obs_a78329819cfaa95fa031508ce00fb0bc11757d31bb8210c4a73ded981d7e7412",
+          "permalink": "/item/obs_a78329819cfaa95fa031508ce00fb0bc11757d31bb8210c4a73ded981d7e7412/",
+          "llm_summary": "新增了与 changelog 相同的条目，包括 Decisions API 发布和 API 层级简化，说明这些更新已通过博客对外公告。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "model_list",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Each model's capabilities object includes thinking.types.disabled, which reports whether the model accepts thinking: {type: \"disabled\"}, the setting that turns thinking off. supported is false when the model rejects \"disabled\" with a 400 error, and true on a model that doesn't support thinking. Even when supported is true, the API can still reject a \"disabled\" request for another reason. One such reason is an effort level that the model doesn't allow with thinking off."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Each model's capabilities object includes thinking.types.disabled, which reports whether the model accepts thinking: {type: \"disabled\"}, the setting that turns thinking off. supported is false when the model rejects \"disabled\" with a 400 error, and true on a model that doesn't support thinking. Even when supported is true, the API can still reject a \"disabled\" request for another reason. One such reason is an effort level that the model doesn't allow with thinking off.",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_0fcec8222c710853c43798cbb38419d2835911a1369390865a5300db7ee17602",
+          "permalink": "/item/obs_0fcec8222c710853c43798cbb38419d2835911a1369390865a5300db7ee17602/",
+          "llm_summary": "新增了关于 capabilities.thinking.types.disabled 字段的说明，表明模型列表现在包含更详细的思考能力配置信息。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "We've added capabilities.thinking.types.disabled to the Models API. GET /v1/models and GET /v1/models/{model_id} now report whether each model accepts thinking: {type: \"disabled\"}, which turns thinking off. See Using the Models API."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "We've added capabilities.thinking.types.disabled to the Models API. GET /v1/models and GET /v1/models/{model_id} now report whether each model accepts thinking: {type: \"disabled\"}, which turns thinking off. See Using the Models API.",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_0d274b61f070d8b8190b8543e5ebdfcbdcd965865b2100cddaddca32347d937b",
+          "permalink": "/item/obs_0d274b61f070d8b8190b8543e5ebdfcbdcd965865b2100cddaddca32347d937b/",
+          "llm_summary": "新增了 Models API 中 capabilities.thinking.types.disabled 字段的说明，表明 API 现在支持查询模型是否接受 thinking: {type: \"disabled\"} 设置。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "model_list",
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 0,
+          "added_lines": [
+            "High-efficiency image generation and editing model with improved visual quality, typography, and multi-turn consistency.",
+            "Nano Banana 2.1",
+            "gemini-nano-banana-2.1",
+            "| High-efficiency image generation and editing model with improved visual quality, typography, and multi-turn consistency.",
+            "| Nano Banana 2.1"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-01 UTC.",
+              "after": "Last updated 2026-10-06 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-01 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "High-efficiency image generation and editing model with improved visual quality, typography, and multi-turn consistency.",
+          "raw_added_count": 7,
+          "raw_removed_count": 2,
+          "id": "obs_55a59b6b77b52a9f3d2341eff763207a2c31b3039321e4a1d0a767c6ca66012c",
+          "permalink": "/item/obs_55a59b6b77b52a9f3d2341eff763207a2c31b3039321e4a1d0a767c6ca66012c/",
+          "llm_summary": "更新了最后修改日期，并新增了 Nano Banana 2.1 模型及其描述，表明该模型已加入模型列表。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 22,
+          "removed_count": 0,
+          "added_lines": [
+            "$0.0252 per 2K image*,",
+            "$0.0504 per 2K image*,",
+            "$0.0756 per image.",
+            "$15 per 1,000,000 tokens (Batch). Output images at 1K (1024x1024px) consume 1120",
+            "(2048x2048px) consume 1680 tokens and are equivalent to $0.0504 per image.",
+            "* Image output is priced at $30 per 1,000,000 tokens (Standard) and",
+            "An update to Nano Banana 2 (Gemini 3.1 Flash Image), built for high-efficiency",
+            "Equivalent to $0.0168 per 1K image*,",
+            "Equivalent to $0.0336 per 1K image*,",
+            "Gemini Nano Banana 2.1 🍌",
+            "Output images at 4K (4096x4096px) consume 2520 tokens and are equivalent to",
+            "and $0.0378 per 4K image*.",
+            "and $0.0756 per 4K image*.",
+            "gemini-nano-banana-2.1",
+            "generation across 1K, 2K, and 4K resolutions.",
+            "image generation and conversational editing with improved visual quality,",
+            "multi-turn character consistency, accurate text rendering, and search-grounded",
+            "tokens and are equivalent to $0.0336 per image. Output images at 2K",
+            "| $0.75 (text, image, video)",
+            "| $1.50 (text/image/video)",
+            "| $3.75 (text and thinking)",
+            "| $7.50 (text and thinking)"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-01 UTC.",
+              "after": "Last updated 2026-10-06 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-01 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "$0.0252 per 2K image*,",
+          "raw_added_count": 24,
+          "raw_removed_count": 2,
+          "id": "obs_296686a05d36af0f8d78fa11a7bf6edcd8c5b42bd9e4560a70171aa2ad4b5445",
+          "permalink": "/item/obs_296686a05d36af0f8d78fa11a7bf6edcd8c5b42bd9e4560a70171aa2ad4b5445/",
+          "llm_summary": "更新了最后修改日期，并新增了 Nano Banana 2.1 的定价信息，包括按图像分辨率计费的价格，表明新模型定价已公布。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "changelog",
+          "url": "https://ai.google.dev/gemini-api/docs/changelog",
+          "status": "changed",
+          "added_count": 14,
+          "removed_count": 0,
+          "added_lines": [
+            "(gemini-3.1-flash-image),",
+            "(gemini-nano-banana-2.1), the latest high-efficiency image generation and",
+            "Deprecation announcement: The gemini-3.1-flash-image model is",
+            "Gemini Nano Banana 2.1",
+            "Gemini Nano Banana 2.1 generally available (GA): Released",
+            "See the Image generation guide to get",
+            "character consistency, text rendering, and wide and panoramic aspect ratio",
+            "conversational editing model. An update to Nano Banana 2",
+            "deprecated and will be shut down on",
+            "gemini-nano-banana-2.1.",
+            "generation (1:4, 4:1, 1:8, 8:1) across 1K, 2K, and 4K",
+            "it maintains Flash-level speed and cost efficiency while delivering",
+            "resolutions.",
+            "significant improvements in visual quality, prompt adherence, multi-turn"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-01 UTC.",
+              "after": "Last updated 2026-10-06 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-01 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "(gemini-3.1-flash-image),",
+          "raw_added_count": 18,
+          "raw_removed_count": 2,
+          "id": "obs_cf3f87dbceea31d7f12b034666b07ba01ba6078b663602eeb392bd82cde13c62",
+          "permalink": "/item/obs_cf3f87dbceea31d7f12b034666b07ba01ba6078b663602eeb392bd82cde13c62/",
+          "llm_summary": "更新了最后修改日期，并新增了 Nano Banana 2.1 GA 发布、gemini-3.1-flash-image 弃用公告以及相关图像生成指南，表明新模型上线并计划淘汰旧模型。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Ask a Scientist: How are researchers using AI to help pregnant women access ultrasounds?"
+          ],
+          "removed_lines": [
+            "Behind Project Suncatcher, our moonshot to put AI in space"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Ask a Scientist: How are researchers using AI to help pregnant women access ultrasounds?",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_61a74ef7de9910e9381ddd32faf520445ff60c677e6ca26531c7f56c8f1887a5",
+          "permalink": "/item/obs_61a74ef7de9910e9381ddd32faf520445ff60c677e6ca26531c7f56c8f1887a5/",
+          "llm_summary": "新增了一篇关于 AI 辅助孕妇超声检查的文章，删除了关于 Project Suncatcher 的博客，表明博客内容更新，但未涉及模型发布。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "Gemini Nano Banana 2.1",
+            "High-fidelity, multimodal image generation and editing. Delivers significantly improved prompt adherence, text rendering, and visual quality.",
+            "Nano Banana 2.1"
+          ],
+          "removed_lines": [
+            "3.1 Flash Image"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-01 UTC.",
+              "after": "Last updated 2026-10-06 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-01 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Gemini Nano Banana 2.1",
+          "raw_added_count": 5,
+          "raw_removed_count": 3,
+          "id": "obs_a4fbe77b781b85e1eb4e064b389f662bc4f3d70a1224a3f57ed5ffb79ed704bc",
+          "permalink": "/item/obs_a4fbe77b781b85e1eb4e064b389f662bc4f3d70a1224a3f57ed5ffb79ed704bc/",
+          "llm_summary": "更新了最后修改日期，新增了 Gemini Nano Banana 2.1 模型，删除了 3.1 Flash Image，表明模型列表已替换。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 25,
+          "removed_count": 5,
+          "added_lines": [
+            "$0.00 (Free) / 1,000 count, per 1 month / account",
+            "$14.00 / 1,000 count, per 1 month / account",
+            "Customers may decide not to display Search Suggestions with Grounded Results in their Customer Applications at standard pricing for under 1 million Grounding Prompts per day. |",
+            "Gemini 3.5 Flash Lite |",
+            "Gemini Nano Banana 2.1 [4] |",
+            "Gemini Nano Banana 2.1 |",
+            "Global | $0.90 | $0.09",
+            "Global | $1.00 |",
+            "Global | $1.50 | $0.15",
+            "Global | $108.00 |",
+            "Global | $12.00 |",
+            "Global | $120.00 |",
+            "Global | $13.50 |",
+            "Global | $2.00 | $0.20",
+            "Global | $2.70 |",
+            "Global | $2.70 | $0.27",
+            "Global | $21.60 |",
+            "Global | $216.00 |",
+            "Global | $3.60 | $0.36",
+            "Global | $3.75 |",
+            "Global | $5.40 |",
+            "Global | $54.00 |",
+            "Global | $6.00 |",
+            "Global | $7.50 |",
+            "Image Output [1] |"
+          ],
+          "removed_lines": [
+            "Image Output** |",
+            "Image Output*** |",
+            "Image Output**** |",
+            "N/A | $0.0125 |",
+            "N/A | $0.025 |"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "global",
+              "before": "Global | $0.125 |",
+              "after": "Global | $0.125 | $0.0125"
+            },
+            {
+              "key": "global",
+              "before": "Global | $0.25 |",
+              "after": "Global | $0.25 | $0.025"
+            },
+            {
+              "key": "global",
+              "before": "Global | $0.50 |",
+              "after": "Global | $0.45 | $0.045"
+            },
+            {
+              "key": "global",
+              "before": "Global | $120.00 | $120.00 |",
+              "after": "Global | $0.50 | $0.05"
+            },
+            {
+              "key": "global",
+              "before": "Global | $216.00 | $216.00 |",
+              "after": "Global | $0.75 | $0.075"
+            }
+          ],
+          "signal_preview": "$0.00 (Free) / 1,000 count, per 1 month / account",
+          "raw_added_count": 57,
+          "raw_removed_count": 12,
+          "id": "obs_c10e20ca44e1a48b1e9e6806641f27db59f244f7e379ff5c088597d91ed7cb6c",
+          "permalink": "/item/obs_c10e20ca44e1a48b1e9e6806641f27db59f244f7e379ff5c088597d91ed7cb6c/",
+          "llm_summary": "更新了最后修改日期，新增了 Nano Banana 2.1 的定价条目，并调整了部分图像输出价格，表明新模型定价已生效，旧模型价格可能调整。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "changelog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "89 articles",
+            "Introducing Mistral Large 4"
+          ],
+          "removed_lines": [
+            "Oh lawd, no results",
+            "88 articles"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Introducing Mistral Large 4",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_002f4a3fdb231664f644abc2eab85427baf8b442f1906104b91835507a622fce",
+          "permalink": "/item/obs_002f4a3fdb231664f644abc2eab85427baf8b442f1906104b91835507a622fce/",
+          "llm_summary": "新增了 89 articles 和 Introducing Mistral Large 4，删除了 88 articles 和 Oh lawd, no results，表明发布了新模型并更新了文档。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "blog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "89 articles",
+            "Introducing Mistral Large 4"
+          ],
+          "removed_lines": [
+            "Oh lawd, no results",
+            "88 articles"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Introducing Mistral Large 4",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_a2f866d62574f907e0134c6e3c40b86f0c1f507f522e53f41d1bfd4cfc8ca08f",
+          "permalink": "/item/obs_a2f866d62574f907e0134c6e3c40b86f0c1f507f522e53f41d1bfd4cfc8ca08f/",
+          "llm_summary": "新增了 89 articles 和 Introducing Mistral Large 4，删除了 88 articles 和 Oh lawd, no results，表明发布了新模型博客。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "model_list",
+          "url": "https://docs.cohere.com/docs/models",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 0,
+          "added_lines": [
+            "- v1 API: https://docs.cohere.com/v1/llms.txt",
+            "- v2 API (default): https://docs.cohere.com/v2/llms.txt",
+            "For other versions, use one of these documentation indexes:",
+            "This page is for version v2 API (default)."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "- v1 API: https://docs.cohere.com/v1/llms.txt",
+          "raw_added_count": 4,
+          "raw_removed_count": 0,
+          "id": "obs_ee702087e2f0e3bfa4d70a360e06aebfb388ac519269b5bb7b674091b8531259",
+          "permalink": "/item/obs_ee702087e2f0e3bfa4d70a360e06aebfb388ac519269b5bb7b674091b8531259/",
+          "llm_summary": "新增了 v1 和 v2 API 的文档索引链接，表明模型列表页面更新了文档导航。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "changelog",
+          "url": "https://docs.cohere.com/changelog",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 0,
+          "added_lines": [
+            "- v1 API: https://docs.cohere.com/v1/llms.txt",
+            "- v2 API (default): https://docs.cohere.com/v2/llms.txt",
+            "For other versions, use one of these documentation indexes:",
+            "This page is for version v2 API (default)."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "- v1 API: https://docs.cohere.com/v1/llms.txt",
+          "raw_added_count": 4,
+          "raw_removed_count": 0,
+          "id": "obs_c4fc286016b75a7d532e90ee69920b6e84b6edc70e42db52bfe68e4eedf9fe23",
+          "permalink": "/item/obs_c4fc286016b75a7d532e90ee69920b6e84b6edc70e42db52bfe68e4eedf9fe23/",
+          "llm_summary": "新增了 v1 和 v2 API 的文档索引链接，表明变更日志更新了文档导航。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 4,
+          "added_lines": [
+            "Multilingual Bridges: How Data Mixing Unlocks In-Language Reasoning",
+            "TechnologyAI for Developers",
+            "When a reasoning model gets an answer wrong, you’d read its reasoning to find out why. But what if that reasoning is in a language you don't speak?"
+          ],
+          "removed_lines": [
+            "Cohere and the University of Waterloo launch partnership to strengthen Canada’s AI talent pipeline",
+            "Company NewsPartner",
+            "Our new standard for measuring enterprise retrieval quality, validated against human judgment.",
+            "TechnologyAI for DevelopersResearch"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Multilingual Bridges: How Data Mixing Unlocks In-Language Reasoning",
+          "raw_added_count": 4,
+          "raw_removed_count": 5,
+          "id": "obs_3bc5c0077a5ec892e4d80f2fd25dde6ab81d7d0b13774d94d263f9f7790b4442",
+          "permalink": "/item/obs_3bc5c0077a5ec892e4d80f2fd25dde6ab81d7d0b13774d94d263f9f7790b4442/",
+          "llm_summary": "新增了关于多语言推理的博客，删除了关于与 University of Waterloo 合作和检索质量标准的博客，表明博客内容更新，但未涉及模型或定价变化。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 2,
+          "added_lines": [
+            "AnthropicOpenAIGoogleMetaSpaceXAIXiaomiAlibabaZ AIStepFunKimiDeepSeekMistralInstitute of Foundation ModelsMiniMaxThinking Machines",
+            "Mistral Large 4 Preview",
+            "Mistral has released Mistral Large 4, making France home to the most intelligent model outside the US and China",
+            "New article published · 6 Oct",
+            "New language model evaluation · 6 Oct",
+            "StepFunZ AIXiaomiMiniMaxOpenAIAnthropicMistralMetaSpaceXAINVIDIAGoogleAlibabaDeepSeekKimi",
+            "XiaomiZ AIKimiDeepSeekAlibabaMiniMaxThinking MachinesNVIDIAMeta",
+            "Z AIXiaomiMiniMaxOpenAIAnthropicMistralSpaceXAINVIDIAGoogleAlibabaMetaDeepSeekKimi"
+          ],
+          "removed_lines": [
+            "AnthropicOpenAIGoogleMetaSpaceXAIXiaomiAlibabaZ AIStepFunKimiDeepSeekInstitute of Foundation ModelsMiniMaxThinking MachinesMistral",
+            "Claude Sonnet 5.5 (Medium, Default Fallback)"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "cache hit",
+              "before": "Cache Hit, Input, and Output PricingBlended PriceBlended Price (Stacked)Cache DiscountIntelligence Index vs. PriceIntelligence Index vs. Price (Log, Inverted)",
+              "after": "Cache Hit, Input, and Output PricingBlended PriceBlended Price (Stacked)Cache DiscountCache Hit RateIntelligence Index vs. PriceIntelligence Index vs. Price (Log, Inverted)"
+            },
+            {
+              "key": "claude sonnet",
+              "before": "Claude Sonnet 5.5 (High, Default Fallback)",
+              "after": "Claude Sonnet 5.5 (Medium, Default Fallback)See more"
+            }
+          ],
+          "signal_preview": "AnthropicOpenAIGoogleMetaSpaceXAIXiaomiAlibabaZ AIStepFunKimiDeepSeekMistralInstitute of Foundation ModelsMiniMaxThinking Machines",
+          "raw_added_count": 16,
+          "raw_removed_count": 14,
+          "id": "obs_52bdf90d2f0e0b663e67a83e41209a5d52efe980c1e75eb6e334170e222e7f72",
+          "permalink": "/item/obs_52bdf90d2f0e0b663e67a83e41209a5d52efe980c1e75eb6e334170e222e7f72/",
+          "llm_summary": "新增了 Mistral Large 4 的评测和文章，更新了模型列表，并调整了 Claude Sonnet 5.5 的默认回退设置，表明新模型评测已加入。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 14,
+          "removed_count": 7,
+          "added_lines": [
+            "15.90%View details",
+            "360,271,357360,271,357Total Sessions",
+            "Claude Fable 5.1 (Max)$5.39/task",
+            "Claude Sonnet 5 (High)·",
+            "Editing a file",
+            "GPT 5.6 Sol (xHigh)·",
+            "GPT 6 Luna (Max)$0.05/task",
+            "GPT 6.1 Sol (Max)$0.56/task",
+            "Kimi K3 (Max)·",
+            "MiMo V2.6 Flash$0.05/task",
+            "Reading a web page",
+            "Searching the web",
+            "Solar Pro 4$0.04/task",
+            "Writing a file"
+          ],
+          "removed_lines": [
+            "Deepseek V4.1 Flash (Max)·",
+            "359,786,420359,786,420Total Sessions",
+            "7.52%View details",
+            "GPT 5.5 (xHigh)·",
+            "GPT 6 Luna (Max)$0.06/task",
+            "GPT 6 Luna (Max)·",
+            "GPT 6.1 Sol (Max)$0.57/task"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5.1 (Max)$5.21/task",
+              "after": "Claude Fable 5 (High)·"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (High)$1.57/task",
+              "after": "Claude Opus 5.5 (High)$1.58/task"
+            },
+            {
+              "key": "deepseek v",
+              "before": "Deepseek V4.1 Flash (Max)$0.11/task",
+              "after": "Deepseek V4.1 Flash (Max)$0.12/task"
+            }
+          ],
+          "signal_preview": "Claude Fable 5.1 (Max)$5.39/task",
+          "raw_added_count": 17,
+          "raw_removed_count": 14,
+          "id": "obs_b0ac7577956396e9c07a5c8803a27aff7a4492bd7b772287b70d9bb2d2eb49b1",
+          "permalink": "/item/obs_b0ac7577956396e9c07a5c8803a27aff7a4492bd7b772287b70d9bb2d2eb49b1/",
+          "llm_summary": "新增了多个模型条目（如 GPT 6 Luna、GPT 6.1 Sol 等），并更新了部分模型价格，表明榜单更新，新模型进入评测。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_9d359c9e346775b5738b7a0fe1f5d5e7a5f0f4d03b43530aad46ddb80fbfbcc2",
+          "permalink": "/item/obs_9d359c9e346775b5738b7a0fe1f5d5e7a5f0f4d03b43530aad46ddb80fbfbcc2/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "model_list",
+          "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "Mistral Large 4",
+            "Mistral Large 4Open"
+          ],
+          "removed_lines": [
+            "Mistral Medium 3.5"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_62d8c876c0ac7362226262bb2fa74dee53efa3a74c198591a629593b8df36400",
+          "permalink": "/item/obs_62d8c876c0ac7362226262bb2fa74dee53efa3a74c198591a629593b8df36400/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 31,
+          "raw_removed_count": 31,
+          "id": "obs_6ed6a2b63dda558a031ddcd56fb7e8021912ecf3f8ba1e15bf9fc9bfd95eaca0",
+          "permalink": "/item/obs_6ed6a2b63dda558a031ddcd56fb7e8021912ecf3f8ba1e15bf9fc9bfd95eaca0/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "Kimi",
+          "source_type": "model_list",
+          "url": "https://platform.kimi.com/docs/api/models-overview",
+          "status": "fetch_failed",
+          "error": "curl 返回空 (stderr: )"
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_0819d74c3f60addd653e5c260b32ad0cf65009b56a42b8a3f746ee2cd634ff0f",
+          "provider": "google",
+          "model": "gemini-nano-banana-2.1-🍌",
+          "component": "input",
+          "current": "1.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "id": "price_fc156eff9601be07b92988264af416aac008f5df67173e8ba61b0ead33c4d248",
+          "provider": "google",
+          "model": "gemini-nano-banana-2.1-🍌",
+          "component": "output",
+          "current": "7.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "OpenAI",
+          "logo_summary": "发布Decisions API及gpt-6-luna，简化API层级",
+          "items": [
+            {
+              "text": "OpenAI 发布 Decisions API（beta），基于 gpt-6-luna，宣称比 Responses API 快10倍，支持文本和图像输入输出类型化答案。",
+              "type": "release"
+            },
+            {
+              "text": "OpenAI 将 API 使用层级从五层简化为三层：Build、Launch、Grow，组织根据累计购买金额自动升级。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "发布Nano Banana 2.1图像模型并定价，弃用3.1 Flash Image",
+          "items": [
+            {
+              "text": "Google Gemini API 发布 Nano Banana 2.1（gemini-nano-banana-2.1）图像生成/编辑模型，GA，支持1K/2K/4K分辨率，并更新定价。",
+              "type": "release"
+            },
+            {
+              "text": "Google Gemini API 弃用 gemini-3.1-flash-image，并计划关闭，用户需迁移至 Nano Banana 2.1。",
+              "type": "sunset"
+            },
+            {
+              "text": "Nano Banana 2.1 定价：输入 $1.5/M tokens，输出 $7.5/M tokens，图像输出按 token 计费（1K图约$0.0168，2K约$0.0336，4K约$0.0378）。",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "新增Nano Banana 2.1，调整图像模型定价",
+          "items": [
+            {
+              "text": "Google Vertex AI 模型列表新增 Gemini Nano Banana 2.1，移除 3.1 Flash Image。",
+              "type": "release"
+            },
+            {
+              "text": "Vertex AI 定价页新增 Nano Banana 2.1 定价（如 $0.90/1K图像等），并调整部分图像输出价格（如 $0.50 → $0.45）。",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Mistral AI",
+          "logo_summary": "发布Mistral Large 4，文章数增至89",
+          "items": [
+            {
+              "text": "Mistral AI 发布 Mistral Large 4，并发布相关博客文章，文章总数从88增至89。",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Models API新增thinking.disabled能力字段",
+          "items": [
+            {
+              "text": "Anthropic 在 Models API 中新增 capabilities.thinking.types.disabled 字段，报告模型是否接受 thinking: {type: \"disabled\"}。",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "新增Mistral Large 4评测，更新模型列表",
+          "items": [
+            {
+              "text": "Artificial Analysis 新增 Mistral Large 4 的语言模型评测，并发布相关文章。",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "榜单新增GPT-6 Luna等模型，价格微调",
+          "items": [
+            {
+              "text": "LMArena 榜单新增 GPT 6 Luna (Max) 等模型，并更新部分模型价格（如 GPT 6 Luna 从 $0.06/task 降至 $0.05/task）。",
+              "type": "release"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-10-06",
       "stats": {
