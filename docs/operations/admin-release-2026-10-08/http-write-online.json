@@ -1,0 +1,17 @@
+{
+  "result": "passed through synthetic-browser.py line44 before browser timeout",
+  "checks": [
+    "12 anonymous admin APIs return401",
+    "12 Plus admin APIs return403",
+    "12 admin APIs return200",
+    "Origin403",
+    "standard and revision body413",
+    "entitlement revoke / idempotent replay / key conflict409 / stale version409",
+    "Free denied",
+    "mock diagnostic succeeded and advisoryOnly",
+    "deterministic editorial prepare succeeded",
+    "no synthetic publication"
+  ],
+  "browserFirstAttempt": "timeout waiting for admin-status; not counted passed",
+  "browserRecheck": "8 pages visible, zero page errors, mobile no overflow; browser-page-recheck.json"
+}
