@@ -23,12 +23,13 @@ jobs:
       cancel-in-progress: false
       queue: max
     env:
-      MAAS_MONITOR_OUTPUT: ${{ runner.temp }}/monitor-stages
       DEPLOY_HOST: 47.237.135.97
       DEPLOY_USER: maasdeploy
       MAAS_DEPLOY_MODE: release
       MAAS_VERIFY_MAIN_CANDIDATE: '1'
     steps:
+      - name: Set monitoring output directory
+        run: echo "MAAS_MONITOR_OUTPUT=$RUNNER_TEMP/monitor-stages" >> "$GITHUB_ENV"
       - name: Checkout exact candidate
         uses: actions/checkout@v4
         with:
