@@ -1,4 +1,14 @@
-# T01–T07生产部署验收（进行中）
+# T01–T07生产部署验收（已部署，写入验收待批准）
+
+当前结论（2026-10-08 14:48之后复核）：代码6e9fac6db9885a0d51ee84c246aea7f8533346b8已部署，release rl_6e9fac6db9_22c3472abbdf，数据截至2026-10-08；CI完整门禁70/70与四入口成功。独立公开HTTP四入口8检查、匿名管理接口12检查、生产迁移/数据库健康/原业务主键保留通过，真实浏览器后台匿名登录入口正常。指定zhangchen3508@gmail.com已由CLI授予管理员并审计。
+
+**尚未完成生产写入验收。两个mock worker和原邮件digest/retry timer均inactive；health timer保持active。原邮件自动投递目前仍暂停。** 后续具体服务启停/维护脚本/inbox/合成写入及清理被自动批准审查拒绝，需要明确批准；动作和脚本见[pending-approval/README.md](pending-approval/README.md)。T08 payment disabled，两类付费模型开关false。
+
+已完成的生产核查来自实际HTTP、服务器只读数据库比较及实际CLI授权，不仅是代码检查。原本本机verify-release.sh因maasdeploy SSH凭据不可用中止，保留four-surfaces-online.txt，未算通过；改按同一HTTP/RPC合同独立核对四服务面并结合root只读status绑定版本，结果见four-surfaces-independent.json。CI原封装四入口也成功。
+
+证据：ci-success.json、ci-success-build.txt、database-online.json、anonymous-admin-online.json、four-surfaces-independent.json、runtime-state.json。真实Umami/邮件送达、真实模型质量/费用尚未做本轮验证，不将mock或配置存在算作外部能力通过。
+
+回滚边界：previous为rl_9cb41382fe_755b2c83d439（数据截至10-07）。本次没有执行生产回滚；旧数据不覆盖当前10-08数据，直接回退会受既有防数据回退门禁限制。需要旧代码回退时先停管理写入/新worker/投递，按既有协议准备保留当前公开数据的兼容旧代码或修复release；保留所有新私有表/审计/费用，不DROP或用旧sender重发未知任务。原env/activator备份仅在服务器受限目录；共享配置恢复不是release回滚的自动组成部分。
 
 用户2026-10-08授权提交代码并进入生产部署验收，管理员为zhangchen3508@gmail.com。T08继续禁用，不启用付费模型或额外邮件发送。
 
@@ -27,3 +37,8 @@
 37715522486未激活，68组通过、2组失败：cross-platform测试强制每个平台必须有新鲜完整输入/输出价格，与P2-01合同“报价缺失显示缺失”及现有页面等待证据状态不一致；测试修正为可用报价须fresh/complete、平台/时间/口径一致，不可用时不隐瞒有效报价、不回退旧价，并核对实际HTML缺失提示。未修改价格事实、未下调质量阈值。
 
 leaderboards门禁AA周榜09-28快照超过10天；进一步核对同样周周期的SWE-bench及Terminal-Bench2.1。官方来源实际更新三个榜单观察快照为10-08，保留HTML/哈希及官方Harbor DOM证据于manual-board-evidence/。SWE只取Verified下mini-SWE-agent同环境，Terminal-Bench官方首页已4.0，但经Benchmarks导航找到2.1 rev.6官方归档，不混合基准。日期表示此次观察，不宣称所有评测重新发布；新鲜度门禁仍10天。人工榜单仍人工维护，不声称接入自动抓取。
+
+
+最新部署候选6e9fac6db9885a0d51ee84c246aea7f8533346b8，流水线 https://github.com/zhangchen456/maasweekly/actions/runs/37718488790 。两个失败专项已在重建52443页站点后通过。待完整CI门禁/激活与生产独立复核后才能宣称上线通过。
+
+恢复入口：/private/tmp/maas-admin-online-20261008.mjs与maas-admin-online-browser-20261008.py为待执行的生产合成验收脚本（只模拟用户、mock任务，不出版正式内容/发邮件/支付），/private/tmp/maas-monitor-production-20261008为77条公开归档任务投影。执行前核对current=最新RID和完整门禁成功；不得把旧CI失败、取消构建或本地专项算作生产通过。原sender timer已暂停，health timer保留运行；worker unit installed但未启动。后续结束时需要恢复原sender timer或明确留给协调处理，不能遗漏维护状态。管理员指定邮箱已确认，不需重问。

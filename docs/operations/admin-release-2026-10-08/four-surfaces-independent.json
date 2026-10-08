@@ -1,0 +1,46 @@
+[
+  {
+    "surface": "REST",
+    "path": "/api/v1/status",
+    "status": 200,
+    "datasetVersion": "ds_22c3472abbdfdd8134d42d8db5a6cbc3f687a3ea881200d47c218319462addc1"
+  },
+  {
+    "surface": "REST",
+    "path": "/api/v1/changes?limit=10",
+    "status": 200,
+    "datasetVersion": "ds_22c3472abbdfdd8134d42d8db5a6cbc3f687a3ea881200d47c218319462addc1"
+  },
+  {
+    "surface": "MCP",
+    "method": "initialize",
+    "status": 200,
+    "versionMatch": false
+  },
+  {
+    "surface": "MCP",
+    "method": "tools/list",
+    "status": 200,
+    "versionMatch": false
+  },
+  {
+    "surface": "MCP",
+    "method": "tools/call",
+    "status": 200,
+    "versionMatch": true
+  },
+  {
+    "surface": "RSS",
+    "path": "/feed.xml",
+    "etag304": true
+  },
+  {
+    "surface": "RSS",
+    "path": "/feed/weekly.xml",
+    "etag304": true
+  },
+  {
+    "surface": "Skill",
+    "manifestAndInstaller": true
+  }
+]
