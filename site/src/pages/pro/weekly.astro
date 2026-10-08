@@ -1,0 +1,8 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="统一周报 · MaaS Daily" noindex={true}>
+ <main data-pro-weekly class="pro-weekly"><p><a href="/pro/">专业情报</a> · <a href="/archive/">历史周报归档</a></p><h1>统一周报</h1><p>统一编辑的 briefing；个人简报另按关注范围组合详解和专题。</p><p id="weekly-reader-status" role="status">正在加载…</p><div id="weekly-reader-list"></div><article id="weekly-reader-body"></article></main>
+</Layout>
+<script>import '../../scripts/pro-weekly';</script>
+<style>.pro-weekly{max-width:900px;margin:auto;padding:48px 24px}article{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.9}</style>

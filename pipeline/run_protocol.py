@@ -15,6 +15,12 @@ _ACTIVE = None
 
 def current_journal(): return _ACTIVE
 
+def workflow_link():
+    import os
+    repo = os.environ.get('GITHUB_REPOSITORY', ''); run_id = os.environ.get('GITHUB_RUN_ID', '')
+    return f'https://github.com/{repo}/actions/runs/{run_id}' if re.fullmatch(r'[\w.-]+/[\w.-]+', repo) and run_id.isdigit() else None
+
+
 def utc(): return datetime.now(timezone.utc).isoformat()
 def identifier(value):
     if not isinstance(value, str) or not re.fullmatch(r'[a-zA-Z0-9:_-]{1,128}', value): raise ValueError('invalid run/source identifier')
@@ -54,7 +60,7 @@ class RunJournal:
                 capture(self.root, self.run_id + '_baseline')
                 pointer = json.loads(safe(self.root, POINTER).read_text())
                 self.data = {'schemaVersion': 1, 'runId': self.run_id, 'family': self.family, 'state': 'running',
-                             'startedAt': utc(), 'runDate': datetime.now(ZoneInfo('Asia/Shanghai')).strftime('%Y-%m-%d'),
+                             'trigger': __import__('os').environ.get('GITHUB_EVENT_NAME', 'manual'), 'runLink': workflow_link(), 'startedAt': utc(), 'runDate': datetime.now(ZoneInfo('Asia/Shanghai')).strftime('%Y-%m-%d'),
                              'baselinePointer': pointer, 'sources': {}, 'rawBackups': {}}
                 self.save(); put_json(self.root, PENDING, {'runId': self.run_id, 'family': self.family, 'journalPath': self.relative})
             _ACTIVE = self

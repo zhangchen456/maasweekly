@@ -1,0 +1,15 @@
+{
+  "scope": "Local Chromium + real admin/account API/SQLite + private outbox; no external email",
+  "states": [
+    "anonymous-login-entry",
+    "existing-login-cli-grant-real-overview",
+    "audit-real-record-and-empty-filter",
+    "T08-processing-return-does-not-grant",
+    "T08-failed-then-verified-paid",
+    "T08-cancel-keeps-current-paid-period",
+    "T08-pending-partial-full-refund-separate-from-entitlement",
+    "T08-currency-reconciliation-source-unknown-vs-known-and-append-action",
+    "T08-mobile-and-logout-private-dom-cleared"
+  ],
+  "errors": []
+}

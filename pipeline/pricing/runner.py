@@ -25,6 +25,7 @@ async def collect(entries, *, journal=None, concurrency=2, offline=None, timeout
             if state.get('snapshot') and state.get('extractorVersion') not in (None, version):
                 raise ValueError('staged extractor version differs; use the matching implementation')
             if journal: journal.source_result(source, {'attemptId': attempt, 'phase': 'fetching', 'extractorVersion': version, 'rulesVersion': 'normalize-1', 'schemaVersion': 1})
+            failure_phase = 'fetch'
             snap = offline.get(source) if offline else None
             if snap is None and journal and journal.recover: snap = journal.snapshot(source)
             tried = 0
@@ -53,12 +54,14 @@ async def collect(entries, *, journal=None, concurrency=2, offline=None, timeout
                 if snap.source_key != source: raise ValueError('offline source mismatch')
                 if hashlib.sha256(snap.content.encode()).hexdigest() != snap.sha256: raise ValueError('snapshot content hash mismatch')
                 if journal: journal.stage_snapshot(source, snap, attempt)
+                failure_phase = 'parse'
                 # Parsing failures do not trigger another HTTP request.
                 result = extractor.extract(snap); report = normalize_and_validate(result)
                 if not report.accepted: raise ValueError('all facts rejected; probable structure drift')
                 raw = json.dumps(dataclasses.asdict(result), ensure_ascii=False, sort_keys=True, separators=(',', ':'))
                 value = {'attemptId': attempt, 'attempts': attempts, 'outcome': 'success', 'phase': 'parsed', 'extractorVersion': version,
                          'elapsedMs': (time.monotonic() - started) * 1000, 'retries': tried, 'parsedCount': len(report.accepted),
+                         'validation': 'passed' if report.ok else 'failed', 'rejectedCount': len(report.rejected),
                          'outputSha256': hashlib.sha256(raw.encode()).hexdigest(), 'processingKey': hashlib.sha256((snap.sha256 + ':' + version + ':normalize-1').encode()).hexdigest(),
                          'observationKey': hashlib.sha256((snap.sha256 + ':' + version + ':' + str(snap.fetched_at)).encode()).hexdigest(),
                          'lastSuccessAt': snap.fetched_at, 'successAgeHours': max(0, (time.time() - snap.fetched_at) / 3600)}
@@ -66,7 +69,7 @@ async def collect(entries, *, journal=None, concurrency=2, offline=None, timeout
                 return entry, snap, result, report, None, value
             except Exception as error:
                 value = {'attemptId': attempt, 'attempts': attempts, 'outcome': 'failed', 'phase': 'failed', 'extractorVersion': version,
-                         'elapsedMs': (time.monotonic() - started) * 1000, 'retries': tried, 'errorCode': type(error).__name__, 'parsedCount': 0}
+                         'elapsedMs': (time.monotonic() - started) * 1000, 'retries': tried, 'errorCode': type(error).__name__, 'failurePhase': failure_phase, 'parsedCount': 0}
                 if journal: journal.source_result(source, value)
                 return entry, snap, None, None, error, value
     try:

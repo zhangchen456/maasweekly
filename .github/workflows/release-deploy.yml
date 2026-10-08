@@ -23,6 +23,7 @@ jobs:
       cancel-in-progress: false
       queue: max
     env:
+      MAAS_MONITOR_OUTPUT: ${{ runner.temp }}/monitor-stages
       DEPLOY_HOST: 47.237.135.97
       DEPLOY_USER: maasdeploy
       MAAS_DEPLOY_MODE: release
@@ -49,6 +50,9 @@ jobs:
       - name: Install Python dependencies
         if: steps.candidate.outputs.eligible == 'true'
         run: pip install -q -c requirements.lock.txt -r requirements.txt
+      - name: Setup Chromium for admin acceptance
+        if: steps.candidate.outputs.eligible == 'true'
+        run: python3 -m playwright install chromium --with-deps
       - name: Setup Node
         if: steps.candidate.outputs.eligible == 'true'
         uses: actions/setup-node@v4
@@ -77,13 +81,13 @@ jobs:
           CANDIDATE_SHA: ${{ inputs.commit }}
         run: |
           set -o pipefail
-          ops/deploy-release.sh --commit "$CANDIDATE_SHA" 2>&1 | tee "$RUNNER_TEMP/release-build.txt"
+          python3 scripts/monitor-record.py build-deploy 2>&1 | tee "$RUNNER_TEMP/release-build.txt"
       - name: Online verify (four surfaces)
         if: steps.deploy.outputs.deployed == 'true'
         env:
           MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
           RELEASE_ID: ${{ steps.deploy.outputs.rid }}
-        run: ops/verify-release.sh --online --expect-release "$RELEASE_ID"
+        run: python3 scripts/monitor-record.py release-verify
       - name: Summarize release diagnostics
         if: always() && steps.candidate.outputs.eligible == 'true'
         run: |
@@ -101,3 +105,14 @@ jobs:
             ${{ runner.temp }}/regression-failures/
           if-no-files-found: ignore
           retention-days: 14
+      - name: Collect sanitized release task records
+        if: always()
+        run: python3 scripts/monitor-collect.py --stages "$MAAS_MONITOR_OUTPUT" --output "$RUNNER_TEMP/monitor-inbox"
+      - name: Archive sanitized release task records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monitor-release-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/monitor-inbox/
+          retention-days: 14
+          if-no-files-found: warn

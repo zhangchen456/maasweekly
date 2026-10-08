@@ -1,0 +1,21 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="流量与内容使用分析">
+  <form id="analytics-filter" class="admin-form">
+    <label>日期范围<select name="preset"><option value="7">近7天</option><option value="28">近28天</option><option value="custom">自定义日期</option></select></label>
+    <label>开始日期<input name="from" type="date" /></label><label>结束日期（含当天）<input name="to" type="date" /></label>
+    <button type="submit">查询</button>
+  </form>
+  <p id="analytics-status" role="status" aria-live="polite"></p>
+  <p class="admin-note">默认北京时间。网站访客、注册账号与Agent请求分别统计；成功读取不等于阅读完成，公测激活不代表付费。</p>
+  <section><h2>网站流量</h2><p id="analytics-website-state"></p><dl id="analytics-website" class="admin-summary"></dl>
+    <div class="admin-grid"><div><h3>热门页面（最多20项）</h3><div id="analytics-pages"></div></div><div><h3>来源（最多20项）</h3><div id="analytics-sources"></div></div></div>
+    <p class="admin-note">沿用Umami口径，内测访问可能混入；来源排行不作为所有访问的分母，Direct表示缺少可识别来源。</p>
+  </section>
+  <section><h2>账号与内容使用</h2><p id="analytics-coverage"></p><dl id="analytics-business" class="admin-summary"></dl></section>
+  <section><h2>各期周报</h2><p class="admin-note">读者按账号去重；同一期在至少两个不同北京日期成功读取为回访。历史周报日期入口单列，原记录可能混有公共周报读取。</p><div id="analytics-weekly"></div></section>
+  <section><h2>Agent / API 使用</h2><p class="admin-note">请求按HTTP响应完成计数，HTTP 2xx不代表MCP工具成功，也不代表真实Agent人数。专业工具成功另外记录，匿名调用无法绑定账号。</p><div id="analytics-agents"></div></section>
+  <section><h2>观察期完整的队列</h2><div id="analytics-cohorts"></div><p class="admin-note">仅计算已满观察期的账号；少于5个样本不展示百分比。专业留存以完整采集开始后的首次已记录读取为起点，第4周为第21–28天。无法还原历史未采集行为。</p></section>
+</AdminLayout>
+<script>import '../../../lib/admin-analytics-client';</script>

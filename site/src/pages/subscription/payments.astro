@@ -1,0 +1,8 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="付费订阅与支付记录" noindex={true}>
+<main class="billing-page"><h1>付费订阅与支付记录</h1><p>免费公测不会自动转为付费，也不会自动扣款。专业邮件需单独开启。</p><p id="billing-status" role="status">正在读取订阅…</p><p id="billing-entitlement"></p><section><h2>当前订阅</h2><div id="billing-subscriptions"></div></section><section><h2>支付记录</h2><div class="billing-scroll" id="billing-records"></div></section><button id="billing-refresh">刷新订阅与支付记录</button><button id="billing-buy" disabled>前往套餐结账</button><p>支付处理中或结果未知时请查询订单。返回本站不代表支付成功。</p><a href="/subscription/">返回套餐</a></main>
+</Layout>
+<script>import '../../scripts/billing';</script>
+<style>.billing-page{max-width:1080px;margin:3rem auto;padding:0 1rem}.billing-page article{border:1px solid #ddd;padding:1rem;margin:1rem 0}.billing-page button{margin:.4rem .6rem .4rem 0}.billing-scroll{overflow:auto}.billing-scroll :global(th),.billing-scroll :global(td){text-align:left;padding:.7rem;vertical-align:top;overflow-wrap:anywhere}.billing-scroll :global(table){width:100%;min-width:760px;border-collapse:collapse}</style>

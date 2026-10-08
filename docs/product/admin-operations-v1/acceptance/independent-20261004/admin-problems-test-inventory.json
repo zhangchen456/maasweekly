@@ -1,0 +1,14 @@
+[
+  "T07 additive migration, merge and unlink preserve original feedback and per-user history",
+  "T07 cycle prevention, existence and stale writes, audit rollback, exact idempotency",
+  "T07 independent diagnosis uses selected whitelist, fixed sources, dedupes tasks; does not alter feedback or editorial production",
+  "T07 model uncertainty and malformed suggestions require review, explicit provider recovery before replay",
+  "T07 cancelled / expired tasks fenced; late usage preserved without storing stale advice",
+  "T07 repair links distinguish sources, reject wrong fix, release verification can fail and never resolves feedback",
+  "T07 HTTP roles, CSRF, no-store, version gate, create replay and unknown-field isolation",
+  "T07 explicit private screenshot selection is independent, scoped and redaction-confirmed",
+  "T07 shared failure handling bounds rate-limit retries and input size without invoking model",
+  "T07 failed migration rolls back only new tables and retains T02 records",
+  "T07 independent paid config requires quoted budget; unknown evidence sources are never saved as usable advice",
+  "T07 multiline reproduction/evidence stays private and can be cleared without changing public feedback"
+]

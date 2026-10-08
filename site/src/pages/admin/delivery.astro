@@ -1,0 +1,9 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="邮件投递">
+ <p>供应商接受不等于确认送达。未知结果须先核对供应商；重试只重新入队原任务。</p>
+ <form id="delivery-filter" class="admin-filter"><label>类型<select name="type"><option value="">全部</option><option value="digest">普通摘要</option><option value="pro">专业邮件</option></select></label><label>状态<select name="state"><option value="">全部</option>{['queued','sending','accepted','delivered','failed','unknown','cancelled'].map((s,i)=><option value={s}>{['入队','发送中','供应商接受','确认送达','失败','未知','取消'][i]}</option>)}</select></label><label>用户<input name="user" placeholder="邮箱或用户ID" maxlength="254" /></label><label>开始（北京时间）<input name="from" type="datetime-local" /></label><label>结束（北京时间）<input name="to" type="datetime-local" /></label><button>检索</button></form>
+ <p id="delivery-status" role="status"></p><div id="delivery-items"></div><button id="delivery-next" hidden>下一页</button><section id="delivery-detail"></section>
+</AdminLayout>
+<script>import '../../lib/admin-delivery-client';</script>

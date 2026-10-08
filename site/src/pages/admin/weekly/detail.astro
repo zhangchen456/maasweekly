@@ -1,0 +1,17 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="周报工作台">
+ <section data-editorial-detail>
+ <p id="weekly-status" role="status"></p><button id="weekly-refresh">刷新状态</button><div id="weekly-summary"></div>
+ <nav aria-label="生产步骤"><a href="#weekly-material">1 素材与选题</a><a href="#weekly-generation">2 生成</a><a href="#weekly-editor">3 编辑与证据</a><a href="#weekly-review">4 审核</a><a href="#weekly-publication">5 出版</a></nav>
+ <label>本次操作原因<input id="weekly-reason" required maxlength="1000" /></label>
+ <section id="weekly-material"><h2>素材与覆盖</h2><div id="weekly-monitor"></div><form id="weekly-prepare"><label><input id="weekly-monitor-ack" type="checkbox" />已核对下列同窗口来源失败、投影冲突和版本关系，并在覆盖说明中披露限制</label><label>覆盖<select name="coverage"><option value="partial">partial：覆盖受限</option><option value="normal">normal：覆盖正常</option><option value="failed">failed：覆盖失败</option></select></label><label>覆盖说明<textarea name="coverageNote" required maxlength="2000"></textarea></label><button>冻结当前证据</button></form><div id="weekly-inputs"></div><button id="weekly-input-next" hidden>更多素材</button></section>
+ <section id="weekly-generation"><h2>独立模型阶段</h2><p>依次准备、选题、分析、独立审稿。不会自动审核或出版。模拟稿仅用于流程验收。</p><div id="weekly-run-buttons"><button data-stage="prepare">prepare</button><button data-stage="curate">curate 选题</button><button data-stage="analyze">analyze 分析</button><button data-stage="verify">verify 独立审稿</button></div><div id="weekly-runs"></div></section>
+ <section id="weekly-editor"><h2>人工编辑与证据</h2><p>编辑内容包JSON：一份 briefing，可附 explainer/comparison。保存形成新revision，旧审核失效；不直接写正式内容版本。证据ID、URL、观察时间必须匹配素材。</p><div class="weekly-columns"><form id="weekly-save"><label>稿件内容包<textarea id="weekly-package" rows="24" spellcheck="false" required></textarea></label><button>保存新版本</button></form><aside><h3>核验问题</h3><pre id="weekly-checks"></pre><h3>公共预览（转义文本）</h3><div id="weekly-preview"></div></aside></div></section>
+ <section id="weekly-review"><h2>人工审核</h2><form id="weekly-review-form"><fieldset><legend>逐项确认</legend>{[['sources','来源与适用条件'],['conditions','价格/时间/比较口径'],['conclusions','关键结论与证据'],['coverage','覆盖限制'],['preview','公共预览'],['attribution','模型归属与历史依据']].map(([key,label])=><label><input type="checkbox" name={key} />{label}</label>)}</fieldset><label>审核意见<input name="note" required maxlength="2000" /></label><button name="decision" value="submit">提交审核</button><button name="decision" value="approve">批准当前版本</button><button name="decision" value="reject">退回编辑</button></form><div id="weekly-reviews"></div></section>
+ <section id="weekly-publication"><h2>出版与组合</h2><button id="weekly-publish">出版已批准版本</button><div id="weekly-publications"></div><p id="weekly-composition"></p><label><input id="weekly-queue" type="checkbox" />为本次新建报告按用户专业邮件开关入队（默认关闭，不补发已有报告）</label><button id="weekly-compose">组合个人简报</button><p>sent 表示供应商已接受；投递状态不会在此重置。</p><div id="weekly-mail"></div></section>
+ </section>
+</AdminLayout>
+<script>import '../../../lib/admin-editorial-client';</script>
+<style>.weekly-columns{display:grid;grid-template-columns:2fr 1fr;gap:24px}textarea{width:100%;font-family:monospace}pre{white-space:pre-wrap;overflow-wrap:anywhere}@media(max-width:800px){.weekly-columns{grid-template-columns:1fr}}</style>

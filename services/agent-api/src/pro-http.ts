@@ -1,3 +1,6 @@
+import { PaymentSimulator } from './payment-simulator.js';
+import { PaymentStore,paymentMonthEnd } from './payment-store.js';
+import { AdminStore } from './admin-store.js';
 import {readFileSync} from 'node:fs';
 import path from 'node:path';
 import type { IncomingMessage, ServerResponse } from 'node:http';
@@ -51,20 +54,29 @@ export function createProHandler(store: ProStore | null, holder: DatasetHolder, 
       }
       if (route.startsWith('content/') && req.method === 'GET') {
         const c = store.get(decodeURIComponent(route.slice(8)),user?.id);
-        store.event(url.searchParams.has('format') ? 'content_export' : c.sample ? 'sample_read' : 'content_read',c.id,user?.id);
+        store.event(['markdown','csv'].includes(url.searchParams.get('format')??'') ? (c.sample?'sample_export':'content_export') : c.sample ? 'sample_read' : 'content_read',c.id,user?.id);
         const format = url.searchParams.get('format');
         if (format === 'markdown' || format === 'csv') { res.setHeader('Content-Disposition',`attachment; filename="maas-pro.${format === 'csv' ? 'csv' : 'md'}"`); send(format === 'csv' ? csv(c) : markdown(c),200,format === 'csv' ? 'text/csv; charset=utf-8' : 'text/markdown; charset=utf-8'); }
         else send(c); return;
       }
       if (!user) throw new AccountError(401,'unauthenticated','请先登录');
       // Bearer tokens are read-only; account management requires the website session.
-      if (req.headers.authorization && (req.method === 'POST' || ['tokens','rss-address'].includes(route))) throw new AccountError(403,'session_required','请在网站账户中管理凭证');
+      if (req.headers.authorization && (req.method === 'POST' || ['tokens','rss-address','billing'].includes(route) || route.startsWith('billing/'))) throw new AccountError(403,'session_required','请在网站账户中管理凭证');
       if (route.startsWith('weekly/') && req.method === 'GET') {
         store.require(user.id);
         const id=route.slice(7); if (!/^\d{4}-\d{2}-\d{2}$/.test(id)) throw new AccountError(404,'not_found','周报不存在');
         const root=process.env.PRIVATE_WEEKLY_ROOT ?? (process.env.MAAS_RELEASE_DIR ? path.join(process.env.MAAS_RELEASE_DIR,'data/private-weekly') : path.resolve(process.env.PUBLIC_DATA_ROOT ?? 'data/public/v1','../../private-weekly'));
         let html:string;try{html=readFileSync(path.join(root,id+'.html'),'utf8');}catch{throw new AccountError(404,'not_found','周报暂不可用');}
         store.event('weekly_read',id,user.id);send(html,200,'text/html; charset=utf-8');return;
+      }
+      if(route==='billing'&&req.method==='GET'){const payments=new PaymentStore(new AdminStore(store.accounts));send({...payments.user(user.id),entitlement:store.entitlement(user.id),checkoutAvailability:process.env.MAAS_PAYMENT_MODE==='simulator'&&['localhost','127.0.0.1'].includes(new URL(config.origin).hostname)?'simulator':'unavailable',reason:'real_sandbox_provider_not_configured'});return;}
+      if(['billing/checkout','billing/simulator-result','billing/cancel'].includes(route)&&req.method==='POST'){
+       if(process.env.MAAS_PAYMENT_MODE!=='simulator'||!['localhost','127.0.0.1'].includes(new URL(config.origin).hostname))throw new AccountError(503,'payment_unavailable','支付沙箱渠道尚未配置，未产生扣款');
+       const payments=new PaymentStore(new AdminStore(store.accounts)),sim=new PaymentSimulator(payments);
+       if(route==='billing/checkout'){if(typeof input.key!=='string')throw new AccountError(400,'invalid_key','缺少订单幂等键');const o=payments.createOrder(user.id,input.key);send({orderId:o.id,url:'/subscription/sandbox/?order='+encodeURIComponent(String(o.id)),mode:'simulator'});return;}
+       if(typeof input.orderId!=='string')throw new AccountError(400,'invalid_order','缺少订单');const o=payments.order(input.orderId);if(o.userId!==user.id)throw new AccountError(404,'not_found','订单不存在');
+       if(route==='billing/cancel'){sim.action(String(o.id),'cancel');send({cancelRequested:true,mode:'simulator'});return;}
+       if(!['paid','failed'].includes(String(input.outcome)))throw new AccountError(400,'invalid_outcome','模拟结果无效');const previous=payments.db.prepare('SELECT id FROM paid_simulator_objects WHERE id=?').get('sim_'+input.orderId+'_'+String(input.outcome));if(previous){sim.deliver(String(previous.id));send({verified:true,mode:'simulator'});return;}const now=store.accounts.now(),end=paymentMonthEnd(now);const f=sim.publish({id:'sim_'+input.orderId+'_'+String(input.outcome),kind:input.outcome,orderId:o.id,subscriptionId:o.subscriptionId,objectId:'sim_payment_'+o.id,currency:o.currency,amount:o.amount,starts:now,ends:end,occurredAt:now});sim.deliver(f.id);send({verified:true,mode:'simulator'});return;
       }
       if (route === 'me' && req.method === 'GET') { const settings = store.settings(user.id); send({betaAvailable:store.betaAvailable,entitlement:store.entitlement(user.id),settings:settings ? {scope:settings.scope,emailEnabled:settings.emailEnabled} : null,reports:store.reports(user.id),applied:Boolean(store.db.prepare('SELECT 1 FROM pro_applications WHERE userId=?').get(user.id)),mailAvailable}); return; }
       if (route === 'beta' && req.method === 'POST') { send({entitlement:store.activateBeta(user.id)}); return; }
@@ -84,7 +96,7 @@ export function createProHandler(store: ProStore | null, holder: DatasetHolder, 
       if (route === 'rss-address' && req.method === 'GET') { store.require(user.id); const token = store.rssSecret(user.id); send({url:token ? `${config.origin}/api/pro/feed?token=${encodeURIComponent(token)}` : null}); return; }
       if (route.startsWith('report/') && req.method === 'GET') {
         const report = store.report(user.id,route.slice(7));
-        store.event(url.searchParams.has('format') ? 'report_export' : 'report_read',report.id,user.id);
+        store.event(['markdown','csv'].includes(url.searchParams.get('format')??'') ? 'report_export' : 'report_read',report.id,user.id);
         const format = url.searchParams.get('format');
         if (format === 'markdown' || format === 'csv') {
           const metadata = {reportId:report.id,reportPeriod:report.period,scope:JSON.stringify(report.scope),coverage:report.coverage};

@@ -1,0 +1,16 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+const stages=['triage','investigating','waiting_user','fix_pending','release_pending','verify_pending','resolved'];
+---
+<AdminLayout title="反馈详情">
+  <section data-operations="feedback-detail">
+    <p id="ops-status" role="status"></p><div id="ops-items"></div><div id="ops-images"></div><a id="ops-user-link">查看用户与权益</a>
+    <h2>公开回复与内部阶段</h2>
+    <form id="ops-update" data-action="update"><label>内部阶段<select name="stage">{stages.map(s=><option>{s}</option>)}</select></label><label>优先级<select name="priority">{['urgent','high','normal','low'].map(s=><option>{s}</option>)}</select></label><label>公开回复（用户可见）<textarea name="publicReply" maxlength="2000"></textarea></label><label>解决类型<select name="resolutionType"><option value="">暂不解决</option>{['code','content','data','other'].map(s=><option>{s}</option>)}</select></label><label>重复反馈关联 ID<input name="relatedFeedbackId" maxlength="500" /></label><label>操作原因（回退或重开需说明）<input name="reason" required maxlength="1000" /></label><button>保存处理状态</button></form>
+    <h2>内部备注（仅管理员可见）</h2><div id="ops-notes"></div><button id="ops-notes-next" hidden>更多内部备注</button>
+    <form data-action="notes"><label>内部备注<textarea name="body" required maxlength="4000"></textarea></label><label>原因<input name="reason" required maxlength="1000" /></label><button>追加内部备注</button></form>
+    <h2>修复关联与验证记录</h2><p>代码问题需修复引用、发布版本及通过的线上验证；内容和数据问题需更正对象与核验，其他处理需依据。记录追加后再解决。</p><div id="ops-verifications"></div><button id="ops-verifications-next" hidden>更多验证记录</button>
+    <form data-action="verify"><label>类型<select name="kind">{['code','content','data','other'].map(s=><option>{s}</option>)}</select></label><label>修复 / 更正 / 处理依据引用<input name="artifactRef" required maxlength="500" /></label><label>发布版本<input name="releaseRef" maxlength="500" /></label><label>验证环境<select name="environment"><option value="online">线上</option><option value="other">其他</option></select></label><label>结果<select name="result"><option value="passed">通过</option><option value="failed">失败</option></select></label><label>验证说明<textarea name="note" required maxlength="4000"></textarea></label><label>原因<input name="reason" required maxlength="1000" /></label><button>追加验证记录</button></form>
+  </section>
+</AdminLayout>
+<script>import '../../../lib/admin-operations-client';</script>

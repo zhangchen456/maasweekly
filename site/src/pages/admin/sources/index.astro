@@ -1,0 +1,13 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="信源质量">
+  <p>最近成功与数据截至以真实记录为准。无变化表示已执行；未执行与未知分别显示。健康状态不受异常队列的忽略操作影响。</p>
+  <p id="monitor-status" role="status"></p>
+  <form id="monitor-filter"><label>健康状态 <select name="health"><option value="">全部</option><option value="degraded">异常</option><option value="stale">记录过期</option><option value="unknown">未知</option><option value="normal">正常</option><option value="not_run">未执行</option></select></label><button>查询</button></form>
+  <div class="admin-table-wrap"><table><thead><tr><th>信源 / 平台</th><th>健康 / 结果</th><th>最近尝试</th><th>最近成功</th><th>数据截至</th><th>连续失败</th><th>覆盖 / 原因</th></tr></thead><tbody id="monitor-sources"></tbody></table></div>
+  <p>新鲜度预算为48小时，仅表示监控记录是否过期，不能证明来源没有新变化。历史诊断无法区分抓取与解析时明确显示。</p>
+  <h2>异常处理队列</h2><p>解决需要后续成功运行标识；忽略只改变处理状态。每次变更都需原因并记录审计。</p>
+  <div id="monitor-anomalies"></div><button id="monitor-anomaly-next" hidden>更多异常</button>
+</AdminLayout>
+<script>import '../../../lib/admin-monitor-client';</script>

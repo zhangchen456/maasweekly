@@ -1,0 +1,11 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="问题诊断与修复">
+ <section data-problems>
+ <p>归并需人工确认，原反馈与公开说明保留。AI 仅提供建议；合并、发布、线上验证分别记录，每条反馈仍须在反馈工作台确认影响与解决。</p>
+ <form id="problem-create"><h2>创建问题</h2><label>标题<input name="title" required maxlength="200" /></label><label>问题描述<textarea name="description" required maxlength="4000"></textarea></label><button>创建问题</button></form>
+ <button id="problem-refresh" type="button">刷新列表</button><p id="problem-status" role="status"></p><div id="problem-list"></div><button id="problem-next" hidden>下一页</button><div id="problem-detail"></div>
+ </section>
+</AdminLayout>
+<script>import '../../../lib/admin-problems-client';</script>

@@ -90,6 +90,26 @@ def notify(result, state):
     temporary.replace(state)
 
 
+def admin_records(root, action, succeeded, result=None):
+    # Only actual invocation creates receipts. Never infer restore from backup file existence/mtime.
+    root.mkdir(parents=True, exist_ok=True, mode=0o700)
+    os.chmod(root, 0o700)
+    now = int(time.time() * 1000)
+    kinds = [('backup', 'account-maintenance.backup'), ('restore', 'account-maintenance.restore')] if action == 'backup' else [('api', 'account-maintenance.health')]
+    for kind, source in kinds:
+        status = 'normal' if succeeded else 'abnormal' if kind != 'restore' else 'unknown'
+        if action == 'health' and result and result.get('alerts'):
+            status = 'abnormal'
+        value = 'isolated-sqlite-copy-integrity-and-content' if kind == 'restore' and succeeded else None
+        record = {'id': 'maintenance_' + os.urandom(12).hex(), 'kind': kind, 'status': status,
+                  'checkedAt': now, 'budgetSeconds': 26 * 3600, 'source': source, 'value': value}
+        target = root / (record['id'] + '.json')
+        temporary = target.with_suffix('.tmp')
+        temporary.write_text(json.dumps(record))
+        os.chmod(temporary, 0o600)
+        temporary.replace(target)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('action', choices=['backup', 'health'])
@@ -98,10 +118,16 @@ def main():
     parser.add_argument('--keep', type=int, default=14)
     parser.add_argument('--notify-state', type=Path)
     parser.add_argument('--systemd', action='store_true')
+    parser.add_argument('--admin-records', type=Path, help='Optional private T06 inbox for actual execution receipts')
     args = parser.parse_args()
     if not args.db or not args.db.is_file(): parser.error('existing account database required')
     os.umask(0o077)
-    result = backup(args.db, args.backups, args.keep) if args.action == 'backup' else health(args.db, args.backups)
+    try:
+        result = backup(args.db, args.backups, args.keep) if args.action == 'backup' else health(args.db, args.backups)
+    except Exception:
+        if args.admin_records:
+            admin_records(args.admin_records, args.action, False)
+        raise
     if args.systemd and args.action == 'health':
         for unit in ('maas-account-digest', 'maas-account-digest-retry', 'maas-account-backup'):
             active = subprocess.run(['systemctl', 'is-active', unit + '.timer'], capture_output=True, text=True).stdout.strip()
@@ -109,6 +135,8 @@ def main():
             if active != 'active': result['alerts'].append(unit + '_timer_inactive')
             if outcome != 'success': result['alerts'].append(unit + '_service_failed')
         result['alerts'].sort()
+    if args.admin_records:
+        admin_records(args.admin_records, args.action, True, result)
     if args.notify_state: notify(result, args.notify_state)
     print(json.dumps(result))
     if result.get('alerts'): raise SystemExit(1)

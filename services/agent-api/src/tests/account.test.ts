@@ -79,7 +79,7 @@ test('digest opt-in, baseline, exact identity, revision dedup, unsubscribe and r
   } finally { store.close(); }
 });
 
-test('failed email retries with identical payload and key; lease blocks concurrent sends', async () => {
+test('timeout remains unknown and lease blocks concurrent sends', async () => {
   let now=start; const store = new AccountStore(':memory:', () => now, SECRET); const attempts: Mail[] = [];
   try {
     const { user } = login(store); store.watch(user.id, 'openai:gpt-test', catalog); store.preferences(user.id, true);
@@ -90,7 +90,7 @@ test('failed email retries with identical payload and key; lease blocks concurre
     assert.equal(store.claim(), null);
     now+=300001;
     const result = await deliverDigests(store, { async send(mail) { attempts.push(mail); } }, [{...items[0]!,title:'modified'}], 'https://daily.maas.click');
-    assert.equal(result.sent, 1); assert.deepEqual(attempts[0], attempts[1]);
+    assert.equal(result.sent, 0); assert.equal(attempts.length,1);
     assert.equal((await deliverDigests(store, failing, items, 'https://daily.maas.click')).failed, 0);
   } finally { store.close(); }
 });
@@ -164,7 +164,7 @@ test('queued superseded revisions and cancelled model watches do not generate st
   } finally {store.close();}
 });
 
-test('retry-only run retries existing job and leaves new changes for daily digest', async () => {
+test('retry-only run retains unknown job and leaves new changes for daily digest', async () => {
   let now=start;const store=new AccountStore(':memory:',()=>now,SECRET);const mails:Mail[]=[];
   try {
     const {user}=login(store);store.watch(user.id,'openai:gpt-test',catalog);store.preferences(user.id,true);now+=2000;
@@ -172,7 +172,7 @@ test('retry-only run retries existing job and leaves new changes for daily diges
     await deliverDigests(store,{async send(){throw new Error('timeout');}},[first],'https://daily.maas.click');
     now+=300001;const second=change('b',now-1000);
     const result=await deliverDigests(store,{async send(mail){mails.push(mail);}},[first,second],'https://daily.maas.click',false);
-    assert.equal(result.queued,0);assert.equal(result.sent,1);assert.ok(!mails[0]!.text.includes('/item/b/'));
+    assert.equal(result.queued,0);assert.equal(result.sent,0);assert.equal(mails.length,0);
     assert.equal((await deliverDigests(store,{async send(mail){mails.push(mail);}},[first,second],'https://daily.maas.click')).sent,1);
   } finally {store.close();}
 });

@@ -72,6 +72,7 @@ export class AccountStore {
         const org = randomUUID(), id = randomUUID();
         this.db.prepare('INSERT INTO organizations VALUES(?,?)').run(org, '个人空间');
         this.db.prepare('INSERT INTO users(id,email,organizationId,unsubscribeToken) VALUES(?,?,?,?)').run(id, email, org, token());
+        if (this.db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='account_registrations'").get()) this.db.prepare('INSERT INTO account_registrations VALUES(?,?)').run(id,this.now());
         user = this.db.prepare('SELECT * FROM users WHERE id=?').get(id) as unknown as User;
       }
       this.profile(user);
@@ -186,13 +187,14 @@ export class AccountStore {
   }
   claim(): (Job & { user: User }) | null {
     return this.transaction(() => {
-      // Resend idempotency expires after 24h. Uncertain older attempts require review.
-      this.db.prepare("UPDATE mail_jobs SET status='review' WHERE status='pending' AND lease>0 AND created<?").run(this.now() - 23 * 60 * MINUTE);
-      const job = this.db.prepare("SELECT j.* FROM mail_jobs j JOIN users u ON u.id=j.userId WHERE j.status='pending' AND u.emailEnabled=1 AND j.lease<? ORDER BY j.created LIMIT 1").get(this.now()) as unknown as Job | undefined;
+      // Any expired attempt is uncertain. Require supplier evidence before reexecution.
+      this.db.prepare("UPDATE mail_jobs SET status='review' WHERE status='pending' AND lease>0 AND lease<=?").run(this.now());
+      const job = this.db.prepare("SELECT j.* FROM mail_jobs j JOIN users u ON u.id=j.userId WHERE j.status='pending' AND u.emailEnabled=1 AND j.lease=0 AND j.created<=? ORDER BY j.created LIMIT 1").get(this.now()) as unknown as Job | undefined;
       if (!job) return null;
-      this.db.prepare('UPDATE mail_jobs SET lease=? WHERE id=?').run(this.now() + 5 * MINUTE, job.id);
+      const lease=this.now()+5*MINUTE;
+      this.db.prepare('UPDATE mail_jobs SET lease=? WHERE id=?').run(lease, job.id);
       const user = this.db.prepare('SELECT * FROM users WHERE id=?').get(job.userId) as unknown as User;
-      return { ...job, user };
+      return { ...job, lease, user };
     });
   }
   freezeMail(id: string, mail: string) { this.db.prepare('UPDATE mail_jobs SET mail=COALESCE(mail,?) WHERE id=?').run(mail, id); }

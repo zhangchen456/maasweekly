@@ -1,0 +1,312 @@
+{
+  "datasetVersion": "ds_06271d209e3d343f108455222e239e0cbc323f7e42595ba246c0b28b62923c22",
+  "inputHash": "982a91afb713b0fc0d2cf46155d1a1fc872824e0d3dd8300a589174c89367e1b",
+  "revision": 2,
+  "outputHash": "7798ee6a81208ce02ed0cca9cf83202492423fc6e34db89765abc2e1bb4915d5",
+  "evidence": [
+    {
+      "id": "obs_178c5674afefb4a833baf0ccd2cbc9ab391f522fa796a8c7d467820d8f16ff24",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+      "observedAt": "2026-09-27",
+      "note": "冻结快照；事实与适用条件须人工核对"
+    },
+    {
+      "id": "obs_2a2de9ed0d3277405ab50366260085c00f2b8811f9ea3b32c2e5cfd22d6988c3",
+      "url": "https://lmarena.ai/leaderboard",
+      "observedAt": "2026-09-27",
+      "note": "冻结快照；事实与适用条件须人工核对"
+    },
+    {
+      "id": "obs_2b85b3e3c6c5183ff5574c66518f94d408c5e1c228c25010aae2ce55982d8fc7",
+      "url": "https://platform.openai.com/docs/changelog",
+      "observedAt": "2026-09-27",
+      "note": "冻结快照；事实与适用条件须人工核对"
+    },
+    {
+      "id": "obs_43ee94715b143293014646f3b4a7826cdee3e1a946dea919dc361b249df864b1",
+      "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+      "observedAt": "2026-09-27",
+      "note": "冻结快照；事实与适用条件须人工核对"
+    },
+    {
+      "id": "obs_48a6e2d753b1604a8c21f0b3c54bfa9e227d3779be87bcf5c223cba9a16b78e7",
+      "url": "https://platform.openai.com/docs/changelog",
+      "observedAt": "2026-09-27",
+      "note": "冻结快照；事实与适用条件须人工核对"
+    },
+    {
+      "id": "obs_9e4bcc83b2b36c111aa29fc053d2ccc6eb01c24dfbeeee7229ea5b8d6d20900f",
+      "url": "https://artificialanalysis.ai/",
+      "observedAt": "2026-09-27",
+      "note": "冻结快照；事实与适用条件须人工核对"
+    },
+    {
+      "id": "obs_de6e4c1912e0dac93ba48f8f9497439828805b0e018ff1bc9f25d343b1794702",
+      "url": "https://www.volcengine.com/docs/82379/1544106",
+      "observedAt": "2026-09-27",
+      "note": "冻结快照；事实与适用条件须人工核对"
+    },
+    {
+      "id": "price_00b5a0300612b615c891d17da85fdf5759bbd4289fb3af5c5e3f2ca58fad474e",
+      "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "observedAt": "2026-09-26T23:25:59+00:00",
+      "note": "冻结快照；事实与适用条件须人工核对"
+    }
+  ],
+  "runs": [
+    {
+      "id": "55545fb3-24bc-4b69-a3f0-cf8279e31c72",
+      "issueId": "weekly-2026-09-28",
+      "stage": "verify",
+      "state": "succeeded",
+      "attempt": 1,
+      "leaseOwner": "11ebc66d-0611-4b1a-b710-9db190e1aed8",
+      "leaseUntil": 0,
+      "fencingVersion": 1,
+      "version": 2,
+      "inputHash": "962864b6bc6a9f664624c98d1ae3ee93d6bc3fc08bf1c64750b500b670614cc1",
+      "config": {
+        "adapter": "mock",
+        "curator": {
+          "model": "deterministic-curator-v1"
+        },
+        "analyst": {
+          "model": "deterministic-analyst-v1"
+        },
+        "reviewer": {
+          "model": "deterministic-reviewer-v1"
+        },
+        "maxInputTokens": 40000,
+        "maxOutputTokens": 8000,
+        "timeoutMs": 60000,
+        "price": null
+      },
+      "budget": 0,
+      "reserved": 0,
+      "estimatedCost": null,
+      "actualCost": null,
+      "usage": [
+        {
+          "attempt": 1,
+          "fencingVersion": 1,
+          "inputTokens": 37733,
+          "outputTokens": 169,
+          "actualCost": null,
+          "requestId": null,
+          "adapter": "mock"
+        }
+      ],
+      "errorCode": null,
+      "result": {
+        "findings": [
+          "模拟独立审稿：必须人工核对关键结论、价格适用条件与公开预览"
+        ],
+        "recommendation": "人工审核；模拟器不证明模型质量",
+        "machine": {
+          "blocking": [],
+          "manual": [
+            "逐项核对关键结论与引用、正文与表格数值、前后比较口径；程序不能证明语义正确"
+          ]
+        }
+      },
+      "createdAt": 1791125994858,
+      "startedAt": 1791125995431,
+      "finishedAt": 1791125995449,
+      "availableAt": 0,
+      "inputCount": 13,
+      "fullSnapshotCount": 500
+    },
+    {
+      "id": "ea91e08c-fcbb-4229-bb7c-3563f3f2f722",
+      "issueId": "weekly-2026-09-28",
+      "stage": "analyze",
+      "state": "succeeded",
+      "attempt": 1,
+      "leaseOwner": "58bb5b93-6856-4bd0-afd1-2409b8be0e1c",
+      "leaseUntil": 0,
+      "fencingVersion": 1,
+      "version": 2,
+      "inputHash": "a35c060c80b6476cfae8dc61580b0963ced773bd45379ae7e20d4676c14ebe00",
+      "config": {
+        "adapter": "mock",
+        "curator": {
+          "model": "deterministic-curator-v1"
+        },
+        "analyst": {
+          "model": "deterministic-analyst-v1"
+        },
+        "reviewer": {
+          "model": "deterministic-reviewer-v1"
+        },
+        "maxInputTokens": 40000,
+        "maxOutputTokens": 8000,
+        "timeoutMs": 60000,
+        "price": null
+      },
+      "budget": 0,
+      "reserved": 0,
+      "estimatedCost": null,
+      "actualCost": null,
+      "usage": [
+        {
+          "attempt": 1,
+          "fencingVersion": 1,
+          "inputTokens": 9692,
+          "outputTokens": 7781,
+          "actualCost": null,
+          "requestId": null,
+          "adapter": "mock"
+        }
+      ],
+      "errorCode": null,
+      "result": {
+        "id": "weekly-2026-09-28",
+        "revision": 1,
+        "outputHash": "e7e5d5c2bbdf4e2174af18454da08b1a24aaa5c6370f061977fe93010ffcdeac",
+        "version": 5,
+        "state": "draft"
+      },
+      "createdAt": 1791125993108,
+      "startedAt": 1791125993684,
+      "finishedAt": 1791125993714,
+      "availableAt": 0,
+      "inputCount": 15,
+      "fullSnapshotCount": 500
+    },
+    {
+      "id": "07192cec-a4c9-4f55-8209-c68e0388e42f",
+      "issueId": "weekly-2026-09-28",
+      "stage": "curate",
+      "state": "succeeded",
+      "attempt": 1,
+      "leaseOwner": "4486b367-a680-4dfc-9a59-8cfc0ab3af19",
+      "leaseUntil": 0,
+      "fencingVersion": 1,
+      "version": 2,
+      "inputHash": "75979a55c8f582c180c4b7a6b3c406651b9525a9e10ca853b44c1ca5d4d98232",
+      "config": {
+        "adapter": "mock",
+        "curator": {
+          "model": "deterministic-curator-v1"
+        },
+        "analyst": {
+          "model": "deterministic-analyst-v1"
+        },
+        "reviewer": {
+          "model": "deterministic-reviewer-v1"
+        },
+        "maxInputTokens": 40000,
+        "maxOutputTokens": 8000,
+        "timeoutMs": 60000,
+        "price": null
+      },
+      "budget": 0,
+      "reserved": 0,
+      "estimatedCost": null,
+      "actualCost": null,
+      "usage": [
+        {
+          "attempt": 1,
+          "fencingVersion": 1,
+          "inputTokens": 38547,
+          "outputTokens": 678,
+          "actualCost": null,
+          "requestId": null,
+          "adapter": "mock"
+        }
+      ],
+      "errorCode": null,
+      "result": {
+        "selectedIds": [
+          "obs_178c5674afefb4a833baf0ccd2cbc9ab391f522fa796a8c7d467820d8f16ff24",
+          "obs_2a2de9ed0d3277405ab50366260085c00f2b8811f9ea3b32c2e5cfd22d6988c3",
+          "obs_2b85b3e3c6c5183ff5574c66518f94d408c5e1c228c25010aae2ce55982d8fc7",
+          "obs_43ee94715b143293014646f3b4a7826cdee3e1a946dea919dc361b249df864b1",
+          "obs_48a6e2d753b1604a8c21f0b3c54bfa9e227d3779be87bcf5c223cba9a16b78e7",
+          "obs_9e4bcc83b2b36c111aa29fc053d2ccc6eb01c24dfbeeee7229ea5b8d6d20900f",
+          "obs_de6e4c1912e0dac93ba48f8f9497439828805b0e018ff1bc9f25d343b1794702",
+          "price_00b5a0300612b615c891d17da85fdf5759bbd4289fb3af5c5e3f2ca58fad474e"
+        ],
+        "rationale": "确定性演练选题：按冻结顺序取前8条，需人工确认重要性"
+      },
+      "createdAt": 1791125991363,
+      "startedAt": 1791125991948,
+      "finishedAt": 1791125991952,
+      "availableAt": 0,
+      "inputCount": 15,
+      "fullSnapshotCount": 500
+    },
+    {
+      "id": "33a6602d-3713-4d2f-ab7f-9d8fe8c8043b",
+      "issueId": "weekly-2026-09-28",
+      "stage": "prepare",
+      "state": "succeeded",
+      "attempt": 1,
+      "leaseOwner": "d7862d5b-d80f-47fc-b2ea-c01a65256879",
+      "leaseUntil": 0,
+      "fencingVersion": 1,
+      "version": 2,
+      "inputHash": "99c441433e44371b3fbeeda619675bc49f150032b0b9b8e1849972e47d069b28",
+      "config": {
+        "adapter": "mock",
+        "curator": {
+          "model": "deterministic-curator-v1"
+        },
+        "analyst": {
+          "model": "deterministic-analyst-v1"
+        },
+        "reviewer": {
+          "model": "deterministic-reviewer-v1"
+        },
+        "maxInputTokens": 40000,
+        "maxOutputTokens": 8000,
+        "timeoutMs": 60000,
+        "price": null
+      },
+      "budget": 0,
+      "reserved": 0,
+      "estimatedCost": 0,
+      "actualCost": null,
+      "usage": [],
+      "errorCode": null,
+      "result": {
+        "evidenceCount": 15,
+        "snapshotHash": "982a91afb713b0fc0d2cf46155d1a1fc872824e0d3dd8300a589174c89367e1b"
+      },
+      "createdAt": 1791125989585,
+      "startedAt": 1791125990179,
+      "finishedAt": 1791125990182,
+      "availableAt": 0,
+      "inputCount": 15,
+      "fullSnapshotCount": 500
+    }
+  ],
+  "publication": [
+    {
+      "id": "5c134df4-6429-4a49-95c1-679eb87c9c93",
+      "issueId": "weekly-2026-09-28",
+      "revision": 2,
+      "contentRefs": [
+        {
+          "id": "editorial-2026-09-28-briefing",
+          "version": 1,
+          "kind": "briefing"
+        },
+        {
+          "id": "editorial-2026-09-28-detail",
+          "version": 1,
+          "kind": "explainer"
+        }
+      ],
+      "publishedAt": 1791126001445,
+      "actorId": "f091073a-2fab-4562-b66a-7dc315b3b830",
+      "compositionState": "succeeded",
+      "queueMail": 0,
+      "summary": {
+        "created": 0
+      }
+    }
+  ],
+  "modelQuality": "Not evaluated: deterministic simulation only",
+  "cost": "Unknown price; no paid calls"
+}

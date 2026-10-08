@@ -1,0 +1,9 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="周报生产">
+ <section data-editorial-list><p>统一周报发布为 briefing；个人简报只组合匹配的详解和专题。</p>
+ <form id="weekly-create"><label>统计结束周一<input name="periodEnd" type="date" required /></label><label>选题说明<input name="selection" maxlength="2000" required /></label><label>每期预算（USD，模型价格未知时仅限制调用/token）<input name="budget" type="number" min="0" max="10000" value="0" step="0.01" required /></label><label>操作原因<input name="reason" required maxlength="1000" /></label><button>创建期次</button></form>
+ <p id="weekly-status" role="status"></p><div id="weekly-list"></div><button id="weekly-next" hidden>下一页</button></section>
+</AdminLayout>
+<script>import '../../../lib/admin-editorial-client';</script>
