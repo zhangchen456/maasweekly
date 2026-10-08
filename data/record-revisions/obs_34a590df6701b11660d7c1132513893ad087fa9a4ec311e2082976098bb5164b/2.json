@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_34a590df6701b11660d7c1132513893ad087fa9a4ec311e2082976098bb5164b",
+  "sourceId": "openai-pricing",
+  "date": "2026-10-08",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.openai.com/docs/pricing",
+  "title": "OpenAI · 定价来源更新",
+  "summary": "与model_list相同的变化模式，新增三条内容并删除一条，但未涉及具体价格数字变动，可能只是文档结构调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-08T00:54:20+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Meet the ambassadors",
+      "Roll out a gateway",
+      "Use API/provider credentials"
+    ],
+    "removed_lines": [
+      "Deploy Codex through a gateway"
+    ],
+    "added_count": 3,
+    "removed_count": 1,
+    "raw_added_count": 3,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-08.json"
+  },
+  "permalink": "/item/obs_34a590df6701b11660d7c1132513893ad087fa9a4ec311e2082976098bb5164b/"
+}

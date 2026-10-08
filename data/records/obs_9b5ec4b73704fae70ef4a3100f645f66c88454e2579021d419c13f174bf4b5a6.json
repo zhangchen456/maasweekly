@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_9b5ec4b73704fae70ef4a3100f645f66c88454e2579021d419c13f174bf4b5a6",
+  "sourceId": "openai-changelog",
+  "date": "2026-10-08",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "changelog",
+  "sourceUrl": "https://platform.openai.com/docs/changelog",
+  "title": "OpenAI · 更新日志来源更新",
+  "summary": "新增了chat-latest快照更新说明，指向ChatGPT最新模型，同时新增网关和凭据相关条目，删除Codex网关部署条目，反映产品功能更新。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-08T00:54:20+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Meet the ambassadors",
+      "Roll out a gateway",
+      "Updated the chat-latest snapshot, which points to the latest model available in ChatGPT for Plus, Pro, Business and Enterprise users. We recommend leveraging the GPT-6 model family for production API usage, but feel free to use this model to test the latest improvements for chat use cases. The underlying model snapshot will be regularly updated. Read more here.",
+      "Use API/provider credentials"
+    ],
+    "removed_lines": [
+      "Deploy Codex through a gateway"
+    ],
+    "added_count": 4,
+    "removed_count": 1,
+    "raw_added_count": 4,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-08.json"
+  },
+  "permalink": "/item/obs_9b5ec4b73704fae70ef4a3100f645f66c88454e2579021d419c13f174bf4b5a6/"
+}

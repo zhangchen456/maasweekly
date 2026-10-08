@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_0fcec8222c710853c43798cbb38419d2835911a1369390865a5300db7ee17602",
+  "sourceId": "anthropic-modellist",
+  "date": "2026-10-07",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "model_list",
+  "sourceUrl": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+  "title": "Anthropic · 模型列表来源更新",
+  "summary": "Each model's capabilities object includes thinking.types.disabled, which reports whether the model accepts thinking: {type: \"disabled\"}, the setting that turns thinking off. supported is false when the model rejects \"disabled\" with a 400 error, and true on a model that doesn't support thinking. Even when supported is true, the API can still reject a \"disabled\" request for another reason. One such reason is an effort level that the model doesn't allow with thinking off.",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Each model's capabilities object includes thinking.types.disabled, which reports whether the model accepts thinking: {type: \"disabled\"}, the setting that turns thinking off. supported is false when the model rejects \"disabled\" with a 400 error, and true on a model that doesn't support thinking. Even when supported is true, the API can still reject a \"disabled\" request for another reason. One such reason is an effort level that the model doesn't allow with thinking off."
+    ],
+    "removed_lines": [],
+    "added_count": 1,
+    "removed_count": 0,
+    "raw_added_count": 1,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-07.json"
+  },
+  "permalink": "/item/obs_0fcec8222c710853c43798cbb38419d2835911a1369390865a5300db7ee17602/"
+}

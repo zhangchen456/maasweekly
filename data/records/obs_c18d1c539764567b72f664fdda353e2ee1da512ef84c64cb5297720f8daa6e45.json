@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_c18d1c539764567b72f664fdda353e2ee1da512ef84c64cb5297720f8daa6e45",
+  "sourceId": "google-gemini-pricing",
+  "date": "2026-10-08",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "pricing",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+  "title": "Google Gemini API · 定价来源更新",
+  "summary": "定价页更新日期从10月6日变为10月7日，4K图像输出token消耗从2520增至3780，导致单张价格从$0.0756涨至$0.113，同时新增了$0.113 per image的条目，删除了旧的$0.0756 per image，表明图像生成定价上调。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-08T00:54:20+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-10-06 UTC.",
+        "after": "Last updated 2026-10-07 UTC."
+      },
+      {
+        "key": "output images at",
+        "before": "Output images at 4K (4096x4096px) consume 2520 tokens and are equivalent to",
+        "after": "Output images at 4K (4096x4096px) consume 3780 tokens and are equivalent to"
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-07 UTC.\"],[],[]]"
+      },
+      {
+        "key": "and $",
+        "before": "and $0.0378 per 4K image*.",
+        "after": "and $0.0567 per 4K image*."
+      },
+      {
+        "key": "and $",
+        "before": "and $0.0756 per 4K image*.",
+        "after": "and $0.113 per 4K image*."
+      }
+    ],
+    "added_lines": [
+      "$0.113 per image."
+    ],
+    "removed_lines": [
+      "$0.0756 per image."
+    ],
+    "added_count": 1,
+    "removed_count": 1,
+    "raw_added_count": 6,
+    "raw_removed_count": 6
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-08.json"
+  },
+  "permalink": "/item/obs_c18d1c539764567b72f664fdda353e2ee1da512ef84c64cb5297720f8daa6e45/"
+}

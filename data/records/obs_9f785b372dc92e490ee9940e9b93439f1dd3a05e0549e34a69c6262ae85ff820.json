@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_9f785b372dc92e490ee9940e9b93439f1dd3a05e0549e34a69c6262ae85ff820",
+  "sourceId": "lmarena-industry",
+  "date": "2026-10-05",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 3,
+  "status": "active",
+  "platform": "LMArena",
+  "sourceType": "industry",
+  "sourceUrl": "https://lmarena.ai/leaderboard",
+  "title": "LMArena · 行业数据来源更新",
+  "summary": "新增多款模型（Claude Opus 5、Sonnet 5、Gemini 3.7 Flash、GPT 6.1 Sol 等），调整 GPT 6 Luna 定价，升级 Claude Fable 5 至 5.1 并调整价格，同时移除 Deepseek V4.1 Flash 和 Qwen 3.8 27B，反映模型阵容和价格动态。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-05T06:35:04+00:00",
+  "revisionReason": "变化内容更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "claude fable",
+        "before": "Claude Fable 5 (High)·",
+        "after": "Claude Fable 5.1 (Max)$5.12/task"
+      },
+      {
+        "key": "claude opus",
+        "before": "Claude Opus 5.5 (High)$1.56/task",
+        "after": "Claude Opus 5.5 (High)$1.58/task"
+      }
+    ],
+    "added_lines": [
+      "359,375,021359,375,021Total Sessions",
+      "GPT 6 Luna (Max)$0.06/task",
+      "GPT 6.1 Sol (Max)$0.57/task",
+      "Gemini 3.7 Flash (High)·",
+      "Private Model·",
+      "Running bash",
+      "Searching the web"
+    ],
+    "removed_lines": [
+      "Claude Fable 5.1 (Max)$4.86/task",
+      "Presenting the result",
+      "Qwen 3.8 27B·",
+      "358,848,044358,848,044Total Sessions",
+      "GPT 6 Luna (Max)$0.07/task",
+      "GPT 6 Luna (Max)·",
+      "GPT 6.1 Sol (Max)$0.58/task"
+    ],
+    "added_count": 7,
+    "removed_count": 7,
+    "raw_added_count": 9,
+    "raw_removed_count": 9
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-05.json"
+  },
+  "permalink": "/item/obs_9f785b372dc92e490ee9940e9b93439f1dd3a05e0549e34a69c6262ae85ff820/"
+}

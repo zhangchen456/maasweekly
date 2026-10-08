@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_5fa577ca28b34e30d7759e45b3a25484bf3d32a666838acb56cb457740008a6a",
+  "sourceId": "google-gemini-changelog",
+  "date": "2026-10-08",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "changelog",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+  "title": "Google Gemini API · 更新日志来源更新",
+  "summary": "更新日期变更，并新增了deprecated（无关停日期）的说明，删除了deprecated and will be shut down on，表明某些模型被标记为弃用但未设定具体关停时间。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-08T00:54:20+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-10-06 UTC.",
+        "after": "Last updated 2026-10-07 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-07 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "deprecated (no shutdown date announced). Migrate to"
+    ],
+    "removed_lines": [
+      "deprecated and will be shut down on"
+    ],
+    "added_count": 1,
+    "removed_count": 1,
+    "raw_added_count": 3,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-08.json"
+  },
+  "permalink": "/item/obs_5fa577ca28b34e30d7759e45b3a25484bf3d32a666838acb56cb457740008a6a/"
+}

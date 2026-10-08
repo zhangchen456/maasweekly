@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_51b56f28fe083d187834e6370d431a922833551983ed821db00132e9fc205301",
+  "sourceId": "anthropic-modellist",
+  "date": "2026-10-06",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "model_list",
+  "sourceUrl": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+  "title": "Anthropic · 模型列表来源更新",
+  "summary": "新增说明：Models API 响应中每个模型新增 line 字段，用于标识模型所属系列，Claude Opus 4.5 和 4.6 均报告为 opus。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-06T01:47:53+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Each model in the response also has a line field, which names the model line it belongs to. Claude Opus 4.5 and Claude Opus 4.6 both report opus. Use line to group models, for example, in a model picker. line is null when a model belongs to no line. Read line instead of inferring it from the model's id. Anthropic might add more lines, so don't treat the set of values as fixed."
+    ],
+    "removed_lines": [],
+    "added_count": 1,
+    "removed_count": 0,
+    "raw_added_count": 1,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-06.json"
+  },
+  "permalink": "/item/obs_51b56f28fe083d187834e6370d431a922833551983ed821db00132e9fc205301/"
+}

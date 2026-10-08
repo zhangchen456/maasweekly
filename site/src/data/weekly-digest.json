@@ -1,5 +1,331 @@
 [
   {
+    "week": "2026-W41",
+    "start": "2026-10-05",
+    "end": "2026-10-11",
+    "days": {
+      "2026-10-08": {
+        "substantive": 20,
+        "jitter": 2,
+        "failed": 2,
+        "releases": 7,
+        "pricings": 4,
+        "sunsets": 1
+      },
+      "2026-10-07": {
+        "substantive": 19,
+        "jitter": 3,
+        "failed": 4,
+        "releases": 6,
+        "pricings": 2,
+        "sunsets": 1
+      },
+      "2026-10-06": {
+        "substantive": 11,
+        "jitter": 2,
+        "failed": 2,
+        "releases": 2,
+        "pricings": 2,
+        "sunsets": 0
+      },
+      "2026-10-05": {
+        "substantive": 3,
+        "jitter": 0,
+        "failed": 0,
+        "releases": 3,
+        "pricings": 2,
+        "sunsets": 1
+      }
+    },
+    "totals": {
+      "substantive": 53,
+      "releases": 18,
+      "pricings": 10,
+      "sunsets": 3
+    },
+    "highlights": [
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-08",
+        "text": "Claude Haiku 5.5 正式发布，1M上下文窗口，输入$0.1/MTok，输出$0.5/MTok，主打高吞吐低延迟场景",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-08",
+        "text": "Claude Sonnet 5.5 缓存读取价格从$0.20降至$0.10/MTok，降幅50%",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-08",
+        "text": "Claude Haiku 4.5 在模型列表中移除，被5.5取代",
+        "type": "sunset"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-08",
+        "text": "chat-latest快照更新，指向ChatGPT Plus/Pro/Business/Enterprise用户可用的最新模型",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-08",
+        "text": "新增网关部署和API/提供商凭据使用指南，移除通过网关部署Codex的旧文档",
+        "type": "other"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-08",
+        "text": "4K图像输出token消耗从2520增至3780，单张价格从$0.0756涨至$0.113",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-08",
+        "text": "定价页更新日期从10月6日变更为10月7日，部分模型标记为deprecated但未公布关停日期",
+        "type": "other"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-08",
+        "text": "API credits从$10/月提升至$25.5/月，$30/月档被移除",
+        "type": "pricing"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-08",
+        "text": "新增电子表格和演示文稿生成功能，图像生成能力从基础升级为更好",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-08",
+        "text": "Command R和Command R+的08-2024版本重新出现在模型列表中",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-08",
+        "text": "博客内容从英语切换为法语，涉及产品发布、研究和技术主题",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-08",
+        "text": "Claude Haiku 5.5在High/Low/Max/Medium/Xhigh五档配置下均新增评测数据",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-08",
+        "text": "新增GPT-6.1 Sol (High)评测，移除Claude Sonnet 5.5 (Low, Default Fallback)",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-08",
+        "text": "Mistral Large 4 (Le Chonk) 上线并发布上手体验文章",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-08",
+        "text": "GPT-6 Luna (Max) 和 GPT-6.1 Sol (Max) 新增至榜单，任务价格分别为$0.07和$0.57",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-08",
+        "text": "Claude Opus 5.5 (High)任务价格从$1.58涨至$1.67，Deepseek V4.1 Flash (Max)从$0.12涨至$0.13",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-07",
+        "text": "OpenAI 发布 Decisions API（beta），基于 gpt-6-luna，宣称比 Responses API 快10倍，支持文本和图像输入输出类型化答案。",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-07",
+        "text": "OpenAI 将 API 使用层级从五层简化为三层：Build、Launch、Grow，组织根据累计购买金额自动升级。",
+        "type": "other"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-07",
+        "text": "Google Gemini API 发布 Nano Banana 2.1（gemini-nano-banana-2.1）图像生成/编辑模型，GA，支持1K/2K/4K分辨率，并更新定价。",
+        "type": "release"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-07",
+        "text": "Google Gemini API 弃用 gemini-3.1-flash-image，并计划关闭，用户需迁移至 Nano Banana 2.1。",
+        "type": "sunset"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-07",
+        "text": "Nano Banana 2.1 定价：输入 $1.5/M tokens，输出 $7.5/M tokens，图像输出按 token 计费（1K图约$0.0168，2K约$0.0336，4K约$0.0378）。",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-07",
+        "text": "Google Vertex AI 模型列表新增 Gemini Nano Banana 2.1，移除 3.1 Flash Image。",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-07",
+        "text": "Vertex AI 定价页新增 Nano Banana 2.1 定价（如 $0.90/1K图像等），并调整部分图像输出价格（如 $0.50 → $0.45）。",
+        "type": "pricing"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-07",
+        "text": "Mistral AI 发布 Mistral Large 4，并发布相关博客文章，文章总数从88增至89。",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-07",
+        "text": "Anthropic 在 Models API 中新增 capabilities.thinking.types.disabled 字段，报告模型是否接受 thinking: {type: \"disabled\"}。",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-07",
+        "text": "Artificial Analysis 新增 Mistral Large 4 的语言模型评测，并发布相关文章。",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-07",
+        "text": "LMArena 榜单新增 GPT 6 Luna (Max) 等模型，并更新部分模型价格（如 GPT 6 Luna 从 $0.06/task 降至 $0.05/task）。",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-06",
+        "text": "Cohere 发布 North 2，定位企业级 Agent 平台，强调安全、智能、成本治理与全栈控制",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-06",
+        "text": "Cohere 与 PwC 合作，加速企业安全 AI 采用，聚焦从试点到生产",
+        "type": "other"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-06",
+        "text": "OpenAI 在 API Organization 设置中新增 HIPAA 合规支持流程，符合条件的组织可接受标准商业协议",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-06",
+        "text": "Anthropic 在 Models API 中新增 line 字段，GET /v1/models 返回模型系列信息，Claude Opus 4.5/4.6 均报告为 opus",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-06",
+        "text": "LMArena 榜单更名为『Arena Leaderboard: Official AI Model Rankings & Benchmarks』",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-06",
+        "text": "LMArena 新增 GPT 5.5 (xHigh)、GPT 5.6 Luna (xHigh)、GPT 6 Luna (Max) 等模型条目",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-06",
+        "text": "LMArena 中 Claude Fable 5.1 (Max) 价格从 $5.12/task 上调至 $5.21/task，Claude Opus 5.5 (High) 从 $1.58/task 微调至 $1.57/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-10-06",
+        "text": "火山方舟删除多项定价条目，包括 0.0015 元/GB/小时、0.45 元/CU/小时、0.0005 元/千token 等，可能为价格体系更新",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-05",
+        "text": "新增 Claude Opus 5 (High)、Claude Sonnet 5 (High) 和 Gemini 3.7 Flash (High) 等模型",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-05",
+        "text": "新增 GPT 6 Luna (Max) 定价 $0.06/task（原 $0.07/task）和 GPT 6.1 Sol (Max) 定价 $0.57/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-05",
+        "text": "Claude Fable 5 升级为 Claude Fable 5.1 (Max)，定价 $5.01/task（原 $4.86/task）",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-05",
+        "text": "移除 Deepseek V4.1 Flash (Max) 和 Qwen 3.8 27B 模型",
+        "type": "sunset"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-05",
+        "text": "新增 Coding Agent Index 评测基准",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-05",
+        "text": "厂商列表更新：新增 SpaceX、AI Meta、Z AI、Kimi、Alibaba、DeepSeek，移除 Moonshot AI 和 Alibaba Cloud",
+        "type": "other"
+      },
+      {
+        "platform": "HuggingFace",
+        "date": "2026-10-05",
+        "text": "新增 google/gemma-4-26B-A4B 作为 base_model 及 finetune 基座",
+        "type": "release"
+      },
+      {
+        "platform": "HuggingFace",
+        "date": "2026-10-05",
+        "text": "更新 arxiv 引用：新增 arxiv:2607.02770，移除 arxiv:2409.12191 和 arxiv:2502.13923",
+        "type": "other"
+      }
+    ],
+    "story": {
+      "theme": "新模型与评测基准密集发布周",
+      "sections": [
+        {
+          "title": "密集发布：旗舰与轻量模型齐上阵",
+          "body": "10月5日，LMArena 新增 Claude Opus 5 (High)、Claude Sonnet 5 (High) 和 Gemini 3.7 Flash (High)，同日 HuggingFace 上线 google/gemma-4-26B-A4B 作为微调基座。三平台同日上新，显示头部厂商加速迭代，且覆盖从旗舰到轻量的全谱系。"
+        },
+        {
+          "title": "评测基准扩容：Coding Agent 成焦点",
+          "body": "Artificial Analysis 新增 Coding Agent Index 评测基准，并同步更新厂商列表，新增 SpaceX、AI Meta、Z AI、Kimi、Alibaba、DeepSeek，移除 Moonshot AI 和 Alibaba Cloud。评测维度向智能体编码倾斜，厂商洗牌反映行业整合加速。"
+        },
+        {
+          "title": "价格锚点：GPT-6 降价，Claude 微涨",
+          "body": "LMArena 显示 GPT 6 Luna (Max) 从 $0.07/task 降至 $0.06/task，而 Claude Fable 5.1 (Max) 从 $4.86/task 涨至 $5.01/task。同一平台内降价与涨价并存，说明厂商正按模型定位差异化定价，而非统一调价。"
+        },
+        {
+          "title": "下线清理：旧模型逐步退场",
+          "body": "10月5日，LMArena 移除 Deepseek V4.1 Flash (Max) 和 Qwen 3.8 27B。同日 HuggingFace 更新 arxiv 引用，移除两篇旧论文。清理动作集中在同一日，或为配合新模型上架，保持榜单与基准的时效性。"
+        }
+      ]
+    }
+  },
+  {
     "week": "2026-W40",
     "start": "2026-09-28",
     "end": "2026-10-04",
@@ -123,13 +449,13 @@
         "type": "pricing"
       },
       {
-        "platform": "官方定价页",
+        "platform": "阿里百炼",
         "date": "2026-10-04",
         "text": "qwen3.8-flash input 新定价 1.094000 CNY/百万tokens，output 新定价 3.427000 CNY/百万tokens",
         "type": "pricing"
       },
       {
-        "platform": "官方定价页",
+        "platform": "阿里百炼",
         "date": "2026-10-04",
         "text": "qwen-image-2.1-pro output 新定价 0.250000 CNY/百万tokens",
         "type": "pricing"

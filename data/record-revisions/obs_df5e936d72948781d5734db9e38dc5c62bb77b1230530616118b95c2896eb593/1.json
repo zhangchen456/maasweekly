@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_df5e936d72948781d5734db9e38dc5c62bb77b1230530616118b95c2896eb593",
+  "sourceId": "anthropic-changelog",
+  "date": "2026-10-06",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.anthropic.com/en/release-notes/api",
+  "title": "Anthropic · 更新日志来源更新",
+  "summary": "We've added a line field to the Models API. GET /v1/models and GET /v1/models/{model_id} now return the model line each model belongs to. Claude Opus 4.5 and Claude Opus 4.6 both report opus, for example. Use line to group models without parsing their IDs. line is null for a model that belongs to no line. See Using the Models API.",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "We've added a line field to the Models API. GET /v1/models and GET /v1/models/{model_id} now return the model line each model belongs to. Claude Opus 4.5 and Claude Opus 4.6 both report opus, for example. Use line to group models without parsing their IDs. line is null for a model that belongs to no line. See Using the Models API."
+    ],
+    "removed_lines": [],
+    "added_count": 1,
+    "removed_count": 0,
+    "raw_added_count": 2,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-06.json"
+  },
+  "permalink": "/item/obs_df5e936d72948781d5734db9e38dc5c62bb77b1230530616118b95c2896eb593/"
+}
