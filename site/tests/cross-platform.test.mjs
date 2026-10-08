@@ -11,8 +11,21 @@ assert.equal(groups.length,3);
 for(const g of groups){
  assert.equal(new Set(g.rows.map(r=>r.availability.platformId)).size,2);
  for(const row of g.rows){
-  assert(row.input && row.output,`${g.model.modelId}/${row.availability.platformId}: current input and output required`);
+  // The product contract permits unavailable current quotes; never substitute stale evidence.
+  if (!row.input) {
+   assert.equal(row.output,undefined);
+   assert.equal(row.cache,undefined);
+   const prices=release.prices.filter(p=>p.availabilityId===row.availability.availabilityId);
+   const latest=Math.max(...prices.map(p=>Date.parse(p.observedAt)));
+   assert(!prices.some(p=>Date.parse(p.observedAt)===latest && p.quality.state==='fresh'
+     && p.evidenceStatus==='complete' && p.billingMode==='realtime' && p.serviceTier==='standard' && p.component==='input'),
+     `${g.model.modelId}/${row.availability.platformId}: an eligible current quote must not be hidden`);
+   continue;
+  }
+  assert.equal(row.input.quality.state,'fresh');
+  assert.equal(row.input.evidenceStatus,'complete');
   assert.equal(row.input.platformId,row.availability.platformId);
+  if(!row.output) continue;
   assert.equal(row.output.platformId,row.availability.platformId);
   assert.equal(row.output.observedAt,row.input.observedAt);
   assert.deepEqual(row.output.contextBand,row.input.contextBand);
@@ -24,7 +37,8 @@ assert.equal(selectHomeQuote(gemini,'google').input.sourceId,'google-gemini-pric
 const cloud=gemini.find(p=>p.platformId==='google-vertex-ai' && p.component==='input');
 assert(cloud);
 assert.equal(selectHomeQuote([...gemini,{...cloud,observedAt:'2030-01-01T00:00:00Z'}],'google').input.sourceId,'google-gemini-pricing');
-const old=groups[0].rows[0].input;
+const old=groups.flatMap(g=>g.rows).find(r=>r.input)?.input;
+assert(old,'at least one valid current quote is required for pairing fixtures');
 const a=release.modelIdentities.availabilities[0];
 const base={...old,modelId:a.modelId,upstreamModelId:a.upstreamModelId,availabilityId:a.availabilityId,platformId:a.platformId,component:'input',observedAt:'2026-10-01T00:00:00Z'};
 const bad={...base,id:'new-partial',observedAt:'2026-10-02T00:00:00Z',evidenceStatus:'partial'};
@@ -35,4 +49,6 @@ const html=readFileSync('dist/compare/index.html','utf8');
 assert(html.includes('同一模型，不同平台怎么收费？'));
 for(const id of ['google-gemini-api','google-vertex-ai','anthropic-api'])assert(html.includes(`data-platform-id="${id}"`));
 assert(!html.includes('undefined'));
+if(groups.some(g=>g.rows.some(r=>!r.input))) assert(html.includes('等待完整、最新的价格证据'));
+
 console.log(JSON.stringify({models:groups.length,rows:groups.reduce((n,g)=>n+g.rows.length,0),exactPlatforms:true,scenarioParity:true,defaultSourceStable:true,missingQuoteExclusion:true,rendered:true}));
