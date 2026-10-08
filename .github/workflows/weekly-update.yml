@@ -28,8 +28,6 @@ permissions:
 jobs:
   weekly:
     runs-on: ubuntu-latest
-    env:
-      MAAS_MONITOR_OUTPUT: ${{ runner.temp }}/monitor-stages
     concurrency:
       group: maas-data-write-main
       cancel-in-progress: false
@@ -38,6 +36,8 @@ jobs:
       sha: ${{ steps.datacommit.outputs.sha }}
       mode: ${{ steps.mode.outputs.mode }}
     steps:
+      - name: Set monitoring output directory
+        run: echo "MAAS_MONITOR_OUTPUT=$RUNNER_TEMP/monitor-stages" >> "$GITHUB_ENV"
       - name: Checkout
         uses: actions/checkout@v4
         with:
