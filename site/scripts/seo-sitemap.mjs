@@ -21,7 +21,7 @@ export default function seoSitemap(origin) {
             const route = '/' + relative.split(path.sep).filter(Boolean).join('/') + (relative ? '/' : '');
             // Evidence and tiny raw observation pages remain reachable through their parent records.
             const baseRoute = route.replace(/^\/en(?=\/)/, '');
-            const eligible = /^\/(?:$|(?:models|pricing|leaderboards|changes|weekly|daily|agent|method|about)\/)/.test(baseRoute)
+            const eligible = /^\/(?:$|(?:models|pricing|compare|guides|leaderboards|changes|weekly|daily|agent|method|about)\/)/.test(baseRoute)
               || baseRoute.startsWith('/model/') || baseRoute.startsWith('/item/');
             if (!eligible) continue;
             const html = await readFile(path.join(root, file), 'utf8');

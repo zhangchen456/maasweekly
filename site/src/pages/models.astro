@@ -6,8 +6,8 @@ const release = modelRelease();
 const pricedIds = new Set(release.prices!.map(p => p.modelId).filter(Boolean));
 const models = release.modelIdentities!.models.filter(m => pricedIds.has(m.modelId));
 ---
-<Layout title="大模型 API 价格查询与价格变化 — MaaS Daily"
-  description="按模型查询大模型 API 价格、输入输出与缓存计费条件、原币种报价和近期变化，附观察时间、证据状态与官方来源。">
+<Layout title={Astro.url.pathname.startsWith('/en/') ? 'LLM API pricing: DeepSeek, GPT, Claude and Gemini — MaaS Daily' : '大模型 API 价格对比：DeepSeek、GPT、Claude、Gemini — MaaS Daily'}
+  description={Astro.url.pathname.startsWith('/en/') ? `Compare observed API quotes for DeepSeek, GPT, Claude, Gemini and Qwen. Inspect input, output and cache prices, billing conditions and official evidence. Data through ${release.dataThrough}.` : `查询 DeepSeek、GPT、Claude、Gemini、通义千问等模型 API 价格，核对输入、输出、缓存与平台计费条件，附原币种报价、近期变化和官方来源。数据截至 ${release.dataThrough}。`}>
   <header class="catalog-head">
     <h1>大模型 API 价格查询</h1>
       <p><a href="/compare/">同一模型，比较不同调用平台的报价 →</a></p>
@@ -15,6 +15,7 @@ const models = release.modelIdentities!.models.filter(m => pricedIds.has(m.model
     <p>这是当前公开数据中有报价的模型目录，不能代表所有模型或全部平台覆盖。</p>
   </header>
   <ModelPriceLinks />
+  <p><a href="/guides/">{Astro.url.pathname.startsWith('/en/') ? 'Token costs, caching and platform comparison guides →' : '理解 Token 费用、缓存计费与跨平台比较 →'}</a></p>
   <section class="catalog-section">
     <h2>有可观察报价的模型（{models.length}）</h2>
     <ul>{models.map(m => <li><a href={`/model/${m.modelId}/`}>{m.modelName} API 价格</a>

@@ -1,0 +1,34 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { priceGuides } from '../../lib/price-guides';
+import { priceGuidesEnglish } from '../../lib/price-guides-en';
+import { canonicalUrl } from '../../lib/seo';
+export function getStaticPaths() {
+  return priceGuides.map(guide => ({ params: { slug: guide.slug }, props: { guide } }));
+}
+const en = Astro.url.pathname.startsWith('/en/');
+const guide = en ? priceGuidesEnglish.find(item => item.slug === Astro.props.guide.slug)! : Astro.props.guide;
+const t = (zh, english) => en ? english : zh;
+const canonical = canonicalUrl(Astro.url.pathname);
+const organization = { '@type': 'Organization', name: 'MaaS Daily', url: canonicalUrl('/about/') };
+const schema = { '@context': 'https://schema.org', '@graph': [
+  { '@type': 'Article', headline: guide.title, description: guide.description, inLanguage: en ? 'en' : 'zh-CN', author: organization, publisher: organization, mainEntityOfPage: canonical, datePublished: '2026-10-08', dateModified: '2026-10-08' },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: t('首页', 'Home'), item: canonicalUrl(en ? '/en/' : '/') },
+    { '@type': 'ListItem', position: 2, name: t('成本指南', 'Cost guides'), item: canonicalUrl(en ? '/en/guides/' : '/guides/') },
+    { '@type': 'ListItem', position: 3, name: guide.title, item: canonical },
+  ] },
+] };
+---
+<Layout title={`${guide.title} — MaaS Daily`} description={guide.description}>
+  <article class="price-guide">
+    <nav aria-label={t('面包屑', 'Breadcrumb')}><a href="/">{t('首页', 'Home')}</a> / <a href="/guides/">{t('成本指南', 'Cost guides')}</a> / {t('本文', 'Article')}</nav>
+    <header><h1>{guide.title}</h1><p class="lead">{guide.lead}</p><p class="byline"><a href="/about/">MaaS Daily</a> · {t('发布与修订：', 'Published and revised: ')}<time datetime="2026-10-08">2026-10-08</time></p></header>
+    <nav class="contents" aria-label={t('本文目录', 'Contents')}><strong>{t('本文内容', 'In this guide')}</strong><ol>{guide.sections.map((section, i) => <li><a href={`#section-${i + 1}`}>{section.title}</a></li>)}</ol></nav>
+    {guide.sections.map((section, i) => <section id={`section-${i + 1}`}><h2>{section.title}</h2>{section.paragraphs.map(paragraph => <p>{paragraph}</p>)}</section>)}
+    <section><h2>{t('查报价，继续计算', 'Find quotes and calculate costs')}</h2><ul>{guide.links.map(link => <li><a href={link.href}>{link.label} →</a></li>)}</ul></section>
+    <aside><h2>{t('依据与适用范围', 'Sources and scope')}</h2><p>{t('本文解释通用比较方法，示例均为教学假设。具体计费以对应 API 的官方说明为准；本站模型详情保留实际观察报价、完整条件和来源链接。', 'This guide explains general methods; examples are hypothetical. Check the specific API documentation for billing rules. Our model pages retain observed quotes, complete conditions and source links.')}</p><ul>{guide.sources.map(source => <li><a href={source.href}>{source.label}</a></li>)}</ul></aside>
+  </article>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schema).replaceAll('<', '\\u003c')} />
+</Layout>
+<style>.price-guide{max-width:820px;padding:36px 0 48px}.price-guide h1{font-size:clamp(28px,5vw,40px);line-height:1.35;overflow-wrap:anywhere}.price-guide h2{font-size:23px;line-height:1.5}.price-guide p,.price-guide li{font-size:16px;line-height:1.95;overflow-wrap:anywhere}.price-guide p{color:var(--muted)}.price-guide a{color:var(--cyan)}.price-guide .lead{font-size:19px;color:var(--paper)}.price-guide .byline,.price-guide nav{font-size:13px}.contents{padding:20px 24px;border:1px solid var(--line);margin:28px 0}.contents ol{padding-left:20px;margin-bottom:0}.price-guide section{padding:12px 0;scroll-margin-top:24px}.price-guide aside{border-top:1px solid var(--line);margin-top:24px;padding-top:20px}</style>
