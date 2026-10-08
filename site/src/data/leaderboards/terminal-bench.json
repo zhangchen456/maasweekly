@@ -1,10 +1,10 @@
 {
   "source": "Terminal-Bench 2.1",
-  "source_url": "https://www.tbench.ai/leaderboard/terminal-bench/2.1",
-  "snapshot_date": "2026-09-28",
+  "source_url": "https://hub.harborframework.com/datasets/terminal-bench/terminal-bench-2-1/latest?tab=leaderboard&leaderboard=main",
+  "snapshot_date": "2026-10-08",
   "manual": true,
   "update_cycle": "weekly",
-  "note": "终端环境 agentic 任务完成率（官方榜，Laude Institute / Stanford / Harbor 维护）。同行多 entry 为同一模型不同推理档位，本表取各模型最高分；agent 框架（Codex / Claude Code 等）与模型组合参赛。",
+  "note": "2026-10-08经官方Benchmarks页进入Harbor的Terminal-Bench 2.1 rev.6 latest，核对主榜前10条模型/agent/effort设置；保留2.1基准，不混入首页4.0。日期为此次观察时间，非评测发布时间。",
   "top": [
     {
       "rank": 1,
@@ -15,66 +15,66 @@
     },
     {
       "rank": 2,
+      "model": "GPT-6 Astra (medium)",
+      "vendor": "OpenAI",
+      "score": 87.0,
+      "note": "Codex"
+    },
+    {
+      "rank": 3,
+      "model": "GPT-6 Astra (low)",
+      "vendor": "OpenAI",
+      "score": 86.7,
+      "note": "Codex"
+    },
+    {
+      "rank": 3,
+      "model": "GPT-6 Astra (max)",
+      "vendor": "OpenAI",
+      "score": 86.7,
+      "note": "Codex"
+    },
+    {
+      "rank": 5,
+      "model": "GPT-6 Astra (xhigh)",
+      "vendor": "OpenAI",
+      "score": 85.8,
+      "note": "Codex"
+    },
+    {
+      "rank": 6,
       "model": "Fable 5 (xhigh)",
       "vendor": "Anthropic",
       "score": 83.8,
       "note": "Claude Code"
     },
     {
-      "rank": 3,
+      "rank": 7,
       "model": "GPT-5.5 (xhigh)",
       "vendor": "OpenAI",
       "score": 83.2,
       "note": "Codex"
     },
     {
-      "rank": 4,
+      "rank": 8,
       "model": "Fable 5 (high)",
       "vendor": "Anthropic",
       "score": 80.5,
       "note": "Terminus 2"
     },
     {
-      "rank": 5,
+      "rank": 9,
       "model": "Grok 4.5 (high)",
       "vendor": "xAI",
       "score": 79.3,
       "note": "Cursor CLI"
     },
     {
-      "rank": 6,
+      "rank": 10,
       "model": "Opus 4.8 (high)",
       "vendor": "Anthropic",
       "score": 78.9,
       "note": "Claude Code"
-    },
-    {
-      "rank": 7,
-      "model": "GPT-5.6 Terra (max)",
-      "vendor": "OpenAI",
-      "score": 78.4,
-      "note": "Codex"
-    },
-    {
-      "rank": 8,
-      "model": "GPT-5.5 (xhigh)",
-      "vendor": "OpenAI",
-      "score": 78.0,
-      "note": "Terminus 2"
-    },
-    {
-      "rank": 9,
-      "model": "Muse Spark 1.1 (xhigh)",
-      "vendor": "Meta",
-      "score": 76.2,
-      "note": "mini-SWE-agent"
-    },
-    {
-      "rank": 10,
-      "model": "GPT-5.6 Luna (max)",
-      "vendor": "OpenAI",
-      "score": 75.7,
-      "note": "Codex"
     }
   ]
 }
