@@ -1,1 +1,26 @@
-{"flags": {"MAAS_PAYMENT_MODE": "disabled", "MAAS_EDITORIAL_ALLOW_PAID": "false", "MAAS_DIAGNOSTIC_ALLOW_PAID": "false"}, "models": {"editorial": "mock", "diagnostic": "mock"}, "units": {"maas-account-digest.timer": "inactive", "maas-account-digest-retry.timer": "inactive", "maas-editorial-worker.service": "inactive", "maas-diagnostic-worker.service": "inactive", "maas-account-health.timer": "active"}}
+{
+  "flags": {
+    "MAAS_PAYMENT_MODE": "disabled",
+    "MAAS_EDITORIAL_ALLOW_PAID": "false",
+    "MAAS_DIAGNOSTIC_ALLOW_PAID": "false"
+  },
+  "models": {
+    "editorial": "mock",
+    "diagnostic": "mock"
+  },
+  "units": {
+    "maas-account-digest.timer": "active",
+    "maas-account-digest-retry.timer": "active",
+    "maas-editorial-worker.service": "active",
+    "maas-diagnostic-worker.service": "active",
+    "maas-account-health.timer": "active"
+  },
+  "syntheticFixtureRemoved": true,
+  "releaseId": "rl_f6ad9f25d7_22c3472abbdf",
+  "commit": "f6ad9f25d7d191f0458ec279bd780b3e55f624a2",
+  "workersRestartedAfterFinalRelease": true,
+  "unitSha256": {
+    "editorial": "dc61331c3a36b88858d4d4046d43df6aec42c9d7765188b2a59f8e5ce41ed489",
+    "diagnostic": "2584cf38a357c993faf6321d0c56969742b5092712c4f21468ffec5d4246fc32"
+  }
+}

@@ -42,6 +42,7 @@ with sync_playwright() as p:
   time.sleep(1)
  check('production editorial worker completed deterministic stage',done['state']=='succeeded');detail=admin.request.get(base+'/api/admin/weekly/'+iid).json();check('no synthetic publication',detail['publications']==[])
  (out/'synthetic-task-ids.json').write_text(json.dumps(task_ids))
+ (out/'http-online.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
  page=admin.new_page();page.on('pageerror',lambda e:report['errors'].append(str(e)));page.route('**/*',lambda route:route.continue_() if route.request.url.startswith(base+'/') else route.abort())
  for route in ['','weekly/','sources/','tasks/','delivery/','health/','problems/','analytics/']:
   page.goto(base+'/admin/'+route);page.wait_for_function("document.querySelector('#admin-status').textContent.includes('后台权限已确认')");check('browser '+route,page.locator('#admin-private').is_visible());time.sleep(.5)

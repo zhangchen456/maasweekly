@@ -1,8 +1,10 @@
-# T01–T07生产部署验收（已部署，写入验收待批准）
+# T01–T07生产部署验收（写入与运行验收通过）
 
-当前结论（2026-10-08 14:48之后复核）：代码6e9fac6db9885a0d51ee84c246aea7f8533346b8已部署，release rl_6e9fac6db9_22c3472abbdf，数据截至2026-10-08；CI完整门禁70/70与四入口成功。独立公开HTTP四入口8检查、匿名管理接口12检查、生产迁移/数据库健康/原业务主键保留通过，真实浏览器后台匿名登录入口正常。指定zhangchen3508@gmail.com已由CLI授予管理员并审计。
+当前结论（2026-10-08批准后最终复核）：代码f6ad9f25d7d191f0458ec279bd780b3e55f624a2已部署，release rl_f6ad9f25d7_22c3472abbdf，数据截至2026-10-08；CI完整门禁70/70与四入口成功。独立公开HTTP四入口8检查、匿名管理接口12检查、生产迁移/数据库健康/原业务主键保留通过，真实浏览器后台匿名登录入口正常。指定zhangchen3508@gmail.com已由CLI授予管理员并审计。
 
-**尚未完成生产写入验收。两个mock worker和原邮件digest/retry timer均inactive；health timer保持active。原邮件自动投递目前仍暂停。** 后续具体服务启停/维护脚本/inbox/合成写入及清理被自动批准审查拒绝，需要明确批准；动作和脚本见[pending-approval/README.md](pending-approval/README.md)。T08 payment disabled，两类付费模型开关false。
+用户随后明确同意四项操作，已安装维护脚本并导入77条公开归档任务、71信源；实际SQLite backup和隔离恢复通过。原digest/retry及health timer保持active。两个mock worker已启用并持续运行，付费模型开关false，T08 payment disabled。合成账号生产HTTP写入与worker任务验收通过；浏览器首次等待超时保留为失败，独立重验8页权限可见、无页面错误、390px无横向溢出。撤权立即403，两个临时账号及精确关联测试数据均清理，审计保留。真实管理员保留。
+
+启动验收发现current符号链接导致worker入口判断跳过，修复为node --preserve-symlinks-main，生产unit已安装验证，提交f6ad9f25d。后续发布流水线37742831591成功，最终current=rl_f6ad9f25d7_22c3472abbdf；站点/API业务代码与6e9fac6db9相同。两个worker已重启加载最终release并确认active。临时凭据已删除。CLI preservation首次受备份WAL目录权限限制未算通过，改用immutable备份与只读线上库独立核对通过，六张原业务表主键缺失均为0，合成账号残留0。
 
 已完成的生产核查来自实际HTTP、服务器只读数据库比较及实际CLI授权，不仅是代码检查。原本本机verify-release.sh因maasdeploy SSH凭据不可用中止，保留four-surfaces-online.txt，未算通过；改按同一HTTP/RPC合同独立核对四服务面并结合root只读status绑定版本，结果见four-surfaces-independent.json。CI原封装四入口也成功。
 
@@ -42,3 +44,10 @@ leaderboards门禁AA周榜09-28快照超过10天；进一步核对同样周周�
 最新部署候选6e9fac6db9885a0d51ee84c246aea7f8533346b8，流水线 https://github.com/zhangchen456/maasweekly/actions/runs/37718488790 。两个失败专项已在重建52443页站点后通过。待完整CI门禁/激活与生产独立复核后才能宣称上线通过。
 
 恢复入口：/private/tmp/maas-admin-online-20261008.mjs与maas-admin-online-browser-20261008.py为待执行的生产合成验收脚本（只模拟用户、mock任务，不出版正式内容/发邮件/支付），/private/tmp/maas-monitor-production-20261008为77条公开归档任务投影。执行前核对current=最新RID和完整门禁成功；不得把旧CI失败、取消构建或本地专项算作生产通过。原sender timer已暂停，health timer保留运行；worker unit installed但未启动。后续结束时需要恢复原sender timer或明确留给协调处理，不能遗漏维护状态。管理员指定邮箱已确认，不需重问。
+
+
+## 批准后验收证据
+
+http-write-online.json记录浏览器前已执行通过的HTTP与任务断言；browser-page-recheck.json及两张截图为独立浏览器重验；revocation-online.json为撤权403。worker-first-attempt.json保留worker首次失败。所有测试任务均为合成、无出版、无验收邮件、无付费模型、无支付。外部Umami、真实邮件送达和真实模型质量仍未验证。
+
+最终发布证据：worker-fix-ci.json，current和worker重启后运行状态见runtime-state.json。实际无告警健康检查见health-final.json。
