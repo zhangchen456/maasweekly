@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_a5e8b40501415069ec2461b3318ae42fb9dd8ba333c85641e6a1170e08ac58be",
+  "sourceId": "aa-industry",
+  "date": "2026-10-08",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "新增了Claude Haiku 5.5在五个推理配置下的评测数据，以及GPT-6.1 Sol (High)的评测，删除了Claude Sonnet 5.5 (Low, Default Fallback)，表明模型评测集更新。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-08T00:54:20+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "AnthropicGoogleOpenAIAnthropic + CognitionSpaceXAIMetaZ AIKimiAlibabaDeepSeek",
+      "Claude Haiku 5.5 (High)",
+      "Claude Haiku 5.5 (Low)",
+      "Claude Haiku 5.5 (Max)",
+      "Claude Haiku 5.5 (Medium)",
+      "Claude Haiku 5.5 (Xhigh)",
+      "Compare models side-by-side on intelligence, pricing, speed, latency, benchmarks, and more.",
+      "GPT-6.1 Sol (High)See more",
+      "Model Comparison",
+      "New language model evaluation · 7 Oct"
+    ],
+    "removed_lines": [
+      "AnthropicGoogleOpenAIAnthropic + CognitionOpenAI + CognitionSpaceXAIMetaZ AIKimiAlibabaDeepSeek",
+      "Claude Sonnet 5.5 (Low, Default Fallback)"
+    ],
+    "added_count": 10,
+    "removed_count": 2,
+    "raw_added_count": 18,
+    "raw_removed_count": 20
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-08.json"
+  },
+  "permalink": "/item/obs_a5e8b40501415069ec2461b3318ae42fb9dd8ba333c85641e6a1170e08ac58be/"
+}

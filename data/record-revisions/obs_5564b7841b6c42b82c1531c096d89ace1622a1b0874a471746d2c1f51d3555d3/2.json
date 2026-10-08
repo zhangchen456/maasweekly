@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_5564b7841b6c42b82c1531c096d89ace1622a1b0874a471746d2c1f51d3555d3",
+  "sourceId": "openai-modellist",
+  "date": "2026-10-08",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "model_list",
+  "sourceUrl": "https://platform.openai.com/docs/models",
+  "title": "OpenAI · 模型列表来源更新",
+  "summary": "新增了Meet the ambassadors、Roll out a gateway、Use API/provider credentials三条内容，同时删除了Deploy Codex through a gateway，表明OpenAI在文档层面调整了Codex部署相关指引，新增了网关和凭据使用说明。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-08T00:54:20+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Meet the ambassadors",
+      "Roll out a gateway",
+      "Use API/provider credentials"
+    ],
+    "removed_lines": [
+      "Deploy Codex through a gateway"
+    ],
+    "added_count": 3,
+    "removed_count": 1,
+    "raw_added_count": 3,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-08.json"
+  },
+  "permalink": "/item/obs_5564b7841b6c42b82c1531c096d89ace1622a1b0874a471746d2c1f51d3555d3/"
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "version_id": "pfv_895616bba371ca2051f5e3a68bf5888b832a201991a9c512125e09374cf6665b",
+  "fact_key": "ae4d13662516da9f35f180ab3745c4b8cc0b0a5902319bad2712142245423377",
+  "provider_id": "anthropic",
+  "model_key": "claude-haiku-5.5-for-high-volume,-latency-sensitive-tasks-such-as-classification,-extraction,-and-routing",
+  "component": "cache_write",
+  "billing_mode": "realtime",
+  "amount": "0.625",
+  "amountRaw": "0.625000",
+  "currency": "USD",
+  "unit_quantity": 1000000,
+  "unit_name": "token",
+  "region": "global",
+  "service_tier": "standard",
+  "context_band": null,
+  "time_condition": {
+    "period": "cache_write_5m",
+    "tz": "UTC",
+    "schedule": "5m"
+  },
+  "effective_at": null,
+  "observed_at": 1791420680.9741344,
+  "observedAt": "2026-10-08T00:51:20+00:00",
+  "source_key": "anthropic:pricing",
+  "evidence_id": "ev_08e4cb3d3bd637cca1f58a81ceda22f71ba4a21c06704bc16afc1d9e1d3f52fe",
+  "evidence_status": "complete",
+  "field_state": "confirmed",
+  "stale_reason": null
+}

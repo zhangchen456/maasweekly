@@ -1,6 +1,1028 @@
 {
-  "updated_at": "2026-10-07T00:34:48+00:00",
+  "updated_at": "2026-10-08T00:54:21+00:00",
   "days": [
+    {
+      "date": "2026-10-08",
+      "stats": {
+        "total": 68,
+        "success": 66,
+        "failed": 2,
+        "changed": 22,
+        "unchanged": 44
+      },
+      "changed": [
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "Meet the ambassadors",
+            "Roll out a gateway",
+            "Use API/provider credentials"
+          ],
+          "removed_lines": [
+            "Deploy Codex through a gateway"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Use API/provider credentials",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_5564b7841b6c42b82c1531c096d89ace1622a1b0874a471746d2c1f51d3555d3",
+          "permalink": "/item/obs_5564b7841b6c42b82c1531c096d89ace1622a1b0874a471746d2c1f51d3555d3/",
+          "llm_summary": "新增了Meet the ambassadors、Roll out a gateway、Use API/provider credentials三条内容，同时删除了Deploy Codex through a gateway，表明OpenAI在文档层面调整了Codex部署相关指引，新增了网关和凭据使用说明。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 1,
+          "added_lines": [
+            "Meet the ambassadors",
+            "Roll out a gateway",
+            "Use API/provider credentials"
+          ],
+          "removed_lines": [
+            "Deploy Codex through a gateway"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Use API/provider credentials",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_34a590df6701b11660d7c1132513893ad087fa9a4ec311e2082976098bb5164b",
+          "permalink": "/item/obs_34a590df6701b11660d7c1132513893ad087fa9a4ec311e2082976098bb5164b/",
+          "llm_summary": "与model_list相同的变化模式，新增三条内容并删除一条，但未涉及具体价格数字变动，可能只是文档结构调整。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 1,
+          "added_lines": [
+            "Meet the ambassadors",
+            "Roll out a gateway",
+            "Updated the chat-latest snapshot, which points to the latest model available in ChatGPT for Plus, Pro, Business and Enterprise users. We recommend leveraging the GPT-6 model family for production API usage, but feel free to use this model to test the latest improvements for chat use cases. The underlying model snapshot will be regularly updated. Read more here.",
+            "Use API/provider credentials"
+          ],
+          "removed_lines": [
+            "Deploy Codex through a gateway"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Updated the chat-latest snapshot, which points to the latest model available in ChatGPT for Plus, Pro, Business and Enterprise users. We recommend leveraging the GPT-6 model family for production API usage, but feel free to use this model to test the latest improvements for chat use cases. The underlying model snapshot will be regularly updated. Read more here.",
+          "raw_added_count": 4,
+          "raw_removed_count": 1,
+          "id": "obs_9b5ec4b73704fae70ef4a3100f645f66c88454e2579021d419c13f174bf4b5a6",
+          "permalink": "/item/obs_9b5ec4b73704fae70ef4a3100f645f66c88454e2579021d419c13f174bf4b5a6/",
+          "llm_summary": "新增了chat-latest快照更新说明，指向ChatGPT最新模型，同时新增网关和凭据相关条目，删除Codex网关部署条目，反映产品功能更新。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 1,
+          "added_lines": [
+            "Meet the ambassadors",
+            "Roll out a gateway",
+            "Updated the chat-latest snapshot, which points to the latest model available in ChatGPT for Plus, Pro, Business and Enterprise users. We recommend leveraging the GPT-6 model family for production API usage, but feel free to use this model to test the latest improvements for chat use cases. The underlying model snapshot will be regularly updated. Read more here.",
+            "Use API/provider credentials"
+          ],
+          "removed_lines": [
+            "Deploy Codex through a gateway"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Updated the chat-latest snapshot, which points to the latest model available in ChatGPT for Plus, Pro, Business and Enterprise users. We recommend leveraging the GPT-6 model family for production API usage, but feel free to use this model to test the latest improvements for chat use cases. The underlying model snapshot will be regularly updated. Read more here.",
+          "raw_added_count": 4,
+          "raw_removed_count": 1,
+          "id": "obs_ee7551a50022106f42ab98b39c0e960fc2339afa78671aa8cac4dce17bb2b801",
+          "permalink": "/item/obs_ee7551a50022106f42ab98b39c0e960fc2339afa78671aa8cac4dce17bb2b801/",
+          "llm_summary": "与changelog一致，新增chat-latest快照更新和网关/凭据内容，删除Codex网关部署，博客内容同步了产品变更。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "model_list",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+          "status": "changed",
+          "added_count": 14,
+          "removed_count": 4,
+          "added_lines": [
+            "Claude Haiku 5.5",
+            "Claude Haiku 5.5For high-volume, latency-sensitive tasks such as classification, extraction, and routing",
+            "Each model's capabilities object also includes server_tools, which reports whether the model accepts the web search and code execution tools. It doesn't cover other server tools, such as web fetch. server_tools.web_search.supported and server_tools.code_execution.supported are true when the model accepts at least one version of that tool, not necessarily every version. server_tools.supported is true when the model accepts at least one of the two tools. Even when a tool is supported, your organization's settings can still cause a request that uses it to fail. For example, an administrator can disable web search.",
+            "Lifecycle and referenceModel IDs and versioningModel deprecationsModel cardsPricingAPI credits for subscribers",
+            "The top-level code_execution capability is a different check. It reports whether code that Claude runs in the code execution tool can call the request's other tools, as in programmatic tool calling. For Claude Haiku 4.5, for example, the Models API reports server_tools.code_execution.supported as true and code_execution.supported as false.",
+            "| Context window | 1M tokens | 1M tokens | 1M tokens | 1M tokens",
+            "| Default effort | high | medium | high | medium",
+            "| Max output | 128K tokens | 128K tokens | 128K tokens | 128K tokens",
+            "| Microsoft Foundry ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-5-5",
+            "| Pricing | $10 / input MTok$50 / output MTok | $4 / input MTok$20 / output MTok | $2 / input MTok$10 / output MTok | From $0.10 / input MTokFrom $0.50 / output MTok",
+            "| Reliable knowledge cutoff | Jun 2026 | Jun 2026 | Jun 2026 | Jun 2026",
+            "| Retirement | Not sooner than September 1, 2027 | Not sooner than September 22, 2027 | Not sooner than September 28, 2027 | Not sooner than October 7, 2027",
+            "| Thinking | Adaptive (always on) | Adaptive (always on) | Adaptive | Adaptive",
+            "| Training data cutoff | Jun 2026 | Jun 2026 | Jun 2026 | Jun 2026"
+          ],
+          "removed_lines": [
+            "Claude Haiku 4.5The fastest model with near-frontier intelligence",
+            "Lifecycle and referenceModel IDs and versioningModel deprecationsModel cardsPricing",
+            "| Context window | 1M tokens | 1M tokens | 1M tokens | 200K tokens",
+            "| Default effort | high | medium | high | Not supported"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "output quality",
+              "before": "Output quality: When migrating from a previous model generation, you may notice larger improvements in overall performance. If you're on Claude Opus 5 or earlier, see Migrating to Claude Opus 5.5.",
+              "after": "Output quality: When migrating from a previous model generation, you may notice larger improvements in overall performance. If you're on Claude Opus 5 or earlier, see the Claude Opus 5.5 migration guide."
+            },
+            {
+              "key": "claude-fable-5-1",
+              "before": "| Amazon Bedrock ID | anthropic.claude-fable-5-1 | anthropic.claude-opus-5-5 | anthropic.claude-sonnet-5-5 | anthropic.claude-haiku-4-5",
+              "after": "| Amazon Bedrock ID | anthropic.claude-fable-5-1 | anthropic.claude-opus-5-5 | anthropic.claude-sonnet-5-5 | anthropic.claude-haiku-5-5"
+            },
+            {
+              "key": "claude-fable-5-1",
+              "before": "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5-20251001",
+              "after": "| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-5-5"
+            },
+            {
+              "key": "claude-fable-5-1",
+              "before": "| Claude API alias | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5",
+              "after": "| Claude API alias | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-5-5"
+            },
+            {
+              "key": "claude-fable-5-1",
+              "before": "| Claude Platform on AWS ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5",
+              "after": "| Claude Platform on AWS ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-5-5"
+            },
+            {
+              "key": "claude-fable-5-1",
+              "before": "| Google Cloud ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-4-5@20251001",
+              "after": "| Google Cloud ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-5-5"
+            }
+          ],
+          "signal_preview": "Claude Haiku 5.5For high-volume, latency-sensitive tasks such as classification, extraction, and routing",
+          "raw_added_count": 20,
+          "raw_removed_count": 17,
+          "id": "obs_49290d92fc2f362ec80668787931760f913d028319f14a0ea739b38b0b67ac9d",
+          "permalink": "/item/obs_49290d92fc2f362ec80668787931760f913d028319f14a0ea739b38b0b67ac9d/",
+          "llm_summary": "模型列表发生重大更新：新增Claude Haiku 5.5，包含完整的上下文窗口、定价、退役日期等规格，同时删除了Claude Haiku 4.5及其相关配置，并将所有平台（Bedrock、API、AWS、Google Cloud、Microsoft Foundry）的Haiku ID从4.5更新为5.5，表明Haiku系列正式换代。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "pricing",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+          "status": "changed",
+          "added_count": 16,
+          "removed_count": 3,
+          "added_lines": [
+            "$0.01 / MTok",
+            "$0.05 / MTok",
+            "$0.05 / MTokfor prompts up to 100,000 tokens |",
+            "$0.10 / MTokfor prompts up to 100,000 tokens |",
+            "$0.125 / MTok |",
+            "$0.20 / MTok |",
+            "$0.25 / MTokfor prompts over 100,000 tokens |",
+            "$0.50 / MTokfor prompts over 100,000 tokens |",
+            "$0.625 / MTok |",
+            "$1.25 / MTok",
+            "Claude Haiku 4.5 |",
+            "Claude Haiku 5.5",
+            "Claude Haiku 5.5 is priced by prompt length: a prompt of over 100,000 tokens pays higher prices. Model pricing and Batch processing list both sets of prices.",
+            "Claude Haiku 5.5For high-volume, latency-sensitive tasks such as classification, extraction, and routing |",
+            "Lifecycle and referenceModel IDs and versioningModel deprecationsModel cardsPricingAPI credits for subscribers",
+            "| Cache read (hit) | 0.1x base input price (0.025x on Claude Fable 5.1 and Claude Mythos 5.1; 0.05x on Claude Opus 5.5 and Claude Sonnet 5.5) | Same duration as the preceding write"
+          ],
+          "removed_lines": [
+            "Claude Haiku 4.5The fastest model with near-frontier intelligence |",
+            "Lifecycle and referenceModel IDs and versioningModel deprecationsModel cardsPricing",
+            "| Cache read (hit) | 0.1x base input price (0.025x on Claude Fable 5.1 and Claude Mythos 5.1; 0.05x on Claude Opus 5.5) | Same duration as the preceding write"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "cache write tokens are charged when content is first stored",
+              "before": "Cache write tokens are charged when content is first stored. Cache read tokens are charged when a subsequent request retrieves the cached content. A cache hit costs 10% of the standard input price, which means caching pays off after one cache read for the 5-minute duration (1.25x write), or after two cache reads for the 1-hour duration (2x write). On Claude Fable 5.1 and Claude Mythos 5.1, a cache hit costs 2.5% of the standard input price ($0.25 USD per million tokens). On Claude Opus 5.5, a cache hit costs 5% of the standard input price ($0.20 USD per million tokens).",
+              "after": "Cache write tokens are charged when content is first stored. Cache read tokens are charged when a subsequent request retrieves the cached content. A cache hit costs 10% of the standard input price, which means caching pays off after one cache read for the 5-minute duration (1.25x write), or after two cache reads for the 1-hour duration (2x write). On Claude Fable 5.1 and Claude Mythos 5.1, a cache hit costs 2.5% of the standard input price ($0.25 USD per million tokens). On Claude Opus 5.5 and Claude Sonnet 5.5, a cache hit costs 5% of the standard input price ($0.20 USD per million tokens on Claude Opus 5.5, $0.10 USD on Claude Sonnet 5.5)."
+            },
+            {
+              "key": "k-token",
+              "before": "Claude 4.6 and later models and Claude Mythos Preview include the full 1M token context window at standard pricing. (A 900k-token request is billed at the same per-token rate as a 9k-token request.) Prompt caching and batch processing discounts apply at standard rates across the full context window.",
+              "after": "Claude 4.6 and later models (except Claude Haiku 5.5) and Claude Mythos Preview include the full 1M token context window at standard pricing. (A 900k-token request is billed at the same per-token rate as a 9k-token request.) Prompt caching and batch processing discounts apply at standard rates across the full context window."
+            },
+            {
+              "key": "scope",
+              "before": "Scope: This pricing structure applies to Claude Sonnet 4.5, Haiku 4.5, Opus 4.5, and all future models. Earlier models (Claude Opus 4.1 and prior releases) retain their existing pricing.",
+              "after": "Scope: This pricing structure applies to Claude Sonnet 4.5 (deprecated), Haiku 4.5, Opus 4.5, and all future models. Earlier models (Claude Opus 4.1 and prior releases) retain their existing pricing."
+            }
+          ],
+          "signal_preview": "$0.01 / MTok",
+          "raw_added_count": 19,
+          "raw_removed_count": 6,
+          "id": "obs_95210d7a7f3aeebf477fda157fb4ab89806d73e950415c95e261855827cdeeb3",
+          "permalink": "/item/obs_95210d7a7f3aeebf477fda157fb4ab89806d73e950415c95e261855827cdeeb3/",
+          "llm_summary": "定价页新增了Claude Haiku 5.5的详细价格（输入$0.1/MTok，输出$0.5/MTok，缓存读写价格），同时删除了Claude Haiku 4.5的定价条目，并调整了缓存读取倍率说明（Sonnet 5.5从0.1x降至0.05x），反映新模型定价和缓存价格优化。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 10,
+          "removed_count": 0,
+          "added_lines": [
+            "Claude Max and Team plans now include monthly API credits. To learn how to claim them, see API credits for Max and Team plans.",
+            "Code written for Claude Haiku 4.5 can break on Claude Haiku 5.5. Manual extended thinking (budget_tokens) returns a 400 error, and adaptive thinking is on by default, so a response can begin with thinking blocks. The same text also counts as more tokens. See the migration guide. For model-specific prompting patterns, see Prompting Claude Haiku 5.5.",
+            "In Claude Managed Agents, a cloud environment with limited networking now also applies its allowed_hosts to the web_search and web_fetch tools. A web_fetch call for a URL on a host that allowed_hosts does not match returns a url_not_allowed error result to the agent. web_search omits results from such hosts. When allowed_hosts lists no hosts, neither tool returns a page or a search result. allow_package_managers and allow_mcp_servers add no hosts for these tools. To let the tools reach a host, add it to allowed_hosts, which also opens it to the sandbox. unrestricted networking and self-hosted environments do not limit these tools. See Environment networking.",
+            "In Python SDK 1.10.0, TypeScript SDK 0.130.0, C# SDK 12.52.0, Go SDK 1.77.0, Java SDK 2.67.0, PHP SDK 0.53.0, Ruby SDK 1.75.0, and version 1.37.0 of the ant CLI, the Admin API methods for organization info, members, invites, workspaces, API keys, rate limits, service accounts, workload identity federation, customer-managed encryption keys, and compliance settings are out of beta: call them under client.organization and ant organization. These releases also keep client.beta.organization and ant beta:organization.",
+            "The Compliance API chat endpoints now also return chats from the unified Claude experience, in beta for Claude Enterprise organizations, with your existing Compliance Access Key. See Retrieve and delete chats, files, and projects.",
+            "The Python and TypeScript SDKs now include classes, in beta, for the browser use tool and the computer use tool. You subclass one and write one method per tool against your own browser or desktop automation. The SDK runs the tool loop, the URL and file policies you set for the browser, and your approval callback. See Browser and computer use with the SDK toolsets.",
+            "We've added capabilities.server_tools to the Models API. GET /v1/models and GET /v1/models/{model_id} now report whether each model accepts the web search and code execution tools. To check whether a model accepts the code execution tool, read capabilities.server_tools.code_execution. The top-level capabilities.code_execution reports whether code can call your request's other tools. See Using the Models API.",
+            "We've launched Claude Haiku 5.5 (claude-haiku-5-5), our most capable model tuned for high-volume and latency-sensitive work. It has a 1M token context window, 128k max output tokens, and adaptive thinking with the effort parameter. It's available on the Claude API, Claude in Amazon Bedrock, Claude Platform on AWS, Claude on Google Cloud, and Claude in Microsoft Foundry. See What's new in Claude Haiku 5.5.",
+            "We've lowered the price of prompt cache reads on Claude Sonnet 5.5 from $0.20 USD to $0.10 USD per million tokens: 0.05x the base input price instead of 0.1x. Cache writes and all other prices are unchanged. See Prompt caching pricing.",
+            "With limited networking, creating a session fails with a 400 error when an enabled web tool's allowed_domains has an entry not within allowed_hosts. So does a session update that adds such an entry. An allowed_hosts entry matches one exact host unless it starts with *., so docs.example.com is not within [\"example.com\"]. To fix the error, add the host to allowed_hosts or remove the entry from allowed_domains. See Restrict web search and web fetch domains."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Claude Max and Team plans now include monthly API credits. To learn how to claim them, see API credits for Max and Team plans.",
+          "raw_added_count": 13,
+          "raw_removed_count": 0,
+          "id": "obs_308c05f6cdb5221ffae90aafe86798bef9590e6c35b21ec23f3d24aba2e6a6c8",
+          "permalink": "/item/obs_308c05f6cdb5221ffae90aafe86798bef9590e6c35b21ec23f3d24aba2e6a6c8/",
+          "llm_summary": "新增多条重要更新：Claude Haiku 5.5发布、Sonnet 5.5缓存读取降价、API credits功能、SDK更新、Compliance API扩展等，同时删除了旧内容，表明Anthropic在模型、工具和价格方面均有实质进展。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 6,
+          "added_lines": [
+            "AnnouncementsOct 6, 2026",
+            "AnnouncementsOct 7, 2026",
+            "Expanding the Cyber Verification Program",
+            "Introducing Claude Haiku 5.5",
+            "Our fastest, cheapest, and most capable small model yet. It’s designed for high-volume, cost-sensitive work.",
+            "We’re launching a new, expanded version of our Cyber Verification Program, which makes advanced cyber capabilities and reduced blocking classifiers available to qualifying security professionals."
+          ],
+          "removed_lines": [
+            "AnnouncementsSep 1, 2026",
+            "AnnouncementsSep 10, 2026",
+            "Detecting and countering misuse of AI: September 2026",
+            "Introducing Claude Fable 5.1 and Claude Mythos 5.1",
+            "Our most advanced models for coding and knowledge work. Their research capabilities also offer an early glimpse of how AI models will contribute to scientific progress.",
+            "Over the past eight months, our Threat Intelligence team identified and disrupted operations in which threat actors tried to use Claude for malicious activity. In this report, we share case studies from those operations and describe how malicious use of Claude has evolved since our previous threat reports in 2025."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Expanding the Cyber Verification Program",
+          "raw_added_count": 6,
+          "raw_removed_count": 6,
+          "id": "obs_1eab6c1e98177401c4dbf21c3a85133404168d2a65eb9fddcda71cbd3cdd5caa",
+          "permalink": "/item/obs_1eab6c1e98177401c4dbf21c3a85133404168d2a65eb9fddcda71cbd3cdd5caa/",
+          "llm_summary": "博客新增了Claude Haiku 5.5发布公告和Cyber Verification Program扩展，删除了9月的旧公告和Fable/Mythos发布内容，显示博客内容更新到10月最新动态。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "$0.113 per image."
+          ],
+          "removed_lines": [
+            "$0.0756 per image."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-06 UTC.",
+              "after": "Last updated 2026-10-07 UTC."
+            },
+            {
+              "key": "output images at",
+              "before": "Output images at 4K (4096x4096px) consume 2520 tokens and are equivalent to",
+              "after": "Output images at 4K (4096x4096px) consume 3780 tokens and are equivalent to"
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-07 UTC.\"],[],[]]"
+            },
+            {
+              "key": "and $",
+              "before": "and $0.0378 per 4K image*.",
+              "after": "and $0.0567 per 4K image*."
+            },
+            {
+              "key": "and $",
+              "before": "and $0.0756 per 4K image*.",
+              "after": "and $0.113 per 4K image*."
+            }
+          ],
+          "signal_preview": "$0.113 per image.",
+          "raw_added_count": 6,
+          "raw_removed_count": 6,
+          "id": "obs_c18d1c539764567b72f664fdda353e2ee1da512ef84c64cb5297720f8daa6e45",
+          "permalink": "/item/obs_c18d1c539764567b72f664fdda353e2ee1da512ef84c64cb5297720f8daa6e45/",
+          "llm_summary": "定价页更新日期从10月6日变为10月7日，4K图像输出token消耗从2520增至3780，导致单张价格从$0.0756涨至$0.113，同时新增了$0.113 per image的条目，删除了旧的$0.0756 per image，表明图像生成定价上调。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "changelog",
+          "url": "https://ai.google.dev/gemini-api/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "deprecated (no shutdown date announced). Migrate to"
+          ],
+          "removed_lines": [
+            "deprecated and will be shut down on"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-06 UTC.",
+              "after": "Last updated 2026-10-07 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-07 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "deprecated (no shutdown date announced). Migrate to",
+          "raw_added_count": 3,
+          "raw_removed_count": 4,
+          "id": "obs_5fa577ca28b34e30d7759e45b3a25484bf3d32a666838acb56cb457740008a6a",
+          "permalink": "/item/obs_5fa577ca28b34e30d7759e45b3a25484bf3d32a666838acb56cb457740008a6a/",
+          "llm_summary": "更新日期变更，并新增了deprecated（无关停日期）的说明，删除了deprecated and will be shut down on，表明某些模型被标记为弃用但未设定具体关停时间。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-06 UTC.",
+              "after": "Last updated 2026-10-07 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-07 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-10-07 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_8c544bd9a37a470aa616ce750973d9294e1a78ae8850d4955f09606b8361c46e",
+          "permalink": "/item/obs_8c544bd9a37a470aa616ce750973d9294e1a78ae8850d4955f09606b8361c46e/",
+          "llm_summary": "仅更新了日期和页面反馈信息，无实质模型变化。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "ModelPrice (/1M tokens) =< 200K input tokens |"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 57,
+          "raw_removed_count": 1,
+          "id": "obs_573c75a6d1fe1bfabcecee472e8fa8d23acdc4056dc6c9d99b94a51ff22a4548",
+          "permalink": "/item/obs_573c75a6d1fe1bfabcecee472e8fa8d23acdc4056dc6c9d99b94a51ff22a4548/",
+          "llm_summary": "删除了'ModelPrice (/1M tokens) =< 200K input tokens'这一行，可能表示定价结构简化或该计费区间被移除。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "changelog",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-09-30 UTC.",
+              "after": "Last updated 2026-10-07 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-09-30 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-07 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-10-07 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_5cfb49e16f8ec22cf267d7b1b0cdb4486d5bfbb838b4ae72ef5647c5debdf050",
+          "permalink": "/item/obs_5cfb49e16f8ec22cf267d7b1b0cdb4486d5bfbb838b4ae72ef5647c5debdf050/",
+          "llm_summary": "更新日期从9月30日变为10月7日，无其他实质变化。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "By AI Infrastructure team • 4-minute read"
+          ],
+          "removed_lines": [
+            "By Andrés Lagar-Cavilla • 4-minute read"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "By AI Infrastructure team • 4-minute read",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_225d3e454d3e1c9499eb404c546f7479fca0e366c7272ec9f0c05ba087b80e25",
+          "permalink": "/item/obs_225d3e454d3e1c9499eb404c546f7479fca0e366c7272ec9f0c05ba087b80e25/",
+          "llm_summary": "博客作者从Andrés Lagar-Cavilla变更为AI Infrastructure team，可能表示文章归属调整。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "pricing",
+          "url": "https://mistral.ai/pricing",
+          "status": "changed",
+          "added_count": 9,
+          "removed_count": 4,
+          "added_lines": [
+            "$25.5 /mo in API credits.",
+            "Basic image generation and editing.",
+            "Better image generation and editing.",
+            "Create, edit, and share or download your presentations. |",
+            "Create, edit, and share or download your spreadsheets. |",
+            "Even higher limits.",
+            "Faster responses.",
+            "Generate spreadsheets and slides.",
+            "Spreadsheets"
+          ],
+          "removed_lines": [
+            "State-of-the-art image generation.",
+            "Test Mistral models in Studio.",
+            "$10 /mo in API credits.",
+            "$30 /mo in API credits."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "$25.5 /mo in API credits.",
+          "raw_added_count": 9,
+          "raw_removed_count": 4,
+          "id": "obs_c99b4f6567bf550502bdf2f4fb1c5a5a424ea88ba5a054a490cdcb0dd85e279d",
+          "permalink": "/item/obs_c99b4f6567bf550502bdf2f4fb1c5a5a424ea88ba5a054a490cdcb0dd85e279d/",
+          "llm_summary": "订阅计划调整：API credits从$10/月提升至$25.5/月，删除了$30/月档，同时新增了电子表格和演示文稿生成功能，图像生成能力从'State-of-the-art'降级为'Basic'和'Better'，表明产品线重新定位。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "model_list",
+          "url": "https://docs.cohere.com/docs/models",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 10,
+          "added_lines": [
+            "Learn more)\">",
+            "Skip to navigation",
+            "| command-r-08-2024 | Live | command-r-08-2024 is an update of the Command R model, delivered in August 2024. Find more information in the changelog | Text | 128k | 4k | Chat",
+            "| command-r-plus-08-2024 | Live | command-r-plus-08-2024 is an update of the Command R+ model, delivered in August 2024. Find more information in the changelog | Text | 128k | 4k | Chat"
+          ],
+          "removed_lines": [
+            "API Keys and Rate Limits",
+            "API Reference",
+            "Advanced Generation Parameters",
+            "Agentic RAG",
+            "Batch Embedding Jobs",
+            "Build Things with Cohere!",
+            "Cloud AI Services",
+            "Cohere Labs",
+            "Cohere Labs Acceptable Use Policy",
+            "Cohere Platform"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| command-r-08-2024 | Live | command-r-08-2024 is an update of the Command R model, delivered in August 2024. Find more information in the changelog | Text | 128k | 4k | Chat",
+          "raw_added_count": 4,
+          "raw_removed_count": 63,
+          "id": "obs_bb68f062272657c9e7cd35ab9349f3e87d98a34355dcf8d486aa68751448e826",
+          "permalink": "/item/obs_bb68f062272657c9e7cd35ab9349f3e87d98a34355dcf8d486aa68751448e826/",
+          "llm_summary": "重新列出了Command R和Command R+的08-2024版本，同时删除了大量API文档链接（如API Keys、API Reference等），可能表示页面结构重构。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "changelog",
+          "url": "https://docs.cohere.com/changelog",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 6,
+          "added_lines": [
+            "Announcing Cohere's Command A+",
+            "Learn more)\">",
+            "Skip to navigation",
+            "summarize (Refer to the migration guide for alternatives)."
+          ],
+          "removed_lines": [
+            "API Reference",
+            "Announcing Cohere’s Command A+",
+            "DASHBOARDPLAYGROUNDDOCSCOMMUNITYLOG IN",
+            "Guides and concepts",
+            "for alternatives).",
+            "summarize (Refer to the migration guide"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Announcing Cohere's Command A+",
+          "raw_added_count": 4,
+          "raw_removed_count": 6,
+          "id": "obs_b52c162bc7a19c3f4daa5d10105b0ebd5d3089ed4fb6bbabef7ae0c1f36bc9ea",
+          "permalink": "/item/obs_b52c162bc7a19c3f4daa5d10105b0ebd5d3089ed4fb6bbabef7ae0c1f36bc9ea/",
+          "llm_summary": "新增了Command A+的公告（英文），同时删除了法语版本，并新增了summarize迁移指南，表明文档更新。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 3,
+          "added_lines": [
+            "Lancement de produitActualités de l'entreprise",
+            "Lancement de produitResearch",
+            "Lancement de produitTechnology",
+            "Santé et sciences de la vie"
+          ],
+          "removed_lines": [
+            "Healthcare & Life Sciences",
+            "Product LaunchResearch",
+            "Product LaunchTechnology"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Lancement de produitActualités de l'entreprise",
+          "raw_added_count": 4,
+          "raw_removed_count": 3,
+          "id": "obs_7a65abce7722b88c0045d35bc7ce111c24cd2fb46734ebc42a3c9466918add48",
+          "permalink": "/item/obs_7a65abce7722b88c0045d35bc7ce111c24cd2fb46734ebc42a3c9466918add48/",
+          "llm_summary": "博客语言从英语切换为法语，主题从Healthcare & Life Sciences等变为Santé et sciences de la vie等，可能表示内容本地化调整。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 10,
+          "removed_count": 2,
+          "added_lines": [
+            "AnthropicGoogleOpenAIAnthropic + CognitionSpaceXAIMetaZ AIKimiAlibabaDeepSeek",
+            "Claude Haiku 5.5 (High)",
+            "Claude Haiku 5.5 (Low)",
+            "Claude Haiku 5.5 (Max)",
+            "Claude Haiku 5.5 (Medium)",
+            "Claude Haiku 5.5 (Xhigh)",
+            "Compare models side-by-side on intelligence, pricing, speed, latency, benchmarks, and more.",
+            "GPT-6.1 Sol (High)See more",
+            "Model Comparison",
+            "New language model evaluation · 7 Oct"
+          ],
+          "removed_lines": [
+            "AnthropicGoogleOpenAIAnthropic + CognitionOpenAI + CognitionSpaceXAIMetaZ AIKimiAlibabaDeepSeek",
+            "Claude Sonnet 5.5 (Low, Default Fallback)"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AnthropicGoogleOpenAIAnthropic + CognitionSpaceXAIMetaZ AIKimiAlibabaDeepSeek",
+          "raw_added_count": 18,
+          "raw_removed_count": 20,
+          "id": "obs_a5e8b40501415069ec2461b3318ae42fb9dd8ba333c85641e6a1170e08ac58be",
+          "permalink": "/item/obs_a5e8b40501415069ec2461b3318ae42fb9dd8ba333c85641e6a1170e08ac58be/",
+          "llm_summary": "新增了Claude Haiku 5.5在五个推理配置下的评测数据，以及GPT-6.1 Sol (High)的评测，删除了Claude Sonnet 5.5 (Low, Default Fallback)，表明模型评测集更新。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 12,
+          "removed_count": 6,
+          "added_lines": [
+            "360,766,343360,766,343Total Sessions",
+            "Deepseek V4.1 Flash (Max)·",
+            "GPT 6 Luna (Max)$0.07/task",
+            "GPT 6 Luna (Max)·",
+            "GPT 6.1 Sol (Max)$0.57/task",
+            "Gemini Nano Banana 2.1",
+            "Mistral Large 4",
+            "Mistral Large 4 (Le Chonk) | First Impressions",
+            "Muse Spark 1.3 (Max)·",
+            "Reading files",
+            "Step 5 Preview·",
+            "Text-to-Image"
+          ],
+          "removed_lines": [
+            "Claude Fable 5.1 (Max)$5.39/task",
+            "Claude Sonnet 5 (High)·",
+            "Editing a file",
+            "360,271,357360,271,357Total Sessions",
+            "GPT 5.6 Luna (xHigh)·",
+            "GPT 5.6 Sol (xHigh)·"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "hands-on",
+              "before": "A hands-on first look at Qwen 3.8 27B in the Arena.",
+              "after": "A hands-on first look at Mistral Large 4 (Le Chonk) in the Arena."
+            },
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5 (High)·",
+              "after": "Claude Fable 5.1 (Max)$5.99/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (High)$1.58/task",
+              "after": "Claude Opus 5.5 (High)$1.67/task"
+            },
+            {
+              "key": "deepseek v",
+              "before": "Deepseek V4.1 Flash (Max)$0.12/task",
+              "after": "Deepseek V4.1 Flash (Max)$0.13/task"
+            }
+          ],
+          "signal_preview": "Deepseek V4.1 Flash (Max)·",
+          "raw_added_count": 16,
+          "raw_removed_count": 21,
+          "id": "obs_1217fb26b1c457f0853268c151714e3379941f8ada239d331f84f849520a5b30",
+          "permalink": "/item/obs_1217fb26b1c457f0853268c151714e3379941f8ada239d331f84f849520a5b30/",
+          "llm_summary": "新增了Mistral Large 4 (Le Chonk)及其上手体验文章，新增GPT-6 Luna和GPT-6.1 Sol等模型，同时调整了部分模型的任务价格（Claude Opus 5.5从$1.58涨至$1.67，Deepseek V4.1 Flash从$0.12涨至$0.13），并移除了GPT-5.6系列，反映榜单模型更新。"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "编排 Multi Agent"
+          ],
+          "removed_lines": [
+            "Multi Agent"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_891a3e506e96b2cce0529fd22013a35dd692fd1caabb040d08dda323baf70e46",
+          "permalink": "/item/obs_891a3e506e96b2cce0529fd22013a35dd692fd1caabb040d08dda323baf70e46/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 38,
+          "raw_removed_count": 38,
+          "id": "obs_d4cd5a329df292979ef90b7c4ab4beb3821f456fbffe20712897c022f1c9860c",
+          "permalink": "/item/obs_d4cd5a329df292979ef90b7c4ab4beb3821f456fbffe20712897c022f1c9860c/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_4f7f27ca237fef0bf335096e8d54a7da5ea26768014f5a89721d6f8caa30d144",
+          "provider": "anthropic",
+          "model": "claude-sonnet-5.5",
+          "component": "cache_read",
+          "previous": "0.200000",
+          "current": "0.100000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "id": "price_5b7013b98f8292203aed80fb09e564b12e4059f43f049d17dc9cb0c50187b7d7",
+          "provider": "anthropic",
+          "model": "claude-haiku-5.5",
+          "component": "input",
+          "current": "0.100000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "id": "price_4faf40875161d52f678a76310f6095609d9f153f1734a0192ace8faad5ff8bdd",
+          "provider": "anthropic",
+          "model": "claude-haiku-5.5",
+          "component": "output",
+          "current": "0.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "id": "price_fab3f24e8e8fb4680480273b8c543c55ee213b1ea6c867b81ded7a6211a809b4",
+          "provider": "anthropic",
+          "model": "claude-haiku-5.5",
+          "component": "cache_write",
+          "current": "0.125000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "id": "price_8e534897d20171560cf2f545261bdf17f4e5902ab02584996a967657efdf8576",
+          "provider": "anthropic",
+          "model": "claude-haiku-5.5",
+          "component": "cache_write",
+          "current": "0.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "id": "price_f650ba8738249b24734a82fe129c85a002545974945bb5d25e24ea0cdbb6b45a",
+          "provider": "anthropic",
+          "model": "claude-haiku-5.5",
+          "component": "cache_read",
+          "current": "0.010000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "id": "price_7e16d403b15e7591582177dfa9516287c73803016a465abbd7d1ed2aa9ea7912",
+          "provider": "anthropic",
+          "model": "claude-haiku-5.5-for-high-volume,-latency-sensitive-tasks-such-as-classification,-extraction,-and-routing",
+          "component": "input",
+          "current": "0.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "id": "price_5e59b0c4246162a869ac815378702c28a2def86b5f045b953d9996fd8309a4f3",
+          "provider": "anthropic",
+          "model": "claude-haiku-5.5-for-high-volume,-latency-sensitive-tasks-such-as-classification,-extraction,-and-routing",
+          "component": "output",
+          "current": "2.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "id": "price_a6046eb15ee6befee204b9a9281d21555c3458e82abcf9b1b78ff223f9578453",
+          "provider": "anthropic",
+          "model": "claude-haiku-5.5-for-high-volume,-latency-sensitive-tasks-such-as-classification,-extraction,-and-routing",
+          "component": "cache_write",
+          "current": "0.625000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "id": "price_25ed9e7ffb23093bd4f376d078e2dafe6e60aff6a06dbf0d37f3785cbdb5c392",
+          "provider": "anthropic",
+          "model": "claude-haiku-5.5-for-high-volume,-latency-sensitive-tasks-such-as-classification,-extraction,-and-routing",
+          "component": "cache_write",
+          "current": "1.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "id": "price_c5a05a95dc525d9b5076cf09fdd1cb3f29b95db16466e4344464edea22314edb",
+          "provider": "anthropic",
+          "model": "claude-haiku-5.5-for-high-volume,-latency-sensitive-tasks-such-as-classification,-extraction,-and-routing",
+          "component": "cache_read",
+          "current": "0.050000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Anthropic",
+          "logo_summary": "发布Claude Haiku 5.5，降价Sonnet 5.5缓存读取",
+          "items": [
+            {
+              "text": "Claude Haiku 5.5 正式发布，1M上下文窗口，输入$0.1/MTok，输出$0.5/MTok，主打高吞吐低延迟场景",
+              "type": "release"
+            },
+            {
+              "text": "Claude Sonnet 5.5 缓存读取价格从$0.20降至$0.10/MTok，降幅50%",
+              "type": "pricing"
+            },
+            {
+              "text": "Claude Haiku 4.5 在模型列表中移除，被5.5取代",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "更新chat-latest快照，新增网关与API凭据功能",
+          "items": [
+            {
+              "text": "chat-latest快照更新，指向ChatGPT Plus/Pro/Business/Enterprise用户可用的最新模型",
+              "type": "release"
+            },
+            {
+              "text": "新增网关部署和API/提供商凭据使用指南，移除通过网关部署Codex的旧文档",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "4K图像输出token消耗上调，价格相应上涨",
+          "items": [
+            {
+              "text": "4K图像输出token消耗从2520增至3780，单张价格从$0.0756涨至$0.113",
+              "type": "pricing"
+            },
+            {
+              "text": "定价页更新日期从10月6日变更为10月7日，部分模型标记为deprecated但未公布关停日期",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Mistral AI",
+          "logo_summary": "订阅计划调整，API额度与图像生成能力升级",
+          "items": [
+            {
+              "text": "API credits从$10/月提升至$25.5/月，$30/月档被移除",
+              "type": "pricing"
+            },
+            {
+              "text": "新增电子表格和演示文稿生成功能，图像生成能力从基础升级为更好",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "",
+          "items": [
+            {
+              "text": "Command R和Command R+的08-2024版本重新出现在模型列表中",
+              "type": "release"
+            },
+            {
+              "text": "博客内容从英语切换为法语，涉及产品发布、研究和技术主题",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "新增Claude Haiku 5.5多档推理配置评测",
+          "items": [
+            {
+              "text": "Claude Haiku 5.5在High/Low/Max/Medium/Xhigh五档配置下均新增评测数据",
+              "type": "release"
+            },
+            {
+              "text": "新增GPT-6.1 Sol (High)评测，移除Claude Sonnet 5.5 (Low, Default Fallback)",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "新增Mistral Large 4和GPT-6 Luna等模型，任务价格微调",
+          "items": [
+            {
+              "text": "Mistral Large 4 (Le Chonk) 上线并发布上手体验文章",
+              "type": "release"
+            },
+            {
+              "text": "GPT-6 Luna (Max) 和 GPT-6.1 Sol (Max) 新增至榜单，任务价格分别为$0.07和$0.57",
+              "type": "release"
+            },
+            {
+              "text": "Claude Opus 5.5 (High)任务价格从$1.58涨至$1.67，Deepseek V4.1 Flash (Max)从$0.12涨至$0.13",
+              "type": "pricing"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-10-07",
       "stats": {

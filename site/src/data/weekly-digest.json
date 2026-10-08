@@ -4,6 +4,14 @@
     "start": "2026-10-05",
     "end": "2026-10-11",
     "days": {
+      "2026-10-08": {
+        "substantive": 20,
+        "jitter": 2,
+        "failed": 2,
+        "releases": 7,
+        "pricings": 4,
+        "sunsets": 1
+      },
       "2026-10-07": {
         "substantive": 19,
         "jitter": 3,
@@ -30,12 +38,108 @@
       }
     },
     "totals": {
-      "substantive": 33,
-      "releases": 11,
-      "pricings": 6,
-      "sunsets": 2
+      "substantive": 53,
+      "releases": 18,
+      "pricings": 10,
+      "sunsets": 3
     },
     "highlights": [
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-08",
+        "text": "Claude Haiku 5.5 正式发布，1M上下文窗口，输入$0.1/MTok，输出$0.5/MTok，主打高吞吐低延迟场景",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-08",
+        "text": "Claude Sonnet 5.5 缓存读取价格从$0.20降至$0.10/MTok，降幅50%",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-08",
+        "text": "Claude Haiku 4.5 在模型列表中移除，被5.5取代",
+        "type": "sunset"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-08",
+        "text": "chat-latest快照更新，指向ChatGPT Plus/Pro/Business/Enterprise用户可用的最新模型",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-08",
+        "text": "新增网关部署和API/提供商凭据使用指南，移除通过网关部署Codex的旧文档",
+        "type": "other"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-08",
+        "text": "4K图像输出token消耗从2520增至3780，单张价格从$0.0756涨至$0.113",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-08",
+        "text": "定价页更新日期从10月6日变更为10月7日，部分模型标记为deprecated但未公布关停日期",
+        "type": "other"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-08",
+        "text": "API credits从$10/月提升至$25.5/月，$30/月档被移除",
+        "type": "pricing"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-08",
+        "text": "新增电子表格和演示文稿生成功能，图像生成能力从基础升级为更好",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-08",
+        "text": "Command R和Command R+的08-2024版本重新出现在模型列表中",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-08",
+        "text": "博客内容从英语切换为法语，涉及产品发布、研究和技术主题",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-08",
+        "text": "Claude Haiku 5.5在High/Low/Max/Medium/Xhigh五档配置下均新增评测数据",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-08",
+        "text": "新增GPT-6.1 Sol (High)评测，移除Claude Sonnet 5.5 (Low, Default Fallback)",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-08",
+        "text": "Mistral Large 4 (Le Chonk) 上线并发布上手体验文章",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-08",
+        "text": "GPT-6 Luna (Max) 和 GPT-6.1 Sol (Max) 新增至榜单，任务价格分别为$0.07和$0.57",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-08",
+        "text": "Claude Opus 5.5 (High)任务价格从$1.58涨至$1.67，Deepseek V4.1 Flash (Max)从$0.12涨至$0.13",
+        "type": "pricing"
+      },
       {
         "platform": "OpenAI",
         "date": "2026-10-07",
