@@ -622,6 +622,15 @@ class TestNginxThreeIncludeTx(ActivateFixture):
         self.assertIn("client_max_body_size 9m;", feedback)
         self.assertIn("client_max_body_size 8k;", account)
         self.assertIn("proxy_cache off;", feedback)
+        admin = rt.split("location /api/admin/ {", 1)[1].split("\n}", 1)[0]
+        for directive in ("client_max_body_size 16k;", "proxy_pass http://agent_api;", "proxy_cache off;", 'add_header Cache-Control "no-store" always;', "limit_except GET POST"):
+            self.assertIn(directive, admin)
+        self.assertNotIn("Access-Control-Allow-Origin", admin)
+        editorial = rt.split("location ~ ^/api/admin/weekly/[a-zA-Z0-9:_-]+/revisions$ {", 1)[1].split("\n}", 1)[0]
+        self.assertIn("client_max_body_size 1m;", editorial)
+        self.assertIn("proxy_pass http://agent_api;", editorial)
+        self.assertIn("access_log off;", editorial)
+        self.assertIn("client_max_body_size 16k;", admin)
         # 继承 server root：不得硬编码 /srv/.../current 或 releases 路径
         self.assertNotIn("/srv/maasweekly", rt)
         # RSS 缓存 ≥30 分钟

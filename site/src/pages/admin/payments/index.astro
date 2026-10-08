@@ -1,0 +1,13 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="付费订阅与对账"><div data-operations>
+ <p>公测与手工授权不计收入。下面金额均按最小货币单位记账，不把订单金额视为到账金额。真实支付渠道未配置。</p>
+ <form id="payments-filter"><label>记录类型<select name="kind"><option value="orders">订单</option><option value="subscriptions">订阅</option><option value="refunds">退款请求</option><option value="events">支付回调</option><option value="reconciliations">对账快照</option><option value="differences">对账差异</option></select></label><label>对象 ID<input name="q" /></label><label>用户 ID<input name="userId" /></label><button>查询</button></form>
+ <form id="payments-range"><h2>财务范围</h2><label>币种<input name="currency" value="USD" pattern="[A-Z]{3}" required /></label><label>起点（含，ISO带时区）<input name="from" /></label><label>终点（不含，ISO带时区）<input name="to" /></label><button>查询财务汇总</button></form>
+ <p id="payments-status" role="status"></p><dl id="payments-totals" class="admin-summary"></dl><div class="admin-table-wrap" id="payments-items"></div><button id="payments-next" hidden>下一页</button>
+ <section id="payments-detail" hidden><h2 id="payments-detail-title"></h2><div id="payments-detail-records"></div><button id="payments-actions-next" hidden>下一页处理记录</button></section>
+ <form id="payments-refund"><h2>申请退款</h2><label>订单 ID<input name="orderId" required /></label><label>金额（最小货币单位整数）<input name="amount" type="number" min="1" step="1" required /></label><label>原因<input name="reason" required /></label><button>保存退款请求</button><p>提交成功仅表示请求已保存。供应商结果未知时仍预留可退余额，不自动再次退款。</p></form>
+ <form id="payments-note"><h2>对账差异处理记录</h2><label>差异 ID<input name="id" required /></label><label>处理记录<textarea name="note" required></textarea></label><label>原因<input name="reason" required /></label><button>追加记录</button></form>
+</div></AdminLayout>
+<script>import '../../../lib/admin-payments-client';</script>

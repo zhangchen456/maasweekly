@@ -1,0 +1,8 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="模拟支付结账" noindex={true}><main><h1>模拟支付结账</h1><p>这是本机模拟器，不接收银行卡、不扣款，不代表真实供应商沙箱已验收。模拟 USD 990 最小单位 / 月。</p><p id="sandbox-status" role="status"></p><button data-outcome="paid">模拟供应商支付成功</button><button data-outcome="failed">模拟支付失败</button><a href="/subscription/payments/">查看服务端支付结果</a></main></Layout>
+<script>
+const orderId=new URLSearchParams(location.search).get('order');
+for(const b of document.querySelectorAll<HTMLButtonElement>('[data-outcome]'))b.addEventListener('click',async()=>{b.disabled=true;try{const r=await fetch('/api/pro/billing/simulator-result',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId,outcome:b.dataset.outcome})}),v=await r.json();document.getElementById('sandbox-status')!.textContent=r.ok?'模拟供应商结果已在服务端核验，请查看最终订单状态。':v.message;}catch{document.getElementById('sandbox-status')!.textContent='支付结果未知，请查询订单。';}finally{b.disabled=false;}});
+</script>

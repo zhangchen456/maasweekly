@@ -1,0 +1,16 @@
+import {AccountStore} from './services/agent-api/dist/account-store.js';
+import {AdminStore} from './services/agent-api/dist/admin-store.js';
+import {AdminMonitor} from './services/agent-api/dist/admin-monitor.js';
+import {EditorialStore} from './services/agent-api/dist/editorial-store.js';
+import {EditorialService} from './services/agent-api/dist/editorial-service.js';
+import {Dataset} from './services/agent-api/dist/dataset.js';
+import {MockModel} from './services/agent-api/dist/editorial-model.js';
+import {randomUUID} from 'node:crypto';
+const now=Date.parse('2026-10-04T08:00:00Z'),a=new AccountStore(':memory:',()=>now,'independent-synthetic-secret-32-chars'),ad=new AdminStore(a),m=new AdminMonitor(ad),st=new EditorialStore(ad),ds=Dataset.load('./data/public/v1'),s=new EditorialService(st,{current:ds});
+const source={id:'google-vertex-changelog',name:'Synthetic Google Vertex changelog failure',platform:'google',kind:'changelog',budgetHours:48};
+m.ingest({schemaVersion:1,batchId:'independent-failed-source',sources:[source],runs:[{id:'independent-failed-run',kind:'prices',trigger:'manual',state:'failed',stage:'fetch',startedAt:Date.parse('2026-09-27T10:00:00Z'),finishedAt:Date.parse('2026-09-27T10:01:00Z'),observedAt:Date.parse('2026-09-27T10:01:00Z'),inputVersion:null,outputVersion:null,result:'failed',validation:'unknown',publication:'not_run',errorCode:'fetch_failed',runLink:null,sources:[{sourceId:source.id,attemptAt:Date.parse('2026-09-27T10:00:00Z'),successAt:null,dataThrough:null,outcome:'fetch_failed',coverage:'missing',errorCode:'fetch_failed'}]}]});
+// Stale public status says healthy; failure exists only in operational monitor.
+ds.status.sourceStreams=[];
+const id='weekly-2026-09-28';
+function write(op,input){return s.write({actor:{type:'cli',id:'independent-acceptance'},action:'weekly.'+op,targetType:'editorial_issue',targetId:id,requestId:randomUUID(),idempotencyKey:randomUUID(),reason:'synthetic monitor-publication integration',input,...(op==='create'?{}:{expectedVersion:st.issue(id).version,currentVersion:()=>st.issue(id).version})},op)}
+try{write('create',{periodEnd:'2026-09-28',selection:'real history with synthetic monitor failure',budget:0});write('prepare',{coverage:'normal',coverageNote:'Synthetic public dataset status remains healthy'});let i=st.issue(id);const pack=(await new MockModel().call({stage:'analyze',periodEnd:i.periodEnd,windowFrom:i.windowFrom,windowTo:i.windowTo,dataThrough:i.dataThrough,coverage:i.coverage,coverageNote:i.coverageNote,selection:i.selection,inputs:st.inputs(id),upstream:null})).output;write('revisions',{package:pack});let r=st.revision(id);write('review',{decision:'submit',revision:r.revision,outputHash:r.outputHash,note:'synthetic approval'});write('review',{decision:'approve',revision:r.revision,outputHash:r.outputHash,note:'synthetic approval',checklist:{sources:true,conditions:true,conclusions:true,coverage:true,preview:true,attribution:true}});const publication=write('publish',{revision:r.revision,outputHash:r.outputHash});console.log(JSON.stringify({monitor:m.sources(new URLSearchParams()).items,issueCoverage:st.issue(id).coverage,publication,conclusion:'Monitor failure does not affect editorial coverage or publication'},null,2));}finally{a.close()}

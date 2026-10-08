@@ -1,0 +1,11 @@
+[
+  "T08 paid access consistent across website/REST/MCP/RSS and mail eligibility; independent sources survive refunds",
+  "T08 administrator HTTP permissions, Origin, request idempotency and safe detail projections",
+  "T08 failed final refund commit retains reservation and retries the same authoritative result atomically",
+  "T08 two independent processes cannot reserve more than the refundable balance",
+  "T08 subscription and order states are derived from facts, not browser guesses",
+  "T08 read-only event worker recovers persisted events, bounds attempts, and audits explicit re-query",
+  "T08 expired lookup lease rejects a late result while another processor completes the same event",
+  "T08 lookup timeout remains unknown without money changes, no supplier mutation or unbounded retry",
+  "T08 migration9 upgrades an existing payment database and rolls back conflicts without changing financial facts"
+]

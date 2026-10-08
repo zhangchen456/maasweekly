@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-04",
+  "scope": "local temporary SQLite / real HTTP / deterministic model; no production, paid calls or real messages",
+  "api": {
+    "command": "npm run test:compiled --prefix services/agent-api",
+    "tests": 174,
+    "passed": 174,
+    "failed": 0
+  },
+  "relatedTests": {
+    "tests": 44,
+    "passed": 44
+  },
+  "t07Tests": 12,
+  "browser": {
+    "scope": "Local Chromium + real admin/account API/SQLite + private outbox; no external email",
+    "states": [
+      "anonymous-login-entry",
+      "existing-login-cli-grant-real-overview",
+      "audit-real-record-and-empty-filter",
+      "problem-merge-two-feedback-original-history-preserved",
+      "selected-material-deterministic-advice-dedup-no-feedback-state-change",
+      "merge-release-separate-post-release-failure-reinvestigation-per-feedback-gate",
+      "unlink-wrong-repair-reset-progress-unlink-feedback",
+      "mobile-no-overflow-no-private-storage"
+    ],
+    "errors": []
+  },
+  "regressionBrowser": {
+    "scope": "Local Chromium + real admin/account API/SQLite + private outbox; no external email",
+    "states": [
+      "anonymous-login-entry",
+      "existing-login-cli-grant-real-overview",
+      "audit-real-record-and-empty-filter",
+      "T03-real-history-create-freeze-stage-worker-edit-review-publish-compose-plus-preview",
+      "T04-7day-28day-custom-real-SQL-deduplicated-cross-day-readers",
+      "T04-Umami-failure-null-values-last-success-local-metrics-still-visible",
+      "T04-desktop-mobile-no-overflow-and-Umami-recovery",
+      "T04-logout-late-response-clears-private-metrics",
+      "T05-real-ingest-duplicate-success-failure-unchanged-stale-unknown-ignore-not-heal-verified-resolution-audit-desktop-mobile",
+      "T05-private-DOM-cleared-no-execution-endpoint-no-persistent-storage",
+      "T05-real-logout-late-task-response-does-not-repopulate-private-DOM",
+      "T02-two-browser-windows-version-conflict",
+      "T02-user-search-grant-private-image-note-public-reply-verification-resolve",
+      "T02-ordinary-owner-sees-public-result-without-internal-note",
+      "revocation-and-logout-clear-private-dom",
+      "free-plus-no-admin-permission"
+    ],
+    "errors": []
+  },
+  "build": {
+    "api": "passed",
+    "pageModels": "passed",
+    "sitePages": 47462,
+    "siteLog": "/private/tmp/maas-t07-site-delivery.log"
+  },
+  "trust": "References are manually entered; verified records are administrator declarations of actual queries with source/time. Browser commit/release/online fixtures are simulations, not real production evidence.",
+  "unverified": [
+    "real repository merge / release containing fix / per-feedback impact and online verification",
+    "real model quality / parameters / token usage and supplier billing",
+    "production DB migration / backup restore / worker configuration / large database performance"
+  ],
+  "cleanup": "Temporary account databases, outboxes and services destroyed by browser harness; final screenshots and logs retained."
+}

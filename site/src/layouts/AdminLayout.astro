@@ -1,0 +1,16 @@
+---
+import Layout from './Layout.astro';
+import '../styles/admin.css';
+const { title } = Astro.props;
+---
+<Layout title={`${title} · MaaS Daily 后台`} noindex={true}>
+  <main class="admin-shell" data-admin-page>
+    <header><p class="admin-eyebrow">MAAS DAILY / OPERATIONS</p><h1>{title}</h1><p id="admin-identity"></p></header>
+    <nav aria-label="后台导航"><a href="/admin/">系统状态</a><a href="/admin/users/">用户与权益</a><a href="/admin/feedback/">反馈处理</a><a href="/admin/problems/">问题与修复</a><a href="/admin/weekly/">周报生产</a><a href="/admin/analytics/">流量与使用</a><a href="/admin/sources/">信源质量</a><a href="/admin/tasks/">日常任务</a><a href="/admin/delivery/">邮件投递</a><a href="/admin/health/">服务健康</a><a href="/admin/payments/">付费与对账</a><a href="/admin/audit/">操作审计</a></nav>
+    <p id="admin-status" role="status" aria-live="polite">正在检查后台权限…</p>
+    <button id="admin-retry" type="button">重新检查</button>
+    <section id="admin-private" hidden><slot /></section>
+    <p class="admin-note">内部备注仅管理员可见；公开回复会展示给反馈提交者。</p>
+  </main>
+</Layout>
+<script>import '../lib/admin-client';</script>

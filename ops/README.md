@@ -123,3 +123,19 @@ journalctl -u maas-release-cleanup.service
 2026-10-04 已在生产安装清理规则并启用 timer，首次手动执行 `Result=success / ExecMainStatus=0`；
 下次计划执行为北京时间 2026-10-05 04:00。旧激活器备份位于服务器
 `/srv/maasweekly/shared/state/activator-before-retention-20261004`。
+
+## T05后台监控（本地候选）
+
+信源与任务入口、受控artifact/inbox采集、migration5、权限隔离、故障恢复及生产接入配置见 [T05交付记录](../docs/product/admin-operations-v1/T05-implementation.md)。后台API不读生产抓取/SSH密钥或原始日志，不提供抓取/发布重试。新增Actions回执适配未部署、未安装新调度。
+
+## T06邮件投递与服务健康（本地候选）
+
+入口、邮件状态/租约变化、受控供应商查询/验签回执与健康inbox协议见 [T06交付记录](../docs/product/admin-operations-v1/T06-implementation.md)。新版停止超时/过期租约自动重发；切换时不要混跑旧sender。维护脚本可选`--admin-records`只输出实际backup/隔离SQLite恢复/health结果，没有安装调度或新通知。后台不持有SSH、systemctl或恢复执行权限。
+
+## T07问题辅助诊断（本地候选）
+
+独立诊断 worker、migration7、人工查询修复/发布引用、逐条反馈验证及恢复协议见 [T07交付记录](../docs/product/admin-operations-v1/T07-implementation.md)。默认mock、付费关闭；没有生产worker/调度、代码托管自动同步、仓库写入或自动部署。回滚先停止worker，保留私有诊断材料、费用与审计；执行未知必须先核对供应商。
+
+## T08付费订阅（部分本地候选）
+
+本机模拟器、8/9加法迁移及readonly回调worker已本地验证；真实渠道/沙箱尚未配置，未完成收费开发与验收。合同、运行/恢复与明确缺口见 [T08交接](../docs/product/admin-operations-v1/T08-implementation.md)。默认disabled，无live密钥/真实退款/新增生产回调代理/调度；保留金融事实，不DROP新表。

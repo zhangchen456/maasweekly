@@ -1,3 +1,4 @@
+import { paidEntitlement } from './payment-store.js';
 import { randomBytes, randomUUID, createCipheriv, createDecipheriv, createHash } from 'node:crypto';
 import { z } from 'zod';
 import { AccountStore, AccountError, hash, type User } from './account-store.js';
@@ -36,6 +37,11 @@ export function csvRows(rows: Record<string,string>[]) {
   return [keys.map(cell).join(','), ...rows.map(r => keys.map(k => cell(r[k] ?? '')).join(','))].join('\r\n');
 }
 
+export function effectiveEntitlement(e: {starts:number;ends:number;revoked:number}|undefined, beta: {created:number}|undefined, available:boolean, now:number) {
+  if (beta && available && !e?.revoked) return {status:'active',starts:beta.created,ends:null,source:'beta'};
+  return {source:'manual',status:!e?'pending':e.revoked?'revoked':e.starts>now?'pending':e.ends<=now?'expired':'active',starts:e?.starts??null,ends:e?.ends??null};
+}
+
 export class ProStore {
   constructor(readonly accounts: AccountStore) {
     accounts.db.exec(`
@@ -64,8 +70,7 @@ export class ProStore {
   entitlement(userId: string) {
     const e = this.db.prepare('SELECT starts,ends,revoked FROM pro_entitlements WHERE userId=?').get(userId) as {starts:number;ends:number;revoked:number} | undefined;
     const beta = this.db.prepare('SELECT created FROM pro_beta_access WHERE userId=?').get(userId) as {created:number} | undefined;
-    if (beta && this.betaAvailable && !e?.revoked) return {status:'active', starts:beta.created, ends:null, source:'beta'};
-    return { source:'manual', status: !e ? 'pending' : e.revoked ? 'revoked' : e.starts > this.now ? 'pending' : e.ends <= this.now ? 'expired' : 'active', starts: e?.starts ?? null, ends: e?.ends ?? null };
+    return paidEntitlement(this.db,userId,this.now) ?? effectiveEntitlement(e,beta,this.betaAvailable,this.now);
   }
   get betaAvailable() { return process.env.PRO_BETA_ENABLED !== 'false'; }
   activateBeta(userId: string) {
@@ -80,26 +85,33 @@ export class ProStore {
   require(userId: string) { if (this.entitlement(userId).status !== 'active') throw new AccountError(403, 'pro_required', '专业服务未生效或已到期，请查看账户权益'); }
   grant(userId: string, starts: number, ends: number, actor: string, note: string, revoked = false) {
     if (!Number.isSafeInteger(starts) || !Number.isSafeInteger(ends) || starts >= ends) throw new Error('invalid service period');
-    this.accounts.transaction(() => {
+    this.accounts.transaction(() => this.grantInTransaction(userId,starts,ends,actor,note,revoked));
+  }
+  grantInTransaction(userId:string,starts:number,ends:number,actor:string,note:string,revoked=false) {
+    if (!Number.isSafeInteger(starts) || !Number.isSafeInteger(ends) || starts >= ends) throw new AccountError(400,'invalid_period','服务期无效');
       this.audit(actor, revoked ? 'revoke' : 'grant', userId, note);
       this.db.prepare('INSERT INTO pro_entitlements VALUES(?,?,?,?) ON CONFLICT(userId) DO UPDATE SET starts=excluded.starts,ends=excluded.ends,revoked=excluded.revoked').run(userId, starts, ends, Number(revoked));
       this.event(revoked ? 'entitlement_revoked' : 'entitlement_granted','',userId);
-      if (revoked) this.db.prepare("UPDATE pro_mail SET status='cancelled' WHERE userId=? AND status='pending'").run(userId);
-    });
+      if (revoked && this.entitlement(userId).status !== 'active') this.db.prepare("UPDATE pro_mail SET status='cancelled' WHERE userId=? AND status='pending'").run(userId);
   }
   draft(input: unknown, actor: string) {
     const c = contentSchema.parse(input);
-    this.accounts.transaction(() => {
+    this.accounts.transaction(() => this.draftInTransaction(c, actor)); return c;
+  }
+  draftInTransaction(input: unknown, actor: string) {
+    const c = contentSchema.parse(input);
       const latest = this.db.prepare('SELECT MAX(version) AS version FROM pro_content WHERE id=?').get(c.id)?.version as number | null;
       if (c.version !== (latest ?? 0) + 1) throw new Error('version must increment by one');
       if (latest && !c.sample && this.db.prepare("SELECT 1 FROM pro_content WHERE id=? AND json_extract(payload,'$.sample')=1").get(c.id)) throw new Error('public sample cannot become private');
       if (latest && !c.correction.trim()) throw new Error('revision requires correction note');
       this.audit(actor, 'draft', `${c.id}:${c.version}`, c.correction || 'initial draft');
       this.db.prepare("INSERT INTO pro_content(id,version,payload,state) VALUES(?,?,?,'draft')").run(c.id,c.version,JSON.stringify(c));
-    }); return c;
+    return c;
   }
   transition(id: string, version: number, action: 'review'|'publish'|'withdraw', actor: string, note: string) {
-    this.accounts.transaction(() => {
+    this.accounts.transaction(() => this.transitionInTransaction(id,version,action,actor,note));
+  }
+  transitionInTransaction(id: string, version: number, action: 'review'|'publish'|'withdraw', actor: string, note: string) {
       const row = this.db.prepare('SELECT * FROM pro_content WHERE id=? AND version=?').get(id,version) as ContentRow | undefined;
       if (!row) throw new Error('content not found');
       if (action === 'review' && row.state !== 'draft' || action === 'publish' && row.state !== 'in_review' || action === 'withdraw' && row.state !== 'published') throw new Error('invalid editorial transition');
@@ -112,7 +124,6 @@ export class ProStore {
         this.db.prepare("UPDATE pro_content SET state='superseded' WHERE id=? AND version<? AND state='published'").run(id,version);
         this.propagate(id, version, action, action === 'withdraw' || JSON.parse(row.payload).critical);
       }
-    });
   }
   contents(): (ProContent & {reviewedAt:number;publishedAt:number})[] { return (this.db.prepare("SELECT payload,reviewed,published FROM pro_content WHERE state='published' ORDER BY published DESC,id").all() as {payload:string;reviewed:number;published:number}[]).map(r => ({...JSON.parse(r.payload),reviewedAt:r.reviewed,publishedAt:r.published})); }
   feedContents() { return (this.db.prepare("SELECT payload,state FROM pro_content WHERE state IN ('published','withdrawn') AND version=(SELECT MAX(version) FROM pro_content c WHERE c.id=pro_content.id AND c.state IN ('published','withdrawn')) ORDER BY published DESC LIMIT 500").all() as {payload:string;state:string}[]).map(r => ({...JSON.parse(r.payload) as ProContent,withdrawn:r.state === 'withdrawn'})); }
@@ -186,7 +197,10 @@ export class ProStore {
   compose(period: string, coverage: 'normal'|'partial'|'failed', queueMail = false) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(period) || !Number.isFinite(Date.parse(period))) throw new Error('period must be Monday YYYY-MM-DD');
     const to = Date.parse(`${period}T00:00:00+08:00`); if (new Date(to+8*3600000).getUTCDay() !== 1) throw new Error('period must end on Monday');
-    return this.accounts.transaction(() => {
+    return this.accounts.transaction(() => this.composeInTransaction(period,coverage,queueMail));
+  }
+  composeInTransaction(period: string, coverage: 'normal'|'partial'|'failed', queueMail=false) {
+    const to=Date.parse(`${period}T00:00:00+08:00`);
       let count = 0;
       const settings = this.db.prepare('SELECT userId FROM pro_settings').all() as {userId:string}[];
       for (const {userId} of settings) {
@@ -198,7 +212,6 @@ export class ProStore {
         if (!inserted.changes) continue; count++;
         if (queueMail && s.emailEnabled) this.db.prepare('INSERT OR IGNORE INTO pro_mail(id,userId,reportId,created) VALUES(?,?,?,?)').run(`report-${reportId}`,userId,reportId,this.now);
       } return count;
-    });
   }
   private propagate(contentId: string, version: number, action: 'publish'|'withdraw', critical: boolean) {
     if (!critical) return;

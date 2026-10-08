@@ -1,0 +1,33 @@
+{
+  "monitor": [
+    {
+      "id": "google-vertex-changelog",
+      "name": "Synthetic Google Vertex changelog failure",
+      "platform": "google",
+      "kind": "changelog",
+      "budgetHours": 48,
+      "latestAttemptAt": 1790503200000,
+      "latestSuccessAt": null,
+      "dataThrough": null,
+      "consecutiveFailures": 1,
+      "failureCountTruncated": false,
+      "health": "degraded",
+      "freshness": "unknown",
+      "coverage": "missing",
+      "outcome": "fetch_failed",
+      "errorSummary": "抓取失败",
+      "runId": "independent-failed-run",
+      "runLink": null
+    }
+  ],
+  "issueCoverage": "normal",
+  "publication": {
+    "id": "weekly-2026-09-28",
+    "publicationId": "b4d03fb5-b3c1-416e-826a-238f6bed45a4",
+    "state": "published",
+    "version": 5
+  },
+  "conclusion": "Monitor failure does not affect editorial coverage or publication"
+}
+(node:75909) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

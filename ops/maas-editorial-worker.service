@@ -1,0 +1,22 @@
+# Candidate service. No timer, automatic publication or mail delivery.
+[Unit]
+Description=MaaS Daily editorial worker
+After=network.target
+[Service]
+Type=simple
+User=maasagent
+Group=maasagent
+WorkingDirectory=/srv/maasweekly/current/services/agent-api
+EnvironmentFile=/srv/maasweekly/shared/agent.env
+EnvironmentFile=/srv/maasweekly/shared/editorial.env
+ExecStart=/usr/bin/node dist/editorial-worker.js
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=210
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/maasweekly/shared
+[Install]
+WantedBy=multi-user.target

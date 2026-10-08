@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-04",
+  "status": "local_simulator_delivered_real_provider_blocked",
+  "taskComplete": false,
+  "environment": "isolated_local_simulator",
+  "realProvider": "not_confirmed_or_implemented",
+  "realSandbox": "not_run",
+  "liveOperations": false,
+  "checks": {
+    "apiBuild": "passed",
+    "apiRegression": {
+      "passed": 195,
+      "total": 195
+    },
+    "paymentFinal": {
+      "passed": 21,
+      "total": 21
+    },
+    "pageModels": "passed",
+    "finalSiteBuild": {
+      "status": "passed",
+      "pages": 47465
+    },
+    "paymentBrowser": {
+      "flows": 9,
+      "errors": 0
+    },
+    "existingAdminBrowser": {
+      "flows": 16,
+      "errors": 0
+    },
+    "diffShellPythonAst": "passed"
+  },
+  "migrations": [
+    8,
+    9
+  ],
+  "coverage": [
+    "initial_payment",
+    "renewal",
+    "failed_payment",
+    "cancel_at_period_end",
+    "terminate",
+    "expiry",
+    "partial_and_full_refund",
+    "refund_atomic_recovery",
+    "two_process_refund_balance",
+    "duplicate_out_of_order_missing_callbacks",
+    "signed_callback_and_server_object_binding",
+    "paid_website_rest_mcp_rss_and_mail",
+    "manual_revoke_preserves_paid_delivery",
+    "worker_timeout_lease_fencing_bounded_query_and_audited_retry",
+    "currency_reconciliation_snapshot_and_append_only_difference_actions",
+    "migration8_and_9_atomic_rollback",
+    "no_private_static_projection_or_persistent_browser_storage",
+    "mobile_scroll_and_logout_dom_and_query_input_clear"
+  ],
+  "logs": [
+    "/private/tmp/maas-t08-api-final-delivery.log",
+    "/private/tmp/maas-t08-payment-delivery.log",
+    "/private/tmp/maas-t08-site-final-delivery.log",
+    "/private/tmp/maas-t08-browser-final-delivery.log",
+    "/private/tmp/maas-t08-browser-regression.log"
+  ],
+  "usage": {
+    "primaryUsedPercent": 34,
+    "secondaryUsedPercent": 93,
+    "ordinaryUsageAllowed": true,
+    "resetCreditsUsed": false
+  },
+  "remaining": [
+    "Confirm merchant/provider, currency, price, cycle, taxes and entitlement/refund rules",
+    "Supply sandbox product IDs and private test credentials/callback setup",
+    "Implement the chosen provider hosted checkout, normalized verified events and financial write/recovery adapters",
+    "Run the real supplier sandbox matrix and obtain supplier financial evidence",
+    "Obtain separate production migration/notification/release authorization"
+  ],
+  "resume": "Read T08-implementation.md; check limits; preserve all existing workspace changes; do not enable live"
+}

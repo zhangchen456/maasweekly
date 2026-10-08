@@ -1,0 +1,33 @@
+{
+  "monitor": [
+    {
+      "id": "google-vertex-changelog",
+      "name": "Synthetic Google Vertex changelog failure",
+      "platform": "google",
+      "kind": "changelog",
+      "budgetHours": 48,
+      "latestAttemptAt": 1790503200000,
+      "latestSuccessAt": null,
+      "dataThrough": null,
+      "consecutiveFailures": 1,
+      "failureCountTruncated": false,
+      "health": "degraded",
+      "freshness": "unknown",
+      "coverage": "missing",
+      "outcome": "fetch_failed",
+      "errorSummary": "抓取失败",
+      "runId": "independent-failed-run",
+      "runLink": null
+    }
+  ],
+  "issueCoverage": "partial",
+  "publication": {
+    "id": "weekly-2026-09-28",
+    "publicationId": "9553dbf1-3f64-446a-8f7e-916779b82121",
+    "state": "published",
+    "version": 5
+  },
+  "conclusion": "Independent assertions passed: normal blocked; stale acknowledgment blocked; explicit partial published; legacy basis blocked; repeat publication remains one"
+}
+(node:79147) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

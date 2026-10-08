@@ -1,0 +1,5 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="服务健康"><p>每项保留来源与检查时间。过期或缺失显示未知；备份成功不代表恢复验证成功。</p><p id="delivery-status" role="status"></p><div id="health-items"></div><p>服务重启、生产回滚和恢复仍按既有运维流程，在受控终端执行。</p></AdminLayout>
+<script>import '../../lib/admin-delivery-client';</script>

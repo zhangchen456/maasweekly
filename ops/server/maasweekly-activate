@@ -288,6 +288,46 @@ location = /api/account/feedback {
     add_header Referrer-Policy "no-referrer" always;
     limit_except GET POST { deny all; }
 }
+# Admin foundation; larger editorial bodies require a future exact location.
+location /api/admin/ {
+    limit_req zone=api_anon burst=10 nodelay;
+    limit_req_status 429;
+    client_max_body_size 16k;
+    proxy_pass http://agent_api;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Maas-Client-IP $remote_addr;
+    proxy_set_header X-Forwarded-For "";
+    proxy_set_header CF-IPCountry "";
+    proxy_connect_timeout 5s;
+    proxy_read_timeout 30s;
+    proxy_cache off;
+    access_log off;
+    error_log /dev/null crit;
+    add_header Cache-Control "no-store" always;
+    add_header Referrer-Policy "no-referrer" always;
+    limit_except GET POST { deny all; }
+}
+# Only the exact revision route accepts a larger private editorial package.
+location ~ ^/api/admin/weekly/[a-zA-Z0-9:_-]+/revisions$ {
+    limit_req zone=api_anon burst=10 nodelay;
+    limit_req_status 429;
+    client_max_body_size 1m;
+    proxy_pass http://agent_api;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Maas-Client-IP $remote_addr;
+    proxy_set_header X-Forwarded-For "";
+    proxy_set_header CF-IPCountry "";
+    proxy_connect_timeout 5s;
+    proxy_read_timeout 30s;
+    proxy_cache off;
+    access_log off;
+    error_log /dev/null crit;
+    add_header Cache-Control "no-store" always;
+    add_header Referrer-Policy "no-referrer" always;
+    limit_except GET POST { deny all; }
+}
 # Protected professional content and private RSS: no URL credential logging.
 location /api/pro/ {
     limit_req zone=api_anon burst=10 nodelay;

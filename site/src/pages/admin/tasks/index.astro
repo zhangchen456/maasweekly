@@ -1,0 +1,11 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="日常任务">
+  <p>执行成功、数据校验通过和发布完成是独立结果。未接入安全执行适配的任务通过受控运行入口定位；本页不执行抓取、发布或任意命令。</p>
+  <p id="monitor-status" role="status"></p>
+  <form id="monitor-filter"><input name="runId" type="hidden" /><input name="sourceId" type="hidden" /><label>任务类型 <input name="kind" placeholder="prices / sources / editorial" /></label><label>任务状态 <select name="state"><option value="">全部</option><option value="succeeded">执行成功</option><option value="failed">执行失败</option><option value="needs_review">需核查</option><option value="running">运行中</option><option value="queued">排队</option><option value="cancelled">取消</option></select></label><button>查询</button></form>
+  <div id="monitor-runs"></div><button id="monitor-next" hidden>更多任务</button>
+  <p>外部执行链的排队、未执行与进程硬中断可能没有记录；没有记录不表示成功。已接入T03周报任务的实时状态。</p>
+</AdminLayout>
+<script>import '../../../lib/admin-monitor-client';</script>

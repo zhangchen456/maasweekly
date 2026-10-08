@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-04",
+  "scope": "Local isolated SQLite/API/CLI, simulated signatures and supplier queries, file outbox; no production operations or real email",
+  "api": {
+    "tests": 162,
+    "passed": 162,
+    "failed": 0,
+    "t06Tests": 16
+  },
+  "maintenance": {
+    "tests": 6,
+    "passed": 6
+  },
+  "site": {
+    "pages": 47461,
+    "status": "passed"
+  },
+  "pageModels": "passed",
+  "browserFocus": {
+    "flows": 8,
+    "errors": 0
+  },
+  "browserRegression": {
+    "flows": 16,
+    "errors": 0
+  },
+  "unverified": [
+    "production migration/permissions/performance",
+    "real Resend send/delivery/query permissions",
+    "webhook network receiver and trusted transport",
+    "production backup/full application recovery",
+    "production release and public entrypoint consistency"
+  ],
+  "mailFinal": {
+    "tests": 39,
+    "passed": 39,
+    "scope": "Final provider-field change: account/pro/T06 related regression"
+  }
+}

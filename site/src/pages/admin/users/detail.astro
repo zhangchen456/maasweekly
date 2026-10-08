@@ -1,0 +1,14 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="用户详情">
+  <section data-operations="users-detail">
+    <p id="ops-status" role="status"></p><div id="ops-items"></div><a id="ops-feedback-link">查看此用户反馈</a>
+    <h2>管理操作</h2><p>手工授权不会开启邮件或生成付费记录。有效公测优先于手工服务期；撤销会阻止公测与手工权益并取消待发送专业邮件，再次授权可能恢复公测。</p>
+    <form id="ops-entitlement" data-action="entitlement"><label>操作<select name="operation"><option value="grant">手工授权</option><option value="revoke">撤销权益</option></select></label><label>开始时间（带时区 ISO）<input name="starts" placeholder="2026-10-04T09:00:00+08:00" /></label><label>结束时间（带时区 ISO）<input name="ends" placeholder="2026-11-04T09:00:00+08:00" /></label><label>原因<input name="reason" required maxlength="1000" /></label><button>提交权益操作</button></form>
+    <p>撤销网页会话将使该用户所有设备重新登录；专业凭证单独撤销。</p>
+    <form data-action="revoke-sessions"><label>原因<input name="reason" required maxlength="1000" /></label><button>撤销全部网页会话</button></form>
+    <form id="ops-credential" data-action="credential"><label>专业凭证<select name="credentialId" required></select></label><label>原因<input name="reason" required maxlength="1000" /></label><button>撤销所选专业凭证</button></form>
+  </section>
+</AdminLayout>
+<script>import '../../../lib/admin-operations-client';</script>

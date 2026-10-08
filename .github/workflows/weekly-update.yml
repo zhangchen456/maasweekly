@@ -28,6 +28,8 @@ permissions:
 jobs:
   weekly:
     runs-on: ubuntu-latest
+    env:
+      MAAS_MONITOR_OUTPUT: ${{ runner.temp }}/monitor-stages
     concurrency:
       group: maas-data-write-main
       cancel-in-progress: false
@@ -74,7 +76,6 @@ jobs:
 
       # ---- 抓取 + 汇总 diff ----
       - name: Setup Playwright
-        if: steps.mode.outputs.mode != 'import'
         run: |
           pip install --quiet -c requirements.lock.txt playwright beautifulsoup4
           python3 -m playwright install chromium --with-deps
@@ -87,12 +88,12 @@ jobs:
 
       - name: Sync diff data to site
         if: steps.mode.outputs.mode != 'aggregate'
-        run: python3 pipeline/scripts/sync-diff-to-site.py
+        run: python3 scripts/monitor-record.py diff-sync
 
       # ---- 周度串讲（LLM，失败不阻塞）----
       - name: LLM weekly story
         if: steps.mode.outputs.mode != 'aggregate'
-        run: python3 pipeline/scripts/llm-weekly-digest.py --all
+        run: python3 scripts/monitor-record.py weekly-summary
         env:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
         continue-on-error: true
@@ -101,7 +102,7 @@ jobs:
       - name: Import weekly reports
         if: steps.mode.outputs.mode != 'aggregate'
         run: |
-          python3 site/scripts/import-weekly.py
+          python3 scripts/monitor-record.py weekly-import
 
       # ---- 生成由数据驱动的 tracked 产物（§5.2：所有数据驱动的 tracked 文件
       #      必须在 commit 前生成并提交，否则 build-release.sh [3/6] tracked
@@ -109,14 +110,14 @@ jobs:
       - name: Prebuild site artifacts
         if: steps.mode.outputs.mode != 'aggregate'
         run: |
-          python3 pipeline/scripts/project-site-data.py
+          python3 scripts/monitor-record.py site-projection
           python3 site/scripts/build-skill-package.py
       - name: Export public data
         if: steps.mode.outputs.mode != 'aggregate'
-        run: python3 pipeline/scripts/export-public-data.py
+        run: python3 scripts/monitor-record.py public-export
       - name: Validate public data
         if: steps.mode.outputs.mode != 'aggregate'
-        run: python3 pipeline/scripts/export-public-data.py --check
+        run: python3 scripts/monitor-record.py public-validation # fixed export-public-data.py --check
 
       # ---- 提交数据（§5.2：先入库）----
       # aggregate 模式提交素材（data/weekly 等汇总）；full/import 模式提交
@@ -128,6 +129,18 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/ site/src/content/ site/src/data/ site/public/maas-skill/
           bash scripts/commit-workflow-data.sh "data: 周报更新 $(date +'%Y-%m-%d')"
+
+      - name: Collect sanitized task records
+        if: always()
+        run: python3 scripts/monitor-collect.py --stages "$MAAS_MONITOR_OUTPUT" --output "$RUNNER_TEMP/monitor-inbox"
+      - name: Archive sanitized task records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monitor-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/monitor-inbox/
+          retention-days: 14
+          if-no-files-found: warn
 
       - name: Preserve interrupted pipeline inputs
         if: always() && hashFiles('data/pipeline-pending.json') != ''

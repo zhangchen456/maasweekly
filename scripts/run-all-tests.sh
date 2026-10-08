@@ -73,6 +73,7 @@ run "test_public_retention（公开历史引用完整性）" python3 -m unittest
 run "test_cross_platform（关系与官方价格）" python3 -m unittest discover -s tests -p 'test_cross_platform.py'
 run "test_regression_diagnostics（CI failure evidence）" python3 -m unittest discover -s tests -p 'test_regression_diagnostics.py'
 run "test_current_pricing（official table drift）" python3 -m unittest discover -s tests -p 'test_current_pricing.py'
+run "test_monitor_collection（T05 controlled receipts）" python3 -m unittest discover -s tests -p 'test_monitor_collection.py'
 run "test_record_archive（Task 01）" python3 -m unittest discover -s tests -p 'test_record_archive.py'
 run "test_price_archive（Task 02）" python3 -m unittest discover -s tests -p 'test_price_archive.py'
 run "test_public_export（Task 03）" python3 -m unittest discover -s tests -p 'test_public_export.py'
@@ -137,6 +138,13 @@ run "agent-api: MCP 真实数据" bash -c 'cd services/agent-api && npm run test
 run "site: feedback interaction" bash -c 'cd site && node --test tests/feedback.test.mjs'
 run "site: password login interaction" bash -c 'cd site && node --test tests/account-password.test.mjs'
 run "site: scope checkbox interaction" bash -c 'cd site && node --test tests/pro-scope.test.mjs'
+
+# Local admin acceptance uses temporary SQLite/outbox and blocks external browser requests.
+if ! $QUICK; then
+  run "admin: isolated browser acceptance" python3 scripts/admin-browser-smoke.py --output "$SUITE_LOG_DIR/admin-browser"
+  run "admin: isolated payment simulator acceptance" python3 scripts/admin-browser-smoke.py --focus payments --output "$SUITE_LOG_DIR/admin-payments-browser"
+  run "admin: isolated problem diagnosis acceptance" python3 scripts/admin-browser-smoke.py --focus problems --output "$SUITE_LOG_DIR/admin-problems-browser"
+fi
 
 # ---- 汇总 ----
 echo "══════════════════════════"

@@ -1,0 +1,10 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="用户与权益">
+  <section data-operations="users">
+    <form id="ops-filter"><label>邮箱或 userId<input name="q" /></label><label>权益<select name="entitlementStatus"><option value="">全部</option><option value="active">有效 Plus</option><option value="free">Free（未生效）</option></select></label><label>来源<select name="source"><option value="">全部</option><option value="beta">公测</option><option value="manual">手工</option><option value="paid">付费</option></select></label><button>查询</button></form>
+    <p id="ops-status" role="status"></p><div id="ops-items"></div><button id="ops-next" hidden>下一页</button>
+  </section>
+</AdminLayout>
+<script>import '../../../lib/admin-operations-client';</script>

@@ -1,3 +1,8 @@
+import { PaymentStore } from './payment-store.js';
+import { createPaymentWebhook } from './payment-http.js';
+import { trackAnalyticsRequest } from './admin-analytics.js';
+import { AdminStore } from './admin-store.js';
+import { createAdminHandler } from './admin-http.js';
 /**
  * server.ts：agent-api 启动入口（Task 03 M5）。
  *
@@ -93,13 +98,19 @@ const accountStore = process.env.MAAS_ACCOUNT_DB ? new AccountStore(path.resolve
 const accountHandler = createAccountHandler(accountStore, createMailer(), holder, { origin: accountOrigin, secure: accountUrl.protocol === 'https:', trustProxy: TRUST_PROXY });
 const proStore = accountStore ? new ProStore(accountStore) : null;
 const proConfig = { origin: accountOrigin, secure: accountUrl.protocol === 'https:', trustProxy: TRUST_PROXY };
+const adminStore = accountStore ? new AdminStore(accountStore) : null;
+const adminHandler = createAdminHandler(adminStore, holder, proConfig, logger?.emit);
+const paymentWebhook=createPaymentWebhook(adminStore?new PaymentStore(adminStore):null,accountOrigin);
 const proHandler = createProHandler(proStore, holder, proConfig, Boolean(createMailer()));
 const mcpHandler = instrumentRequest(createMcpHandler(holder, mcpConfig), holder, releaseId, logger?.emit);
 const proMcpHandler = proStore ? createMcpHandler(holder, mcpConfig, {store:proStore,config:proConfig}) : proHandler;
 const server = http.createServer((req, res) => {
+  if(adminStore)trackAnalyticsRequest(adminStore,req,res);
   const pathname = (req.url ?? '').split('?')[0] ?? '';
   if (pathname === '/api/pro/mcp') { void proMcpHandler(req, res); return; }
+  if (pathname==='/api/payment/webhook') { void paymentWebhook(req,res);return;}
   if (pathname.startsWith('/api/pro/')) { void proHandler(req, res); return; }
+  if (pathname.startsWith('/api/admin/')) { void adminHandler(req, res); return; }
   if (pathname.startsWith('/api/account/')) { void accountHandler(req, res); return; }
   if (pathname === '/_locale/country') { countryHandler(req, res); return; }
   if (pathname === '/api/mcp') {

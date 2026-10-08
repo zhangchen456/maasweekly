@@ -1,0 +1,11 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+<AdminLayout title="操作审计">
+  <form id="admin-audit-filter" class="admin-filter">
+    <label>动作<input name="action" maxlength="200" /></label><label>对象类型<input name="targetType" maxlength="200" /></label><label>对象 ID<input name="targetId" maxlength="200" /></label>
+    <label>开始时间<input name="from" type="datetime-local" /></label><label>结束时间<input name="to" type="datetime-local" /></label><button type="submit">查询</button>
+  </form>
+  <div class="admin-table-wrap"><table><thead><tr><th>时间 / 请求 ID</th><th>操作者</th><th>动作 / 对象</th><th>原因</th><th>变更详情</th></tr></thead><tbody id="admin-audit-items"></tbody></table></div>
+  <button id="admin-next" type="button" hidden>下一页</button>
+</AdminLayout>

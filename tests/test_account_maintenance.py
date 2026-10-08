@@ -63,3 +63,35 @@ class AccountMaintenanceTests(unittest.TestCase):
 
 
 if __name__ == '__main__': unittest.main()
+
+class AdminMaintenanceRecordTests(unittest.TestCase):
+    def test_records_keep_backup_and_restore_separate_and_private(self):
+        import json
+        with tempfile.TemporaryDirectory() as work:
+            root = Path(work) / 'inbox'
+            module.admin_records(root, 'backup', True, {'backup': '/private/secret/path', 'restore': 'ok'})
+            records = [json.loads(p.read_text()) for p in root.glob('*.json')]
+            self.assertEqual({r['kind'] for r in records}, {'backup', 'restore'})
+            self.assertTrue(all(r['status'] == 'normal' for r in records))
+            self.assertTrue(all(r['checkedAt'] > 0 for r in records))
+            self.assertNotIn('secret', json.dumps(records))
+            self.assertTrue(all(p.stat().st_mode & 0o777 == 0o600 for p in root.glob('*.json')))
+
+    def test_failed_backup_does_not_assert_restore_passed(self):
+        import json
+        with tempfile.TemporaryDirectory() as work:
+            root = Path(work) / 'inbox'
+            module.admin_records(root, 'backup', False)
+            records = {r['kind']: r for r in (json.loads(p.read_text()) for p in root.glob('*.json'))}
+            self.assertEqual(records['backup']['status'], 'abnormal')
+            self.assertEqual(records['restore']['status'], 'unknown')
+
+    def test_health_alerts_record_abnormal_without_notify(self):
+        import json
+        with tempfile.TemporaryDirectory() as work, patch.object(module, 'notify') as notify:
+            root = Path(work) / 'inbox'
+            module.admin_records(root, 'health', True, {'alerts': ['mail_review']})
+            record = json.loads(next(root.glob('*.json')).read_text())
+            self.assertEqual(record['status'], 'abnormal')
+            self.assertEqual(record['source'], 'account-maintenance.health')
+            notify.assert_not_called()

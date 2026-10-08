@@ -8,6 +8,7 @@ import seoSitemap from './scripts/seo-sitemap.mjs';
 export default defineConfig({
   site: SITE_CANONICAL,
   vite: { server: { proxy: {
+    '/api/admin/': 'http://127.0.0.1:8787',
     '/api/pro/': 'http://127.0.0.1:8787',
     '/api/account/': 'http://127.0.0.1:8787',
     '/api/v1/': 'http://127.0.0.1:8787',

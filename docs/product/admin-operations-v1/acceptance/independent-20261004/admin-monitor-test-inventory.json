@@ -1,0 +1,14 @@
+[
+  "additive migration is repeatable and rollback leaves no partial schema",
+  "success and unchanged are executions; validation and publication remain independent",
+  "partial and full failure preserve prior success, distinguish fetch and parse, no not-run success",
+  "unknown history and stale evidence never invent success",
+  "duplicate receipt and duplicate run are idempotent; conflicting replay rolls back whole batch",
+  "strict bounded protocol rejects arbitrary logs, commands, URLs, errors and unknown sources",
+  "queue ignores do not heal sources; resolution requires later successful same source and full coverage",
+  "validation anomaly cannot resolve using merely successful execution",
+  "runs pagination binds filters and omits private diagnostic payloads",
+  "HTTP permission, CSRF, write audit, version and no execution endpoints",
+  "two connections and restart preserve receipts and source history",
+  "T03 live state and safe versions project without config, payload or provider error text"
+]
