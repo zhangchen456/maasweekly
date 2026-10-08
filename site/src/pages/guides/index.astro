@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { priceGuides as chineseGuides } from '../../lib/price-guides';
+import { priceGuidesEnglish } from '../../lib/price-guides-en';
+const en = Astro.url.pathname.startsWith('/en/');
+const priceGuides = en ? priceGuidesEnglish : chineseGuides;
+const t = (zh, english) => en ? english : zh;
+---
+<Layout title={t('大模型 API 成本指南：Token 费用、缓存计费与平台比较 — MaaS Daily', 'LLM API cost guides: tokens, prompt caching and provider comparisons — MaaS Daily')} description={t('从实际问题理解大模型 API 费用，学习 Token 用量计算、提示词缓存计费和跨平台报价比较，再查询有来源的模型价格。', 'Learn how to calculate token costs, evaluate prompt caching and compare API providers, with original quotes and source evidence.')}>
+  <section class="guide-index">
+    <nav aria-label={t('面包屑', 'Breadcrumb')}><a href="/">{t('首页', 'Home')}</a> / {t('成本指南', 'Cost guides')}</nav>
+    <h1>{t('大模型 API 成本指南', 'LLM API cost guides')}</h1>
+    <p>{t('看懂价格，再用自己的用量做比较。指南解释计算方法，实时观察报价请查看模型详情。', 'Understand billing, then compare your own usage. These guides explain methods; inspect model pages for current observed quotes.')}</p>
+    {priceGuides.map(guide => <article><h2><a href={`/guides/${guide.slug}/`}>{guide.title}</a></h2><p>{guide.description}</p></article>)}
+    <p><a href="/pricing/#api-pricing">{t('API 价格与用量计算器 →', 'API prices and usage calculator →')}</a> · <a href="/compare/">{t('同模型跨平台报价 →', 'Same-model provider comparisons →')}</a></p>
+  </section>
+</Layout>
+<style>.guide-index{max-width:820px;padding:36px 0 48px}.guide-index h1{font-size:clamp(28px,5vw,40px);line-height:1.35}.guide-index p{line-height:1.85;color:var(--muted)}.guide-index a{color:var(--cyan)}article{padding:20px 0;border-bottom:1px solid var(--line)}h2{font-size:21px;line-height:1.5}nav{font-size:13px}</style>

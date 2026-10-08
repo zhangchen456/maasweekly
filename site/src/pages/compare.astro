@@ -34,6 +34,7 @@ const region = (p) => ({global:'全球',us:'美国多区域',eu:'欧盟多区域
       </table></div>
     </section>)}
     {!groups.length && <p>当前公开版本尚未收录经核验的跨平台关系。</p>}
+    <p><a href="/guides/compare-api-prices/">{Astro.url.pathname.startsWith('/en/') ? 'How to compare billing conditions →' : '怎样对齐模型身份、计费条件和用量？查看比较步骤 →'}</a></p>
     <p class="muted methodology"><a href="/method/">数据方法</a> · 批处理、优先档、缓存写入和其他条件报价见模型详情；此页不把不同条件混合成最低价排名。</p>
   </div>
 </Layout>

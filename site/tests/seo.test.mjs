@@ -38,6 +38,35 @@ assert.equal(XMLValidator.validate(xml), true);
 const urls = new XMLParser().parse(xml).urlset.url.map(entry => entry.loc);
 assert.equal(new Set(urls).size, urls.length);
 assert(!xml.includes('lastmod'), 'no fabricated modification times');
+for (const route of ['/compare/', '/en/compare/', '/guides/', '/guides/token-cost/', '/guides/prompt-caching/', '/guides/compare-api-prices/']) {
+  assert(urls.includes(canonicalUrl(route)), `search entry missing from sitemap: ${route}`);
+}
+for (const slug of ['token-cost', 'prompt-caching', 'compare-api-prices']) {
+  const doc = docFor(`guides/${slug}`);
+  assert.equal(doc.querySelectorAll('h1').length, 1);
+  assert(doc.querySelector('article').textContent.length > 600, 'guide must contain a complete static answer');
+  assert(!doc.querySelector('meta[name=robots]')?.content.includes('noindex'));
+  assert.equal(doc.querySelectorAll('link[rel=alternate][hreflang]').length, 2, 'both real guide translations are discoverable');
+  const english = docFor(`en/guides/${slug}`);
+  assert.equal(english.documentElement.lang, 'en');
+  assert.equal(english.querySelector('link[rel=canonical]').href, canonicalUrl(`/en/guides/${slug}/`));
+  assert(!/[\u3400-\u9fff]/.test(english.querySelector('article').textContent), 'English guides have actual translated static answers');
+  const graph = JSON.parse(doc.querySelector('script[type="application/ld+json"]').textContent)['@graph'];
+  const article = graph.find(item => item['@type'] === 'Article');
+  assert.equal(article.headline, doc.querySelector('h1').textContent);
+  assert.equal(article.mainEntityOfPage, doc.querySelector('link[rel=canonical]').href);
+  assert.equal(article.datePublished, doc.querySelector('time').dateTime);
+  const crumbs = graph.find(item => item['@type'] === 'BreadcrumbList').itemListElement;
+  assert.deepEqual(crumbs.map(item => item.position), [1, 2, 3]);
+  assert.equal(crumbs.at(-1).item, article.mainEntityOfPage);
+  for (const link of doc.querySelectorAll('article a[href^="/"]')) {
+    const pathname = new URL(link.getAttribute('href'), 'https://daily.maas.click').pathname;
+    assert(existsSync(path.join(dist, pathname, 'index.html')), `guide destination is unbuilt: ${pathname}`);
+  }
+}
+assert(docFor('guides/token-cost').querySelector('article').textContent.includes((10000 / 1000000 * 2 + 2000 / 1000000 * 8).toFixed(3)), 'cost example can be independently recomputed');
+assert(docFor('guides/prompt-caching').querySelector('article').textContent.includes((2000 / 1000000 * 2 + 8000 / 1000000 * 0.2).toFixed(4)), 'cache input counts each token once');
+for (const route of ['', 'pricing', 'models', 'compare']) assert(docFor(route).querySelector('a[href^="/guides/"]'), `guide not discoverable from ${route || 'home'}`);
 for (const url of urls) {
   const u = new URL(url);
   assert.equal(u.origin, 'https://daily.maas.click');

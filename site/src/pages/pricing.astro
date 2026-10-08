@@ -7,7 +7,7 @@ import { pricingPage } from '../lib/page-data';
 const { ledger, gpu, chips, ledgerDate, modelCount, providerCount, gpuRows, chipGroups } = pricingPage();
 ---
 
-<Layout title="大模型 API 价格比较与 GPU 租赁行情 — MaaS Daily" description="查询大模型 API 价格与成本估算，查看模型原币种报价、计费条件和价格变化，追踪 GPU 租赁行情与国产 AI 芯片动态。">
+<Layout title={Astro.url.pathname.startsWith('/en/') ? 'LLM API pricing comparison and cost calculator — MaaS Daily' : '大模型 API 价格对比与 Token 费用计算器 — MaaS Daily'} description="查询大模型 API 价格与成本估算，查看模型原币种报价、计费条件和价格变化，追踪 GPU 租赁行情与国产 AI 芯片动态。">
   <div class="pricing-page">
     <header class="pricing-hero reveal">
       <div class="pricing-intro">
@@ -28,6 +28,7 @@ const { ledger, gpu, chips, ledgerDate, modelCount, providerCount, gpuRows, chip
     </header>
 
     <ModelPriceLinks />
+    <p class="section-note"><a href="/guides/token-cost/">{Astro.url.pathname.startsWith('/en/') ? 'How to calculate Token costs →' : 'Token 费用怎么算？查看公式与完整用量示例 →'}</a></p>
 
     <section class="section pricing-section" id="api-pricing">
       <div class="section-heading">
