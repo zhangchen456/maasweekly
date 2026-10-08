@@ -26,4 +26,8 @@ Search Console 当时选择 Web、3 months，最后更新为25小时前：670 im
 
 ## 验证与发布
 
-本地最终构建52451页、sitemap19216条；SEO与中英文专项通过。真实浏览器390px中英文指南正文可读，scrollWidth375，无横向溢出；静态本地预览不提供账号API，未把账号保存错误记为生产故障或账号验收通过。标准发布门禁与线上定向复核待完成。首轮中文专项通过，后续中英文回归发现新指南需要双语sitemap；已补齐实际英文译本，保留严格回归规则。
+本地最终构建52451页、sitemap19216条；SEO与中英文专项通过。真实浏览器390px中英文指南正文可读，scrollWidth375，无横向溢出；静态本地预览不提供账号API，未把账号保存错误记为生产故障或账号验收通过。标准发布70组门禁通过、0失败，线上四入口成功；线上12页面、sitemap19216条、百度验证与robots通过，真实浏览器中英文390px无横向溢出。首轮中文专项通过，后续中英文回归发现新指南需要双语sitemap；已补齐实际英文译本，保留严格回归规则。
+
+最终提交680b2a4d3bb0e814fd4d94fd717f9428e471ab32，release rl_680b2a4d3b_22c3472abbdf。[发布流水线](https://github.com/zhangchen456/maasweekly/actions/runs/37750648224)成功。公开数据版本不变。两个mock worker重启加载最终版本，五个相关服务/调度active。证据见ci-success.json、release-summary.txt、validation-online.json、ui-online.json与runtime-online.json。
+
+本轮更新了站点地图文件，未完成Google控制台的手动重新提交状态核对；资源本身已有收录和展示，新页面是否被搜索引擎抓取、是否增加点击需后续实际报告验证。未声称新增指南已经收录。
