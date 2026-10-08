@@ -1,0 +1,7 @@
+{
+  "result": "failed",
+  "reason": "worker entrypoint import.meta.url resolved current symlink; argv path retained symlink; service exited success without running loop",
+  "diagnosticTask": "problem_f9ad6723-2bcb-4cf9-a330-59423af6567c",
+  "fix": "node --preserve-symlinks-main",
+  "cleanupRetry": "private task-ID group read permission corrected before retry"
+}
