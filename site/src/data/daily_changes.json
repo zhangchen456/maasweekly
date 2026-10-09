@@ -1,6 +1,997 @@
 {
-  "updated_at": "2026-10-08T00:54:21+00:00",
+  "updated_at": "2026-10-09T01:21:38+00:00",
   "days": [
+    {
+      "date": "2026-10-09",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 21,
+        "unchanged": 44
+      },
+      "changed": [
+        {
+          "platform": "百度千帆",
+          "source_type": "model_list",
+          "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 10,
+          "added_lines": [
+            "> DeepSeek系列思考模型支持设置thinking_budget，输出长度控制请参考[上下文管理](https://cloud.baidu.com/doc/qianfan-docs/s/Imkdq47r5)。"
+          ],
+          "removed_lines": [
+            "DeepSeek-V3.2 当前对应DeepSeek-V3.2 正式版，model参数/接入点ID不变。",
+            "DeepSeek-V3.2-Think 当前对应DeepSeek-V3.2 正式版，model参数/接入点ID不变。",
+            "DeepSeek系列思考模型支持设置thinking_budget，输出长度控制请参考上下文管理。",
+            "| DeepSeek-V3.2",
+            "| DeepSeek-V3.2(即将下线）",
+            "| DeepSeek-V3.2-Think",
+            "| DeepSeek-V3.2-Think(即将下线）",
+            "| DeepSeek-V4-Flash(即将下线）",
+            "| DeepSeek-V4-Flash（即将下线）",
+            "| [1,65536]"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "> DeepSeek系列思考模型支持设置thinking_budget，输出长度控制请参考[上下文管理](https://cloud.baidu.com/doc/qianfan-docs/s/Imkdq47r5)。",
+          "raw_added_count": 2,
+          "raw_removed_count": 14,
+          "id": "obs_92aef9e1c18aaeaeb8e81dae635a8bfd87ecc8a4ddf898398e03ab2debbd80ec",
+          "permalink": "/item/obs_92aef9e1c18aaeaeb8e81dae635a8bfd87ecc8a4ddf898398e03ab2debbd80ec/",
+          "llm_summary": "模型列表移除 DeepSeek-V3.2 及 V3.2-Think 的说明，新增 thinking_budget 设置指引，对应 V3.2 下线后的文档清理。"
+        },
+        {
+          "platform": "百度千帆",
+          "source_type": "pricing",
+          "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 10,
+          "added_lines": [
+            "| DeepSeek-V3.2（已下线）"
+          ],
+          "removed_lines": [
+            "DeepSeek-V4-Pro-0813",
+            "DeepSeek-V4.1-Flash",
+            "DeepSeek-V4.1-Flash、DeepSeek-V4-Pro-0813、GLM-5.3",
+            "2026年9月24日 00:00 – 2026年10月7日 23:59",
+            "22:00–次日8:00",
+            "| DeepSeek-V3.2",
+            "| DeepSeek-V3.2 （即将下线）",
+            "| DeepSeek-V3.2-Think",
+            "| DeepSeek-V3.2-Think（即将下线）",
+            "| DeepSeek-V3.2（即将下线）"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 40,
+          "id": "obs_ef62b65b7e4892d246859af9d74c3d934f0cfa2d3f8367c4db44253683ac3f5e",
+          "permalink": "/item/obs_ef62b65b7e4892d246859af9d74c3d934f0cfa2d3f8367c4db44253683ac3f5e/",
+          "llm_summary": "定价页移除 DeepSeek-V4-Pro-0813、V4.1-Flash 等条目，新增 DeepSeek-V3.2（已下线）标记，反映模型生命周期管理。"
+        },
+        {
+          "platform": "Kimi",
+          "source_type": "pricing",
+          "url": "https://platform.kimi.com/docs/pricing/chat",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "Kimi API 开放平台提供的模型推理服务是「按量计费」模式，不提供订阅制方案，请注意与 Kimi 会员、Kimi Code 等产品区分，查看产品差异。",
+            "注：缓存写入 是指将请求前缀写入 上下文缓存 所产生的费用。Kimi API 对重复的请求前缀自动启用上下文缓存，缓存条目按有效期（TTL）分为 5min 和 1h 两档，不指定 TTL 时默认按 5min 档。在有效期内命中缓存的输入仅按”输入价格（缓存命中）“计费，命中后缓存有效期自动续期，不再收取缓存写入费用。"
+          ],
+          "removed_lines": [
+            "注：缓存写入 是指将请求前缀写入上下文缓存所产生的费用。Kimi API 对重复的请求前缀自动启用上下文缓存，缓存条目按有效期（TTL）分为 5min 和 1h 两档，不指定 TTL 时默认按 5min 档。在有效期内命中缓存的输入仅按”输入价格（缓存命中）“计费，命中后缓存有效期自动续期，不再收取缓存写入费用。"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "token",
+              "before": "Token：代表常见的字符序列，每个汉字使用的 Token 数目可能是不同的。例如，单个汉字”夔”可能会被分解为若干 Token 的组合，而像”中国”这样短且常见的短语则可能会使用单个 Token。大致来说，对于一段通常的中文文本，1 个 Token 大约相当于 1.5-2 个汉字。具体每次调用实际产生的 Tokens 数量可以通过调用计算 Token API 来获得。",
+              "after": "Token：代表常见的字符序列，每个汉字使用的 Token 数目可能是不同的。例如，单个汉字”夔”可能会被分解为若干 Token 的组合，而像”中国”这样短且常见的短语则可能会使用单个 Token。大致来说，对于一段通常的中文文本，1 个 Token 大约相当于 1.5-2 个汉字。具体每次调用实际产生的 Tokens 数量可以通过调用 计算 Token API 来获得。"
+            }
+          ],
+          "signal_preview": "Kimi API 开放平台提供的模型推理服务是「按量计费」模式，不提供订阅制方案，请注意与 Kimi 会员、Kimi Code 等产品区分，查看产品差异。",
+          "raw_added_count": 3,
+          "raw_removed_count": 2,
+          "id": "obs_3f7708b7190f40be3dcf1d5ff2bfa0bbb2dd9142ce826b14e939aad68b8cba53",
+          "permalink": "/item/obs_3f7708b7190f40be3dcf1d5ff2bfa0bbb2dd9142ce826b14e939aad68b8cba53/",
+          "llm_summary": "定价页新增按量计费声明和缓存写入计费详细说明，同时更新 Token 定义，整体为计费说明的细化与澄清。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "| gpt-6.1-sol | $12.00 | $0.60 | $15.00 | $60.00 | $24.00 | $1.20 | $30.00 | $90.00"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| gpt-6.1-sol | $12.00 | $0.60 | $15.00 | $60.00 | $24.00 | $1.20 | $30.00 | $90.00",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_2823dac1395e608cbffe749f8913a9608ceb8886e2a2277a608f733a36bcfd11",
+          "permalink": "/item/obs_2823dac1395e608cbffe749f8913a9608ceb8886e2a2277a608f733a36bcfd11/",
+          "llm_summary": "新增 gpt-6.1-sol 的完整定价行，包含两档价格（$12/$60 和 $24/$90），对应新模型上架。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Added Ultrafast mode for GPT-6.1 Sol in the Responses API. Use gpt-6.1-sol with service_tier: \"ultrafast\" to reduce the time between generated output tokens. It is available to all API users, subject to rate limits, with global processing and US and EU data residency. See Ultrafast pricing."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Added Ultrafast mode for GPT-6.1 Sol in the Responses API. Use gpt-6.1-sol with service_tier: \"ultrafast\" to reduce the time between generated output tokens. It is available to all API users, subject to rate limits, with global processing and US and EU data residency. See Ultrafast pricing.",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_143273a8383298662711b49d138e3e502e9c72d3711d7f339854bd4c2ed8d624",
+          "permalink": "/item/obs_143273a8383298662711b49d138e3e502e9c72d3711d7f339854bd4c2ed8d624/",
+          "llm_summary": "新增 Ultrafast 模式说明，用于 gpt-6.1-sol 降低输出 token 间隔，与定价页新增模型一致。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Added Ultrafast mode for GPT-6.1 Sol in the Responses API. Use gpt-6.1-sol with service_tier: \"ultrafast\" to reduce the time between generated output tokens. It is available to all API users, subject to rate limits, with global processing and US and EU data residency. See Ultrafast pricing."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Added Ultrafast mode for GPT-6.1 Sol in the Responses API. Use gpt-6.1-sol with service_tier: \"ultrafast\" to reduce the time between generated output tokens. It is available to all API users, subject to rate limits, with global processing and US and EU data residency. See Ultrafast pricing.",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_fc591a32ee246ed0daa71357a51185c1f4d7c74a173bdbee07961e253bdffc83",
+          "permalink": "/item/obs_fc591a32ee246ed0daa71357a51185c1f4d7c74a173bdbee07961e253bdffc83/",
+          "llm_summary": "与 changelog 相同，新增 Ultrafast 模式公告，确认新功能发布。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "pricing",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 6,
+          "added_lines": [],
+          "removed_lines": [
+            "Average ~3,700 tokens per conversation",
+            "Claude Haiku 5.5 is priced by prompt length: a prompt of over 100,000 tokens pays higher prices. Model pricing and Batch processing list both sets of prices.",
+            "Example calculation for processing 10,000 support tickets:",
+            "For a detailed walkthrough of this calculation, see the customer support agent guide.",
+            "Total cost: ~$37.00 per 10,000 tickets",
+            "Using Claude Haiku 4.5 at $1/MTok input, $5/MTok output"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude haiku",
+              "before": "Claude Haiku 4.5",
+              "after": "Claude Haiku 5.5 is priced by prompt length: a request whose prompt is over 100,000 tokens pays higher prices. A request's prompt length counts all of its input tokens, including cache reads and cache writes. Each request is priced on its own: a request over the threshold pays the higher prices even when part of its prompt is a cache hit, and earlier requests keep the prices they were billed at. Model pricing and Batch processing list both sets of prices."
+            }
+          ],
+          "signal_preview": "Claude Haiku 5.5 is priced by prompt length: a request whose prompt is over 100,000 tokens pays higher prices. A request's prompt length counts all of its input tokens, including cache reads and cache writes. Each request is priced on its own: a request over the threshold pays the higher prices even when part of its prompt is a cache hit, and earlier requests keep the prices they were billed at. Model pricing and Batch processing list both sets of prices.",
+          "raw_added_count": 1,
+          "raw_removed_count": 7,
+          "id": "obs_fab6509d6fe43f8a3d0f2c384a8fb5dde5a4d60c5a0050ad787e524da0049db9",
+          "permalink": "/item/obs_fab6509d6fe43f8a3d0f2c384a8fb5dde5a4d60c5a0050ad787e524da0049db9/",
+          "llm_summary": "定价页从 Claude Haiku 4.5 更新至 5.5，并改为按 prompt 长度区分价格，移除旧示例计算，反映定价策略调整。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Dreams (research preview) now supports Claude Opus 5.5, Claude Fable 5.1, and Claude Sonnet 5.5. See Supported models.",
+            "In Claude Managed Agents, the web_fetch tool now fetches only URLs that have already appeared in the session, for example in the text of a user message, in a web_search result, or in a page that web_fetch returned earlier. This reduces the risk of data exfiltration. A URL that appears only in Claude's own output, the agent's system prompt, an attached document, or the output of a tool such as bash, read, or an MCP tool does not count: a web_fetch call for it returns a url_not_in_prior_context error result to the agent. To let the agent fetch a URL, send it in the text of a user.message event."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "per-tool",
+              "before": "The session viewer in the Claude Console has been redesigned with a timeline minimap, a transcript grouped by model request, and an Inspector panel for session details and cost, raw events, per-tool statistics, mounted resources, and per-thread activity. See Console observability.",
+              "after": "The session viewer in the Claude Console has been redesigned with a timeline minimap, a transcript grouped by model request, and an Inspector panel for session details and cost, raw events, per-tool statistics, mounted resources, and per-thread activity. See Inspect a session in the Console."
+            }
+          ],
+          "signal_preview": "Dreams (research preview) now supports Claude Opus 5.5, Claude Fable 5.1, and Claude Sonnet 5.5. See Supported models.",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_7e07b5e47adbfb9936e5f7976182bdba0d57945eb4180530068e282d3e34eada",
+          "permalink": "/item/obs_7e07b5e47adbfb9936e5f7976182bdba0d57945eb4180530068e282d3e34eada/",
+          "llm_summary": "新增 Dreams 支持模型列表，更新会话查看器描述，控制台功能迭代。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 30,
+          "removed_count": 10,
+          "added_lines": [
+            "AI Hypercomputer",
+            "AI-assisted code refactoring, assessment, and transformation for legacy applications.",
+            "Application Modernization & Migration",
+            "Application Modernization with AI",
+            "Automated tools and AI-driven guidance for moving your mainframe apps to the cloud.",
+            "Certified infrastructure and AI solutions for running SAP applications and SAP HANA.",
+            "Compute, storage, and networking options to support any high-performance workload.",
+            "Cross-Cloud Networking",
+            "Data Center Exits",
+            "Data Lake Modernization",
+            "Data Warehouse Modernization",
+            "Database Modernization & Migration",
+            "Discovery, assessment, and migration tools for moving and modernizing applications.",
+            "End-to-end migration program to simplify and accelerate your path to the cloud.",
+            "Enterprise-ready generative AI and agents to accelerate innovation across your organization.",
+            "Fully managed database services to migrate, manage, and modernize enterprise data.",
+            "Fully managed, native VMware Cloud Foundation software stack on Google Cloud.",
+            "Gemini for business",
+            "Gemini for customer experience",
+            "Gemini for enterprise",
+            "Gemini platform",
+            "Google Cloud Modernize",
+            "High Performance Computing (HPC)",
+            "Infrastructure Modernization",
+            "Integrated supercomputing architecture to train, tune, and serve AI workloads.",
+            "Mainframe Modernization",
+            "Managed services and golden paths to build, manage, and scale internal developer platforms.",
+            "Migrate and modernize your enterprise data warehouse for serverless analytics and AI.",
+            "Migrate core systems rapidly and modernize enterprise workloads with AI-powered infrastructure and automated cloud solutions.",
+            "Migration solutions for moving VMs, apps, databases, and workloads out of data centers."
+          ],
+          "removed_lines": [
+            "AI Infrastructure",
+            "Agent Platform",
+            "Analyze, categorize, and get started with cloud migration on traditional workloads.",
+            "Architect for Multicloud",
+            "Assess, plan, implement, and measure software practices and capabilities to modernize and simplify your organization’s business application portfolios.",
+            "Automated tools and prescriptive guidance for moving your mainframe apps to the cloud.",
+            "Automatic cloud resource optimization and increased security.",
+            "Backup and Disaster Recovery",
+            "Certifications for running SAP applications and SAP HANA.",
+            "Comprehensive suite of managed services and Golden Paths to build, manage, and scale IDPs."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AI-assisted code refactoring, assessment, and transformation for legacy applications.",
+          "raw_added_count": 37,
+          "raw_removed_count": 40,
+          "id": "obs_5a52dfbb6663a9eeb2bc72ba4ad91031d41e4a40fdcc2424be0e0370e8a0c186",
+          "permalink": "/item/obs_5a52dfbb6663a9eeb2bc72ba4ad91031d41e4a40fdcc2424be0e0370e8a0c186/",
+          "llm_summary": "定价页分类大规模重构，新增 AI Hypercomputer、应用现代化等分类，移除旧分类，反映产品线重组。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 6,
+          "added_lines": [
+            "By Sandeep Khanna • 5-minute read",
+            "By Thomas Kurian • 29-minute read",
+            "Innovation in Ireland: How Irish brands scale with Gemini Enterprise",
+            "This article is adapted from Thomas Kurian’s keynote address at Gemini at Work 2026. Read on to learn more.",
+            "Welcome to Gemini at Work 2026: Introducing the Gemini agent"
+          ],
+          "removed_lines": [
+            "By Brian Delahunty • 7-minute read",
+            "By Sandra Joyce • 10-minute read",
+            "Cloud CISO Perspectives: How Google monitors AI threats and advances AI defenses",
+            "Gemini Enterprise is now the end-to-end system for the agentic era, built to help you delegate business outcomes to agents rather than micromanage tasks. It unifies the best AI models, an intuitive UI, and a secure development framework, providing agents the native system access needed to successfully deploy at global scale.",
+            "Security & Identity",
+            "The new Gemini Enterprise: one platform for agent development, orchestration, and governance"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "by andrea morange •",
+              "before": "By Andrea Morange • 27-minute read",
+              "after": "By Andrea Morange • 29-minute read"
+            }
+          ],
+          "signal_preview": "By Sandeep Khanna • 5-minute read",
+          "raw_added_count": 6,
+          "raw_removed_count": 7,
+          "id": "obs_e99bcf77d421dc8d196eddfcfdccaeeaa651276ef2c94e5d2366dea1c3520297",
+          "permalink": "/item/obs_e99bcf77d421dc8d196eddfcfdccaeeaa651276ef2c94e5d2366dea1c3520297/",
+          "llm_summary": "新增 Gemini at Work 2026 相关文章，移除旧文章，内容重心转向 Gemini Enterprise 和 agent 平台。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "pricing",
+          "url": "https://cohere.com/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 2,
+          "added_lines": [
+            "North 2: Cohere's latest platform update — with 15+ new features"
+          ],
+          "removed_lines": [
+            "Command: High-performance generative AI models for real-world applications",
+            "Healthcare and Life Sciences"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "North 2: Cohere's latest platform update — with 15+ new features",
+          "raw_added_count": 1,
+          "raw_removed_count": 2,
+          "id": "obs_a6b97d0ed07cd687db51237d321ed03de5133b79572dd784fbb61583e996f84d",
+          "permalink": "/item/obs_a6b97d0ed07cd687db51237d321ed03de5133b79572dd784fbb61583e996f84d/",
+          "llm_summary": "新增 North 2 平台更新说明，移除 Command 模型描述和 Healthcare 分类，产品定位调整。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 6,
+          "added_lines": [
+            "Healthcare & Life Sciences",
+            "North 2: Cohere's latest platform update — with 15+ new features",
+            "Product LaunchResearch",
+            "Product LaunchTechnology"
+          ],
+          "removed_lines": [
+            "Command: High-performance generative AI models for real-world applications",
+            "Healthcare and Life Sciences",
+            "Lancement de produitActualités de l'entreprise",
+            "Lancement de produitResearch",
+            "Lancement de produitTechnology",
+            "Santé et sciences de la vie"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Healthcare & Life Sciences",
+          "raw_added_count": 4,
+          "raw_removed_count": 6,
+          "id": "obs_e8e2d6ba178d237e4c0db902ca14fac55af6b08cf5e7caddae1a02e25a69aa6c",
+          "permalink": "/item/obs_e8e2d6ba178d237e4c0db902ca14fac55af6b08cf5e7caddae1a02e25a69aa6c/",
+          "llm_summary": "新增 North 2 发布文章和 Healthcare 分类，移除旧文章，与定价页变化一致。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Video Overview"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: October 2, 2026",
+              "after": "Last updated: October 8, 2026"
+            }
+          ],
+          "signal_preview": "Last updated: October 8, 2026",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_200e389e1965ef4cbb77e1bf320ed710345801016efddf0b8b746f47be001ff0",
+          "permalink": "/item/obs_200e389e1965ef4cbb77e1bf320ed710345801016efddf0b8b746f47be001ff0/",
+          "llm_summary": "更新日期至 10 月 8 日，新增 Video Overview 功能，无其他变化。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Video Overview"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: October 2, 2026",
+              "after": "Last updated: October 8, 2026"
+            }
+          ],
+          "signal_preview": "Last updated: October 8, 2026",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_d5c95c38915ee91f99126a0e2c7c5fb212075181ad4e19e5a22ba8091c5c267d",
+          "permalink": "/item/obs_d5c95c38915ee91f99126a0e2c7c5fb212075181ad4e19e5a22ba8091c5c267d/",
+          "llm_summary": "与 changelog 同步，新增 Video Overview 公告。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 10,
+          "removed_count": 5,
+          "added_lines": [
+            "Announcing Harvey LAB-AA v1.1: adding hallucination checks to raise the bar for agentic legal work",
+            "Anthropic has released Claude Haiku 5.5",
+            "Harvey LAB-AA v1.1",
+            "Introducing trusted-access models to the Artificial Analysis Cyber Index",
+            "JT-4.1 Flash 236B A21B (Reasoning)See more",
+            "Legal agentic work, Hallucination-Gated All-Pass Rate",
+            "New article published · 7 Oct",
+            "New article published · 8 Oct",
+            "New language model evaluation · 8 Oct",
+            "Trusted-access model (not publicly available)"
+          ],
+          "removed_lines": [
+            "DeepSeek V4 Pro 0813 (Non-reasoning)",
+            "GPT-6.1 Sol (Low)",
+            "GPT-6.1 Sol (Medium)",
+            "Harvey LAB-AA",
+            "JT-4.1 Flash 236B A21B (Reasoning)"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "gpt-",
+              "before": "GPT-6.1 Sol (High)See more",
+              "after": "GPT-6 Sol (Daybreak Blue, max)"
+            }
+          ],
+          "signal_preview": "Announcing Harvey LAB-AA v1.1: adding hallucination checks to raise the bar for agentic legal work",
+          "raw_added_count": 15,
+          "raw_removed_count": 11,
+          "id": "obs_752633030235e0fef149140c61516ae1b46f633b9f211ba585bb9b4af9fcc40e",
+          "permalink": "/item/obs_752633030235e0fef149140c61516ae1b46f633b9f211ba585bb9b4af9fcc40e/",
+          "llm_summary": "新增 Claude Haiku 5.5 评测和 Harvey LAB-AA v1.1 文章，榜单更新，移除旧模型，反映行业动态。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 22,
+          "removed_count": 6,
+          "added_lines": [
+            "361,270,688361,270,688Total Sessions",
+            "Arena Alignment Index",
+            "Best Aligned AgentsNew",
+            "Claude Fable 5.1 (Max)$6.31/task",
+            "Claude Haiku 5.5",
+            "Claude Opus 5 (Max)Anthropic",
+            "Claude Opus 5 (Max)·",
+            "Claude Opus 5.5 (High)$1.73/task",
+            "GLM 5.2 (Max)",
+            "GLM 5.2 (Max)·",
+            "GLM 5.3 Flash·",
+            "GPT 5.6 Terra (xHigh)·",
+            "GPT 6.1 Sol (Max)$0.58/task",
+            "Gemini 3.8 Flash (High)·",
+            "Jul 12 – Oct 9 · Top three models of each license",
+            "Kimi K3 (Max)",
+            "Leaderboard Trends",
+            "Measuring the AI Frontier for Real-World Alignment: Arena's $200 Million Series B",
+            "Open Source vs ProprietaryUS vs ChinaTop 5 Labs",
+            "Qwen3.8 Flash Next·",
+            "Reading a web page",
+            "WebDev · High"
+          ],
+          "removed_lines": [
+            "Announcing the First Cohort of Arena's Academic Partnerships Program",
+            "Coding in Agent Mode: From Idea to Shipping with GitHub",
+            "Ideogram 4.5",
+            "Muse Spark 1.3 (Max)·",
+            "360,766,343360,766,343Total Sessions",
+            "GPT 6.1 Sol (Max)$0.57/task"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude fable",
+              "before": "Claude Fable 5.1 (Max)$5.99/task",
+              "after": "Claude Fable 5 (High)Anthropic"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (High)$1.67/task",
+              "after": "Claude Opus 5 (High)Anthropic"
+            },
+            {
+              "key": "deepseek v",
+              "before": "Deepseek V4.1 Flash (Max)·",
+              "after": "Deepseek V4 Flash (High) (20260731)"
+            }
+          ],
+          "signal_preview": "Arena Alignment Index",
+          "raw_added_count": 26,
+          "raw_removed_count": 12,
+          "id": "obs_5efffdf946143f58aeb645804f6653debe71518f3c584e1afccc637bd2e74145",
+          "permalink": "/item/obs_5efffdf946143f58aeb645804f6653debe71518f3c584e1afccc637bd2e74145/",
+          "llm_summary": "榜单新增多个模型和指标，移除旧模型，总会话数更新，反映竞技场生态变化。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "model_list",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "Claude Haiku 4.5"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 1,
+          "id": "obs_929d7522d7397a5d24ade44d0973d1e1f1e584425655475a33b95956d657e9e3",
+          "permalink": "/item/obs_929d7522d7397a5d24ade44d0973d1e1f1e584425655475a33b95956d657e9e3/"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 4,
+          "raw_removed_count": 4,
+          "id": "obs_9fef10c35aeb8da4a44a2d2656052c6762bfbec118acaa13a8fe43f9289f6a78",
+          "permalink": "/item/obs_9fef10c35aeb8da4a44a2d2656052c6762bfbec118acaa13a8fe43f9289f6a78/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "model_list",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Video Overview"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_a11ed8c014b16f5dcfa40123d15b0800737cdc91744a4695c139495a5f176b99",
+          "permalink": "/item/obs_a11ed8c014b16f5dcfa40123d15b0800737cdc91744a4695c139495a5f176b99/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "pricing",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Video Overview"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_0996addae87823f74398c5c513ebfc5745360b2347ed5b4557136f11d44b9d2f",
+          "permalink": "/item/obs_0996addae87823f74398c5c513ebfc5745360b2347ed5b4557136f11d44b9d2f/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 37,
+          "raw_removed_count": 37,
+          "id": "obs_3dd220b8a6d20ed89eceddc9fa550f12402e193521d9b4563c9ef79c435688a6",
+          "permalink": "/item/obs_3dd220b8a6d20ed89eceddc9fa550f12402e193521d9b4563c9ef79c435688a6/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_1e0ae2e583df632c690752b1693e0ee937ba6611c318c6c0555f4638ca1f5d94",
+          "provider": "openai",
+          "model": "gpt-6.1-sol",
+          "component": "input",
+          "current": "12.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_2d86d2b33e745dcd7639e7802902a939ccd60a357c5441c803ce8357f3c115c8",
+          "provider": "openai",
+          "model": "gpt-6.1-sol",
+          "component": "cache_read",
+          "current": "0.600000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_0edd5c428cb0c0695724af1365d5d04a4210dd0334d1989680267c5f9acd8b87",
+          "provider": "openai",
+          "model": "gpt-6.1-sol",
+          "component": "cache_write",
+          "current": "15.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_d0f60f35bce363074f481fec49f76527c4d76ec120e897e83e7eafb551a062a3",
+          "provider": "openai",
+          "model": "gpt-6.1-sol",
+          "component": "output",
+          "current": "60.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_0bed1767bd8802ed48bfcb939150e20ebd17b1cae3fefdb60f4c812a43b71081",
+          "provider": "openai",
+          "model": "gpt-6.1-sol",
+          "component": "input",
+          "current": "24.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_b3106eac6c42998db735ddeddcb5cadd7fab20c28d94e2cb1204fe91637bddb7",
+          "provider": "openai",
+          "model": "gpt-6.1-sol",
+          "component": "cache_read",
+          "current": "1.200000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_5e791f2f3a7025b008de51199537c692be6f781456484913bbd01b4b88027740",
+          "provider": "openai",
+          "model": "gpt-6.1-sol",
+          "component": "cache_write",
+          "current": "30.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_107ddf10e6745d9841bfe102f665cc5017fcbf083a9ecb29d83f0b5527183319",
+          "provider": "openai",
+          "model": "gpt-6.1-sol",
+          "component": "output",
+          "current": "90.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_e5ae7ba047ca73004bc66fe93f875e2cd48b86dafe2df34c713276e9aaf5639a",
+          "provider": "qwen",
+          "model": "qwen3.8-max",
+          "component": "input",
+          "current": "14.988000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_b129bcb755dcecd3dfcf99b08cfd586ca234b8174dec2942846f453ee7f2eb89",
+          "provider": "qwen",
+          "model": "qwen3.8-max",
+          "component": "output",
+          "current": "44.965000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_4203a96f1614edeaae89b8e5e8c6a5a640078709ca8837cc29297795ae725d64",
+          "provider": "qwen",
+          "model": "qwen3.7-flash",
+          "component": "input",
+          "current": "0.225000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_c0c679ccc94b7855bad89072319e602bcd686415209dde410f89edcf58ade1b8",
+          "provider": "qwen",
+          "model": "qwen3.7-flash",
+          "component": "output",
+          "current": "0.974000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_1182229d8126f0b5649b1538172ce1ebc12a9ba40fdaa7924619c576ca78ad34",
+          "provider": "qwen",
+          "model": "qwen3.7-flash",
+          "component": "input",
+          "current": "1.499000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_e8e8aba36307766279ff1b8d0caa473b5a7c4c5d6aff3218b168c2f7b50f5e3c",
+          "provider": "qwen",
+          "model": "qwen3.7-flash",
+          "component": "output",
+          "current": "5.995000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "OpenAI",
+          "logo_summary": "GPT-6.1 Sol 上线，Ultrafast 模式发布",
+          "items": [
+            {
+              "text": "GPT-6.1 Sol 定价页新增，输入 $12/MTok、输出 $60/MTok，另有 $24/$90 高价位档",
+              "type": "pricing"
+            },
+            {
+              "text": "Responses API 新增 Ultrafast 模式，使用 gpt-6.1-sol 配合 service_tier 降低输出 token 间隔",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Claude Haiku 5.5 定价调整，控制台更新",
+          "items": [
+            {
+              "text": "Claude Haiku 5.5 定价改为按 prompt 长度区分，超 10 万 token 价格更高",
+              "type": "pricing"
+            },
+            {
+              "text": "Dreams 预览版新增支持 Claude Opus 5.5、Claude Fable 5.1、Claude Sonnet 5.5",
+              "type": "release"
+            },
+            {
+              "text": "Claude Console 会话查看器重新设计，新增时间线缩略图和 Inspector 面板",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "百度千帆",
+          "logo_summary": "DeepSeek-V3.2 下线，V4 系列移除",
+          "items": [
+            {
+              "text": "DeepSeek-V3.2 正式下线，定价页标记为已下线",
+              "type": "sunset"
+            },
+            {
+              "text": "DeepSeek-V4-Pro-0813、V4.1-Flash 从定价页移除",
+              "type": "sunset"
+            },
+            {
+              "text": "DeepSeek 思考模型新增 thinking_budget 设置说明",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Kimi",
+          "logo_summary": "定价页说明更新，缓存计费细节调整",
+          "items": [
+            {
+              "text": "新增按量计费声明，明确不提供订阅制方案",
+              "type": "other"
+            },
+            {
+              "text": "缓存写入计费说明更新，明确 TTL 5min/1h 两档及自动续期规则",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "North 2 平台更新发布，产品线调整",
+          "items": [
+            {
+              "text": "North 2 平台更新发布，包含 15+ 新功能",
+              "type": "release"
+            },
+            {
+              "text": "Command 模型描述从定价页移除，Healthcare 分类调整",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "定价页分类重构，Gemini 企业版发布",
+          "items": [
+            {
+              "text": "定价页新增 AI Hypercomputer、应用现代化等分类，移除旧分类",
+              "type": "other"
+            },
+            {
+              "text": "博客发布 Gemini at Work 2026 主题，介绍 Gemini agent 和 Gemini Enterprise",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "更新日志新增 Video Overview 功能",
+          "items": [
+            {
+              "text": "changelog 和 blog 均新增 Video Overview，更新时间更新至 10 月 8 日",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "新增 Claude Haiku 5.5 评测，榜单更新",
+          "items": [
+            {
+              "text": "新增 Claude Haiku 5.5 评测文章，以及 Harvey LAB-AA v1.1 评测",
+              "type": "release"
+            },
+            {
+              "text": "榜单新增 JT-4.1 Flash 236B A21B (Reasoning)，移除 DeepSeek V4 Pro 0813",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "榜单模型更新，新增 Arena Alignment Index",
+          "items": [
+            {
+              "text": "新增 Claude Haiku 5.5、GLM 5.2 (Max)、GPT 5.6 Terra 等模型",
+              "type": "release"
+            },
+            {
+              "text": "新增 Arena Alignment Index 和 Best Aligned Agents 指标",
+              "type": "other"
+            },
+            {
+              "text": "移除 GPT 6.1 Sol (Max)、Ideogram 4.5 等模型",
+              "type": "sunset"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-10-08",
       "stats": {

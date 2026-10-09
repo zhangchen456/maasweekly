@@ -4,6 +4,14 @@
     "start": "2026-10-05",
     "end": "2026-10-11",
     "days": {
+      "2026-10-09": {
+        "substantive": 16,
+        "jitter": 5,
+        "failed": 3,
+        "releases": 7,
+        "pricings": 3,
+        "sunsets": 3
+      },
       "2026-10-08": {
         "substantive": 20,
         "jitter": 2,
@@ -38,12 +46,132 @@
       }
     },
     "totals": {
-      "substantive": 53,
-      "releases": 18,
-      "pricings": 10,
-      "sunsets": 3
+      "substantive": 69,
+      "releases": 25,
+      "pricings": 13,
+      "sunsets": 6
     },
     "highlights": [
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-09",
+        "text": "GPT-6.1 Sol 定价页新增，输入 $12/MTok、输出 $60/MTok，另有 $24/$90 高价位档",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-09",
+        "text": "Responses API 新增 Ultrafast 模式，使用 gpt-6.1-sol 配合 service_tier 降低输出 token 间隔",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-09",
+        "text": "Claude Haiku 5.5 定价改为按 prompt 长度区分，超 10 万 token 价格更高",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-09",
+        "text": "Dreams 预览版新增支持 Claude Opus 5.5、Claude Fable 5.1、Claude Sonnet 5.5",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-09",
+        "text": "Claude Console 会话查看器重新设计，新增时间线缩略图和 Inspector 面板",
+        "type": "other"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-10-09",
+        "text": "DeepSeek-V3.2 正式下线，定价页标记为已下线",
+        "type": "sunset"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-10-09",
+        "text": "DeepSeek-V4-Pro-0813、V4.1-Flash 从定价页移除",
+        "type": "sunset"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-10-09",
+        "text": "DeepSeek 思考模型新增 thinking_budget 设置说明",
+        "type": "other"
+      },
+      {
+        "platform": "Kimi",
+        "date": "2026-10-09",
+        "text": "新增按量计费声明，明确不提供订阅制方案",
+        "type": "other"
+      },
+      {
+        "platform": "Kimi",
+        "date": "2026-10-09",
+        "text": "缓存写入计费说明更新，明确 TTL 5min/1h 两档及自动续期规则",
+        "type": "pricing"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-09",
+        "text": "North 2 平台更新发布，包含 15+ 新功能",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-09",
+        "text": "Command 模型描述从定价页移除，Healthcare 分类调整",
+        "type": "other"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-09",
+        "text": "定价页新增 AI Hypercomputer、应用现代化等分类，移除旧分类",
+        "type": "other"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-09",
+        "text": "博客发布 Gemini at Work 2026 主题，介绍 Gemini agent 和 Gemini Enterprise",
+        "type": "release"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-10-09",
+        "text": "changelog 和 blog 均新增 Video Overview，更新时间更新至 10 月 8 日",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-09",
+        "text": "新增 Claude Haiku 5.5 评测文章，以及 Harvey LAB-AA v1.1 评测",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-09",
+        "text": "榜单新增 JT-4.1 Flash 236B A21B (Reasoning)，移除 DeepSeek V4 Pro 0813",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-09",
+        "text": "新增 Claude Haiku 5.5、GLM 5.2 (Max)、GPT 5.6 Terra 等模型",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-09",
+        "text": "新增 Arena Alignment Index 和 Best Aligned Agents 指标",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-09",
+        "text": "移除 GPT 6.1 Sol (Max)、Ideogram 4.5 等模型",
+        "type": "sunset"
+      },
       {
         "platform": "Anthropic",
         "date": "2026-10-08",

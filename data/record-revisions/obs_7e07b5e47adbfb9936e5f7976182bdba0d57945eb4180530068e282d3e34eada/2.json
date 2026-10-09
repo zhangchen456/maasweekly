@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_7e07b5e47adbfb9936e5f7976182bdba0d57945eb4180530068e282d3e34eada",
+  "sourceId": "anthropic-changelog",
+  "date": "2026-10-09",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.anthropic.com/en/release-notes/api",
+  "title": "Anthropic · 更新日志来源更新",
+  "summary": "新增 Dreams 支持模型列表，更新会话查看器描述，控制台功能迭代。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-09T01:21:38+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "per-tool",
+        "before": "The session viewer in the Claude Console has been redesigned with a timeline minimap, a transcript grouped by model request, and an Inspector panel for session details and cost, raw events, per-tool statistics, mounted resources, and per-thread activity. See Console observability.",
+        "after": "The session viewer in the Claude Console has been redesigned with a timeline minimap, a transcript grouped by model request, and an Inspector panel for session details and cost, raw events, per-tool statistics, mounted resources, and per-thread activity. See Inspect a session in the Console."
+      }
+    ],
+    "added_lines": [
+      "Dreams (research preview) now supports Claude Opus 5.5, Claude Fable 5.1, and Claude Sonnet 5.5. See Supported models.",
+      "In Claude Managed Agents, the web_fetch tool now fetches only URLs that have already appeared in the session, for example in the text of a user message, in a web_search result, or in a page that web_fetch returned earlier. This reduces the risk of data exfiltration. A URL that appears only in Claude's own output, the agent's system prompt, an attached document, or the output of a tool such as bash, read, or an MCP tool does not count: a web_fetch call for it returns a url_not_in_prior_context error result to the agent. To let the agent fetch a URL, send it in the text of a user.message event."
+    ],
+    "removed_lines": [],
+    "added_count": 2,
+    "removed_count": 0,
+    "raw_added_count": 3,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-09.json"
+  },
+  "permalink": "/item/obs_7e07b5e47adbfb9936e5f7976182bdba0d57945eb4180530068e282d3e34eada/"
+}

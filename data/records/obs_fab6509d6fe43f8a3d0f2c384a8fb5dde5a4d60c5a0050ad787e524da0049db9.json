@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_fab6509d6fe43f8a3d0f2c384a8fb5dde5a4d60c5a0050ad787e524da0049db9",
+  "sourceId": "anthropic-pricing",
+  "date": "2026-10-09",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "pricing",
+  "sourceUrl": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+  "title": "Anthropic · 定价来源更新",
+  "summary": "定价页从 Claude Haiku 4.5 更新至 5.5，并改为按 prompt 长度区分价格，移除旧示例计算，反映定价策略调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-09T01:21:38+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "claude haiku",
+        "before": "Claude Haiku 4.5",
+        "after": "Claude Haiku 5.5 is priced by prompt length: a request whose prompt is over 100,000 tokens pays higher prices. A request's prompt length counts all of its input tokens, including cache reads and cache writes. Each request is priced on its own: a request over the threshold pays the higher prices even when part of its prompt is a cache hit, and earlier requests keep the prices they were billed at. Model pricing and Batch processing list both sets of prices."
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [
+      "Average ~3,700 tokens per conversation",
+      "Claude Haiku 5.5 is priced by prompt length: a prompt of over 100,000 tokens pays higher prices. Model pricing and Batch processing list both sets of prices.",
+      "Example calculation for processing 10,000 support tickets:",
+      "For a detailed walkthrough of this calculation, see the customer support agent guide.",
+      "Total cost: ~$37.00 per 10,000 tickets",
+      "Using Claude Haiku 4.5 at $1/MTok input, $5/MTok output"
+    ],
+    "added_count": 0,
+    "removed_count": 6,
+    "raw_added_count": 1,
+    "raw_removed_count": 7
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-09.json"
+  },
+  "permalink": "/item/obs_fab6509d6fe43f8a3d0f2c384a8fb5dde5a4d60c5a0050ad787e524da0049db9/"
+}

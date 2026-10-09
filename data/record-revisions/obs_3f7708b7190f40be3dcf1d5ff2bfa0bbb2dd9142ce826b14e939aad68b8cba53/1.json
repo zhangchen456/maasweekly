@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_3f7708b7190f40be3dcf1d5ff2bfa0bbb2dd9142ce826b14e939aad68b8cba53",
+  "sourceId": "kimi-pricing",
+  "date": "2026-10-09",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Kimi",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.kimi.com/docs/pricing/chat",
+  "title": "Kimi · 定价来源更新",
+  "summary": "Kimi API 开放平台提供的模型推理服务是「按量计费」模式，不提供订阅制方案，请注意与 Kimi 会员、Kimi Code 等产品区分，查看产品差异。",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "token",
+        "before": "Token：代表常见的字符序列，每个汉字使用的 Token 数目可能是不同的。例如，单个汉字”夔”可能会被分解为若干 Token 的组合，而像”中国”这样短且常见的短语则可能会使用单个 Token。大致来说，对于一段通常的中文文本，1 个 Token 大约相当于 1.5-2 个汉字。具体每次调用实际产生的 Tokens 数量可以通过调用计算 Token API 来获得。",
+        "after": "Token：代表常见的字符序列，每个汉字使用的 Token 数目可能是不同的。例如，单个汉字”夔”可能会被分解为若干 Token 的组合，而像”中国”这样短且常见的短语则可能会使用单个 Token。大致来说，对于一段通常的中文文本，1 个 Token 大约相当于 1.5-2 个汉字。具体每次调用实际产生的 Tokens 数量可以通过调用 计算 Token API 来获得。"
+      }
+    ],
+    "added_lines": [
+      "Kimi API 开放平台提供的模型推理服务是「按量计费」模式，不提供订阅制方案，请注意与 Kimi 会员、Kimi Code 等产品区分，查看产品差异。",
+      "注：缓存写入 是指将请求前缀写入 上下文缓存 所产生的费用。Kimi API 对重复的请求前缀自动启用上下文缓存，缓存条目按有效期（TTL）分为 5min 和 1h 两档，不指定 TTL 时默认按 5min 档。在有效期内命中缓存的输入仅按”输入价格（缓存命中）“计费，命中后缓存有效期自动续期，不再收取缓存写入费用。"
+    ],
+    "removed_lines": [
+      "注：缓存写入 是指将请求前缀写入上下文缓存所产生的费用。Kimi API 对重复的请求前缀自动启用上下文缓存，缓存条目按有效期（TTL）分为 5min 和 1h 两档，不指定 TTL 时默认按 5min 档。在有效期内命中缓存的输入仅按”输入价格（缓存命中）“计费，命中后缓存有效期自动续期，不再收取缓存写入费用。"
+    ],
+    "added_count": 2,
+    "removed_count": 1,
+    "raw_added_count": 3,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-09.json"
+  },
+  "permalink": "/item/obs_3f7708b7190f40be3dcf1d5ff2bfa0bbb2dd9142ce826b14e939aad68b8cba53/"
+}

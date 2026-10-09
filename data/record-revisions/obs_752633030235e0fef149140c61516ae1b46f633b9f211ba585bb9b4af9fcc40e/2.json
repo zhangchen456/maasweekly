@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_752633030235e0fef149140c61516ae1b46f633b9f211ba585bb9b4af9fcc40e",
+  "sourceId": "aa-industry",
+  "date": "2026-10-09",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "新增 Claude Haiku 5.5 评测和 Harvey LAB-AA v1.1 文章，榜单更新，移除旧模型，反映行业动态。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-09T01:21:38+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "gpt-",
+        "before": "GPT-6.1 Sol (High)See more",
+        "after": "GPT-6 Sol (Daybreak Blue, max)"
+      }
+    ],
+    "added_lines": [
+      "Announcing Harvey LAB-AA v1.1: adding hallucination checks to raise the bar for agentic legal work",
+      "Anthropic has released Claude Haiku 5.5",
+      "Harvey LAB-AA v1.1",
+      "Introducing trusted-access models to the Artificial Analysis Cyber Index",
+      "JT-4.1 Flash 236B A21B (Reasoning)See more",
+      "Legal agentic work, Hallucination-Gated All-Pass Rate",
+      "New article published · 7 Oct",
+      "New article published · 8 Oct",
+      "New language model evaluation · 8 Oct",
+      "Trusted-access model (not publicly available)"
+    ],
+    "removed_lines": [
+      "DeepSeek V4 Pro 0813 (Non-reasoning)",
+      "GPT-6.1 Sol (Low)",
+      "GPT-6.1 Sol (Medium)",
+      "Harvey LAB-AA",
+      "JT-4.1 Flash 236B A21B (Reasoning)"
+    ],
+    "added_count": 10,
+    "removed_count": 5,
+    "raw_added_count": 15,
+    "raw_removed_count": 11
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-09.json"
+  },
+  "permalink": "/item/obs_752633030235e0fef149140c61516ae1b46f633b9f211ba585bb9b4af9fcc40e/"
+}

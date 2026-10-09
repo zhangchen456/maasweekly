@@ -1,0 +1,772 @@
+{
+  "date": "2026-10-09",
+  "fetched_at": "2026-10-09T09:10:36.298435",
+  "stats": {
+    "total": 68,
+    "success": 65,
+    "failed": 3,
+    "changed": 21,
+    "unchanged": 44
+  },
+  "changes": [
+    {
+      "platform": "火山方舟",
+      "source_type": "model_list",
+      "url": "https://www.volcengine.com/docs/82379/1330310",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11902)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "pricing",
+      "url": "https://www.volcengine.com/docs/82379/1544106",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11902)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "changelog",
+      "url": "https://www.volcengine.com/docs/82379/1159177",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=4606)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "blog",
+      "url": "https://www.volcengine.com/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "model_list",
+      "url": "https://help.aliyun.com/zh/model-studio/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "pricing",
+      "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "changelog",
+      "url": "https://help.aliyun.com/zh/model-studio/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "blog",
+      "url": "https://qwenlm.github.io/blog/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "model_list",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 14,
+      "added_lines": [
+        "> DeepSeek系列思考模型支持设置thinking_budget，输出长度控制请参考[上下文管理](https://cloud.baidu.com/doc/qianfan-docs/s/Imkdq47r5)。",
+        "更新时间：2026-10-08"
+      ],
+      "removed_lines": [
+        "DeepSeek-V3.2 当前对应DeepSeek-V3.2 正式版，model参数/接入点ID不变。",
+        "DeepSeek-V3.2-Think 当前对应DeepSeek-V3.2 正式版，model参数/接入点ID不变。",
+        "DeepSeek系列思考模型支持设置thinking_budget，输出长度控制请参考上下文管理。",
+        "| DeepSeek-V3.2",
+        "| DeepSeek-V3.2(即将下线）",
+        "| DeepSeek-V3.2-Think",
+        "| DeepSeek-V3.2-Think(即将下线）",
+        "| DeepSeek-V4-Flash(即将下线）",
+        "| DeepSeek-V4-Flash（即将下线）",
+        "| [1,65536]"
+      ]
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "pricing",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 40,
+      "added_lines": [
+        "| DeepSeek-V3.2（已下线）",
+        "更新时间：2026-10-08"
+      ],
+      "removed_lines": [
+        "2026年9月24日 00:00 – 2026年10月7日 23:59",
+        "22:00–次日8:00",
+        "DeepSeek-V4-Pro-0813",
+        "DeepSeek-V4.1-Flash",
+        "DeepSeek-V4.1-Flash、DeepSeek-V4-Pro-0813、GLM-5.3",
+        "| DeepSeek-V3.2",
+        "| DeepSeek-V3.2 （即将下线）",
+        "| DeepSeek-V3.2-Think",
+        "| DeepSeek-V3.2-Think（即将下线）",
+        "| DeepSeek-V3.2（即将下线）"
+      ]
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "changelog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Mmh8l4qwj",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "blog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "model_list",
+      "url": "https://cloud.tencent.com/document/product/1729/104753",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "pricing",
+      "url": "https://cloud.tencent.com/document/product/1729/97731",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "changelog",
+      "url": "https://cloud.tencent.com/document/product/1729/97765",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "blog",
+      "url": "https://cloud.tencent.com/document/product/1729/132069",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "model_list",
+      "url": "https://cloud.siliconflow.cn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "pricing",
+      "url": "https://siliconflow.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "changelog",
+      "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "blog",
+      "url": "https://siliconflow.cn/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "model_list",
+      "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "pricing",
+      "url": "https://bigmodel.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "changelog",
+      "url": "https://docs.bigmodel.cn/cn/update/new-releases",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "blog",
+      "url": "https://www.bigmodel.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "model_list",
+      "url": "https://platform.kimi.com/docs/api/models-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "pricing",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 2,
+      "added_lines": [
+        "Kimi API 开放平台提供的模型推理服务是「按量计费」模式，不提供订阅制方案，请注意与 Kimi 会员、Kimi Code 等产品区分，查看产品差异。",
+        "Token：代表常见的字符序列，每个汉字使用的 Token 数目可能是不同的。例如，单个汉字”夔”可能会被分解为若干 Token 的组合，而像”中国”这样短且常见的短语则可能会使用单个 Token。大致来说，对于一段通常的中文文本，1 个 Token 大约相当于 1.5-2 个汉字。具体每次调用实际产生的 Tokens 数量可以通过调用 计算 Token API 来获得。",
+        "注：缓存写入 是指将请求前缀写入 上下文缓存 所产生的费用。Kimi API 对重复的请求前缀自动启用上下文缓存，缓存条目按有效期（TTL）分为 5min 和 1h 两档，不指定 TTL 时默认按 5min 档。在有效期内命中缓存的输入仅按”输入价格（缓存命中）“计费，命中后缓存有效期自动续期，不再收取缓存写入费用。"
+      ],
+      "removed_lines": [
+        "Token：代表常见的字符序列，每个汉字使用的 Token 数目可能是不同的。例如，单个汉字”夔”可能会被分解为若干 Token 的组合，而像”中国”这样短且常见的短语则可能会使用单个 Token。大致来说，对于一段通常的中文文本，1 个 Token 大约相当于 1.5-2 个汉字。具体每次调用实际产生的 Tokens 数量可以通过调用计算 Token API 来获得。",
+        "注：缓存写入 是指将请求前缀写入上下文缓存所产生的费用。Kimi API 对重复的请求前缀自动启用上下文缓存，缓存条目按有效期（TTL）分为 5min 和 1h 两档，不指定 TTL 时默认按 5min 档。在有效期内命中缓存的输入仅按”输入价格（缓存命中）“计费，命中后缓存有效期自动续期，不再收取缓存写入费用。"
+      ]
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "changelog",
+      "url": "https://platform.kimi.com/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "blog",
+      "url": "https://www.moonshot.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "model_list",
+      "url": "https://platform.minimaxi.com/docs/guides/models-intro",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "pricing",
+      "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "changelog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "blog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "model_list",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "pricing",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "changelog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "blog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "model_list",
+      "url": "https://platform.openai.com/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "pricing",
+      "url": "https://platform.openai.com/docs/pricing",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "| gpt-6.1-sol | $12.00 | $0.60 | $15.00 | $60.00 | $24.00 | $1.20 | $30.00 | $90.00"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "changelog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "Added Ultrafast mode for GPT-6.1 Sol in the Responses API. Use gpt-6.1-sol with service_tier: \"ultrafast\" to reduce the time between generated output tokens. It is available to all API users, subject to rate limits, with global processing and US and EU data residency. See Ultrafast pricing."
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "blog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "Added Ultrafast mode for GPT-6.1 Sol in the Responses API. Use gpt-6.1-sol with service_tier: \"ultrafast\" to reduce the time between generated output tokens. It is available to all API users, subject to rate limits, with global processing and US and EU data residency. See Ultrafast pricing."
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "model_list",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+      "status": "changed",
+      "added_count": 0,
+      "removed_count": 1,
+      "added_lines": [],
+      "removed_lines": [
+        "Claude Haiku 4.5"
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "pricing",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 7,
+      "added_lines": [
+        "Claude Haiku 5.5 is priced by prompt length: a request whose prompt is over 100,000 tokens pays higher prices. A request's prompt length counts all of its input tokens, including cache reads and cache writes. Each request is priced on its own: a request over the threshold pays the higher prices even when part of its prompt is a cache hit, and earlier requests keep the prices they were billed at. Model pricing and Batch processing list both sets of prices."
+      ],
+      "removed_lines": [
+        "Average ~3,700 tokens per conversation",
+        "Claude Haiku 4.5",
+        "Claude Haiku 5.5 is priced by prompt length: a prompt of over 100,000 tokens pays higher prices. Model pricing and Batch processing list both sets of prices.",
+        "Example calculation for processing 10,000 support tickets:",
+        "For a detailed walkthrough of this calculation, see the customer support agent guide.",
+        "Total cost: ~$37.00 per 10,000 tickets",
+        "Using Claude Haiku 4.5 at $1/MTok input, $5/MTok output"
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "changelog",
+      "url": "https://docs.anthropic.com/en/release-notes/api",
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 1,
+      "added_lines": [
+        "Dreams (research preview) now supports Claude Opus 5.5, Claude Fable 5.1, and Claude Sonnet 5.5. See Supported models.",
+        "In Claude Managed Agents, the web_fetch tool now fetches only URLs that have already appeared in the session, for example in the text of a user message, in a web_search result, or in a page that web_fetch returned earlier. This reduces the risk of data exfiltration. A URL that appears only in Claude's own output, the agent's system prompt, an attached document, or the output of a tool such as bash, read, or an MCP tool does not count: a web_fetch call for it returns a url_not_in_prior_context error result to the agent. To let the agent fetch a URL, send it in the text of a user.message event.",
+        "The session viewer in the Claude Console has been redesigned with a timeline minimap, a transcript grouped by model request, and an Inspector panel for session details and cost, raw events, per-tool statistics, mounted resources, and per-thread activity. See Inspect a session in the Console."
+      ],
+      "removed_lines": [
+        "The session viewer in the Claude Console has been redesigned with a timeline minimap, a transcript grouped by model request, and an Inspector panel for session details and cost, raw events, per-tool statistics, mounted resources, and per-thread activity. See Console observability."
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "blog",
+      "url": "https://www.anthropic.com/news",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 4,
+      "added_lines": [
+        "Oct 8, 2026Announcements2026 Usage Policy update",
+        "Oct 8, 2026AnnouncementsBuilding on our commitment to American scientific discovery",
+        "Oct 8, 2026AnnouncementsIntroducing the Anthropic Cyber Mission",
+        "Sep 1, 2026AnnouncementsDeveloping Enterprise Frontier Safeguards with our customersSee more"
+      ],
+      "removed_lines": [
+        "Aug 27, 2026Announcements Expanding our support for scientistsSee more",
+        "Aug 27, 2026AnnouncementsPreviewing the Model Hardware Standard",
+        "Aug 31, 2026AnnouncementsImproving our alignment and security efforts",
+        "Sep 1, 2026AnnouncementsDeveloping Enterprise Frontier Safeguards with our customers"
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "model_list",
+      "url": "https://ai.google.dev/gemini-api/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "changelog",
+      "url": "https://ai.google.dev/gemini-api/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "blog",
+      "url": "https://blog.google/technology/ai/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "model_list",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "pricing",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "status": "changed",
+      "added_count": 37,
+      "removed_count": 40,
+      "added_lines": [
+        "AI Hypercomputer",
+        "AI-assisted code refactoring, assessment, and transformation for legacy applications.",
+        "Application Modernization & Migration",
+        "Application Modernization with AI",
+        "Automated tools and AI-driven guidance for moving your mainframe apps to the cloud.",
+        "Certified infrastructure and AI solutions for running SAP applications and SAP HANA.",
+        "Compute, storage, and networking options to support any high-performance workload.",
+        "Cross-Cloud Networking",
+        "Data Center Exits",
+        "Data Lake Modernization",
+        "Data Warehouse Modernization",
+        "Database Modernization & Migration",
+        "Discovery, assessment, and migration tools for moving and modernizing applications.",
+        "End-to-end migration program to simplify and accelerate your path to the cloud.",
+        "Enterprise-ready generative AI and agents to accelerate innovation across your organization.",
+        "Fully managed database services to migrate, manage, and modernize enterprise data.",
+        "Fully managed, native VMware Cloud Foundation software stack on Google Cloud.",
+        "Gemini for business",
+        "Gemini for customer experience",
+        "Gemini for enterprise",
+        "Gemini platform",
+        "Google Cloud Modernize",
+        "High Performance Computing (HPC)",
+        "Infrastructure Modernization",
+        "Integrated supercomputing architecture to train, tune, and serve AI workloads.",
+        "Mainframe Modernization",
+        "Managed services and golden paths to build, manage, and scale internal developer platforms.",
+        "Migrate and modernize your enterprise data warehouse for serverless analytics and AI.",
+        "Migrate core systems rapidly and modernize enterprise workloads with AI-powered infrastructure and automated cloud solutions.",
+        "Migration solutions for moving VMs, apps, databases, and workloads out of data centers."
+      ],
+      "removed_lines": [
+        "AI Infrastructure",
+        "Agent Platform",
+        "Analyze, categorize, and get started with cloud migration on traditional workloads.",
+        "Architect for Multicloud",
+        "Assess, plan, implement, and measure software practices and capabilities to modernize and simplify your organization’s business application portfolios.",
+        "Automated tools and prescriptive guidance for moving your mainframe apps to the cloud.",
+        "Automatic cloud resource optimization and increased security.",
+        "Backup and Disaster Recovery",
+        "Certifications for running SAP applications and SAP HANA.",
+        "Comprehensive suite of managed services and Golden Paths to build, manage, and scale IDPs."
+      ]
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "changelog",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "blog",
+      "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+      "status": "changed",
+      "added_count": 6,
+      "removed_count": 7,
+      "added_lines": [
+        "By Andrea Morange • 29-minute read",
+        "By Sandeep Khanna • 5-minute read",
+        "By Thomas Kurian • 29-minute read",
+        "Innovation in Ireland: How Irish brands scale with Gemini Enterprise",
+        "This article is adapted from Thomas Kurian’s keynote address at Gemini at Work 2026. Read on to learn more.",
+        "Welcome to Gemini at Work 2026: Introducing the Gemini agent"
+      ],
+      "removed_lines": [
+        "By Andrea Morange • 27-minute read",
+        "By Brian Delahunty • 7-minute read",
+        "By Sandra Joyce • 10-minute read",
+        "Cloud CISO Perspectives: How Google monitors AI threats and advances AI defenses",
+        "Gemini Enterprise is now the end-to-end system for the agentic era, built to help you delegate business outcomes to agents rather than micromanage tasks. It unifies the best AI models, an intuitive UI, and a secure development framework, providing agents the native system access needed to successfully deploy at global scale.",
+        "Security & Identity",
+        "The new Gemini Enterprise: one platform for agent development, orchestration, and governance"
+      ]
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "model_list",
+      "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "pricing",
+      "url": "https://mistral.ai/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "changelog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "blog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "model_list",
+      "url": "https://docs.cohere.com/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "pricing",
+      "url": "https://cohere.com/pricing",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 2,
+      "added_lines": [
+        "North 2: Cohere's latest platform update — with 15+ new features"
+      ],
+      "removed_lines": [
+        "Command: High-performance generative AI models for real-world applications",
+        "Healthcare and Life Sciences"
+      ]
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "changelog",
+      "url": "https://docs.cohere.com/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "blog",
+      "url": "https://txt.cohere.com/",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 6,
+      "added_lines": [
+        "Healthcare & Life Sciences",
+        "North 2: Cohere's latest platform update — with 15+ new features",
+        "Product LaunchResearch",
+        "Product LaunchTechnology"
+      ],
+      "removed_lines": [
+        "Command: High-performance generative AI models for real-world applications",
+        "Healthcare and Life Sciences",
+        "Lancement de produitActualités de l'entreprise",
+        "Lancement de produitResearch",
+        "Lancement de produitTechnology",
+        "Santé et sciences de la vie"
+      ]
+    },
+    {
+      "platform": "xAI",
+      "source_type": "model_list",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "Video Overview"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "xAI",
+      "source_type": "pricing",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 0,
+      "added_lines": [
+        "Video Overview"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "xAI",
+      "source_type": "changelog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 1,
+      "added_lines": [
+        "Last updated: October 8, 2026",
+        "Video Overview"
+      ],
+      "removed_lines": [
+        "Last updated: October 2, 2026"
+      ]
+    },
+    {
+      "platform": "xAI",
+      "source_type": "blog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 1,
+      "added_lines": [
+        "Last updated: October 8, 2026",
+        "Video Overview"
+      ],
+      "removed_lines": [
+        "Last updated: October 2, 2026"
+      ]
+    },
+    {
+      "platform": "讯飞星辰MaaS",
+      "source_type": "changelog",
+      "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+      "status": "unchanged"
+    },
+    {
+      "platform": "HuggingFace",
+      "source_type": "industry",
+      "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+      "status": "changed",
+      "added_count": 37,
+      "removed_count": 37,
+      "added_lines": [
+        "\"downloads\": 12265732,",
+        "\"downloads\": 13022070,",
+        "\"downloads\": 14176773,",
+        "\"downloads\": 15483903,",
+        "\"downloads\": 16152918,",
+        "\"downloads\": 16887918,",
+        "\"downloads\": 18963612,",
+        "\"downloads\": 20237996,",
+        "\"downloads\": 21622595,",
+        "\"downloads\": 21734048,",
+        "\"downloads\": 232247017,",
+        "\"downloads\": 23286378,",
+        "\"downloads\": 24442515,",
+        "\"downloads\": 31151426,",
+        "\"downloads\": 33690050,",
+        "\"downloads\": 37572806,",
+        "\"downloads\": 46065089,",
+        "\"downloads\": 49900292,",
+        "\"downloads\": 61931132,",
+        "\"downloads\": 82504124,",
+        "\"likes\": 1227,",
+        "\"likes\": 127,",
+        "\"likes\": 1424,",
+        "\"likes\": 1581,",
+        "\"likes\": 1613,",
+        "\"likes\": 1756,",
+        "\"likes\": 2180,",
+        "\"likes\": 3397,",
+        "\"likes\": 361,",
+        "\"likes\": 3834,"
+      ],
+      "removed_lines": [
+        "\"downloads\": 12473185,",
+        "\"downloads\": 13052036,",
+        "\"downloads\": 14889351,",
+        "\"downloads\": 15383064,",
+        "\"downloads\": 16236363,",
+        "\"downloads\": 16991607,",
+        "\"downloads\": 19146408,",
+        "\"downloads\": 20416791,",
+        "\"downloads\": 21782856,",
+        "\"downloads\": 22315895,"
+      ]
+    },
+    {
+      "platform": "Artificial Analysis",
+      "source_type": "industry",
+      "url": "https://artificialanalysis.ai/",
+      "status": "changed",
+      "added_count": 15,
+      "removed_count": 11,
+      "added_lines": [
+        "14 of 37 models",
+        "15 of 168 models",
+        "15 of 97 models",
+        "26 of 226 models",
+        "Announcing Harvey LAB-AA v1.1: adding hallucination checks to raise the bar for agentic legal work",
+        "Anthropic has released Claude Haiku 5.5",
+        "GPT-6 Sol (Daybreak Blue, max)",
+        "Harvey LAB-AA v1.1",
+        "Introducing trusted-access models to the Artificial Analysis Cyber Index",
+        "JT-4.1 Flash 236B A21B (Reasoning)See more",
+        "Legal agentic work, Hallucination-Gated All-Pass Rate",
+        "New article published · 7 Oct",
+        "New article published · 8 Oct",
+        "New language model evaluation · 8 Oct",
+        "Trusted-access model (not publicly available)"
+      ],
+      "removed_lines": [
+        "14 of 36 models",
+        "15 of 167 models",
+        "15 of 96 models",
+        "26 of 225 models",
+        "DeepSeek V4 Pro 0813 (Non-reasoning)",
+        "GPT-6.1 Sol (High)See more",
+        "GPT-6.1 Sol (Low)",
+        "GPT-6.1 Sol (Medium)",
+        "Harvey LAB-AA",
+        "JT-4.1 Flash 236B A21B (Reasoning)"
+      ]
+    },
+    {
+      "platform": "LMArena",
+      "source_type": "industry",
+      "url": "https://lmarena.ai/leaderboard",
+      "status": "changed",
+      "added_count": 26,
+      "removed_count": 12,
+      "added_lines": [
+        "361,270,688361,270,688Total Sessions",
+        "Arena Alignment Index",
+        "Best Aligned AgentsNew",
+        "Claude Fable 5 (High)Anthropic",
+        "Claude Fable 5.1 (Max)$6.31/task",
+        "Claude Haiku 5.5",
+        "Claude Opus 5 (High)Anthropic",
+        "Claude Opus 5 (Max)Anthropic",
+        "Claude Opus 5 (Max)·",
+        "Claude Opus 5.5 (High)$1.73/task",
+        "Deepseek V4 Flash (High) (20260731)",
+        "GLM 5.2 (Max)",
+        "GLM 5.2 (Max)·",
+        "GLM 5.3 Flash·",
+        "GPT 5.6 Terra (xHigh)·",
+        "GPT 6.1 Sol (Max)$0.58/task",
+        "Gemini 3.8 Flash (High)·",
+        "Jul 12 – Oct 9 · Top three models of each license",
+        "Kimi K3 (Max)",
+        "Leaderboard Trends",
+        "Measuring the AI Frontier for Real-World Alignment: Arena's $200 Million Series B",
+        "October 8, 2026",
+        "Open Source vs ProprietaryUS vs ChinaTop 5 Labs",
+        "Qwen3.8 Flash Next·",
+        "Reading a web page",
+        "WebDev · High"
+      ],
+      "removed_lines": [
+        "360,766,343360,766,343Total Sessions",
+        "Announcing the First Cohort of Arena's Academic Partnerships Program",
+        "August 24, 2026",
+        "Claude Fable 5.1 (Max)$5.99/task",
+        "Claude Opus 5.5 (High)$1.67/task",
+        "Coding in Agent Mode: From Idea to Shipping with GitHub",
+        "Deepseek V4.1 Flash (Max)·",
+        "GPT 6.1 Sol (Max)$0.57/task",
+        "Ideogram 4.5",
+        "Muse Spark 1.3 (Max)·"
+      ]
+    }
+  ]
+}

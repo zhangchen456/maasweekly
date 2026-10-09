@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_ef62b65b7e4892d246859af9d74c3d934f0cfa2d3f8367c4db44253683ac3f5e",
+  "sourceId": "baidu-pricing",
+  "date": "2026-10-09",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "百度千帆",
+  "sourceType": "pricing",
+  "sourceUrl": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+  "title": "百度千帆 · 定价来源更新",
+  "summary": "定价页移除 DeepSeek-V4-Pro-0813、V4.1-Flash 等条目，新增 DeepSeek-V3.2（已下线）标记，反映模型生命周期管理。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-09T01:21:38+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "| DeepSeek-V3.2（已下线）"
+    ],
+    "removed_lines": [
+      "DeepSeek-V4-Pro-0813",
+      "DeepSeek-V4.1-Flash",
+      "DeepSeek-V4.1-Flash、DeepSeek-V4-Pro-0813、GLM-5.3",
+      "2026年9月24日 00:00 – 2026年10月7日 23:59",
+      "22:00–次日8:00",
+      "| DeepSeek-V3.2",
+      "| DeepSeek-V3.2 （即将下线）",
+      "| DeepSeek-V3.2-Think",
+      "| DeepSeek-V3.2-Think（即将下线）",
+      "| DeepSeek-V3.2（即将下线）"
+    ],
+    "added_count": 1,
+    "removed_count": 10,
+    "raw_added_count": 2,
+    "raw_removed_count": 40
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-09.json"
+  },
+  "permalink": "/item/obs_ef62b65b7e4892d246859af9d74c3d934f0cfa2d3f8367c4db44253683ac3f5e/"
+}
