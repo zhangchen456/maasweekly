@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_b3c69e36057a20b3d5a7b777d0c0928879f2862bee3bb942f7cb22f164635cd9",
+  "sourceId": "anthropic-pricing",
+  "date": "2026-10-10",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "pricing",
+  "sourceUrl": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+  "title": "Anthropic · 定价来源更新",
+  "summary": "定价页更新 token 估算：Claude 4.7 及更新模型和 Claude Mythos Preview 的 token 数从 325 调整为 244（旧模型），并新增 text_editor_20250728 的 token 开销，同时删除旧工具 text_editor_20250429 的条目，反映模型版本更新。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-10T00:53:49+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "for claude",
+        "before": "For Claude 4.6 and later models, specifying US-only inference through the inference_geo parameter incurs a 1.1x multiplier on all token pricing categories, including input tokens, output tokens, cache writes, and cache reads. Global routing (the default) uses standard pricing.",
+        "after": "For Claude 4.6 and later models, specifying US-only inference through the inference_geo parameter incurs a 1.1x multiplier on all token pricing categories, including input tokens, output tokens, cache writes, and cache reads. On Claude Haiku 5.5, the multiplier also applies to the higher prices for prompts over 100,000 tokens (see Long context pricing). Global routing (the default) uses standard pricing."
+      },
+      {
+        "key": "multi-region",
+        "before": "Google Cloud offers three endpoint types: global endpoints, multi-region endpoints (dynamic routing within a geographic area), and regional endpoints.",
+        "after": "Google Cloud offers global endpoints and multi-region endpoints (dynamic routing within a geographic area) for these models, and regional endpoints for Claude Sonnet 4.6 and earlier models."
+      },
+      {
+        "key": "tokens are pieces of text that models process",
+        "before": "Tokens are pieces of text that models process. As a rough estimate, 1 token is approximately 4 characters or 0.75 words in English. The exact count varies by language and content type.",
+        "after": "Tokens are pieces of text that models process. How many tokens the same text produces depends on the model's tokenizer, the language, and the type of content. Claude 4.7 and later models and Claude Mythos Preview use a newer tokenizer that produces approximately 30 percent more tokens for the same text than earlier models. To see how many tokens a request uses on a specific model, count it with token counting and that model's ID."
+      },
+      {
+        "key": "toolset definition overhead",
+        "before": "Toolset definition overhead: Declaring browser_toolset_20260801 with its default members adds about 6,600 input tokens to a request (about 6,610 on Claude Fable 5, Claude Mythos 5, Claude Opus 5, and Claude Opus 4.8, and about 6,670 on Claude Sonnet 5), which covers the member tool definitions and the tool use system prompt. Enabling all four optional members adds about 880 tokens, and disabling members with configs reduces the count. The exact count for a request is reported in the response usage, and you can estimate it in advance with the token counting endpoint.",
+        "after": "Toolset definition overhead: Declaring browser_toolset_20260801 with its default members adds about 6,600 input tokens to a request (about 6,670 on Claude Sonnet 5 and about 6,610 on the other supported models), which covers the member tool definitions and the tool use system prompt. Enabling all four optional members adds about 880 tokens, and disabling members with configs reduces the count. The exact count for a request is reported in the response usage, and you can estimate it in advance with the token counting endpoint."
+      },
+      {
+        "key": "toolset definition overhead",
+        "before": "Toolset definition overhead: Declaring computer_toolset_20260801 with its default members adds about 4,500 input tokens to a request (about 4,520 on Claude Fable 5, Claude Mythos 5, Claude Opus 5, and Claude Opus 4.8, and about 4,590 on Claude Sonnet 5), which covers the member tool definitions and the tool use system prompt. Disabling zoom with configs removes about 410 of those tokens. The exact count for a request is reported in the response usage, and you can estimate it in advance with the token counting endpoint.",
+        "after": "Toolset definition overhead: Declaring computer_toolset_20260801 with its default members adds about 4,500 input tokens to a request (about 4,590 on Claude Sonnet 5 and about 4,520 on the other supported models), which covers the member tool definitions and the tool use system prompt. Disabling zoom with configs removes about 410 of those tokens. The exact count for a request is reported in the response usage, and you can estimate it in advance with the token counting endpoint."
+      }
+    ],
+    "added_lines": [
+      "| Claude 4.6 and earlier models | 244 tokens",
+      "| Claude 4.7 and later models and Claude Mythos Preview | 325 tokens",
+      "| text_editor_20250728 (Claude 4.6 and earlier models) | 745 tokens",
+      "| text_editor_20250728 (Claude 4.7 and later models and Claude Mythos Preview) | 974 tokens"
+    ],
+    "removed_lines": [
+      "| Claude Opus 4.6, Claude Sonnet 4.6, and earlier | 244 tokens",
+      "| Claude Opus 5, Claude Opus 4.8, and Claude Opus 4.7 | 325 tokens",
+      "| text_editor_20250429 (Claude 4.x) | 700 tokens"
+    ],
+    "added_count": 4,
+    "removed_count": 3,
+    "raw_added_count": 9,
+    "raw_removed_count": 8
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-10.json"
+  },
+  "permalink": "/item/obs_b3c69e36057a20b3d5a7b777d0c0928879f2862bee3bb942f7cb22f164635cd9/"
+}

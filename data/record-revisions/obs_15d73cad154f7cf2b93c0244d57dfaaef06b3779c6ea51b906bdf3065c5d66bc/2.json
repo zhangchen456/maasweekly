@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_15d73cad154f7cf2b93c0244d57dfaaef06b3779c6ea51b906bdf3065c5d66bc",
+  "sourceId": "google-gemini-pricing",
+  "date": "2026-10-10",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "pricing",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+  "title": "Google Gemini API · 定价来源更新",
+  "summary": "定价页移除 Gemini 3.5 Flash 和 3.7 Flash 的定价，新增搜索请求配额（每月 5,000 次免费，超出 $14/千次），并更新日期，反映模型退役和搜索计费调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-10T00:53:49+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "gemini",
+        "before": "Gemini 3 models:",
+        "after": "Gemini 3 and newer models:"
+      },
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-10-07 UTC.",
+        "after": "Last updated 2026-10-09 UTC."
+      }
+    ],
+    "added_lines": [
+      "1,500 RPD free (limit shared for Flash and Flash-Lite)",
+      "5,000 free search requests per month (shared across all Gemini 3 and newer models), then $14 per 1,000 requests.",
+      "5,000 requests per month (free, shared across all Gemini 3 and newer models), then $14 / 1,000 search queries.",
+      "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]",
+      "| 5,000 free search requests per month (shared across all Gemini 3 and newer models), then $14 per 1,000 requests for text and image-based grounding.",
+      "| 5,000 free search requests per month (shared across all Gemini 3 and newer models), then $14 per 1,000 requests.",
+      "| 5,000 requests per month (free, shared across all Gemini 3 and newer models), then $14 / 1,000 search queries."
+    ],
+    "removed_lines": [
+      "Gemini 3.5 Flash",
+      "Gemini 3.7 Flash",
+      "Our earlier Flash model, built for speed and foundational performance across",
+      "$0.05 (input caching) starting January 1, 2027.",
+      "$0.125 (input caching) starting January 1, 2027.",
+      "$0.25 (input caching) starting January 1, 2027.",
+      "$0.45 (input caching) starting January 1, 2027.",
+      "5,000 free search requests per month (shared across all Gemini models), then $14 per 1,000 requests."
+    ],
+    "added_count": 7,
+    "removed_count": 8,
+    "raw_added_count": 9,
+    "raw_removed_count": 24
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-10.json"
+  },
+  "permalink": "/item/obs_15d73cad154f7cf2b93c0244d57dfaaef06b3779c6ea51b906bdf3065c5d66bc/"
+}

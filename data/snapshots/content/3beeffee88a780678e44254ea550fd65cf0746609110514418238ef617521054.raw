@@ -1,0 +1,365 @@
+<!-- url: see sources config -->
+<!-- fetched: 2026-10-09T09:12:12.975455+08:00 -->
+
+AI Model & API Providers Analysis | Artificial Analysis
+Artificial Analysis
+K
+Independent analysis of AI
+Understand the AI landscape to choose the best model and provider for your use case
+New
+Announcing the Artificial Analysis Cyber Index
+Addressing an urgent need to step up cyber defense capability
+New
+Model Comparison
+Compare models side-by-side on intelligence, pricing, speed, latency, benchmarks, and more.
+Intelligence
+Artificial Analysis Intelligence Index · Higher is better
+Not publicly available
+Speed
+Output tokens per second · Higher is better
+Not publicly available
+Cost per Task
+Weighted average cost (USD) per Intelligence Index task · Lower is better
+Not publicly available
+Optima
+by Artificial Analysis
+New
+Build your own custom benchmark
+Model Recommender
+Get personalized model recommendations that optimize for your priorities across intelligence, speed, and cost
+Changelog
+New article published · 8 Oct
+Introducing trusted-access models to the Artificial Analysis Cyber Index
+New article published · 8 Oct
+Announcing Harvey LAB-AA v1.1: adding hallucination checks to raise the bar for agentic legal work
+New language model evaluation · 8 Oct
+GPT-6 Sol (Daybreak Blue, max)
+New article published · 7 Oct
+Anthropic has released Claude Haiku 5.5
+New language model evaluation · 7 Oct
+Claude Haiku 5.5 (High)
+New language model evaluation · 7 Oct
+Claude Haiku 5.5 (Low)
+New language model evaluation · 7 Oct
+Claude Haiku 5.5 (Medium)
+New language model evaluation · 7 Oct
+Claude Haiku 5.5 (Max)
+New language model evaluation · 7 Oct
+Claude Haiku 5.5 (Xhigh)
+New article published · 6 Oct
+Mistral has released Mistral Large 4, making France home to the most intelligent model outside the US and China
+New language model evaluation · 6 Oct
+Mistral Large 4 Preview
+New language model evaluation · 3 Oct
+Ling 3.1 Flash
+New language model evaluation · 1 Oct
+Grok 4.7 (Low)
+New article published · 30 Sept
+Korean AI Lab Upstage releases Solar Mini 4
+New article published · 30 Sept
+Gemini 4 Argon: Google is back as one of the top three labs in intelligence achieved
+New language model evaluation · 30 Sept
+Solar Mini 4
+New language model evaluation · 30 Sept
+Gemini 4 Argon (High)
+New article published · 29 Sept
+AA-AgentPerf-Local: Benchmarking local AI agents on laptops and workstations
+New article published · 29 Sept
+GPT-6.1 Sol replaces GPT-6 Sol after just 7 days, with near-Astra intelligence
+New language model evaluation · 29 Sept
+JT-4.1 Flash 236B A21B (Reasoning)See more
+Intelligence
+Intelligence of leading AI models based on our independent evaluations
+Artificial Analysis Intelligence Index
+Artificial Analysis Intelligence Index v4.3.2 incorporates 10 evaluations: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1
+26 of 696 models
+Add model from specific provider
+Not publicly available
+Artificial Analysis Intelligence Index
+Artificial Analysis Intelligence Index v4.3.2 includes: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them.
+Open Weights / ProprietaryReasoning / Non-ReasoningText Only / Multimodal InputsBy Country
+Artificial Analysis Intelligence Index by Open Weights / Proprietary
+Artificial Analysis Intelligence Index v4.3.2 incorporates 10 evaluations: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1
+26 of 696 models
+Add model from specific provider
+Not publicly available
+ProprietaryOpen WeightsOpen Weights (Commercial Use Restricted)
+Artificial Analysis Intelligence Index
+Artificial Analysis Intelligence Index v4.3.2 includes: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them.
+Open Weights
+Indicates whether the model weights are available. Models are labelled as 'Commercial Use Restricted' if commercial use is limited by conditions, and as 'Non-commercial' if the license prohibits commercial use.
+Cost per TaskTime per TaskOutput Tokens per Task
+Cost per Intelligence Index Task
+Weighted average cost (USD) per Artificial Analysis Intelligence Index task, segmented by token type. Lower is better
+26 of 696 models
+Not publicly available
+AnswerReasoningCache WriteCache HitInput
+Cost per Intelligence Index Task
+Weighted average cost per Intelligence Index task. Each evaluation’s cost is calculated from input, cache hit, cache write, reasoning, and answer token prices, divided by task count, and weighted by its Intelligence Index weight.
+Intelligence Index vs. Cost per TaskIntelligence Index vs. Time per TaskIntelligence Index vs. Output Tokens per Task
+Intelligence Index vs. Cost per Intelligence Index Task
+Artificial Analysis Intelligence Index · Weighted average cost (USD) per Artificial Analysis Intelligence Index task
+26 of 696 models
+Most attractive quadrant
+Pareto line
+StepFunZ AIXiaomiMiniMaxOpenAIAnthropicMistralMetaSpaceXAINVIDIAGoogleAlibabaDeepSeekKimi
+Cost per Intelligence Index Task
+Weighted average cost per Intelligence Index task. Each evaluation’s cost is calculated from input, cache hit, cache write, reasoning, and answer token prices, divided by task count, and weighted by its Intelligence Index weight.
+Artificial Analysis Intelligence Index
+Artificial Analysis Intelligence Index v4.3.2 includes: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them.
+Intelligence Index vs. Cost per TaskIntelligence Index vs. Time per TaskIntelligence Index vs. Output Tokens per Task
+Intelligence Index vs. Cost per Intelligence Index Task, by Model Release
+All reasoning and effort variants of each selected release · Weighted average cost (USD) per Artificial Analysis Intelligence Index task
+10 of 502 releases
+Most attractive quadrant
+Pareto line
+AnthropicOpenAIGoogleMetaSpaceXAIXiaomiZ AIDeepSeekOther Models
+Cost per Intelligence Index Task
+Weighted average cost per Intelligence Index task. Each evaluation’s cost is calculated from input, cache hit, cache write, reasoning, and answer token prices, divided by task count, and weighted by its Intelligence Index weight.
+Artificial Analysis Intelligence Index
+Artificial Analysis Intelligence Index v4.3.2 includes: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them.
+Frontier Language Model Intelligence, Over Time
+Artificial Analysis Intelligence Index v4.3.2 incorporates 10 evaluations: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1
+15 of 58 model creators
+AnthropicOpenAIGoogleMetaSpaceXAIXiaomiAlibabaZ AIStepFunKimiDeepSeekMistralInstitute of Foundation ModelsMiniMaxThinking Machines
+Artificial Analysis Intelligence Index
+Artificial Analysis Intelligence Index v4.3.2 includes: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them.
+Coding Agent Index
+Performance, cost, and execution time for leading coding agents on end-to-end software engineering tasks
+IndexCostExecution Time
+Artificial Analysis Coding Agent Index
+Artificial Analysis Coding Agent Index v1.5 incorporates 3 benchmarks: DeepSWE v1.1, Terminal-Bench 4.0, and SWE-Atlas-QnA · Higher is better
+Color by
+ModelAgent
+14 of 37 models
+Not publicly available
+Artificial Analysis Coding Agent Index vs. Cost per Task
+Artificial Analysis Coding Agent Index vs. average pay-per-token API cost per task (USD)
+Color by
+ModelAgent
+14 of 37 models
+Most attractive quadrant
+Pareto line
+AnthropicGoogleOpenAIAnthropic + CognitionSpaceXAIMetaZ AIKimiAlibabaDeepSeek
+How to Read This Chart
+Each point represents a coding-agent variant. Farther left means lower average cost per task, while higher on the chart means higher benchmark performance. The most efficient agents sit toward the upper-left: stronger results at lower cost.
+CyberNew
+Measuring model capability on enterprise cyber defense
+Cyber IndexCyber Index by Benchmark
+Artificial Analysis Cyber Index
+Artificial Analysis Cyber Index v1 incorporates 3 evaluations: CWE-Bench-AA, DeepsecBench-AA, and CyberGym-E2E-AA
+Successes
+Safety blocks
+Trusted-access model (not publicly available)
+Cyber Index vs. Cost per TaskCWE-Bench-AA vs. Cost per TaskDeepsecBench-AA vs. Cost per TaskCyberGym-E2E-AA vs. Cost per Task
+Artificial Analysis Cyber Index: Score vs. Cost per Task
+Artificial Analysis Cyber Index score vs. average cost per task (USD) · Lower is better · Refused tasks are estimated from other models' token use
+Most attractive quadrant
+Pareto line
+Z AIXiaomiMiniMaxOpenAIAnthropicMistralSpaceXAINVIDIAGoogleAlibabaMetaDeepSeekKimi
+Evaluation Cost per Task
+Average cost per task in the evaluation. Costs are split by input, cache hit, cache write, reasoning, and answer token pricing where canonical token counts are available.
+Image & Video
+Top models from our Image Arena and Video Arena leaderboards, with 95% confidence intervals
+Text to ImageImage EditingText to VideoImage to VideoVideo Editing
+Text to Image Leaderboard
+Elo scores from blind preference votes by our recruited human panel, together with public Image Arena votes cast before 1 January 2026. See the full leaderboard here.
+15 of 168 models
+Speech
+Top models from our Text to Speech Arena, Speech to Text and Speech to Speech evaluations
+Provider Voice ArenaControlled Voice ArenaAA-WER Index (Non-Streaming)AA-WER Streaming Index (Final Transcription)Speech to Speech Index
+Provider Voice Arena Preference Elo
+Arena Elo: average Elo rating of the model · Higher is better
+15 of 97 models
+Arena Preference Elo
+Relative Elo score of the models as determined by responses from users in Artificial Analysis' Speech Arena. Some models may not be shown due to not yet having enough votes.
+Capability Indexes
+See more
+Measures the performance of models on specific capabilities and industries
+Finance & AccountingStrategy & OpsLegalHealthcare & MedicalEngineeringEconomics
+Artificial Analysis Finance & Accounting Index
+Incorporates 7 evaluations: AA-Omniscience, GDPval-AA v2.1, AA-Briefcase v1.1, Humanity's Last Exam, AutomationBench-AA, AA-LCR v1.1, GDP.pdf · Higher is better
+26 of 26 models
+Not publicly available
+Benchmarks
+Intelligence Evaluations
+Intelligence evaluations measured independently by Artificial Analysis · Higher is better
+CodingAgenticTool UsePrivate DatasetUser InteractionFinanceMedicalLegalIntelligence IndexLong ContextMultimodalInstruction FollowingFaithfulnessWritingBusinessSee more
+18 of 27 evaluations
+26 of 696 models
+Add model from specific provider
+Not publicly available
+AA-Briefcase v1.1
+Updated
+Agentic knowledge work, (Elo-500)/2000
+GDPval-AA v2.1
+Updated
+Agentic real-world work tasks, (Elo-500)/2000
+AutomationBench-AA
+Agentic SaaS workflows
+Terminal-Bench 4.0
+Agentic coding & terminal use
+SciCode
+Under review
+Coding
+Humanity's Last Exam
+Reasoning & knowledge
+GDP.pdf
+Professional document reasoning, All-pass
+CritPt
+Under review
+Physics reasoning
+AA-Omniscience Accuracy
+Knowledge
+AA-Omniscience Non-Hallucination Rate
+1 - hallucination rate
+AA-LCR v1.1
+Long context reasoning
+Harvey LAB-AA v1.1
+Updated
+Legal agentic work, Hallucination-Gated All-Pass Rate
+EnterpriseOps-Gym-AA
+Agentic business operations
+Terminal-Bench-Science 0.1
+New
+Agentic scientific research workflows in a terminal
+AA-AnalystAgent
+Quantitative analysis on spreadsheets & documents
+ITBench-AA
+Kubernetes incident root-cause analysis
+MMMU-Pro
+Visual reasoning
+MLCR-AA
+Medical long context reasoning
+Intelligence Evaluation Relevance
+While model intelligence generally translates across use cases, specific evaluations may be more relevant for certain use cases.
+Artificial Analysis Intelligence Index
+Artificial Analysis Intelligence Index v4.3.2 includes: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1. See Intelligence Index methodology for further details, including a breakdown of each evaluation and how we run them.
+AA-Briefcase v1.1Updated
+AA-Briefcase is a frontier agentic evaluation for long-horizon knowledge work, testing agents on realistic business workflows that require deliverables such as spreadsheets, presentations, and memos
+AA-Briefcase EloAA-Briefcase Rubric Score (%)Analytical Quality & Presentation EloAA-Briefcase Elo vs. Cost per Task
+AA-Briefcase Elo
+AA-Briefcase v1.1 is an agentic knowledge work benchmark developed by Artificial Analysis. AA-Briefcase Elo is a combined metric that aggregates rubric pass rate, analytical quality Elo and presentation Elo · Higher is better
+26 of 226 models
+Add model from specific provider
+Not publicly available
+AA-Briefcase Elo
+AA-Briefcase Elo is a combined metric that aggregates analytical quality Elo, presentation Elo, and rubric pass rate, with rubric performance converted into Elo via synthetic head-to-head matches. Elo and 95% confidence interval bounds are clamped at 0.
+AA-Omniscience
+AA-Omniscience is a knowledge and hallucination benchmark that rewards accuracy, punishes bad guesses and provides a comprehensive view of which models produce factually reliable outputs across different domains
+AA-Omniscience IndexAA-Omniscience AccuracyAA-Omniscience Hallucination Rate
+AA-Omniscience Index
+AA-Omniscience Index (higher is better) measures knowledge reliability and hallucination. It rewards correct answers, penalizes hallucinations, and has no penalty for refusing to answer. Scores range from -100 to 100, where 0 means as many correct as incorrect answers, and negative scores mean more incorrect than correct.
+26 of 571 models
+Add model from specific provider
+Not publicly available
+AA-Omniscience Index
+AA-Omniscience Index (higher is better) measures knowledge reliability and hallucination. It rewards correct answers, penalizes hallucinations, and has no penalty for refusing to answer. Scores range from -100 to 100, where 0 means as many correct as incorrect answers, and negative scores mean more incorrect than correct.
+GDPval-AA v2.1Updated
+GDPval-AA v2.1 evaluates AI models on real-world, economically valuable tasks across a wide range of occupations
+GDPval-AA v2.1 Leaderboard
+Elo rating for performance on real-world work tasks · Anchored to DeepSeek V4.1 Flash (max) at 1600 · Higher is better
+26 of 288 models
+Add model from specific provider
+Not publicly available
+Openness Index
+Artificial Analysis Openness Index assesses how 'open' models are on the basis of their availability and transparency across different components.
+Openness Index ComponentsOpenness Index
+Artificial Analysis Openness Index: Components
+Openness Index underlying score contribution by components, up to a maximum of 18 (higher is more open)
+10 of 324 models
+Add model from specific provider
+Transparency - Pre-training DataTransparency - Post-training DataTransparency - MethodologyModel Availability
+Artificial Analysis Openness Index vs. Artificial Analysis Intelligence Index
+10 of 324 models
+Add model from specific provider
+Most attractive quadrant
+Pareto line
+XiaomiZ AIKimiDeepSeekAlibabaMiniMaxThinking MachinesNVIDIAMeta
+Output Tokens
+Output tokens of leading AI models based on our independent evaluations
+Output Tokens per TaskIntelligence Index vs. Output Tokens per TaskOutput TokensIntelligence Index vs. Output Tokens
+Output Tokens per Intelligence Index Task
+Weighted average number of output tokens used to run one task in the Artificial Analysis Intelligence Index
+26 of 696 models
+Not publicly available
+AnswerReasoning
+Output Tokens per Intelligence Index Task
+The number of tokens required per Intelligence Index task. This is calculated by multiplying the output tokens per eval by the relative weights of each benchmark in the Intelligence Index, then dividing by task count (excluding repeats).
+Cost
+Price and real-world costs of leading AI models based on our independent evaluations
+Cost per TaskIntelligence Index vs. Cost per TaskEvaluation Breakdown
+Cost per Intelligence Index Task
+Weighted average cost (USD) per Artificial Analysis Intelligence Index task, segmented by token type. Lower is better
+26 of 696 models
+Not publicly available
+AnswerReasoningCache WriteCache HitInput
+Cost per Intelligence Index Task
+Weighted average cost per Intelligence Index task. Each evaluation’s cost is calculated from input, cache hit, cache write, reasoning, and answer token prices, divided by task count, and weighted by its Intelligence Index weight.
+Total CostIntelligence Index vs. Total CostIntelligence Index vs. Compute
+Cost to Run Artificial Analysis Intelligence Index
+Cost (USD) to run all evaluations in the Artificial Analysis Intelligence Index
+26 of 696 models
+Add model from specific provider
+Not publicly available
+OutputReasoningCache WriteCache ReadNon-Cache Input
+Cost to Run Artificial Analysis Intelligence Index
+The cost to run the evaluations in the Artificial Analysis Intelligence Index, calculated using the model's input, cache hit, cache write, reasoning, and answer token prices and the number of tokens used across evaluations (excluding repeats).
+Cache Hit, Input, and Output PricingBlended PriceBlended Price (Stacked)Cache DiscountCache Hit RateIntelligence Index vs. PriceIntelligence Index vs. Price (Log, Inverted)
+Pricing: Cache Hit, Input, and Output
+Price (USD per M Tokens)
+26 of 696 models
+Add model from specific provider
+Not publicly available
+Cache HitInputOutput
+Cache Hit
+Price per token for cached prompts (previously processed), typically offering a significant discount compared to regular input price, represented as USD per million tokens. The values shown here are the cache hit price; cache write and cache storage are billed separately and vary by provider — see "Cache pricing by provider" for detail.
+4 more notes
+Speed & Latency
+Comparison of first-party API performance
+SpeedLatencyEnd-to-End Response TimeIntelligence Index vs. Speed
+Output Speed
+Output tokens per second · Higher is better
+26 of 696 models
+Add model from specific provider
+Output Speed
+Tokens per second received while the model is generating tokens (ie. after first chunk has been received from the API for models which support streaming).
+Model Performance Representation
+Figures represent performance of the model's first-party API or the median across providers where a first-party API is not available.
+Time per TaskIntelligence Index vs. Time per TaskCost vs. Time per Task
+Time per Intelligence Index Task
+Weighted average decode time (minutes) per task; excludes TTFT and overhead time · Lower is better
+26 of 696 models
+Time per Intelligence Index Task
+The weighted average time (seconds) per Artificial Analysis Intelligence Index task. This is calculated by dividing output tokens per task by output speed, weighted by the relative weights of each benchmark in the Intelligence Index.
+Providers
+Endpoint Accuracy Index: gpt-oss-120b (High)
+v1.0 · Composite of BFCL v4-500, HLE-250 and AA-LCR-25 run against each provider endpoint · Percentage of the reference endpoint, with 95% confidence interval · Higher is better
+16 of 16 providers
+Reference (100%)Within referenceBelow reference
+Endpoint Accuracy Index
+Composite measure of how much of a model's accuracy a given provider endpoint preserves, from re-running BFCL v4-500, HLE-250 and AA-LCR-25 against that endpoint. Where a self-hosted reference endpoint exists, scores are expressed as a percentage of that reference (100 = matches reference); lower scores indicate accuracy lost to quantisation, sampling defaults, or other endpoint-side configuration. Scores are point-in-time snapshots. Methodology.
+Output Speed vs. Price: gpt-oss-120b (High)
+Output tokens per second · USD per 1M tokens (blended) · 10,000 input tokens
+16 of 16 providers
+Most attractive quadrant
+Pareto line
+AmazonAzureBasetenCerebrasCoreWeaveCrusoeDeepInfraDeepInfra (Turbo)Google VertexGroqNebius (Base)NovitaParasailSambaNovaScalewayTogether AI
+Emerging Provider Competition
+Smaller, emerging providers are offering high output speed and at competitive prices.
+3 more notes
+Pricing (Cache Hit, Input, and Output): gpt-oss-120b (High)
+Price (USD per M Tokens) · Lower is better · 10,000 input tokens
+16 of 16 providers
+Cache HitInputOutput
+Cache Hit
+Price per token for cached prompts (previously processed), typically offering a significant discount compared to regular input price, represented as USD per million tokens. The values shown here are the cache hit price; cache write and cache storage are billed separately and vary by provider — see "Cache pricing by provider" for detail.
+3 more notes
+SpeedSpeed Over Time
+Output Speed: gpt-oss-120b (High)
+Output speed: output tokens per second · 10,000 input tokens
+16 of 16 providers
+Output Speed
+Tokens per second received while the model is generating tokens (ie. after first chunk has been received from the API for models which support streaming).
+Model Performance Representation
+Figures represent performance of the model's first-party API or the median across providers where a first-party API is not available.

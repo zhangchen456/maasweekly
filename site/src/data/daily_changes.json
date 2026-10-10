@@ -1,6 +1,877 @@
 {
-  "updated_at": "2026-10-09T01:21:38+00:00",
+  "updated_at": "2026-10-10T00:53:50+00:00",
   "days": [
+    {
+      "date": "2026-10-10",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 21,
+        "unchanged": 44
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "0.113362元/张",
+            "qwen-image-2.1-turbo |"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "qwen-image-2.1-turbo |",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_02e17069b033c41b8dada847a3b4d721f0b46a1c8a4571b1b043cb64c1595e10",
+          "permalink": "/item/obs_02e17069b033c41b8dada847a3b4d721f0b46a1c8a4571b1b043cb64c1595e10/",
+          "llm_summary": "新增 qwen-image-2.1-turbo 图像生成模型的输出定价（0.113362元/张），表明该模型已上架并开放计费。"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "pricing",
+          "url": "https://siliconflow.cn/pricing",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 2,
+          "added_lines": [
+            "zai-org/GLM-5.3-Flash",
+            "生成图片每图片¥ 0.10",
+            "生成图片每图片¥ 0.30",
+            "生成视频每视频¥ 2.00",
+            "输入 UTF-8 字节每千字符（UTF-8）¥ 0.05",
+            "输入 UTF-8 字节每千字符（UTF-8）免费",
+            "输入音频时长（s）每秒¥ 0.00022"
+          ],
+          "removed_lines": [
+            "THUDM/GLM-4-32B-0414",
+            "输出价格（/千字符 UTF-8）"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "glm-",
+              "before": "GLM-4-32B-0414",
+              "after": "GLM-5.3-Flash"
+            }
+          ],
+          "signal_preview": "zai-org/GLM-5.3-Flash",
+          "raw_added_count": 10,
+          "raw_removed_count": 5,
+          "id": "obs_d4b44dbcddc9671378f40acad03142dc6c830b095794c78f7b528b1b8b9702ad",
+          "permalink": "/item/obs_d4b44dbcddc9671378f40acad03142dc6c830b095794c78f7b528b1b8b9702ad/",
+          "llm_summary": "移除 THUDM/GLM-4-32B-0414 及其输出价格，新增 zai-org/GLM-5.3-Flash 及多种模态（图片、视频、音频）的定价，显示模型换代并扩展多模态能力。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 3,
+          "added_lines": [
+            "DocsOverview",
+            "DocsSelect...",
+            "Dynamic groups",
+            "Pre-warm sandboxes"
+          ],
+          "removed_lines": [
+            "OverviewFeaturesConfigurationDevelopersSecurityAdministrationUse CasesResourcesDocsOverview",
+            "OverviewModelsAgentsToolsAudio & voiceProductionAPI referenceDocsModels",
+            "OverviewSign in with ChatGPTPluginsWorkspace AgentsCommerceAdsChatGPT + Codex user docsUse casesDocsOverview"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 4,
+          "raw_removed_count": 4,
+          "id": "obs_69c45321bfc0f43a3854ba28cda24811f6f23fe116c88e6b92e357a679d79ccc",
+          "permalink": "/item/obs_69c45321bfc0f43a3854ba28cda24811f6f23fe116c88e6b92e357a679d79ccc/",
+          "llm_summary": "模型列表新增 DocsOverview、DocsSelect、Dynamic groups、Pre-warm sandboxes 等文档结构，删除旧导航，反映文档重构，未涉及具体模型变更。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 3,
+          "added_lines": [
+            "DocsOverview",
+            "DocsSelect...",
+            "Dynamic groups",
+            "Life sciences models",
+            "Our latest Rosalind models.Prices per 1M tokens.",
+            "Pre-warm sandboxes",
+            "| Model | Input | Cached input | Output",
+            "| gpt-rosalind-discovery | $5.00 | $0.50 | $25.00"
+          ],
+          "removed_lines": [
+            "OverviewFeaturesConfigurationDevelopersSecurityAdministrationUse CasesResourcesDocsOverview",
+            "OverviewModelsAgentsToolsAudio & voiceProductionAPI referenceDocsModels",
+            "OverviewSign in with ChatGPTPluginsWorkspace AgentsCommerceAdsChatGPT + Codex user docsUse casesDocsOverview"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "gpt-rosalind-research",
+              "before": "| Life Sciences | gpt-rosalind-research | $5.00 | $0.50 | $25.00",
+              "after": "| gpt-rosalind-research | $5.00 | $0.50 | $25.00"
+            }
+          ],
+          "signal_preview": "Our latest Rosalind models.Prices per 1M tokens.",
+          "raw_added_count": 9,
+          "raw_removed_count": 5,
+          "id": "obs_05023d2176b318d16732653a1b8057974eef7a8636e79db40799144cd413d271",
+          "permalink": "/item/obs_05023d2176b318d16732653a1b8057974eef7a8636e79db40799144cd413d271/",
+          "llm_summary": "新增 Life sciences models 板块，包含 gpt-rosalind-discovery 的定价（$5/$0.5/$25），同时删除旧导航，表明新模型系列上架。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 3,
+          "added_lines": [
+            "DocsOverview",
+            "DocsSelect...",
+            "Dynamic groups",
+            "Pre-warm sandboxes"
+          ],
+          "removed_lines": [
+            "OverviewFeaturesConfigurationDevelopersSecurityAdministrationUse CasesResourcesDocsOverview",
+            "OverviewModelsAgentsToolsAudio & voiceProductionAPI referenceDocsOverview",
+            "OverviewSign in with ChatGPTPluginsWorkspace AgentsCommerceAdsChatGPT + Codex user docsUse casesDocsOverview"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 4,
+          "raw_removed_count": 4,
+          "id": "obs_7faf072a5c2643b98567c7075fbeb6200887af0b48a6aa7dc5df0e11fafdfdf4",
+          "permalink": "/item/obs_7faf072a5c2643b98567c7075fbeb6200887af0b48a6aa7dc5df0e11fafdfdf4/",
+          "llm_summary": "变更日志新增 DocsOverview、Dynamic groups 等文档条目，删除旧导航，属于文档更新。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 3,
+          "added_lines": [
+            "DocsOverview",
+            "DocsSelect...",
+            "Dynamic groups",
+            "Pre-warm sandboxes"
+          ],
+          "removed_lines": [
+            "OverviewFeaturesConfigurationDevelopersSecurityAdministrationUse CasesResourcesDocsOverview",
+            "OverviewModelsAgentsToolsAudio & voiceProductionAPI referenceDocsOverview",
+            "OverviewSign in with ChatGPTPluginsWorkspace AgentsCommerceAdsChatGPT + Codex user docsUse casesDocsOverview"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 4,
+          "raw_removed_count": 4,
+          "id": "obs_20d2ce93a5f7ef52b9e5799931c795c441b44c5a477367653410e48539727076",
+          "permalink": "/item/obs_20d2ce93a5f7ef52b9e5799931c795c441b44c5a477367653410e48539727076/",
+          "llm_summary": "博客新增 DocsOverview 等条目，删除旧导航，属于文档结构调整。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "pricing",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 3,
+          "added_lines": [
+            "| Claude 4.6 and earlier models | 244 tokens",
+            "| Claude 4.7 and later models and Claude Mythos Preview | 325 tokens",
+            "| text_editor_20250728 (Claude 4.6 and earlier models) | 745 tokens",
+            "| text_editor_20250728 (Claude 4.7 and later models and Claude Mythos Preview) | 974 tokens"
+          ],
+          "removed_lines": [
+            "| Claude Opus 4.6, Claude Sonnet 4.6, and earlier | 244 tokens",
+            "| Claude Opus 5, Claude Opus 4.8, and Claude Opus 4.7 | 325 tokens",
+            "| text_editor_20250429 (Claude 4.x) | 700 tokens"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "for claude",
+              "before": "For Claude 4.6 and later models, specifying US-only inference through the inference_geo parameter incurs a 1.1x multiplier on all token pricing categories, including input tokens, output tokens, cache writes, and cache reads. Global routing (the default) uses standard pricing.",
+              "after": "For Claude 4.6 and later models, specifying US-only inference through the inference_geo parameter incurs a 1.1x multiplier on all token pricing categories, including input tokens, output tokens, cache writes, and cache reads. On Claude Haiku 5.5, the multiplier also applies to the higher prices for prompts over 100,000 tokens (see Long context pricing). Global routing (the default) uses standard pricing."
+            },
+            {
+              "key": "multi-region",
+              "before": "Google Cloud offers three endpoint types: global endpoints, multi-region endpoints (dynamic routing within a geographic area), and regional endpoints.",
+              "after": "Google Cloud offers global endpoints and multi-region endpoints (dynamic routing within a geographic area) for these models, and regional endpoints for Claude Sonnet 4.6 and earlier models."
+            },
+            {
+              "key": "tokens are pieces of text that models process",
+              "before": "Tokens are pieces of text that models process. As a rough estimate, 1 token is approximately 4 characters or 0.75 words in English. The exact count varies by language and content type.",
+              "after": "Tokens are pieces of text that models process. How many tokens the same text produces depends on the model's tokenizer, the language, and the type of content. Claude 4.7 and later models and Claude Mythos Preview use a newer tokenizer that produces approximately 30 percent more tokens for the same text than earlier models. To see how many tokens a request uses on a specific model, count it with token counting and that model's ID."
+            },
+            {
+              "key": "toolset definition overhead",
+              "before": "Toolset definition overhead: Declaring browser_toolset_20260801 with its default members adds about 6,600 input tokens to a request (about 6,610 on Claude Fable 5, Claude Mythos 5, Claude Opus 5, and Claude Opus 4.8, and about 6,670 on Claude Sonnet 5), which covers the member tool definitions and the tool use system prompt. Enabling all four optional members adds about 880 tokens, and disabling members with configs reduces the count. The exact count for a request is reported in the response usage, and you can estimate it in advance with the token counting endpoint.",
+              "after": "Toolset definition overhead: Declaring browser_toolset_20260801 with its default members adds about 6,600 input tokens to a request (about 6,670 on Claude Sonnet 5 and about 6,610 on the other supported models), which covers the member tool definitions and the tool use system prompt. Enabling all four optional members adds about 880 tokens, and disabling members with configs reduces the count. The exact count for a request is reported in the response usage, and you can estimate it in advance with the token counting endpoint."
+            },
+            {
+              "key": "toolset definition overhead",
+              "before": "Toolset definition overhead: Declaring computer_toolset_20260801 with its default members adds about 4,500 input tokens to a request (about 4,520 on Claude Fable 5, Claude Mythos 5, Claude Opus 5, and Claude Opus 4.8, and about 4,590 on Claude Sonnet 5), which covers the member tool definitions and the tool use system prompt. Disabling zoom with configs removes about 410 of those tokens. The exact count for a request is reported in the response usage, and you can estimate it in advance with the token counting endpoint.",
+              "after": "Toolset definition overhead: Declaring computer_toolset_20260801 with its default members adds about 4,500 input tokens to a request (about 4,590 on Claude Sonnet 5 and about 4,520 on the other supported models), which covers the member tool definitions and the tool use system prompt. Disabling zoom with configs removes about 410 of those tokens. The exact count for a request is reported in the response usage, and you can estimate it in advance with the token counting endpoint."
+            }
+          ],
+          "signal_preview": "| Claude 4.6 and earlier models | 244 tokens",
+          "raw_added_count": 9,
+          "raw_removed_count": 8,
+          "id": "obs_b3c69e36057a20b3d5a7b777d0c0928879f2862bee3bb942f7cb22f164635cd9",
+          "permalink": "/item/obs_b3c69e36057a20b3d5a7b777d0c0928879f2862bee3bb942f7cb22f164635cd9/",
+          "llm_summary": "定价页更新 token 估算：Claude 4.7 及更新模型和 Claude Mythos Preview 的 token 数从 325 调整为 244（旧模型），并新增 text_editor_20250728 的 token 开销，同时删除旧工具 text_editor_20250429 的条目，反映模型版本更新。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "You can now let a Claude Managed Agents agent use dynamic workflows, in beta with the managed-agents-2026-04-01 beta header. For work with many pieces, such as reviewing hundreds of documents, the agent can write a workflow. A workflow is a program that runs many agents in phases and combines their results. The server runs it in the background as a workflow run. To turn dynamic workflows on, set the agent's multiagent field to {\"type\": \"multiagent_20261001\", \"workflows\": {\"type\": \"enabled\"}}. To guide the agent, tell it in its system prompt when to start a run. Follow each run through workflow_run.* events on the session's event stream. See Workflow runs."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "model-specific",
+              "before": "Code written for Claude Haiku 4.5 can break on Claude Haiku 5.5. Manual extended thinking (budget_tokens) returns a 400 error, and adaptive thinking is on by default, so a response can begin with thinking blocks. The same text also counts as more tokens. See the migration guide. For model-specific prompting patterns, see Prompting Claude Haiku 5.5.",
+              "after": "Code written for Claude Haiku 4.5 can break on Claude Haiku 5.5. Manual extended thinking (budget_tokens), the sampling parameters temperature, top_p, and top_k, and assistant message prefill can each return a 400 error. computer_20250124 also returns a 400 error: use the computer_toolset_20260801 toolset on the Claude API and Google Cloud, or computer_20251124 on Amazon Bedrock. A request that sends thinking blocks back after a change to system, tools, or earlier turns can also return a 400 error. On Amazon Bedrock, structured outputs aren't available for Claude Haiku 5.5. Adaptive thinking is on by default, so a response can begin with thinking blocks, and their text is omitted unless you set thinking.display to \"summarized\". The same text also counts as more tokens. See the migration guide for each change. For model-specific prompting patterns, see Prompting Claude Haiku 5.5."
+            }
+          ],
+          "signal_preview": "You can now let a Claude Managed Agents agent use dynamic workflows, in beta with the managed-agents-2026-04-01 beta header. For work with many pieces, such as reviewing hundreds of documents, the agent can write a workflow. A workflow is a program that runs many agents in phases and combines their results. The server runs it in the background as a workflow run. To turn dynamic workflows on, set the agent's multiagent field to {\"type\": \"multiagent_20261001\", \"workflows\": {\"type\": \"enabled\"}}. To guide the agent, tell it in its system prompt when to start a run. Follow each run through workflow_run.* events on the session's event stream. See Workflow runs.",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_21454573d2fccf2e738d2e0d8a157606001c671d3cb847c5e8ac7c066dfb0e7b",
+          "permalink": "/item/obs_21454573d2fccf2e738d2e0d8a157606001c671d3cb847c5e8ac7c066dfb0e7b/",
+          "llm_summary": "变更日志更新了 Claude Haiku 5.5 的兼容性说明，新增 Managed Agents 动态工作流 beta 功能。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "model_list",
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 8,
+          "added_lines": [],
+          "removed_lines": [
+            "Gemini 3.5 Flash",
+            "Gemini 3.7 Flash",
+            "Our legacy Flash model, providing baseline speed and foundational performance for routine, high-throughput workloads.",
+            "Our previous-generation Flash model for complex coding, agentic workflows, and reliable multi-step execution.",
+            "gemini-3.5-flash",
+            "gemini-3.7-flash",
+            "| Gemini 3.5 Flash",
+            "| Gemini 3.7 Flash"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-06 UTC.",
+              "after": "Last updated 2026-10-09 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-10-09 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 10,
+          "id": "obs_8f40a10bfcf23cde891e30fea56a4e534b38aba49b29a5a7999fd03a7535993e",
+          "permalink": "/item/obs_8f40a10bfcf23cde891e30fea56a4e534b38aba49b29a5a7999fd03a7535993e/",
+          "llm_summary": "模型列表移除 Gemini 3.5 Flash 和 Gemini 3.7 Flash，更新日期至 2026-10-09，表明这些模型已退役。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 8,
+          "added_lines": [
+            "1,500 RPD free (limit shared for Flash and Flash-Lite)",
+            "5,000 free search requests per month (shared across all Gemini 3 and newer models), then $14 per 1,000 requests.",
+            "5,000 requests per month (free, shared across all Gemini 3 and newer models), then $14 / 1,000 search queries.",
+            "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]",
+            "| 5,000 free search requests per month (shared across all Gemini 3 and newer models), then $14 per 1,000 requests for text and image-based grounding.",
+            "| 5,000 free search requests per month (shared across all Gemini 3 and newer models), then $14 per 1,000 requests.",
+            "| 5,000 requests per month (free, shared across all Gemini 3 and newer models), then $14 / 1,000 search queries."
+          ],
+          "removed_lines": [
+            "Gemini 3.5 Flash",
+            "Gemini 3.7 Flash",
+            "Our earlier Flash model, built for speed and foundational performance across",
+            "$0.05 (input caching) starting January 1, 2027.",
+            "$0.125 (input caching) starting January 1, 2027.",
+            "$0.25 (input caching) starting January 1, 2027.",
+            "$0.45 (input caching) starting January 1, 2027.",
+            "5,000 free search requests per month (shared across all Gemini models), then $14 per 1,000 requests."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "gemini",
+              "before": "Gemini 3 models:",
+              "after": "Gemini 3 and newer models:"
+            },
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-07 UTC.",
+              "after": "Last updated 2026-10-09 UTC."
+            }
+          ],
+          "signal_preview": "1,500 RPD free (limit shared for Flash and Flash-Lite)",
+          "raw_added_count": 9,
+          "raw_removed_count": 24,
+          "id": "obs_15d73cad154f7cf2b93c0244d57dfaaef06b3779c6ea51b906bdf3065c5d66bc",
+          "permalink": "/item/obs_15d73cad154f7cf2b93c0244d57dfaaef06b3779c6ea51b906bdf3065c5d66bc/",
+          "llm_summary": "定价页移除 Gemini 3.5 Flash 和 3.7 Flash 的定价，新增搜索请求配额（每月 5,000 次免费，超出 $14/千次），并更新日期，反映模型退役和搜索计费调整。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "changelog",
+          "url": "https://ai.google.dev/gemini-api/docs/changelog",
+          "status": "changed",
+          "added_count": 25,
+          "removed_count": 0,
+          "added_lines": [
+            "All requests to gemini-3.5-flash are automatically routed to",
+            "All requests to gemini-3.7-flash are automatically routed to",
+            "Deep Research Agent deep-research-pro-preview-12-2025 deprecation:",
+            "Designed for speed and efficiency, ideal to be streamed back to a client",
+            "Gemini 3.5 Flash deprecation:",
+            "Gemini 3.6 Flash guide.",
+            "Gemini 3.7 Flash deprecation:",
+            "Maximum comprehensiveness for automated context gathering and synthesis.",
+            "Migrate your requests to one of the newer Deep",
+            "Research agent versions:",
+            "The deep-research-pro-preview-12-2025 agent is deprecated and will be",
+            "To migrate, update the agent parameter in your interactions.create",
+            "and has been replaced by gemini-3.6-flash.",
+            "and has been replaced by gemini-3.8-flash.",
+            "deep-research-max-preview-04-2026:",
+            "deep-research-preview-04-2026 (or deep-research-max-preview-04-2026).",
+            "deep-research-preview-04-2026:",
+            "gemini-3.5-flash is deprecated",
+            "gemini-3.6-flash. Update your model string to gemini-3.6-flash (or",
+            "gemini-3.7-flash is deprecated",
+            "gemini-3.8-flash) and review the",
+            "gemini-3.8-flash. Update your model string to gemini-3.8-flash and",
+            "requests from deep-research-pro-preview-12-2025 to",
+            "review the Gemini 3.8 Flash guide.",
+            "shut down on October 23,"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-07 UTC.",
+              "after": "Last updated 2026-10-09 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-07 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "All requests to gemini-3.5-flash are automatically routed to",
+          "raw_added_count": 28,
+          "raw_removed_count": 2,
+          "id": "obs_267321ecb09ee0b5fb14482359910a7c85b9c2dcbf7f4577cb923f45620ac13f",
+          "permalink": "/item/obs_267321ecb09ee0b5fb14482359910a7c85b9c2dcbf7f4577cb923f45620ac13f/",
+          "llm_summary": "变更日志新增 Gemini 3.5 Flash 和 3.7 Flash 的弃用说明，以及 deep-research-pro-preview-12-2025 弃用，要求迁移至新版本。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "Here are Google’s latest AI updates from September 2026",
+            "The latest AI news we announced in September 2026"
+          ],
+          "removed_lines": [
+            "Building AI to accelerate science and improve lives",
+            "The true measure of AI is who it helps. Here’s how it’s impacting lives today. We're focused on key areas where advanced technology can help make extraordinary progress …"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Here are Google’s latest AI updates from September 2026",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_c189f3ea10cb20823ef4df712466b357597fd8bc5f86b8da8b8e3a0c05709afb",
+          "permalink": "/item/obs_c189f3ea10cb20823ef4df712466b357597fd8bc5f86b8da8b8e3a0c05709afb/",
+          "llm_summary": "博客新增 2026 年 9 月 AI 更新汇总，删除旧文章，内容更新。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Gemini 3.1 Pro",
+            "Our reasoning-first model optimized for complex agentic workflows and coding. Features adaptive thinking, a 1 million token context window, and integrated grounding for multimodal problem-solving."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-07 UTC.",
+              "after": "Last updated 2026-10-09 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-07 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Our reasoning-first model optimized for complex agentic workflows and coding. Features adaptive thinking, a 1 million token context window, and integrated grounding for multimodal problem-solving.",
+          "raw_added_count": 4,
+          "raw_removed_count": 2,
+          "id": "obs_54ff99614525205ff7a4fc7e6115321be76accfcac9736ce32cfef4ffef8c715",
+          "permalink": "/item/obs_54ff99614525205ff7a4fc7e6115321be76accfcac9736ce32cfef4ffef8c715/",
+          "llm_summary": "模型列表新增 Gemini 3.1 Pro，描述为推理优先模型，支持 1M 上下文，更新日期至 2026-10-09。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "model_list",
+          "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Models Overview | Mistral Docs"
+          ],
+          "removed_lines": [
+            "Mistral Docs"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Models Overview | Mistral Docs",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_87d870c6b8aaa17a744f3bb95838cf4828acf8ac9567c49d93beb744ac25178a",
+          "permalink": "/item/obs_87d870c6b8aaa17a744f3bb95838cf4828acf8ac9567c49d93beb744ac25178a/",
+          "llm_summary": "模型列表标题从 'Mistral Docs' 改为 'Models Overview | Mistral Docs'，属于文档结构调整。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "Enterprise AITechnology",
+            "Shared or dedicated inference for Embed & Rerank"
+          ],
+          "removed_lines": [
+            "Bringing together secure, sovereign AI and transformation expertise to help organizations move from pilots to production",
+            "The Culture Funnel: You can’t align what isn’t in the data"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Shared or dedicated inference for Embed & Rerank",
+          "raw_added_count": 3,
+          "raw_removed_count": 3,
+          "id": "obs_e45bec7ebfc2a34330c630a966363cb52b83e91c2451d1aeb690aabbad208f54",
+          "permalink": "/item/obs_e45bec7ebfc2a34330c630a966363cb52b83e91c2451d1aeb690aabbad208f54/",
+          "llm_summary": "博客新增关于企业 AI 和共享/专用推理的文章，删除旧文章，内容更新。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: October 8, 2026",
+              "after": "Last updated: October 9, 2026"
+            }
+          ],
+          "signal_preview": "Last updated: October 9, 2026",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_170e53b2ac27f92f2c86fc925f2f1c5f15437598ec6ae5df627e58e51eba93ea",
+          "permalink": "/item/obs_170e53b2ac27f92f2c86fc925f2f1c5f15437598ec6ae5df627e58e51eba93ea/",
+          "llm_summary": "变更日志更新日期至 2026-10-09，无实质内容变化。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: October 8, 2026",
+              "after": "Last updated: October 9, 2026"
+            }
+          ],
+          "signal_preview": "Last updated: October 9, 2026",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_b844d6fc3740e54d213d470668b47da6e080888a6125d775f6d54d651e7f83a7",
+          "permalink": "/item/obs_b844d6fc3740e54d213d470668b47da6e080888a6125d775f6d54d651e7f83a7/",
+          "llm_summary": "博客更新日期至 2026-10-09，无实质内容变化。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 3,
+          "added_lines": [
+            "\"base_model:nvidia/LocateAnything-3B\",",
+            "\"base_model:quantized:nvidia/LocateAnything-3B\","
+          ],
+          "removed_lines": [
+            "\"arxiv:2607.02770\",",
+            "\"base_model:finetune:google/gemma-4-26B-A4B\",",
+            "\"base_model:google/gemma-4-26B-A4B\","
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "\"base_model:nvidia/LocateAnything-3B\",",
+          "raw_added_count": 43,
+          "raw_removed_count": 40,
+          "id": "obs_9cf88ce704dda122e1b00e9c552b032ee6826b3a773c8c185d55e464ff2c470b",
+          "permalink": "/item/obs_9cf88ce704dda122e1b00e9c552b032ee6826b3a773c8c185d55e464ff2c470b/",
+          "llm_summary": "行业数据新增 nvidia/LocateAnything-3B 及其量化版本，移除 gemma-4-26B-A4B 相关条目，反映模型库更新。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 10,
+          "removed_count": 9,
+          "added_lines": [
+            "10Anthropic",
+            "16.98%View details",
+            "361,725,367361,725,367Total Sessions",
+            "7.95%View all",
+            "GPT 6 Astra (Max)·",
+            "GPT 6.1 Sol (Max)$0.59/task",
+            "MiMo V2.6 Pro$0.10/task",
+            "Muse Spark 1.3 (Max)$0.52/task",
+            "Searching the web",
+            "mistral-large-4·"
+          ],
+          "removed_lines": [
+            "Claude Fable 5 (High)Anthropic",
+            "Claude Fable 5.1 (Max)$6.31/task",
+            "Claude Opus 5 (Max)Anthropic",
+            "Claude Opus 5 (Max)·",
+            "Claude Opus 5.5 (High)$1.73/task",
+            "Deepseek V4 Flash (High) (20260731)",
+            "15.90%View details",
+            "361,270,688361,270,688Total Sessions",
+            "7.57%View all"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5 (High)Anthropic",
+              "after": "Claude Opus 5.5 (High)$1.74/task"
+            }
+          ],
+          "signal_preview": "GPT 6.1 Sol (Max)$0.59/task",
+          "raw_added_count": 11,
+          "raw_removed_count": 20,
+          "id": "obs_f80d98d44f47f6c9e57fe110766dfc4f09d51dc0e0f769b909595fdbf7c3957f",
+          "permalink": "/item/obs_f80d98d44f47f6c9e57fe110766dfc4f09d51dc0e0f769b909595fdbf7c3957f/",
+          "llm_summary": "榜单更新：Claude Opus 5.5 (High) 取代 Claude Opus 5 (High)，价格从 $1.73 微调至 $1.74；新增 GPT 6.1 Sol、MiMo V2.6 Pro、Muse Spark 1.3 等模型，移除 Claude Fable 5、Deepseek V4 Flash 等，反映排名和模型变化。"
+        },
+        {
+          "platform": "百度千帆",
+          "source_type": "pricing",
+          "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "| GLM-5.2-Fast"
+          ],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_c1ee067b3a1351b91ea35fb7d04b209a386061a84cccdff627f7f822ac77c996",
+          "permalink": "/item/obs_c1ee067b3a1351b91ea35fb7d04b209a386061a84cccdff627f7f822ac77c996/"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_6143ed830a0f521682ab3fa4bff8b081d5afe038ead3f3061937f86626d8e0a6",
+          "permalink": "/item/obs_6143ed830a0f521682ab3fa4bff8b081d5afe038ead3f3061937f86626d8e0a6/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        }
+      ],
+      "price_changes": [
+        {
+          "id": "price_89324bc9b8edc4e9498b302c80a46b1831cc8cae7d135798b2783f0a260803ee",
+          "provider": "openai",
+          "model": "gpt-rosalind-discovery",
+          "component": "input",
+          "current": "5.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_23887686ac2ea07368657be56582cc34ebe4ad283c3c9971484d38fd0070f664",
+          "provider": "openai",
+          "model": "gpt-rosalind-discovery",
+          "component": "cache_read",
+          "current": "0.500000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_9e761178b95db7f8ef791acfaedc0a78658b2a5339c873c9a92c6507ac9113c7",
+          "provider": "openai",
+          "model": "gpt-rosalind-discovery",
+          "component": "output",
+          "current": "25.000000",
+          "currency": "USD",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://developers.openai.com/api/docs/pricing"
+        },
+        {
+          "id": "price_e5369b76c67da74397db84dd3623bd7729fd24cdc3a379e775fc2a79958f0f61",
+          "provider": "qwen",
+          "model": "qwen-image-2.1-turbo",
+          "component": "output",
+          "current": "0.100000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        },
+        {
+          "id": "price_192dddd33aa5446e983ac5feb3e746dcb9747fda7bbf3659ad98fad1f9ebf851",
+          "provider": "qwen",
+          "model": "qwen-image-2.1-turbo",
+          "component": "output",
+          "current": "0.100000",
+          "currency": "CNY",
+          "unit": "per_1m_tokens",
+          "unit_quantity": 1000000,
+          "unit_name": "token",
+          "changed_fields": [
+            "amount"
+          ],
+          "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "OpenAI",
+          "logo_summary": "发布Rosalind生命科学模型，定价$5/$0.5/$25",
+          "items": [
+            {
+              "text": "OpenAI 新增 gpt-rosalind-discovery 生命科学模型，输入 $5.00/百万tokens、缓存输入 $0.50、输出 $25.00",
+              "type": "release"
+            },
+            {
+              "text": "OpenAI 定价页新增 Life sciences models 板块，展示 Rosalind 系列模型定价",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "Flash系列退役，搜索配额调整，Deep Research弃用",
+          "items": [
+            {
+              "text": "Gemini 3.5 Flash 与 Gemini 3.7 Flash 从模型列表和定价页移除，请求自动路由至新版本",
+              "type": "sunset"
+            },
+            {
+              "text": "Gemini 3 及更新模型共享每月 5,000 次免费搜索请求，超出后 $14/千次",
+              "type": "pricing"
+            },
+            {
+              "text": "deep-research-pro-preview-12-2025 代理弃用，需迁移至更新版本",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "定价页更新token估算，新增Claude 4.7及Mythos",
+          "items": [
+            {
+              "text": "Anthropic 定价页更新 token 估算：Claude 4.7 及更新模型和 Claude Mythos Preview 为 325 tokens，旧模型为 244 tokens",
+              "type": "pricing"
+            },
+            {
+              "text": "text_editor_20250728 工具 token 开销更新：Claude 4.7+ 为 974 tokens，旧模型为 745 tokens",
+              "type": "pricing"
+            },
+            {
+              "text": "Claude Managed Agents 新增动态工作流（beta）",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "新增Gemini 3.1 Pro，强化推理与代理工作流",
+          "items": [
+            {
+              "text": "Vertex AI 模型列表新增 Gemini 3.1 Pro，定位推理优先，支持 1M 上下文与集成 grounding",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "新增qwen-image-2.1-turbo图像模型定价",
+          "items": [
+            {
+              "text": "阿里百炼新增 qwen-image-2.1-turbo 图像模型，输出定价 0.113362元/张",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "GLM-4-32B退役，GLM-5.3-Flash上架",
+          "items": [
+            {
+              "text": "硅基流动下架 THUDM/GLM-4-32B-0414，新增 zai-org/GLM-5.3-Flash",
+              "type": "release"
+            },
+            {
+              "text": "新增图片生成（¥0.10/张、¥0.30/张）、视频生成（¥2.00/个）及音频输入（¥0.00022/秒）定价",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "榜单更新：Claude Opus 5.5登顶，多模型价格变动",
+          "items": [
+            {
+              "text": "LMArena 榜单中 Claude Opus 5.5 (High) 取代 Claude Opus 5 (High)，任务价格 $1.74/task",
+              "type": "other"
+            },
+            {
+              "text": "新增 GPT 6.1 Sol (Max) $0.59/task、MiMo V2.6 Pro $0.10/task、Muse Spark 1.3 (Max) $0.52/task 等模型",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "博客聚焦企业AI与共享/专用推理",
+          "items": [
+            {
+              "text": "Cohere 博客新增文章：共享或专用推理用于 Embed & Rerank",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-10-09",
       "stats": {

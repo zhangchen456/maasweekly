@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_05023d2176b318d16732653a1b8057974eef7a8636e79db40799144cd413d271",
+  "sourceId": "openai-pricing",
+  "date": "2026-10-10",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "OpenAI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.openai.com/docs/pricing",
+  "title": "OpenAI · 定价来源更新",
+  "summary": "Our latest Rosalind models.Prices per 1M tokens.",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "gpt-rosalind-research",
+        "before": "| Life Sciences | gpt-rosalind-research | $5.00 | $0.50 | $25.00",
+        "after": "| gpt-rosalind-research | $5.00 | $0.50 | $25.00"
+      }
+    ],
+    "added_lines": [
+      "DocsOverview",
+      "DocsSelect...",
+      "Dynamic groups",
+      "Life sciences models",
+      "Our latest Rosalind models.Prices per 1M tokens.",
+      "Pre-warm sandboxes",
+      "| Model | Input | Cached input | Output",
+      "| gpt-rosalind-discovery | $5.00 | $0.50 | $25.00"
+    ],
+    "removed_lines": [
+      "OverviewFeaturesConfigurationDevelopersSecurityAdministrationUse CasesResourcesDocsOverview",
+      "OverviewModelsAgentsToolsAudio & voiceProductionAPI referenceDocsModels",
+      "OverviewSign in with ChatGPTPluginsWorkspace AgentsCommerceAdsChatGPT + Codex user docsUse casesDocsOverview"
+    ],
+    "added_count": 8,
+    "removed_count": 3,
+    "raw_added_count": 9,
+    "raw_removed_count": 5
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-10.json"
+  },
+  "permalink": "/item/obs_05023d2176b318d16732653a1b8057974eef7a8636e79db40799144cd413d271/"
+}

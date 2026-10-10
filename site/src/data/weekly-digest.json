@@ -4,6 +4,14 @@
     "start": "2026-10-05",
     "end": "2026-10-11",
     "days": {
+      "2026-10-10": {
+        "substantive": 19,
+        "jitter": 2,
+        "failed": 3,
+        "releases": 4,
+        "pricings": 6,
+        "sunsets": 2
+      },
       "2026-10-09": {
         "substantive": 16,
         "jitter": 5,
@@ -46,12 +54,102 @@
       }
     },
     "totals": {
-      "substantive": 69,
-      "releases": 25,
-      "pricings": 13,
-      "sunsets": 6
+      "substantive": 88,
+      "releases": 29,
+      "pricings": 19,
+      "sunsets": 8
     },
     "highlights": [
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-10",
+        "text": "OpenAI 新增 gpt-rosalind-discovery 生命科学模型，输入 $5.00/百万tokens、缓存输入 $0.50、输出 $25.00",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-10",
+        "text": "OpenAI 定价页新增 Life sciences models 板块，展示 Rosalind 系列模型定价",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-10",
+        "text": "Gemini 3.5 Flash 与 Gemini 3.7 Flash 从模型列表和定价页移除，请求自动路由至新版本",
+        "type": "sunset"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-10",
+        "text": "Gemini 3 及更新模型共享每月 5,000 次免费搜索请求，超出后 $14/千次",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-10",
+        "text": "deep-research-pro-preview-12-2025 代理弃用，需迁移至更新版本",
+        "type": "sunset"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-10",
+        "text": "Anthropic 定价页更新 token 估算：Claude 4.7 及更新模型和 Claude Mythos Preview 为 325 tokens，旧模型为 244 tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-10",
+        "text": "text_editor_20250728 工具 token 开销更新：Claude 4.7+ 为 974 tokens，旧模型为 745 tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-10",
+        "text": "Claude Managed Agents 新增动态工作流（beta）",
+        "type": "other"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-10",
+        "text": "Vertex AI 模型列表新增 Gemini 3.1 Pro，定位推理优先，支持 1M 上下文与集成 grounding",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-10",
+        "text": "阿里百炼新增 qwen-image-2.1-turbo 图像模型，输出定价 0.113362元/张",
+        "type": "pricing"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-10-10",
+        "text": "硅基流动下架 THUDM/GLM-4-32B-0414，新增 zai-org/GLM-5.3-Flash",
+        "type": "release"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-10-10",
+        "text": "新增图片生成（¥0.10/张、¥0.30/张）、视频生成（¥2.00/个）及音频输入（¥0.00022/秒）定价",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-10",
+        "text": "LMArena 榜单中 Claude Opus 5.5 (High) 取代 Claude Opus 5 (High)，任务价格 $1.74/task",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-10",
+        "text": "新增 GPT 6.1 Sol (Max) $0.59/task、MiMo V2.6 Pro $0.10/task、Muse Spark 1.3 (Max) $0.52/task 等模型",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-10",
+        "text": "Cohere 博客新增文章：共享或专用推理用于 Embed & Rerank",
+        "type": "other"
+      },
       {
         "platform": "OpenAI",
         "date": "2026-10-09",

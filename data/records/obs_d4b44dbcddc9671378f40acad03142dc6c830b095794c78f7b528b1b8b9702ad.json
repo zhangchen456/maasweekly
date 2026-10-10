@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_d4b44dbcddc9671378f40acad03142dc6c830b095794c78f7b528b1b8b9702ad",
+  "sourceId": "siliconflow-pricing",
+  "date": "2026-10-10",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "硅基流动",
+  "sourceType": "pricing",
+  "sourceUrl": "https://siliconflow.cn/pricing",
+  "title": "硅基流动 · 定价来源更新",
+  "summary": "移除 THUDM/GLM-4-32B-0414 及其输出价格，新增 zai-org/GLM-5.3-Flash 及多种模态（图片、视频、音频）的定价，显示模型换代并扩展多模态能力。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-10T00:53:49+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "glm-",
+        "before": "GLM-4-32B-0414",
+        "after": "GLM-5.3-Flash"
+      }
+    ],
+    "added_lines": [
+      "zai-org/GLM-5.3-Flash",
+      "生成图片每图片¥ 0.10",
+      "生成图片每图片¥ 0.30",
+      "生成视频每视频¥ 2.00",
+      "输入 UTF-8 字节每千字符（UTF-8）¥ 0.05",
+      "输入 UTF-8 字节每千字符（UTF-8）免费",
+      "输入音频时长（s）每秒¥ 0.00022"
+    ],
+    "removed_lines": [
+      "THUDM/GLM-4-32B-0414",
+      "输出价格（/千字符 UTF-8）"
+    ],
+    "added_count": 7,
+    "removed_count": 2,
+    "raw_added_count": 10,
+    "raw_removed_count": 5
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-10.json"
+  },
+  "permalink": "/item/obs_d4b44dbcddc9671378f40acad03142dc6c830b095794c78f7b528b1b8b9702ad/"
+}

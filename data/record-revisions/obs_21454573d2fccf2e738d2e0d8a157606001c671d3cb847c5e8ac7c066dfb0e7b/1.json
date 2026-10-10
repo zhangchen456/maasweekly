@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_21454573d2fccf2e738d2e0d8a157606001c671d3cb847c5e8ac7c066dfb0e7b",
+  "sourceId": "anthropic-changelog",
+  "date": "2026-10-10",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.anthropic.com/en/release-notes/api",
+  "title": "Anthropic · 更新日志来源更新",
+  "summary": "You can now let a Claude Managed Agents agent use dynamic workflows, in beta with the managed-agents-2026-04-01 beta header. For work with many pieces, such as reviewing hundreds of documents, the agent can write a workflow. A workflow is a program that runs many agents in phases and combines their results. The server runs it in the background as a workflow run. To turn dynamic workflows on, set the agent's multiagent field to {\"type\": \"multiagent_20261001\", \"workflows\": {\"type\": \"enabled\"}}. To guide the agent, tell it in its system prompt when to start a run. Follow each run through workflow_run.* events on the session's event stream. See Workflow runs.",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "model-specific",
+        "before": "Code written for Claude Haiku 4.5 can break on Claude Haiku 5.5. Manual extended thinking (budget_tokens) returns a 400 error, and adaptive thinking is on by default, so a response can begin with thinking blocks. The same text also counts as more tokens. See the migration guide. For model-specific prompting patterns, see Prompting Claude Haiku 5.5.",
+        "after": "Code written for Claude Haiku 4.5 can break on Claude Haiku 5.5. Manual extended thinking (budget_tokens), the sampling parameters temperature, top_p, and top_k, and assistant message prefill can each return a 400 error. computer_20250124 also returns a 400 error: use the computer_toolset_20260801 toolset on the Claude API and Google Cloud, or computer_20251124 on Amazon Bedrock. A request that sends thinking blocks back after a change to system, tools, or earlier turns can also return a 400 error. On Amazon Bedrock, structured outputs aren't available for Claude Haiku 5.5. Adaptive thinking is on by default, so a response can begin with thinking blocks, and their text is omitted unless you set thinking.display to \"summarized\". The same text also counts as more tokens. See the migration guide for each change. For model-specific prompting patterns, see Prompting Claude Haiku 5.5."
+      }
+    ],
+    "added_lines": [
+      "You can now let a Claude Managed Agents agent use dynamic workflows, in beta with the managed-agents-2026-04-01 beta header. For work with many pieces, such as reviewing hundreds of documents, the agent can write a workflow. A workflow is a program that runs many agents in phases and combines their results. The server runs it in the background as a workflow run. To turn dynamic workflows on, set the agent's multiagent field to {\"type\": \"multiagent_20261001\", \"workflows\": {\"type\": \"enabled\"}}. To guide the agent, tell it in its system prompt when to start a run. Follow each run through workflow_run.* events on the session's event stream. See Workflow runs."
+    ],
+    "removed_lines": [],
+    "added_count": 1,
+    "removed_count": 0,
+    "raw_added_count": 3,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-10.json"
+  },
+  "permalink": "/item/obs_21454573d2fccf2e738d2e0d8a157606001c671d3cb847c5e8ac7c066dfb0e7b/"
+}

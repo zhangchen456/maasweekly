@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_8f40a10bfcf23cde891e30fea56a4e534b38aba49b29a5a7999fd03a7535993e",
+  "sourceId": "google-gemini-modellist",
+  "date": "2026-10-10",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "model_list",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+  "title": "Google Gemini API · 模型列表来源更新",
+  "summary": "模型列表移除 Gemini 3.5 Flash 和 Gemini 3.7 Flash，更新日期至 2026-10-09，表明这些模型已退役。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-10T00:53:49+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-10-06 UTC.",
+        "after": "Last updated 2026-10-09 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [
+      "Gemini 3.5 Flash",
+      "Gemini 3.7 Flash",
+      "Our legacy Flash model, providing baseline speed and foundational performance for routine, high-throughput workloads.",
+      "Our previous-generation Flash model for complex coding, agentic workflows, and reliable multi-step execution.",
+      "gemini-3.5-flash",
+      "gemini-3.7-flash",
+      "| Gemini 3.5 Flash",
+      "| Gemini 3.7 Flash"
+    ],
+    "added_count": 0,
+    "removed_count": 8,
+    "raw_added_count": 2,
+    "raw_removed_count": 10
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-10.json"
+  },
+  "permalink": "/item/obs_8f40a10bfcf23cde891e30fea56a4e534b38aba49b29a5a7999fd03a7535993e/"
+}

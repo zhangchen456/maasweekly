@@ -1,0 +1,774 @@
+{
+  "date": "2026-10-10",
+  "fetched_at": "2026-10-10T08:42:04.658688",
+  "stats": {
+    "total": 68,
+    "success": 65,
+    "failed": 3,
+    "changed": 21,
+    "unchanged": 44
+  },
+  "changes": [
+    {
+      "platform": "火山方舟",
+      "source_type": "model_list",
+      "url": "https://www.volcengine.com/docs/82379/1330310",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11902)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "pricing",
+      "url": "https://www.volcengine.com/docs/82379/1544106",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11902)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "changelog",
+      "url": "https://www.volcengine.com/docs/82379/1159177",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11902)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "blog",
+      "url": "https://www.volcengine.com/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "model_list",
+      "url": "https://help.aliyun.com/zh/model-studio/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "pricing",
+      "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 0,
+      "added_lines": [
+        "0.113362元/张",
+        "qwen-image-2.1-turbo |"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "changelog",
+      "url": "https://help.aliyun.com/zh/model-studio/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "blog",
+      "url": "https://qwenlm.github.io/blog/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "model_list",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "pricing",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 1,
+      "added_lines": [
+        "| GLM-5.2-Fast",
+        "更新时间：2026-10-09"
+      ],
+      "removed_lines": [
+        "更新时间：2026-10-08"
+      ]
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "changelog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Mmh8l4qwj",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "blog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "model_list",
+      "url": "https://cloud.tencent.com/document/product/1729/104753",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "pricing",
+      "url": "https://cloud.tencent.com/document/product/1729/97731",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "changelog",
+      "url": "https://cloud.tencent.com/document/product/1729/97765",
+      "status": "unchanged"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "blog",
+      "url": "https://cloud.tencent.com/document/product/1729/132069",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "model_list",
+      "url": "https://cloud.siliconflow.cn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "pricing",
+      "url": "https://siliconflow.cn/pricing",
+      "status": "changed",
+      "added_count": 10,
+      "removed_count": 5,
+      "added_lines": [
+        "-展开更多 3 个模型",
+        "GLM-5.3-Flash",
+        "Z-aihunyuandeepseek-aimeituan-longcatKimiQwenChinaTelecomTongyi-MAIBaiduStepfun-aiinclusionAIByteDanceWanopenmossFunAudioLLMBAAIKolors",
+        "zai-org/GLM-5.3-Flash",
+        "生成图片每图片¥ 0.10",
+        "生成图片每图片¥ 0.30",
+        "生成视频每视频¥ 2.00",
+        "输入 UTF-8 字节每千字符（UTF-8）¥ 0.05",
+        "输入 UTF-8 字节每千字符（UTF-8）免费",
+        "输入音频时长（s）每秒¥ 0.00022"
+      ],
+      "removed_lines": [
+        "-展开更多 2 个模型",
+        "GLM-4-32B-0414",
+        "THUDM/GLM-4-32B-0414",
+        "hunyuanZ-aideepseek-aimeituan-longcatKimiQwenChinaTelecomTongyi-MAIBaiduStepfun-aiinclusionAIByteDanceWanopenmossFunAudioLLMBAAIKolors",
+        "输出价格（/千字符 UTF-8）"
+      ]
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "changelog",
+      "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "blog",
+      "url": "https://siliconflow.cn/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "model_list",
+      "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "pricing",
+      "url": "https://bigmodel.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "changelog",
+      "url": "https://docs.bigmodel.cn/cn/update/new-releases",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "blog",
+      "url": "https://www.bigmodel.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "model_list",
+      "url": "https://platform.kimi.com/docs/api/models-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "pricing",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "changelog",
+      "url": "https://platform.kimi.com/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "blog",
+      "url": "https://www.moonshot.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "model_list",
+      "url": "https://platform.minimaxi.com/docs/guides/models-intro",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "pricing",
+      "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "changelog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "blog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "model_list",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "pricing",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "changelog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "blog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "model_list",
+      "url": "https://platform.openai.com/docs/models",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 4,
+      "added_lines": [
+        "DocsOverview",
+        "DocsSelect...",
+        "Dynamic groups",
+        "Pre-warm sandboxes"
+      ],
+      "removed_lines": [
+        "OverviewFeaturesConfigurationDevelopersSecurityAdministrationUse CasesResourcesDocsOverview",
+        "OverviewModelsAgentsToolsAudio & voiceProductionAPI referenceDocsModels",
+        "OverviewSign in with ChatGPTPluginsWorkspace AgentsCommerceAdsChatGPT + Codex user docsUse casesDocsOverview",
+        "ShowcaseBlogCookbookLearnCommunityDocsSelect..."
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "pricing",
+      "url": "https://platform.openai.com/docs/pricing",
+      "status": "changed",
+      "added_count": 9,
+      "removed_count": 5,
+      "added_lines": [
+        "DocsOverview",
+        "DocsSelect...",
+        "Dynamic groups",
+        "Life sciences models",
+        "Our latest Rosalind models.Prices per 1M tokens.",
+        "Pre-warm sandboxes",
+        "| Model | Input | Cached input | Output",
+        "| gpt-rosalind-discovery | $5.00 | $0.50 | $25.00",
+        "| gpt-rosalind-research | $5.00 | $0.50 | $25.00"
+      ],
+      "removed_lines": [
+        "OverviewFeaturesConfigurationDevelopersSecurityAdministrationUse CasesResourcesDocsOverview",
+        "OverviewModelsAgentsToolsAudio & voiceProductionAPI referenceDocsModels",
+        "OverviewSign in with ChatGPTPluginsWorkspace AgentsCommerceAdsChatGPT + Codex user docsUse casesDocsOverview",
+        "ShowcaseBlogCookbookLearnCommunityDocsSelect...",
+        "| Life Sciences | gpt-rosalind-research | $5.00 | $0.50 | $25.00"
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "changelog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 4,
+      "added_lines": [
+        "DocsOverview",
+        "DocsSelect...",
+        "Dynamic groups",
+        "Pre-warm sandboxes"
+      ],
+      "removed_lines": [
+        "OverviewFeaturesConfigurationDevelopersSecurityAdministrationUse CasesResourcesDocsOverview",
+        "OverviewModelsAgentsToolsAudio & voiceProductionAPI referenceDocsOverview",
+        "OverviewSign in with ChatGPTPluginsWorkspace AgentsCommerceAdsChatGPT + Codex user docsUse casesDocsOverview",
+        "ShowcaseBlogCookbookLearnCommunityDocsSelect..."
+      ]
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "blog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 4,
+      "added_lines": [
+        "DocsOverview",
+        "DocsSelect...",
+        "Dynamic groups",
+        "Pre-warm sandboxes"
+      ],
+      "removed_lines": [
+        "OverviewFeaturesConfigurationDevelopersSecurityAdministrationUse CasesResourcesDocsOverview",
+        "OverviewModelsAgentsToolsAudio & voiceProductionAPI referenceDocsOverview",
+        "OverviewSign in with ChatGPTPluginsWorkspace AgentsCommerceAdsChatGPT + Codex user docsUse casesDocsOverview",
+        "ShowcaseBlogCookbookLearnCommunityDocsSelect..."
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "model_list",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "pricing",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+      "status": "changed",
+      "added_count": 9,
+      "removed_count": 8,
+      "added_lines": [
+        "For Claude 4.6 and later models, specifying US-only inference through the inference_geo parameter incurs a 1.1x multiplier on all token pricing categories, including input tokens, output tokens, cache writes, and cache reads. On Claude Haiku 5.5, the multiplier also applies to the higher prices for prompts over 100,000 tokens (see Long context pricing). Global routing (the default) uses standard pricing.",
+        "Google Cloud offers global endpoints and multi-region endpoints (dynamic routing within a geographic area) for these models, and regional endpoints for Claude Sonnet 4.6 and earlier models.",
+        "Tokens are pieces of text that models process. How many tokens the same text produces depends on the model's tokenizer, the language, and the type of content. Claude 4.7 and later models and Claude Mythos Preview use a newer tokenizer that produces approximately 30 percent more tokens for the same text than earlier models. To see how many tokens a request uses on a specific model, count it with token counting and that model's ID.",
+        "Toolset definition overhead: Declaring browser_toolset_20260801 with its default members adds about 6,600 input tokens to a request (about 6,670 on Claude Sonnet 5 and about 6,610 on the other supported models), which covers the member tool definitions and the tool use system prompt. Enabling all four optional members adds about 880 tokens, and disabling members with configs reduces the count. The exact count for a request is reported in the response usage, and you can estimate it in advance with the token counting endpoint.",
+        "Toolset definition overhead: Declaring computer_toolset_20260801 with its default members adds about 4,500 input tokens to a request (about 4,590 on Claude Sonnet 5 and about 4,520 on the other supported models), which covers the member tool definitions and the tool use system prompt. Disabling zoom with configs removes about 410 of those tokens. The exact count for a request is reported in the response usage, and you can estimate it in advance with the token counting endpoint.",
+        "| Claude 4.6 and earlier models | 244 tokens",
+        "| Claude 4.7 and later models and Claude Mythos Preview | 325 tokens",
+        "| text_editor_20250728 (Claude 4.6 and earlier models) | 745 tokens",
+        "| text_editor_20250728 (Claude 4.7 and later models and Claude Mythos Preview) | 974 tokens"
+      ],
+      "removed_lines": [
+        "For Claude 4.6 and later models, specifying US-only inference through the inference_geo parameter incurs a 1.1x multiplier on all token pricing categories, including input tokens, output tokens, cache writes, and cache reads. Global routing (the default) uses standard pricing.",
+        "Google Cloud offers three endpoint types: global endpoints, multi-region endpoints (dynamic routing within a geographic area), and regional endpoints.",
+        "Tokens are pieces of text that models process. As a rough estimate, 1 token is approximately 4 characters or 0.75 words in English. The exact count varies by language and content type.",
+        "Toolset definition overhead: Declaring browser_toolset_20260801 with its default members adds about 6,600 input tokens to a request (about 6,610 on Claude Fable 5, Claude Mythos 5, Claude Opus 5, and Claude Opus 4.8, and about 6,670 on Claude Sonnet 5), which covers the member tool definitions and the tool use system prompt. Enabling all four optional members adds about 880 tokens, and disabling members with configs reduces the count. The exact count for a request is reported in the response usage, and you can estimate it in advance with the token counting endpoint.",
+        "Toolset definition overhead: Declaring computer_toolset_20260801 with its default members adds about 4,500 input tokens to a request (about 4,520 on Claude Fable 5, Claude Mythos 5, Claude Opus 5, and Claude Opus 4.8, and about 4,590 on Claude Sonnet 5), which covers the member tool definitions and the tool use system prompt. Disabling zoom with configs removes about 410 of those tokens. The exact count for a request is reported in the response usage, and you can estimate it in advance with the token counting endpoint.",
+        "| Claude Opus 4.6, Claude Sonnet 4.6, and earlier | 244 tokens",
+        "| Claude Opus 5, Claude Opus 4.8, and Claude Opus 4.7 | 325 tokens",
+        "| text_editor_20250429 (Claude 4.x) | 700 tokens"
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "changelog",
+      "url": "https://docs.anthropic.com/en/release-notes/api",
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 1,
+      "added_lines": [
+        "Code written for Claude Haiku 4.5 can break on Claude Haiku 5.5. Manual extended thinking (budget_tokens), the sampling parameters temperature, top_p, and top_k, and assistant message prefill can each return a 400 error. computer_20250124 also returns a 400 error: use the computer_toolset_20260801 toolset on the Claude API and Google Cloud, or computer_20251124 on Amazon Bedrock. A request that sends thinking blocks back after a change to system, tools, or earlier turns can also return a 400 error. On Amazon Bedrock, structured outputs aren't available for Claude Haiku 5.5. Adaptive thinking is on by default, so a response can begin with thinking blocks, and their text is omitted unless you set thinking.display to \"summarized\". The same text also counts as more tokens. See the migration guide for each change. For model-specific prompting patterns, see Prompting Claude Haiku 5.5.",
+        "October 9, 2026",
+        "You can now let a Claude Managed Agents agent use dynamic workflows, in beta with the managed-agents-2026-04-01 beta header. For work with many pieces, such as reviewing hundreds of documents, the agent can write a workflow. A workflow is a program that runs many agents in phases and combines their results. The server runs it in the background as a workflow run. To turn dynamic workflows on, set the agent's multiagent field to {\"type\": \"multiagent_20261001\", \"workflows\": {\"type\": \"enabled\"}}. To guide the agent, tell it in its system prompt when to start a run. Follow each run through workflow_run.* events on the session's event stream. See Workflow runs."
+      ],
+      "removed_lines": [
+        "Code written for Claude Haiku 4.5 can break on Claude Haiku 5.5. Manual extended thinking (budget_tokens) returns a 400 error, and adaptive thinking is on by default, so a response can begin with thinking blocks. The same text also counts as more tokens. See the migration guide. For model-specific prompting patterns, see Prompting Claude Haiku 5.5."
+      ]
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "blog",
+      "url": "https://www.anthropic.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "model_list",
+      "url": "https://ai.google.dev/gemini-api/docs/models",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 10,
+      "added_lines": [
+        "Last updated 2026-10-09 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]"
+      ],
+      "removed_lines": [
+        "Gemini 3.5 Flash",
+        "Gemini 3.7 Flash",
+        "Last updated 2026-10-06 UTC.",
+        "Our legacy Flash model, providing baseline speed and foundational performance for routine, high-throughput workloads.",
+        "Our previous-generation Flash model for complex coding, agentic workflows, and reliable multi-step execution.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-06 UTC.\"],[],[]]",
+        "gemini-3.5-flash",
+        "gemini-3.7-flash",
+        "| Gemini 3.5 Flash",
+        "| Gemini 3.7 Flash"
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "status": "changed",
+      "added_count": 9,
+      "removed_count": 24,
+      "added_lines": [
+        "1,500 RPD free (limit shared for Flash and Flash-Lite)",
+        "5,000 free search requests per month (shared across all Gemini 3 and newer models), then $14 per 1,000 requests.",
+        "5,000 requests per month (free, shared across all Gemini 3 and newer models), then $14 / 1,000 search queries.",
+        "Gemini 3 and newer models:",
+        "Last updated 2026-10-09 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]",
+        "| 5,000 free search requests per month (shared across all Gemini 3 and newer models), then $14 per 1,000 requests for text and image-based grounding.",
+        "| 5,000 free search requests per month (shared across all Gemini 3 and newer models), then $14 per 1,000 requests.",
+        "| 5,000 requests per month (free, shared across all Gemini 3 and newer models), then $14 / 1,000 search queries."
+      ],
+      "removed_lines": [
+        "$0.05 (input caching) starting January 1, 2027.",
+        "$0.125 (input caching) starting January 1, 2027.",
+        "$0.25 (input caching) starting January 1, 2027.",
+        "$0.45 (input caching) starting January 1, 2027.",
+        "5,000 free search requests per month (shared across all Gemini models), then $14 per 1,000 requests.",
+        "Gemini 3 models:",
+        "Gemini 3.5 Flash",
+        "Gemini 3.7 Flash",
+        "Last updated 2026-10-07 UTC.",
+        "Our earlier Flash model, built for speed and foundational performance across"
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "changelog",
+      "url": "https://ai.google.dev/gemini-api/docs/changelog",
+      "status": "changed",
+      "added_count": 28,
+      "removed_count": 2,
+      "added_lines": [
+        "All requests to gemini-3.5-flash are automatically routed to",
+        "All requests to gemini-3.7-flash are automatically routed to",
+        "Deep Research Agent deep-research-pro-preview-12-2025 deprecation:",
+        "Designed for speed and efficiency, ideal to be streamed back to a client",
+        "Gemini 3.5 Flash deprecation:",
+        "Gemini 3.6 Flash guide.",
+        "Gemini 3.7 Flash deprecation:",
+        "Last updated 2026-10-09 UTC.",
+        "Maximum comprehensiveness for automated context gathering and synthesis.",
+        "Migrate your requests to one of the newer Deep",
+        "October 8, 2026",
+        "Research agent versions:",
+        "The deep-research-pro-preview-12-2025 agent is deprecated and will be",
+        "To migrate, update the agent parameter in your interactions.create",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]",
+        "and has been replaced by gemini-3.6-flash.",
+        "and has been replaced by gemini-3.8-flash.",
+        "deep-research-max-preview-04-2026:",
+        "deep-research-preview-04-2026 (or deep-research-max-preview-04-2026).",
+        "deep-research-preview-04-2026:",
+        "gemini-3.5-flash is deprecated",
+        "gemini-3.6-flash. Update your model string to gemini-3.6-flash (or",
+        "gemini-3.7-flash is deprecated",
+        "gemini-3.8-flash) and review the",
+        "gemini-3.8-flash. Update your model string to gemini-3.8-flash and",
+        "requests from deep-research-pro-preview-12-2025 to",
+        "review the Gemini 3.8 Flash guide.",
+        "shut down on October 23,"
+      ],
+      "removed_lines": [
+        "Last updated 2026-10-07 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-07 UTC.\"],[],[]]"
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "blog",
+      "url": "https://blog.google/technology/ai/",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 2,
+      "added_lines": [
+        "Here are Google’s latest AI updates from September 2026",
+        "The latest AI news we announced in September 2026"
+      ],
+      "removed_lines": [
+        "Building AI to accelerate science and improve lives",
+        "The true measure of AI is who it helps. Here’s how it’s impacting lives today. We're focused on key areas where advanced technology can help make extraordinary progress …"
+      ]
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "model_list",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+      "status": "changed",
+      "added_count": 4,
+      "removed_count": 2,
+      "added_lines": [
+        "Gemini 3.1 Pro",
+        "Last updated 2026-10-09 UTC.",
+        "Our reasoning-first model optimized for complex agentic workflows and coding. Features adaptive thinking, a 1 million token context window, and integrated grounding for multimodal problem-solving.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]"
+      ],
+      "removed_lines": [
+        "Last updated 2026-10-07 UTC.",
+        "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-07 UTC.\"],[],[]]"
+      ]
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "pricing",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "changelog",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "blog",
+      "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "model_list",
+      "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "Models Overview | Mistral Docs"
+      ],
+      "removed_lines": [
+        "Mistral Docs"
+      ]
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "pricing",
+      "url": "https://mistral.ai/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "changelog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "blog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "model_list",
+      "url": "https://docs.cohere.com/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "pricing",
+      "url": "https://cohere.com/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "changelog",
+      "url": "https://docs.cohere.com/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "blog",
+      "url": "https://txt.cohere.com/",
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 3,
+      "added_lines": [
+        "Enterprise AITechnology",
+        "Oct 09, 2026",
+        "Shared or dedicated inference for Embed & Rerank"
+      ],
+      "removed_lines": [
+        "Aug 19, 2026",
+        "Bringing together secure, sovereign AI and transformation expertise to help organizations move from pilots to production",
+        "The Culture Funnel: You can’t align what isn’t in the data"
+      ]
+    },
+    {
+      "platform": "xAI",
+      "source_type": "model_list",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "pricing",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "changelog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "Last updated: October 9, 2026"
+      ],
+      "removed_lines": [
+        "Last updated: October 8, 2026"
+      ]
+    },
+    {
+      "platform": "xAI",
+      "source_type": "blog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "Last updated: October 9, 2026"
+      ],
+      "removed_lines": [
+        "Last updated: October 8, 2026"
+      ]
+    },
+    {
+      "platform": "讯飞星辰MaaS",
+      "source_type": "changelog",
+      "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+      "status": "unchanged"
+    },
+    {
+      "platform": "HuggingFace",
+      "source_type": "industry",
+      "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+      "status": "changed",
+      "added_count": 43,
+      "removed_count": 40,
+      "added_lines": [
+        "\"_id\": \"6a2abe400fe10211c264136c\",",
+        "\"base_model:nvidia/LocateAnything-3B\",",
+        "\"base_model:quantized:nvidia/LocateAnything-3B\",",
+        "\"createdAt\": \"2026-06-11T13:55:12.000Z\",",
+        "\"downloads\": 12329349,",
+        "\"downloads\": 12878114,",
+        "\"downloads\": 13468964,",
+        "\"downloads\": 15373431,",
+        "\"downloads\": 15949437,",
+        "\"downloads\": 16593179,",
+        "\"downloads\": 18628201,",
+        "\"downloads\": 19850554,",
+        "\"downloads\": 21054616,",
+        "\"downloads\": 21414726,",
+        "\"downloads\": 228008007,",
+        "\"downloads\": 23073196,",
+        "\"downloads\": 24170269,",
+        "\"downloads\": 30889504,",
+        "\"downloads\": 33202631,",
+        "\"downloads\": 36717147,",
+        "\"downloads\": 45334424,",
+        "\"downloads\": 49218833,",
+        "\"downloads\": 60907422,",
+        "\"downloads\": 81016660,",
+        "\"id\": \"mudler/locate-anything.cpp-gguf\",",
+        "\"library_name\": \"gguf\",",
+        "\"likes\": 1426,",
+        "\"likes\": 1582,",
+        "\"likes\": 1761,",
+        "\"likes\": 2193,"
+      ],
+      "removed_lines": [
+        "\"_id\": \"69b1dde5d77b87bf05eff3f9\",",
+        "\"arxiv:2607.02770\",",
+        "\"base_model:finetune:google/gemma-4-26B-A4B\",",
+        "\"base_model:google/gemma-4-26B-A4B\",",
+        "\"createdAt\": \"2026-03-11T21:25:57.000Z\",",
+        "\"downloads\": 12265732,",
+        "\"downloads\": 13022070,",
+        "\"downloads\": 14176773,",
+        "\"downloads\": 15483903,",
+        "\"downloads\": 16152918,"
+      ]
+    },
+    {
+      "platform": "Artificial Analysis",
+      "source_type": "industry",
+      "url": "https://artificialanalysis.ai/",
+      "status": "changed",
+      "added_count": 1,
+      "removed_count": 1,
+      "added_lines": [
+        "15 of 169 models"
+      ],
+      "removed_lines": [
+        "15 of 168 models"
+      ]
+    },
+    {
+      "platform": "LMArena",
+      "source_type": "industry",
+      "url": "https://lmarena.ai/leaderboard",
+      "status": "changed",
+      "added_count": 11,
+      "removed_count": 20,
+      "added_lines": [
+        "10Anthropic",
+        "16.98%View details",
+        "361,725,367361,725,367Total Sessions",
+        "7.95%View all",
+        "Claude Opus 5.5 (High)$1.74/task",
+        "GPT 6 Astra (Max)·",
+        "GPT 6.1 Sol (Max)$0.59/task",
+        "MiMo V2.6 Pro$0.10/task",
+        "Muse Spark 1.3 (Max)$0.52/task",
+        "Searching the web",
+        "mistral-large-4·"
+      ],
+      "removed_lines": [
+        "15.90%View details",
+        "361,270,688361,270,688Total Sessions",
+        "7.57%View all",
+        "Claude Fable 5 (High)Anthropic",
+        "Claude Fable 5.1 (Max)$6.31/task",
+        "Claude Opus 5 (High)Anthropic",
+        "Claude Opus 5 (Max)Anthropic",
+        "Claude Opus 5 (Max)·",
+        "Claude Opus 5.5 (High)$1.73/task",
+        "Deepseek V4 Flash (High) (20260731)"
+      ]
+    }
+  ]
+}

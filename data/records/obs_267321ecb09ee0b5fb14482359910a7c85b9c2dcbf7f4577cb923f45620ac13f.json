@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_267321ecb09ee0b5fb14482359910a7c85b9c2dcbf7f4577cb923f45620ac13f",
+  "sourceId": "google-gemini-changelog",
+  "date": "2026-10-10",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "changelog",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+  "title": "Google Gemini API · 更新日志来源更新",
+  "summary": "变更日志新增 Gemini 3.5 Flash 和 3.7 Flash 的弃用说明，以及 deep-research-pro-preview-12-2025 弃用，要求迁移至新版本。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-10T00:53:50+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-10-07 UTC.",
+        "after": "Last updated 2026-10-09 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-07 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [
+      "All requests to gemini-3.5-flash are automatically routed to",
+      "All requests to gemini-3.7-flash are automatically routed to",
+      "Deep Research Agent deep-research-pro-preview-12-2025 deprecation:",
+      "Designed for speed and efficiency, ideal to be streamed back to a client",
+      "Gemini 3.5 Flash deprecation:",
+      "Gemini 3.6 Flash guide.",
+      "Gemini 3.7 Flash deprecation:",
+      "Maximum comprehensiveness for automated context gathering and synthesis.",
+      "Migrate your requests to one of the newer Deep",
+      "Research agent versions:",
+      "The deep-research-pro-preview-12-2025 agent is deprecated and will be",
+      "To migrate, update the agent parameter in your interactions.create",
+      "and has been replaced by gemini-3.6-flash.",
+      "and has been replaced by gemini-3.8-flash.",
+      "deep-research-max-preview-04-2026:",
+      "deep-research-preview-04-2026 (or deep-research-max-preview-04-2026).",
+      "deep-research-preview-04-2026:",
+      "gemini-3.5-flash is deprecated",
+      "gemini-3.6-flash. Update your model string to gemini-3.6-flash (or",
+      "gemini-3.7-flash is deprecated",
+      "gemini-3.8-flash) and review the",
+      "gemini-3.8-flash. Update your model string to gemini-3.8-flash and",
+      "requests from deep-research-pro-preview-12-2025 to",
+      "review the Gemini 3.8 Flash guide.",
+      "shut down on October 23,"
+    ],
+    "removed_lines": [],
+    "added_count": 25,
+    "removed_count": 0,
+    "raw_added_count": 28,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-10.json"
+  },
+  "permalink": "/item/obs_267321ecb09ee0b5fb14482359910a7c85b9c2dcbf7f4577cb923f45620ac13f/"
+}
