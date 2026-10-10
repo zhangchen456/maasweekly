@@ -1,0 +1,176 @@
+{
+  "date": "2026-09-15",
+  "period": "2026-09-09 ~ 2026-09-15",
+  "headline": [
+    {
+      "rank": 1,
+      "level": "notable",
+      "platform": "",
+      "title": "历史补编说明——采集范围与日期口径",
+      "summary": "采集范围与日期口径",
+      "detail_markdown": "本期于 2026 年 10 月 10 日依据 2026-09-09 至 2026-09-15 的历史采集记录补编。窗口内有 7/7 天 diff；七天均有采集记录。日期表示采集到变化的时间，除非正文另有明确公告日期；不把首次抓取、页面删除、导航调整或抓取失败解释为新品发布、下线或调价。",
+      "date_mentioned": "7/7",
+      "is_new": null
+    },
+    {
+      "rank": 2,
+      "level": "notable",
+      "platform": "DeepSeek",
+      "title": "DeepSeek 撤回 V4 Pro 迁移预告，继续提供原服务",
+      "summary": "9 月 11 日归档曾预告从 9 月 14 日起将 V4 Pro 请求路由到 V4.1 Flash；9 月 12 日同一模型页改为在 9 月 14 日后继续提供 V4 Pro API，计费方式保持不变，后续变化另行通知",
+      "detail_markdown": "9 月 11 日归档曾预告从 9 月 14 日起将 V4 Pro 请求路由到 V4.1 Flash；9 月 12 日同一模型页改为在 9 月 14 日后继续提供 V4 Pro API，计费方式保持不变，后续变化另行通知。本期采用截至截止日的修订口径，不能把前一天的计划写成已经执行的迁移。\n\n   证据：[2026-09-12 归档条目](/item/obs_466db393675ca2c1560dc77e7716a0d7d086a28d1f168734c875714a98f27657/) · [官方来源](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 3,
+      "level": "notable",
+      "platform": "DeepSeek",
+      "title": "DeepSeek Flash 旧别名改由 V4.1 Flash 服务",
+      "summary": "模型页说明应使用 deepseek-flash，旧名 deepseek-v4-flash 与 deepseek-v4-flash-vision-exp 仍可调用，但底层由 V4.1 Flash 服务并按 Flash 价格计费",
+      "detail_markdown": "模型页说明应使用 deepseek-flash，旧名 deepseek-v4-flash 与 deepseek-v4-flash-vision-exp 仍可调用，但底层由 V4.1 Flash 服务并按 Flash 价格计费。这项 Flash 别名变动与随后撤回的 Pro 迁移计划是两个不同事项；应用需要记录实际模型版本，不能只按请求别名判断服务版本。\n\n   证据：[2026-09-11 归档条目](/item/obs_20c849f249df924b5a65af7d393417a5f9efdc86054afd931708a33a9ed95d23/) · [官方来源](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 4,
+      "level": "notable",
+      "platform": "",
+      "title": "OpenAI 缓存诊断正式开放，图像模型增加双版本",
+      "summary": "归档记录 Responses API 的 Prompt Cache Diagnostics 正式开放，支持 GPT-5.6 及以后受支持的模型，可比较缓存复用、定位未命中原因",
+      "detail_markdown": "归档记录 Responses API 的 Prompt Cache Diagnostics 正式开放，支持 GPT-5.6 及以后受支持的模型，可比较缓存复用、定位未命中原因。同日还记录 GPT Image 2.5 Sunburst 与 Flare，通过 Image API 和 Responses 图像工具提供，分别面向编辑精度与日常生成速度。上线前应按自己的图像任务分别评估。\n\n   证据：[2026-09-09 归档条目](/item/obs_c282247197c9676ba72595f5b55926e5899efd6dcfb8d77d4836e05e4912a325/) · [官方来源](https://platform.openai.com/docs/changelog)。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 5,
+      "level": "notable",
+      "platform": "硅基流动",
+      "title": "硅基流动生图接口移除 batch_size，默认添加水印",
+      "summary": "公告记录生图请求不再支持 batch_size，原来一次生成多张图片的调用需要拆为多次请求；生成图片默认添加显式水印",
+      "detail_markdown": "公告记录生图请求不再支持 batch_size，原来一次生成多张图片的调用需要拆为多次请求；生成图片默认添加显式水印。9 月 12 日补充说明对关闭显式水印的使用场景和下游处理要求进行了限定，集成时应查看修订后的完整公告，不把可配置请求头解释为默认无水印。\n\n   证据：[2026-09-11 归档条目](/item/obs_d3d22347862a8e467754a86b519f8c6b9d267b11093ec5ea59c98a9e4c82cf59/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。",
+      "date_mentioned": "",
+      "is_new": null
+    }
+  ],
+  "platforms": [
+    {
+      "name": "DeepSeek",
+      "status": "stable",
+      "status_text": "历史归档有变更记录",
+      "this_week": [
+        "**DeepSeek 撤回 V4 Pro 迁移预告，继续提供原服务**：9 月 11 日归档曾预告从 9 月 14 日起将 V4 Pro 请求路由到 V4.1 Flash；9 月 12 日同一模型页改为在 9 月 14 日后继续提供 V4 Pro API，计费方式保持不变，后续变化另行通知。本期采用截至截止日的修订口径，不能把前一天的计划写成已经执行的迁移。",
+        "证据：[2026-09-12 归档条目](/item/obs_466db393675ca2c1560dc77e7716a0d7d086a28d1f168734c875714a98f27657/) · [官方来源](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。",
+        "**DeepSeek Flash 旧别名改由 V4.1 Flash 服务**：模型页说明应使用 deepseek-flash，旧名 deepseek-v4-flash 与 deepseek-v4-flash-vision-exp 仍可调用，但底层由 V4.1 Flash 服务并按 Flash 价格计费。这项 Flash 别名变动与随后撤回的 Pro 迁移计划是两个不同事项；应用需要记录实际模型版本，不能只按请求别名判断服务版本。",
+        "证据：[2026-09-11 归档条目](/item/obs_20c849f249df924b5a65af7d393417a5f9efdc86054afd931708a33a9ed95d23/) · [官方来源](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。"
+      ],
+      "recent": []
+    },
+    {
+      "name": "OpenAI",
+      "status": "stable",
+      "status_text": "历史归档有变更记录",
+      "this_week": [
+        "**OpenAI 缓存诊断正式开放，图像模型增加双版本**：归档记录 Responses API 的 Prompt Cache Diagnostics 正式开放，支持 GPT-5.6 及以后受支持的模型，可比较缓存复用、定位未命中原因。同日还记录 GPT Image 2.5 Sunburst 与 Flare，通过 Image API 和 Responses 图像工具提供，分别面向编辑精度与日常生成速度。上线前应按自己的图像任务分别评估。",
+        "证据：[2026-09-09 归档条目](/item/obs_c282247197c9676ba72595f5b55926e5899efd6dcfb8d77d4836e05e4912a325/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+      ],
+      "recent": []
+    },
+    {
+      "name": "硅基流动",
+      "status": "stable",
+      "status_text": "历史归档有变更记录",
+      "this_week": [
+        "**硅基流动生图接口移除 batch_size，默认添加水印**：公告记录生图请求不再支持 batch_size，原来一次生成多张图片的调用需要拆为多次请求；生成图片默认添加显式水印。9 月 12 日补充说明对关闭显式水印的使用场景和下游处理要求进行了限定，集成时应查看修订后的完整公告，不把可配置请求头解释为默认无水印。",
+        "证据：[2026-09-11 归档条目](/item/obs_d3d22347862a8e467754a86b519f8c6b9d267b11093ec5ea59c98a9e4c82cf59/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
+      ],
+      "recent": []
+    }
+  ],
+  "summary_table": {
+    "headers": [
+      "平台",
+      "归档观察",
+      "证据日期"
+    ],
+    "rows": [
+      [
+        "DeepSeek",
+        "DeepSeek 撤回 V4 Pro 迁移预告，继续提供原服务",
+        "2026-09-12"
+      ],
+      [
+        "DeepSeek",
+        "DeepSeek Flash 旧别名改由 V4.1 Flash 服务",
+        "2026-09-11"
+      ],
+      [
+        "OpenAI",
+        "OpenAI 缓存诊断正式开放，图像模型增加双版本",
+        "2026-09-09"
+      ],
+      [
+        "硅基流动",
+        "硅基流动生图接口移除 batch_size，默认添加水印",
+        "2026-09-11"
+      ]
+    ]
+  },
+  "trends": [
+    {
+      "title": "模型别名与产品公告需要保留修订链",
+      "body_markdown": "DeepSeek 同一周内修订 Pro 迁移计划，Flash 旧别名继续接受调用却改由新模型服务；硅基流动也补充了生图接口说明。调用成功不等于服务版本保持不变，公告初稿也不等于最终执行结果。以上为基于本期归档的编辑判断。"
+    },
+    {
+      "title": "采集覆盖与结论边界",
+      "body_markdown": "本期于 2026 年 10 月 10 日依据 2026-09-09 至 2026-09-15 的历史采集记录补编。窗口内有 7/7 天 diff；七天均有采集记录。日期表示采集到变化的时间，除非正文另有明确公告日期；不把首次抓取、页面删除、导航调整或抓取失败解释为新品发布、下线或调价。 本窗口累计 15 次信源抓取失败（按日、按信源累计），这类失败只反映证据缺口。未列入本期的平台不等于没有产品更新；孤立价格数字和单位缺失的变化不用于判断涨跌。"
+    }
+  ],
+  "watchpoints": {
+    "headers": [
+      "时间",
+      "核对事项",
+      "适用范围"
+    ],
+    "rows": [
+      [
+        "2026-09-12（采集日）",
+        "核对原公告：DeepSeek 撤回 V4 Pro 迁移预告，继续提供原服务",
+        "DeepSeek"
+      ],
+      [
+        "2026-09-11（采集日）",
+        "核对原公告：DeepSeek Flash 旧别名改由 V4.1 Flash 服务",
+        "DeepSeek"
+      ],
+      [
+        "2026-09-09（采集日）",
+        "核对原公告：OpenAI 缓存诊断正式开放，图像模型增加双版本",
+        "OpenAI"
+      ],
+      [
+        "2026-09-11（采集日）",
+        "核对原公告：硅基流动生图接口移除 batch_size，默认添加水印",
+        "硅基流动"
+      ]
+    ]
+  },
+  "event_index": [
+    {
+      "date": "2026-09-12",
+      "text": "DeepSeek 撤回 V4 Pro 迁移预告，继续提供原服务。证据：[2026-09-12 归档条目](/item/obs_466db393675ca2c1560dc77e7716a0d7d086a28d1f168734c875714a98f27657/) · [官方来源](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。"
+    },
+    {
+      "date": "2026-09-11",
+      "text": "DeepSeek Flash 旧别名改由 V4.1 Flash 服务。证据：[2026-09-11 归档条目](/item/obs_20c849f249df924b5a65af7d393417a5f9efdc86054afd931708a33a9ed95d23/) · [官方来源](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "OpenAI 缓存诊断正式开放，图像模型增加双版本。证据：[2026-09-09 归档条目](/item/obs_c282247197c9676ba72595f5b55926e5899efd6dcfb8d77d4836e05e4912a325/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+    },
+    {
+      "date": "2026-09-11",
+      "text": "硅基流动生图接口移除 batch_size，默认添加水印。证据：[2026-09-11 归档条目](/item/obs_d3d22347862a8e467754a86b519f8c6b9d267b11093ec5ea59c98a9e4c82cf59/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
+    }
+  ]
+}
