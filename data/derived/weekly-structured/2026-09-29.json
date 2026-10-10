@@ -6,19 +6,19 @@
       "rank": 1,
       "level": "notable",
       "platform": "",
-      "title": "历史补编说明——采集范围与日期口径",
-      "summary": "采集范围与日期口径",
-      "detail_markdown": "本期于 2026 年 10 月 10 日依据 2026-09-23 至 2026-09-29 的历史采集记录补编。窗口内有 7/7 天 diff；七天均有采集记录。日期表示采集到变化的时间，除非正文另有明确公告日期；不把首次抓取、页面删除、导航调整或抓取失败解释为新品发布、下线或调价。",
-      "date_mentioned": "7/7",
+      "title": "Anthropic 发布 Sonnet 5.5，迁移包含请求兼容变化",
+      "summary": "更新日志记录 claude-sonnet-5-5 发布，并单列从 Sonnet 5 迁移的变化：部分思考配置需要改写，强制工具选择可能返回 400，旧版 computer use 工具及部分 advisor 组合不再接受",
+      "detail_markdown": "更新日志记录 claude-sonnet-5-5 发布，并单列从 Sonnet 5 迁移的变化：部分思考配置需要改写，强制工具选择可能返回 400，旧版 computer use 工具及部分 advisor 组合不再接受。直接替换模型名可能造成请求失败，应先跑思考、工具与跨账号消息的回归用例。\n\n   证据：[2026-09-29 来源记录](/item/obs_8b6acc99991635cc75062cdb7cc53727b5c73e2827723c5426f68fb9715faf13/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+      "date_mentioned": "",
       "is_new": null
     },
     {
       "rank": 2,
       "level": "notable",
       "platform": "",
-      "title": "Anthropic 发布 Sonnet 5.5，迁移包含请求兼容变化",
-      "summary": "更新日志记录 claude-sonnet-5-5 发布，并单列从 Sonnet 5 迁移的变化：部分思考配置需要改写，强制工具选择可能返回 400，旧版 computer use 工具及部分 advisor 组合不再接受",
-      "detail_markdown": "更新日志记录 claude-sonnet-5-5 发布，并单列从 Sonnet 5 迁移的变化：部分思考配置需要改写，强制工具选择可能返回 400，旧版 computer use 工具及部分 advisor 组合不再接受。直接替换模型名可能造成请求失败，应先跑思考、工具与跨账号消息的回归用例。\n\n   证据：[2026-09-29 归档条目](/item/obs_8b6acc99991635cc75062cdb7cc53727b5c73e2827723c5426f68fb9715faf13/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+      "title": "Google Gemini API 增加两款正式 TTS 模型",
+      "summary": "官方文档记录 gemini-3.8-flash-lite-tts 与 gemini-3.8-flash-tts 正式发布，分别面向高吞吐语音合成与创作级语音表现；模型列表建议从旧 TTS 预览版本迁移",
+      "detail_markdown": "官方文档记录 gemini-3.8-flash-lite-tts 与 gemini-3.8-flash-tts 正式发布，分别面向高吞吐语音合成与创作级语音表现；模型列表建议从旧 TTS 预览版本迁移。模型选择要结合语种、音色和吞吐要求。\n\n   证据：[2026-09-24 来源记录](/item/obs_38ab000e3d30fac1174b3b5b0060aae6c7a0d4bc226a2e178f8d3a87236f9b96/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。",
       "date_mentioned": "",
       "is_new": null
     },
@@ -26,39 +26,29 @@
       "rank": 3,
       "level": "notable",
       "platform": "",
-      "title": "Google Gemini API 增加两款正式 TTS 模型",
-      "summary": "归档记录 gemini-3.8-flash-lite-tts 与 gemini-3.8-flash-tts 正式发布，分别面向高吞吐语音合成与创作级语音表现；模型列表建议从旧 TTS 预览版本迁移",
-      "detail_markdown": "归档记录 gemini-3.8-flash-lite-tts 与 gemini-3.8-flash-tts 正式发布，分别面向高吞吐语音合成与创作级语音表现；模型列表建议从旧 TTS 预览版本迁移。模型选择要结合语种、音色和吞吐要求，本期不把厂商定位当作独立效果评测。\n\n   证据：[2026-09-24 归档条目](/item/obs_38ab000e3d30fac1174b3b5b0060aae6c7a0d4bc226a2e178f8d3a87236f9b96/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。",
+      "title": "Anthropic 缓存诊断结束 Beta",
+      "summary": "官方文档说明缓存诊断不再要求 Beta 请求头；请求中的 diagnostics 对象仍需显式传入，响应会包含 diagnostics 字段，未开启时为 null",
+      "detail_markdown": "官方文档说明缓存诊断不再要求 Beta 请求头；请求中的 diagnostics 对象仍需显式传入，响应会包含 diagnostics 字段，未开启时为 null。接入代码要处理 null，并在需要连续比较的各轮请求中启用诊断，不能依赖只传旧请求头来保存指纹。\n\n   证据：[2026-09-25 来源记录](/item/obs_7cc176334cc36722cc1947c05eca4eaa666180b332c75a3c9c4f82c666a78e90/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
       "date_mentioned": "",
       "is_new": null
     },
     {
       "rank": 4,
       "level": "notable",
-      "platform": "",
-      "title": "Anthropic 缓存诊断结束 Beta",
-      "summary": "归档说明缓存诊断不再要求 Beta 请求头；请求中的 diagnostics 对象仍需显式传入，响应会包含 diagnostics 字段，未开启时为 null",
-      "detail_markdown": "归档说明缓存诊断不再要求 Beta 请求头；请求中的 diagnostics 对象仍需显式传入，响应会包含 diagnostics 字段，未开启时为 null。接入代码要处理 null，并在需要连续比较的各轮请求中启用诊断，不能依赖只传旧请求头来保存指纹。\n\n   证据：[2026-09-25 归档条目](/item/obs_7cc176334cc36722cc1947c05eca4eaa666180b332c75a3c9c4f82c666a78e90/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+      "platform": "MiniMax",
+      "title": "MiniMax M3.1 Flash Preview 的入口有限",
+      "summary": "模型页新增 MiniMax-M3.1-Flash-Preview，描述为原生多模态、1M 上下文、思考深度可调的编程模型；当期说明暂时仅通过 Token Plan 与 MiniMax Code 提供",
+      "detail_markdown": "模型页新增 MiniMax-M3.1-Flash-Preview，描述为原生多模态、1M 上下文、思考深度可调的编程模型；当期说明暂时仅通过 Token Plan 与 MiniMax Code 提供。不能据此推断所有按量 API 账号已经可用，访问入口和套餐范围需分别核对。\n\n   证据：[2026-09-28 来源记录](/item/obs_41e8441daba198062937687c7ef96db09ec670ad4573e445cca97ab1c4727985/) · [官方来源](https://platform.minimaxi.com/docs/guides/models-intro)。",
       "date_mentioned": "",
       "is_new": null
     },
     {
       "rank": 5,
       "level": "notable",
-      "platform": "MiniMax",
-      "title": "MiniMax M3.1 Flash Preview 的入口有限",
-      "summary": "模型页新增 MiniMax-M3.1-Flash-Preview，描述为原生多模态、1M 上下文、思考深度可调的编程模型；当期说明暂时仅通过 Token Plan 与 MiniMax Code 提供",
-      "detail_markdown": "模型页新增 MiniMax-M3.1-Flash-Preview，描述为原生多模态、1M 上下文、思考深度可调的编程模型；当期说明暂时仅通过 Token Plan 与 MiniMax Code 提供。不能据此推断所有按量 API 账号已经可用，访问入口和套餐范围需分别核对。\n\n   证据：[2026-09-28 归档条目](/item/obs_41e8441daba198062937687c7ef96db09ec670ad4573e445cca97ab1c4727985/) · [官方来源](https://platform.minimaxi.com/docs/guides/models-intro)。",
-      "date_mentioned": "",
-      "is_new": null
-    },
-    {
-      "rank": 6,
-      "level": "notable",
       "platform": "硅基流动",
       "title": "硅基流动公告预告 9 月 30 日下线 ERNIE Image Turbo",
       "summary": "窗口末更新日志新增 ERNIE-Image-Turbo 下线公告，并写明计划于 9 月 30 日处理",
-      "detail_markdown": "窗口末更新日志新增 ERNIE-Image-Turbo 下线公告，并写明计划于 9 月 30 日处理。本期截止日为 9 月 29 日，因此这是待执行节点；有相关调用的应用应提前准备替代模型，不写成当期已经下线。\n\n   证据：[2026-09-29 归档条目](/item/obs_552346278fcfb6c703fc76f94a72f52b29e31bce4cea8d3d688979315ca11e9e/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。",
+      "detail_markdown": "窗口末更新日志新增 ERNIE-Image-Turbo 下线公告，并写明计划于 9 月 30 日处理。有相关调用的应用应提前准备替代模型。\n\n   证据：[2026-09-29 来源记录](/item/obs_552346278fcfb6c703fc76f94a72f52b29e31bce4cea8d3d688979315ca11e9e/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。",
       "date_mentioned": "",
       "is_new": null
     }
@@ -67,42 +57,42 @@
     {
       "name": "Anthropic",
       "status": "stable",
-      "status_text": "历史归档有变更记录",
+      "status_text": "本周有更新",
       "this_week": [
         "**Anthropic 发布 Sonnet 5.5，迁移包含请求兼容变化**：更新日志记录 claude-sonnet-5-5 发布，并单列从 Sonnet 5 迁移的变化：部分思考配置需要改写，强制工具选择可能返回 400，旧版 computer use 工具及部分 advisor 组合不再接受。直接替换模型名可能造成请求失败，应先跑思考、工具与跨账号消息的回归用例。",
-        "证据：[2026-09-29 归档条目](/item/obs_8b6acc99991635cc75062cdb7cc53727b5c73e2827723c5426f68fb9715faf13/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
-        "**Anthropic 缓存诊断结束 Beta**：归档说明缓存诊断不再要求 Beta 请求头；请求中的 diagnostics 对象仍需显式传入，响应会包含 diagnostics 字段，未开启时为 null。接入代码要处理 null，并在需要连续比较的各轮请求中启用诊断，不能依赖只传旧请求头来保存指纹。",
-        "证据：[2026-09-25 归档条目](/item/obs_7cc176334cc36722cc1947c05eca4eaa666180b332c75a3c9c4f82c666a78e90/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+        "证据：[2026-09-29 来源记录](/item/obs_8b6acc99991635cc75062cdb7cc53727b5c73e2827723c5426f68fb9715faf13/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+        "**Anthropic 缓存诊断结束 Beta**：官方文档说明缓存诊断不再要求 Beta 请求头；请求中的 diagnostics 对象仍需显式传入，响应会包含 diagnostics 字段，未开启时为 null。接入代码要处理 null，并在需要连续比较的各轮请求中启用诊断，不能依赖只传旧请求头来保存指纹。",
+        "证据：[2026-09-25 来源记录](/item/obs_7cc176334cc36722cc1947c05eca4eaa666180b332c75a3c9c4f82c666a78e90/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
       ],
       "recent": []
     },
     {
       "name": "Google Gemini API",
       "status": "stable",
-      "status_text": "历史归档有变更记录",
+      "status_text": "本周有更新",
       "this_week": [
-        "**Google Gemini API 增加两款正式 TTS 模型**：归档记录 gemini-3.8-flash-lite-tts 与 gemini-3.8-flash-tts 正式发布，分别面向高吞吐语音合成与创作级语音表现；模型列表建议从旧 TTS 预览版本迁移。模型选择要结合语种、音色和吞吐要求，本期不把厂商定位当作独立效果评测。",
-        "证据：[2026-09-24 归档条目](/item/obs_38ab000e3d30fac1174b3b5b0060aae6c7a0d4bc226a2e178f8d3a87236f9b96/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。"
+        "**Google Gemini API 增加两款正式 TTS 模型**：官方文档记录 gemini-3.8-flash-lite-tts 与 gemini-3.8-flash-tts 正式发布，分别面向高吞吐语音合成与创作级语音表现；模型列表建议从旧 TTS 预览版本迁移。模型选择要结合语种、音色和吞吐要求。",
+        "证据：[2026-09-24 来源记录](/item/obs_38ab000e3d30fac1174b3b5b0060aae6c7a0d4bc226a2e178f8d3a87236f9b96/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。"
       ],
       "recent": []
     },
     {
       "name": "MiniMax",
       "status": "stable",
-      "status_text": "历史归档有变更记录",
+      "status_text": "本周有更新",
       "this_week": [
         "**MiniMax M3.1 Flash Preview 的入口有限**：模型页新增 MiniMax-M3.1-Flash-Preview，描述为原生多模态、1M 上下文、思考深度可调的编程模型；当期说明暂时仅通过 Token Plan 与 MiniMax Code 提供。不能据此推断所有按量 API 账号已经可用，访问入口和套餐范围需分别核对。",
-        "证据：[2026-09-28 归档条目](/item/obs_41e8441daba198062937687c7ef96db09ec670ad4573e445cca97ab1c4727985/) · [官方来源](https://platform.minimaxi.com/docs/guides/models-intro)。"
+        "证据：[2026-09-28 来源记录](/item/obs_41e8441daba198062937687c7ef96db09ec670ad4573e445cca97ab1c4727985/) · [官方来源](https://platform.minimaxi.com/docs/guides/models-intro)。"
       ],
       "recent": []
     },
     {
       "name": "硅基流动",
       "status": "stable",
-      "status_text": "历史归档有变更记录",
+      "status_text": "本周有更新",
       "this_week": [
-        "**硅基流动公告预告 9 月 30 日下线 ERNIE Image Turbo**：窗口末更新日志新增 ERNIE-Image-Turbo 下线公告，并写明计划于 9 月 30 日处理。本期截止日为 9 月 29 日，因此这是待执行节点；有相关调用的应用应提前准备替代模型，不写成当期已经下线。",
-        "证据：[2026-09-29 归档条目](/item/obs_552346278fcfb6c703fc76f94a72f52b29e31bce4cea8d3d688979315ca11e9e/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
+        "**硅基流动公告预告 9 月 30 日下线 ERNIE Image Turbo**：窗口末更新日志新增 ERNIE-Image-Turbo 下线公告，并写明计划于 9 月 30 日处理。有相关调用的应用应提前准备替代模型。",
+        "证据：[2026-09-29 来源记录](/item/obs_552346278fcfb6c703fc76f94a72f52b29e31bce4cea8d3d688979315ca11e9e/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
       ],
       "recent": []
     }
@@ -110,8 +100,8 @@
   "summary_table": {
     "headers": [
       "平台",
-      "归档观察",
-      "证据日期"
+      "本周动态",
+      "观察日期"
     ],
     "rows": [
       [
@@ -144,43 +134,39 @@
   "trends": [
     {
       "title": "模型迁移涉及请求协议和产品入口",
-      "body_markdown": "Sonnet 5.5 的参数与工具兼容变化，以及 MiniMax Preview 的限定入口，说明模型出现在列表中并不代表旧请求可直接复用。迁移评估应包含真实请求回归，且区分公告日期与执行日期。以上为基于本期归档的编辑判断。"
-    },
-    {
-      "title": "采集覆盖与结论边界",
-      "body_markdown": "本期于 2026 年 10 月 10 日依据 2026-09-23 至 2026-09-29 的历史采集记录补编。窗口内有 7/7 天 diff；七天均有采集记录。日期表示采集到变化的时间，除非正文另有明确公告日期；不把首次抓取、页面删除、导航调整或抓取失败解释为新品发布、下线或调价。 本窗口累计 14 次信源抓取失败（按日、按信源累计），这类失败只反映证据缺口。未列入本期的平台不等于没有产品更新；孤立价格数字和单位缺失的变化不用于判断涨跌。"
+      "body_markdown": "Sonnet 5.5 的参数与工具兼容变化，以及 MiniMax Preview 的限定入口，说明模型出现在列表中并不代表旧请求可直接复用。迁移评估应包含真实请求回归，且区分公告日期与执行日期。"
     }
   ],
   "watchpoints": {
     "headers": [
-      "时间",
-      "核对事项",
+      "观察日期",
+      "关注事项",
       "适用范围"
     ],
     "rows": [
       [
-        "2026-09-29（采集日）",
-        "核对原公告：Anthropic 发布 Sonnet 5.5，迁移包含请求兼容变化",
+        "2026-09-29",
+        "Anthropic 发布 Sonnet 5.5，迁移包含请求兼容变化",
         "Anthropic"
       ],
       [
-        "2026-09-24（采集日）",
-        "核对原公告：Google Gemini API 增加两款正式 TTS 模型",
+        "2026-09-24",
+        "Google Gemini API 增加两款正式 TTS 模型",
         "Google Gemini API"
       ],
       [
-        "2026-09-25（采集日）",
-        "核对原公告：Anthropic 缓存诊断结束 Beta",
+        "2026-09-25",
+        "Anthropic 缓存诊断结束 Beta",
         "Anthropic"
       ],
       [
-        "2026-09-28（采集日）",
-        "核对原公告：MiniMax M3.1 Flash Preview 的入口有限",
+        "2026-09-28",
+        "MiniMax M3.1 Flash Preview 的入口有限",
         "MiniMax"
       ],
       [
-        "2026-09-29（采集日）",
-        "核对原公告：硅基流动公告预告 9 月 30 日下线 ERNIE Image Turbo",
+        "2026-09-29",
+        "硅基流动公告预告 9 月 30 日下线 ERNIE Image Turbo",
         "硅基流动"
       ]
     ]
@@ -188,23 +174,23 @@
   "event_index": [
     {
       "date": "2026-09-29",
-      "text": "Anthropic 发布 Sonnet 5.5，迁移包含请求兼容变化。证据：[2026-09-29 归档条目](/item/obs_8b6acc99991635cc75062cdb7cc53727b5c73e2827723c5426f68fb9715faf13/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+      "text": "Anthropic 发布 Sonnet 5.5，迁移包含请求兼容变化。证据：[2026-09-29 来源记录](/item/obs_8b6acc99991635cc75062cdb7cc53727b5c73e2827723c5426f68fb9715faf13/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
     },
     {
       "date": "2026-09-24",
-      "text": "Google Gemini API 增加两款正式 TTS 模型。证据：[2026-09-24 归档条目](/item/obs_38ab000e3d30fac1174b3b5b0060aae6c7a0d4bc226a2e178f8d3a87236f9b96/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。"
+      "text": "Google Gemini API 增加两款正式 TTS 模型。证据：[2026-09-24 来源记录](/item/obs_38ab000e3d30fac1174b3b5b0060aae6c7a0d4bc226a2e178f8d3a87236f9b96/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。"
     },
     {
       "date": "2026-09-25",
-      "text": "Anthropic 缓存诊断结束 Beta。证据：[2026-09-25 归档条目](/item/obs_7cc176334cc36722cc1947c05eca4eaa666180b332c75a3c9c4f82c666a78e90/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+      "text": "Anthropic 缓存诊断结束 Beta。证据：[2026-09-25 来源记录](/item/obs_7cc176334cc36722cc1947c05eca4eaa666180b332c75a3c9c4f82c666a78e90/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
     },
     {
       "date": "2026-09-28",
-      "text": "MiniMax M3.1 Flash Preview 的入口有限。证据：[2026-09-28 归档条目](/item/obs_41e8441daba198062937687c7ef96db09ec670ad4573e445cca97ab1c4727985/) · [官方来源](https://platform.minimaxi.com/docs/guides/models-intro)。"
+      "text": "MiniMax M3.1 Flash Preview 的入口有限。证据：[2026-09-28 来源记录](/item/obs_41e8441daba198062937687c7ef96db09ec670ad4573e445cca97ab1c4727985/) · [官方来源](https://platform.minimaxi.com/docs/guides/models-intro)。"
     },
     {
       "date": "2026-09-29",
-      "text": "硅基流动公告预告 9 月 30 日下线 ERNIE Image Turbo。证据：[2026-09-29 归档条目](/item/obs_552346278fcfb6c703fc76f94a72f52b29e31bce4cea8d3d688979315ca11e9e/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
+      "text": "硅基流动公告预告 9 月 30 日下线 ERNIE Image Turbo。证据：[2026-09-29 来源记录](/item/obs_552346278fcfb6c703fc76f94a72f52b29e31bce4cea8d3d688979315ca11e9e/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
     }
   ]
 }

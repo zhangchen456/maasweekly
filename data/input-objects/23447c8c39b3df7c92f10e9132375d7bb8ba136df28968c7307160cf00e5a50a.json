@@ -1,0 +1,170 @@
+{
+  "date": "2026-09-08",
+  "period": "2026-09-02 ~ 2026-09-08",
+  "headline": [
+    {
+      "rank": 1,
+      "level": "notable",
+      "platform": "",
+      "title": "OpenAI Responses API 增加长任务控制",
+      "summary": "官方更新日志记录了 GPT-6 Astra 的异步工具调用及会话中调整推理强度：应用执行工具时模型可继续工作，结果就绪后再返回；后续轮次可调整推理强度",
+      "detail_markdown": "官方更新日志记录了 GPT-6 Astra 的异步工具调用及会话中调整推理强度：应用执行工具时模型可继续工作，结果就绪后再返回；后续轮次可调整推理强度。对已有工具循环，需要核对异步结果回传顺序与缓存复用，不能仅替换模型名。\n\n   证据：[2026-09-04 来源记录](/item/obs_10ada9f77675757ea6eb3af0b24dd44db199f8c9dfe7043c4d0fcdaa485eaf86/) · [官方来源](https://platform.openai.com/docs/changelog)。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 2,
+      "level": "notable",
+      "platform": "",
+      "title": "Anthropic 更新内容标记与企业接口说明",
+      "summary": "官方文档说明 Claude Fable 5.1 与 Mythos 5.1 的文本带有 Anthropic 文本水印；通过代码执行工具产生并经 Files API 取回的受支持媒体文件带有 C2PA 标记",
+      "detail_markdown": "官方文档说明 Claude Fable 5.1 与 Mythos 5.1 的文本带有 Anthropic 文本水印；通过代码执行工具产生并经 Files API 取回的受支持媒体文件带有 C2PA 标记。企业管理、分析与合规接口指南同时补充 anthropic-version 请求头说明。标记范围应按生成方式和文件类型区分。\n\n   证据：[2026-09-04 来源记录](/item/obs_d87e97003af9f0b7677258a6f716dad206125505534f3cfe59c754e520412b84/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 3,
+      "level": "notable",
+      "platform": "硅基流动",
+      "title": "硅基流动新增一批模型下线公告",
+      "summary": "更新日志出现 Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线的公告标题",
+      "detail_markdown": "更新日志出现 Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线的公告标题。具体下线时间需以完整公告为准；使用这些模型的应用需要核对完整公告和替代模型。\n\n   证据：[2026-09-04 来源记录](/item/obs_ba11534add6ffc1d2fda194d00b066ab55c02aa193eac39ce82d0c29333eab0f/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 4,
+      "level": "notable",
+      "platform": "",
+      "title": "讯飞星辰MaaS 模型集市新增 Spark-X2.5",
+      "summary": "公告列表新增 Spark-X2.5 上线模型集市记录，列表中的发布时间为 9 月 7 日",
+      "detail_markdown": "公告列表新增 Spark-X2.5 上线模型集市记录，列表中的发布时间为 9 月 7 日。\n\n   证据：[2026-09-08 来源记录](/item/obs_4a37e8b3be8764788a615c247d88119a4878c1bcae2cfd4e4f1f469721711b8b/) · [官方来源](https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1)。",
+      "date_mentioned": "",
+      "is_new": null
+    }
+  ],
+  "platforms": [
+    {
+      "name": "OpenAI",
+      "status": "stable",
+      "status_text": "本周有更新",
+      "this_week": [
+        "**OpenAI Responses API 增加长任务控制**：官方更新日志记录了 GPT-6 Astra 的异步工具调用及会话中调整推理强度：应用执行工具时模型可继续工作，结果就绪后再返回；后续轮次可调整推理强度。对已有工具循环，需要核对异步结果回传顺序与缓存复用，不能仅替换模型名。",
+        "证据：[2026-09-04 来源记录](/item/obs_10ada9f77675757ea6eb3af0b24dd44db199f8c9dfe7043c4d0fcdaa485eaf86/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+      ],
+      "recent": []
+    },
+    {
+      "name": "Anthropic",
+      "status": "stable",
+      "status_text": "本周有更新",
+      "this_week": [
+        "**Anthropic 更新内容标记与企业接口说明**：官方文档说明 Claude Fable 5.1 与 Mythos 5.1 的文本带有 Anthropic 文本水印；通过代码执行工具产生并经 Files API 取回的受支持媒体文件带有 C2PA 标记。企业管理、分析与合规接口指南同时补充 anthropic-version 请求头说明。标记范围应按生成方式和文件类型区分。",
+        "证据：[2026-09-04 来源记录](/item/obs_d87e97003af9f0b7677258a6f716dad206125505534f3cfe59c754e520412b84/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+      ],
+      "recent": []
+    },
+    {
+      "name": "硅基流动",
+      "status": "stable",
+      "status_text": "本周有更新",
+      "this_week": [
+        "**硅基流动新增一批模型下线公告**：更新日志出现 Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线的公告标题。具体下线时间需以完整公告为准；使用这些模型的应用需要核对完整公告和替代模型。",
+        "证据：[2026-09-04 来源记录](/item/obs_ba11534add6ffc1d2fda194d00b066ab55c02aa193eac39ce82d0c29333eab0f/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
+      ],
+      "recent": []
+    },
+    {
+      "name": "讯飞星辰MaaS",
+      "status": "stable",
+      "status_text": "本周有更新",
+      "this_week": [
+        "**讯飞星辰MaaS 模型集市新增 Spark-X2.5**：公告列表新增 Spark-X2.5 上线模型集市记录，列表中的发布时间为 9 月 7 日。",
+        "证据：[2026-09-08 来源记录](/item/obs_4a37e8b3be8764788a615c247d88119a4878c1bcae2cfd4e4f1f469721711b8b/) · [官方来源](https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1)。"
+      ],
+      "recent": []
+    }
+  ],
+  "summary_table": {
+    "headers": [
+      "平台",
+      "本周动态",
+      "观察日期"
+    ],
+    "rows": [
+      [
+        "OpenAI",
+        "OpenAI Responses API 增加长任务控制",
+        "2026-09-04"
+      ],
+      [
+        "Anthropic",
+        "Anthropic 更新内容标记与企业接口说明",
+        "2026-09-04"
+      ],
+      [
+        "硅基流动",
+        "硅基流动新增一批模型下线公告",
+        "2026-09-04"
+      ],
+      [
+        "讯飞星辰MaaS",
+        "讯飞星辰MaaS 模型集市新增 Spark-X2.5",
+        "2026-09-08"
+      ]
+    ]
+  },
+  "trends": [
+    {
+      "title": "长任务控制与内容来源管理进入 API 接入层",
+      "body_markdown": "异步工具调用和动态推理强度改变了长任务执行方式；内容标记影响生成文件的来源识别。编辑建议是分别检查工具结果回传与媒体取回流程，不能用一次模型替换覆盖全部接入工作。"
+    }
+  ],
+  "watchpoints": {
+    "headers": [
+      "观察日期",
+      "关注事项",
+      "适用范围"
+    ],
+    "rows": [
+      [
+        "2026-09-04",
+        "OpenAI Responses API 增加长任务控制",
+        "OpenAI"
+      ],
+      [
+        "2026-09-04",
+        "Anthropic 更新内容标记与企业接口说明",
+        "Anthropic"
+      ],
+      [
+        "2026-09-04",
+        "硅基流动新增一批模型下线公告",
+        "硅基流动"
+      ],
+      [
+        "2026-09-08",
+        "讯飞星辰MaaS 模型集市新增 Spark-X2.5",
+        "讯飞星辰MaaS"
+      ]
+    ]
+  },
+  "event_index": [
+    {
+      "date": "2026-09-04",
+      "text": "OpenAI Responses API 增加长任务控制。证据：[2026-09-04 来源记录](/item/obs_10ada9f77675757ea6eb3af0b24dd44db199f8c9dfe7043c4d0fcdaa485eaf86/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+    },
+    {
+      "date": "2026-09-04",
+      "text": "Anthropic 更新内容标记与企业接口说明。证据：[2026-09-04 来源记录](/item/obs_d87e97003af9f0b7677258a6f716dad206125505534f3cfe59c754e520412b84/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+    },
+    {
+      "date": "2026-09-04",
+      "text": "硅基流动新增一批模型下线公告。证据：[2026-09-04 来源记录](/item/obs_ba11534add6ffc1d2fda194d00b066ab55c02aa193eac39ce82d0c29333eab0f/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
+    },
+    {
+      "date": "2026-09-08",
+      "text": "讯飞星辰MaaS 模型集市新增 Spark-X2.5。证据：[2026-09-08 来源记录](/item/obs_4a37e8b3be8764788a615c247d88119a4878c1bcae2cfd4e4f1f469721711b8b/) · [官方来源](https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1)。"
+    }
+  ]
+}

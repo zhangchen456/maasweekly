@@ -1,0 +1,204 @@
+{
+  "date": "2026-09-22",
+  "period": "2026-09-16 ~ 2026-09-22",
+  "headline": [
+    {
+      "rank": 1,
+      "level": "notable",
+      "platform": "Kimi",
+      "title": "Kimi Batch API 开放，托管智能体仍有准入范围",
+      "summary": "官方更新日志记录 Batch API 面向全量用户开放；托管智能体 Beta 当前面向国内企业认证用户开放",
+      "detail_markdown": "官方更新日志记录 Batch API 面向全量用户开放；托管智能体 Beta 当前面向国内企业认证用户开放。列表同时出现 Context Caching 全量开放与续期不再收取创建费用的说明。\n\n   证据：[2026-09-16 来源记录](/item/obs_584d2d0e11207d9178106093bdd645ba35d9472abe33ff447a0bbad40f511a2d/) · [官方来源](https://platform.kimi.com/docs/changelog)。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 2,
+      "level": "notable",
+      "platform": "",
+      "title": "Anthropic Messages API 支持按需压缩会话",
+      "summary": "官方文档说明通过 compact-2026-09-04 Beta 请求头和顶层 compaction 参数，可以主动生成签名压缩块，后续以压缩块替换旧消息；也可保留最近轮次原文",
+      "detail_markdown": "官方文档说明通过 compact-2026-09-04 Beta 请求头和顶层 compaction 参数，可以主动生成签名压缩块，后续以压缩块替换旧消息；也可保留最近轮次原文。对长会话应用，这提供了显式管理上下文的方式，但需要核对模型支持、签名块回传与保留思考的约束。\n\n   证据：[2026-09-16 来源记录](/item/obs_0cfe2284f81351fd00ea3c22db40f92f6b46ce210d412115a4423bcff64c3fb3/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 3,
+      "level": "notable",
+      "platform": "",
+      "title": "Google Gemini API 增加实时语音模型选项",
+      "summary": "官方文档记录 Gemini 3.8 Live 与 Gemini 3.8 Live Extended Thinking 两个实时音频模型的正式可用说明，前者为默认选项，后者面向更强推理需求",
+      "detail_markdown": "官方文档记录 Gemini 3.8 Live 与 Gemini 3.8 Live Extended Thinking 两个实时音频模型的正式可用说明，前者为默认选项，后者面向更强推理需求。实时语音系统应分别测量响应延迟、打断处理和推理质量，本期没有独立延迟或效果测试。\n\n   证据：[2026-09-16 来源记录](/item/obs_354d7aa50473a2d7e27b0b83854d22d225d330bd328dc30eaef9aeb0e40ef4fa/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 4,
+      "level": "notable",
+      "platform": "",
+      "title": "OpenAI 增加组织与项目级 API key 创建控制",
+      "summary": "管理员可以只允许服务账号 key、只允许用户所属项目 key，或禁止创建新 key；组织级限制优先于项目设置，现有 key 不受这项创建规则影响",
+      "detail_markdown": "管理员可以只允许服务账号 key、只允许用户所属项目 key，或禁止创建新 key；组织级限制优先于项目设置，现有 key 不受这项创建规则影响。企业集成应核对自动化开通流程的账号类型，避免把禁止新建误认为已撤销现有凭证。\n\n   证据：[2026-09-17 来源记录](/item/obs_37b261f34fa67090b074b120f9aeacdd63d317563028e2ef432dd16cbfa91142/) · [官方来源](https://platform.openai.com/docs/changelog)。",
+      "date_mentioned": "",
+      "is_new": null
+    },
+    {
+      "rank": 5,
+      "level": "notable",
+      "platform": "",
+      "title": "xAI API 更新日志记录 Grok 4.7 上线",
+      "summary": "官方文档记录公开 API 模型名 grok-4.7、500k 上下文、文本与图像输入、文本输出，以及按提示长度分档的计费和推理强度选项",
+      "detail_markdown": "官方文档记录公开 API 模型名 grok-4.7、500k 上下文、文本与图像输入、文本输出，以及按提示长度分档的计费和推理强度选项。Grok 4.7 Fast 当时仅通过 Cursor 与 Grok Build 提供，不属于公开 xAI API 的可调用模型。\n\n   证据：[2026-09-22 来源记录](/item/obs_be81c9cd2a853b249b95074d457a3a1aed4eb7b7d4ed5241beaa31e3bafbc099/) · [官方来源](https://docs.x.ai/docs/release-notes)。",
+      "date_mentioned": "",
+      "is_new": null
+    }
+  ],
+  "platforms": [
+    {
+      "name": "Kimi",
+      "status": "stable",
+      "status_text": "本周有更新",
+      "this_week": [
+        "**Kimi Batch API 开放，托管智能体仍有准入范围**：官方更新日志记录 Batch API 面向全量用户开放；托管智能体 Beta 当前面向国内企业认证用户开放。列表同时出现 Context Caching 全量开放与续期不再收取创建费用的说明。",
+        "证据：[2026-09-16 来源记录](/item/obs_584d2d0e11207d9178106093bdd645ba35d9472abe33ff447a0bbad40f511a2d/) · [官方来源](https://platform.kimi.com/docs/changelog)。"
+      ],
+      "recent": []
+    },
+    {
+      "name": "Anthropic",
+      "status": "stable",
+      "status_text": "本周有更新",
+      "this_week": [
+        "**Anthropic Messages API 支持按需压缩会话**：官方文档说明通过 compact-2026-09-04 Beta 请求头和顶层 compaction 参数，可以主动生成签名压缩块，后续以压缩块替换旧消息；也可保留最近轮次原文。对长会话应用，这提供了显式管理上下文的方式，但需要核对模型支持、签名块回传与保留思考的约束。",
+        "证据：[2026-09-16 来源记录](/item/obs_0cfe2284f81351fd00ea3c22db40f92f6b46ce210d412115a4423bcff64c3fb3/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+      ],
+      "recent": []
+    },
+    {
+      "name": "Google Gemini API",
+      "status": "stable",
+      "status_text": "本周有更新",
+      "this_week": [
+        "**Google Gemini API 增加实时语音模型选项**：官方文档记录 Gemini 3.8 Live 与 Gemini 3.8 Live Extended Thinking 两个实时音频模型的正式可用说明，前者为默认选项，后者面向更强推理需求。实时语音系统应分别测量响应延迟、打断处理和推理质量，本期没有独立延迟或效果测试。",
+        "证据：[2026-09-16 来源记录](/item/obs_354d7aa50473a2d7e27b0b83854d22d225d330bd328dc30eaef9aeb0e40ef4fa/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。"
+      ],
+      "recent": []
+    },
+    {
+      "name": "OpenAI",
+      "status": "stable",
+      "status_text": "本周有更新",
+      "this_week": [
+        "**OpenAI 增加组织与项目级 API key 创建控制**：管理员可以只允许服务账号 key、只允许用户所属项目 key，或禁止创建新 key；组织级限制优先于项目设置，现有 key 不受这项创建规则影响。企业集成应核对自动化开通流程的账号类型，避免把禁止新建误认为已撤销现有凭证。",
+        "证据：[2026-09-17 来源记录](/item/obs_37b261f34fa67090b074b120f9aeacdd63d317563028e2ef432dd16cbfa91142/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+      ],
+      "recent": []
+    },
+    {
+      "name": "xAI",
+      "status": "stable",
+      "status_text": "本周有更新",
+      "this_week": [
+        "**xAI API 更新日志记录 Grok 4.7 上线**：官方文档记录公开 API 模型名 grok-4.7、500k 上下文、文本与图像输入、文本输出，以及按提示长度分档的计费和推理强度选项。Grok 4.7 Fast 当时仅通过 Cursor 与 Grok Build 提供，不属于公开 xAI API 的可调用模型。",
+        "证据：[2026-09-22 来源记录](/item/obs_be81c9cd2a853b249b95074d457a3a1aed4eb7b7d4ed5241beaa31e3bafbc099/) · [官方来源](https://docs.x.ai/docs/release-notes)。"
+      ],
+      "recent": []
+    }
+  ],
+  "summary_table": {
+    "headers": [
+      "平台",
+      "本周动态",
+      "观察日期"
+    ],
+    "rows": [
+      [
+        "Kimi",
+        "Kimi Batch API 开放，托管智能体仍有准入范围",
+        "2026-09-16"
+      ],
+      [
+        "Anthropic",
+        "Anthropic Messages API 支持按需压缩会话",
+        "2026-09-16"
+      ],
+      [
+        "Google Gemini API",
+        "Google Gemini API 增加实时语音模型选项",
+        "2026-09-16"
+      ],
+      [
+        "OpenAI",
+        "OpenAI 增加组织与项目级 API key 创建控制",
+        "2026-09-17"
+      ],
+      [
+        "xAI",
+        "xAI API 更新日志记录 Grok 4.7 上线",
+        "2026-09-22"
+      ]
+    ]
+  },
+  "trends": [
+    {
+      "title": "上下文管理、实时语音与凭证治理同步演进",
+      "body_markdown": "批处理与缓存文档、显式会话压缩、实时语音选项和 key 创建控制，分别影响成本、上下文、交互与账号开通。它们不构成统一能力排名，选型应回到自己的调用链与账号范围。"
+    }
+  ],
+  "watchpoints": {
+    "headers": [
+      "观察日期",
+      "关注事项",
+      "适用范围"
+    ],
+    "rows": [
+      [
+        "2026-09-16",
+        "Kimi Batch API 开放，托管智能体仍有准入范围",
+        "Kimi"
+      ],
+      [
+        "2026-09-16",
+        "Anthropic Messages API 支持按需压缩会话",
+        "Anthropic"
+      ],
+      [
+        "2026-09-16",
+        "Google Gemini API 增加实时语音模型选项",
+        "Google Gemini API"
+      ],
+      [
+        "2026-09-17",
+        "OpenAI 增加组织与项目级 API key 创建控制",
+        "OpenAI"
+      ],
+      [
+        "2026-09-22",
+        "xAI API 更新日志记录 Grok 4.7 上线",
+        "xAI"
+      ]
+    ]
+  },
+  "event_index": [
+    {
+      "date": "2026-09-16",
+      "text": "Kimi Batch API 开放，托管智能体仍有准入范围。证据：[2026-09-16 来源记录](/item/obs_584d2d0e11207d9178106093bdd645ba35d9472abe33ff447a0bbad40f511a2d/) · [官方来源](https://platform.kimi.com/docs/changelog)。"
+    },
+    {
+      "date": "2026-09-16",
+      "text": "Anthropic Messages API 支持按需压缩会话。证据：[2026-09-16 来源记录](/item/obs_0cfe2284f81351fd00ea3c22db40f92f6b46ce210d412115a4423bcff64c3fb3/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+    },
+    {
+      "date": "2026-09-16",
+      "text": "Google Gemini API 增加实时语音模型选项。证据：[2026-09-16 来源记录](/item/obs_354d7aa50473a2d7e27b0b83854d22d225d330bd328dc30eaef9aeb0e40ef4fa/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。"
+    },
+    {
+      "date": "2026-09-17",
+      "text": "OpenAI 增加组织与项目级 API key 创建控制。证据：[2026-09-17 来源记录](/item/obs_37b261f34fa67090b074b120f9aeacdd63d317563028e2ef432dd16cbfa91142/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+    },
+    {
+      "date": "2026-09-22",
+      "text": "xAI API 更新日志记录 Grok 4.7 上线。证据：[2026-09-22 来源记录](/item/obs_be81c9cd2a853b249b95074d457a3a1aed4eb7b7d4ed5241beaa31e3bafbc099/) · [官方来源](https://docs.x.ai/docs/release-notes)。"
+    }
+  ]
+}
