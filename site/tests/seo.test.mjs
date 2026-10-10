@@ -10,7 +10,7 @@ import { JSDOM } from 'jsdom';
 import { canonicalUrl } from '../src/lib/seo.ts';
 import { loadVerifiedRelease } from '../src/lib/release.ts';
 import { modelPage, featuredModels } from '../src/lib/model-pages.ts';
-import { homeModelGroups } from '../src/lib/home-models.ts';
+
 import { priceCells, priceUnit } from '../src/lib/price-display.ts';
 import { priceChangeLink } from '../src/lib/record-links.ts';
 
@@ -90,12 +90,19 @@ for (const route of ['', 'pricing', 'models', 'changes', 'weekly']) {
 }
 
 const home = docFor('');
-assert.equal(home.querySelectorAll('.market-table').length,1,'one shared price table');
-assert.equal(home.querySelectorAll('[role=tab]').length,3);
-assert.equal(home.querySelectorAll('[role=tab][aria-selected=true]').length,1);
-assert.equal(home.querySelector('[data-home-group]:not([hidden])').dataset.homeGroup,'flagship');
-assert.equal(home.querySelectorAll('[data-home-model]').length,18);
-assert.equal(home.querySelectorAll('[data-quote-amount]').length,36,'all models have input and output quotes');
+assert.equal(home.querySelectorAll('.market-table').length,0,'homepage centers changes');
+const daily=JSON.parse(readFileSync('src/data/daily_changes.json','utf8')).days;
+const to=daily[0].date;
+const from=new Date(Date.parse(to+'T00:00:00Z')-6*86400000).toISOString().slice(0,10);
+const expected=new Set(daily.filter(d=>d.date>=from && d.date<=to).flatMap(d=>(d.highlights??[]).filter(h=>h.items.length).map(h=>h.platform)));
+assert.deepEqual(new Set([...home.querySelectorAll('[data-recent-platform]')].map(el=>el.dataset.recentPlatform)),expected);
+for(const row of home.querySelectorAll('[data-recent-platform]')) {
+  const entries=[...row.querySelectorAll('.vendor-change-items li')];
+  assert.equal(new Set(entries.map(el=>el.querySelector('p').textContent)).size,entries.length);
+  for(const a of row.querySelectorAll('.vendor-change-items a')) assert(existsSync(path.join(dist,a.getAttribute('href').split('#')[0],'index.html')));
+  for(const time of row.querySelectorAll('time')) assert(time.dateTime>=from && time.dateTime<=to);
+}
+for(const slide of home.querySelectorAll('[data-highlight-slide]')) assert(slide.querySelector('h2').textContent.includes(slide.querySelector('.opening-deck').textContent.split(' · ')[0]));
 const featured = featuredModels();
 assert(featured.length <= 5, 'only featured models with fresh, complete evidence are promoted');
 for (const page of [...featured, modelPage('anthropic:claude-sonnet-4.5')]) {
@@ -133,10 +140,7 @@ if (empty) {
 assert(!existsSync(path.join(dist, 'model/unknown:ghost/index.html')));
 for (const route of ['', 'pricing', 'models']) {
   const doc = docFor(route);
-  if (route === '') for (const group of homeModelGroups()) for (const page of group.models) {
-    assert(doc.querySelector(`[data-home-model="${page.pick.modelId}"]`));
-    if (page.modelHref) assert(doc.querySelector(`a[href="${page.modelHref}"]`));
-  }
+  if (route === '') assert(doc.querySelector('a[href="/models/"]'));
   else for (const page of featured) assert(doc.querySelector(`a[href="/model/${page.model.modelId}/"]`));
 }
 

@@ -126,6 +126,7 @@ run "site: records（含残留检测）" bash -c 'cd site && node tests/records.
 # never needs a cleanup rebuild, including after interrupted fixture tests.
 run "site: SEO（canonical / sitemap / model content）" bash -c 'cd site && node --experimental-strip-types tests/seo.test.mjs'
 
+run "site: homepage explore" bash -c 'cd site && node tests/home-explore.test.mjs'
 run "site: multilingual" bash -c 'cd site && node --experimental-strip-types tests/multilingual.test.mjs'
 
 # ---- agent-api（REST + MCP 全套）----

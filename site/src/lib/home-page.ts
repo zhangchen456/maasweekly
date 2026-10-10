@@ -1,7 +1,4 @@
-import { readPageProjection, readPageJson } from './page-data';
-import { modelRelease } from './model-pages';
-import { homeModelGroups } from './home-models';
-import type { PriceRecord } from './release';
+import { readPageProjection } from './page-data';
 export interface HighlightItem {text:string;type:string}
 export interface PlatformHighlight {platform:string;logo_summary:string;items:HighlightItem[]}
 export interface SourceSignal {platform:string;source_type:string;url:string;kind:string;added_count:number;removed_count:number;added_lines:string[];removed_lines:string[];pairs:{before:string;after:string}[];signal_preview?:string;permalink?:string;llm_summary?:string}
@@ -78,12 +75,7 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
 return { data, today, currentWeek, pastWeeks, substantive, highlights, platformsInSignals, platformOrder, HL_TYPE, typeLabel, dateLong, dateShort, weekday, storySections, storyParas, priceChanges, weekHighlightCount };
 }
 
-export function homeOverview(highlights:PlatformHighlight[], updatedAt?:string) {
-const ledger = readPageJson<{fx_snapshot:{rates:{CNY:number};as_of:string}}>('derived/pricing/ledger.json')!;
-const fxRate = Number(ledger.fx_snapshot.rates.CNY);
-const displayAmount = (p: PriceRecord | undefined) => p && ['USD','CNY'].includes(p.currency) ? new Intl.NumberFormat('zh-CN',{maximumSignificantDigits:6}).format(Number(p.amount) * (p.currency === 'USD' ? fxRate : 1)) : p?.amount ?? '—';
-
-const updateLabel = updatedAt;
+export function homeOverview(highlights:PlatformHighlight[]) {
 const labels: Record<string,string> = {sunset:'服务下线',pricing:'价格变化',release:'新模型发布',other:'平台更新'};
 const all = highlights.flatMap((h) => h.items.map((item) => ({...item,platform:h.platform,headline:h.logo_summary})));
 const picks: (HighlightItem & {platform:string;headline:string})[] = [];
@@ -92,8 +84,19 @@ for (const type of ['sunset','pricing','release']) {
   if(item) picks.push(item);
 }
 for(const item of all) if(picks.length<3 && !picks.some(p=>p.platform===item.platform)) picks.push(item);
-const modelGroups=homeModelGroups();
-const quote=(p: PriceRecord | undefined)=>p?`${p.amount} ${p.currency}`:'未单列';
-const release=modelRelease();
-return {ledger,fxRate,displayAmount,updateLabel,labels,picks,modelGroups,quote,release};
+const days=readPageProjection<DailyProjection>('daily_changes.json').days;
+const to=[...days].sort((a,b)=>b.date.localeCompare(a.date))[0]?.date ?? '';
+const from=to ? new Date(Date.parse(to+'T00:00:00Z')-6*86400000).toISOString().slice(0,10) : '';
+const groups=new Map<string,{platform:string;items:(HighlightItem & {date:string;href:string})[]}>();
+const weeks=readPageProjection<WeekProjection[]>('weekly-digest.json');
+for(const day of [...days].sort((a,b)=>b.date.localeCompare(a.date))) {
+  if(day.date<from || day.date>to) continue;
+  for(const h of day.highlights ?? []) {
+    const group=groups.get(h.platform) ?? {platform:h.platform,items:[]};
+    for(const item of h.items) if(!group.items.some(i=>i.text===item.text && i.type===item.type)) group.items.push({...item,date:day.date,href:`/daily/${weeks.find(w=>w.start<=day.date && w.end>=day.date)?.week ?? ''}/#day-${day.date}`});
+    if(group.items.length) groups.set(h.platform,group);
+  }
+}
+const recentChanges={from,to,groups:[...groups.values()].sort((a,b)=>b.items[0].date.localeCompare(a.items[0].date)||b.items.length-a.items.length||a.platform.localeCompare(b.platform))};
+return {labels,picks,recentChanges};
 }

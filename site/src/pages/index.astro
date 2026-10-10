@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import HomeOverview from '../components/HomeOverview.astro';
 import '../styles/home-overview.css';
-import { priceChangeLink } from '../lib/record-links';
 import '../styles/workspace.css';
 import { getCollection } from 'astro:content';
 import { logoFor } from '../lib/platforms';
@@ -16,79 +15,7 @@ const latestReport = reports[0];
 ---
 <Layout title="MaaS Daily — 大模型 API 价格与全球 MaaS 每日动态" description="每日追踪大模型发布、API 价格变化与平台更新。查询模型报价、计费条件和官方证据，查看全球 MaaS 平台周报。">
   <HomeOverview highlights={highlights} platformOrder={platformOrder} date={today?.date} updatedAt={data.updated_at} />
-  <div class="more-heading"><div><p class="home-kicker">继续了解</p><h2>更多平台动态</h2></div><div class="edition"><time datetime={today?.date}>{dateLong || '等待更新'}</time><button id="copy-brief" type="button">复制简报 ↗</button><span id="copy-status" role="status"></span></div></div>
-  <div class="explore-bar" aria-label="动态筛选">
-    <label class="search-field"><span aria-hidden="true">⌕</span><input id="signal-search" type="search" placeholder="搜索平台、模型或关键词…" aria-label="搜索今日要点与信号"/><kbd>/</kbd></label>
-    <label class="platform-select"><span class="sr-only">筛选平台</span><select id="platform-filter"><option value="">全部平台</option>{platformOrder.map((p) => <option value={p}>{p}</option>)}</select></label>
-    <button id="following-filter" class="quiet-button" type="button" aria-pressed="false">只看关注</button>
-  </div>
-  <div class="workspace-tabs"><div class="type-filters" role="group" aria-label="要点类型">
-    {[['all', '全部动态'], ['release', '新发布'], ['pricing', '价格变化'], ['sunset', '下线提醒']].map(([value, label]) => <button type="button" data-filter={value} aria-pressed={value === 'all'}>{label}</button>)}
-    </div><a href="#week">本周回顾 ↗</a>
-  </div>
-  <p id="filter-status" class="filter-status" role="status" aria-live="polite"></p>
-  <div id="filter-empty" class="filter-empty" hidden><strong>没有找到匹配的动态</strong><p>试试其他关键词，或关注下方平台后再使用「只看关注」。</p><button type="button" id="reset-filters">重置筛选</button></div>
-
   <div class="daily-main">
-    {/* ===== 01 今日要点（按平台分组 + logo） ===== */}
-    <section class="section" id="digest">
-      <div class="section-heading reveal">
-        <div class="section-no">01 / DIGEST</div>
-        <h2>今日平台动态</h2>
-        <p class="section-note">按平台展开，查看完整摘要与变化依据。</p>
-      </div>
-      {highlights.length > 0 ? (
-        <div class="platform-grid">
-          {highlights.map((h) => (
-            <article class="platform-card reveal" data-platform={h.platform}>
-              <header class="pc-head">
-                {logoFor(h.platform) ? <img class="pc-logo" src={logoFor(h.platform)} alt={h.platform} loading="lazy" /> : <span class="pc-logo pc-logo-fallback">{h.platform.slice(0, 1)}</span>}
-                <div class="pc-title">
-                  <h3>{h.platform}</h3>
-                  <p class="pc-summary">{h.logo_summary}</p>
-                </div>
-                <button class="follow-button" type="button" data-follow={h.platform} aria-pressed="false" aria-label={`关注 ${h.platform}`}>＋ 关注</button>
-              </header>
-              <ul class="pc-items">
-                {h.items.map((item) => (
-                  <li class={`pc-item ${HL_TYPE[item.type]?.cls || 't-other'}`} data-type={item.type || 'other'}>
-                    <span class="hl-type">{HL_TYPE[item.type]?.label || '动态'}</span>
-                    <span class="pc-text">{highlightEntities(item.text).map((seg) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</span>
-                  </li>
-                ))}
-              </ul>
-              <a class="evidence-link" href={`#signal-${platformOrder.indexOf(h.platform)}`}>查看变化依据 <span>↗</span></a>
-            </article>
-          ))}
-        </div>
-      ) : (
-        <div class="empty-day">今日暂无要点，信号明细见下方。</div>
-      )}
-      {priceChanges.length > 0 && (
-        <div class="price-changes reveal">
-          <div class="pcx-head">
-            <span class="pcx-kicker">PRICE LEDGER</span>
-            <span>八家厂商官方定价页结构化 diff · <a href="/pricing/">完整台账 ↗</a></span>
-          </div>
-          <ul class="pcx-list">
-            {priceChanges.slice(0, 12).map((pc) => (
-              <li class="pcx-item">
-                <span class="pcx-vendor">{pc.provider}</span>
-                <code class="ent">{pc.model}</code>
-                <span class="pcx-comp">{pc.component}</span>
-                <span class="pcx-vals">
-                  {pc.previous ? <><s>{pc.previous}</s> → </> : null}
-                  <strong>{pc.current}</strong> {pc.currency}/百万tokens
-                </span>
-                <a class="pcx-detail" href={priceChangeLink(pc).href}>{priceChangeLink(pc).label} ↗</a>
-              </li>
-            ))}
-          </ul>
-          {priceChanges.length > 12 && <p class="pcx-more">…共 {priceChanges.length} 条，完整见 <a href="/pricing/">价格台账</a></p>}
-        </div>
-      )}
-    </section>
-
     {/* ===== 03 本周回顾（结构化） ===== */}
     {currentWeek && (
       <section class="section" id="week">

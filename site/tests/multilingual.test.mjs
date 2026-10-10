@@ -21,9 +21,9 @@ const release = loadVerifiedRelease(undefined, { select: ['prices','modelIdentit
 const pages = ['','models/','pricing/','method/','agent/','changes/','leaderboards/','weekly/','about/', ...translatedModels().map(p => `model/${p.model.modelId}/`)];
 assert(featuredModels().length <= 5);
 const homeDoc = new JSDOM(readFileSync('dist/en/index.html','utf8')).window.document;
-assert.equal(homeDoc.querySelectorAll('.market-table').length,1);
-assert.equal(homeDoc.querySelectorAll('[role=tab]').length,3);
-assert.equal(homeDoc.querySelectorAll('[data-home-model]').length,18);
+assert.equal(homeDoc.querySelectorAll('.market-table').length,0);
+const chineseHome = new JSDOM(readFileSync('dist/index.html','utf8')).window.document;
+assert.deepEqual([...homeDoc.querySelectorAll('[data-recent-platform]')].map(el=>el.dataset.recentPlatform),[...chineseHome.querySelectorAll('[data-recent-platform]')].map(el=>el.dataset.recentPlatform));
 const sitemap = readFileSync('dist/sitemap.xml','utf8');
 const sitemapUrls = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]));
 for (const url of sitemapUrls) { const path = new URL(url).pathname; const counterpart = path.startsWith('/en/') ? path.replace(/^\/en(?=\/)/,'') : `/en${path}`; assert(sitemapUrls.has(`https://daily.maas.click${counterpart}`), `Sitemap language parity: ${path}`); }
