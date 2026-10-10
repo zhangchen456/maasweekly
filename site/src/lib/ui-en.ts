@@ -2,6 +2,20 @@ import { HOME_MODEL_GROUPS } from '../config/home-model-selection';
 // One translation catalog for server-rendered pages and client-rendered controls.
 // Product data, API identifiers, and saved source excerpts are not rewritten.
 export const uiEnglish: Record<string, string> = {
+ '条要点':'highlights','搜索厂家与产品变化':'Search provider and product changes','项今日变化依据':'today’s source changes','动态时间范围':'Update time range','今天':'Today','展开更多变化':'Show more changes','按厂家与平台汇总。':'Grouped by provider and platform.',
+ '今日模型与平台变化':'Today’s model and platform changes',
+ '查看各家近期变化':'Recent changes by provider',
+ '各家产品，最近发生了什么':'What changed across providers and products',
+ '查模型与报价':'Explore models and prices',
+ '近 7 天':'Past 7 days',
+ '按厂家与平台汇总，重复摘要合并，保留最近记录。':'Grouped by provider and platform. Duplicate summaries are merged, retaining the latest record.',
+ '条变化 · 最近':'changes · latest',
+ '展开其余':'Show remaining',
+ '条变化':'changes',
+ '的变化记录':'change records',
+ '查看日期记录可追溯当天摘要与官方来源。':'Follow dated records for daily summaries and official sources.',
+ '近 7 天暂无已整理的厂家与产品变化。':'No summarized provider or product changes in the past 7 days.',
+
  'MaaS Daily — 大模型 API 价格与全球 MaaS 每日动态':'MaaS Daily — Model API prices and daily platform updates',
  '大模型 API 价格比较与 GPU 租赁行情 — MaaS Daily':'Model API prices and GPU rental costs — MaaS Daily',
  '大模型 API 价格查询与价格变化 — MaaS Daily':'Model API prices and pricing changes — MaaS Daily',

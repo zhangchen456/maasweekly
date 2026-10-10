@@ -192,7 +192,7 @@ const recordDates = Object.keys(recordsByDate).sort().reverse();
       const priceChanges = daysByDate[date]?.price_changes || [];
       const stats = week.days[date] || {};
       return (
-        <article class="day-block reveal">
+        <article class="day-block reveal" id={`day-${date}`}>
           <div class="day-head">
             <h3>{fmtDate(date)} <span class="weekday">{weekday(date)}</span></h3>
             <div class="day-stats">

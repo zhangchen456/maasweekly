@@ -1,19 +1,19 @@
 ---
-import { providerLabels, priceUnit } from '../lib/price-display';
+import { logoFor } from '../lib/platforms';
 import BrandMark from './BrandMark.astro';
-import { homeOverview } from '../lib/home-page';
+import { homeOverview, highlightEntities } from '../lib/home-page';
 import type { PlatformHighlight } from '../lib/home-page';
 interface Props { highlights: PlatformHighlight[]; platformOrder: string[]; date?: string; updatedAt?: string }
 const { highlights, platformOrder, date, updatedAt } = Astro.props;
-const { ledger, fxRate, displayAmount, labels, picks, modelGroups, quote, release } = homeOverview(highlights, updatedAt);
+const { labels, picks, recentChanges } = homeOverview(highlights);
 
 ---
 <header class="home-opening">
   <div class="opening-copy" data-highlight-carousel role="region" aria-roledescription="轮播" aria-label="今日重点">
     <div class="opening-kicker-row"><p class="home-kicker">MAAS DAILY / 今日重点</p>{picks.length > 1 && <button class="carousel-play" type="button" aria-label="暂停自动轮播">暂停</button>}</div>
-    {picks.length > 0 && <h1 class="sr-only">MaaS Daily · 今日模型重点与价格</h1>}
+    {picks.length > 0 && <h1 class="sr-only">MaaS Daily · 今日模型与平台变化</h1>}
     <div class="highlight-slides">{picks.map((item,index)=><article class="highlight-slide" data-highlight-slide hidden={index !== 0} role="group" aria-roledescription="幻灯片" aria-label={`${index+1} / ${picks.length}`}>
-      <h2 class="highlight-title">{item.headline}</h2><p class="opening-deck">{item.platform} · {labels[item.type] ?? labels.other}</p><p class="highlight-summary">{item.text}</p><div class="opening-links"><a href={`#signal-${platformOrder.indexOf(item.platform)}`}>查看记录与依据 ↗</a><a href="#market-title">比较模型价格 ↓</a></div>
+      <h2 class="highlight-title">{item.platform} · {item.headline}</h2><p class="opening-deck">{item.platform} · {labels[item.type] ?? labels.other}</p><p class="highlight-summary">{item.text}</p><div class="opening-links"><a href={`#signal-${platformOrder.indexOf(item.platform)}`}>查看记录与依据 ↗</a><a href="#market-title">查看各家近期变化 ↓</a></div>
     </article>)}</div>
     {!picks.length && <h1 id="opening-title">模型与平台，今日观察。</h1>}
     {picks.length > 1 && <div class="carousel-controls"><button type="button" data-carousel-prev aria-label="上一条重点">←</button><div class="carousel-pages" role="group" aria-label="选择重点">{picks.map((item,index)=><button type="button" data-carousel-page={index} aria-pressed={index === 0 ? 'true' : 'false'} aria-label={`第 ${index+1} 条：${item.headline}`}>{String(index+1).padStart(2,'0')}</button>)}</div><button type="button" data-carousel-next aria-label="下一条重点">→</button><span class="carousel-status" aria-live="polite">1 / {picks.length}</span></div>}
@@ -21,25 +21,34 @@ const { ledger, fxRate, displayAmount, labels, picks, modelGroups, quote, releas
   </div>
   <div class="opening-brand"><div class="opening-mark"><BrandMark /></div><span class="opening-wordmark">MaaS Daily</span>{updatedAt && <div class="brand-update"><span>最近更新</span><time datetime={updatedAt}>{updatedAt}</time></div>}</div>
 </header>
-<section class="market-section" aria-labelledby="market-title">
-  <div class="market-heading"><div><p class="home-kicker">当前价格一览</p><h2 id="market-title">各家旗舰与主力模型，怎么选、怎么收费</h2></div><a href="/models/">全部模型 ↗</a></div>
-  <p class="market-note">按官方定位分组，查看输入与输出成本。金额来自采集快照，换算为估算值。数据截至 {release.dataThrough}。</p>
-  <div class="currency-toolbar" data-home-fx={fxRate}><div class="currency-buttons" role="group" aria-label="价格显示币种"><button type="button" data-currency="CNY" aria-pressed="true">¥ 人民币</button><button type="button" data-currency="USD" aria-pressed="false">$ 美元</button></div><label>1 USD = <input id="home-fx-rate" type="number" min="0.01" max="1000" step="0.01" value={fxRate} aria-label="美元兑人民币估算汇率" /> CNY</label><span id="home-fx-note">手动汇率 · {ledger.fx_snapshot.as_of} · 非实时</span><span id="home-fx-status" role="status"></span></div>
-  <div data-model-tabs>
-  <div class="model-group-nav" role="tablist" aria-label="模型比较分组">{modelGroups.map((group,index) => <button type="button" role="tab" id={`model-tab-${group.id}`} aria-controls="home-model-panel" aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1} data-model-tab={group.id}>{group.title}<span>{group.models.length}</span></button>)}</div>
-  <div id="home-model-panel" role="tabpanel" aria-labelledby={`model-tab-${modelGroups[0].id}`} tabindex="0">
-    {modelGroups.map((group,index) => <p class="model-group-description" data-model-description={group.id} hidden={index !== 0}>{group.description}</p>)}
-    <div class="market-table-wrap"><table class="market-table market-simple"><thead><tr><th scope="col">模型与定位</th><th scope="col">输入价格</th><th scope="col">输出价格</th><th scope="col">报价条件</th></tr></thead>{modelGroups.map((group,groupIndex) => <tbody data-home-group={group.id} hidden={groupIndex !== 0}>{group.models.map((page,index)=><tr data-home-model={page.pick.modelId}>
-      <td><div class="model-identity"><span class="model-sequence">{String(index+1).padStart(2,'0')}</span><div>{page.modelHref ? <a href={page.modelHref}>{page.pick.name}</a> : <strong class="home-model-name">{page.pick.name}</strong>}<small>{providerLabels[page.pick.providerId] ?? page.pick.providerId} · {page.pick.reason}</small><a class="model-selection-source" href={page.pick.source} target="_blank" rel="noopener noreferrer">官方定位 ↗</a></div></div></td>
-      <td>{page.input ? <><span class="quote-value" data-quote-amount={page.input.amount} data-quote-currency={page.input.currency}>{displayAmount(page.input)}</span><small><span data-display-currency>{['CNY','USD'].includes(page.input.currency) ? 'CNY' : page.input.currency}</span> / {priceUnit(page.input.unitQuantity,page.input.unitName)}</small><small class="original-quote">原价 {quote(page.input)}</small></> : <span class="home-quote-pending">{page.quoteStatus}</span>}</td>
-      <td>{page.output ? <><span class="quote-value" data-quote-amount={page.output.amount} data-quote-currency={page.output.currency}>{displayAmount(page.output)}</span><small><span data-display-currency>{['CNY','USD'].includes(page.output.currency) ? 'CNY' : page.output.currency}</span> / {priceUnit(page.output.unitQuantity,page.output.unitName)}</small><small class="original-quote">原价 {quote(page.output)}</small></> : <span class="home-quote-pending">{page.input ? '该档位未单列' : '—'}</span>}</td>
-      <td>{page.input && <details class="quote-details"><summary>查看条件</summary><p>{page.condition}</p><p>缓存读取：{quote(page.cache)}</p><p>观察于 <time datetime={page.input.observedAt}>{page.input.observedAt}</time> · 证据完整</p></details>}{page.modelHref && <a class="quote-link" href={page.modelHref}>报价与证据 ↗</a>}</td>
-    </tr>)}</tbody>)}</table></div>
+<section class="market-section vendor-changes" aria-labelledby="market-title" data-latest-date={recentChanges.to}>
+  <div class="market-heading"><h2 id="market-title">各家产品，最近发生了什么</h2><div class="edition"><time datetime={date}>{date?.replaceAll('-','.')}</time><button id="copy-brief" type="button">复制简报 ↗</button><span id="copy-status" role="status"></span></div></div>
+  <p class="market-note" id="change-range-note">近 7 天 · {recentChanges.from} — {recentChanges.to} · 按厂家与平台汇总，重复摘要合并，保留最近记录。</p>
+  <div class="range-switch" role="group" aria-label="动态时间范围"><button type="button" data-range="today" aria-pressed="false">今天</button><button type="button" data-range="week" aria-pressed="true">近 7 天</button></div>
+  <div class="explore-bar" aria-label="动态筛选">
+    <label class="search-field"><span aria-hidden="true">⌕</span><input id="signal-search" type="search" placeholder="搜索平台、模型或关键词…" aria-label="搜索厂家与产品变化"/><kbd>/</kbd></label>
+    <label class="platform-select"><span class="sr-only">筛选平台</span><select id="platform-filter"><option value="">全部平台</option>{recentChanges.groups.map(({platform:p}) => <option value={p}>{p}</option>)}</select></label>
+    <button id="following-filter" class="quiet-button" type="button" aria-pressed="false">只看关注</button>
   </div>
-  <noscript><style>[data-home-group][hidden]{display:table-row-group!important}[data-model-description][hidden]{display:block!important}.model-group-nav{display:none}</style><p>未启用 JavaScript，以下依次展示全部分组。</p></noscript>
+  <div class="workspace-tabs"><div class="type-filters" role="group" aria-label="要点类型">
+    {[['all', '全部动态'], ['release', '新发布'], ['pricing', '价格变化'], ['sunset', '下线提醒']].map(([value, label]) => <button type="button" data-filter={value} aria-pressed={value === 'all'}>{label}</button>)}
+    </div><a href="#week">本周回顾 ↗</a>
   </div>
-  <p class="market-note">型号定位核对于 {modelGroups[0]?.reviewedAt}。缺少可核验报价的型号保留在列表中，不以旧型号代替。</p>
-  <div class="market-footer"><span>不同区域、上下文和时段可能有不同报价，查看全部档位后再比较。</span><a href="/pricing/">查找具体报价 →</a></div>
+  <p id="filter-status" class="filter-status" role="status" aria-live="polite"></p>
+  <div id="filter-empty" class="filter-empty" hidden><strong>没有找到匹配的动态</strong><p>试试其他关键词，或关注下方平台后再使用「只看关注」。</p><button type="button" id="reset-filters">重置筛选</button></div>
+
+  <div id="digest">
+  {recentChanges.groups.map(group => <article class="vendor-change-row" data-recent-platform={group.platform} data-platform={group.platform}>
+    <header class="vendor-change-identity"><img src={logoFor(group.platform)} alt="" width="32" height="32" loading="lazy" /><div><h3>{group.platform}</h3><p>{group.items.length} 条变化 · 最近 {group.items[0].date.slice(5).replace('-','.')}</p></div><button class="follow-button" type="button" data-follow={group.platform} aria-pressed="false" aria-label={`关注 ${group.platform}`}>＋ 关注</button></header>
+    <div class="vendor-change-body">
+      <ul class="vendor-change-items">{group.items.map((item,index) => <li class="vendor-change-item" data-type={item.type} data-date={item.date} data-order={index}><span class={`change-kind kind-${item.type}`}>{labels[item.type] ?? labels.other}</span><p>{highlightEntities(item.text).map(seg => seg.hl ? <code>{seg.text}</code> : seg.text)}</p><a href={item.href} aria-label={`${group.platform} ${item.date} 的变化记录`}><time datetime={item.date}>{item.date.slice(5).replace('-','.')}</time> ↗</a></li>)}</ul>
+      <details class="vendor-change-more" hidden><summary>展开更多变化</summary><ul class="vendor-change-items"></ul></details>
+
+    </div>
+  </article>)}
+  {!recentChanges.groups.length && <p class="home-empty">近 7 天暂无已整理的厂家与产品变化。</p>}
+  </div>
+  <p class="market-note">查看日期记录可追溯当天摘要与官方来源。</p>
 </section>
 <script>
   document.querySelectorAll<HTMLAnchorElement>('a[href^="#signal-"]').forEach(link=>link.addEventListener('click',()=>{
@@ -49,8 +58,4 @@ const { ledger, fxRate, displayAmount, labels, picks, modelGroups, quote, releas
   openFromHash();window.addEventListener('hashchange',openFromHash);
 </script>
 
-<script src="../scripts/home-currency.ts"></script>
-
 <script src="../scripts/highlight-carousel.ts"></script>
-
-<script src="../scripts/home-model-tabs.ts"></script>

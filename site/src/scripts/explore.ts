@@ -2,10 +2,13 @@ import { savedState, currentAccount } from './account-client';
 const search = document.querySelector<HTMLInputElement>('#signal-search')!;
 const platform = document.querySelector<HTMLSelectElement>('#platform-filter')!;
 const following = document.querySelector<HTMLButtonElement>('#following-filter')!;
-const cards = [...document.querySelectorAll<HTMLElement>('.platform-card')];
+const cards = [...document.querySelectorAll<HTMLElement>('.vendor-change-row')];
 const sources = [...document.querySelectorAll<HTMLElement>('.signal-platform')];
 const filters = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
 let selectedType = 'all';
+let selectedRange = 'week';
+const rangeButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-range]')];
+const latestDate = document.querySelector<HTMLElement>('[data-latest-date]')!.dataset.latestDate!;
 let onlyFollowing = false;
 let followed = new Set<string>();
 try {
@@ -30,11 +33,21 @@ function update() {
     const name = card.dataset.platform!;
     const allowed = (!platform.value || platform.value === name) && (!onlyFollowing || followed.has(name));
     let visible = 0;
-    card.querySelectorAll<HTMLElement>('.pc-item').forEach((item) => {
-      const matches = allowed && (selectedType === 'all' || item.dataset.type === selectedType) && `${name} ${item.textContent}`.toLocaleLowerCase().includes(query);
+    card.querySelectorAll<HTMLElement>('.vendor-change-item').forEach((item) => {
+      const matches = allowed && (selectedRange === 'week' || item.dataset.date === latestDate) && (selectedType === 'all' || item.dataset.type === selectedType) && `${name} ${item.textContent}`.toLocaleLowerCase().includes(query);
       item.hidden = !matches;
       if (matches) visible++;
     });
+    const items = [...card.querySelectorAll<HTMLElement>('.vendor-change-item')].sort((a,b) => Number(a.dataset.order) - Number(b.dataset.order));
+    const mainList = card.querySelector<HTMLElement>('.vendor-change-body > ul')!;
+    const more = card.querySelector<HTMLDetailsElement>('.vendor-change-more')!;
+    const moreList = more.querySelector('ul')!;
+    const matching = items.filter(item => !item.hidden);
+    items.forEach(item => (matching.indexOf(item) >= 3 ? moreList : mainList).append(item));
+    more.hidden = matching.length <= 3;
+    more.querySelector('summary')!.textContent = `展开其余 ${Math.max(0, matching.length - 3)} 条变化`;
+    if (query || selectedType !== 'all') more.open = true;
+    card.querySelector('.vendor-change-identity p')!.textContent = `${visible} 条变化`;
     card.hidden = visible === 0;
     if (visible) matchingPlatforms.add(name);
     count += visible;
@@ -52,10 +65,12 @@ function update() {
     group.hidden = visible === 0;
     sourceCount += visible;
   });
-  document.querySelector('#filter-status')!.textContent = `${count} 条要点 · ${sourceCount} 项变化依据${onlyFollowing ? (currentAccount() ? ' · 已同步账户关注' : ' · 关注保存在此浏览器，登录后可同步') : ''}`;
+  document.querySelector('#filter-status')!.textContent = `${count} 条要点 · ${sourceCount} 项今日变化依据${onlyFollowing ? (currentAccount() ? ' · 已同步账户关注' : ' · 关注保存在此浏览器，登录后可同步') : ''}`;
   (document.querySelector('#filter-empty') as HTMLElement).hidden = count > 0 || sourceCount > 0;
   (document.querySelector('#digest') as HTMLElement).hidden = count === 0;
   (document.querySelector('#signals') as HTMLElement).hidden = sourceCount === 0;
+  rangeButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.range === selectedRange)));
+  document.querySelector('#change-range-note')!.textContent = selectedRange === 'today' ? `今天 · ${latestDate} · 按厂家与平台汇总。` : `近 7 天 · ${new Date(Date.parse(latestDate + 'T00:00:00Z') - 6 * 86400000).toISOString().slice(0,10)} — ${latestDate} · 按厂家与平台汇总，重复摘要合并，保留最近记录。`;
   filters.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.filter === selectedType)));
   following.setAttribute('aria-pressed', String(onlyFollowing));
 }
@@ -63,6 +78,7 @@ search.maxLength = 200;
 let save = (_value: ExploreState) => {};
 type ExploreState = { followed: string[]; query: string; platform: string; type: string; onlyFollowing: boolean };
 const persist = () => save({ followed: [...followed], query: search.value, platform: platform.value, type: selectedType, onlyFollowing });
+rangeButtons.forEach(button => button.addEventListener('click', () => { selectedRange = button.dataset.range!; update(); }));
 search.addEventListener('input', () => { update(); persist(); });
 platform.addEventListener('change', () => { update(); persist(); });
 filters.forEach((button) => button.addEventListener('click', () => { selectedType = button.dataset.filter!; update(); persist(); }));
@@ -72,7 +88,7 @@ followButtons.forEach((button) => button.addEventListener('click', () => {
   followed.has(name) ? followed.delete(name) : followed.add(name);
   updateFollowButtons(); update(); persist();
 }));
-document.querySelector('#reset-filters')?.addEventListener('click', () => { search.value = ''; platform.value = ''; selectedType = 'all'; onlyFollowing = false; update(); persist(); search.focus(); });
+document.querySelector('#reset-filters')?.addEventListener('click', () => { search.value = ''; platform.value = ''; selectedRange = 'week'; selectedType = 'all'; onlyFollowing = false; update(); persist(); search.focus(); });
 document.addEventListener('keydown', (event) => {
   const target = event.target as HTMLElement;
   if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !target.closest('input, textarea, select, [contenteditable="true"]')) { event.preventDefault(); search.focus(); }
@@ -80,7 +96,7 @@ document.addEventListener('keydown', (event) => {
 });
 document.querySelector('#copy-brief')?.addEventListener('click', async () => {
   const visible = cards.filter((card) => !card.hidden);
-  const text = ['MaaS Daily · ' + document.querySelector('.edition time')?.textContent, ...visible.map((card) => `${card.dataset.platform}\n${[...card.querySelectorAll<HTMLElement>('.pc-item')].filter((item) => !item.hidden).map((item) => '• ' + item.textContent?.trim()).join('\n')}`)].join('\n\n');
+  const text = ['MaaS Daily · ' + document.querySelector('#change-range-note')?.textContent, ...visible.map((card) => `${card.dataset.platform}\n${[...card.querySelectorAll<HTMLElement>('.vendor-change-item')].filter((item) => !item.hidden).map((item) => '• ' + item.textContent?.trim()).join('\n')}`)].join('\n\n');
   const status = document.querySelector('#copy-status')!;
   if (!visible.length) { status.textContent = '当前筛选下没有可复制的要点'; return; }
   try { await navigator.clipboard.writeText(text); document.dispatchEvent(new CustomEvent('maas:copy-success', { detail: { kind: 'brief' } })); status.textContent = '已复制当前筛选的简报'; } catch { status.textContent = '浏览器未允许复制，请选中文字复制'; }
