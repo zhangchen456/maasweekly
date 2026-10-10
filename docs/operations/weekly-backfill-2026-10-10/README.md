@@ -24,4 +24,8 @@
 
 ## 验证与发布状态
 
-验证结果见 `validation.json`。本次仅完成本地内容与发布数据准备，尚未提交、推送或部署；线上缺失路径须经正式 release 发布后再核验。
+本地补编验证见 `validation.json`，对应最初截至 10-08 的本地数据；生产发布使用最新 main 上截至 10-10 的数据重新导入，未使用旧本地数据包。
+
+2026-10-10 已提交并发布：源稿提交 `f6aa676541c4a35323d410dd1fcd4ddd625b5810`，正式导入生成提交 `034cc51a384f02a5f15545e34ef4acdb5744db82`，release `rl_034cc51a38_7e5b0c27a795`。[正式发布流水线](https://github.com/zhangchen456/maasweekly/actions/runs/38030112809)成功，70 组完整门禁通过、0 失败，REST/MCP/RSS/Skill 四入口同版验收通过。
+
+独立线上核验通过：五期中英文页面共 10 个返回 200，补编标识与 Plus 入口存在，公开页面没有私有正文 template；五个 API 周报详情、两个周报索引、RSS 与 23 个归档证据链接正常。周报数由 23 增至 28，最新期次为 2026-10-06，公开数据仍截至 2026-10-10。证据见 `online-validation.json`、`ci-success.json`、`release-summary.txt`、`deployment.json`。
