@@ -67,6 +67,7 @@ run "validate-price-archive（Task 02）" python3 pipeline/scripts/validate-pric
 run "build-skill-package --check" python3 site/scripts/build-skill-package.py --check
 
 # ---- Python 测试 ----
+run "test_english_translation（事实和身份保护）" python3 -m unittest discover -s tests -p 'test_english_translation.py'
 run "test_release_retention（live references）" python3 -m unittest discover -s tests -p 'test_release_retention.py'
 run "test_operations_budget（production resource thresholds）" python3 -m unittest discover -s tests -p 'test_operations_budget.py'
 run "test_public_retention（公开历史引用完整性）" python3 -m unittest discover -s tests -p 'test_public_retention.py'
@@ -127,6 +128,8 @@ run "site: records（含残留检测）" bash -c 'cd site && node tests/records.
 run "site: SEO（canonical / sitemap / model content）" bash -c 'cd site && node --experimental-strip-types tests/seo.test.mjs'
 
 run "site: homepage explore" bash -c 'cd site && node tests/home-explore.test.mjs'
+run "site: dynamic English" bash -c 'cd site && node --experimental-strip-types tests/dynamic-translation.test.mjs'
+run "site: theme preference" bash -c 'cd site && node tests/theme-preference.test.mjs'
 run "site: multilingual" bash -c 'cd site && node --experimental-strip-types tests/multilingual.test.mjs'
 
 # ---- agent-api（REST + MCP 全套）----

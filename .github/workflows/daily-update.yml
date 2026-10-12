@@ -121,6 +121,13 @@ jobs:
         run: python3 site/scripts/fetch-images.py
         continue-on-error: true
 
+      - name: Translate dynamic content to English
+        run: python3 scripts/monitor-record.py dynamic-translation
+        env:
+          TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
+          TZ: Asia/Shanghai
+        continue-on-error: true
+
       # ---- 4. 生成由数据驱动的 tracked 产物（§5.2：所有数据驱动的 tracked 文件
       #      必须在 commit 前生成并提交，否则 build-release.sh [3/6] tracked diff
       #      gate 拒载。含 public projection + site prebuild 产物）----

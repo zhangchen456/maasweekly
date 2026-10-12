@@ -130,6 +130,8 @@ def save_weekly(root: Path, weeks, metadata=None):
 
 def project_site(root: Path):
     """Only this boundary writes site JSON/content compatibility outputs."""
+    from english_translation import CACHE, projected_texts
+    write(root, 'site/src/data/translations-en.json', {'schemaVersion': 1, 'texts': projected_texts(read(root, CACHE, {}))})
     write(root, 'site/src/data/daily_changes.json', compose_daily(root))
     write(root, 'site/src/data/weekly-digest.json', compose_weekly(root))
     for folder, target, pattern in [(PRICING, 'site/src/data/pricing', '*.json'),

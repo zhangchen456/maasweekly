@@ -15,6 +15,7 @@ ACTIONS = {
     'public-validation': ['python3', 'pipeline/scripts/export-public-data.py', '--check'],
     'archive-validation': ['python3', 'pipeline/scripts/validate-archive.py'],
     'price-validation': ['python3', 'pipeline/scripts/validate-price-archive.py'],
+    'dynamic-translation': ['python3', 'pipeline/scripts/translate-dynamic-en.py'],
     'daily-summary': ['python3', 'pipeline/scripts/llm-digest.py'],
     'weekly-summary': ['python3', 'pipeline/scripts/llm-weekly-digest.py', '--all'],
     'weekly-import': ['python3', 'site/scripts/import-weekly.py'],
@@ -73,7 +74,7 @@ def main():
     validation = 'passed' if code == 0 else 'failed'
     record = {'id': run_id, 'kind': args.action, 'trigger': 'schedule' if os.environ.get('GITHUB_EVENT_NAME') == 'schedule' else 'workflow' if ghid else 'manual',
               'state': 'succeeded' if code == 0 else 'failed', 'stage': args.action, 'startedAt': started, 'finishedAt': finished, 'observedAt': finished,
-              'inputVersion': os.environ.get('CANDIDATE_SHA') if args.action == 'build-deploy' else before, 'outputVersion': output_version(args.action) if code == 0 else None, 'result': 'not_run' if code == 0 and args.action in ('daily-summary','weekly-summary') and not os.environ.get('LLM_API_KEY') else 'success' if code == 0 else 'failed',
+              'inputVersion': os.environ.get('CANDIDATE_SHA') if args.action == 'build-deploy' else before, 'outputVersion': output_version(args.action) if code == 0 else None, 'result': 'not_run' if args.action == 'dynamic-translation' and not os.environ.get('TRANSLATION_API_KEY') else 'not_run' if code == 0 and args.action in ('daily-summary','weekly-summary') and not os.environ.get('LLM_API_KEY') else 'success' if code == 0 else 'failed',
               'validation': validation if args.action.endswith('validation') else 'unknown', 'publication': ('completed' if code == 0 else 'failed') if args.action == 'release-verify' else 'unknown' if args.action == 'build-deploy' else 'not_run',
               'errorCode': None if code == 0 else 'validation_failed' if args.action.endswith('validation') else 'execution_failed', 'runLink': link, 'sources': []}
     save(record)
