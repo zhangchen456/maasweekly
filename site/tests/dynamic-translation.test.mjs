@@ -20,5 +20,8 @@ for(const file of ['dist/en/index.html','dist/en/daily/2026-W41/index.html']) {
  const summaries=doc.querySelectorAll('.highlight-summary,.highlight-title,.vendor-change-item p,.llm-summary,.story-sec-item p,.story-sec-item h3,.hl-text');
  assert(summaries.length,'Dynamic summary nodes rendered');
  for(const node of summaries) assert(!/[\u3400-\u9fff]/.test(node.textContent),`${file}: untranslated editorial text: ${node.textContent}`);
+ if(file.includes('/daily/')) for(const node of doc.querySelectorAll('.back-link,.section-note,.day-stats,.pcx-fold summary,.footnote,.wr-title,.wr-note,.hero-aside')) {
+  assert(!/[\u3400-\u9fff]/.test(node.textContent),`${file}: untranslated archive label: ${node.textContent}`);
+ }
 }
 console.log('Dynamic English projection, source preservation and rendered summaries passed');
