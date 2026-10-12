@@ -67,12 +67,23 @@ const localizedContent = en ? englishHtml(content) : content;
     )}
     <script is:inline>
       (function () {
+        const root = document.documentElement;
+        const system = window.matchMedia('(prefers-color-scheme: dark)');
         let saved; try { saved = localStorage.getItem('maas-theme'); } catch {}
-        if (saved !== 'dark') {
-          document.documentElement.setAttribute('data-theme', 'light');
-        } else {
-          document.documentElement.setAttribute('data-theme', 'dark');
-        }
+        let preference = saved === 'light' || saved === 'dark' ? saved : 'system';
+        const apply = (value) => {
+          preference = ['system', 'light', 'dark'].includes(value) ? value : 'system';
+          const theme = preference === 'system' ? (system.matches ? 'dark' : 'light') : preference;
+          root.dataset.themePreference = preference;
+          root.dataset.theme = theme;
+          root.style.colorScheme = theme;
+          const select = document.querySelector('.theme-select');
+          if (select) select.value = preference;
+          try { localStorage.setItem('maas-theme', preference); } catch {}
+        };
+        apply(preference);
+        system.addEventListener('change', () => { if (preference === 'system') apply(preference); });
+        document.addEventListener('maas:appearance-restored', (event) => apply(event.detail));
       })();
     </script>
   </head>
@@ -89,10 +100,11 @@ const localizedContent = en ? englishHtml(content) : content;
           <span aria-hidden="true"> / </span>
           <a href={enRoute ?? '/en/?lang=en&untranslated=1'} data-language="en" data-translated={Boolean(enRoute)} lang="en" aria-current={en ? 'true' : undefined}>English</a>
         </nav>
-        <button class="theme-toggle" aria-label={t("切换主题", "Switch theme")} title={t("切换深/浅色", "Switch dark/light theme")}>
-          <span class="theme-icon-light">☀</span>
-          <span class="theme-icon-dark">☾</span>
-        </button>
+        <select class="theme-select" aria-label={t("外观", "Appearance")} title={t("外观", "Appearance")}>
+          <option value="system">{t("跟随系统", "System")}</option>
+          <option value="light">{t("浅色", "Light")}</option>
+          <option value="dark">{t("深色", "Dark")}</option>
+        </select>
         <AccountAccess locale={locale} />
       </div>
     </header>
@@ -115,13 +127,14 @@ const localizedContent = en ? englishHtml(content) : content;
 
     <script>import '../scripts/account-preferences'; import '../scripts/ui-translation'; import { startTimeDisplay } from '../../public/time-display.js'; startTimeDisplay(window);</script>
     <script is:inline>
-      document.querySelector('.theme-toggle')?.addEventListener('click', () => {
-        const cur = document.documentElement.getAttribute('data-theme');
-        const next = cur === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('maas-theme', next); } catch {}
-        document.dispatchEvent(new CustomEvent('maas:theme-change', { detail: next }));
-      });
+      const themeSelect = document.querySelector('.theme-select');
+      if (themeSelect) {
+        themeSelect.value = document.documentElement.dataset.themePreference;
+        themeSelect.addEventListener('change', () => {
+          document.dispatchEvent(new CustomEvent('maas:appearance-restored', { detail: themeSelect.value }));
+          document.dispatchEvent(new CustomEvent('maas:theme-change', { detail: themeSelect.value }));
+        });
+      }
       document.documentElement.classList.add('motion-ready');
       // reveal 动画
       const revealObserver = new IntersectionObserver((entries) => {
@@ -237,15 +250,13 @@ const localizedContent = en ? englishHtml(content) : content;
       .nav { display: flex; gap: 24px; color: var(--muted); font-size: 12px; }
       .nav a { text-decoration: none; transition: color .2s ease; }
       .nav a:hover { color: var(--paper); }
-      .theme-toggle {
-        appearance: none; border: 1px solid var(--line-strong); color: var(--paper);
-        background: transparent; border-radius: 99px; width: 32px; height: 32px;
-        display: flex; align-items: center; justify-content: center; cursor: pointer;
-        font-size: 14px; transition: .2s ease;
+      .theme-select {
+        border: 1px solid var(--line-strong); color: var(--paper);
+        background: var(--panel-solid); border-radius: 2px; min-height: 32px;
+        padding: 4px 6px; cursor: pointer; font: inherit; font-size: 12px;
       }
-      .theme-toggle:hover { color: var(--ink); background: var(--acid); border-color: var(--acid); }
-      [data-theme="light"] .theme-icon-dark { display: none; }
-      [data-theme="dark"] .theme-icon-light { display: none; }
+      .theme-select:hover { border-color: var(--acid); }
+      .theme-select:focus-visible { outline: 2px solid var(--acid); outline-offset: 3px; }
 
       main { padding-bottom: 60px; }
       section { scroll-margin-top: 84px; }

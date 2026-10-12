@@ -2,6 +2,14 @@ import { HOME_MODEL_GROUPS } from '../config/home-model-selection';
 // One translation catalog for server-rendered pages and client-rendered controls.
 // Product data, API identifiers, and saved source excerpts are not rewritten.
 export const uiEnglish: Record<string, string> = {
+ '暂停自动轮播':'Pause automatic rotation','上一条重点':'Previous highlight','下一条重点':'Next highlight','选择重点':'Choose a highlight','轮播':'carousel','幻灯片':'slide',
+ '新模型发布':'Model release','发布':'Releases','调价':'Price changes','下线':'Retirements','数据积累中':'Collecting updates',
+ '本周逐日要点 →':'Daily highlights for this week →','原始变化与证据明细':'Original changes and evidence','展开核对 ↓':'Expand to verify ↓',
+ '过期每日动态按 ISO 周聚合。':'Older daily updates grouped by ISO week.','共 28 期完整周报，深度分析与趋势洞察。':'28 in-depth reports with analysis and trends.',
+ 'MaaS 平台周度追踪报告':'MaaS platform weekly tracking report','让变化主动找到你。':'Get updates as they happen.','订阅每日变化，或在你的 Agent 里直接搜索。':'Subscribe to daily updates or search directly from your agent.',
+ 'RSS 订阅 ↗':'Subscribe via RSS ↗','接入 Agent ↗':'Connect your agent ↗','数据每日自动更新 · 历史归档可查':'Automatically updated daily · Searchable archives',
+
+ '讯飞星辰MaaS':'iFlytek Astron MaaS','腾讯混元/TokenHub':'Tencent Hunyuan/TokenHub','字节跳动':'ByteDance','美团':'Meituan','智谱AI':'Zhipu AI',
  '条要点':'highlights','搜索厂家与产品变化':'Search provider and product changes','项今日变化依据':'today’s source changes','动态时间范围':'Update time range','今天':'Today','展开更多变化':'Show more changes','按厂家与平台汇总。':'Grouped by provider and platform.',
  '今日模型与平台变化':'Today’s model and platform changes',
  '查看各家近期变化':'Recent changes by provider',
