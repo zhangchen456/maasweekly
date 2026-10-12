@@ -4116,5 +4116,85 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-12": {
+    "highlights": [
+      {
+        "platform": "LMArena",
+        "logo_summary": "多模型价格调整与新增，Claude Opus 5.5 上线",
+        "items": [
+          {
+            "text": "Claude Opus 5.5 (High) 新增，定价 $1.86/task，同时出现 Max 档 $5.24/task",
+            "type": "release"
+          },
+          {
+            "text": "GPT 6.1 Sol (Max) 新增，定价 $0.62/task，旧价 $0.57/task 被替换",
+            "type": "release"
+          },
+          {
+            "text": "Deepseek V4.1 Flash (Max) 价格从 $0.12/task 上调至 $0.13/task，MiMo V2.6 Pro 从 $0.10/task 上调至 $0.11/task",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "阿里百炼",
+        "logo_summary": "定价文档清理，免费额度地域说明更新",
+        "items": [
+          {
+            "text": "新增说明：Qwen3.5-Omni 和 Qwen3-Omni 系列仅在华北2（北京）地域提供免费额度",
+            "type": "other"
+          },
+          {
+            "text": "删除多个模型定价行，包括 Qwen3-Omni-Captioner、qwen3-14b、deepseek-v4-flash 等",
+            "type": "sunset"
+          }
+        ]
+      },
+      {
+        "platform": "xAI",
+        "logo_summary": "文档域名从 SpaceXAI 变更为 SpaceXSI",
+        "items": [
+          {
+            "text": "模型列表、定价、更新日志、博客的文档链接均从 SpaceXAI Docs 变更为 SpaceXSI Docs",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "HuggingFace",
+        "logo_summary": "新增 nvidia/LocateAnything-3B 基础模型条目",
+        "items": [
+          {
+            "text": "新增 base_model:nvidia/LocateAnything-3B 及其量化版本，删除 arxiv:1911.02116 引用",
+            "type": "release"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_4db1fc4ce8106307dd185865e8693ba68fd05c7676774ef0a6d40a8949ecf992": "定价文档新增了关于 Qwen3.5-Omni 和 Qwen3-Omni 系列免费额度地域限制的说明，同时删除了多个模型的定价行（如 Qwen3-Omni-Captioner、qwen3-14b、deepseek-v4-flash 等），可能对应模型下架或定价策略调整。",
+      "obs_701a121c7086620f71518cf51848029b1c19d3d707678cdec882d4e66d219148": "模型列表文档的链接从 SpaceXAI Docs 变更为 SpaceXSI Docs，可能反映公司品牌或域名变更。",
+      "obs_38295c3396412985ea82dc2b026f218f791ef90b724611e5e29a4545bf4b444c": "定价文档的链接从 SpaceXAI Docs 变更为 SpaceXSI Docs，与模型列表的变更一致。",
+      "obs_97ffb33bf1cf62a3f3ffa1fa78aa05428c7e854722a512a949987cecbba7148b": "更新日志文档的链接从 SpaceXAI Docs 变更为 SpaceXSI Docs，表明文档体系整体迁移。",
+      "obs_a801c01da5489d7d0e600a139954436bc876798283be0a487be5be082569d60f": "博客文档的链接从 SpaceXAI Docs 变更为 SpaceXSI Docs，进一步确认域名变更。",
+      "obs_e8f3d5b4fa55581d09105fe8821de7304a359975a24fde17c0fd0cb5a1b1c52b": "新增了 nvidia/LocateAnything-3B 及其量化版本作为基础模型，同时删除了一个 arxiv 引用，可能表示模型库更新或引用清理。",
+      "obs_3bb65772f198660fb470e5db3719dc93599e21eee3c9af291290df4644cb3298": "榜单中新增了 Claude Opus 5.5 系列（High 和 Max 档）以及 GPT 6.1 Sol (Max) 的新定价，同时删除了 Gemini 3.7 Flash (High) 条目，并调整了多个模型的价格（如 Deepseek V4.1 Flash 和 MiMo V2.6 Pro 上调），反映了模型阵容和定价的实时变化。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "1dde084fa48c7135d2e21464372a58acb4b52f29db7ff80e5b60291b95126173",
+      "inputRefs": [
+        "obs_38295c3396412985ea82dc2b026f218f791ef90b724611e5e29a4545bf4b444c",
+        "obs_3bb65772f198660fb470e5db3719dc93599e21eee3c9af291290df4644cb3298",
+        "obs_4db1fc4ce8106307dd185865e8693ba68fd05c7676774ef0a6d40a8949ecf992",
+        "obs_701a121c7086620f71518cf51848029b1c19d3d707678cdec882d4e66d219148",
+        "obs_97ffb33bf1cf62a3f3ffa1fa78aa05428c7e854722a512a949987cecbba7148b",
+        "obs_a801c01da5489d7d0e600a139954436bc876798283be0a487be5be082569d60f",
+        "obs_e8f3d5b4fa55581d09105fe8821de7304a359975a24fde17c0fd0cb5a1b1c52b"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }
