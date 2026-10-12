@@ -357,12 +357,9 @@ export function startPriceWorkspace() {
         toast('请输入大于 0、且不超过 1000 的汇率。');
         return;
     } fx = n; fxManual = true; updateFxLabel(); renderCatalog(); renderCompare(); renderHero(); };
-    window.addEventListener('message', event => { if (event.source !== parent || event.data?.type !== 'zhuilang:appearance' || !['light', 'dark'].includes(event.data.theme))
-        return; root.dataset.theme = event.data.theme; $('theme').setAttribute('aria-label', event.data.theme === 'light' ? '切换深色外观' : '切换浅色外观'); userToggledTheme = false; });
-    let userToggledTheme = false;
-    (function initTheme() { const mq = matchMedia('(prefers-color-scheme: dark)'); const apply = (dark: boolean) => { if (userToggledTheme)
-        return; root.dataset.theme = dark ? 'dark' : 'light'; $('theme').setAttribute('aria-label', dark ? '切换浅色外观' : '切换深色外观'); }; apply(mq.matches); mq.addEventListener('change', e => apply(e.matches)); })();
-    $('theme').onclick = () => { const light = root.dataset.theme !== 'light'; root.dataset.theme = light ? 'light' : 'dark'; $('theme').setAttribute('aria-label', light ? '切换深色外观' : '切换浅色外观'); userToggledTheme = true; };
+    const syncTheme = () => { root.dataset.theme = document.documentElement.dataset.theme; };
+    syncTheme();
+    new MutationObserver(syncTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     for (const [n, label] of [[providers.length, '家厂商'], [models.length, '个模型'], [rows.length, '条报价']])
         $('stats').append(append(el('div', 'stat'), el('strong', 'number', n), el('span', '', label)));
     $('updated').textContent = '更新于 ' + date(data.meta?.published_at);
@@ -398,8 +395,6 @@ export function startPriceWorkspace() {
     root.addEventListener('input', persist); root.addEventListener('change', persist);
     root.addEventListener('click', event => { if ((event.target as HTMLElement).closest('button') && !(event.target as HTMLElement).closest('#theme')) persist(); });
     $('search').maxLength = 200;
-    document.addEventListener('maas:appearance-restored', event => { root.dataset.theme = (event as CustomEvent<string>).detail; userToggledTheme = true; });
-    $('theme').addEventListener('click', () => document.dispatchEvent(new CustomEvent('maas:theme-change', { detail: root.dataset.theme })));
     window.addEventListener('popstate', () => { parseUrlFilter(); initSelectors(); renderProviders(); renderCatalog(); renderFilterSummary(); renderFilterError(); persist(); });
 }
 startPriceWorkspace();

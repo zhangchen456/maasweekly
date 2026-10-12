@@ -6,7 +6,7 @@ import '../styles/workspace.css';
 import { getCollection } from 'astro:content';
 import { logoFor } from '../lib/platforms';
 import { homePage, highlightEntities, fmtWeekRange } from '../lib/home-page';
-const { data, today, currentWeek, pastWeeks, substantive, highlights, platformsInSignals, platformOrder, HL_TYPE, typeLabel, dateLong, dateShort, weekday, storySections, storyParas, priceChanges, weekHighlightCount } = homePage();
+const { data, today, currentWeek, pastWeeks, substantive, highlights, platformsInSignals, platformOrder, HL_TYPE, typeLabel, dateLong, dateShort, weekday, storySections, storyParas, priceChanges, weekHighlightCount } = homePage(Astro.url.pathname.startsWith('/en/') ? 'en' : 'zh');
 const reports = await getCollection('weekly', ({ data }) => data.date <= new Date().toISOString().slice(0, 10));
 reports.sort((a, b) => b.data.date.localeCompare(a.data.date));
 const latestReport = reports[0];
@@ -91,14 +91,14 @@ const latestReport = reports[0];
                     {c.llm_summary ? (
                       <p class="llm-summary">{c.llm_summary}</p>
                     ) : c.signal_preview ? (
-                      <p class="added-preview">{highlightEntities(c.signal_preview).map((seg) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</p>
+                      <blockquote class="added-preview" style="margin:0">{highlightEntities(c.signal_preview).map((seg) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</blockquote>
                     ) : null}
                   </summary>
                   <div class="diff-body">
                     {c.pairs?.length > 0 && (
                       <div class="diff-sec">
                         <div class="diff-label paired">变更 {c.pairs.length} 处（旧 → 新）</div>
-                        <ul class="line-list">
+                        <blockquote class="original-evidence" style="margin:0"><ul class="line-list">
                           {c.pairs.slice(0, 20).map((p) => (
                             <li class="line paired">
                               <span class="pair-old">{p.before.slice(0, 160)}</span>
@@ -106,25 +106,25 @@ const latestReport = reports[0];
                               <span class="pair-new">{p.after.slice(0, 160)}</span>
                             </li>
                           ))}
-                        </ul>
+                        </ul></blockquote>
                       </div>
                     )}
                     {c.added_lines?.length > 0 && (
                       <div class="diff-sec">
                         <div class="diff-label added">新增 {c.added_lines.length} 行</div>
-                        <ul class="line-list">
+                        <blockquote class="original-evidence" style="margin:0"><ul class="line-list">
                           {c.added_lines.slice(0, 15).map((l: string) => (
                             <li class="line added">{highlightEntities(l.slice(0, 220)).map((seg) => seg.hl ? <code class="ent">{seg.text}</code> : seg.text)}</li>
                           ))}
-                        </ul>
+                        </ul></blockquote>
                       </div>
                     )}
                     {c.removed_lines?.length > 0 && (
                       <div class="diff-sec">
                         <div class="diff-label removed">删除 {c.removed_lines.length} 行</div>
-                        <ul class="line-list">
+                        <blockquote class="original-evidence" style="margin:0"><ul class="line-list">
                           {c.removed_lines.slice(0, 8).map((l: string) => <li class="line removed">{l.slice(0, 220)}</li>)}
-                        </ul>
+                        </ul></blockquote>
                       </div>
                     )}
                   </div>

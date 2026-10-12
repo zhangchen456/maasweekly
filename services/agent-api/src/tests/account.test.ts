@@ -203,6 +203,8 @@ test('account profile and workspace data persist, isolate users, export safely, 
     assert.equal((await post('state',{key:'appearance',value:{theme:'dark'},userId:a.user.id},b.session)).status,200);
     const other=await(await fetch(base+'me',{headers:{Cookie:cookie(b.session)}})).json() as {state:Record<string,unknown>};
     assert.deepEqual(other.state,{appearance:{theme:'dark'}});assert.equal(store.state(a.user.id).appearance,undefined);
+    assert.equal((await post('state',{key:'appearance',value:{theme:'system'}})).status,200);
+    assert.deepEqual(store.state(a.user.id).appearance,{theme:'system'});
     const exported=JSON.stringify(await(await fetch(base+'export',{headers:{Cookie:cookie(a.session)}})).json());
     assert.ok(exported.includes('工作账户'));assert.ok(!exported.includes('unsubscribeToken'));assert.ok(!exported.includes(a.session));
     assert.equal((await post('logout-all',{})).status,200);assert.equal(store.user(a.session),undefined);assert.equal(store.user(another.session),undefined);assert.ok(store.user(b.session));
