@@ -17,7 +17,7 @@ assert.equal(input.highlights[0].items[0].text,source,'No shared Chinese data mu
 assert.match(localizeEditorial({text:'新版本尚未翻译的测试内容'},'en').text,/English translation pending/);
 for(const file of ['dist/en/index.html','dist/en/daily/2026-W41/index.html']) {
  const doc=new JSDOM(readFileSync(file,'utf8')).window.document;
- const summaries=doc.querySelectorAll('.highlight-summary,.highlight-title,.llm-summary,.story-sec-item p,.story-sec-item h3');
+ const summaries=doc.querySelectorAll('.highlight-summary,.highlight-title,.vendor-change-item p,.llm-summary,.story-sec-item p,.story-sec-item h3,.hl-text');
  assert(summaries.length,'Dynamic summary nodes rendered');
  for(const node of summaries) assert(!/[\u3400-\u9fff]/.test(node.textContent),`${file}: untranslated editorial text: ${node.textContent}`);
 }

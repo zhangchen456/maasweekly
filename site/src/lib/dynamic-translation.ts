@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
+// Offline translations are loaded once per immutable build.
 const editorialFields = new Set(['text','logo_summary','theme','title','body','story','llm_summary']);
 let translations: Record<string,string> | undefined;
 function dictionary() {

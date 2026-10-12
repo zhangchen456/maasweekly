@@ -7,7 +7,7 @@ from unittest.mock import patch
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'pipeline'))
-from english_translation import collect_texts, projected_texts, protect, restore_and_validate, text_key, PROMPT_VERSION
+from english_translation import collect_texts, projected_texts, protect, restore_and_validate, text_key, PROMPT_VERSION, normalize_terms
 
 class EnglishTranslationTests(unittest.TestCase):
     def test_scope_excludes_original_evidence_and_identity(self):
@@ -42,6 +42,12 @@ class EnglishTranslationTests(unittest.TestCase):
         self.assertEqual(projected_texts({'entries':{text_key(source):good}}),{source:'Today’s highlights'})
         for bad in [{**good,'status':'failed'},{**good,'promptVersion':'old'},{**good,'source':'已修改内容'}]:
             self.assertEqual(projected_texts({'entries':{text_key(source):bad}}),{})
+
+    def test_quantization_uses_the_technical_term(self):
+        self.assertEqual(normalize_terms('新增量化版本','Added quantitative version'),'Added quantized version')
+        self.assertEqual(normalize_terms('普通统计','quantitative analysis'),'quantitative analysis')
+        self.assertEqual(normalize_terms('硅基流动下架 THUDM/GLM-4-32B-0414，新增 zai-org/GLM-5.3-Flash','SiliconFlow and THUDM are removed'),'SiliconFlow delisted THUDM/GLM-4-32B-0414 and added zai-org/GLM-5.3-Flash.')
+        self.assertEqual(normalize_terms('更新时间更新至 10 月 8 日','Updated to 10 month 8 day'),'Updated to October 8')
 
     def test_negation_is_preserved(self):
         source='暂无价格，不能判断免费。'
