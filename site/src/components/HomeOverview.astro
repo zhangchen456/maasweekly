@@ -5,7 +5,7 @@ import { homeOverview, highlightEntities } from '../lib/home-page';
 import type { PlatformHighlight } from '../lib/home-page';
 interface Props { highlights: PlatformHighlight[]; platformOrder: string[]; date?: string; updatedAt?: string }
 const { highlights, platformOrder, date, updatedAt } = Astro.props;
-const { labels, picks, recentChanges } = homeOverview(highlights);
+const { labels, picks, recentChanges } = homeOverview(highlights, Astro.url.pathname.startsWith('/en/') ? 'en' : 'zh');
 
 ---
 <header class="home-opening">

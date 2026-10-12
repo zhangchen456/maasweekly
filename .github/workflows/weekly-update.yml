@@ -104,6 +104,14 @@ jobs:
         run: |
           python3 scripts/monitor-record.py weekly-import
 
+      - name: Translate dynamic content to English
+        if: steps.mode.outputs.mode != 'aggregate'
+        run: python3 scripts/monitor-record.py dynamic-translation
+        env:
+          TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
+          TZ: Asia/Shanghai
+        continue-on-error: true
+
       # ---- 生成由数据驱动的 tracked 产物（§5.2：所有数据驱动的 tracked 文件
       #      必须在 commit 前生成并提交，否则 build-release.sh [3/6] tracked
       #      diff gate 拒载。aggregate 模式只汇总素材不部署，不生成产物）----

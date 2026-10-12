@@ -13,6 +13,12 @@ export function englishUi(text: string): string {
   if (stats) return `${stats[1]} changes · ${stats[2]} releases · ${stats[3]} price changes`;
   const price = trim.match(/^每((?:\d|百万).+)$/);
   if (price) return `per ${englishUi(price[1])}`;
+  const highlight = trim.match(/^第 (\d+) 条：(.*)$/);
+  if (highlight) return `Highlight ${highlight[1]}: ${englishUi(highlight[2])}`;
+  const pending = trim.match(/^本周串讲将在周末数据收齐后生成。当前已积累 (\d+) 条要点。$/);
+  if (pending) return `The weekly recap will be generated when the week is complete. ${pending[1]} highlights collected so far.`;
+  const deepReports = trim.match(/^共 (\d+) 期完整周报，深度分析与趋势洞察。$/);
+  if (deepReports) return `${deepReports[1]} in-depth reports with analysis and trends.`;
   const direct = uiEnglish[trim];
   if (direct) return text.replace(trim, direct);
   const coverage = trim.match(/^截至 ([\d-]+)，本数据集覆盖 ([\d-]+) 至 ([\d-]+)\s*共 (\d+) 条变化记录、(\d+) 条价格事实、(\d+) 条证据、(\d+) 期正式周报。以下是这些数字的产生方法与边界。$/);
@@ -34,7 +40,7 @@ export function englishHtml(html: string): string {
   // Do not translate executable code, structured data or quoted original evidence.
   return html.replace(/<(script|style|pre|code|blockquote)\b[^>]*>[\s\S]*?<\/\1\s*>|<[^>]+>|[^<]+/gi, token => {
     if (/^<(script|style|pre|code|blockquote)\b/i.test(token)) return token;
-    if (token.startsWith('<')) return token.replace(/\b(href|title|placeholder|aria-label|alt)="([^"]*)"/g, (_m, key, value) => `${key}="${encode(key === 'href' ? englishHref(decode(value)) : englishUi(decode(value)))}"`);
+    if (token.startsWith('<')) return token.replace(/\b(href|title|placeholder|aria-label|aria-roledescription|alt)="([^"]*)"/g, (_m, key, value) => `${key}="${encode(key === 'href' ? englishHref(decode(value)) : englishUi(decode(value)))}"`);
     const next = englishUi(decode(token));
     return next === decode(token) ? token : encode(next);
   });

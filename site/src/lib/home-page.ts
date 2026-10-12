@@ -1,3 +1,4 @@
+import { localizeEditorial } from './dynamic-translation';
 import { readPageProjection } from './page-data';
 export interface HighlightItem {text:string;type:string}
 export interface PlatformHighlight {platform:string;logo_summary:string;items:HighlightItem[]}
@@ -27,11 +28,11 @@ export const fmtWeekRange = (w: WeekProjection) => {
 };
 
 
-export function homePage() {
+export function homePage(locale: 'zh' | 'en' = 'zh') {
 
-const data = readPageProjection<DailyProjection>('daily_changes.json');
+const data = localizeEditorial(readPageProjection<DailyProjection>('daily_changes.json'), locale);
 const today = data.days[0];
-const weeks = readPageProjection<WeekProjection[]>('weekly-digest.json');
+const weeks = localizeEditorial(readPageProjection<WeekProjection[]>('weekly-digest.json'), locale);
 const currentWeek = weeks[0];
 const pastWeeks = weeks.slice(1);
 
@@ -75,7 +76,7 @@ const weekHighlightCount = currentWeek?.highlights?.length || 0;
 return { data, today, currentWeek, pastWeeks, substantive, highlights, platformsInSignals, platformOrder, HL_TYPE, typeLabel, dateLong, dateShort, weekday, storySections, storyParas, priceChanges, weekHighlightCount };
 }
 
-export function homeOverview(highlights:PlatformHighlight[]) {
+export function homeOverview(highlights:PlatformHighlight[], locale: 'zh' | 'en' = 'zh') {
 const labels: Record<string,string> = {sunset:'服务下线',pricing:'价格变化',release:'新模型发布',other:'平台更新'};
 const all = highlights.flatMap((h) => h.items.map((item) => ({...item,platform:h.platform,headline:h.logo_summary})));
 const picks: (HighlightItem & {platform:string;headline:string})[] = [];
@@ -84,11 +85,11 @@ for (const type of ['sunset','pricing','release']) {
   if(item) picks.push(item);
 }
 for(const item of all) if(picks.length<3 && !picks.some(p=>p.platform===item.platform)) picks.push(item);
-const days=readPageProjection<DailyProjection>('daily_changes.json').days;
+const days=localizeEditorial(readPageProjection<DailyProjection>('daily_changes.json'), locale).days;
 const to=[...days].sort((a,b)=>b.date.localeCompare(a.date))[0]?.date ?? '';
 const from=to ? new Date(Date.parse(to+'T00:00:00Z')-6*86400000).toISOString().slice(0,10) : '';
 const groups=new Map<string,{platform:string;items:(HighlightItem & {date:string;href:string})[]}>();
-const weeks=readPageProjection<WeekProjection[]>('weekly-digest.json');
+const weeks=localizeEditorial(readPageProjection<WeekProjection[]>('weekly-digest.json'), locale);
 for(const day of [...days].sort((a,b)=>b.date.localeCompare(a.date))) {
   if(day.date<from || day.date>to) continue;
   for(const h of day.highlights ?? []) {

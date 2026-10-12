@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { localizeEditorial } from '../../lib/dynamic-translation';
 import { priceChangeLink } from '../../lib/record-links';
 import { logoFor } from '../../lib/platforms';
 import fs from 'node:fs';
@@ -85,13 +86,14 @@ export async function getStaticPaths() {
   }));
 }
 
-const { week } = Astro.props;
+const locale = Astro.url.pathname.startsWith('/en/') ? 'en' : 'zh';
+const week = localizeEditorial(Astro.props.week, locale);
 
 // 拉该周各日明细
 const dailyPath = path.join(process.cwd(), 'src/data/daily_changes.json');
 let daysByDate: Record<string, any> = {};
 try {
-  const daily = JSON.parse(fs.readFileSync(dailyPath, 'utf-8'));
+  const daily = localizeEditorial(JSON.parse(fs.readFileSync(dailyPath, 'utf-8')), locale);
   daysByDate = Object.fromEntries((daily.days || []).map((d: any) => [d.date, d]));
 } catch {}
 
