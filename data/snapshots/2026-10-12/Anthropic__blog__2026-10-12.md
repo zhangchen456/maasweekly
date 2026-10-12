@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-12T08:27:32.880308+08:00 -->
+<!-- fetched: 2026-10-12T14:49:25.733201+08:00 -->
 
 Newsroom \ Anthropic
 Skip to main contentSkip to footer

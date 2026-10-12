@@ -1,11 +1,11 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-12T08:27:54.889499+08:00 -->
+<!-- fetched: 2026-10-12T14:49:34.725828+08:00 -->
 
 [
   {
     "_id": "621ffdc136468d709f180294",
     "id": "sentence-transformers/all-MiniLM-L6-v2",
-    "likes": 6241,
+    "likes": 6248,
     "private": false,
     "downloads": 223255538,
     "tags": [
@@ -65,7 +65,7 @@
   {
     "_id": "621ffdc136468d709f17a20e",
     "id": "cross-encoder/ms-marco-MiniLM-L6-v2",
-    "likes": 362,
+    "likes": 363,
     "private": false,
     "downloads": 79794014,
     "tags": [
@@ -97,7 +97,7 @@
   {
     "_id": "64fff537d522560505ad6567",
     "id": "BAAI/bge-small-en-v1.5",
-    "likes": 606,
+    "likes": 607,
     "private": false,
     "downloads": 60146924,
     "tags": [
@@ -269,7 +269,7 @@
   {
     "_id": "65b53851e602b6c2c96e78da",
     "id": "BAAI/bge-m3",
-    "likes": 3843,
+    "likes": 3844,
     "private": false,
     "downloads": 32850245,
     "tags": [
@@ -370,7 +370,7 @@
   {
     "_id": "6a6bd1dc7034404148ec9107",
     "id": "Comfy-Org/MiniMax-H3",
-    "likes": 2224,
+    "likes": 2223,
     "private": false,
     "downloads": 23580892,
     "tags": [
@@ -411,7 +411,7 @@
   {
     "_id": "69037c2ff37fdfe285722818",
     "id": "amazon/chronos-2",
-    "likes": 514,
+    "likes": 515,
     "private": false,
     "downloads": 20044510,
     "tags": [
@@ -605,7 +605,7 @@
   {
     "_id": "65c7188324e59a0e4f89d863",
     "id": "nomic-ai/nomic-embed-text-v1.5",
-    "likes": 950,
+    "likes": 951,
     "private": false,
     "downloads": 12870656,
     "tags": [
@@ -666,7 +666,7 @@
   {
     "_id": "6a2abe400fe10211c264136c",
     "id": "mudler/locate-anything.cpp-gguf",
-    "likes": 27,
+    "likes": 28,
     "private": false,
     "downloads": 12332115,
     "tags": [

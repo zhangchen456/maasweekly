@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-12T08:27:51.072417+08:00 -->
+<!-- fetched: 2026-10-12T14:49:30.520289+08:00 -->
 
 Latest news | Mistral
 Get in touch

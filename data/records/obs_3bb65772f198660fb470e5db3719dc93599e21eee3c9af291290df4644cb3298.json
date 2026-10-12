@@ -5,7 +5,7 @@
   "date": "2026-10-12",
   "recordType": "source_observation",
   "changeType": "source_updated",
-  "revision": 2,
+  "revision": 3,
   "status": "active",
   "platform": "LMArena",
   "sourceType": "industry",
@@ -15,15 +15,15 @@
   "summaryOrigin": "llm",
   "observedAt": null,
   "timePrecision": "date",
-  "revisedAt": "2026-10-12T00:37:38+00:00",
-  "revisionReason": "摘要更新",
+  "revisedAt": "2026-10-12T06:51:45+00:00",
+  "revisionReason": "变化内容更新",
   "kind": "substantive",
   "diff": {
     "pairs": [
       {
         "key": "claude opus",
         "before": "Claude Opus 5 (High)",
-        "after": "Claude Opus 5.5 (High)$1.86/task"
+        "after": "Claude Opus 5.5 (High)$1.90/task"
       },
       {
         "key": "claude opus",
@@ -33,7 +33,7 @@
       {
         "key": "claude opus",
         "before": "Claude Opus 5.5 (High)·",
-        "after": "Claude Opus 5.5 (Max)$5.24/task"
+        "after": "Claude Opus 5.5 (Max)$5.55/task"
       },
       {
         "key": "deepseek v",
@@ -44,33 +44,33 @@
         "key": "mimo v",
         "before": "MiMo V2.6 Pro$0.10/task",
         "after": "MiMo V2.6 Pro$0.11/task"
-      },
-      {
-        "key": "muse spark",
-        "before": "Muse Spark 1.3 (Max)$0.51/task",
-        "after": "Muse Spark 1.1·"
       }
     ],
     "added_lines": [
-      "362,595,920362,595,920Total Sessions",
+      "362,690,100362,690,100Total Sessions",
       "8.12%View all",
-      "GPT 5.6 Terra (xHigh)·",
-      "GPT 6.1 Sol (Max)$0.62/task",
-      "GPT 6.1 Sol (Max)·",
-      "Muse Spark 1.3 (Max)$0.53/task",
+      "Claude Sonnet 5 (High)·",
+      "GPT 6 Luna (Max)$0.08/task",
+      "GPT 6.1 Sol (Max)$0.64/task",
+      "Hy4 preview·",
+      "Muse Spark 1.3 (Max)$0.54/task",
+      "Muse Spark 1.3 (Max)·",
+      "Presenting the result",
+      "Qwen3.8 Flash Next·",
       "Reading files",
-      "Writing a file"
+      "Searching the web"
     ],
     "removed_lines": [
       "Gemini 3.7 Flash (High)·",
       "362,157,987362,157,987Total Sessions",
       "7.95%View all",
+      "GPT 6 Luna (Max)$0.07/task",
       "GPT 6.1 Sol (Max)$0.57/task"
     ],
-    "added_count": 8,
-    "removed_count": 4,
-    "raw_added_count": 14,
-    "raw_removed_count": 12
+    "added_count": 12,
+    "removed_count": 5,
+    "raw_added_count": 17,
+    "raw_removed_count": 13
   },
   "evidenceLevel": "source_diff",
   "diffCompleteness": "unknown",

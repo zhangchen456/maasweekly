@@ -5,7 +5,7 @@
     "end": "2026-10-18",
     "days": {
       "2026-10-12": {
-        "substantive": 7,
+        "substantive": 8,
         "jitter": 0,
         "failed": 3,
         "releases": 3,
@@ -14,7 +14,7 @@
       }
     },
     "totals": {
-      "substantive": 7,
+      "substantive": 8,
       "releases": 3,
       "pricings": 1,
       "sunsets": 1
@@ -62,7 +62,24 @@
         "text": "新增 base_model:nvidia/LocateAnything-3B 及其量化版本，删除 arxiv:1911.02116 引用",
         "type": "release"
       }
-    ]
+    ],
+    "story": {
+      "theme": "新模型密集上架与定价调整周",
+      "sections": [
+        {
+          "title": "密集发布：旗舰与轻量齐上阵",
+          "body": "10月12日LMArena新增Claude Opus 5.5 (High)与GPT 6.1 Sol (Max)，定价分别为$1.86/task和$0.62/task。同日硅基流动上线高速版GLM-5.3-Flash，HuggingFace新增nvidia/LocateAnything-3B及量化版。三平台同日上新，显示头部厂商加速迭代。"
+        },
+        {
+          "title": "调价与替换：旧价让位新档",
+          "body": "Deepseek V4.1 Flash从$0.12涨至$0.13/task，MiMo V2.6 Pro从$0.10涨至$0.11/task，涨幅均约8%。GPT 6.1 Sol旧价$0.57被$0.62替换，Claude Opus 5.5另设Max档$5.24。涨价集中在轻量模型，或反映推理成本压力。"
+        },
+        {
+          "title": "下线与地域限制：清理进行时",
+          "body": "阿里百炼删除Qwen3-Omni-Captioner、qwen3-14b、deepseek-v4-flash等定价行，同时明确Qwen3.5-Omni和Qwen3-Omni仅华北2（北京）提供免费额度。xAI文档链接从SpaceXAI Docs改为SpaceXSI Docs，疑似品牌更名。清理与限制并行，平台在收缩免费资源。"
+        }
+      ]
+    }
   },
   {
     "week": "2026-W41",

@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-12T08:27:51.744249+08:00 -->
+<!-- fetched: 2026-10-12T14:49:31.509013+08:00 -->
 
 Release Notes | Cohere
 Learn more)">

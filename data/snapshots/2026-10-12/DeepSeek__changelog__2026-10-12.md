@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-12T08:27:29.853948+08:00 -->
+<!-- fetched: 2026-10-12T14:49:22.720328+08:00 -->
 
 Your First API Call | DeepSeek API Docs
 Skip to main content

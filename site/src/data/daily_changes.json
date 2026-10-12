@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-12T00:37:39+00:00",
+  "updated_at": "2026-10-12T06:51:46+00:00",
   "days": [
     {
       "date": "2026-10-12",
@@ -7,8 +7,8 @@
         "total": 68,
         "success": 65,
         "failed": 3,
-        "changed": 7,
-        "unchanged": 58
+        "changed": 8,
+        "unchanged": 57
       },
       "changed": [
         {
@@ -41,6 +41,29 @@
           "id": "obs_4db1fc4ce8106307dd185865e8693ba68fd05c7676774ef0a6d40a8949ecf992",
           "permalink": "/item/obs_4db1fc4ce8106307dd185865e8693ba68fd05c7676774ef0a6d40a8949ecf992/",
           "llm_summary": "定价文档新增了关于 Qwen3.5-Omni 和 Qwen3-Omni 系列免费额度地域限制的说明，同时删除了多个模型的定价行（如 Qwen3-Omni-Captioner、qwen3-14b、deepseek-v4-flash 等），可能对应模型下架或定价策略调整。"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "blog",
+          "url": "https://siliconflow.cn/blog",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "硅基流动上线高速版 glm-",
+              "before": "硅基流动上线高速版 GLM-5.3-FlasH",
+              "after": "硅基流动上线高速版 GLM-5.3-Flash"
+            }
+          ],
+          "signal_preview": "硅基流动上线高速版 GLM-5.3-Flash",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_4166c400a144f9660c354b2a7ec2b3523c99ce9d1ef1102ed371b1e65cc197f0",
+          "permalink": "/item/obs_4166c400a144f9660c354b2a7ec2b3523c99ce9d1ef1102ed371b1e65cc197f0/"
         },
         {
           "platform": "xAI",
@@ -155,8 +178,8 @@
           "kind": "substantive",
           "pairs": [],
           "signal_preview": "\"base_model:nvidia/LocateAnything-3B\",",
-          "raw_added_count": 43,
-          "raw_removed_count": 35,
+          "raw_added_count": 46,
+          "raw_removed_count": 38,
           "id": "obs_e8f3d5b4fa55581d09105fe8821de7304a359975a24fde17c0fd0cb5a1b1c52b",
           "permalink": "/item/obs_e8f3d5b4fa55581d09105fe8821de7304a359975a24fde17c0fd0cb5a1b1c52b/",
           "llm_summary": "新增了 nvidia/LocateAnything-3B 及其量化版本作为基础模型，同时删除了一个 arxiv 引用，可能表示模型库更新或引用清理。"
@@ -166,22 +189,27 @@
           "source_type": "industry",
           "url": "https://lmarena.ai/leaderboard",
           "status": "changed",
-          "added_count": 8,
-          "removed_count": 4,
+          "added_count": 12,
+          "removed_count": 5,
           "added_lines": [
-            "362,595,920362,595,920Total Sessions",
+            "362,690,100362,690,100Total Sessions",
             "8.12%View all",
-            "GPT 5.6 Terra (xHigh)·",
-            "GPT 6.1 Sol (Max)$0.62/task",
-            "GPT 6.1 Sol (Max)·",
-            "Muse Spark 1.3 (Max)$0.53/task",
+            "Claude Sonnet 5 (High)·",
+            "GPT 6 Luna (Max)$0.08/task",
+            "GPT 6.1 Sol (Max)$0.64/task",
+            "Hy4 preview·",
+            "Muse Spark 1.3 (Max)$0.54/task",
+            "Muse Spark 1.3 (Max)·",
+            "Presenting the result",
+            "Qwen3.8 Flash Next·",
             "Reading files",
-            "Writing a file"
+            "Searching the web"
           ],
           "removed_lines": [
             "Gemini 3.7 Flash (High)·",
             "362,157,987362,157,987Total Sessions",
             "7.95%View all",
+            "GPT 6 Luna (Max)$0.07/task",
             "GPT 6.1 Sol (Max)$0.57/task"
           ],
           "kind": "substantive",
@@ -189,7 +217,7 @@
             {
               "key": "claude opus",
               "before": "Claude Opus 5 (High)",
-              "after": "Claude Opus 5.5 (High)$1.86/task"
+              "after": "Claude Opus 5.5 (High)$1.90/task"
             },
             {
               "key": "claude opus",
@@ -199,7 +227,7 @@
             {
               "key": "claude opus",
               "before": "Claude Opus 5.5 (High)·",
-              "after": "Claude Opus 5.5 (Max)$5.24/task"
+              "after": "Claude Opus 5.5 (Max)$5.55/task"
             },
             {
               "key": "deepseek v",
@@ -210,16 +238,11 @@
               "key": "mimo v",
               "before": "MiMo V2.6 Pro$0.10/task",
               "after": "MiMo V2.6 Pro$0.11/task"
-            },
-            {
-              "key": "muse spark",
-              "before": "Muse Spark 1.3 (Max)$0.51/task",
-              "after": "Muse Spark 1.1·"
             }
           ],
-          "signal_preview": "GPT 5.6 Terra (xHigh)·",
-          "raw_added_count": 14,
-          "raw_removed_count": 12,
+          "signal_preview": "Claude Sonnet 5 (High)·",
+          "raw_added_count": 17,
+          "raw_removed_count": 13,
           "id": "obs_3bb65772f198660fb470e5db3719dc93599e21eee3c9af291290df4644cb3298",
           "permalink": "/item/obs_3bb65772f198660fb470e5db3719dc93599e21eee3c9af291290df4644cb3298/",
           "llm_summary": "榜单中新增了 Claude Opus 5.5 系列（High 和 Max 档）以及 GPT 6.1 Sol (Max) 的新定价，同时删除了 Gemini 3.7 Flash (High) 条目，并调整了多个模型的价格（如 Deepseek V4.1 Flash 和 MiMo V2.6 Pro 上调），反映了模型阵容和定价的实时变化。"
@@ -246,7 +269,7 @@
           "source_type": "changelog",
           "url": "https://www.volcengine.com/docs/82379/1159177",
           "status": "fetch_failed",
-          "error": "提取后内容过短 (raw_len=4606)"
+          "error": "提取后内容过短 (raw_len=11902)"
         }
       ],
       "highlights": [

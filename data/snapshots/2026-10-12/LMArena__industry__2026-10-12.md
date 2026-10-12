@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-12T08:27:55.609198+08:00 -->
+<!-- fetched: 2026-10-12T14:49:35.908764+08:00 -->
 
 Arena Leaderboard: Official AI Model Rankings & Benchmarks
 New Chat
@@ -9,7 +9,7 @@ Log In
 Terms of UsePrivacy PolicyCookies
 Measuring AIin the real-world
 Our leaderboards are powered by real people doing real work on Arena from across the globe
-362,595,920362,595,920Total Sessions
+362,690,100362,690,100Total Sessions
 New Release Rankings
 Anthropic
 Claude Haiku 5.5
@@ -63,30 +63,32 @@ Claude Opus 5 (Max)
 8.12%View all
 Live Agent Sessions
 Best Overall
-Private Model·
-Anonymous
-Session complete
-Private Model·
-Anonymous
-Session complete
-GPT 6.1 Sol (Max)·
+GPT 6 Luna (Max)·
 OpenAI
+Session complete
+Meta
+Muse Spark 1.3 (Max)·
+Meta
+Session complete
+Qwen3.8 Flash Next·
+Alibaba
 Session complete
 Deepseek V4.1 Flash (Max)·
 DeepSeek
-Session complete
-GPT 6 Luna (Max)·
-OpenAI
-Writing a file
-Private Model·
-Anonymous
-Session complete
-Meta
-Muse Spark 1.1·
-Meta
-Writing a file
-GPT 5.6 Terra (xHigh)·
-OpenAI
+Presenting the result
+Anthropic
+Claude Sonnet 5 (High)·
+Anthropic
+Running bash
+Tencent
+Hy4 preview·
+Tencent
+Running bash
+Deepseek V4.1 Flash (Max)·
+DeepSeek
+Searching the web
+Deepseek V4.1 Flash (Max)·
+DeepSeek
 Reading files
 Start a chat
 Pareto Frontier
@@ -96,21 +98,21 @@ View details
 Pareto Optimal Models
 Best Overall
 Anthropic
-Claude Opus 5.5 (Max)$5.24/task
+Claude Opus 5.5 (Max)$5.55/task
 15.53%
 Anthropic
-Claude Opus 5.5 (High)$1.86/task
+Claude Opus 5.5 (High)$1.90/task
 14.33%
-GPT 6.1 Sol (Max)$0.62/task
+GPT 6.1 Sol (Max)$0.64/task
 11.72%
 Meta
-Muse Spark 1.3 (Max)$0.53/task
+Muse Spark 1.3 (Max)$0.54/task
 4.04%
 Deepseek V4.1 Flash (Max)$0.13/task
 3.80%
 MiMo V2.6 Pro$0.11/task
 3.52%
-GPT 6 Luna (Max)$0.07/task
+GPT 6 Luna (Max)$0.08/task
 1.93%
 MiMo V2.6 Flash$0.05/task
 0.35%
