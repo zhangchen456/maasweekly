@@ -2,6 +2,7 @@ import { HOME_MODEL_GROUPS } from '../config/home-model-selection';
 // One translation catalog for server-rendered pages and client-rendered controls.
 // Product data, API identifiers, and saved source excerpts are not rewritten.
 export const uiEnglish: Record<string, string> = {
+ '变化':'changes','阅读全文 →':'Read full report →','订阅每日变化，或在你的':'Subscribe to daily updates or search from your','里直接搜索。':'directly.',
  '暂停自动轮播':'Pause automatic rotation','上一条重点':'Previous highlight','下一条重点':'Next highlight','选择重点':'Choose a highlight','轮播':'carousel','幻灯片':'slide',
  '新模型发布':'Model release','发布':'Releases','调价':'Price changes','下线':'Retirements','数据积累中':'Collecting updates',
  '本周逐日要点 →':'Daily highlights for this week →','原始变化与证据明细':'Original changes and evidence','展开核对 ↓':'Expand to verify ↓',

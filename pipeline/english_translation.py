@@ -37,14 +37,14 @@ def collect_texts(value):
 
 
 def protect(source: str):
-    value = source
+    value = source.replace('量化版本', 'quantized version')
     for zh, en in BRANDS.items(): value = value.replace(zh, en)
     def amount(m):
         n = Decimal(m[1]) * (10000 if m[2] == '万' else 100000000)
         return format(n, 'f').rstrip('0').rstrip('.') if '.' in format(n, 'f') else format(n, 'f')
     value = re.sub(r'(\d+(?:\.\d+)?)\s*(万|亿)', amount, value)
     months = ['January','February','March','April','May','June','July','August','September','October','November','December']
-    value = re.sub(r'(\d{1,2})月(\d{1,2})日?', lambda m: f'{months[int(m[1])-1]} {int(m[2])}' if 1 <= int(m[1]) <= 12 else m[0], value)
+    value = re.sub(r'(\d{1,2})\s*月\s*(\d{1,2})\s*日?', lambda m: f'{months[int(m[1])-1]} {int(m[2])}' if 1 <= int(m[1]) <= 12 else m[0], value)
     value = re.sub(r'(20\d{2})年(?:底|末)', r'late \1', value)
     value = re.sub(r'(20\d{2})年初', r'early \1', value)
     value = re.sub(r'百万\s*(tokens?|Token[s]?)', 'million tokens', value)
@@ -79,8 +79,23 @@ def restore_and_validate(source: str, raw: str, protected: dict[str, str]):
     return text
 
 
+def normalize_terms(source, translation):
+    if '量化' in source:
+        translation=re.sub(r'quantitative version', 'quantized version', translation, flags=re.I)
+    months=['January','February','March','April','May','June','July','August','September','October','November','December']
+    for month,day in re.findall(r'(\d{1,2})\s*月\s*(\d{1,2})\s*日',source):
+        if 1 <= int(month) <= 12:
+            translation=re.sub(rf'\b{int(month)}\s+month\s+{int(day)}\s+day\b',f'{months[int(month)-1]} {int(day)}',translation,flags=re.I)
+    translation=re.sub(r'(\d),\s+(\d{3})(?!\d)',r'\1,\2',translation)
+    if '定价页新增' in source:
+        translation=re.sub(r'pricing page (has been |was |is )?added',lambda m:'pricing entry '+(m[1] or '')+'added',translation,flags=re.I)
+    delisted=re.match(r'^硅基流动下架\s*([A-Za-z0-9/_.-]+)，新增\s*([A-Za-z0-9/_.-]+)$',source)
+    if delisted: translation=f'SiliconFlow delisted {delisted[1]} and added {delisted[2]}.'
+    return translation
+
+
 def projected_texts(cache):
-    return {entry['source']: entry['translation'] for key, entry in cache.get('entries', {}).items()
+    return {entry['source']: normalize_terms(entry['source'], entry['translation']) for key, entry in cache.get('entries', {}).items()
             if entry.get('status') == 'success' and entry.get('promptVersion') == PROMPT_VERSION
             and isinstance(entry.get('source'), str) and key == text_key(entry['source'])
             and isinstance(entry.get('translation'), str) and not HAN.search(entry['translation'])}
