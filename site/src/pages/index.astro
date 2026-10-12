@@ -183,7 +183,35 @@ const latestReport = reports[0];
     </section>
   </div>
 
-  <aside class="home-follow"><div><h2>让变化主动找到你。</h2><p>订阅每日变化，或在你的 Agent 里直接查询。</p></div><div><a href="/feed.xml">RSS 订阅 ↗</a><a href="/agent/">接入 Agent ↗</a></div></aside>
+  <aside class="home-follow" aria-labelledby="home-follow-title">
+    <div class="home-follow-intro">
+      <h2 id="home-follow-title">让变化主动找到你。</h2>
+      <p>订阅每日变化，或在你的 Agent 里直接查询。</p>
+      <a class="home-follow-guide" href="/agent/">查看接入指南 <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="home-follow-methods">
+      <a class="home-follow-method" href="/agent/#method-skill">
+        <h3>Agent Skill <span aria-hidden="true">↗</span></h3>
+        <p>安装到支持 Skills 的 Agent，用自然语言查询平台动态与模型价格。</p>
+        <span class="home-follow-action">获取安装提示词 <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="home-follow-method" href="/agent/#method-mcp">
+        <h3>MCP <span aria-hidden="true">↗</span></h3>
+        <p>连接支持远程 MCP 的 AI 客户端，让它调用查询工具，带着来源回答。</p>
+        <span class="home-follow-action">查看连接配置 <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="home-follow-method" href="/agent/#method-rss">
+        <h3>RSS 订阅 <span aria-hidden="true">↗</span></h3>
+        <p>把平台变化与正式周报加入阅读器，按自己的节奏追踪更新。</p>
+        <span class="home-follow-action">获取订阅地址 <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="home-follow-method" href="/agent/#method-rest">
+        <h3>REST API <span aria-hidden="true">↗</span></h3>
+        <p>通过 HTTP 查询变化、价格与证据，接入自己的脚本和自动化工作流。</p>
+        <span class="home-follow-action">查看请求示例 <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </aside>
   <p class="footnote">数据每日自动更新 · 历史归档可查</p>
   <script src="../scripts/explore.ts"></script>
 </Layout>
