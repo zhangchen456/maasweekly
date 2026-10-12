@@ -2,6 +2,12 @@ import { HOME_MODEL_GROUPS } from '../config/home-model-selection';
 // One translation catalog for server-rendered pages and client-rendered controls.
 // Product data, API identifiers, and saved source excerpts are not rewritten.
 export const uiEnglish: Record<string, string> = {
+ '← 返回今日':'← Back to Today','逐日要点':'Daily highlights','该周每日要点，按日倒序。':'Daily highlights for this week, newest first.',
+ '本周动态自动归档 · 每日要点与周度串讲':'Automatically archived weekly updates · Daily highlights and weekly recap',
+ '来源变化条目':'Source change records','已滚出近期窗口，分类统计不可用':'Outside the recent window; category statistics unavailable',
+ '每日来源变化的独立条目，含修订历史与永久链接':'Individual source change records with revision history and permanent links',
+ '。本周已滚出近期窗口，仅保留来源记录索引':'. This week is outside the recent window; only the source record index remains',
+ '本周无归档条目。':'No archived records this week.','百万tokens':'million tokens','波动':'Fluctuation',
  '变化':'changes','阅读全文 →':'Read full report →','订阅每日变化，或在你的':'Subscribe to daily updates or search from your','里直接搜索。':'directly.',
  '暂停自动轮播':'Pause automatic rotation','上一条重点':'Previous highlight','下一条重点':'Next highlight','选择重点':'Choose a highlight','轮播':'carousel','幻灯片':'slide',
  '新模型发布':'Model release','发布':'Releases','调价':'Price changes','下线':'Retirements','数据积累中':'Collecting updates',
