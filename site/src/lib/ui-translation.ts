@@ -5,6 +5,18 @@ const segments = Object.keys(uiEnglish).filter(k => k.length >= 2).sort((a,b) =>
 const pattern = new RegExp(segments.map(escape).join('|'), 'g');
 export function englishUi(text: string): string {
   const trim = text.trim();
+  const weekTitle = trim.match(/^(\d{4}-W\d{2}) 周归档 — MaaS Daily$/);
+  if (weekTitle) return `${weekTitle[1]} Weekly archive — MaaS Daily`;
+  const weekDescription = trim.match(/^([\d-]+) ~ ([\d-]+) MaaS 平台每日动态归档：(\d+) 个实质变化$/);
+  if (weekDescription) return `MaaS daily update archive for ${weekDescription[1]}–${weekDescription[2]}: ${weekDescription[3]} substantive changes`;
+  const changeCount = trim.match(/^(\d+) 项变化$/);
+  if (changeCount) return `${changeCount[1]} changes`;
+  const ledgerCount = trim.match(/^价格台账变化 (\d+) 条$/);
+  if (ledgerCount) return `Pricing ledger changes: ${ledgerCount[1]}`;
+  const recordCount = trim.match(/^来源变化记录（(\d+) 条）$/);
+  if (recordCount) return `Source change records (${recordCount[1]})`;
+  const noHighlights = trim.match(/^当日无要点（(\d+) 个信源有变化）$/);
+  if (noHighlights) return `No highlights today (${noHighlights[1]} sources changed)`;
   const shortDate = trim.match(/^(\d{1,2})月(\d{1,2})日$/);
   if (shortDate) return text.replace(trim, `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(shortDate[1])-1]} ${Number(shortDate[2])}`);
   const weekday = { '星期一':'Mon','星期二':'Tue','星期三':'Wed','星期四':'Thu','星期五':'Fri','星期六':'Sat','星期日':'Sun','周一':'Mon','周二':'Tue','周三':'Wed','周四':'Thu','周五':'Fri','周六':'Sat','周日':'Sun' } as Record<string,string>;
