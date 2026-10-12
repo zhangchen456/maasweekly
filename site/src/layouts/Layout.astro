@@ -77,8 +77,9 @@ const localizedContent = en ? englishHtml(content) : content;
           root.dataset.themePreference = preference;
           root.dataset.theme = theme;
           root.style.colorScheme = theme;
-          const select = document.querySelector('.theme-select');
-          if (select) select.value = preference;
+          document.querySelectorAll('[data-theme-option]').forEach((button) => {
+            button.setAttribute('aria-pressed', String(button.dataset.themeOption === preference));
+          });
           try { localStorage.setItem('maas-theme', preference); } catch {}
         };
         apply(preference);
@@ -100,11 +101,17 @@ const localizedContent = en ? englishHtml(content) : content;
           <span aria-hidden="true"> / </span>
           <a href={enRoute ?? '/en/?lang=en&untranslated=1'} data-language="en" data-translated={Boolean(enRoute)} lang="en" aria-current={en ? 'true' : undefined}>English</a>
         </nav>
-        <select class="theme-select" aria-label={t("外观", "Appearance")} title={t("外观", "Appearance")}>
-          <option value="system">{t("跟随系统", "System")}</option>
-          <option value="light">{t("浅色", "Light")}</option>
-          <option value="dark">{t("深色", "Dark")}</option>
-        </select>
+        <div class="theme-toggle" role="group" aria-label={t("外观", "Appearance")}>
+          <button type="button" data-theme-option="system" aria-pressed="false" aria-label={t("跟随系统", "Follow system")} title={t("跟随系统", "Follow system")}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 20h8M12 16v4" /></svg>
+          </button>
+          <button type="button" data-theme-option="light" aria-pressed="false" aria-label={t("浅色", "Light")} title={t("浅色", "Light")}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5" /></svg>
+          </button>
+          <button type="button" data-theme-option="dark" aria-pressed="false" aria-label={t("深色", "Dark")} title={t("深色", "Dark")}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14Z" /></svg>
+          </button>
+        </div>
         <AccountAccess locale={locale} />
       </div>
     </header>
@@ -127,14 +134,14 @@ const localizedContent = en ? englishHtml(content) : content;
 
     <script>import '../scripts/account-preferences'; import '../scripts/ui-translation'; import { startTimeDisplay } from '../../public/time-display.js'; startTimeDisplay(window);</script>
     <script is:inline>
-      const themeSelect = document.querySelector('.theme-select');
-      if (themeSelect) {
-        themeSelect.value = document.documentElement.dataset.themePreference;
-        themeSelect.addEventListener('change', () => {
-          document.dispatchEvent(new CustomEvent('maas:appearance-restored', { detail: themeSelect.value }));
-          document.dispatchEvent(new CustomEvent('maas:theme-change', { detail: themeSelect.value }));
+      document.querySelectorAll('[data-theme-option]').forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.themeOption === document.documentElement.dataset.themePreference));
+        button.addEventListener('click', () => {
+          const preference = button.dataset.themeOption;
+          document.dispatchEvent(new CustomEvent('maas:appearance-restored', { detail: preference }));
+          document.dispatchEvent(new CustomEvent('maas:theme-change', { detail: preference }));
         });
-      }
+      });
       document.documentElement.classList.add('motion-ready');
       // reveal 动画
       const revealObserver = new IntersectionObserver((entries) => {
@@ -250,13 +257,16 @@ const localizedContent = en ? englishHtml(content) : content;
       .nav { display: flex; gap: 24px; color: var(--muted); font-size: 12px; }
       .nav a { text-decoration: none; transition: color .2s ease; }
       .nav a:hover { color: var(--paper); }
-      .theme-select {
-        border: 1px solid var(--line-strong); color: var(--paper);
-        background: var(--panel-solid); border-radius: 2px; min-height: 32px;
-        padding: 4px 6px; cursor: pointer; font: inherit; font-size: 12px;
+      .theme-toggle { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+      .theme-toggle button {
+        appearance: none; border: 1px solid var(--line-strong); color: var(--muted);
+        background: transparent; border-radius: 99px; width: 32px; height: 32px;
+        display: flex; align-items: center; justify-content: center; cursor: pointer;
+        padding: 0; transition: color .2s ease, background .2s ease, border-color .2s ease;
       }
-      .theme-select:hover { border-color: var(--acid); }
-      .theme-select:focus-visible { outline: 2px solid var(--acid); outline-offset: 3px; }
+      .theme-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+      .theme-toggle button:hover, .theme-toggle button[aria-pressed="true"] { color: var(--ink); background: var(--acid); border-color: var(--acid); }
+      .theme-toggle button:focus-visible { outline: 2px solid var(--acid); outline-offset: 3px; }
 
       main { padding-bottom: 60px; }
       section { scroll-margin-top: 84px; }
