@@ -1,9 +1,82 @@
 [
   {
+    "week": "2026-W42",
+    "start": "2026-10-12",
+    "end": "2026-10-18",
+    "days": {
+      "2026-10-12": {
+        "substantive": 7,
+        "jitter": 0,
+        "failed": 3,
+        "releases": 3,
+        "pricings": 1,
+        "sunsets": 1
+      }
+    },
+    "totals": {
+      "substantive": 7,
+      "releases": 3,
+      "pricings": 1,
+      "sunsets": 1
+    },
+    "highlights": [
+      {
+        "platform": "LMArena",
+        "date": "2026-10-12",
+        "text": "Claude Opus 5.5 (High) 新增，定价 $1.86/task，同时出现 Max 档 $5.24/task",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-12",
+        "text": "GPT 6.1 Sol (Max) 新增，定价 $0.62/task，旧价 $0.57/task 被替换",
+        "type": "release"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-12",
+        "text": "Deepseek V4.1 Flash (Max) 价格从 $0.12/task 上调至 $0.13/task，MiMo V2.6 Pro 从 $0.10/task 上调至 $0.11/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-12",
+        "text": "新增说明：Qwen3.5-Omni 和 Qwen3-Omni 系列仅在华北2（北京）地域提供免费额度",
+        "type": "other"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-12",
+        "text": "删除多个模型定价行，包括 Qwen3-Omni-Captioner、qwen3-14b、deepseek-v4-flash 等",
+        "type": "sunset"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-10-12",
+        "text": "模型列表、定价、更新日志、博客的文档链接均从 SpaceXAI Docs 变更为 SpaceXSI Docs",
+        "type": "other"
+      },
+      {
+        "platform": "HuggingFace",
+        "date": "2026-10-12",
+        "text": "新增 base_model:nvidia/LocateAnything-3B 及其量化版本，删除 arxiv:1911.02116 引用",
+        "type": "release"
+      }
+    ]
+  },
+  {
     "week": "2026-W41",
     "start": "2026-10-05",
     "end": "2026-10-11",
     "days": {
+      "2026-10-11": {
+        "substantive": 10,
+        "jitter": 0,
+        "failed": 3,
+        "releases": 4,
+        "pricings": 2,
+        "sunsets": 0
+      },
       "2026-10-10": {
         "substantive": 19,
         "jitter": 2,
@@ -54,12 +127,72 @@
       }
     },
     "totals": {
-      "substantive": 88,
-      "releases": 29,
-      "pricings": 19,
+      "substantive": 98,
+      "releases": 33,
+      "pricings": 21,
       "sunsets": 8
     },
     "highlights": [
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-11",
+        "text": "新增 qwen3-asr-flash-realtime、qwen3-omni-flash、qwen3-omni-flash-realtime、qwen3-tts-flash 四款模型定价",
+        "type": "release"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-10-11",
+        "text": "高速版 GLM-5.2 更新为 GLM-5.3-FlasH，并新增 GLM-5 系列首款原生多模态模型",
+        "type": "release"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-10-11",
+        "text": "正式上线 TokenPlus 词元优选平台，提供网关智能路由、团队统一管理及 BYOK 支持",
+        "type": "other"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-11",
+        "text": "Claude Opus 5.5 (High) 价格从 $1.74/task 降至 $1.60/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-11",
+        "text": "Deepseek V4.1 Flash (Max) 价格从 $0.13/task 降至 $0.12/task",
+        "type": "pricing"
+      },
+      {
+        "platform": "LMArena",
+        "date": "2026-10-11",
+        "text": "GPT 6.1 Sol (Max) 以 $0.57/task 新上榜，同时移除 GPT 6 Astra (Max) 和 GPT 5.6 Terra (xHigh)",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-11",
+        "text": "发布 Claude Fable 5 (claude-fable-5) 及 Claude Mythos 5 (claude-mythos-5)，后者面向 Project Glasswing",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-11",
+        "text": "Compliance API 新增支持将 Claude Docs 文档下载为 Word 文件（beta）",
+        "type": "other"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-11",
+        "text": "changelog 最后更新日期从 2026-10-07 更新至 2026-10-09",
+        "type": "other"
+      },
+      {
+        "platform": "HuggingFace",
+        "date": "2026-10-11",
+        "text": "industry 列表新增 arxiv:2006.03677、arxiv:2010.11929 及 dataset:imagenet-21k",
+        "type": "other"
+      },
       {
         "platform": "OpenAI",
         "date": "2026-10-10",

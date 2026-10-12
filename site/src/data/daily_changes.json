@@ -1,6 +1,716 @@
 {
-  "updated_at": "2026-10-10T07:06:34+00:00",
+  "updated_at": "2026-10-12T00:37:39+00:00",
   "days": [
+    {
+      "date": "2026-10-12",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 7,
+        "unchanged": 58
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 10,
+          "added_lines": [
+            "说明Qwen3.5-Omni 和 Qwen3-Omni 系列仅在华北2（北京）地域下有免费额度，其他地域均无免费额度。"
+          ],
+          "removed_lines": [
+            "128K<Token≤200K |",
+            "Qwen3-Omni-Captioner",
+            "qwen3-14b |",
+            "deepseek-v4-flash",
+            "fun-asr-2025-08-25 |",
+            "qwen-plus-2025-07-28 |",
+            "qwen-plus-2025-09-11 |",
+            "qwen3-235b-a22b |",
+            "qwen3-235b-a22b-thinking-2507 |",
+            "0.000035元/秒"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "说明Qwen3.5-Omni 和 Qwen3-Omni 系列仅在华北2（北京）地域下有免费额度，其他地域均无免费额度。",
+          "raw_added_count": 1,
+          "raw_removed_count": 35,
+          "id": "obs_4db1fc4ce8106307dd185865e8693ba68fd05c7676774ef0a6d40a8949ecf992",
+          "permalink": "/item/obs_4db1fc4ce8106307dd185865e8693ba68fd05c7676774ef0a6d40a8949ecf992/",
+          "llm_summary": "定价文档新增了关于 Qwen3.5-Omni 和 Qwen3-Omni 系列免费额度地域限制的说明，同时删除了多个模型的定价行（如 Qwen3-Omni-Captioner、qwen3-14b、deepseek-v4-flash 等），可能对应模型下架或定价策略调整。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "model_list",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "grok models & pricing",
+              "before": "Grok Models & Pricing | SpaceXAI Docs",
+              "after": "Grok Models & Pricing | SpaceXSI Docs"
+            }
+          ],
+          "signal_preview": "Grok Models & Pricing | SpaceXSI Docs",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_701a121c7086620f71518cf51848029b1c19d3d707678cdec882d4e66d219148",
+          "permalink": "/item/obs_701a121c7086620f71518cf51848029b1c19d3d707678cdec882d4e66d219148/",
+          "llm_summary": "模型列表文档的链接从 SpaceXAI Docs 变更为 SpaceXSI Docs，可能反映公司品牌或域名变更。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "pricing",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "grok models & pricing",
+              "before": "Grok Models & Pricing | SpaceXAI Docs",
+              "after": "Grok Models & Pricing | SpaceXSI Docs"
+            }
+          ],
+          "signal_preview": "Grok Models & Pricing | SpaceXSI Docs",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_38295c3396412985ea82dc2b026f218f791ef90b724611e5e29a4545bf4b444c",
+          "permalink": "/item/obs_38295c3396412985ea82dc2b026f218f791ef90b724611e5e29a4545bf4b444c/",
+          "llm_summary": "定价文档的链接从 SpaceXAI Docs 变更为 SpaceXSI Docs，与模型列表的变更一致。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "release notes",
+              "before": "Release Notes | SpaceXAI Docs",
+              "after": "Release Notes | SpaceXSI Docs"
+            }
+          ],
+          "signal_preview": "Release Notes | SpaceXSI Docs",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_97ffb33bf1cf62a3f3ffa1fa78aa05428c7e854722a512a949987cecbba7148b",
+          "permalink": "/item/obs_97ffb33bf1cf62a3f3ffa1fa78aa05428c7e854722a512a949987cecbba7148b/",
+          "llm_summary": "更新日志文档的链接从 SpaceXAI Docs 变更为 SpaceXSI Docs，表明文档体系整体迁移。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "release notes",
+              "before": "Release Notes | SpaceXAI Docs",
+              "after": "Release Notes | SpaceXSI Docs"
+            }
+          ],
+          "signal_preview": "Release Notes | SpaceXSI Docs",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_a801c01da5489d7d0e600a139954436bc876798283be0a487be5be082569d60f",
+          "permalink": "/item/obs_a801c01da5489d7d0e600a139954436bc876798283be0a487be5be082569d60f/",
+          "llm_summary": "博客文档的链接从 SpaceXAI Docs 变更为 SpaceXSI Docs，进一步确认域名变更。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "\"base_model:nvidia/LocateAnything-3B\",",
+            "\"base_model:quantized:nvidia/LocateAnything-3B\","
+          ],
+          "removed_lines": [
+            "\"arxiv:1911.02116\","
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "\"base_model:nvidia/LocateAnything-3B\",",
+          "raw_added_count": 43,
+          "raw_removed_count": 35,
+          "id": "obs_e8f3d5b4fa55581d09105fe8821de7304a359975a24fde17c0fd0cb5a1b1c52b",
+          "permalink": "/item/obs_e8f3d5b4fa55581d09105fe8821de7304a359975a24fde17c0fd0cb5a1b1c52b/",
+          "llm_summary": "新增了 nvidia/LocateAnything-3B 及其量化版本作为基础模型，同时删除了一个 arxiv 引用，可能表示模型库更新或引用清理。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 4,
+          "added_lines": [
+            "362,595,920362,595,920Total Sessions",
+            "8.12%View all",
+            "GPT 5.6 Terra (xHigh)·",
+            "GPT 6.1 Sol (Max)$0.62/task",
+            "GPT 6.1 Sol (Max)·",
+            "Muse Spark 1.3 (Max)$0.53/task",
+            "Reading files",
+            "Writing a file"
+          ],
+          "removed_lines": [
+            "Gemini 3.7 Flash (High)·",
+            "362,157,987362,157,987Total Sessions",
+            "7.95%View all",
+            "GPT 6.1 Sol (Max)$0.57/task"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5 (High)",
+              "after": "Claude Opus 5.5 (High)$1.86/task"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (High)$1.60/task",
+              "after": "Claude Opus 5.5 (Max)"
+            },
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (High)·",
+              "after": "Claude Opus 5.5 (Max)$5.24/task"
+            },
+            {
+              "key": "deepseek v",
+              "before": "Deepseek V4.1 Flash (Max)$0.12/task",
+              "after": "Deepseek V4.1 Flash (Max)$0.13/task"
+            },
+            {
+              "key": "mimo v",
+              "before": "MiMo V2.6 Pro$0.10/task",
+              "after": "MiMo V2.6 Pro$0.11/task"
+            },
+            {
+              "key": "muse spark",
+              "before": "Muse Spark 1.3 (Max)$0.51/task",
+              "after": "Muse Spark 1.1·"
+            }
+          ],
+          "signal_preview": "GPT 5.6 Terra (xHigh)·",
+          "raw_added_count": 14,
+          "raw_removed_count": 12,
+          "id": "obs_3bb65772f198660fb470e5db3719dc93599e21eee3c9af291290df4644cb3298",
+          "permalink": "/item/obs_3bb65772f198660fb470e5db3719dc93599e21eee3c9af291290df4644cb3298/",
+          "llm_summary": "榜单中新增了 Claude Opus 5.5 系列（High 和 Max 档）以及 GPT 6.1 Sol (Max) 的新定价，同时删除了 Gemini 3.7 Flash (High) 条目，并调整了多个模型的价格（如 Deepseek V4.1 Flash 和 MiMo V2.6 Pro 上调），反映了模型阵容和定价的实时变化。"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "LMArena",
+          "logo_summary": "多模型价格调整与新增，Claude Opus 5.5 上线",
+          "items": [
+            {
+              "text": "Claude Opus 5.5 (High) 新增，定价 $1.86/task，同时出现 Max 档 $5.24/task",
+              "type": "release"
+            },
+            {
+              "text": "GPT 6.1 Sol (Max) 新增，定价 $0.62/task，旧价 $0.57/task 被替换",
+              "type": "release"
+            },
+            {
+              "text": "Deepseek V4.1 Flash (Max) 价格从 $0.12/task 上调至 $0.13/task，MiMo V2.6 Pro 从 $0.10/task 上调至 $0.11/task",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "定价文档清理，免费额度地域说明更新",
+          "items": [
+            {
+              "text": "新增说明：Qwen3.5-Omni 和 Qwen3-Omni 系列仅在华北2（北京）地域提供免费额度",
+              "type": "other"
+            },
+            {
+              "text": "删除多个模型定价行，包括 Qwen3-Omni-Captioner、qwen3-14b、deepseek-v4-flash 等",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "xAI",
+          "logo_summary": "文档域名从 SpaceXAI 变更为 SpaceXSI",
+          "items": [
+            {
+              "text": "模型列表、定价、更新日志、博客的文档链接均从 SpaceXAI Docs 变更为 SpaceXSI Docs",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "HuggingFace",
+          "logo_summary": "新增 nvidia/LocateAnything-3B 基础模型条目",
+          "items": [
+            {
+              "text": "新增 base_model:nvidia/LocateAnything-3B 及其量化版本，删除 arxiv:1911.02116 引用",
+              "type": "release"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-11",
+      "stats": {
+        "total": 68,
+        "success": 65,
+        "failed": 3,
+        "changed": 10,
+        "unchanged": 55
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 10,
+          "added_lines": [
+            "qwen3-asr-flash-realtime |",
+            "qwen3-omni-flash |",
+            "qwen3-omni-flash-realtime |",
+            "qwen3-tts-flash |"
+          ],
+          "removed_lines": [
+            "100万Token（不区分模态）",
+            "125张 ＜ 生成数量 ≤ 250张",
+            "250张 ＜ 生成数量 ≤ 1250张",
+            "25张 ＜ 生成数量 ≤ 125张",
+            "32K<Token≤166K |",
+            "32K<Token≤96K |",
+            "0.330266元/张",
+            "1250张 ＜ 生成数量 ≤ 2500张",
+            "1:1画幅视频：0.08元/秒",
+            "2500张 ＜ 生成数量 ≤ 2.5万张"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "qwen3-asr-flash-realtime |",
+          "raw_added_count": 4,
+          "raw_removed_count": 181,
+          "id": "obs_666816e3b608b31f751a5cbab374782b396d7baa6366e10fb1664a1a72f25afa",
+          "permalink": "/item/obs_666816e3b608b31f751a5cbab374782b396d7baa6366e10fb1664a1a72f25afa/",
+          "llm_summary": "新增了 qwen3-asr-flash-realtime、qwen3-omni-flash、qwen3-omni-flash-realtime、qwen3-tts-flash 四款模型的定价行，同时删除了旧的按Token和图片生成数量分档的定价说明，对应新模型上架并调整了计费方式。"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "blog",
+          "url": "https://siliconflow.cn/blog",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 3,
+          "added_lines": [
+            "GLM-5 系列首款原生多模态模型，高效承接编程与视觉智能体任务立即试用",
+            "TokenPlus 词元优选，正式上线！",
+            "一站式 Token 智能调度平台",
+            "网关智能路由、团队统一管理，支持硅基流动 BYOK，让模型调用更省、更稳。立即体验"
+          ],
+          "removed_lines": [
+            "Code Arena全球第二，专攻长周期、高复杂度的软件工程，极大改变开发者与知识工作者的工作立即试用",
+            "会看屏幕，“想得更少、写得更好”的代码专家立即试用",
+            "硅基流动上线高速版 Kimi K2.7 Code"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "硅基流动上线高速版 glm-",
+              "before": "硅基流动上线高速版 GLM-5.2",
+              "after": "硅基流动上线高速版 GLM-5.3-FlasH"
+            }
+          ],
+          "signal_preview": "GLM-5 系列首款原生多模态模型，高效承接编程与视觉智能体任务立即试用",
+          "raw_added_count": 5,
+          "raw_removed_count": 4,
+          "id": "obs_d22072fc20170ac063caef42b0652c0f34b3c334540dd36603727902da39054d",
+          "permalink": "/item/obs_d22072fc20170ac063caef42b0652c0f34b3c334540dd36603727902da39054d/",
+          "llm_summary": "博客内容从宣传 GLM-5.2 高速版和 Kimi K2.7 Code 更新为宣传 GLM-5.3-FlasH 和 GLM-5 系列首款原生多模态模型，同时新增 TokenPlus 词元优选平台的介绍，显示产品重心转向新模型和智能调度服务。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Overview Plugins Sign in with ChatGPT Commerce Ads Workspace Agents ChatGPT + Codex user docs"
+          ],
+          "removed_lines": [
+            "Overview Sign in with ChatGPT Plugins Workspace Agents Commerce Ads ChatGPT + Codex user docs"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Overview Plugins Sign in with ChatGPT Commerce Ads Workspace Agents ChatGPT + Codex user docs",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_d0decbedec057615ddf4021ca5b220acff350ebeaa94bb8e18b4527490fb7426",
+          "permalink": "/item/obs_d0decbedec057615ddf4021ca5b220acff350ebeaa94bb8e18b4527490fb7426/",
+          "llm_summary": "页面结构变化，新增了 'Overview Plugins Sign in with ChatGPT Commerce Ads Workspace Agents ChatGPT + Codex user docs' 的导航元素，删除了旧版导航，可能反映了网站布局调整，未涉及模型列表实质变化。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Overview Plugins Sign in with ChatGPT Commerce Ads Workspace Agents ChatGPT + Codex user docs"
+          ],
+          "removed_lines": [
+            "Overview Sign in with ChatGPT Plugins Workspace Agents Commerce Ads ChatGPT + Codex user docs"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Overview Plugins Sign in with ChatGPT Commerce Ads Workspace Agents ChatGPT + Codex user docs",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_13db954ee53f1b798b73ca63a45afcdee8d09a02dfba8e783d2987d528ce31fd",
+          "permalink": "/item/obs_13db954ee53f1b798b73ca63a45afcdee8d09a02dfba8e783d2987d528ce31fd/",
+          "llm_summary": "页面结构变化，新增了 'Overview Plugins Sign in with ChatGPT Commerce Ads Workspace Agents ChatGPT + Codex user docs' 的导航元素，删除了旧版导航，可能反映了网站布局调整，未涉及定价数据变化。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Overview Plugins Sign in with ChatGPT Commerce Ads Workspace Agents ChatGPT + Codex user docs"
+          ],
+          "removed_lines": [
+            "Overview Sign in with ChatGPT Plugins Workspace Agents Commerce Ads ChatGPT + Codex user docs"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Overview Plugins Sign in with ChatGPT Commerce Ads Workspace Agents ChatGPT + Codex user docs",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_c3a9a17d407f88cf1e85718d176125e7938c3114a75fee6a6e78db325af47b5d",
+          "permalink": "/item/obs_c3a9a17d407f88cf1e85718d176125e7938c3114a75fee6a6e78db325af47b5d/",
+          "llm_summary": "页面结构变化，新增了 'Overview Plugins Sign in with ChatGPT Commerce Ads Workspace Agents ChatGPT + Codex user docs' 的导航元素，删除了旧版导航，可能反映了网站布局调整，未涉及更新日志内容变化。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Overview Plugins Sign in with ChatGPT Commerce Ads Workspace Agents ChatGPT + Codex user docs"
+          ],
+          "removed_lines": [
+            "Overview Sign in with ChatGPT Plugins Workspace Agents Commerce Ads ChatGPT + Codex user docs"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Overview Plugins Sign in with ChatGPT Commerce Ads Workspace Agents ChatGPT + Codex user docs",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_5a51930d5a3cf647f235f45e0512c78bee50fccc24259c71996bd3f77830e176",
+          "permalink": "/item/obs_5a51930d5a3cf647f235f45e0512c78bee50fccc24259c71996bd3f77830e176/",
+          "llm_summary": "页面结构变化，新增了 'Overview Plugins Sign in with ChatGPT Commerce Ads Workspace Agents ChatGPT + Codex user docs' 的导航元素，删除了旧版导航，可能反映了网站布局调整，未涉及博客内容变化。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "The Compliance API can now download Claude Docs documents as Word files, in beta. See Retrieve files and artifacts."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "on claude fable",
+              "before": "On Claude Fable 5 and Claude Mythos 5, adaptive thinking is the only thinking mode: thinking: {\"type\": \"disabled\"} is not supported, and manual extended thinking budgets and assistant prefill are not supported (both return a 400 error). See Migrating from Claude Mythos Preview to Claude Mythos 5.",
+              "after": "On Claude Fable 5 and Claude Mythos 5, adaptive thinking is the only thinking mode: thinking: {\"type\": \"disabled\"} is not supported, and manual extended thinking budgets and assistant prefill are not supported (both return a 400 error)."
+            },
+            {
+              "key": "claude-fable-5",
+              "before": "We've launched Claude Fable 5 (claude-fable-5), our most capable model open to all customers, alongside Claude Mythos 5 (claude-mythos-5) for Project Glasswing participants. Both models support a 1M token context window by default, 128k max output tokens, and always-on adaptive thinking. See Introducing Claude Fable 5 and Claude Mythos 5 for capabilities, API changes, and availability.",
+              "after": "We've launched Claude Fable 5 (claude-fable-5), our most capable model open to all customers, alongside Claude Mythos 5 (claude-mythos-5) for Project Glasswing participants. Both models support a 1M token context window by default, 128k max output tokens, and always-on adaptive thinking. See Claude Fable 5 for specifications, pricing, and availability."
+            }
+          ],
+          "signal_preview": "The Compliance API can now download Claude Docs documents as Word files, in beta. See Retrieve files and artifacts.",
+          "raw_added_count": 3,
+          "raw_removed_count": 2,
+          "id": "obs_77321a278f7c9e5126b47ccf6b90cb6161a095ac43fdb4c069e431498a4d98cd",
+          "permalink": "/item/obs_77321a278f7c9e5126b47ccf6b90cb6161a095ac43fdb4c069e431498a4d98cd/",
+          "llm_summary": "更新了 Claude Fable 5 和 Claude Mythos 5 的发布说明，强调 adaptive thinking 是唯一思考模式，并新增了 Compliance API 支持下载 Word 文档的功能，整体对应新模型发布和 API 功能扩展。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "changelog",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-07 UTC.",
+              "after": "Last updated 2026-10-09 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-07 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-10-09 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_f0f161005031c54227e496a1ff12da9f0f5c307c07791ca42f066d9a4f3ed2fb",
+          "permalink": "/item/obs_f0f161005031c54227e496a1ff12da9f0f5c307c07791ca42f066d9a4f3ed2fb/",
+          "llm_summary": "changelog 最后更新日期从 2026-10-07 更新至 2026-10-09，同时页面反馈按钮的 HTML 结构有微调，未发现实质性的产品变更。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "\"arxiv:2006.03677\",",
+            "\"arxiv:2010.11929\",",
+            "\"dataset:imagenet-21k\","
+          ],
+          "removed_lines": [
+            "\"base_model:nvidia/LocateAnything-3B\",",
+            "\"base_model:quantized:nvidia/LocateAnything-3B\","
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "\"dataset:imagenet-21k\",",
+          "raw_added_count": 39,
+          "raw_removed_count": 45,
+          "id": "obs_82bc74211c0cf89da6d633102d3317a18a0c2f004369406d764bdb6f45b0a592",
+          "permalink": "/item/obs_82bc74211c0cf89da6d633102d3317a18a0c2f004369406d764bdb6f45b0a592/",
+          "llm_summary": "行业列表新增了 arxiv:2006.03677、arxiv:2010.11929 和 dataset:imagenet-21k，同时删除了 nvidia/LocateAnything-3B 及其量化版本，可能反映了关注点从特定模型转向更广泛的研究论文和数据集。"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 6,
+          "added_lines": [
+            "362,157,987362,157,987Total Sessions",
+            "Claude Opus 5.5 (High)·",
+            "Deepseek V4.1 Flash (Max)·",
+            "GPT 6.1 Sol (Max)$0.57/task",
+            "Private Model·",
+            "Running bash"
+          ],
+          "removed_lines": [
+            "Searching the web",
+            "mistral-large-4·",
+            "361,725,367361,725,367Total Sessions",
+            "GPT 5.6 Terra (xHigh)·",
+            "GPT 6 Astra (Max)·",
+            "GPT 6.1 Sol (Max)$0.59/task"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude opus",
+              "before": "Claude Opus 5.5 (High)$1.74/task",
+              "after": "Claude Opus 5.5 (High)$1.60/task"
+            },
+            {
+              "key": "deepseek v",
+              "before": "Deepseek V4.1 Flash (Max)$0.13/task",
+              "after": "Deepseek V4.1 Flash (Max)$0.12/task"
+            },
+            {
+              "key": "gemini",
+              "before": "Gemini 3.8 Flash (High)·",
+              "after": "Gemini 3.7 Flash (High)·"
+            },
+            {
+              "key": "muse spark",
+              "before": "Muse Spark 1.3 (Max)$0.52/task",
+              "after": "Muse Spark 1.3 (Max)$0.51/task"
+            }
+          ],
+          "signal_preview": "Claude Opus 5.5 (High)·",
+          "raw_added_count": 10,
+          "raw_removed_count": 10,
+          "id": "obs_08bb996c033483c024e344c78fef06f0f7df7b29b0b3bba477edbc4090fca762",
+          "permalink": "/item/obs_08bb996c033483c024e344c78fef06f0f7df7b29b0b3bba477edbc4090fca762/",
+          "llm_summary": "多个模型价格下调（Claude Opus 5.5、Deepseek V4.1 Flash、Muse Spark 1.3），新增 GPT 6.1 Sol (Max) 并移除 GPT 6 Astra (Max) 和 GPT 5.6 Terra (xHigh)，同时 Gemini 3.8 Flash 更名为 Gemini 3.7 Flash，总会话数更新，显示榜单模型和定价的常规调整。"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "新增4款通义千问实时/多模态模型",
+          "items": [
+            {
+              "text": "新增 qwen3-asr-flash-realtime、qwen3-omni-flash、qwen3-omni-flash-realtime、qwen3-tts-flash 四款模型定价",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "上线GLM-5.3-FlasH及TokenPlus平台",
+          "items": [
+            {
+              "text": "高速版 GLM-5.2 更新为 GLM-5.3-FlasH，并新增 GLM-5 系列首款原生多模态模型",
+              "type": "release"
+            },
+            {
+              "text": "正式上线 TokenPlus 词元优选平台，提供网关智能路由、团队统一管理及 BYOK 支持",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "LMArena",
+          "logo_summary": "多模型价格下调，GPT-6.1 Sol新上榜",
+          "items": [
+            {
+              "text": "Claude Opus 5.5 (High) 价格从 $1.74/task 降至 $1.60/task",
+              "type": "pricing"
+            },
+            {
+              "text": "Deepseek V4.1 Flash (Max) 价格从 $0.13/task 降至 $0.12/task",
+              "type": "pricing"
+            },
+            {
+              "text": "GPT 6.1 Sol (Max) 以 $0.57/task 新上榜，同时移除 GPT 6 Astra (Max) 和 GPT 5.6 Terra (xHigh)",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Claude Fable 5 发布，新增文档下载功能",
+          "items": [
+            {
+              "text": "发布 Claude Fable 5 (claude-fable-5) 及 Claude Mythos 5 (claude-mythos-5)，后者面向 Project Glasswing",
+              "type": "release"
+            },
+            {
+              "text": "Compliance API 新增支持将 Claude Docs 文档下载为 Word 文件（beta）",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "changelog 更新日期至10月9日",
+          "items": [
+            {
+              "text": "changelog 最后更新日期从 2026-10-07 更新至 2026-10-09",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "HuggingFace",
+          "logo_summary": "行业列表新增论文与数据集引用",
+          "items": [
+            {
+              "text": "industry 列表新增 arxiv:2006.03677、arxiv:2010.11929 及 dataset:imagenet-21k",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-10-10",
       "stats": {

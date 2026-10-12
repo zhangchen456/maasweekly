@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_4db1fc4ce8106307dd185865e8693ba68fd05c7676774ef0a6d40a8949ecf992",
+  "sourceId": "alibaba-pricing",
+  "date": "2026-10-12",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "阿里百炼",
+  "sourceType": "pricing",
+  "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+  "title": "阿里百炼 · 定价来源更新",
+  "summary": "定价文档新增了关于 Qwen3.5-Omni 和 Qwen3-Omni 系列免费额度地域限制的说明，同时删除了多个模型的定价行（如 Qwen3-Omni-Captioner、qwen3-14b、deepseek-v4-flash 等），可能对应模型下架或定价策略调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-12T00:37:38+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "说明Qwen3.5-Omni 和 Qwen3-Omni 系列仅在华北2（北京）地域下有免费额度，其他地域均无免费额度。"
+    ],
+    "removed_lines": [
+      "128K<Token≤200K |",
+      "Qwen3-Omni-Captioner",
+      "qwen3-14b |",
+      "deepseek-v4-flash",
+      "fun-asr-2025-08-25 |",
+      "qwen-plus-2025-07-28 |",
+      "qwen-plus-2025-09-11 |",
+      "qwen3-235b-a22b |",
+      "qwen3-235b-a22b-thinking-2507 |",
+      "0.000035元/秒"
+    ],
+    "added_count": 1,
+    "removed_count": 10,
+    "raw_added_count": 1,
+    "raw_removed_count": 35
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-12.json"
+  },
+  "permalink": "/item/obs_4db1fc4ce8106307dd185865e8693ba68fd05c7676774ef0a6d40a8949ecf992/"
+}

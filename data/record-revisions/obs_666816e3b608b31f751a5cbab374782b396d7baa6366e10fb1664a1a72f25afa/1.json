@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_666816e3b608b31f751a5cbab374782b396d7baa6366e10fb1664a1a72f25afa",
+  "sourceId": "alibaba-pricing",
+  "date": "2026-10-11",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "阿里百炼",
+  "sourceType": "pricing",
+  "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+  "title": "阿里百炼 · 定价来源更新",
+  "summary": "qwen3-asr-flash-realtime |",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "qwen3-asr-flash-realtime |",
+      "qwen3-omni-flash |",
+      "qwen3-omni-flash-realtime |",
+      "qwen3-tts-flash |"
+    ],
+    "removed_lines": [
+      "100万Token（不区分模态）",
+      "125张 ＜ 生成数量 ≤ 250张",
+      "250张 ＜ 生成数量 ≤ 1250张",
+      "25张 ＜ 生成数量 ≤ 125张",
+      "32K<Token≤166K |",
+      "32K<Token≤96K |",
+      "0.330266元/张",
+      "1250张 ＜ 生成数量 ≤ 2500张",
+      "1:1画幅视频：0.08元/秒",
+      "2500张 ＜ 生成数量 ≤ 2.5万张"
+    ],
+    "added_count": 4,
+    "removed_count": 10,
+    "raw_added_count": 4,
+    "raw_removed_count": 181
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-11.json"
+  },
+  "permalink": "/item/obs_666816e3b608b31f751a5cbab374782b396d7baa6366e10fb1664a1a72f25afa/"
+}
