@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_19b6f7734405cbd68486dd5914e7f14735b809424d018a55428dd821fed63bb7",
+  "sourceId": "xai-changelog",
+  "date": "2026-10-13",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "xAI",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.x.ai/docs/release-notes",
+  "title": "xAI · 更新日志来源更新",
+  "summary": "品牌从 SpaceXAI 更新为 SpaceXSI，所有相关文档和集成同步更新，新增 Replit 集成和指南，移除旧品牌引用。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-13T02:42:37+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "grok",
+        "before": "Grok 4.5, SpaceXAI's model for coding, agentic tasks, and knowledge work, is now available on the xAI API. Priced at $2 / 1M input tokens and $6 / 1M output tokens, with configurable reasoning effort (low, medium, or high; default high). See the Grok 4.5 overview and the announcement.",
+        "after": "Grok 4.5, SpaceXSI's model for coding, agentic tasks, and knowledge work, is now available on the xAI API. Priced at $2 / 1M input tokens and $6 / 1M output tokens, with configurable reasoning effort (low, medium, or high; default high). See the Grok 4.5 overview and the announcement."
+      },
+      {
+        "key": "text-only",
+        "before": "Grok 4.6, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. See the Grok 4.6 overview and the announcement.",
+        "after": "Grok 4.6, SpaceXSI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. See the Grok 4.6 overview and the announcement."
+      },
+      {
+        "key": "grok-4.7.",
+        "before": "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast is the same model and costs 2x the standard token rates, or 1.5x for long-context requests. It's available only in Cursor and Grok Build, not on the public xAI API, and is billed through your plan there. See the Grok 4.7 overview and the announcement.",
+        "after": "Grok 4.7, SpaceXSI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast is the same model and costs 2x the standard token rates, or 1.5x for long-context requests. It's available only in Cursor and Grok Build, not on the public xAI API, and is billed through your plan there. See the Grok 4.7 overview and the announcement."
+      },
+      {
+        "key": "last updated",
+        "before": "Last updated: October 9, 2026",
+        "after": "Last updated: October 10, 2026"
+      },
+      {
+        "key": "end-user",
+        "before": "You can now send safety_identifier, an opaque end-user identifier assigned by your application, on Chat Completions, the Responses API, deferred chat completions, the Batch API, and the gRPC GetCompletionsRequest. It lets SpaceXAI attribute a policy violation to one of your end users rather than to your API key. The legacy user field is still accepted. See the Security FAQ.",
+        "after": "You can now send safety_identifier, an opaque end-user identifier assigned by your application, on Chat Completions, the Responses API, deferred chat completions, the Batch API, and the gRPC GetCompletionsRequest. It lets SpaceXSI attribute a policy violation to one of your end users rather than to your API key. The legacy user field is still accepted. See the Security FAQ."
+      }
+    ],
+    "added_lines": [
+      "Best Practices Guide",
+      "Check service statuses across all SpaceXSI products at",
+      "Image Prompting Guide",
+      "LangChain & SpaceXSI",
+      "Replit & SpaceXSI",
+      "Replit Agents can now integrate with SpaceXSI! Start empowering your agents with Grok.",
+      "SpaceXSI's coding model, trained specifically for agentic coding workflows. Currently in early access.",
+      "X Subscription"
+    ],
+    "removed_lines": [
+      "Check service statuses across all SpaceXAI products at",
+      "LangChain & SpaceXAI",
+      "Replit & SpaceXAI",
+      "Replit Agents can now integrate with SpaceXAI! Start empowering your agents with Grok.",
+      "SpaceXAI's coding model, trained specifically for agentic coding workflows. Currently in early access."
+    ],
+    "added_count": 8,
+    "removed_count": 5,
+    "raw_added_count": 13,
+    "raw_removed_count": 10
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-13.json"
+  },
+  "permalink": "/item/obs_19b6f7734405cbd68486dd5914e7f14735b809424d018a55428dd821fed63bb7/"
+}

@@ -4,6 +4,14 @@
     "start": "2026-10-12",
     "end": "2026-10-18",
     "days": {
+      "2026-10-13": {
+        "substantive": 12,
+        "jitter": 0,
+        "failed": 2,
+        "releases": 5,
+        "pricings": 2,
+        "sunsets": 2
+      },
       "2026-10-12": {
         "substantive": 8,
         "jitter": 0,
@@ -14,12 +22,108 @@
       }
     },
     "totals": {
-      "substantive": 8,
-      "releases": 3,
-      "pricings": 1,
-      "sunsets": 1
+      "substantive": 20,
+      "releases": 8,
+      "pricings": 3,
+      "sunsets": 3
     },
     "highlights": [
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-13",
+        "text": "Gemini 3.5 Flash 请求自动路由至 gemini-3.6-flash，需更新模型字符串",
+        "type": "other"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-13",
+        "text": "Gemini 3.7 Flash 请求自动路由至 gemini-3.8-flash，需更新模型字符串",
+        "type": "other"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-13",
+        "text": "新增 Gemini 3.8 Flash 指南，旧版模型在 AI Studio 中不可选",
+        "type": "release"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-13",
+        "text": "MiniMax M2.5、M2.7 系列模型将于 2026-10-19 停止新用户调用，2026-11-18 正式下线",
+        "type": "sunset"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-13",
+        "text": "M Plan 和 Token Plan 用户请求将统一路由至 M3.1 Flash Preview，原模型名保留兼容入口",
+        "type": "other"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-13",
+        "text": "qwen-audio-3.1-tts-flash 输入单价由 1.5 元上调至 1.677 元/百万 Token",
+        "type": "pricing"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-13",
+        "text": "qwen-audio-3.1-tts-flash 输出单价由 12 元上调至 13.636 元/百万 Token",
+        "type": "pricing"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-13",
+        "text": "Mistral Studio 正式发布，替代原有 Mistral AI Studio",
+        "type": "release"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-13",
+        "text": "Mistral 与 NVIDIA、Mozilla 达成合作，并宣布融资 1.7B 欧元",
+        "type": "other"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-10-13",
+        "text": "xAI 品牌更新为 SpaceXSI，相关文档和集成同步更新",
+        "type": "other"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-10-13",
+        "text": "新增 Best Practices Guide、Image Prompting Guide 及 X Subscription 文档",
+        "type": "other"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-10-13",
+        "text": "新增 Replit Agents 集成，支持 Grok 模型",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-13",
+        "text": "发布 FrontierCode 1.1 基准，用于评估 AI 代码编写能力",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-13",
+        "text": "新增 AA-3D 基准，用于评估交互式 3D 体验",
+        "type": "release"
+      },
+      {
+        "platform": "HuggingFace",
+        "date": "2026-10-13",
+        "text": "新增 Qwen/Qwen3-4B-Base 及其微调版本",
+        "type": "release"
+      },
+      {
+        "platform": "HuggingFace",
+        "date": "2026-10-13",
+        "text": "移除 nvidia/LocateAnything-3B 相关条目",
+        "type": "sunset"
+      },
       {
         "platform": "LMArena",
         "date": "2026-10-12",

@@ -4196,5 +4196,151 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-13": {
+    "highlights": [
+      {
+        "platform": "Google Gemini API",
+        "logo_summary": "Gemini 3.5/3.7 Flash 自动升级至 3.6/3.8 Flash",
+        "items": [
+          {
+            "text": "Gemini 3.5 Flash 请求自动路由至 gemini-3.6-flash，需更新模型字符串",
+            "type": "other"
+          },
+          {
+            "text": "Gemini 3.7 Flash 请求自动路由至 gemini-3.8-flash，需更新模型字符串",
+            "type": "other"
+          },
+          {
+            "text": "新增 Gemini 3.8 Flash 指南，旧版模型在 AI Studio 中不可选",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "MiniMax",
+        "logo_summary": "M2.5/M2.7 系列下线通知，迁移至 M3.1 Flash",
+        "items": [
+          {
+            "text": "MiniMax M2.5、M2.7 系列模型将于 2026-10-19 停止新用户调用，2026-11-18 正式下线",
+            "type": "sunset"
+          },
+          {
+            "text": "M Plan 和 Token Plan 用户请求将统一路由至 M3.1 Flash Preview，原模型名保留兼容入口",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "阿里百炼",
+        "logo_summary": "qwen-audio-3.1-tts-flash 定价上调",
+        "items": [
+          {
+            "text": "qwen-audio-3.1-tts-flash 输入单价由 1.5 元上调至 1.677 元/百万 Token",
+            "type": "pricing"
+          },
+          {
+            "text": "qwen-audio-3.1-tts-flash 输出单价由 12 元上调至 13.636 元/百万 Token",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Mistral AI",
+        "logo_summary": "品牌更新：Mistral Studio 及多项合作公告",
+        "items": [
+          {
+            "text": "Mistral Studio 正式发布，替代原有 Mistral AI Studio",
+            "type": "release"
+          },
+          {
+            "text": "Mistral 与 NVIDIA、Mozilla 达成合作，并宣布融资 1.7B 欧元",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "xAI",
+        "logo_summary": "品牌更新为 SpaceXSI，新增集成与指南",
+        "items": [
+          {
+            "text": "xAI 品牌更新为 SpaceXSI，相关文档和集成同步更新",
+            "type": "other"
+          },
+          {
+            "text": "新增 Best Practices Guide、Image Prompting Guide 及 X Subscription 文档",
+            "type": "other"
+          },
+          {
+            "text": "新增 Replit Agents 集成，支持 Grok 模型",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Artificial Analysis",
+        "logo_summary": "发布 FrontierCode 1.1 及 AA-3D 基准",
+        "items": [
+          {
+            "text": "发布 FrontierCode 1.1 基准，用于评估 AI 代码编写能力",
+            "type": "release"
+          },
+          {
+            "text": "新增 AA-3D 基准，用于评估交互式 3D 体验",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "HuggingFace",
+        "logo_summary": "新增 Qwen3-4B 相关模型，移除 nvidia 模型",
+        "items": [
+          {
+            "text": "新增 Qwen/Qwen3-4B-Base 及其微调版本",
+            "type": "release"
+          },
+          {
+            "text": "移除 nvidia/LocateAnything-3B 相关条目",
+            "type": "sunset"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_dacdf1c291843342c6f8fc6db2e2204002305f5effec478a196efe5567faab4a": "新增 qwen-audio-3.1-tts-flash 的输入/输出定价行，输入单价从 1.5 元上调至 1.677 元，输出单价从 12 元上调至 13.636 元，对应模型定价调整。",
+      "obs_71dd5a144c64392401124a714a13191d0f67dd9a05afa5eb5c985786bae6ef88": "新增 M2.5、M2.7 系列模型下线通知，明确停止新用户调用日期为 2026-10-19，正式下线日期为 2026-11-18，并说明存量用户迁移至 M3.1 Flash Preview 的兼容方案。",
+      "obs_5263702361a497a5e8afa4a770cfcfddd9be00044507d8eacd640b375d5d0fb6": "更新了 changelog，新增 Gemini 3.8 Flash 指南，并明确 gemini-3.5-flash 和 gemini-3.7-flash 的请求自动路由至新版本，同时移除了旧版路由说明，对应模型升级。",
+      "obs_91b07f4f583dd1f1996f3ce1114b7071778a04b6d9be6930ed4033805832d20c": "新增 'Even faster responses.' 描述，可能暗示性能提升，但无具体价格变化。",
+      "obs_6358cffc7eafdf36caab9be757c4eedaba88215619885dc28f4ed49f50ec0a02": "新增多条公告，包括 Mistral Studio 发布、与 NVIDIA/Mozilla 合作、融资 1.7B 欧元等，同时移除旧版 'Mistral AI Studio' 等条目，对应品牌更新和内容替换。",
+      "obs_ced1150d34486ffe07cb0aeb5c761fdbc8467e2c9be978daf0b875abf4a78386": "与 changelog 同步，新增 Mistral Studio 等博客文章，移除旧版 'Mistral AI Studio' 等，反映品牌和内容更新。",
+      "obs_2fae6c1e280c8cea936ceb90e1ad06f5bb365ce27b2d0965927ff8f426b981ba": "新增 Best Practices Guide、Image Prompting Guide、X Subscription 文档，可能为新增指南或订阅信息。",
+      "obs_85158e793892cbe7eb8e24fbca8f5c9c5050e5a6831fd21590bcc0493672f46d": "新增与 model_list 相同的文档条目，无价格变化。",
+      "obs_19b6f7734405cbd68486dd5914e7f14735b809424d018a55428dd821fed63bb7": "品牌从 SpaceXAI 更新为 SpaceXSI，所有相关文档和集成同步更新，新增 Replit 集成和指南，移除旧品牌引用。",
+      "obs_79b105befc98a7cfaae2f4c07c345e12e5d8a90759872c41c3600c657f695776": "与 changelog 同步，品牌更新为 SpaceXSI，新增 Replit 集成等博客内容，移除旧品牌引用。",
+      "obs_eeebe5f8cb3afdbe248ea8d3082ef7c372c98253cf6e06010da61e8332d3e355": "新增 Qwen/Qwen3-4B-Base 及其微调版本，移除 nvidia/LocateAnything-3B 相关条目，对应模型列表更新。",
+      "obs_d2826c7abbe8d7386cb3ca71bd6d235ef10e44ce3b3b11dc64eb1768854ddb7f": "新增 FrontierCode 1.1 和 AA-3D 基准，移除旧基准 AA-AgentPerf-Local 和网络安全相关条目，反映基准测试更新。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "a296ca94528ed0ac3b1b09fd20caaecab64eb5c3f30ae1f746949bf117270b64",
+      "inputRefs": [
+        "obs_19b6f7734405cbd68486dd5914e7f14735b809424d018a55428dd821fed63bb7",
+        "obs_2fae6c1e280c8cea936ceb90e1ad06f5bb365ce27b2d0965927ff8f426b981ba",
+        "obs_5263702361a497a5e8afa4a770cfcfddd9be00044507d8eacd640b375d5d0fb6",
+        "obs_6358cffc7eafdf36caab9be757c4eedaba88215619885dc28f4ed49f50ec0a02",
+        "obs_71dd5a144c64392401124a714a13191d0f67dd9a05afa5eb5c985786bae6ef88",
+        "obs_79b105befc98a7cfaae2f4c07c345e12e5d8a90759872c41c3600c657f695776",
+        "obs_85158e793892cbe7eb8e24fbca8f5c9c5050e5a6831fd21590bcc0493672f46d",
+        "obs_91b07f4f583dd1f1996f3ce1114b7071778a04b6d9be6930ed4033805832d20c",
+        "obs_ced1150d34486ffe07cb0aeb5c761fdbc8467e2c9be978daf0b875abf4a78386",
+        "obs_d2826c7abbe8d7386cb3ca71bd6d235ef10e44ce3b3b11dc64eb1768854ddb7f",
+        "obs_dacdf1c291843342c6f8fc6db2e2204002305f5effec478a196efe5567faab4a",
+        "obs_eeebe5f8cb3afdbe248ea8d3082ef7c372c98253cf6e06010da61e8332d3e355",
+        "price_269146f050cdf263d5425088d3bed93c19c29203e3c82639a8e3986451bafbb1",
+        "price_9341b5b91ca157ea5b888c307df9fbc5b16e7f4b311e2fd9de58e63860875d27"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }

@@ -1,6 +1,449 @@
 {
-  "updated_at": "2026-10-12T06:51:46+00:00",
+  "updated_at": "2026-10-13T02:42:38+00:00",
   "days": [
+    {
+      "date": "2026-10-13",
+      "stats": {
+        "total": 68,
+        "success": 66,
+        "failed": 2,
+        "changed": 14,
+        "unchanged": 52
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "| qwen-audio-3.1-tts-flash | 1.677元 | 13.636元 |",
+            "| 模型 ID（Model ID） | 输入单价（每百万 Token） | 输出单价（每百万 Token）"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| qwen-audio-3.1-tts-flash | 1.677元 | 13.636元 |",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_dacdf1c291843342c6f8fc6db2e2204002305f5effec478a196efe5567faab4a",
+          "permalink": "/item/obs_dacdf1c291843342c6f8fc6db2e2204002305f5effec478a196efe5567faab4a/"
+        },
+        {
+          "platform": "MiniMax",
+          "source_type": "model_list",
+          "url": "https://platform.minimaxi.com/docs/guides/models-intro",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 0,
+          "added_lines": [
+            "MiniMax M2.5、M2.7 系列模型下线通知随着新版本模型的推出，我们将逐步停止提供 MiniMax M2.5、M2.7 系列模型服务，并为现有用户预留迁移时间。具体安排如下：",
+            "停止向新用户开放调用：【2026年10月19日】",
+            "按量付费 API 用户存量用户可继续调用至正式下线日，正式下线后相关 API 调用将不再可用。请提前核查调用情况，并在下线前完成模型迁移。M Plan 和 Token Plan 用户M2.5、M2.7 系列模型请求将于【2026年10月19日】统一路由至 M3.1 Flash Preview。原模型名称保留作为兼容入口，用户无需修改模型名称，原有套餐用量权益不受影响。为避免影响业务，请尽快核查调用情况并提前做好模型迁移准备。感谢您一直以来对MiniMax的支持与信任。",
+            "正式下线：【2026年11月18日】"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "MiniMax M2.5、M2.7 系列模型下线通知随着新版本模型的推出，我们将逐步停止提供 MiniMax M2.5、M2.7 系列模型服务，并为现有用户预留迁移时间。具体安排如下：",
+          "raw_added_count": 4,
+          "raw_removed_count": 0,
+          "id": "obs_71dd5a144c64392401124a714a13191d0f67dd9a05afa5eb5c985786bae6ef88",
+          "permalink": "/item/obs_71dd5a144c64392401124a714a13191d0f67dd9a05afa5eb5c985786bae6ef88/"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "changelog",
+          "url": "https://ai.google.dev/gemini-api/docs/changelog",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 3,
+          "added_lines": [
+            "Gemini 3.8 Flash guide.",
+            "It is no longer available to select in Google AI Studio, and API requests to",
+            "your model string to gemini-3.6-flash (or",
+            "your model string to gemini-3.8-flash and review the"
+          ],
+          "removed_lines": [
+            "gemini-3.6-flash. Update your model string to gemini-3.6-flash (or",
+            "gemini-3.8-flash. Update your model string to gemini-3.8-flash and",
+            "review the Gemini 3.8 Flash guide."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-09 UTC.",
+              "after": "Last updated 2026-10-12 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-12 UTC.\"],[],[]]"
+            },
+            {
+              "key": "gemini-3.5-flash",
+              "before": "All requests to gemini-3.5-flash are automatically routed to",
+              "after": "gemini-3.5-flash are automatically routed to gemini-3.6-flash. Update"
+            },
+            {
+              "key": "gemini-3.7-flash",
+              "before": "All requests to gemini-3.7-flash are automatically routed to",
+              "after": "gemini-3.7-flash are automatically routed to gemini-3.8-flash. Update"
+            }
+          ],
+          "signal_preview": "Gemini 3.8 Flash guide.",
+          "raw_added_count": 8,
+          "raw_removed_count": 7,
+          "id": "obs_5263702361a497a5e8afa4a770cfcfddd9be00044507d8eacd640b375d5d0fb6",
+          "permalink": "/item/obs_5263702361a497a5e8afa4a770cfcfddd9be00044507d8eacd640b375d5d0fb6/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "pricing",
+          "url": "https://mistral.ai/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Even faster responses."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Even faster responses.",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_91b07f4f583dd1f1996f3ce1114b7071778a04b6d9be6930ed4033805832d20c",
+          "permalink": "/item/obs_91b07f4f583dd1f1996f3ce1114b7071778a04b6d9be6930ed4033805832d20c/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "changelog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 7,
+          "added_lines": [
+            "Introducing Mistral Studio.",
+            "Mistral - KI für Deutschland",
+            "Mistral Fine-tuning Hackathon",
+            "Mistral partners with NVIDIA to accelerate open frontier models",
+            "Mistral raises 1.7B€ to accelerate technological progress with AI",
+            "Mozilla and Mistral are partnering to bring open, private and multilingual AI to Firefox Smart Window.",
+            "The Mistral Non-Production License"
+          ],
+          "removed_lines": [
+            "Introducing Mistral AI Studio.",
+            "Mistral AI - KI für Deutschland",
+            "Mistral AI Fine-tuning Hackathon",
+            "Mistral AI partners with NVIDIA to accelerate open frontier models",
+            "Mistral AI raises 1.7B€ to accelerate technological progress with AI",
+            "Mozilla and Mistral AI are partnering to bring open, private and multilingual AI to Firefox Smart Window.",
+            "The Mistral AI Non-Production License"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Introducing Mistral Studio.",
+          "raw_added_count": 7,
+          "raw_removed_count": 7,
+          "id": "obs_6358cffc7eafdf36caab9be757c4eedaba88215619885dc28f4ed49f50ec0a02",
+          "permalink": "/item/obs_6358cffc7eafdf36caab9be757c4eedaba88215619885dc28f4ed49f50ec0a02/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "blog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 7,
+          "added_lines": [
+            "Introducing Mistral Studio.",
+            "Mistral - KI für Deutschland",
+            "Mistral Fine-tuning Hackathon",
+            "Mistral partners with NVIDIA to accelerate open frontier models",
+            "Mistral raises 1.7B€ to accelerate technological progress with AI",
+            "Mozilla and Mistral are partnering to bring open, private and multilingual AI to Firefox Smart Window.",
+            "The Mistral Non-Production License"
+          ],
+          "removed_lines": [
+            "Introducing Mistral AI Studio.",
+            "Mistral AI - KI für Deutschland",
+            "Mistral AI Fine-tuning Hackathon",
+            "Mistral AI partners with NVIDIA to accelerate open frontier models",
+            "Mistral AI raises 1.7B€ to accelerate technological progress with AI",
+            "Mozilla and Mistral AI are partnering to bring open, private and multilingual AI to Firefox Smart Window.",
+            "The Mistral AI Non-Production License"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Introducing Mistral Studio.",
+          "raw_added_count": 7,
+          "raw_removed_count": 7,
+          "id": "obs_ced1150d34486ffe07cb0aeb5c761fdbc8467e2c9be978daf0b875abf4a78386",
+          "permalink": "/item/obs_ced1150d34486ffe07cb0aeb5c761fdbc8467e2c9be978daf0b875abf4a78386/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "model_list",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "Best Practices Guide",
+            "Image Prompting Guide",
+            "X Subscription"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Image Prompting Guide",
+          "raw_added_count": 3,
+          "raw_removed_count": 0,
+          "id": "obs_2fae6c1e280c8cea936ceb90e1ad06f5bb365ce27b2d0965927ff8f426b981ba",
+          "permalink": "/item/obs_2fae6c1e280c8cea936ceb90e1ad06f5bb365ce27b2d0965927ff8f426b981ba/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "pricing",
+          "url": "https://docs.x.ai/docs/models",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "Best Practices Guide",
+            "Image Prompting Guide",
+            "X Subscription"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Image Prompting Guide",
+          "raw_added_count": 3,
+          "raw_removed_count": 0,
+          "id": "obs_85158e793892cbe7eb8e24fbca8f5c9c5050e5a6831fd21590bcc0493672f46d",
+          "permalink": "/item/obs_85158e793892cbe7eb8e24fbca8f5c9c5050e5a6831fd21590bcc0493672f46d/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 5,
+          "added_lines": [
+            "Best Practices Guide",
+            "Check service statuses across all SpaceXSI products at",
+            "Image Prompting Guide",
+            "LangChain & SpaceXSI",
+            "Replit & SpaceXSI",
+            "Replit Agents can now integrate with SpaceXSI! Start empowering your agents with Grok.",
+            "SpaceXSI's coding model, trained specifically for agentic coding workflows. Currently in early access.",
+            "X Subscription"
+          ],
+          "removed_lines": [
+            "Check service statuses across all SpaceXAI products at",
+            "LangChain & SpaceXAI",
+            "Replit & SpaceXAI",
+            "Replit Agents can now integrate with SpaceXAI! Start empowering your agents with Grok.",
+            "SpaceXAI's coding model, trained specifically for agentic coding workflows. Currently in early access."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "grok",
+              "before": "Grok 4.5, SpaceXAI's model for coding, agentic tasks, and knowledge work, is now available on the xAI API. Priced at $2 / 1M input tokens and $6 / 1M output tokens, with configurable reasoning effort (low, medium, or high; default high). See the Grok 4.5 overview and the announcement.",
+              "after": "Grok 4.5, SpaceXSI's model for coding, agentic tasks, and knowledge work, is now available on the xAI API. Priced at $2 / 1M input tokens and $6 / 1M output tokens, with configurable reasoning effort (low, medium, or high; default high). See the Grok 4.5 overview and the announcement."
+            },
+            {
+              "key": "text-only",
+              "before": "Grok 4.6, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. See the Grok 4.6 overview and the announcement.",
+              "after": "Grok 4.6, SpaceXSI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. See the Grok 4.6 overview and the announcement."
+            },
+            {
+              "key": "grok-4.7.",
+              "before": "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast is the same model and costs 2x the standard token rates, or 1.5x for long-context requests. It's available only in Cursor and Grok Build, not on the public xAI API, and is billed through your plan there. See the Grok 4.7 overview and the announcement.",
+              "after": "Grok 4.7, SpaceXSI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast is the same model and costs 2x the standard token rates, or 1.5x for long-context requests. It's available only in Cursor and Grok Build, not on the public xAI API, and is billed through your plan there. See the Grok 4.7 overview and the announcement."
+            },
+            {
+              "key": "last updated",
+              "before": "Last updated: October 9, 2026",
+              "after": "Last updated: October 10, 2026"
+            },
+            {
+              "key": "end-user",
+              "before": "You can now send safety_identifier, an opaque end-user identifier assigned by your application, on Chat Completions, the Responses API, deferred chat completions, the Batch API, and the gRPC GetCompletionsRequest. It lets SpaceXAI attribute a policy violation to one of your end users rather than to your API key. The legacy user field is still accepted. See the Security FAQ.",
+              "after": "You can now send safety_identifier, an opaque end-user identifier assigned by your application, on Chat Completions, the Responses API, deferred chat completions, the Batch API, and the gRPC GetCompletionsRequest. It lets SpaceXSI attribute a policy violation to one of your end users rather than to your API key. The legacy user field is still accepted. See the Security FAQ."
+            }
+          ],
+          "signal_preview": "Check service statuses across all SpaceXSI products at",
+          "raw_added_count": 13,
+          "raw_removed_count": 10,
+          "id": "obs_19b6f7734405cbd68486dd5914e7f14735b809424d018a55428dd821fed63bb7",
+          "permalink": "/item/obs_19b6f7734405cbd68486dd5914e7f14735b809424d018a55428dd821fed63bb7/"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 5,
+          "added_lines": [
+            "Best Practices Guide",
+            "Check service statuses across all SpaceXSI products at",
+            "Image Prompting Guide",
+            "LangChain & SpaceXSI",
+            "Replit & SpaceXSI",
+            "Replit Agents can now integrate with SpaceXSI! Start empowering your agents with Grok.",
+            "SpaceXSI's coding model, trained specifically for agentic coding workflows. Currently in early access.",
+            "X Subscription"
+          ],
+          "removed_lines": [
+            "Check service statuses across all SpaceXAI products at",
+            "LangChain & SpaceXAI",
+            "Replit & SpaceXAI",
+            "Replit Agents can now integrate with SpaceXAI! Start empowering your agents with Grok.",
+            "SpaceXAI's coding model, trained specifically for agentic coding workflows. Currently in early access."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "grok",
+              "before": "Grok 4.5, SpaceXAI's model for coding, agentic tasks, and knowledge work, is now available on the xAI API. Priced at $2 / 1M input tokens and $6 / 1M output tokens, with configurable reasoning effort (low, medium, or high; default high). See the Grok 4.5 overview and the announcement.",
+              "after": "Grok 4.5, SpaceXSI's model for coding, agentic tasks, and knowledge work, is now available on the xAI API. Priced at $2 / 1M input tokens and $6 / 1M output tokens, with configurable reasoning effort (low, medium, or high; default high). See the Grok 4.5 overview and the announcement."
+            },
+            {
+              "key": "text-only",
+              "before": "Grok 4.6, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. See the Grok 4.6 overview and the announcement.",
+              "after": "Grok 4.6, SpaceXSI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. See the Grok 4.6 overview and the announcement."
+            },
+            {
+              "key": "grok-4.7.",
+              "before": "Grok 4.7, SpaceXAI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast is the same model and costs 2x the standard token rates, or 1.5x for long-context requests. It's available only in Cursor and Grok Build, not on the public xAI API, and is billed through your plan there. See the Grok 4.7 overview and the announcement.",
+              "after": "Grok 4.7, SpaceXSI's frontier model for coding, agentic tasks, and knowledge work, is now available on the xAI API as grok-4.7. It has a 500k context window, text and image inputs with text-only output, and no text output limit. Pricing is $2 / $0.50 / $6 per 1M tokens (input / cached input / output) below 200k prompt tokens, and $4 / $1 / $12 above. Reasoning effort supports low, medium, high (default), and xhigh. On the Responses API, grok-4.7 always returns reasoning.encrypted_content, even when include does not list it. It is also served on the US regional endpoint. Grok 4.7 Fast is the same model and costs 2x the standard token rates, or 1.5x for long-context requests. It's available only in Cursor and Grok Build, not on the public xAI API, and is billed through your plan there. See the Grok 4.7 overview and the announcement."
+            },
+            {
+              "key": "last updated",
+              "before": "Last updated: October 9, 2026",
+              "after": "Last updated: October 10, 2026"
+            },
+            {
+              "key": "end-user",
+              "before": "You can now send safety_identifier, an opaque end-user identifier assigned by your application, on Chat Completions, the Responses API, deferred chat completions, the Batch API, and the gRPC GetCompletionsRequest. It lets SpaceXAI attribute a policy violation to one of your end users rather than to your API key. The legacy user field is still accepted. See the Security FAQ.",
+              "after": "You can now send safety_identifier, an opaque end-user identifier assigned by your application, on Chat Completions, the Responses API, deferred chat completions, the Batch API, and the gRPC GetCompletionsRequest. It lets SpaceXSI attribute a policy violation to one of your end users rather than to your API key. The legacy user field is still accepted. See the Security FAQ."
+            }
+          ],
+          "signal_preview": "Check service statuses across all SpaceXSI products at",
+          "raw_added_count": 13,
+          "raw_removed_count": 10,
+          "id": "obs_79b105befc98a7cfaae2f4c07c345e12e5d8a90759872c41c3600c657f695776",
+          "permalink": "/item/obs_79b105befc98a7cfaae2f4c07c345e12e5d8a90759872c41c3600c657f695776/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "\"arxiv:2309.00071\",",
+            "\"base_model:Qwen/Qwen3-4B-Base\",",
+            "\"base_model:finetune:Qwen/Qwen3-4B-Base\","
+          ],
+          "removed_lines": [
+            "\"base_model:nvidia/LocateAnything-3B\",",
+            "\"base_model:quantized:nvidia/LocateAnything-3B\","
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "\"base_model:Qwen/Qwen3-4B-Base\",",
+          "raw_added_count": 47,
+          "raw_removed_count": 52,
+          "id": "obs_eeebe5f8cb3afdbe248ea8d3082ef7c372c98253cf6e06010da61e8332d3e355",
+          "permalink": "/item/obs_eeebe5f8cb3afdbe248ea8d3082ef7c372c98253cf6e06010da61e8332d3e355/"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 22,
+          "removed_count": 2,
+          "added_lines": [
+            "Agentic software engineering in open-source repositories",
+            "Announcing AA-3D: a benchmark for interactive 3D experiences",
+            "Announcing FrontierCode 1.1 on Artificial Analysis",
+            "Announcing FrontierCode on Artificial Analysis: can AI models write code maintainers would merge?",
+            "AnthropicGoogleMetaOpenAIAnthropic + CognitionSpaceXAIZ AIKimiAlibabaDeepSeek",
+            "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiAlibabaZ AIStepFunKimiDeepSeekMistralInstitute of Foundation ModelsMiniMaxThinking Machines",
+            "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiZ AIDeepSeekOther Models",
+            "Elo from blind pairwise votes, with 95% confidence intervals · Higher is better",
+            "FrontierCode 1.1",
+            "Gemini 4 Argon: Google is back as one of the top three labs in intelligence achievedSee more",
+            "Measuring how well AI models build interactive 3D experiences, ranked by blind votes from our recruited panel",
+            "Measuring how well AI models turn a written brief into a working three.js scene",
+            "Muse Wonder (Max)",
+            "Muse Wonder Full (Max)",
+            "Muse Wonder and Muse Wonder Full: a material jump in intelligence over previous Meta models",
+            "New Speech to Text model · 12 Oct",
+            "New article published · 12 Oct",
+            "New language model evaluation · 12 Oct",
+            "No publicly available API",
+            "StepFunZ AIXiaomiMiniMaxOpenAIAnthropicMistralSpaceXAINVIDIAGoogleAlibabaMetaDeepSeekKimi",
+            "Testing whether models write code that maintainers of real repositories would merge",
+            "Zoom Scribe V2 Pro"
+          ],
+          "removed_lines": [
+            "AA-AgentPerf-Local: Benchmarking local AI agents on laptops and workstations",
+            "Addressing an urgent need to step up cyber defense capability"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Agentic software engineering in open-source repositories",
+          "raw_added_count": 30,
+          "raw_removed_count": 25,
+          "id": "obs_d2826c7abbe8d7386cb3ca71bd6d235ef10e44ce3b3b11dc64eb1768854ddb7f",
+          "permalink": "/item/obs_d2826c7abbe8d7386cb3ca71bd6d235ef10e44ce3b3b11dc64eb1768854ddb7f/"
+        }
+      ],
+      "first_fetch": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "first_fetch",
+          "content_length": 19683
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "first_fetch",
+          "content_length": 8337
+        }
+      ],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "fetch_failed",
+          "error": "反爬挑战页 (raw_len=5842)"
+        }
+      ]
+    },
     {
       "date": "2026-10-12",
       "stats": {
