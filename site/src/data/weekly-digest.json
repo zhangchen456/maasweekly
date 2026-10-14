@@ -4,6 +4,14 @@
     "start": "2026-10-12",
     "end": "2026-10-18",
     "days": {
+      "2026-10-14": {
+        "substantive": 13,
+        "jitter": 2,
+        "failed": 4,
+        "releases": 4,
+        "pricings": 3,
+        "sunsets": 0
+      },
       "2026-10-13": {
         "substantive": 12,
         "jitter": 0,
@@ -22,12 +30,60 @@
       }
     },
     "totals": {
-      "substantive": 20,
-      "releases": 8,
-      "pricings": 3,
+      "substantive": 33,
+      "releases": 12,
+      "pricings": 6,
       "sunsets": 3
     },
     "highlights": [
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-14",
+        "text": "Gemini 4 Argon (gemini-4-argon) 正式 GA，定位旗舰推理模型，支持 1M 上下文与 1M 输出 token",
+        "type": "release"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-14",
+        "text": "Gemini 4 Argon 输入 $2/百万 tokens，输出 $10/百万 tokens，缓存读取 $0.1/百万 tokens，12月1日起生效",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-14",
+        "text": "Gemini 4 Argon 不支持 Free tier 和 Google AI Pro 计划，仅限付费层使用",
+        "type": "other"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-14",
+        "text": "Gemini 4 Argon 在 Vertex AI 上线，主打深度工作场景（编码、金融、法律、网络安全、科学）",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-14",
+        "text": "新增 Gemini 4 Argon Cyber Permissive 版本，面向防御性网络安全用例，需 allowlist 访问",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-14",
+        "text": "Vertex AI 定价页新增 Gemini 4 Argon 定价，并调整音频输出等计费单位，部分模型标注促销折扣",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-14",
+        "text": "Claude Opus 5.5 定价示例更新：输入 $4/百万 tokens，输出 $20/百万 tokens，缓存读取 $4×0.05/百万 tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-14",
+        "text": "发布 Artificial Analysis Decision Index，用于评估分类、工具调用、知识与推理能力",
+        "type": "release"
+      },
       {
         "platform": "Google Gemini API",
         "date": "2026-10-13",

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_f0661e92506bdf5674ae734ac57ee62a54748e03c174f73619a79d3624b4cd74",
+  "sourceId": "anthropic-pricing",
+  "date": "2026-10-14",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "pricing",
+  "sourceUrl": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+  "title": "Anthropic · 定价来源更新",
+  "summary": "定价示例从 Claude Opus 5 更新为 Claude Opus 5.5，同时输入/输出/缓存读取价格均下调（输入 $5→$4，输出 $25→$20，缓存读取 $5×0.1→$4×0.05），总费用示例从 $0.705 降至 $0.428，反映新模型定价更低。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-14T00:24:10+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "one-hour",
+        "before": "A one-hour coding session using Claude Opus 5 that consumes 50,000 input tokens and 15,000 output tokens:",
+        "after": "A one-hour coding session using Claude Opus 5.5 that consumes 50,000 input tokens and 15,000 output tokens:"
+      }
+    ],
+    "added_lines": [
+      "| Cache read tokens | 40,000 × $4 × 0.05 / 1,000,000 | $0.008",
+      "| Input tokens | 50,000 × $4 / 1,000,000 | $0.20",
+      "| Output tokens | 15,000 × $20 / 1,000,000 | $0.30",
+      "| Total | | $0.428",
+      "| Total | | $0.58",
+      "| Uncached input tokens | 10,000 × $4 / 1,000,000 | $0.04"
+    ],
+    "removed_lines": [
+      "| Cache read tokens | 40,000 × $5 × 0.1 / 1,000,000 | $0.02",
+      "| Input tokens | 50,000 × $5 / 1,000,000 | $0.25",
+      "| Output tokens | 15,000 × $25 / 1,000,000 | $0.375",
+      "| Total | | $0.525",
+      "| Total | | $0.705",
+      "| Uncached input tokens | 10,000 × $5 / 1,000,000 | $0.05"
+    ],
+    "added_count": 6,
+    "removed_count": 6,
+    "raw_added_count": 7,
+    "raw_removed_count": 7
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-14.json"
+  },
+  "permalink": "/item/obs_f0661e92506bdf5674ae734ac57ee62a54748e03c174f73619a79d3624b4cd74/"
+}

@@ -11421,5 +11421,52 @@
       ],
       "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
     }
+  ],
+  "2026-10-14": [
+    {
+      "id": "price_ca52ecac07a2febb96a23429709beaa85728dd1b5ba97c23891b7f9fb702ba7d",
+      "provider": "google",
+      "model": "gemini-4-argon",
+      "component": "input",
+      "current": "2.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_dbae208eb173c089c05f099e74c3df7ed3d40f3fb19faac9e1084ddc2d2a711b",
+      "provider": "google",
+      "model": "gemini-4-argon",
+      "component": "output",
+      "current": "10.000000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "id": "price_d028f3c32b66292135b032688aa11495716f608df9e1ed087cc895f9eb336e65",
+      "provider": "google",
+      "model": "gemini-4-argon",
+      "component": "cache_read",
+      "current": "0.100000",
+      "currency": "USD",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://ai.google.dev/gemini-api/docs/pricing"
+    }
   ]
 }

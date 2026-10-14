@@ -4342,5 +4342,104 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-14": {
+    "highlights": [
+      {
+        "platform": "Google Gemini API",
+        "logo_summary": "Gemini 4 Argon 正式发布，定价与文档全面更新",
+        "items": [
+          {
+            "text": "Gemini 4 Argon (gemini-4-argon) 正式 GA，定位旗舰推理模型，支持 1M 上下文与 1M 输出 token",
+            "type": "release"
+          },
+          {
+            "text": "Gemini 4 Argon 输入 $2/百万 tokens，输出 $10/百万 tokens，缓存读取 $0.1/百万 tokens，12月1日起生效",
+            "type": "pricing"
+          },
+          {
+            "text": "Gemini 4 Argon 不支持 Free tier 和 Google AI Pro 计划，仅限付费层使用",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Google Vertex AI",
+        "logo_summary": "Gemini 4 Argon 上架，含网络安全专用版本，定价调整",
+        "items": [
+          {
+            "text": "Gemini 4 Argon 在 Vertex AI 上线，主打深度工作场景（编码、金融、法律、网络安全、科学）",
+            "type": "release"
+          },
+          {
+            "text": "新增 Gemini 4 Argon Cyber Permissive 版本，面向防御性网络安全用例，需 allowlist 访问",
+            "type": "release"
+          },
+          {
+            "text": "Vertex AI 定价页新增 Gemini 4 Argon 定价，并调整音频输出等计费单位，部分模型标注促销折扣",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Anthropic",
+        "logo_summary": "Claude Opus 5.5 定价示例更新，价格下调",
+        "items": [
+          {
+            "text": "Claude Opus 5.5 定价示例更新：输入 $4/百万 tokens，输出 $20/百万 tokens，缓存读取 $4×0.05/百万 tokens",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Artificial Analysis",
+        "logo_summary": "发布决策指数，替换 FrontierCode 1.1 基准",
+        "items": [
+          {
+            "text": "发布 Artificial Analysis Decision Index，用于评估分类、工具调用、知识与推理能力",
+            "type": "release"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_27ba501b4bb8d040b303dfeb2c4a97b25c7258f0ef35848080e40867beeb7c9a": "新增『Submit desktop-only plugins』条目，可能为桌面端插件提交功能，但无更多细节，属于功能新增而非模型变化。",
+      "obs_d88af368769ce48b4e1fd4badd751c25eaeb4e683a893746e6a814b4e5892f60": "新增『Submit desktop-only plugins』，与定价无直接关联，可能为页面导航或功能入口，未涉及价格调整。",
+      "obs_ccc1a05344e8d741623efd0e2a0ce4fa8644465e4b1b976d655fb0e132fc18db": "新增『Submit desktop-only plugins』，表明 OpenAI 更新日志中记录了桌面端插件提交功能，属于产品功能更新。",
+      "obs_a11cc9c5a3fa5a2684bc5908be0e3f41ed39b5be2c2c8fa43cce2649d0267b9b": "新增『Submit desktop-only plugins』，博客文章可能介绍了桌面端插件提交功能，但未提供具体内容。",
+      "obs_f0661e92506bdf5674ae734ac57ee62a54748e03c174f73619a79d3624b4cd74": "定价示例从 Claude Opus 5 更新为 Claude Opus 5.5，同时输入/输出/缓存读取价格均下调（输入 $5→$4，输出 $25→$20，缓存读取 $5×0.1→$4×0.05），总费用示例从 $0.705 降至 $0.428，反映新模型定价更低。",
+      "obs_ff9ee88dc29e363a2f30e29b5d8a51199aaed88415d092a861d5f889b4356e00": "模型列表将 Gemini 3.1 Pro 替换为 Gemini 4 Argon，并新增『All Gemini 4 models』分组，描述为旗舰推理模型，支持 1M 上下文和长输出，删除旧模型描述，表明 Gemini 4 Argon 成为新旗舰。",
+      "obs_2238dee6eaaa102d1dd2b5a7a5aa11c31c1f5bb9733853fe9488ba1394ca5c99": "定价页新增 Gemini 4 Argon 的输入/输出/缓存读取价格（$2/$10/$0.1 每百万 tokens），并注明 12月1日起生效，且不支持 Free tier 和 Pro 计划，同时移除旧模型定价，对应新模型上架。",
+      "obs_5ff8b160d0ff51383be8958a245054561b97383d5ccf07bae2a590f7a286f735": "更新日志将 Gemini 3.8 Flash 替换为 Gemini 4 Argon GA 发布，并新增迁移指南链接，说明 Gemini 4 Argon 正式可用。",
+      "obs_a4c38e1a77a963d07f7fc8d9f7f4a9f9052eaa7b34ca586d22f7ffe9542fc687": "博客新增 Gemini 4 Argon 开发者可用文章，并提及 Gemini 4 在 Gemini app 中可用，删除旧内容，聚焦新模型发布。",
+      "obs_459bfe923fef253ae24b5518f6df68ee5f9dc38a7f55b5557604b9d02e83da8b": "模型列表新增 Gemini 4 Argon 及其网络安全版本（Cyber Permissive），描述强调深度工作能力，删除旧模型描述，表明新模型上架。",
+      "obs_c3f01a6710037f5e4644a315148274be20c64cc7c8fa9813216c2eae06ef0a92": "定价页新增 Gemini 4 Argon 定价，并调整音频输出计费单位（从 /1M tokens 改为 /1,000,000 count），部分模型标注促销折扣，删除旧价格，反映新模型定价和计费方式更新。",
+      "obs_c9709b6b30d3f17ed97d6fb6bc36e93c84f94da7e009dad1a9204d6e67c26bee": "博客新增 Gemini 4 Argon 在 Google Cloud 可用的文章，删除旧文章，聚焦新模型发布。",
+      "obs_ab4b50884ad9ba75b70844fdf48359cf9eeb7f694612dfcea42c779c7db99b25": "新增 Decision Index 基准，删除 FrontierCode 1.1 和 GDPval-AA 相关内容，表明行业基准从代码能力转向决策能力评估。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "8d681254f330b9a470d77b3811c46d5281f44fe31753d7350cf5b4f38c39c376",
+      "inputRefs": [
+        "obs_2238dee6eaaa102d1dd2b5a7a5aa11c31c1f5bb9733853fe9488ba1394ca5c99",
+        "obs_27ba501b4bb8d040b303dfeb2c4a97b25c7258f0ef35848080e40867beeb7c9a",
+        "obs_459bfe923fef253ae24b5518f6df68ee5f9dc38a7f55b5557604b9d02e83da8b",
+        "obs_5ff8b160d0ff51383be8958a245054561b97383d5ccf07bae2a590f7a286f735",
+        "obs_a11cc9c5a3fa5a2684bc5908be0e3f41ed39b5be2c2c8fa43cce2649d0267b9b",
+        "obs_a4c38e1a77a963d07f7fc8d9f7f4a9f9052eaa7b34ca586d22f7ffe9542fc687",
+        "obs_ab4b50884ad9ba75b70844fdf48359cf9eeb7f694612dfcea42c779c7db99b25",
+        "obs_c3f01a6710037f5e4644a315148274be20c64cc7c8fa9813216c2eae06ef0a92",
+        "obs_c9709b6b30d3f17ed97d6fb6bc36e93c84f94da7e009dad1a9204d6e67c26bee",
+        "obs_ccc1a05344e8d741623efd0e2a0ce4fa8644465e4b1b976d655fb0e132fc18db",
+        "obs_d88af368769ce48b4e1fd4badd751c25eaeb4e683a893746e6a814b4e5892f60",
+        "obs_f0661e92506bdf5674ae734ac57ee62a54748e03c174f73619a79d3624b4cd74",
+        "obs_ff9ee88dc29e363a2f30e29b5d8a51199aaed88415d092a861d5f889b4356e00",
+        "price_ca52ecac07a2febb96a23429709beaa85728dd1b5ba97c23891b7f9fb702ba7d",
+        "price_d028f3c32b66292135b032688aa11495716f608df9e1ed087cc895f9eb336e65",
+        "price_dbae208eb173c089c05f099e74c3df7ed3d40f3fb19faac9e1084ddc2d2a711b"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }

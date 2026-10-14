@@ -1,6 +1,530 @@
 {
-  "updated_at": "2026-10-13T02:42:38+00:00",
+  "updated_at": "2026-10-14T00:24:10+00:00",
   "days": [
+    {
+      "date": "2026-10-14",
+      "stats": {
+        "total": 68,
+        "success": 64,
+        "failed": 4,
+        "changed": 15,
+        "unchanged": 49
+      },
+      "changed": [
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Submit desktop-only plugins"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Submit desktop-only plugins",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_27ba501b4bb8d040b303dfeb2c4a97b25c7258f0ef35848080e40867beeb7c9a",
+          "permalink": "/item/obs_27ba501b4bb8d040b303dfeb2c4a97b25c7258f0ef35848080e40867beeb7c9a/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Submit desktop-only plugins"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Submit desktop-only plugins",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_d88af368769ce48b4e1fd4badd751c25eaeb4e683a893746e6a814b4e5892f60",
+          "permalink": "/item/obs_d88af368769ce48b4e1fd4badd751c25eaeb4e683a893746e6a814b4e5892f60/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Submit desktop-only plugins"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Submit desktop-only plugins",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_ccc1a05344e8d741623efd0e2a0ce4fa8644465e4b1b976d655fb0e132fc18db",
+          "permalink": "/item/obs_ccc1a05344e8d741623efd0e2a0ce4fa8644465e4b1b976d655fb0e132fc18db/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Submit desktop-only plugins"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Submit desktop-only plugins",
+          "raw_added_count": 1,
+          "raw_removed_count": 0,
+          "id": "obs_a11cc9c5a3fa5a2684bc5908be0e3f41ed39b5be2c2c8fa43cce2649d0267b9b",
+          "permalink": "/item/obs_a11cc9c5a3fa5a2684bc5908be0e3f41ed39b5be2c2c8fa43cce2649d0267b9b/"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "pricing",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 6,
+          "added_lines": [
+            "| Cache read tokens | 40,000 × $4 × 0.05 / 1,000,000 | $0.008",
+            "| Input tokens | 50,000 × $4 / 1,000,000 | $0.20",
+            "| Output tokens | 15,000 × $20 / 1,000,000 | $0.30",
+            "| Total | | $0.428",
+            "| Total | | $0.58",
+            "| Uncached input tokens | 10,000 × $4 / 1,000,000 | $0.04"
+          ],
+          "removed_lines": [
+            "| Cache read tokens | 40,000 × $5 × 0.1 / 1,000,000 | $0.02",
+            "| Input tokens | 50,000 × $5 / 1,000,000 | $0.25",
+            "| Output tokens | 15,000 × $25 / 1,000,000 | $0.375",
+            "| Total | | $0.525",
+            "| Total | | $0.705",
+            "| Uncached input tokens | 10,000 × $5 / 1,000,000 | $0.05"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "one-hour",
+              "before": "A one-hour coding session using Claude Opus 5 that consumes 50,000 input tokens and 15,000 output tokens:",
+              "after": "A one-hour coding session using Claude Opus 5.5 that consumes 50,000 input tokens and 15,000 output tokens:"
+            }
+          ],
+          "signal_preview": "| Cache read tokens | 40,000 × $4 × 0.05 / 1,000,000 | $0.008",
+          "raw_added_count": 7,
+          "raw_removed_count": 7,
+          "id": "obs_f0661e92506bdf5674ae734ac57ee62a54748e03c174f73619a79d3624b4cd74",
+          "permalink": "/item/obs_f0661e92506bdf5674ae734ac57ee62a54748e03c174f73619a79d3624b4cd74/"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "model_list",
+          "url": "https://ai.google.dev/gemini-api/docs/models",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 1,
+          "added_lines": [
+            "All Gemini 4 models",
+            "Our flagship reasoning model with a unified 1M context window and long decodes up to 1M tokens.",
+            "gemini-4-argon",
+            "| Gemini 4 Argon"
+          ],
+          "removed_lines": [
+            "Advanced intelligence, complex problem-solving skills, and powerful agentic and vibe coding capabilities."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "gemini",
+              "before": "Gemini 3.1 Pro",
+              "after": "Gemini 4 Argon"
+            },
+            {
+              "key": "gemini",
+              "before": "Gemini 3.8 Flash is now available. Try it out.",
+              "after": "Gemini 4 Argon is now available. Try it out."
+            },
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-09 UTC.",
+              "after": "Last updated 2026-10-13 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-13 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Our flagship reasoning model with a unified 1M context window and long decodes up to 1M tokens.",
+          "raw_added_count": 8,
+          "raw_removed_count": 5,
+          "id": "obs_ff9ee88dc29e363a2f30e29b5d8a51199aaed88415d092a861d5f889b4356e00",
+          "permalink": "/item/obs_ff9ee88dc29e363a2f30e29b5d8a51199aaed88415d092a861d5f889b4356e00/"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 23,
+          "removed_count": 0,
+          "added_lines": [
+            "$0.10 starting December 1, 2026.",
+            "$0.20 starting December 1, 2026.",
+            "$0.36 starting December 1, 2026.",
+            "$10.00 starting December 1, 2026.",
+            "$2.00 starting December 1, 2026.",
+            "$20.00 starting December 1, 2026.",
+            "$36.00 starting December 1, 2026.",
+            "$4.00 starting December 1, 2026.",
+            "$7.20 starting December 1, 2026.",
+            "Gemini 4 Argon is now available. Try it out.",
+            "Implicit caching only (explicit caching is not supported).",
+            "Note: Gemini 4 Argon is not available on the Free tier or on the Google AI Pro plan.",
+            "Our flagship reasoning model, built for complex software engineering, deep mathematical and scientific problem solving, autonomous multi-step agents, and long-decode generation up to 1M tokens.",
+            "gemini-4-argon",
+            "| $0.05 through November 30, 2026.",
+            "| $0.10 through November 30, 2026.",
+            "| $0.18 through November 30, 2026.",
+            "| $1.00 through November 30, 2026.",
+            "| $10.00 through November 30, 2026.",
+            "| $18.00 through November 30, 2026.",
+            "| $2.00 through November 30, 2026.",
+            "| $3.60 through November 30, 2026.",
+            "| $5.00 through November 30, 2026."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "gemini",
+              "before": "Gemini 3.8 Flash is now available. Try it out.",
+              "after": "Gemini 4 Argon"
+            },
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-09 UTC.",
+              "after": "Last updated 2026-10-13 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-13 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "$0.10 starting December 1, 2026.",
+          "raw_added_count": 26,
+          "raw_removed_count": 3,
+          "id": "obs_2238dee6eaaa102d1dd2b5a7a5aa11c31c1f5bb9733853fe9488ba1394ca5c99",
+          "permalink": "/item/obs_2238dee6eaaa102d1dd2b5a7a5aa11c31c1f5bb9733853fe9488ba1394ca5c99/"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "changelog",
+          "url": "https://ai.google.dev/gemini-api/docs/changelog",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 0,
+          "added_lines": [
+            "For API changes, pricing, and migration guidance, see",
+            "Gemini 4 Argon (gemini-4-argon) generally available (GA): Released",
+            "Gemini 4 Argon (gemini-4-argon),",
+            "What's new in Gemini 4 Argon.",
+            "our most capable model built for complex coding, agentic, math, and science"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "gemini",
+              "before": "Gemini 3.8 Flash is now available. Try it out.",
+              "after": "Gemini 4 Argon is now available. Try it out."
+            },
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-12 UTC.",
+              "after": "Last updated 2026-10-13 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-12 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-13 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "For API changes, pricing, and migration guidance, see",
+          "raw_added_count": 9,
+          "raw_removed_count": 3,
+          "id": "obs_5ff8b160d0ff51383be8958a245054561b97383d5ccf07bae2a590f7a286f735",
+          "permalink": "/item/obs_5ff8b160d0ff51383be8958a245054561b97383d5ccf07bae2a590f7a286f735/"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "Gemini 4 Argon is now available for developers.",
+            "Gemini 4 is now available in the Gemini app"
+          ],
+          "removed_lines": [
+            "Pairing Google Antigravity with Gemini 3.7 Flash solves notable multi-agent math and engineering problems.",
+            "4 ways to tackle household chores with Gemini"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Gemini 4 Argon is now available for developers.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_a4c38e1a77a963d07f7fc8d9f7f4a9f9052eaa7b34ca586d22f7ffe9542fc687",
+          "permalink": "/item/obs_a4c38e1a77a963d07f7fc8d9f7f4a9f9052eaa7b34ca586d22f7ffe9542fc687/"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 11,
+          "removed_count": 7,
+          "added_lines": [
+            "A version of Gemini 4 Argon for defensive cybersecurity use cases. Available behind an allowlist.",
+            "All Gemini models can understand the following languages.",
+            "Deep multi-step reasoning with configurable thinking levels",
+            "Excels across coding, finance, legal, cybersecurity, and science",
+            "Gemini 4 Argon",
+            "Gemini 4 Argon Cyber Permissive (Gemini Frontier Cyber Model)",
+            "Gemini models that are capable of text responses can",
+            "Google's frontier model that excels at deep work in complex, real-world tasks",
+            "Google's frontier model that excels at deep work in complex, real-world tasks across domains including coding, finance, legal, cybersecurity, and science.",
+            "Long-output generation up to 1 million tokens",
+            "also respond in these languages:"
+          ],
+          "removed_lines": [
+            "All the Gemini models can understand and respond in the",
+            "Capable tool orchestration",
+            "Optimized for low latency and high-volume traffic",
+            "Our fast, budget-friendly way to power your everyday applications",
+            "Precise document understanding",
+            "following languages:",
+            "3.5 Flash-Lite"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-09 UTC.",
+              "after": "Last updated 2026-10-13 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-13 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "A version of Gemini 4 Argon for defensive cybersecurity use cases. Available behind an allowlist.",
+          "raw_added_count": 13,
+          "raw_removed_count": 9,
+          "id": "obs_459bfe923fef253ae24b5518f6df68ee5f9dc38a7f55b5557604b9d02e83da8b",
+          "permalink": "/item/obs_459bfe923fef253ae24b5518f6df68ee5f9dc38a7f55b5557604b9d02e83da8b/"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 18,
+          "removed_count": 6,
+          "added_lines": [
+            "$2.50 per 1,000 prompts. | $2.50 / 1,000 count",
+            "(Starting December 1, 2026),",
+            "* Promotional pricing provided through 50% credits back on net spend on select models within a given period (promotion period for CodeMender using these models is same as the promotion period on select models)",
+            "* Promotional pricing provided through 50% credits back on net spend on select models within a given period. Promotional pricing does not apply to Gemini 4 Argon Cyber Permissive.",
+            "A “Grounding Prompt” is an End User prompt that Customer submits to Gemini for which Gemini makes one or more queries to a Google web index (each a “Grounding Query”) . You will be charged for each individual Grounding Query performed.",
+            "Audio Output | $18.00 / 1,000,000 count",
+            "Audio Output | $6.00 / 1,000,000 count",
+            "Audio Output | $9.00 / 1,000,000 count",
+            "Cache tokens | $1.50 | $1.50",
+            "Function declarations are included in the input token count.",
+            "Gemini 4 Argon",
+            "Gemini 4 Argon Cyber Permissive |",
+            "Gemini 4 Argon |",
+            "Gemini 4 Argon*",
+            "Includes 5,000 Grounding Queries per month at no charge, aggregated across all Gemini 3 and Gemini 4 models.",
+            "Includes 5,000 search queries per month at no charge, aggregated across all Gemini 3 and Gemini 4 models.",
+            "Input tokens | $4.00 | $4.00",
+            "Maps queries exceeding those limits are billed at $14 per 1,000 queries. A customer-submitted request to Gemini may result in one or more queries to Google Maps. You will be charged for each individual query performed."
+          ],
+          "removed_lines": [
+            "$0.50 / 1M tokens",
+            "$1.00 / 1M tokens",
+            "$12.00 / 1M tokens",
+            "$18.00 / 1M tokens",
+            "$6.00 / 1M tokens",
+            "$9.00 / 1M  tokens"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "audio output",
+              "before": "Audio Output |",
+              "after": "Audio Output | $12.00 / 1,000,000 count"
+            },
+            {
+              "key": "gemini",
+              "before": "Gemini 3.6 Flash |",
+              "after": "Gemini 3.6 Flash * |"
+            },
+            {
+              "key": "gemini",
+              "before": "Gemini 3.7 Flash |",
+              "after": "Gemini 3.7 Flash * |"
+            },
+            {
+              "key": "gemini",
+              "before": "Gemini 3.8 Flash |",
+              "after": "Gemini 3.8 Flash * |"
+            }
+          ],
+          "signal_preview": "$2.50 per 1,000 prompts. | $2.50 / 1,000 count",
+          "raw_added_count": 40,
+          "raw_removed_count": 11,
+          "id": "obs_c3f01a6710037f5e4644a315148274be20c64cc7c8fa9813216c2eae06ef0a92",
+          "permalink": "/item/obs_c3f01a6710037f5e4644a315148274be20c64cc7c8fa9813216c2eae06ef0a92/"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 3,
+          "added_lines": [
+            "By Michael Gerstenhaber • 6-minute read",
+            "Gemini 4 Argon available on Google Cloud, built to help solve your business’ hardest problems"
+          ],
+          "removed_lines": [
+            "By Samuel Moss • 5-minute read",
+            "How Orange built FinOps accountability, and why agents are next",
+            "Telecommunications"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "By Michael Gerstenhaber • 6-minute read",
+          "raw_added_count": 2,
+          "raw_removed_count": 3,
+          "id": "obs_c9709b6b30d3f17ed97d6fb6bc36e93c84f94da7e009dad1a9204d6e67c26bee",
+          "permalink": "/item/obs_c9709b6b30d3f17ed97d6fb6bc36e93c84f94da7e009dad1a9204d6e67c26bee/"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 7,
+          "added_lines": [
+            "Announcing the Artificial Analysis Decision Index",
+            "Benchmarking decision models on classification, tool calling, knowledge and reasoning"
+          ],
+          "removed_lines": [
+            "Announcing FrontierCode 1.1 on Artificial Analysis",
+            "Elo rating for performance on real-world work tasks · Anchored to DeepSeek V4.1 Flash (max) at 1600 · Higher is better",
+            "GDPval-AA v2.1 evaluates AI models on real-world, economically valuable tasks across a wide range of occupations",
+            "GDPval-AA v2.1 Leaderboard",
+            "GDPval-AA v2.1Updated",
+            "Not publicly available",
+            "Testing whether models write code that maintainers of real repositories would merge"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Announcing the Artificial Analysis Decision Index",
+          "raw_added_count": 3,
+          "raw_removed_count": 9,
+          "id": "obs_ab4b50884ad9ba75b70844fdf48359cf9eeb7f694612dfcea42c779c7db99b25",
+          "permalink": "/item/obs_ab4b50884ad9ba75b70844fdf48359cf9eeb7f694612dfcea42c779c7db99b25/"
+        },
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 5,
+          "added_lines": [],
+          "removed_lines": [
+            "原价0.9元/秒（限时8折）",
+            "原价0.9元/秒（限时8折） |",
+            "原价1.049188元/秒（限时8折）",
+            "原价1.6元/秒（限时8折）",
+            "原价1.798608元/秒（限时8折）"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 5,
+          "id": "obs_2e304386a2acf084546832b85e78d1589201ea9d36de91ec4f4285b0a1eae67b",
+          "permalink": "/item/obs_2e304386a2acf084546832b85e78d1589201ea9d36de91ec4f4285b0a1eae67b/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 40,
+          "raw_removed_count": 40,
+          "id": "obs_0002958e8cb4804367513460bd34f35fb0766f978e2e270a6c87fc886e9f075f",
+          "permalink": "/item/obs_0002958e8cb4804367513460bd34f35fb0766f978e2e270a6c87fc886e9f075f/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "fetch_failed",
+          "error": "反爬挑战页 (raw_len=5677)"
+        }
+      ]
+    },
     {
       "date": "2026-10-13",
       "stats": {
