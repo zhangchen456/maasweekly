@@ -2,6 +2,9 @@ import { HOME_MODEL_GROUPS } from '../config/home-model-selection';
 // One translation catalog for server-rendered pages and client-rendered controls.
 // Product data, API identifiers, and saved source excerpts are not rewritten.
 export const uiEnglish: Record<string, string> = {
+ '每日采集归档从 2026-09-02（W36）开始；':'Daily collection archives begin on 2026-09-02 (W36); ',
+ 'W35 无每日归档，查看说明与历史周报':'W35 has no daily archive. View the explanation and historical reports',
+
  '← 返回今日':'← Back to Today','逐日要点':'Daily highlights','该周每日要点，按日倒序。':'Daily highlights for this week, newest first.',
  '本周动态自动归档 · 每日要点与周度串讲':'Automatically archived weekly updates · Daily highlights and weekly recap',
  '来源变化条目':'Source change records','已滚出近期窗口，分类统计不可用':'Outside the recent window; category statistics unavailable',

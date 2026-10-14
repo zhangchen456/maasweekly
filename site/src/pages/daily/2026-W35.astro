@@ -1,0 +1,25 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const en = Astro.url.pathname.startsWith('/en/');
+const t = (zh: string, english: string) => en ? english : zh;
+const prefix = en ? '/en' : '';
+---
+<Layout title={t('W35 每日归档说明 — MaaS Daily', 'W35 daily archive coverage — MaaS Daily')} description={t('2026-W35（8 月 24–30 日）没有每日采集归档，可查看当时的深度周报。', 'No daily collection archive is available for 2026-W35 (August 24–30). Historical weekly reports are available.')} noindex>
+  <section class="coverage">
+    <h1>{t('W35 没有每日采集归档', 'No daily archive for W35')}</h1>
+    <p>{t('2026-W35 对应 8 月 24–30 日。每日采集记录从 9 月 2 日（W36）开始，未保存 W35 的每日数据，因此无法恢复这一周的每日归档。', '2026-W35 covers August 24–30. Daily collection records begin on September 2 (W36). No daily data was retained for W35, so its daily archive cannot be restored.')}</p>
+    <p>{t('这段时间的深度周报仍可查看：', 'Historical weekly reports for this period remain available:')}</p>
+    <ul>
+      <li><a href={`${prefix}/weekly/2026-08-25/`}>{t('8 月 25 日周报 · 8 月 21–25 日', 'August 25 report · August 21–25')}</a></li>
+      <li><a href={`${prefix}/weekly/2026-09-01/`}>{t('9 月 1 日周报', 'September 1 report')}</a></li>
+    </ul>
+    <p><a href={`${prefix}/daily/2026-W36/`}>{t('查看 W36 每日归档', 'View the W36 daily archive')}</a> · <a href={`${prefix}/#archive`}>{t('返回周度归档', 'Back to weekly archives')}</a></p>
+  </section>
+</Layout>
+<style>
+  .coverage { max-width: 70ch; margin: 64px auto; padding: 0 24px; }
+  h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); line-height: 1.25; margin-bottom: 24px; }
+  p, li { line-height: 1.8; }
+  p { margin: 20px 0; }
+  a { color: var(--acid); text-underline-offset: .2em; }
+</style>
