@@ -12082,5 +12082,1159 @@
         "text": "MiniMax M3正式开源、Kimi K2.7 Code开源发布"
       }
     ]
+  },
+  {
+    "id": "2026-09-08",
+    "title": "MaaS 平台周度追踪报告 - 2026-09-08",
+    "date": "2026-09-08",
+    "period": "2026-09-02 ~ 2026-09-08",
+    "url": "/weekly/2026-09-08/",
+    "headline": [
+      {
+        "rank": 1,
+        "level": "notable",
+        "platform": "",
+        "title": "OpenAI Responses API 增加长任务控制",
+        "summary": "官方更新日志记录了 GPT-6 Astra 的异步工具调用及会话中调整推理强度：应用执行工具时模型可继续工作，结果就绪后再返回；后续轮次可调整推理强度",
+        "detail_markdown": "官方更新日志记录了 GPT-6 Astra 的异步工具调用及会话中调整推理强度：应用执行工具时模型可继续工作，结果就绪后再返回；后续轮次可调整推理强度。对已有工具循环，需要核对异步结果回传顺序与缓存复用，不能仅替换模型名。\n\n   证据：[2026-09-04 来源记录](/item/obs_10ada9f77675757ea6eb3af0b24dd44db199f8c9dfe7043c4d0fcdaa485eaf86/) · [官方来源](https://platform.openai.com/docs/changelog)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 2,
+        "level": "notable",
+        "platform": "",
+        "title": "Anthropic 更新内容标记与企业接口说明",
+        "summary": "官方文档说明 Claude Fable 5.1 与 Mythos 5.1 的文本带有 Anthropic 文本水印；通过代码执行工具产生并经 Files API 取回的受支持媒体文件带有 C2PA 标记",
+        "detail_markdown": "官方文档说明 Claude Fable 5.1 与 Mythos 5.1 的文本带有 Anthropic 文本水印；通过代码执行工具产生并经 Files API 取回的受支持媒体文件带有 C2PA 标记。企业管理、分析与合规接口指南同时补充 anthropic-version 请求头说明。标记范围应按生成方式和文件类型区分。\n\n   证据：[2026-09-04 来源记录](/item/obs_d87e97003af9f0b7677258a6f716dad206125505534f3cfe59c754e520412b84/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 3,
+        "level": "notable",
+        "platform": "硅基流动",
+        "title": "硅基流动新增一批模型下线公告",
+        "summary": "更新日志出现 Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线的公告标题",
+        "detail_markdown": "更新日志出现 Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线的公告标题。具体下线时间需以完整公告为准；使用这些模型的应用需要核对完整公告和替代模型。\n\n   证据：[2026-09-04 来源记录](/item/obs_ba11534add6ffc1d2fda194d00b066ab55c02aa193eac39ce82d0c29333eab0f/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 4,
+        "level": "notable",
+        "platform": "",
+        "title": "讯飞星辰MaaS 模型集市新增 Spark-X2.5",
+        "summary": "公告列表新增 Spark-X2.5 上线模型集市记录，列表中的发布时间为 9 月 7 日",
+        "detail_markdown": "公告列表新增 Spark-X2.5 上线模型集市记录，列表中的发布时间为 9 月 7 日。\n\n   证据：[2026-09-08 来源记录](/item/obs_4a37e8b3be8764788a615c247d88119a4878c1bcae2cfd4e4f1f469721711b8b/) · [官方来源](https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1)。",
+        "date_mentioned": "",
+        "is_new": null
+      }
+    ],
+    "platforms": [
+      {
+        "name": "OpenAI",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**OpenAI Responses API 增加长任务控制**：官方更新日志记录了 GPT-6 Astra 的异步工具调用及会话中调整推理强度：应用执行工具时模型可继续工作，结果就绪后再返回；后续轮次可调整推理强度。对已有工具循环，需要核对异步结果回传顺序与缓存复用，不能仅替换模型名。",
+          "证据：[2026-09-04 来源记录](/item/obs_10ada9f77675757ea6eb3af0b24dd44db199f8c9dfe7043c4d0fcdaa485eaf86/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "Anthropic",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**Anthropic 更新内容标记与企业接口说明**：官方文档说明 Claude Fable 5.1 与 Mythos 5.1 的文本带有 Anthropic 文本水印；通过代码执行工具产生并经 Files API 取回的受支持媒体文件带有 C2PA 标记。企业管理、分析与合规接口指南同时补充 anthropic-version 请求头说明。标记范围应按生成方式和文件类型区分。",
+          "证据：[2026-09-04 来源记录](/item/obs_d87e97003af9f0b7677258a6f716dad206125505534f3cfe59c754e520412b84/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "硅基流动",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**硅基流动新增一批模型下线公告**：更新日志出现 Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线的公告标题。具体下线时间需以完整公告为准；使用这些模型的应用需要核对完整公告和替代模型。",
+          "证据：[2026-09-04 来源记录](/item/obs_ba11534add6ffc1d2fda194d00b066ab55c02aa193eac39ce82d0c29333eab0f/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "讯飞星辰MaaS",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**讯飞星辰MaaS 模型集市新增 Spark-X2.5**：公告列表新增 Spark-X2.5 上线模型集市记录，列表中的发布时间为 9 月 7 日。",
+          "证据：[2026-09-08 来源记录](/item/obs_4a37e8b3be8764788a615c247d88119a4878c1bcae2cfd4e4f1f469721711b8b/) · [官方来源](https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1)。"
+        ],
+        "recent": []
+      }
+    ],
+    "summary_table": {
+      "headers": [
+        "平台",
+        "本周动态",
+        "观察日期"
+      ],
+      "rows": [
+        [
+          "OpenAI",
+          "OpenAI Responses API 增加长任务控制",
+          "2026-09-04"
+        ],
+        [
+          "Anthropic",
+          "Anthropic 更新内容标记与企业接口说明",
+          "2026-09-04"
+        ],
+        [
+          "硅基流动",
+          "硅基流动新增一批模型下线公告",
+          "2026-09-04"
+        ],
+        [
+          "讯飞星辰MaaS",
+          "讯飞星辰MaaS 模型集市新增 Spark-X2.5",
+          "2026-09-08"
+        ]
+      ]
+    },
+    "trends": [
+      {
+        "title": "长任务控制与内容来源管理进入 API 接入层",
+        "body_markdown": "异步工具调用和动态推理强度改变了长任务执行方式；内容标记影响生成文件的来源识别。编辑建议是分别检查工具结果回传与媒体取回流程，不能用一次模型替换覆盖全部接入工作。"
+      }
+    ],
+    "watchpoints": {
+      "headers": [
+        "观察日期",
+        "关注事项",
+        "适用范围"
+      ],
+      "rows": [
+        [
+          "2026-09-04",
+          "OpenAI Responses API 增加长任务控制",
+          "OpenAI"
+        ],
+        [
+          "2026-09-04",
+          "Anthropic 更新内容标记与企业接口说明",
+          "Anthropic"
+        ],
+        [
+          "2026-09-04",
+          "硅基流动新增一批模型下线公告",
+          "硅基流动"
+        ],
+        [
+          "2026-09-08",
+          "讯飞星辰MaaS 模型集市新增 Spark-X2.5",
+          "讯飞星辰MaaS"
+        ]
+      ]
+    },
+    "event_index": [
+      {
+        "date": "2026-09-04",
+        "text": "OpenAI Responses API 增加长任务控制。证据：[2026-09-04 来源记录](/item/obs_10ada9f77675757ea6eb3af0b24dd44db199f8c9dfe7043c4d0fcdaa485eaf86/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+      },
+      {
+        "date": "2026-09-04",
+        "text": "Anthropic 更新内容标记与企业接口说明。证据：[2026-09-04 来源记录](/item/obs_d87e97003af9f0b7677258a6f716dad206125505534f3cfe59c754e520412b84/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+      },
+      {
+        "date": "2026-09-04",
+        "text": "硅基流动新增一批模型下线公告。证据：[2026-09-04 来源记录](/item/obs_ba11534add6ffc1d2fda194d00b066ab55c02aa193eac39ce82d0c29333eab0f/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
+      },
+      {
+        "date": "2026-09-08",
+        "text": "讯飞星辰MaaS 模型集市新增 Spark-X2.5。证据：[2026-09-08 来源记录](/item/obs_4a37e8b3be8764788a615c247d88119a4878c1bcae2cfd4e4f1f469721711b8b/) · [官方来源](https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1)。"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-15",
+    "title": "MaaS 平台周度追踪报告 - 2026-09-15",
+    "date": "2026-09-15",
+    "period": "2026-09-09 ~ 2026-09-15",
+    "url": "/weekly/2026-09-15/",
+    "headline": [
+      {
+        "rank": 1,
+        "level": "notable",
+        "platform": "DeepSeek",
+        "title": "DeepSeek 撤回 V4 Pro 迁移预告，继续提供原服务",
+        "summary": "9 月 11 日文档曾预告从 9 月 14 日起将 V4 Pro 请求路由到 V4.1 Flash；9 月 12 日同一模型页改为在 9 月 14 日后继续提供 V4 Pro API，计费方式保持不变，后续变化另行通知",
+        "detail_markdown": "9 月 11 日文档曾预告从 9 月 14 日起将 V4 Pro 请求路由到 V4.1 Flash；9 月 12 日同一模型页改为在 9 月 14 日后继续提供 V4 Pro API，计费方式保持不变，后续变化另行通知。\n\n   证据：[2026-09-12 来源记录](/item/obs_466db393675ca2c1560dc77e7716a0d7d086a28d1f168734c875714a98f27657/) · [官方来源](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 2,
+        "level": "notable",
+        "platform": "DeepSeek",
+        "title": "DeepSeek Flash 旧别名改由 V4.1 Flash 服务",
+        "summary": "模型页说明应使用 deepseek-flash，旧名 deepseek-v4-flash 与 deepseek-v4-flash-vision-exp 仍可调用，但底层由 V4.1 Flash 服务并按 Flash 价格计费",
+        "detail_markdown": "模型页说明应使用 deepseek-flash，旧名 deepseek-v4-flash 与 deepseek-v4-flash-vision-exp 仍可调用，但底层由 V4.1 Flash 服务并按 Flash 价格计费。这项 Flash 别名变动与随后撤回的 Pro 迁移计划是两个不同事项；应用需要记录实际模型版本，不能只按请求别名判断服务版本。\n\n   证据：[2026-09-11 来源记录](/item/obs_20c849f249df924b5a65af7d393417a5f9efdc86054afd931708a33a9ed95d23/) · [官方来源](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 3,
+        "level": "notable",
+        "platform": "",
+        "title": "OpenAI 缓存诊断正式开放，图像模型增加双版本",
+        "summary": "官方文档记录 Responses API 的 Prompt Cache Diagnostics 正式开放，支持 GPT-5.6 及以后受支持的模型，可比较缓存复用、定位未命中原因",
+        "detail_markdown": "官方文档记录 Responses API 的 Prompt Cache Diagnostics 正式开放，支持 GPT-5.6 及以后受支持的模型，可比较缓存复用、定位未命中原因。同日还记录 GPT Image 2.5 Sunburst 与 Flare，通过 Image API 和 Responses 图像工具提供，分别面向编辑精度与日常生成速度。上线前应按自己的图像任务分别评估。\n\n   证据：[2026-09-09 来源记录](/item/obs_c282247197c9676ba72595f5b55926e5899efd6dcfb8d77d4836e05e4912a325/) · [官方来源](https://platform.openai.com/docs/changelog)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 4,
+        "level": "notable",
+        "platform": "硅基流动",
+        "title": "硅基流动生图接口移除 batch_size，默认添加水印",
+        "summary": "公告记录生图请求不再支持 batch_size，原来一次生成多张图片的调用需要拆为多次请求；生成图片默认添加显式水印",
+        "detail_markdown": "公告记录生图请求不再支持 batch_size，原来一次生成多张图片的调用需要拆为多次请求；生成图片默认添加显式水印。9 月 12 日补充说明对关闭显式水印的使用场景和下游处理要求进行了限定，集成时应查看修订后的完整公告，不把可配置请求头解释为默认无水印。\n\n   证据：[2026-09-11 来源记录](/item/obs_d3d22347862a8e467754a86b519f8c6b9d267b11093ec5ea59c98a9e4c82cf59/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。",
+        "date_mentioned": "",
+        "is_new": null
+      }
+    ],
+    "platforms": [
+      {
+        "name": "DeepSeek",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**DeepSeek 撤回 V4 Pro 迁移预告，继续提供原服务**：9 月 11 日文档曾预告从 9 月 14 日起将 V4 Pro 请求路由到 V4.1 Flash；9 月 12 日同一模型页改为在 9 月 14 日后继续提供 V4 Pro API，计费方式保持不变，后续变化另行通知。",
+          "证据：[2026-09-12 来源记录](/item/obs_466db393675ca2c1560dc77e7716a0d7d086a28d1f168734c875714a98f27657/) · [官方来源](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。",
+          "**DeepSeek Flash 旧别名改由 V4.1 Flash 服务**：模型页说明应使用 deepseek-flash，旧名 deepseek-v4-flash 与 deepseek-v4-flash-vision-exp 仍可调用，但底层由 V4.1 Flash 服务并按 Flash 价格计费。这项 Flash 别名变动与随后撤回的 Pro 迁移计划是两个不同事项；应用需要记录实际模型版本，不能只按请求别名判断服务版本。",
+          "证据：[2026-09-11 来源记录](/item/obs_20c849f249df924b5a65af7d393417a5f9efdc86054afd931708a33a9ed95d23/) · [官方来源](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "OpenAI",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**OpenAI 缓存诊断正式开放，图像模型增加双版本**：官方文档记录 Responses API 的 Prompt Cache Diagnostics 正式开放，支持 GPT-5.6 及以后受支持的模型，可比较缓存复用、定位未命中原因。同日还记录 GPT Image 2.5 Sunburst 与 Flare，通过 Image API 和 Responses 图像工具提供，分别面向编辑精度与日常生成速度。上线前应按自己的图像任务分别评估。",
+          "证据：[2026-09-09 来源记录](/item/obs_c282247197c9676ba72595f5b55926e5899efd6dcfb8d77d4836e05e4912a325/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "硅基流动",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**硅基流动生图接口移除 batch_size，默认添加水印**：公告记录生图请求不再支持 batch_size，原来一次生成多张图片的调用需要拆为多次请求；生成图片默认添加显式水印。9 月 12 日补充说明对关闭显式水印的使用场景和下游处理要求进行了限定，集成时应查看修订后的完整公告，不把可配置请求头解释为默认无水印。",
+          "证据：[2026-09-11 来源记录](/item/obs_d3d22347862a8e467754a86b519f8c6b9d267b11093ec5ea59c98a9e4c82cf59/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
+        ],
+        "recent": []
+      }
+    ],
+    "summary_table": {
+      "headers": [
+        "平台",
+        "本周动态",
+        "观察日期"
+      ],
+      "rows": [
+        [
+          "DeepSeek",
+          "DeepSeek 撤回 V4 Pro 迁移预告，继续提供原服务",
+          "2026-09-12"
+        ],
+        [
+          "DeepSeek",
+          "DeepSeek Flash 旧别名改由 V4.1 Flash 服务",
+          "2026-09-11"
+        ],
+        [
+          "OpenAI",
+          "OpenAI 缓存诊断正式开放，图像模型增加双版本",
+          "2026-09-09"
+        ],
+        [
+          "硅基流动",
+          "硅基流动生图接口移除 batch_size，默认添加水印",
+          "2026-09-11"
+        ]
+      ]
+    },
+    "trends": [
+      {
+        "title": "模型别名与产品公告需要保留修订链",
+        "body_markdown": "DeepSeek 同一周内修订 Pro 迁移计划，Flash 旧别名继续接受调用却改由新模型服务；硅基流动也补充了生图接口说明。调用成功不等于服务版本保持不变，公告初稿也不等于最终执行结果。"
+      }
+    ],
+    "watchpoints": {
+      "headers": [
+        "观察日期",
+        "关注事项",
+        "适用范围"
+      ],
+      "rows": [
+        [
+          "2026-09-12",
+          "DeepSeek 撤回 V4 Pro 迁移预告，继续提供原服务",
+          "DeepSeek"
+        ],
+        [
+          "2026-09-11",
+          "DeepSeek Flash 旧别名改由 V4.1 Flash 服务",
+          "DeepSeek"
+        ],
+        [
+          "2026-09-09",
+          "OpenAI 缓存诊断正式开放，图像模型增加双版本",
+          "OpenAI"
+        ],
+        [
+          "2026-09-11",
+          "硅基流动生图接口移除 batch_size，默认添加水印",
+          "硅基流动"
+        ]
+      ]
+    },
+    "event_index": [
+      {
+        "date": "2026-09-12",
+        "text": "DeepSeek 撤回 V4 Pro 迁移预告，继续提供原服务。证据：[2026-09-12 来源记录](/item/obs_466db393675ca2c1560dc77e7716a0d7d086a28d1f168734c875714a98f27657/) · [官方来源](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。"
+      },
+      {
+        "date": "2026-09-11",
+        "text": "DeepSeek Flash 旧别名改由 V4.1 Flash 服务。证据：[2026-09-11 来源记录](/item/obs_20c849f249df924b5a65af7d393417a5f9efdc86054afd931708a33a9ed95d23/) · [官方来源](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。"
+      },
+      {
+        "date": "2026-09-09",
+        "text": "OpenAI 缓存诊断正式开放，图像模型增加双版本。证据：[2026-09-09 来源记录](/item/obs_c282247197c9676ba72595f5b55926e5899efd6dcfb8d77d4836e05e4912a325/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+      },
+      {
+        "date": "2026-09-11",
+        "text": "硅基流动生图接口移除 batch_size，默认添加水印。证据：[2026-09-11 来源记录](/item/obs_d3d22347862a8e467754a86b519f8c6b9d267b11093ec5ea59c98a9e4c82cf59/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-22",
+    "title": "MaaS 平台周度追踪报告 - 2026-09-22",
+    "date": "2026-09-22",
+    "period": "2026-09-16 ~ 2026-09-22",
+    "url": "/weekly/2026-09-22/",
+    "headline": [
+      {
+        "rank": 1,
+        "level": "notable",
+        "platform": "Kimi",
+        "title": "Kimi Batch API 开放，托管智能体仍有准入范围",
+        "summary": "官方更新日志记录 Batch API 面向全量用户开放；托管智能体 Beta 当前面向国内企业认证用户开放",
+        "detail_markdown": "官方更新日志记录 Batch API 面向全量用户开放；托管智能体 Beta 当前面向国内企业认证用户开放。列表同时出现 Context Caching 全量开放与续期不再收取创建费用的说明。\n\n   证据：[2026-09-16 来源记录](/item/obs_584d2d0e11207d9178106093bdd645ba35d9472abe33ff447a0bbad40f511a2d/) · [官方来源](https://platform.kimi.com/docs/changelog)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 2,
+        "level": "notable",
+        "platform": "",
+        "title": "Anthropic Messages API 支持按需压缩会话",
+        "summary": "官方文档说明通过 compact-2026-09-04 Beta 请求头和顶层 compaction 参数，可以主动生成签名压缩块，后续以压缩块替换旧消息；也可保留最近轮次原文",
+        "detail_markdown": "官方文档说明通过 compact-2026-09-04 Beta 请求头和顶层 compaction 参数，可以主动生成签名压缩块，后续以压缩块替换旧消息；也可保留最近轮次原文。对长会话应用，这提供了显式管理上下文的方式，但需要核对模型支持、签名块回传与保留思考的约束。\n\n   证据：[2026-09-16 来源记录](/item/obs_0cfe2284f81351fd00ea3c22db40f92f6b46ce210d412115a4423bcff64c3fb3/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 3,
+        "level": "notable",
+        "platform": "",
+        "title": "Google Gemini API 增加实时语音模型选项",
+        "summary": "官方文档记录 Gemini 3.8 Live 与 Gemini 3.8 Live Extended Thinking 两个实时音频模型的正式可用说明，前者为默认选项，后者面向更强推理需求",
+        "detail_markdown": "官方文档记录 Gemini 3.8 Live 与 Gemini 3.8 Live Extended Thinking 两个实时音频模型的正式可用说明，前者为默认选项，后者面向更强推理需求。实时语音系统应分别测量响应延迟、打断处理和推理质量，本期没有独立延迟或效果测试。\n\n   证据：[2026-09-16 来源记录](/item/obs_354d7aa50473a2d7e27b0b83854d22d225d330bd328dc30eaef9aeb0e40ef4fa/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 4,
+        "level": "notable",
+        "platform": "",
+        "title": "OpenAI 增加组织与项目级 API key 创建控制",
+        "summary": "管理员可以只允许服务账号 key、只允许用户所属项目 key，或禁止创建新 key；组织级限制优先于项目设置，现有 key 不受这项创建规则影响",
+        "detail_markdown": "管理员可以只允许服务账号 key、只允许用户所属项目 key，或禁止创建新 key；组织级限制优先于项目设置，现有 key 不受这项创建规则影响。企业集成应核对自动化开通流程的账号类型，避免把禁止新建误认为已撤销现有凭证。\n\n   证据：[2026-09-17 来源记录](/item/obs_37b261f34fa67090b074b120f9aeacdd63d317563028e2ef432dd16cbfa91142/) · [官方来源](https://platform.openai.com/docs/changelog)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 5,
+        "level": "notable",
+        "platform": "",
+        "title": "xAI API 更新日志记录 Grok 4.7 上线",
+        "summary": "官方文档记录公开 API 模型名 grok-4.7、500k 上下文、文本与图像输入、文本输出，以及按提示长度分档的计费和推理强度选项",
+        "detail_markdown": "官方文档记录公开 API 模型名 grok-4.7、500k 上下文、文本与图像输入、文本输出，以及按提示长度分档的计费和推理强度选项。Grok 4.7 Fast 当时仅通过 Cursor 与 Grok Build 提供，不属于公开 xAI API 的可调用模型。\n\n   证据：[2026-09-22 来源记录](/item/obs_be81c9cd2a853b249b95074d457a3a1aed4eb7b7d4ed5241beaa31e3bafbc099/) · [官方来源](https://docs.x.ai/docs/release-notes)。",
+        "date_mentioned": "",
+        "is_new": null
+      }
+    ],
+    "platforms": [
+      {
+        "name": "Kimi",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**Kimi Batch API 开放，托管智能体仍有准入范围**：官方更新日志记录 Batch API 面向全量用户开放；托管智能体 Beta 当前面向国内企业认证用户开放。列表同时出现 Context Caching 全量开放与续期不再收取创建费用的说明。",
+          "证据：[2026-09-16 来源记录](/item/obs_584d2d0e11207d9178106093bdd645ba35d9472abe33ff447a0bbad40f511a2d/) · [官方来源](https://platform.kimi.com/docs/changelog)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "Anthropic",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**Anthropic Messages API 支持按需压缩会话**：官方文档说明通过 compact-2026-09-04 Beta 请求头和顶层 compaction 参数，可以主动生成签名压缩块，后续以压缩块替换旧消息；也可保留最近轮次原文。对长会话应用，这提供了显式管理上下文的方式，但需要核对模型支持、签名块回传与保留思考的约束。",
+          "证据：[2026-09-16 来源记录](/item/obs_0cfe2284f81351fd00ea3c22db40f92f6b46ce210d412115a4423bcff64c3fb3/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "Google Gemini API",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**Google Gemini API 增加实时语音模型选项**：官方文档记录 Gemini 3.8 Live 与 Gemini 3.8 Live Extended Thinking 两个实时音频模型的正式可用说明，前者为默认选项，后者面向更强推理需求。实时语音系统应分别测量响应延迟、打断处理和推理质量，本期没有独立延迟或效果测试。",
+          "证据：[2026-09-16 来源记录](/item/obs_354d7aa50473a2d7e27b0b83854d22d225d330bd328dc30eaef9aeb0e40ef4fa/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "OpenAI",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**OpenAI 增加组织与项目级 API key 创建控制**：管理员可以只允许服务账号 key、只允许用户所属项目 key，或禁止创建新 key；组织级限制优先于项目设置，现有 key 不受这项创建规则影响。企业集成应核对自动化开通流程的账号类型，避免把禁止新建误认为已撤销现有凭证。",
+          "证据：[2026-09-17 来源记录](/item/obs_37b261f34fa67090b074b120f9aeacdd63d317563028e2ef432dd16cbfa91142/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "xAI",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**xAI API 更新日志记录 Grok 4.7 上线**：官方文档记录公开 API 模型名 grok-4.7、500k 上下文、文本与图像输入、文本输出，以及按提示长度分档的计费和推理强度选项。Grok 4.7 Fast 当时仅通过 Cursor 与 Grok Build 提供，不属于公开 xAI API 的可调用模型。",
+          "证据：[2026-09-22 来源记录](/item/obs_be81c9cd2a853b249b95074d457a3a1aed4eb7b7d4ed5241beaa31e3bafbc099/) · [官方来源](https://docs.x.ai/docs/release-notes)。"
+        ],
+        "recent": []
+      }
+    ],
+    "summary_table": {
+      "headers": [
+        "平台",
+        "本周动态",
+        "观察日期"
+      ],
+      "rows": [
+        [
+          "Kimi",
+          "Kimi Batch API 开放，托管智能体仍有准入范围",
+          "2026-09-16"
+        ],
+        [
+          "Anthropic",
+          "Anthropic Messages API 支持按需压缩会话",
+          "2026-09-16"
+        ],
+        [
+          "Google Gemini API",
+          "Google Gemini API 增加实时语音模型选项",
+          "2026-09-16"
+        ],
+        [
+          "OpenAI",
+          "OpenAI 增加组织与项目级 API key 创建控制",
+          "2026-09-17"
+        ],
+        [
+          "xAI",
+          "xAI API 更新日志记录 Grok 4.7 上线",
+          "2026-09-22"
+        ]
+      ]
+    },
+    "trends": [
+      {
+        "title": "上下文管理、实时语音与凭证治理同步演进",
+        "body_markdown": "批处理与缓存文档、显式会话压缩、实时语音选项和 key 创建控制，分别影响成本、上下文、交互与账号开通。它们不构成统一能力排名，选型应回到自己的调用链与账号范围。"
+      }
+    ],
+    "watchpoints": {
+      "headers": [
+        "观察日期",
+        "关注事项",
+        "适用范围"
+      ],
+      "rows": [
+        [
+          "2026-09-16",
+          "Kimi Batch API 开放，托管智能体仍有准入范围",
+          "Kimi"
+        ],
+        [
+          "2026-09-16",
+          "Anthropic Messages API 支持按需压缩会话",
+          "Anthropic"
+        ],
+        [
+          "2026-09-16",
+          "Google Gemini API 增加实时语音模型选项",
+          "Google Gemini API"
+        ],
+        [
+          "2026-09-17",
+          "OpenAI 增加组织与项目级 API key 创建控制",
+          "OpenAI"
+        ],
+        [
+          "2026-09-22",
+          "xAI API 更新日志记录 Grok 4.7 上线",
+          "xAI"
+        ]
+      ]
+    },
+    "event_index": [
+      {
+        "date": "2026-09-16",
+        "text": "Kimi Batch API 开放，托管智能体仍有准入范围。证据：[2026-09-16 来源记录](/item/obs_584d2d0e11207d9178106093bdd645ba35d9472abe33ff447a0bbad40f511a2d/) · [官方来源](https://platform.kimi.com/docs/changelog)。"
+      },
+      {
+        "date": "2026-09-16",
+        "text": "Anthropic Messages API 支持按需压缩会话。证据：[2026-09-16 来源记录](/item/obs_0cfe2284f81351fd00ea3c22db40f92f6b46ce210d412115a4423bcff64c3fb3/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+      },
+      {
+        "date": "2026-09-16",
+        "text": "Google Gemini API 增加实时语音模型选项。证据：[2026-09-16 来源记录](/item/obs_354d7aa50473a2d7e27b0b83854d22d225d330bd328dc30eaef9aeb0e40ef4fa/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。"
+      },
+      {
+        "date": "2026-09-17",
+        "text": "OpenAI 增加组织与项目级 API key 创建控制。证据：[2026-09-17 来源记录](/item/obs_37b261f34fa67090b074b120f9aeacdd63d317563028e2ef432dd16cbfa91142/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+      },
+      {
+        "date": "2026-09-22",
+        "text": "xAI API 更新日志记录 Grok 4.7 上线。证据：[2026-09-22 来源记录](/item/obs_be81c9cd2a853b249b95074d457a3a1aed4eb7b7d4ed5241beaa31e3bafbc099/) · [官方来源](https://docs.x.ai/docs/release-notes)。"
+      }
+    ]
+  },
+  {
+    "id": "2026-09-29",
+    "title": "MaaS 平台周度追踪报告 - 2026-09-29",
+    "date": "2026-09-29",
+    "period": "2026-09-23 ~ 2026-09-29",
+    "url": "/weekly/2026-09-29/",
+    "headline": [
+      {
+        "rank": 1,
+        "level": "notable",
+        "platform": "",
+        "title": "Anthropic 发布 Sonnet 5.5，迁移包含请求兼容变化",
+        "summary": "更新日志记录 claude-sonnet-5-5 发布，并单列从 Sonnet 5 迁移的变化：部分思考配置需要改写，强制工具选择可能返回 400，旧版 computer use 工具及部分 advisor 组合不再接受",
+        "detail_markdown": "更新日志记录 claude-sonnet-5-5 发布，并单列从 Sonnet 5 迁移的变化：部分思考配置需要改写，强制工具选择可能返回 400，旧版 computer use 工具及部分 advisor 组合不再接受。直接替换模型名可能造成请求失败，应先跑思考、工具与跨账号消息的回归用例。\n\n   证据：[2026-09-29 来源记录](/item/obs_8b6acc99991635cc75062cdb7cc53727b5c73e2827723c5426f68fb9715faf13/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 2,
+        "level": "notable",
+        "platform": "",
+        "title": "Google Gemini API 增加两款正式 TTS 模型",
+        "summary": "官方文档记录 gemini-3.8-flash-lite-tts 与 gemini-3.8-flash-tts 正式发布，分别面向高吞吐语音合成与创作级语音表现；模型列表建议从旧 TTS 预览版本迁移",
+        "detail_markdown": "官方文档记录 gemini-3.8-flash-lite-tts 与 gemini-3.8-flash-tts 正式发布，分别面向高吞吐语音合成与创作级语音表现；模型列表建议从旧 TTS 预览版本迁移。模型选择要结合语种、音色和吞吐要求。\n\n   证据：[2026-09-24 来源记录](/item/obs_38ab000e3d30fac1174b3b5b0060aae6c7a0d4bc226a2e178f8d3a87236f9b96/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 3,
+        "level": "notable",
+        "platform": "",
+        "title": "Anthropic 缓存诊断结束 Beta",
+        "summary": "官方文档说明缓存诊断不再要求 Beta 请求头；请求中的 diagnostics 对象仍需显式传入，响应会包含 diagnostics 字段，未开启时为 null",
+        "detail_markdown": "官方文档说明缓存诊断不再要求 Beta 请求头；请求中的 diagnostics 对象仍需显式传入，响应会包含 diagnostics 字段，未开启时为 null。接入代码要处理 null，并在需要连续比较的各轮请求中启用诊断，不能依赖只传旧请求头来保存指纹。\n\n   证据：[2026-09-25 来源记录](/item/obs_7cc176334cc36722cc1947c05eca4eaa666180b332c75a3c9c4f82c666a78e90/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 4,
+        "level": "notable",
+        "platform": "MiniMax",
+        "title": "MiniMax M3.1 Flash Preview 的入口有限",
+        "summary": "模型页新增 MiniMax-M3.1-Flash-Preview，描述为原生多模态、1M 上下文、思考深度可调的编程模型；当期说明暂时仅通过 Token Plan 与 MiniMax Code 提供",
+        "detail_markdown": "模型页新增 MiniMax-M3.1-Flash-Preview，描述为原生多模态、1M 上下文、思考深度可调的编程模型；当期说明暂时仅通过 Token Plan 与 MiniMax Code 提供。不能据此推断所有按量 API 账号已经可用，访问入口和套餐范围需分别核对。\n\n   证据：[2026-09-28 来源记录](/item/obs_41e8441daba198062937687c7ef96db09ec670ad4573e445cca97ab1c4727985/) · [官方来源](https://platform.minimaxi.com/docs/guides/models-intro)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 5,
+        "level": "notable",
+        "platform": "硅基流动",
+        "title": "硅基流动公告预告 9 月 30 日下线 ERNIE Image Turbo",
+        "summary": "窗口末更新日志新增 ERNIE-Image-Turbo 下线公告，并写明计划于 9 月 30 日处理",
+        "detail_markdown": "窗口末更新日志新增 ERNIE-Image-Turbo 下线公告，并写明计划于 9 月 30 日处理。有相关调用的应用应提前准备替代模型。\n\n   证据：[2026-09-29 来源记录](/item/obs_552346278fcfb6c703fc76f94a72f52b29e31bce4cea8d3d688979315ca11e9e/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。",
+        "date_mentioned": "",
+        "is_new": null
+      }
+    ],
+    "platforms": [
+      {
+        "name": "Anthropic",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**Anthropic 发布 Sonnet 5.5，迁移包含请求兼容变化**：更新日志记录 claude-sonnet-5-5 发布，并单列从 Sonnet 5 迁移的变化：部分思考配置需要改写，强制工具选择可能返回 400，旧版 computer use 工具及部分 advisor 组合不再接受。直接替换模型名可能造成请求失败，应先跑思考、工具与跨账号消息的回归用例。",
+          "证据：[2026-09-29 来源记录](/item/obs_8b6acc99991635cc75062cdb7cc53727b5c73e2827723c5426f68fb9715faf13/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+          "**Anthropic 缓存诊断结束 Beta**：官方文档说明缓存诊断不再要求 Beta 请求头；请求中的 diagnostics 对象仍需显式传入，响应会包含 diagnostics 字段，未开启时为 null。接入代码要处理 null，并在需要连续比较的各轮请求中启用诊断，不能依赖只传旧请求头来保存指纹。",
+          "证据：[2026-09-25 来源记录](/item/obs_7cc176334cc36722cc1947c05eca4eaa666180b332c75a3c9c4f82c666a78e90/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "Google Gemini API",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**Google Gemini API 增加两款正式 TTS 模型**：官方文档记录 gemini-3.8-flash-lite-tts 与 gemini-3.8-flash-tts 正式发布，分别面向高吞吐语音合成与创作级语音表现；模型列表建议从旧 TTS 预览版本迁移。模型选择要结合语种、音色和吞吐要求。",
+          "证据：[2026-09-24 来源记录](/item/obs_38ab000e3d30fac1174b3b5b0060aae6c7a0d4bc226a2e178f8d3a87236f9b96/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "MiniMax",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**MiniMax M3.1 Flash Preview 的入口有限**：模型页新增 MiniMax-M3.1-Flash-Preview，描述为原生多模态、1M 上下文、思考深度可调的编程模型；当期说明暂时仅通过 Token Plan 与 MiniMax Code 提供。不能据此推断所有按量 API 账号已经可用，访问入口和套餐范围需分别核对。",
+          "证据：[2026-09-28 来源记录](/item/obs_41e8441daba198062937687c7ef96db09ec670ad4573e445cca97ab1c4727985/) · [官方来源](https://platform.minimaxi.com/docs/guides/models-intro)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "硅基流动",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**硅基流动公告预告 9 月 30 日下线 ERNIE Image Turbo**：窗口末更新日志新增 ERNIE-Image-Turbo 下线公告，并写明计划于 9 月 30 日处理。有相关调用的应用应提前准备替代模型。",
+          "证据：[2026-09-29 来源记录](/item/obs_552346278fcfb6c703fc76f94a72f52b29e31bce4cea8d3d688979315ca11e9e/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
+        ],
+        "recent": []
+      }
+    ],
+    "summary_table": {
+      "headers": [
+        "平台",
+        "本周动态",
+        "观察日期"
+      ],
+      "rows": [
+        [
+          "Anthropic",
+          "Anthropic 发布 Sonnet 5.5，迁移包含请求兼容变化",
+          "2026-09-29"
+        ],
+        [
+          "Google Gemini API",
+          "Google Gemini API 增加两款正式 TTS 模型",
+          "2026-09-24"
+        ],
+        [
+          "Anthropic",
+          "Anthropic 缓存诊断结束 Beta",
+          "2026-09-25"
+        ],
+        [
+          "MiniMax",
+          "MiniMax M3.1 Flash Preview 的入口有限",
+          "2026-09-28"
+        ],
+        [
+          "硅基流动",
+          "硅基流动公告预告 9 月 30 日下线 ERNIE Image Turbo",
+          "2026-09-29"
+        ]
+      ]
+    },
+    "trends": [
+      {
+        "title": "模型迁移涉及请求协议和产品入口",
+        "body_markdown": "Sonnet 5.5 的参数与工具兼容变化，以及 MiniMax Preview 的限定入口，说明模型出现在列表中并不代表旧请求可直接复用。迁移评估应包含真实请求回归，且区分公告日期与执行日期。"
+      }
+    ],
+    "watchpoints": {
+      "headers": [
+        "观察日期",
+        "关注事项",
+        "适用范围"
+      ],
+      "rows": [
+        [
+          "2026-09-29",
+          "Anthropic 发布 Sonnet 5.5，迁移包含请求兼容变化",
+          "Anthropic"
+        ],
+        [
+          "2026-09-24",
+          "Google Gemini API 增加两款正式 TTS 模型",
+          "Google Gemini API"
+        ],
+        [
+          "2026-09-25",
+          "Anthropic 缓存诊断结束 Beta",
+          "Anthropic"
+        ],
+        [
+          "2026-09-28",
+          "MiniMax M3.1 Flash Preview 的入口有限",
+          "MiniMax"
+        ],
+        [
+          "2026-09-29",
+          "硅基流动公告预告 9 月 30 日下线 ERNIE Image Turbo",
+          "硅基流动"
+        ]
+      ]
+    },
+    "event_index": [
+      {
+        "date": "2026-09-29",
+        "text": "Anthropic 发布 Sonnet 5.5，迁移包含请求兼容变化。证据：[2026-09-29 来源记录](/item/obs_8b6acc99991635cc75062cdb7cc53727b5c73e2827723c5426f68fb9715faf13/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+      },
+      {
+        "date": "2026-09-24",
+        "text": "Google Gemini API 增加两款正式 TTS 模型。证据：[2026-09-24 来源记录](/item/obs_38ab000e3d30fac1174b3b5b0060aae6c7a0d4bc226a2e178f8d3a87236f9b96/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。"
+      },
+      {
+        "date": "2026-09-25",
+        "text": "Anthropic 缓存诊断结束 Beta。证据：[2026-09-25 来源记录](/item/obs_7cc176334cc36722cc1947c05eca4eaa666180b332c75a3c9c4f82c666a78e90/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+      },
+      {
+        "date": "2026-09-28",
+        "text": "MiniMax M3.1 Flash Preview 的入口有限。证据：[2026-09-28 来源记录](/item/obs_41e8441daba198062937687c7ef96db09ec670ad4573e445cca97ab1c4727985/) · [官方来源](https://platform.minimaxi.com/docs/guides/models-intro)。"
+      },
+      {
+        "date": "2026-09-29",
+        "text": "硅基流动公告预告 9 月 30 日下线 ERNIE Image Turbo。证据：[2026-09-29 来源记录](/item/obs_552346278fcfb6c703fc76f94a72f52b29e31bce4cea8d3d688979315ca11e9e/) · [官方来源](https://docs.siliconflow.cn/docs/release-notes/overview)。"
+      }
+    ]
+  },
+  {
+    "id": "2026-10-06",
+    "title": "MaaS 平台周度追踪报告 - 2026-10-06",
+    "date": "2026-10-06",
+    "period": "2026-09-30 ~ 2026-10-06",
+    "url": "/weekly/2026-10-06/",
+    "headline": [
+      {
+        "rank": 1,
+        "level": "notable",
+        "platform": "",
+        "title": "OpenAI Agents API 增加 computer use",
+        "summary": "官方文档说明 Agents API 可使用 OpenAI 托管浏览器完成任务，网站访问批准与登录由应用处理",
+        "detail_markdown": "官方文档说明 Agents API 可使用 OpenAI 托管浏览器完成任务，网站访问批准与登录由应用处理。这项能力改变了 Agent 与浏览器环境的连接方式，应用仍需实现相应的批准和登录流程；本期没有对真实网站执行任务的效果测试。\n\n   证据：[2026-09-30 来源记录](/item/obs_4791dfded079c1d4e0e1130d3d5165f111a462edb836bf7a65fd7ceac9038e68/) · [官方来源](https://platform.openai.com/docs/changelog)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 2,
+        "level": "notable",
+        "platform": "",
+        "title": "Cohere 发布 Embed 5 嵌入模型系列",
+        "summary": "更新日志与模型列表记录 Embed 5 Pro/Fast，支持文本、图像及混合文档输入，128k 上下文，并提供多档向量维度与输出类型",
+        "detail_markdown": "更新日志与模型列表记录 Embed 5 Pro/Fast，支持文本、图像及混合文档输入，128k 上下文，并提供多档向量维度与输出类型。对于现有检索系统，迁移涉及重建向量和匹配维度；厂商关于检索质量的说明需要用自己的文档集验证。\n\n   证据：[2026-09-30 来源记录](/item/obs_2df532a4f57ab88af12d65014a2ac3b5c89e9ed0e0398efac67dd386095a8051/) · [官方来源](https://docs.cohere.com/changelog)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 3,
+        "level": "notable",
+        "platform": "",
+        "title": "Anthropic 预告 Sonnet 4.5 在 11 月 30 日退役",
+        "summary": "官方公告记录 claude-sonnet-4-5-20250929 计划于 2026 年 11 月 30 日在 Claude API 退役，并建议迁移到 Sonnet 5.5",
+        "detail_markdown": "官方公告记录 claude-sonnet-4-5-20250929 计划于 2026 年 11 月 30 日在 Claude API 退役，并建议迁移到 Sonnet 5.5。应在退役日期前安排迁移。迁移还应结合上期记录的 Sonnet 5.5 请求兼容变化。\n\n   证据：[2026-10-01 来源记录](/item/obs_b430bb7e93094c95e3dcbaa684cab49865b04b24715f4529e84542f0661fa5d8/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 4,
+        "level": "notable",
+        "platform": "",
+        "title": "xAI 语音转写旧模型改由 2.0 服务",
+        "summary": "更新日志说明 grok-voice-transcribe-1.0 于 10 月 2 日结束生命周期，旧 slug 请求路由到 grok-voice-transcribe-2.0，价格保持一致",
+        "detail_markdown": "更新日志说明 grok-voice-transcribe-1.0 于 10 月 2 日结束生命周期，旧 slug 请求路由到 grok-voice-transcribe-2.0，价格保持一致。应用应同步更新模型配置，并用现有音频样本核对输出格式与质量。\n\n   证据：[2026-10-03 来源记录](/item/obs_3db8a4529be6c9c1a08d2fb870476b85a26ebbfe86f2607b04aa92dc515f2d0d/) · [官方来源](https://docs.x.ai/docs/release-notes)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 5,
+        "level": "notable",
+        "platform": "MiniMax",
+        "title": "MiniMax 将 Preview 模型入口说明改为 M Plan",
+        "summary": "模型列表把 M3.1 Flash Preview 的入口描述从 Token Plan 改为 M Plan 与 MiniMax Code",
+        "detail_markdown": "模型列表把 M3.1 Flash Preview 的入口描述从 Token Plan 改为 M Plan 与 MiniMax Code。来源记录能确认入口名称发生修改，但不足以单独证明套餐涨价、权益扩大或按量 API 开放，本期只记录这项范围明确的文档变化。\n\n   证据：[2026-10-01 来源记录](/item/obs_3fd225ab04f787bd68efb780ae24091aceccf3ba8f83ea92078da82a1ca7f87b/) · [官方来源](https://platform.minimaxi.com/docs/guides/models-intro)。",
+        "date_mentioned": "",
+        "is_new": null
+      }
+    ],
+    "platforms": [
+      {
+        "name": "OpenAI",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**OpenAI Agents API 增加 computer use**：官方文档说明 Agents API 可使用 OpenAI 托管浏览器完成任务，网站访问批准与登录由应用处理。这项能力改变了 Agent 与浏览器环境的连接方式，应用仍需实现相应的批准和登录流程；本期没有对真实网站执行任务的效果测试。",
+          "证据：[2026-09-30 来源记录](/item/obs_4791dfded079c1d4e0e1130d3d5165f111a462edb836bf7a65fd7ceac9038e68/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "Cohere",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**Cohere 发布 Embed 5 嵌入模型系列**：更新日志与模型列表记录 Embed 5 Pro/Fast，支持文本、图像及混合文档输入，128k 上下文，并提供多档向量维度与输出类型。对于现有检索系统，迁移涉及重建向量和匹配维度；厂商关于检索质量的说明需要用自己的文档集验证。",
+          "证据：[2026-09-30 来源记录](/item/obs_2df532a4f57ab88af12d65014a2ac3b5c89e9ed0e0398efac67dd386095a8051/) · [官方来源](https://docs.cohere.com/changelog)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "Anthropic",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**Anthropic 预告 Sonnet 4.5 在 11 月 30 日退役**：官方公告记录 claude-sonnet-4-5-20250929 计划于 2026 年 11 月 30 日在 Claude API 退役，并建议迁移到 Sonnet 5.5。应在退役日期前安排迁移。迁移还应结合上期记录的 Sonnet 5.5 请求兼容变化。",
+          "证据：[2026-10-01 来源记录](/item/obs_b430bb7e93094c95e3dcbaa684cab49865b04b24715f4529e84542f0661fa5d8/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "xAI",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**xAI 语音转写旧模型改由 2.0 服务**：更新日志说明 grok-voice-transcribe-1.0 于 10 月 2 日结束生命周期，旧 slug 请求路由到 grok-voice-transcribe-2.0，价格保持一致。应用应同步更新模型配置，并用现有音频样本核对输出格式与质量。",
+          "证据：[2026-10-03 来源记录](/item/obs_3db8a4529be6c9c1a08d2fb870476b85a26ebbfe86f2607b04aa92dc515f2d0d/) · [官方来源](https://docs.x.ai/docs/release-notes)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "MiniMax",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**MiniMax 将 Preview 模型入口说明改为 M Plan**：模型列表把 M3.1 Flash Preview 的入口描述从 Token Plan 改为 M Plan 与 MiniMax Code。来源记录能确认入口名称发生修改，但不足以单独证明套餐涨价、权益扩大或按量 API 开放，本期只记录这项范围明确的文档变化。",
+          "证据：[2026-10-01 来源记录](/item/obs_3fd225ab04f787bd68efb780ae24091aceccf3ba8f83ea92078da82a1ca7f87b/) · [官方来源](https://platform.minimaxi.com/docs/guides/models-intro)。"
+        ],
+        "recent": []
+      }
+    ],
+    "summary_table": {
+      "headers": [
+        "平台",
+        "本周动态",
+        "观察日期"
+      ],
+      "rows": [
+        [
+          "OpenAI",
+          "OpenAI Agents API 增加 computer use",
+          "2026-09-30"
+        ],
+        [
+          "Cohere",
+          "Cohere 发布 Embed 5 嵌入模型系列",
+          "2026-09-30"
+        ],
+        [
+          "Anthropic",
+          "Anthropic 预告 Sonnet 4.5 在 11 月 30 日退役",
+          "2026-10-01"
+        ],
+        [
+          "xAI",
+          "xAI 语音转写旧模型改由 2.0 服务",
+          "2026-10-03"
+        ],
+        [
+          "MiniMax",
+          "MiniMax 将 Preview 模型入口说明改为 M Plan",
+          "2026-10-01"
+        ]
+      ]
+    },
+    "trends": [
+      {
+        "title": "旧名称保留与底层服务迁移可以同时发生",
+        "body_markdown": "xAI 转写旧 slug 继续接受请求，但日志已说明路由到新模型；MiniMax 修改入口名称，却未在该片段提供完整套餐变化。配置应记录底层服务与可用范围。Embed 5 迁移还需核对向量维度及重建成本。"
+      }
+    ],
+    "watchpoints": {
+      "headers": [
+        "观察日期",
+        "关注事项",
+        "适用范围"
+      ],
+      "rows": [
+        [
+          "2026-09-30",
+          "OpenAI Agents API 增加 computer use",
+          "OpenAI"
+        ],
+        [
+          "2026-09-30",
+          "Cohere 发布 Embed 5 嵌入模型系列",
+          "Cohere"
+        ],
+        [
+          "2026-10-01",
+          "Anthropic 预告 Sonnet 4.5 在 11 月 30 日退役",
+          "Anthropic"
+        ],
+        [
+          "2026-10-03",
+          "xAI 语音转写旧模型改由 2.0 服务",
+          "xAI"
+        ],
+        [
+          "2026-10-01",
+          "MiniMax 将 Preview 模型入口说明改为 M Plan",
+          "MiniMax"
+        ]
+      ]
+    },
+    "event_index": [
+      {
+        "date": "2026-09-30",
+        "text": "OpenAI Agents API 增加 computer use。证据：[2026-09-30 来源记录](/item/obs_4791dfded079c1d4e0e1130d3d5165f111a462edb836bf7a65fd7ceac9038e68/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+      },
+      {
+        "date": "2026-09-30",
+        "text": "Cohere 发布 Embed 5 嵌入模型系列。证据：[2026-09-30 来源记录](/item/obs_2df532a4f57ab88af12d65014a2ac3b5c89e9ed0e0398efac67dd386095a8051/) · [官方来源](https://docs.cohere.com/changelog)。"
+      },
+      {
+        "date": "2026-10-01",
+        "text": "Anthropic 预告 Sonnet 4.5 在 11 月 30 日退役。证据：[2026-10-01 来源记录](/item/obs_b430bb7e93094c95e3dcbaa684cab49865b04b24715f4529e84542f0661fa5d8/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+      },
+      {
+        "date": "2026-10-03",
+        "text": "xAI 语音转写旧模型改由 2.0 服务。证据：[2026-10-03 来源记录](/item/obs_3db8a4529be6c9c1a08d2fb870476b85a26ebbfe86f2607b04aa92dc515f2d0d/) · [官方来源](https://docs.x.ai/docs/release-notes)。"
+      },
+      {
+        "date": "2026-10-01",
+        "text": "MiniMax 将 Preview 模型入口说明改为 M Plan。证据：[2026-10-01 来源记录](/item/obs_3fd225ab04f787bd68efb780ae24091aceccf3ba8f83ea92078da82a1ca7f87b/) · [官方来源](https://platform.minimaxi.com/docs/guides/models-intro)。"
+      }
+    ]
+  },
+  {
+    "id": "2026-10-13",
+    "title": "MaaS 平台周度追踪报告 - 2026-10-13",
+    "date": "2026-10-13",
+    "period": "2026-10-07 ~ 2026-10-13",
+    "url": "/weekly/2026-10-13/",
+    "headline": [
+      {
+        "rank": 1,
+        "level": "notable",
+        "platform": "",
+        "title": "OpenAI Decisions API 进入 beta",
+        "summary": "更新日志记录 Decisions API beta 与 gpt-6-luna，可将文本和图像转换为类型化答案",
+        "detail_markdown": "更新日志记录 Decisions API beta 与 gpt-6-luna，可将文本和图像转换为类型化答案。官方宣称其速度优于 Responses API，但本期没有独立性能测试。适合评估分类、提取与结构化判断任务，接入前仍需验证输出约束和失败处理。\n\n   证据：[2026-10-07 来源记录](/item/obs_402deed05035c4d16fb1a0c880734eb73d266a0ce58a63b08d4633931ad27ec9/) · [官方来源](https://platform.openai.com/docs/changelog)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 2,
+        "level": "notable",
+        "platform": "",
+        "title": "Haiku 5.5 迁移需要调整请求参数",
+        "summary": "本周更新的迁移说明列出多项兼容变化：manual extended thinking 的 budget_tokens、temperature、top_p、top_k 和 assistant prefill 可返回 400；adaptive ",
+        "detail_markdown": "本周更新的迁移说明列出多项兼容变化：manual extended thinking 的 budget_tokens、temperature、top_p、top_k 和 assistant prefill 可返回 400；adaptive thinking 默认开启。旧请求不能只替换模型名，应先检查参数、thinking blocks 和工具版本。Amazon Bedrock 的结构化输出可用性也需单独核对。\n\n   证据：[2026-10-10 来源记录](/item/obs_21454573d2fccf2e738d2e0d8a157606001c671d3cb847c5e8ac7c066dfb0e7b/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 3,
+        "level": "notable",
+        "platform": "",
+        "title": "Nano Banana 2.1 上线，旧图像模型进入弃用阶段",
+        "summary": "更新日志记录 Gemini Nano Banana 2.1 正式可用，模型标识为 gemini-nano-banana-2.1；gemini-3.1-flash-image 进入弃用阶段，当时尚未公布关闭日期",
+        "detail_markdown": "更新日志记录 Gemini Nano Banana 2.1 正式可用，模型标识为 gemini-nano-banana-2.1；gemini-3.1-flash-image 进入弃用阶段，当时尚未公布关闭日期。图像生成与编辑应用应评估新模型的文字渲染和多轮一致性，并为旧入口准备迁移。\n\n   证据：[2026-10-08 来源记录](/item/obs_5fa577ca28b34e30d7759e45b3a25484bf3d32a666838acb56cb457740008a6a/) · [2026-10-07 上线记录](/item/obs_cf3f87dbceea31d7f12b034666b07ba01ba6078b663602eeb392bd82cde13c62/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 4,
+        "level": "notable",
+        "platform": "",
+        "title": "GPT-6.1 Sol 增加 Ultrafast 模式",
+        "summary": "更新日志说明 Responses API 可为 gpt-6.1-sol 设置 service_tier: \"ultrafast\"，以减少输出 token 之间的时间",
+        "detail_markdown": "更新日志说明 Responses API 可为 gpt-6.1-sol 设置 service_tier: \"ultrafast\"，以减少输出 token 之间的时间。该模式受速率限制约束，并有独立价格说明；本期不从页面零散数字推断费用，也不把厂商的速度说明当作实测结果。\n\n   证据：[2026-10-09 来源记录](/item/obs_143273a8383298662711b49d138e3e502e9c72d3711d7f339854bd4c2ed8d624/) · [官方来源](https://platform.openai.com/docs/changelog)。",
+        "date_mentioned": "",
+        "is_new": null
+      },
+      {
+        "rank": 5,
+        "level": "notable",
+        "platform": "",
+        "title": "Qwen Omni 免费额度明确地域限制",
+        "summary": "定价页新增说明：Qwen3.5-Omni 与 Qwen3-Omni 系列仅在华北 2（北京）地域提供免费额度，其他地域无免费额度",
+        "detail_markdown": "定价页新增说明：Qwen3.5-Omni 与 Qwen3-Omni 系列仅在华北 2（北京）地域提供免费额度，其他地域无免费额度。使用其他地域的应用应按实际地域核对费用；这条文档变化本身不能证明模型单价发生调整。\n\n   证据：[2026-10-12 来源记录](/item/obs_4db1fc4ce8106307dd185865e8693ba68fd05c7676774ef0a6d40a8949ecf992/) · [官方来源](https://help.aliyun.com/zh/model-studio/model-pricing)。",
+        "date_mentioned": "",
+        "is_new": null
+      }
+    ],
+    "platforms": [
+      {
+        "name": "OpenAI",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**OpenAI Decisions API 进入 beta**：更新日志记录 Decisions API beta 与 gpt-6-luna，可将文本和图像转换为类型化答案。官方宣称其速度优于 Responses API，但本期没有独立性能测试。适合评估分类、提取与结构化判断任务，接入前仍需验证输出约束和失败处理。",
+          "证据：[2026-10-07 来源记录](/item/obs_402deed05035c4d16fb1a0c880734eb73d266a0ce58a63b08d4633931ad27ec9/) · [官方来源](https://platform.openai.com/docs/changelog)。",
+          "**GPT-6.1 Sol 增加 Ultrafast 模式**：更新日志说明 Responses API 可为 gpt-6.1-sol 设置 service_tier: \"ultrafast\"，以减少输出 token 之间的时间。该模式受速率限制约束，并有独立价格说明；本期不从页面零散数字推断费用，也不把厂商的速度说明当作实测结果。",
+          "证据：[2026-10-09 来源记录](/item/obs_143273a8383298662711b49d138e3e502e9c72d3711d7f339854bd4c2ed8d624/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "Anthropic",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**Haiku 5.5 迁移需要调整请求参数**：本周更新的迁移说明列出多项兼容变化：manual extended thinking 的 budget_tokens、temperature、top_p、top_k 和 assistant prefill 可返回 400；adaptive thinking 默认开启。旧请求不能只替换模型名，应先检查参数、thinking blocks 和工具版本。Amazon Bedrock 的结构化输出可用性也需单独核对。",
+          "证据：[2026-10-10 来源记录](/item/obs_21454573d2fccf2e738d2e0d8a157606001c671d3cb847c5e8ac7c066dfb0e7b/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "Google Gemini API",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**Nano Banana 2.1 上线，旧图像模型进入弃用阶段**：更新日志记录 Gemini Nano Banana 2.1 正式可用，模型标识为 gemini-nano-banana-2.1；gemini-3.1-flash-image 进入弃用阶段，当时尚未公布关闭日期。图像生成与编辑应用应评估新模型的文字渲染和多轮一致性，并为旧入口准备迁移。",
+          "证据：[2026-10-08 来源记录](/item/obs_5fa577ca28b34e30d7759e45b3a25484bf3d32a666838acb56cb457740008a6a/) · [2026-10-07 上线记录](/item/obs_cf3f87dbceea31d7f12b034666b07ba01ba6078b663602eeb392bd82cde13c62/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。"
+        ],
+        "recent": []
+      },
+      {
+        "name": "阿里百炼",
+        "status": "stable",
+        "status_text": "本周有更新",
+        "this_week": [
+          "**Qwen Omni 免费额度明确地域限制**：定价页新增说明：Qwen3.5-Omni 与 Qwen3-Omni 系列仅在华北 2（北京）地域提供免费额度，其他地域无免费额度。使用其他地域的应用应按实际地域核对费用；这条文档变化本身不能证明模型单价发生调整。",
+          "证据：[2026-10-12 来源记录](/item/obs_4db1fc4ce8106307dd185865e8693ba68fd05c7676774ef0a6d40a8949ecf992/) · [官方来源](https://help.aliyun.com/zh/model-studio/model-pricing)。"
+        ],
+        "recent": []
+      }
+    ],
+    "summary_table": {
+      "headers": [
+        "平台",
+        "本周动态",
+        "观察日期"
+      ],
+      "rows": [
+        [
+          "OpenAI",
+          "OpenAI Decisions API 进入 beta",
+          "2026-10-07"
+        ],
+        [
+          "Anthropic",
+          "Haiku 5.5 迁移需要调整请求参数",
+          "2026-10-10"
+        ],
+        [
+          "Google Gemini API",
+          "Nano Banana 2.1 上线，旧图像模型进入弃用阶段",
+          "2026-10-08"
+        ],
+        [
+          "OpenAI",
+          "GPT-6.1 Sol 增加 Ultrafast 模式",
+          "2026-10-09"
+        ],
+        [
+          "阿里百炼",
+          "Qwen Omni 免费额度明确地域限制",
+          "2026-10-12"
+        ]
+      ]
+    },
+    "trends": [
+      {
+        "title": "新入口上线时，请求兼容与计费条件需要一起核对",
+        "body_markdown": "Decisions API 和 Ultrafast 为不同任务提供新入口与速度选项，Haiku 5.5 则要求修改旧请求参数。接入前应同时检查输出形态、工具版本、速率限制及对应价格；Qwen Omni 的地域限制也说明免费额度不能跨地域直接套用。"
+      },
+      {
+        "title": "弃用公告和关闭日期应分别跟踪",
+        "body_markdown": "Gemini 图像旧模型已进入弃用阶段，但记录中没有关闭日期。可以先测试新模型并制定迁移计划，不能把弃用公告写成服务已经下线。"
+      }
+    ],
+    "watchpoints": {
+      "headers": [
+        "观察日期",
+        "关注事项",
+        "适用范围"
+      ],
+      "rows": [
+        [
+          "2026-10-07",
+          "OpenAI Decisions API 进入 beta",
+          "OpenAI"
+        ],
+        [
+          "2026-10-10",
+          "Haiku 5.5 迁移需要调整请求参数",
+          "Anthropic"
+        ],
+        [
+          "2026-10-08",
+          "Nano Banana 2.1 上线，旧图像模型进入弃用阶段",
+          "Google Gemini API"
+        ],
+        [
+          "2026-10-09",
+          "GPT-6.1 Sol 增加 Ultrafast 模式",
+          "OpenAI"
+        ],
+        [
+          "2026-10-12",
+          "Qwen Omni 免费额度明确地域限制",
+          "阿里百炼"
+        ]
+      ]
+    },
+    "event_index": [
+      {
+        "date": "2026-10-07",
+        "text": "OpenAI Decisions API 进入 beta。证据：[2026-10-07 来源记录](/item/obs_402deed05035c4d16fb1a0c880734eb73d266a0ce58a63b08d4633931ad27ec9/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+      },
+      {
+        "date": "2026-10-10",
+        "text": "Haiku 5.5 迁移需要调整请求参数。证据：[2026-10-10 来源记录](/item/obs_21454573d2fccf2e738d2e0d8a157606001c671d3cb847c5e8ac7c066dfb0e7b/) · [官方来源](https://docs.anthropic.com/en/release-notes/api)。"
+      },
+      {
+        "date": "2026-10-08",
+        "text": "Nano Banana 2.1 上线，旧图像模型进入弃用阶段。证据：[2026-10-08 来源记录](/item/obs_5fa577ca28b34e30d7759e45b3a25484bf3d32a666838acb56cb457740008a6a/) · [2026-10-07 上线记录](/item/obs_cf3f87dbceea31d7f12b034666b07ba01ba6078b663602eeb392bd82cde13c62/) · [官方来源](https://ai.google.dev/gemini-api/docs/changelog)。"
+      },
+      {
+        "date": "2026-10-09",
+        "text": "GPT-6.1 Sol 增加 Ultrafast 模式。证据：[2026-10-09 来源记录](/item/obs_143273a8383298662711b49d138e3e502e9c72d3711d7f339854bd4c2ed8d624/) · [官方来源](https://platform.openai.com/docs/changelog)。"
+      },
+      {
+        "date": "2026-10-12",
+        "text": "Qwen Omni 免费额度明确地域限制。证据：[2026-10-12 来源记录](/item/obs_4db1fc4ce8106307dd185865e8693ba68fd05c7676774ef0a6d40a8949ecf992/) · [官方来源](https://help.aliyun.com/zh/model-studio/model-pricing)。"
+      }
+    ]
   }
 ]
