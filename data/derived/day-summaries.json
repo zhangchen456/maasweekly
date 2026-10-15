@@ -4441,5 +4441,173 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-15": {
+    "highlights": [
+      {
+        "platform": "xAI",
+        "logo_summary": "Grok Voice 3.0发布，2.0弃用",
+        "items": [
+          {
+            "text": "Grok Voice 3.0 已上线，支持 Speech to Speech API，价格与 2.0 相同，grok-voice-latest 已指向 3.0",
+            "type": "release"
+          },
+          {
+            "text": "Grok Voice 2.0 已弃用，用户需升级至 grok-voice-3.0 或 grok-voice-latest",
+            "type": "sunset"
+          }
+        ]
+      },
+      {
+        "platform": "MiniMax",
+        "logo_summary": "视频生成定价重构，新增计费说明",
+        "items": [
+          {
+            "text": "MiniMax-H3-Max 视频生成改为输出与输入素材分别计费，输入视频按时长及分辨率计费",
+            "type": "pricing"
+          },
+          {
+            "text": "MiniMax-H3-Regeneration 新增 768P 至 2K 再生成计费，输入素材需重新计费",
+            "type": "pricing"
+          },
+          {
+            "text": "新增 Hailuo-02 与 Hailuo-2.3 视频点数扣减规则，不同分辨率与时长对应不同点数",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Google Vertex AI",
+        "logo_summary": "DeepSeek-V4.1-Flash 上架，输入价格上调",
+        "items": [
+          {
+            "text": "DeepSeek-V4.1-Flash 新增至 Vertex AI，免费至 2026 年 10 月 16 日",
+            "type": "release"
+          },
+          {
+            "text": "某模型输入价格从 $2.00 上调至 $4.00（每 1M tokens），输出价格从 $10.00 上调至 $20.00",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Google Gemini API",
+        "logo_summary": "Gemini 3.8 Flash 指南上线，新增贡献者层",
+        "items": [
+          {
+            "text": "Gemini 3.8 Flash 指南新增，替代旧的 Latest Gemini Model 文档",
+            "type": "release"
+          },
+          {
+            "text": "Gemini API 新增 Contributor Tier 私有预览，邀请制，速度和可靠性等同标准层",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Anthropic",
+        "logo_summary": "Claude 托管代理部署与可观测性更新",
+        "items": [
+          {
+            "text": "Claude Managed Agents 定时部署现已在 AWS 上可用",
+            "type": "release"
+          },
+          {
+            "text": "OpenTelemetry 导出功能 beta 上线，可追踪 Messages API 请求和代理会话",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "OpenAI",
+        "logo_summary": "新增评估与维护文档，移除旧内容",
+        "items": [
+          {
+            "text": "新增 Evaluation best practices 和 Maintaining software with the GPT-6 family 文档",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Cohere",
+        "logo_summary": "博客聚焦编码代理与主权AI",
+        "items": [
+          {
+            "text": "新文章：扩展编码代理团队的经验，以 30% 成本达到前沿水平",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "火山方舟",
+        "logo_summary": "Seedream 5.0 教程更新",
+        "items": [
+          {
+            "text": "Doubao Seedream 5.0 pro 教程更新为 pro / flash 教程",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "百度千帆",
+        "logo_summary": "下架 deepseek-flash 模型",
+        "items": [
+          {
+            "text": "deepseek-flash 从模型列表中移除",
+            "type": "sunset"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_117d752f784378c23aa4c7bd5239393e75ac36993ccebdc4ac1c58451f2e3015": "模型列表中的教程链接从仅 pro 版本扩展为 pro / flash 两个版本，可能意味着 flash 版本已获得更多关注或文档支持。",
+      "obs_81755e72a88eb4f998af2f7ce37527eafd26e3d14afc6798d6bdca76609f5369": "删除了 Seedance 1.5 pro 的提示词指南，可能表示该指南已过时或不再适用。",
+      "obs_6640012359c268513550eb8fce331c95149cc596d1af50cb740be610763a7c16": "从模型列表中移除了 deepseek-flash，可能表示该模型已下架或不再提供。",
+      "obs_30da6dbcfcc38c8271c4eafecd2315a88769416c21f842b2f58da505548a7faa": "视频生成定价结构大幅调整，新增了输入素材与输出分别计费的说明，并细化了不同分辨率和时长的点数扣减规则，同时删除了旧的按量计费说明，反映了计费模式的更新。",
+      "obs_cd77ad4d17498ec56e7b8accfbf012d040697092dadff1373f8b38ee2f040ea2": "新增了关于评估最佳实践和 GPT-6 系列维护的文档，同时移除了 Rosalind Workbench 相关内容，可能表示文档重点的转移。",
+      "obs_04cd7c36c5b75fc64fb2ac24460611d3ff19ac68e580414eddbbb6030453488d": "与 model_list 相同，新增了评估和 GPT-6 维护文档，删除了 Rosalind Workbench，可能表示定价页面更新了相关链接或说明。",
+      "obs_183242b81428ec0f5d4f8be2df9878b75c1657d64138a85f0fc95e47965f2eaa": "新增了评估最佳实践和 GPT-6 维护文档，删除了 Rosalind Workbench，可能表示变更日志中更新了这些文档的引用。",
+      "obs_2949a16157bfabe953d8af975e1b92c8c3e100b639eb285d172d5f2c83889b52": "新增了评估最佳实践和 GPT-6 维护文档，删除了 Rosalind Workbench，可能表示博客文章列表的更新。",
+      "obs_ecdccec9e7c645f67459730ac424e3082285fe7c89e9ccecf830cf5c9e245749": "支付方式说明从仅提及企业发票更改为接受主要信用卡，可能表示支付政策的调整。",
+      "obs_67d522d0aadaeae0f955be6bae7137ce140ef1083f0a7e6f6da7633af3b7b1a2": "新增了 Claude Managed Agents 在 AWS 上的部署和 OpenTelemetry 导出功能，可能表示平台功能的扩展。",
+      "obs_fc8e4d2e9cb68d4abdfff4e9fe525986ea2a152d0183b0ea0ed8dbb203f4433a": "定价页面更新了最后更新日期，并新增了 Contributor Tier 的说明和新的定价行（如 $0.10 和 $6.00 的提示词价格），可能表示新增了贡献者层或调整了定价。",
+      "obs_aafb33ec03809b2d65268e0a8bb1f926cdb43a99cd311cf952f5b651661a5ad3": "更新了最后更新日期，新增了 Gemini 3.6 Flash 和 3.8 Flash 指南，删除了旧的 Latest Gemini Model 文档，可能表示模型文档的更新。",
+      "obs_6026a36b0b1d7b70c2b5fe72dda99a7ec175d6ca306b9724a0abc599fcdc3c6a": "新增了关于研究能力的文章，删除了关于流感预测的文章，可能表示博客内容的更新。",
+      "obs_394cf0eadd9e338b1d909682eb819c34537a1d1628e9f056d6750f3141e1ba55": "更新了定价，输入价格从 $2.00 上调至 $4.00，输出和思考价格从 $10.00 上调至 $20.00，并新增了 DeepSeek-V4.1-Flash 模型，同时删除了旧的缓存写入和输入输出说明，可能表示定价调整和新模型上架。",
+      "obs_09cc069df5098d11c81babd34e3e7f77f0c5971378256f7479ff675a9113b1bf": "更新了最后更新日期，可能表示变更日志的常规更新。",
+      "obs_3f0ec70ff55115bec806bbef0fe4487ef350be77091b59d64ef032e0f85698d4": "新增了关于 BigQuery 成本管理的文章，删除了关于代理式 AI 安全性的文章，可能表示博客内容的更新。",
+      "obs_8533c78b833a1df37e362e3befbbb86f74bbae901dc25b7bd84820b37e463246": "新增了关于编码代理团队规模的文章，删除了关于主权 AI 和 North 2 的文章，可能表示博客内容的更新。",
+      "obs_c578f067b4116818304a0aa669890fce377de5ebefd5a1ccd5cc4ea76379aeb0": "更新了最后更新日期，新增了 Grok Voice 1.0、2.0、3.0 的发布和弃用信息，删除了 Grok Voice Think Fast 1.0 和 2.0 的发布信息，可能表示语音模型版本的迭代。",
+      "obs_815bb3f3fd828ce9cdf38519679e2868354419b40f8d8574bf4f4de150cb5528": "与 changelog 相同，新增了 Grok Voice 1.0、2.0、3.0 的发布和弃用信息，删除了 Think Fast 版本，可能表示博客文章同步更新。",
+      "obs_8612182cf407f8ae36beacf15626565c4e09f12b6ad66751afbee23053fd98d6": "更新了 Cyber Index 的描述，新增了 AA-3D 基准和 Decision Index v1.0，并更新了模型列表，可能表示基准测试和排行榜的更新。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "7a711ce38d19958ac022925ab0a74e3d7b15b4e16f8ee0844c42967967afaa14",
+      "inputRefs": [
+        "obs_04cd7c36c5b75fc64fb2ac24460611d3ff19ac68e580414eddbbb6030453488d",
+        "obs_09cc069df5098d11c81babd34e3e7f77f0c5971378256f7479ff675a9113b1bf",
+        "obs_117d752f784378c23aa4c7bd5239393e75ac36993ccebdc4ac1c58451f2e3015",
+        "obs_183242b81428ec0f5d4f8be2df9878b75c1657d64138a85f0fc95e47965f2eaa",
+        "obs_2949a16157bfabe953d8af975e1b92c8c3e100b639eb285d172d5f2c83889b52",
+        "obs_30da6dbcfcc38c8271c4eafecd2315a88769416c21f842b2f58da505548a7faa",
+        "obs_394cf0eadd9e338b1d909682eb819c34537a1d1628e9f056d6750f3141e1ba55",
+        "obs_3f0ec70ff55115bec806bbef0fe4487ef350be77091b59d64ef032e0f85698d4",
+        "obs_6026a36b0b1d7b70c2b5fe72dda99a7ec175d6ca306b9724a0abc599fcdc3c6a",
+        "obs_6640012359c268513550eb8fce331c95149cc596d1af50cb740be610763a7c16",
+        "obs_67d522d0aadaeae0f955be6bae7137ce140ef1083f0a7e6f6da7633af3b7b1a2",
+        "obs_815bb3f3fd828ce9cdf38519679e2868354419b40f8d8574bf4f4de150cb5528",
+        "obs_81755e72a88eb4f998af2f7ce37527eafd26e3d14afc6798d6bdca76609f5369",
+        "obs_8533c78b833a1df37e362e3befbbb86f74bbae901dc25b7bd84820b37e463246",
+        "obs_8612182cf407f8ae36beacf15626565c4e09f12b6ad66751afbee23053fd98d6",
+        "obs_aafb33ec03809b2d65268e0a8bb1f926cdb43a99cd311cf952f5b651661a5ad3",
+        "obs_c578f067b4116818304a0aa669890fce377de5ebefd5a1ccd5cc4ea76379aeb0",
+        "obs_cd77ad4d17498ec56e7b8accfbf012d040697092dadff1373f8b38ee2f040ea2",
+        "obs_ecdccec9e7c645f67459730ac424e3082285fe7c89e9ccecf830cf5c9e245749",
+        "obs_fc8e4d2e9cb68d4abdfff4e9fe525986ea2a152d0183b0ea0ed8dbb203f4433a"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }

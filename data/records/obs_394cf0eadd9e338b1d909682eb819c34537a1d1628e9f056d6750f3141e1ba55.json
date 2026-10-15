@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_394cf0eadd9e338b1d909682eb819c34537a1d1628e9f056d6750f3141e1ba55",
+  "sourceId": "google-vertex-pricing",
+  "date": "2026-10-15",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Vertex AI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+  "title": "Google Vertex AI · 定价来源更新",
+  "summary": "更新了定价，输入价格从 $2.00 上调至 $4.00，输出和思考价格从 $10.00 上调至 $20.00，并新增了 DeepSeek-V4.1-Flash 模型，同时删除了旧的缓存写入和输入输出说明，可能表示定价调整和新模型上架。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-15T00:06:28+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "price per",
+        "before": "Price per 1M input tokens | $2.00 | $8.00",
+        "after": "Price per 1M input tokens | $4.00 | $8.00"
+      },
+      {
+        "key": "price per",
+        "before": "Price per 1M output and thinking tokens | $10.00 | $40.00",
+        "after": "Price per 1M output and thinking tokens | $20.00 | $40.00"
+      }
+    ],
+    "added_lines": [
+      "* Available at no charge until Oct 16, 2026.",
+      "DeepSeek-V4.1-Flash * |"
+    ],
+    "removed_lines": [
+      "1hr Cache Write",
+      "Inpur | | |",
+      "Outpur | | |",
+      "Price (/1M tokens) > 200K input tokens |"
+    ],
+    "added_count": 2,
+    "removed_count": 4,
+    "raw_added_count": 4,
+    "raw_removed_count": 6
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-15.json"
+  },
+  "permalink": "/item/obs_394cf0eadd9e338b1d909682eb819c34537a1d1628e9f056d6750f3141e1ba55/"
+}

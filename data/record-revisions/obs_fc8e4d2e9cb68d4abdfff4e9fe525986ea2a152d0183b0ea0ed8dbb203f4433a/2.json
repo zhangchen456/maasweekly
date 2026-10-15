@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_fc8e4d2e9cb68d4abdfff4e9fe525986ea2a152d0183b0ea0ed8dbb203f4433a",
+  "sourceId": "google-gemini-pricing",
+  "date": "2026-10-15",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "pricing",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+  "title": "Google Gemini API · 定价来源更新",
+  "summary": "定价页面更新了最后更新日期，并新增了 Contributor Tier 的说明和新的定价行（如 $0.10 和 $6.00 的提示词价格），可能表示新增了贡献者层或调整了定价。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-15T00:06:28+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-10-13 UTC.",
+        "after": "Last updated 2026-10-14 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-13 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-14 UTC.\"],[],[]]"
+      },
+      {
+        "key": "pay-as-you-go",
+        "before": "prepaid then pay-as-you-go pricing for your production ready applications.",
+        "after": "prepaid and pay-as-you-go pricing for your production-ready applications."
+      }
+    ],
+    "added_lines": [
+      "ContributorNote: The Gemini API Contributor Tier is offered as a private preview on an",
+      "Standard Tier inference. Eligible users will",
+      "be invited by email and see a callout in AI Studio.",
+      "invite-only basis. Speed and reliability are equivalent to",
+      "| $0.10, prompts 200k tokens",
+      "| $6.00, prompts 200k tokens"
+    ],
+    "removed_lines": [],
+    "added_count": 6,
+    "removed_count": 0,
+    "raw_added_count": 9,
+    "raw_removed_count": 3
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-15.json"
+  },
+  "permalink": "/item/obs_fc8e4d2e9cb68d4abdfff4e9fe525986ea2a152d0183b0ea0ed8dbb203f4433a/"
+}

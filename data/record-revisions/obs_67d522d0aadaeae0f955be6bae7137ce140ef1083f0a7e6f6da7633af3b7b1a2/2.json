@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_67d522d0aadaeae0f955be6bae7137ce140ef1083f0a7e6f6da7633af3b7b1a2",
+  "sourceId": "anthropic-changelog",
+  "date": "2026-10-15",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.anthropic.com/en/release-notes/api",
+  "title": "Anthropic · 更新日志来源更新",
+  "summary": "新增了 Claude Managed Agents 在 AWS 上的部署和 OpenTelemetry 导出功能，可能表示平台功能的扩展。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-15T00:06:28+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Claude Managed Agents scheduled deployments are now available on Claude Platform on AWS.",
+      "We've launched OpenTelemetry export in beta, so you can trace Messages API requests and Claude Managed Agents sessions in your observability backend. The Claude SDK emits spans in Python, TypeScript, C#, Go, Java, PHP, and Ruby. To get spans from the API, add an OpenTelemetry destination in the Claude Console."
+    ],
+    "removed_lines": [],
+    "added_count": 2,
+    "removed_count": 0,
+    "raw_added_count": 3,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-15.json"
+  },
+  "permalink": "/item/obs_67d522d0aadaeae0f955be6bae7137ce140ef1083f0a7e6f6da7633af3b7b1a2/"
+}

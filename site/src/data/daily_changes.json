@@ -1,6 +1,836 @@
 {
-  "updated_at": "2026-10-14T01:47:35+00:00",
+  "updated_at": "2026-10-15T00:06:28+00:00",
   "days": [
+    {
+      "date": "2026-10-15",
+      "stats": {
+        "total": 68,
+        "success": 63,
+        "failed": 5,
+        "changed": 24,
+        "unchanged": 39
+      },
+      "changed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "doubao seedream",
+              "before": "Doubao Seedream 5.0 pro 教程",
+              "after": "Doubao Seedream 5.0 pro / flash 教程"
+            }
+          ],
+          "signal_preview": "Doubao Seedream 5.0 pro / flash 教程",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_117d752f784378c23aa4c7bd5239393e75ac36993ccebdc4ac1c58451f2e3015",
+          "permalink": "/item/obs_117d752f784378c23aa4c7bd5239393e75ac36993ccebdc4ac1c58451f2e3015/",
+          "llm_summary": "模型列表中的教程链接从仅 pro 版本扩展为 pro / flash 两个版本，可能意味着 flash 版本已获得更多关注或文档支持。"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "Seedance 1.5 pro 提示词指南"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 1,
+          "id": "obs_81755e72a88eb4f998af2f7ce37527eafd26e3d14afc6798d6bdca76609f5369",
+          "permalink": "/item/obs_81755e72a88eb4f998af2f7ce37527eafd26e3d14afc6798d6bdca76609f5369/",
+          "llm_summary": "删除了 Seedance 1.5 pro 的提示词指南，可能表示该指南已过时或不再适用。"
+        },
+        {
+          "platform": "百度千帆",
+          "source_type": "model_list",
+          "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "| deepseek-flash"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 2,
+          "id": "obs_6640012359c268513550eb8fce331c95149cc596d1af50cb740be610763a7c16",
+          "permalink": "/item/obs_6640012359c268513550eb8fce331c95149cc596d1af50cb740be610763a7c16/",
+          "llm_summary": "从模型列表中移除了 deepseek-flash，可能表示该模型已下架或不再提供。"
+        },
+        {
+          "platform": "MiniMax",
+          "source_type": "pricing",
+          "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+          "status": "changed",
+          "added_count": 26,
+          "removed_count": 6,
+          "added_lines": [
+            "H3 视频生成的输出与输入素材分别计费。输入图片超过免费张数后需额外付费，输入视频按时长及生成分辨率计费。视频再生成也需重新计算原任务使用的输入素材费用。",
+            "M3 标准服务与优先服务有什么区别？",
+            "RPM：20 | 支持 video generation 接口",
+            "RPM：30 | 支持 video generation 接口",
+            "RPM：40 | 支持 video generation 接口",
+            "RPM：50 | 无限 RPM/TPM",
+            "Turbo 系列立即购买",
+            "[MiniMax-Hailuo-02] [MiniMax-Hailuo-2.3]，生成单条1080p，6s视频，扣减2视频点数",
+            "[MiniMax-Hailuo-02] [MiniMax-Hailuo-2.3]，生成单条768p，10s视频，扣减2视频点数",
+            "[MiniMax-Hailuo-02] [MiniMax-Hailuo-2.3]，生成单条768p，6s视频，扣减1视频点数",
+            "[MiniMax-Hailuo-02]，生成单条512p，10s视频，扣减0.5视频点数",
+            "[MiniMax-Hailuo-02]，生成单条512p，6s视频，扣减0.3视频点数",
+            "[MiniMax-Hailuo-2.3-Fast]，生成单条1080p，6s视频，扣减1.3视频点数",
+            "[MiniMax-Hailuo-2.3-Fast]，生成单条768p，10s视频，扣减1.1视频点数",
+            "[MiniMax-Hailuo-2.3-Fast]，生成单条768p，6s视频，扣减0.7视频点数",
+            "| API-vlm | 通过 M Plan MCP 插件或工具自带的视觉接口调用 | 0.025通过 M Plan 调用 API-vlm 时，会按其按量计费价格扣减套餐内 M Plan 额度；套餐内额度耗尽且已购积分可用时，超出部分可由已购积分自动补充支付。",
+            "| 付费方式 | 充值账户，按实际用量扣费 | 预付购买，在有效期内使用对应额度",
+            "| 分类 | 语音套餐一",
+            "| 到期规则 | 余量不继承，到期清零 | 余量不继承，到期清零",
+            "| 功能 | 支持 T2A v2 / T2A async v2 接口",
+            "| 功能 | 支持 video generation 接口",
+            "| 原价 | ¥400 | ¥4,000 | ¥40,000 | ——",
+            "| 原价 | ¥7,368 | ¥16,667 | ¥35,294 | ¥50,000 |",
+            "| 原价 | ¥700 | ¥7,000 | ¥70,000 | ——",
+            "| 套餐详情 | 语音资源包 | 视频资源包",
+            "| 对比项 | 按量计费 | 资源包"
+          ],
+          "removed_lines": [
+            "MiniMax按量计费定价",
+            "| 语音识别 | Speech-to-Text | 音频转文本，支持流式返回、说话人分离与字幕（srt/vtt）导出。 | 2.50",
+            "将已生成的 768P 视频进一步生成为 2K 视频，按视频再生成输出秒数计费。",
+            "H3-Context-IR 任务价格",
+            "| API-vlm | 通过 M Plan MCP 插件或工具自带的视觉接口调用 | 0.025",
+            "原 768P 生成任务中使用的输入素材需要重新计费。"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "minimax-h",
+              "before": "MiniMax-H3-Max | 768P | 按秒计费 | 0.50 元/秒",
+              "after": "MiniMax-H3-Max | 768P | 按秒计费 | 0.50 元/秒视频生成-输入素材价格"
+            },
+            {
+              "key": "minimax-h",
+              "before": "MiniMax-H3-Max | 视频 | 按输入视频时长及生成视频分辨率计费：480P 0.37 元/秒，768P 0.97 元/秒",
+              "after": "MiniMax-H3-Max | 视频 | 按输入视频时长及生成视频分辨率计费：480P 0.37 元/秒，768P 0.97 元/秒视频再生成-输出价格将已生成的 768P 视频进一步生成为 2K 视频，按视频再生成输出秒数计费。"
+            },
+            {
+              "key": "minimax-h",
+              "before": "MiniMax-H3-Regeneration | 768P → 2K | 按视频再生成输出秒数计费 | 0.30 元/秒",
+              "after": "MiniMax-H3-Regeneration | 768P → 2K | 按视频再生成输出秒数计费 | 0.30 元/秒视频再生成-输入素材价格原 768P 生成任务中使用的输入素材需要重新计费。"
+            },
+            {
+              "key": "minimax-h",
+              "before": "MiniMax-H3-Regeneration | 视频 | 按原 768P 生成任务中输入视频的秒数计费：0.30 元/秒",
+              "after": "MiniMax-H3-Regeneration | 视频 | 按原 768P 生成任务中输入视频的秒数计费：0.30 元/秒H3-Context-IR 任务价格"
+            }
+          ],
+          "signal_preview": "H3 视频生成的输出与输入素材分别计费。输入图片超过免费张数后需额外付费，输入视频按时长及生成分辨率计费。视频再生成也需重新计算原任务使用的输入素材费用。",
+          "raw_added_count": 93,
+          "raw_removed_count": 16,
+          "id": "obs_30da6dbcfcc38c8271c4eafecd2315a88769416c21f842b2f58da505548a7faa",
+          "permalink": "/item/obs_30da6dbcfcc38c8271c4eafecd2315a88769416c21f842b2f58da505548a7faa/",
+          "llm_summary": "视频生成定价结构大幅调整，新增了输入素材与输出分别计费的说明，并细化了不同分辨率和时长的点数扣减规则，同时删除了旧的按量计费说明，反映了计费模式的更新。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "Evaluation best practices",
+            "Maintaining software with the GPT-6 family"
+          ],
+          "removed_lines": [
+            "Meet Rosalind Workbench: Empowering every scientist to be their own research team"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Evaluation best practices",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_cd77ad4d17498ec56e7b8accfbf012d040697092dadff1373f8b38ee2f040ea2",
+          "permalink": "/item/obs_cd77ad4d17498ec56e7b8accfbf012d040697092dadff1373f8b38ee2f040ea2/",
+          "llm_summary": "新增了关于评估最佳实践和 GPT-6 系列维护的文档，同时移除了 Rosalind Workbench 相关内容，可能表示文档重点的转移。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "Evaluation best practices",
+            "Maintaining software with the GPT-6 family"
+          ],
+          "removed_lines": [
+            "Meet Rosalind Workbench: Empowering every scientist to be their own research team"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Evaluation best practices",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_04cd7c36c5b75fc64fb2ac24460611d3ff19ac68e580414eddbbb6030453488d",
+          "permalink": "/item/obs_04cd7c36c5b75fc64fb2ac24460611d3ff19ac68e580414eddbbb6030453488d/",
+          "llm_summary": "与 model_list 相同，新增了评估和 GPT-6 维护文档，删除了 Rosalind Workbench，可能表示定价页面更新了相关链接或说明。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "Evaluation best practices",
+            "Maintaining software with the GPT-6 family"
+          ],
+          "removed_lines": [
+            "Meet Rosalind Workbench: Empowering every scientist to be their own research team"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Evaluation best practices",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_183242b81428ec0f5d4f8be2df9878b75c1657d64138a85f0fc95e47965f2eaa",
+          "permalink": "/item/obs_183242b81428ec0f5d4f8be2df9878b75c1657d64138a85f0fc95e47965f2eaa/",
+          "llm_summary": "新增了评估最佳实践和 GPT-6 维护文档，删除了 Rosalind Workbench，可能表示变更日志中更新了这些文档的引用。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "Evaluation best practices",
+            "Maintaining software with the GPT-6 family"
+          ],
+          "removed_lines": [
+            "Meet Rosalind Workbench: Empowering every scientist to be their own research team"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Evaluation best practices",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_2949a16157bfabe953d8af975e1b92c8c3e100b639eb285d172d5f2c83889b52",
+          "permalink": "/item/obs_2949a16157bfabe953d8af975e1b92c8c3e100b639eb285d172d5f2c83889b52/",
+          "llm_summary": "新增了评估最佳实践和 GPT-6 维护文档，删除了 Rosalind Workbench，可能表示博客文章列表的更新。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "pricing",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Major credit cards are accepted for standard accounts. To buy credits or manage your payment methods, go to the Billing page (platform.claude.com/settings/billing) in the Claude Console. Enterprise customers can arrange invoicing and other payment methods."
+          ],
+          "removed_lines": [
+            "Major credit cards are accepted for standard accounts. Enterprise customers can arrange invoicing and other payment methods."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Major credit cards are accepted for standard accounts. To buy credits or manage your payment methods, go to the Billing page (platform.claude.com/settings/billing) in the Claude Console. Enterprise customers can arrange invoicing and other payment methods.",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_ecdccec9e7c645f67459730ac424e3082285fe7c89e9ccecf830cf5c9e245749",
+          "permalink": "/item/obs_ecdccec9e7c645f67459730ac424e3082285fe7c89e9ccecf830cf5c9e245749/",
+          "llm_summary": "支付方式说明从仅提及企业发票更改为接受主要信用卡，可能表示支付政策的调整。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "Claude Managed Agents scheduled deployments are now available on Claude Platform on AWS.",
+            "We've launched OpenTelemetry export in beta, so you can trace Messages API requests and Claude Managed Agents sessions in your observability backend. The Claude SDK emits spans in Python, TypeScript, C#, Go, Java, PHP, and Ruby. To get spans from the API, add an OpenTelemetry destination in the Claude Console."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Claude Managed Agents scheduled deployments are now available on Claude Platform on AWS.",
+          "raw_added_count": 3,
+          "raw_removed_count": 0,
+          "id": "obs_67d522d0aadaeae0f955be6bae7137ce140ef1083f0a7e6f6da7633af3b7b1a2",
+          "permalink": "/item/obs_67d522d0aadaeae0f955be6bae7137ce140ef1083f0a7e6f6da7633af3b7b1a2/",
+          "llm_summary": "新增了 Claude Managed Agents 在 AWS 上的部署和 OpenTelemetry 导出功能，可能表示平台功能的扩展。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 0,
+          "added_lines": [
+            "ContributorNote: The Gemini API Contributor Tier is offered as a private preview on an",
+            "Standard Tier inference. Eligible users will",
+            "be invited by email and see a callout in AI Studio.",
+            "invite-only basis. Speed and reliability are equivalent to",
+            "| $0.10, prompts 200k tokens",
+            "| $6.00, prompts 200k tokens"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-13 UTC.",
+              "after": "Last updated 2026-10-14 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-13 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-14 UTC.\"],[],[]]"
+            },
+            {
+              "key": "pay-as-you-go",
+              "before": "prepaid then pay-as-you-go pricing for your production ready applications.",
+              "after": "prepaid and pay-as-you-go pricing for your production-ready applications."
+            }
+          ],
+          "signal_preview": "ContributorNote: The Gemini API Contributor Tier is offered as a private preview on an",
+          "raw_added_count": 9,
+          "raw_removed_count": 3,
+          "id": "obs_fc8e4d2e9cb68d4abdfff4e9fe525986ea2a152d0183b0ea0ed8dbb203f4433a",
+          "permalink": "/item/obs_fc8e4d2e9cb68d4abdfff4e9fe525986ea2a152d0183b0ea0ed8dbb203f4433a/",
+          "llm_summary": "定价页面更新了最后更新日期，并新增了 Contributor Tier 的说明和新的定价行（如 $0.10 和 $6.00 的提示词价格），可能表示新增了贡献者层或调整了定价。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "changelog",
+          "url": "https://ai.google.dev/gemini-api/docs/changelog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "Gemini 3.6 Flash guide",
+            "the Gemini 3.8 Flash guide."
+          ],
+          "removed_lines": [
+            "Latest Gemini Model",
+            "the Latest model guide."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-13 UTC.",
+              "after": "Last updated 2026-10-14 UTC."
+            },
+            {
+              "key": "to learn more",
+              "before": "To learn more, see the Latest Gemini model",
+              "after": "To learn more, see the"
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-13 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-14 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Gemini 3.6 Flash guide",
+          "raw_added_count": 5,
+          "raw_removed_count": 5,
+          "id": "obs_aafb33ec03809b2d65268e0a8bb1f926cdb43a99cd311cf952f5b651661a5ad3",
+          "permalink": "/item/obs_aafb33ec03809b2d65268e0a8bb1f926cdb43a99cd311cf952f5b651661a5ad3/",
+          "llm_summary": "更新了最后更新日期，新增了 Gemini 3.6 Flash 和 3.8 Flash 指南，删除了旧的 Latest Gemini Model 文档，可能表示模型文档的更新。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Research@ 2026: Novel capabilities and intelligence"
+          ],
+          "removed_lines": [
+            "Google's AI ranks #1 for predicting flu hospitalizations."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Research@ 2026: Novel capabilities and intelligence",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_6026a36b0b1d7b70c2b5fe72dda99a7ec175d6ca306b9724a0abc599fcdc3c6a",
+          "permalink": "/item/obs_6026a36b0b1d7b70c2b5fe72dda99a7ec175d6ca306b9724a0abc599fcdc3c6a/",
+          "llm_summary": "新增了关于研究能力的文章，删除了关于流感预测的文章，可能表示博客内容的更新。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 4,
+          "added_lines": [
+            "* Available at no charge until Oct 16, 2026.",
+            "DeepSeek-V4.1-Flash * |"
+          ],
+          "removed_lines": [
+            "1hr Cache Write",
+            "Inpur | | |",
+            "Outpur | | |",
+            "Price (/1M tokens) > 200K input tokens |"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "price per",
+              "before": "Price per 1M input tokens | $2.00 | $8.00",
+              "after": "Price per 1M input tokens | $4.00 | $8.00"
+            },
+            {
+              "key": "price per",
+              "before": "Price per 1M output and thinking tokens | $10.00 | $40.00",
+              "after": "Price per 1M output and thinking tokens | $20.00 | $40.00"
+            }
+          ],
+          "signal_preview": "* Available at no charge until Oct 16, 2026.",
+          "raw_added_count": 4,
+          "raw_removed_count": 6,
+          "id": "obs_394cf0eadd9e338b1d909682eb819c34537a1d1628e9f056d6750f3141e1ba55",
+          "permalink": "/item/obs_394cf0eadd9e338b1d909682eb819c34537a1d1628e9f056d6750f3141e1ba55/",
+          "llm_summary": "更新了定价，输入价格从 $2.00 上调至 $4.00，输出和思考价格从 $10.00 上调至 $20.00，并新增了 DeepSeek-V4.1-Flash 模型，同时删除了旧的缓存写入和输入输出说明，可能表示定价调整和新模型上架。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "changelog",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-09 UTC.",
+              "after": "Last updated 2026-10-13 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-09 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-13 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-10-13 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_09cc069df5098d11c81babd34e3e7f77f0c5971378256f7479ff675a9113b1bf",
+          "permalink": "/item/obs_09cc069df5098d11c81babd34e3e7f77f0c5971378256f7479ff675a9113b1bf/",
+          "llm_summary": "更新了最后更新日期，可能表示变更日志的常规更新。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "By Tushar Jaiswal • 9-minute read",
+            "Data Analytics",
+            "Predictable AI spend in BigQuery: Introducing cost management for generative AI functions"
+          ],
+          "removed_lines": [
+            "By AI Infrastructure team • 4-minute read",
+            "Changing the game: Using agentic AI to secure infrastructure code"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "By Tushar Jaiswal • 9-minute read",
+          "raw_added_count": 3,
+          "raw_removed_count": 2,
+          "id": "obs_3f0ec70ff55115bec806bbef0fe4487ef350be77091b59d64ef032e0f85698d4",
+          "permalink": "/item/obs_3f0ec70ff55115bec806bbef0fe4487ef350be77091b59d64ef032e0f85698d4/",
+          "llm_summary": "新增了关于 BigQuery 成本管理的文章，删除了关于代理式 AI 安全性的文章，可能表示博客内容的更新。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 3,
+          "added_lines": [
+            "Lessons from scaling teams of coding agents: reach the frontier at 30% of the cost",
+            "Teams of coding agents are already building large-scale software, but how should they be organized to work most effectively and efficiently?"
+          ],
+          "removed_lines": [
+            "For BusinessSovereign AI",
+            "North 2 is Cohere’s biggest upgrade yet — unifying enterprise‑grade security, intelligence, cost governance, and full‑stack control into a single agentic AI platform that runs wherever your data lives.",
+            "The state of sovereign AI adoption in 2026"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Lessons from scaling teams of coding agents: reach the frontier at 30% of the cost",
+          "raw_added_count": 4,
+          "raw_removed_count": 4,
+          "id": "obs_8533c78b833a1df37e362e3befbbb86f74bbae901dc25b7bd84820b37e463246",
+          "permalink": "/item/obs_8533c78b833a1df37e362e3befbbb86f74bbae901dc25b7bd84820b37e463246/",
+          "llm_summary": "新增了关于编码代理团队规模的文章，删除了关于主权 AI 和 North 2 的文章，可能表示博客内容的更新。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "changelog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 4,
+          "added_lines": [
+            "Grok Voice 1.0 is available",
+            "Grok Voice 1.0 is now available with the Speech to Speech API. To get started, check out the Speech to Speech docs. For more details, see our blog post.",
+            "Grok Voice 2.0 deprecation",
+            "Grok Voice 2.0 is available",
+            "Grok Voice 3.0 is available",
+            "grok-voice-2.0 is deprecated. To upgrade, set model to grok-voice-3.0 or grok-voice-latest, at the same price. See Upgrading from Grok Voice 2.0.",
+            "grok-voice-2.0 is now available with Speech to Speech. grok-voice-latest will route to this model starting August 5, 2026. To get started, see the Speech to Speech docs. For more details, see our announcement.",
+            "grok-voice-3.0 is now available with Speech to Speech, at the same price as Grok Voice 2.0. grok-voice-latest now points to grok-voice-3.0, so sessions that use the alias are upgraded automatically. The API is unchanged. To get started, see the Speech to Speech docs."
+          ],
+          "removed_lines": [
+            "Grok Voice Think Fast 1.0 is available",
+            "Grok Voice Think Fast 2.0 is available",
+            "You can now use grok-voice-think-fast-1.0 with the Speech to Speech API. To get started, check out the Speech to Speech docs. For more details, see our blog post.",
+            "grok-voice-think-fast-2.0 is now available with Speech to Speech. grok-voice-latest will route to this model starting August 5, 2026. To get started, see the Speech to Speech docs. For more details, see our announcement."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: October 10, 2026",
+              "after": "Last updated: October 13, 2026"
+            }
+          ],
+          "signal_preview": "Grok Voice 1.0 is available",
+          "raw_added_count": 9,
+          "raw_removed_count": 5,
+          "id": "obs_c578f067b4116818304a0aa669890fce377de5ebefd5a1ccd5cc4ea76379aeb0",
+          "permalink": "/item/obs_c578f067b4116818304a0aa669890fce377de5ebefd5a1ccd5cc4ea76379aeb0/",
+          "llm_summary": "更新了最后更新日期，新增了 Grok Voice 1.0、2.0、3.0 的发布和弃用信息，删除了 Grok Voice Think Fast 1.0 和 2.0 的发布信息，可能表示语音模型版本的迭代。"
+        },
+        {
+          "platform": "xAI",
+          "source_type": "blog",
+          "url": "https://docs.x.ai/docs/release-notes",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 4,
+          "added_lines": [
+            "Grok Voice 1.0 is available",
+            "Grok Voice 1.0 is now available with the Speech to Speech API. To get started, check out the Speech to Speech docs. For more details, see our blog post.",
+            "Grok Voice 2.0 deprecation",
+            "Grok Voice 2.0 is available",
+            "Grok Voice 3.0 is available",
+            "grok-voice-2.0 is deprecated. To upgrade, set model to grok-voice-3.0 or grok-voice-latest, at the same price. See Upgrading from Grok Voice 2.0.",
+            "grok-voice-2.0 is now available with Speech to Speech. grok-voice-latest will route to this model starting August 5, 2026. To get started, see the Speech to Speech docs. For more details, see our announcement.",
+            "grok-voice-3.0 is now available with Speech to Speech, at the same price as Grok Voice 2.0. grok-voice-latest now points to grok-voice-3.0, so sessions that use the alias are upgraded automatically. The API is unchanged. To get started, see the Speech to Speech docs."
+          ],
+          "removed_lines": [
+            "Grok Voice Think Fast 1.0 is available",
+            "Grok Voice Think Fast 2.0 is available",
+            "You can now use grok-voice-think-fast-1.0 with the Speech to Speech API. To get started, check out the Speech to Speech docs. For more details, see our blog post.",
+            "grok-voice-think-fast-2.0 is now available with Speech to Speech. grok-voice-latest will route to this model starting August 5, 2026. To get started, see the Speech to Speech docs. For more details, see our announcement."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated: October 10, 2026",
+              "after": "Last updated: October 13, 2026"
+            }
+          ],
+          "signal_preview": "Grok Voice 1.0 is available",
+          "raw_added_count": 9,
+          "raw_removed_count": 5,
+          "id": "obs_815bb3f3fd828ce9cdf38519679e2868354419b40f8d8574bf4f4de150cb5528",
+          "permalink": "/item/obs_815bb3f3fd828ce9cdf38519679e2868354419b40f8d8574bf4f4de150cb5528/",
+          "llm_summary": "与 changelog 相同，新增了 Grok Voice 1.0、2.0、3.0 的发布和弃用信息，删除了 Think Fast 版本，可能表示博客文章同步更新。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 9,
+          "removed_count": 3,
+          "added_lines": [
+            "Announcing AA-3D: a benchmark for AI models building interactive 3D experiences",
+            "AnthropicAnthropic + OpenAIGoogleMetaOpenAISpaceXAIZ AIKimiAlibabaDeepSeek",
+            "Artificial Analysis Decision Index v1.0",
+            "Elo scores from blind preference votes by our validated private evaluators. See the full leaderboard here.",
+            "Grok 4.7 (Low)See more",
+            "New article published · 13 Oct",
+            "Weighted average cost (USD) per Intelligence Index task · Segmented by token type · Lower is better",
+            "Weighted average decode time (minutes) per Intelligence Index task · Excludes TTFT and overhead time · Lower is better",
+            "Welcome to the era of embodied AI: Introducing AA-Robotics v0.1"
+          ],
+          "removed_lines": [
+            "AnthropicGoogleMetaOpenAIAnthropic + CognitionSpaceXAIZ AIKimiAlibabaDeepSeek",
+            "Benchmarking decision models on classification, tool calling, knowledge and reasoning",
+            "Elo scores from blind preference votes by our recruited human panel, together with public Image Arena votes cast before 1 January 2026. See the full leaderboard here."
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "artificial analysis cyber index score vs",
+              "before": "Artificial Analysis Cyber Index score vs. average cost per task (USD) · Lower is better · Refused tasks are estimated from other models' token use",
+              "after": "Artificial Analysis Cyber Index score vs. average cost per task (USD) · Refused tasks are estimated from other models' token use"
+            }
+          ],
+          "signal_preview": "Announcing AA-3D: a benchmark for AI models building interactive 3D experiences",
+          "raw_added_count": 16,
+          "raw_removed_count": 17,
+          "id": "obs_8612182cf407f8ae36beacf15626565c4e09f12b6ad66751afbee23053fd98d6",
+          "permalink": "/item/obs_8612182cf407f8ae36beacf15626565c4e09f12b6ad66751afbee23053fd98d6/",
+          "llm_summary": "更新了 Cyber Index 的描述，新增了 AA-3D 基准和 Decision Index v1.0，并更新了模型列表，可能表示基准测试和排行榜的更新。"
+        },
+        {
+          "platform": "百度千帆",
+          "source_type": "blog",
+          "url": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_9e3a4aed729f584c7d1d4929226d76dde267fccfb02e29a9c1c47c1b2e0008f1",
+          "permalink": "/item/obs_9e3a4aed729f584c7d1d4929226d76dde267fccfb02e29a9c1c47c1b2e0008f1/"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 3,
+          "raw_removed_count": 3,
+          "id": "obs_ffebfc2b4945debe9b0b9bd4515dbd1220d6d5d2c0eb7e48c1ecfaefecd5651e",
+          "permalink": "/item/obs_ffebfc2b4945debe9b0b9bd4515dbd1220d6d5d2c0eb7e48c1ecfaefecd5651e/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 30,
+          "raw_removed_count": 30,
+          "id": "obs_e02bfacc0a77d27c06d4f008f2e970fa92e7feaa482152e99e6ba0f306372b36",
+          "permalink": "/item/obs_e02bfacc0a77d27c06d4f008f2e970fa92e7feaa482152e99e6ba0f306372b36/"
+        }
+      ],
+      "first_fetch": [
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "first_fetch",
+          "content_length": 17801
+        }
+      ],
+      "failed": [
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "model_list",
+          "url": "https://cloud.tencent.com/document/product/1729/104753",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=989)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "pricing",
+          "url": "https://cloud.tencent.com/document/product/1729/97731",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=987)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "changelog",
+          "url": "https://cloud.tencent.com/document/product/1729/97765",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=988)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "blog",
+          "url": "https://cloud.tencent.com/document/product/1729/132069",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=988)"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "fetch_failed",
+          "error": "反爬挑战页 (raw_len=5677)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "xAI",
+          "logo_summary": "Grok Voice 3.0发布，2.0弃用",
+          "items": [
+            {
+              "text": "Grok Voice 3.0 已上线，支持 Speech to Speech API，价格与 2.0 相同，grok-voice-latest 已指向 3.0",
+              "type": "release"
+            },
+            {
+              "text": "Grok Voice 2.0 已弃用，用户需升级至 grok-voice-3.0 或 grok-voice-latest",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "MiniMax",
+          "logo_summary": "视频生成定价重构，新增计费说明",
+          "items": [
+            {
+              "text": "MiniMax-H3-Max 视频生成改为输出与输入素材分别计费，输入视频按时长及分辨率计费",
+              "type": "pricing"
+            },
+            {
+              "text": "MiniMax-H3-Regeneration 新增 768P 至 2K 再生成计费，输入素材需重新计费",
+              "type": "pricing"
+            },
+            {
+              "text": "新增 Hailuo-02 与 Hailuo-2.3 视频点数扣减规则，不同分辨率与时长对应不同点数",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "DeepSeek-V4.1-Flash 上架，输入价格上调",
+          "items": [
+            {
+              "text": "DeepSeek-V4.1-Flash 新增至 Vertex AI，免费至 2026 年 10 月 16 日",
+              "type": "release"
+            },
+            {
+              "text": "某模型输入价格从 $2.00 上调至 $4.00（每 1M tokens），输出价格从 $10.00 上调至 $20.00",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "Gemini 3.8 Flash 指南上线，新增贡献者层",
+          "items": [
+            {
+              "text": "Gemini 3.8 Flash 指南新增，替代旧的 Latest Gemini Model 文档",
+              "type": "release"
+            },
+            {
+              "text": "Gemini API 新增 Contributor Tier 私有预览，邀请制，速度和可靠性等同标准层",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Claude 托管代理部署与可观测性更新",
+          "items": [
+            {
+              "text": "Claude Managed Agents 定时部署现已在 AWS 上可用",
+              "type": "release"
+            },
+            {
+              "text": "OpenTelemetry 导出功能 beta 上线，可追踪 Messages API 请求和代理会话",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "OpenAI",
+          "logo_summary": "新增评估与维护文档，移除旧内容",
+          "items": [
+            {
+              "text": "新增 Evaluation best practices 和 Maintaining software with the GPT-6 family 文档",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "博客聚焦编码代理与主权AI",
+          "items": [
+            {
+              "text": "新文章：扩展编码代理团队的经验，以 30% 成本达到前沿水平",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "Seedream 5.0 教程更新",
+          "items": [
+            {
+              "text": "Doubao Seedream 5.0 pro 教程更新为 pro / flash 教程",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "百度千帆",
+          "logo_summary": "下架 deepseek-flash 模型",
+          "items": [
+            {
+              "text": "deepseek-flash 从模型列表中移除",
+              "type": "sunset"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-10-14",
       "stats": {

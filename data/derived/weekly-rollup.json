@@ -4,6 +4,14 @@
     "start": "2026-10-12",
     "end": "2026-10-18",
     "days": {
+      "2026-10-15": {
+        "substantive": 20,
+        "jitter": 3,
+        "failed": 5,
+        "releases": 4,
+        "pricings": 4,
+        "sunsets": 2
+      },
       "2026-10-14": {
         "substantive": 13,
         "jitter": 2,
@@ -30,12 +38,102 @@
       }
     },
     "totals": {
-      "substantive": 33,
-      "releases": 12,
-      "pricings": 6,
-      "sunsets": 3
+      "substantive": 53,
+      "releases": 16,
+      "pricings": 10,
+      "sunsets": 5
     },
     "highlights": [
+      {
+        "platform": "xAI",
+        "date": "2026-10-15",
+        "text": "Grok Voice 3.0 已上线，支持 Speech to Speech API，价格与 2.0 相同，grok-voice-latest 已指向 3.0",
+        "type": "release"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-10-15",
+        "text": "Grok Voice 2.0 已弃用，用户需升级至 grok-voice-3.0 或 grok-voice-latest",
+        "type": "sunset"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-15",
+        "text": "MiniMax-H3-Max 视频生成改为输出与输入素材分别计费，输入视频按时长及分辨率计费",
+        "type": "pricing"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-15",
+        "text": "MiniMax-H3-Regeneration 新增 768P 至 2K 再生成计费，输入素材需重新计费",
+        "type": "pricing"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-15",
+        "text": "新增 Hailuo-02 与 Hailuo-2.3 视频点数扣减规则，不同分辨率与时长对应不同点数",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-15",
+        "text": "DeepSeek-V4.1-Flash 新增至 Vertex AI，免费至 2026 年 10 月 16 日",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-15",
+        "text": "某模型输入价格从 $2.00 上调至 $4.00（每 1M tokens），输出价格从 $10.00 上调至 $20.00",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-15",
+        "text": "Gemini 3.8 Flash 指南新增，替代旧的 Latest Gemini Model 文档",
+        "type": "release"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-15",
+        "text": "Gemini API 新增 Contributor Tier 私有预览，邀请制，速度和可靠性等同标准层",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-15",
+        "text": "Claude Managed Agents 定时部署现已在 AWS 上可用",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-15",
+        "text": "OpenTelemetry 导出功能 beta 上线，可追踪 Messages API 请求和代理会话",
+        "type": "other"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-15",
+        "text": "新增 Evaluation best practices 和 Maintaining software with the GPT-6 family 文档",
+        "type": "other"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-15",
+        "text": "新文章：扩展编码代理团队的经验，以 30% 成本达到前沿水平",
+        "type": "other"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-10-15",
+        "text": "Doubao Seedream 5.0 pro 教程更新为 pro / flash 教程",
+        "type": "other"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-10-15",
+        "text": "deepseek-flash 从模型列表中移除",
+        "type": "sunset"
+      },
       {
         "platform": "Google Gemini API",
         "date": "2026-10-14",
