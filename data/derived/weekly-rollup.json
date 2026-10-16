@@ -4,6 +4,14 @@
     "start": "2026-10-12",
     "end": "2026-10-18",
     "days": {
+      "2026-10-17": {
+        "substantive": 20,
+        "jitter": 4,
+        "failed": 8,
+        "releases": 6,
+        "pricings": 5,
+        "sunsets": 1
+      },
       "2026-10-16": {
         "substantive": 18,
         "jitter": 6,
@@ -46,12 +54,96 @@
       }
     },
     "totals": {
-      "substantive": 71,
-      "releases": 21,
-      "pricings": 12,
-      "sunsets": 6
+      "substantive": 91,
+      "releases": 27,
+      "pricings": 17,
+      "sunsets": 7
     },
     "highlights": [
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-17",
+        "text": "GPT-Live新增原生Decisions集成，应用可在用户说话时执行操作",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-17",
+        "text": "GPT-Live新增9种自然语音（德语、法语、印地语、日语、韩语），并推出prompt-to-voice功能",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-17",
+        "text": "Codex Security SDK、cookbook及failover设计指南等文档上线",
+        "type": "other"
+      },
+      {
+        "platform": "DeepSeek",
+        "date": "2026-10-17",
+        "text": "Search API和Fetch API上线，每1,000次成功请求收费5元",
+        "type": "release"
+      },
+      {
+        "platform": "DeepSeek",
+        "date": "2026-10-17",
+        "text": "Claude Code和Codex中的网页搜索在前两周免收Search API费用",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-17",
+        "text": "Claude Opus 5.5定价为$8/MTok输入、$40/MTok输出，Claude Opus 5/4.8为$10/$50",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-17",
+        "text": "Claude Opus 5.5的Fast mode退出研究预览，无需再申请访问",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-17",
+        "text": "Gemini 4 Argon纳入50% Provisioned Throughput促销折扣，有效期至2026-11-30",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-17",
+        "text": "Gemini 4生成超过32K tokens时按可检索token计费",
+        "type": "pricing"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-10-17",
+        "text": "硅基流动上线高速版DeepSeek V4.1 Flash，支持原生视觉理解",
+        "type": "release"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-10-17",
+        "text": "systemone接口的diffusiongemma模型于2026-10-17停止服务",
+        "type": "sunset"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-17",
+        "text": "新模型north-small-translate-09-2026上线，替代north-small-translate-1-0",
+        "type": "release"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-17",
+        "text": "Timestral 1.0模型参数标注从Modified MIT改为209B，并新增其他专业模型分类",
+        "type": "other"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-17",
+        "text": "Gemini 4 Argon不再受Google AI Pro计划限制，但Free tier仍不可用",
+        "type": "pricing"
+      },
       {
         "platform": "Mistral AI",
         "date": "2026-10-16",

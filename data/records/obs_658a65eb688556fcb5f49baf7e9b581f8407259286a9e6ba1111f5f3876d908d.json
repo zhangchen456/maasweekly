@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_658a65eb688556fcb5f49baf7e9b581f8407259286a9e6ba1111f5f3876d908d",
+  "sourceId": "cohere-modellist",
+  "date": "2026-10-17",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Cohere",
+  "sourceType": "model_list",
+  "sourceUrl": "https://docs.cohere.com/docs/models",
+  "title": "Cohere · 模型列表来源更新",
+  "summary": "新增north-small-translate-09-2026模型，删除north-small-translate-1-0，对应模型版本迭代。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-16T23:36:53+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "| north-small-translate-09-2026 | Live | North Small Translate is a 218B total / 25B active parameter MoE model purpose-built for machine translation across more than 50 languages. | Text | 16k | 16k | Chat"
+    ],
+    "removed_lines": [
+      "| north-small-translate-1-0 | Live | North Small Translate is a 218B total / 25B active parameter MoE model purpose-built for machine translation across more than 50 languages. | Text | 16k | 16k | Chat"
+    ],
+    "added_count": 1,
+    "removed_count": 1,
+    "raw_added_count": 1,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-17.json"
+  },
+  "permalink": "/item/obs_658a65eb688556fcb5f49baf7e9b581f8407259286a9e6ba1111f5f3876d908d/"
+}

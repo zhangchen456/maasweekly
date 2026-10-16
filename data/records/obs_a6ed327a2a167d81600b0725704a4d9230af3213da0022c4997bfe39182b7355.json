@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_a6ed327a2a167d81600b0725704a4d9230af3213da0022c4997bfe39182b7355",
+  "sourceId": "google-vertex-pricing",
+  "date": "2026-10-17",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Vertex AI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+  "title": "Google Vertex AI · 定价来源更新",
+  "summary": "新增Gemini 4 Argon的促销折扣和长输出计费规则，删除旧促销描述，显示促销范围扩大和计费细化。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-16T23:36:53+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "pro-rated",
+        "before": "Issued credits apply to usage across On-Demand Gemini 3.8 Flash, Gemini 3.7 Flash and Gemini 3.6 Flash SKUs, as well as Provisioned Throughput SKUs across all models. Credits are issued on the 7th day of each month following the billing period, and expire 30 days after issuance, under standard Google Cloud Credit Terms of Service. Spend for the initial month is pro-rated strictly for active usage between August 13 and August 31, 2026.",
+        "after": "Issued credits apply to usage across On-Demand Gemini 4 Argon (excluding Gemini 4 Argon Cyber Permissive), Gemini 3.8 Flash, Gemini 3.7 Flash, and Gemini 3.6 Flash SKUs, as well as Provisioned Throughput SKUs across all models. Credits are issued on the 7th day of each month following the billing period, and expire 30 days after issuance, under standard Google Cloud Credit Terms of Service. Spend for the initial month is pro-rated strictly for active usage starting October 13, 2026 for Gemini 4 Argon and August 13, 2026 for Gemini 3.8 Flash, Gemini 3.7 Flash, and Gemini 3.6 Flash."
+      }
+    ],
+    "added_lines": [
+      "** Gemini 4 can generate completions up to 1 million tokens in length. When a completion exceeds 32K tokens in length, users will be charged for retrievable token usage even if the request ultimately fails due to client or server timeouts. This will take effect on November 13 2026.",
+      "50% Promotional Credits on Gemini 4 Argon, Gemini 3.8 Flash, Gemini 3.7 Flash, and Gemini 3.6 Flash Provisioned Throughput Usage",
+      "Effective October 13, 2026 through November 30, 2026 for Gemini 4 Argon (excluding Gemini 4 Argon Cyber Permissive), and effective August 13, 2026 through December 31, 2026 for Gemini 3.8 Flash, Gemini 3.7 Flash, and Gemini 3.6 Flash, Google Cloud is injecting a monthly billing credit equal to 50% of net eligible Provisioned Throughput spending on these models."
+    ],
+    "removed_lines": [
+      "Effective August 13, 2026 through December 31, 2026, Google Cloud is injecting a monthly billing credit equal to 50% of net eligible Provisioned Throughput spending on Gemini 3.8 Flash, Gemini 3.7 Flash, and Gemini 3.6 Flash models.",
+      "50% Promotional Credits on Gemini 3.8 Flash, Gemini 3.7 Flash and Gemini 3.6 Flash Provisioned Throughput Usage"
+    ],
+    "added_count": 3,
+    "removed_count": 2,
+    "raw_added_count": 4,
+    "raw_removed_count": 3
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-17.json"
+  },
+  "permalink": "/item/obs_a6ed327a2a167d81600b0725704a4d9230af3213da0022c4997bfe39182b7355/"
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_6a61d347992949806c739fc7e79681d456ff0fff7ce90caf0b5967cdf17e4456",
+  "sourceId": "deepseek-blog",
+  "date": "2026-10-17",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "DeepSeek",
+  "sourceType": "blog",
+  "sourceUrl": "https://api-docs.deepseek.com/zh-cn/news/",
+  "title": "DeepSeek · 博客来源更新",
+  "summary": "博客代码示例同步更新，与changelog一致，无实质内容变化。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-16T23:36:53+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "base_url=\"https",
+        "before": "base_url=\"https://api.deepseek.com\")",
+        "after": "base_url=\"https://api.deepseek.com\","
+      },
+      {
+        "key": "extra_body={\"thinking\"",
+        "before": "extra_body={\"thinking\": {\"type\": \"enabled\"}}",
+        "after": "extra_body={\"thinking\": {\"type\": \"enabled\"}},"
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [],
+    "added_count": 0,
+    "removed_count": 0,
+    "raw_added_count": 2,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-17.json"
+  },
+  "permalink": "/item/obs_6a61d347992949806c739fc7e79681d456ff0fff7ce90caf0b5967cdf17e4456/"
+}

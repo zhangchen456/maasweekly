@@ -4777,5 +4777,163 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-17": {
+    "highlights": [
+      {
+        "platform": "OpenAI",
+        "logo_summary": "GPT-Live新增语音与Decisions集成，Codex安全工具上线",
+        "items": [
+          {
+            "text": "GPT-Live新增原生Decisions集成，应用可在用户说话时执行操作",
+            "type": "release"
+          },
+          {
+            "text": "GPT-Live新增9种自然语音（德语、法语、印地语、日语、韩语），并推出prompt-to-voice功能",
+            "type": "release"
+          },
+          {
+            "text": "Codex Security SDK、cookbook及failover设计指南等文档上线",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "DeepSeek",
+        "logo_summary": "推出Search与Fetch API，按请求计费",
+        "items": [
+          {
+            "text": "Search API和Fetch API上线，每1,000次成功请求收费5元",
+            "type": "release"
+          },
+          {
+            "text": "Claude Code和Codex中的网页搜索在前两周免收Search API费用",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Anthropic",
+        "logo_summary": "Claude Opus 5.5定价明确，Fast mode正式可用",
+        "items": [
+          {
+            "text": "Claude Opus 5.5定价为$8/MTok输入、$40/MTok输出，Claude Opus 5/4.8为$10/$50",
+            "type": "pricing"
+          },
+          {
+            "text": "Claude Opus 5.5的Fast mode退出研究预览，无需再申请访问",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "Google Vertex AI",
+        "logo_summary": "Gemini 4 Argon加入促销，长输出计费规则更新",
+        "items": [
+          {
+            "text": "Gemini 4 Argon纳入50% Provisioned Throughput促销折扣，有效期至2026-11-30",
+            "type": "pricing"
+          },
+          {
+            "text": "Gemini 4生成超过32K tokens时按可检索token计费",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "硅基流动",
+        "logo_summary": "上线DeepSeek V4.1 Flash高速版，下线diffusiongemma",
+        "items": [
+          {
+            "text": "硅基流动上线高速版DeepSeek V4.1 Flash，支持原生视觉理解",
+            "type": "release"
+          },
+          {
+            "text": "systemone接口的diffusiongemma模型于2026-10-17停止服务",
+            "type": "sunset"
+          }
+        ]
+      },
+      {
+        "platform": "Cohere",
+        "logo_summary": "发布North Small Translate新版本模型",
+        "items": [
+          {
+            "text": "新模型north-small-translate-09-2026上线，替代north-small-translate-1-0",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "Mistral AI",
+        "logo_summary": "模型列表更新，Timestral参数标注调整",
+        "items": [
+          {
+            "text": "Timestral 1.0模型参数标注从Modified MIT改为209B，并新增其他专业模型分类",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Google Gemini API",
+        "logo_summary": "定价页面更新，Pro计划限制调整",
+        "items": [
+          {
+            "text": "Gemini 4 Argon不再受Google AI Pro计划限制，但Free tier仍不可用",
+            "type": "pricing"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_5be46865f4f41aaa9c7f0ca08454bd75e8095561b985a547813d625998f1410d": "定价页面出现费用时段重复标注，但价格数字未变，可能为页面格式调整，无实质价格变化。",
+      "obs_4051e83d97671665958b3c00575653d55df7d23d21b890950d4cc3ac1a0d5b64": "新增systemone接口diffusiongemma模型停止服务的公告，同时保留ERNIE-Image-Turbo下线等既有变更，显示模型服务调整持续进行。",
+      "obs_9cd22a257d4d258bff1e6318560cd4499a0d97856098e5547f3238730cd0ebeb": "博客新增高速版DeepSeek V4.1 Flash上线文章，删除旧版DeepSeek-V4-Flash-0731相关文章，对应模型版本更新。",
+      "obs_8dcde339ac4e6fbca17aeb8edf8fd84510c9030071abe0f7437f939eec3f8329": "新增Search和Fetch API的计费说明，按请求次数收费（5元/千次），并移除旧的token扣费描述，表明新增独立API计费模式。",
+      "obs_ac8710c5f505fa11fe68d480702756ecc68cfc248d223a0d4025cc0c7e864ddf": "与model_list一致，新增Search和Fetch API定价，删除旧的扣费说明，反映计费规则变更。",
+      "obs_28a071f110a7ef23b1a2af4897111644285aad72290bde7765134e427e81fe69": "代码示例中base_url和extra_body参数格式微调，无实质功能变化。",
+      "obs_6a61d347992949806c739fc7e79681d456ff0fff7ce90caf0b5967cdf17e4456": "博客代码示例同步更新，与changelog一致，无实质内容变化。",
+      "obs_85ba68fdb682e18d7ffff1f1b6657fe4674a6578233d2d4a4c99e65534ae735d": "新增Codex安全SDK、cookbook、failover设计等文档，删除Building games with Astra等旧文档，反映文档资源更新。",
+      "obs_1630bcee45f9753de900498bc91f42fa47b4e5236a21022361347abc3b5ccc54": "与model_list同步，新增和删除相同文档条目，无价格变化。",
+      "obs_1013ee548c94e488f3ae57371f139e8fada54d27e27a8d62d8c1bd5a438c86b7": "新增GPT-Live的Decisions集成、9种自然语音、prompt-to-voice功能，以及Codex安全文档，删除旧文档，显示功能扩展。",
+      "obs_1babb15dc97ae98e0aac3e10636bb68d175de678244650ae9f154d19f1350e8c": "与changelog一致，新增功能公告和文档，删除旧内容，反映产品更新。",
+      "obs_c507f9c44f50b149b1215e337a60378fe5110ea90a4b30880b327e73f44eea15": "新增Claude Opus 5.5和Opus 5/4.8的定价行（带USD单位），删除旧定价行和Fast mode不可用说明，对应定价正式化。",
+      "obs_4de4f57b75036148be1f1f3b9b70c9c415b9170b18abf17f57eb4e72fe313d73": "Fast mode状态更新，从需申请变为无需申请，反映功能正式可用。",
+      "obs_4f8071b397e241aa6da6a4ed4ada533331e8d6f9b6d4711a1fed207f7e02a4d2": "更新日期至2026-10-16，并修改Gemini 4 Argon的可用性说明，移除Pro计划限制，但Free tier仍不可用。",
+      "obs_a6ed327a2a167d81600b0725704a4d9230af3213da0022c4997bfe39182b7355": "新增Gemini 4 Argon的促销折扣和长输出计费规则，删除旧促销描述，显示促销范围扩大和计费细化。",
+      "obs_3a2f3207f784705530134e7d61efdba7f713015ee2bcf19462a3220dcac14640": "新增多篇关于agent架构和评估工程的文章，删除RL定制指南和Gemini 3.8 Live Avatar GA公告，反映内容更新。",
+      "obs_90daaea3bed34602b02b55cb2195005c8ce9c3f007da93977b5771ec95d03c7e": "Timestral 1.0模型参数标注更新，并新增其他专业模型分类，显示模型列表结构优化。",
+      "obs_658a65eb688556fcb5f49baf7e9b581f8407259286a9e6ba1111f5f3876d908d": "新增north-small-translate-09-2026模型，删除north-small-translate-1-0，对应模型版本迭代。",
+      "obs_a87de7b008d38fc6970f9d6b3c5345df4f32082fc6cffae25176c74a34799e27": "与model_list一致，模型名称更新，反映新版本上线。",
+      "obs_45cb69e82c45212e1d53900c1a1734359fe27624594dcacd29f414c0ca3e6f5d": "新增多个评测指标（AA-Robotics、AA-WER v2）和决策指数，以及web搜索API基准，显示评测范围扩展。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "05131b06c1bcf4696ea8c4f0856cf7fcbc4590d02264c06092dfd903b3baf94a",
+      "inputRefs": [
+        "obs_1013ee548c94e488f3ae57371f139e8fada54d27e27a8d62d8c1bd5a438c86b7",
+        "obs_1630bcee45f9753de900498bc91f42fa47b4e5236a21022361347abc3b5ccc54",
+        "obs_1babb15dc97ae98e0aac3e10636bb68d175de678244650ae9f154d19f1350e8c",
+        "obs_28a071f110a7ef23b1a2af4897111644285aad72290bde7765134e427e81fe69",
+        "obs_3a2f3207f784705530134e7d61efdba7f713015ee2bcf19462a3220dcac14640",
+        "obs_4051e83d97671665958b3c00575653d55df7d23d21b890950d4cc3ac1a0d5b64",
+        "obs_45cb69e82c45212e1d53900c1a1734359fe27624594dcacd29f414c0ca3e6f5d",
+        "obs_4de4f57b75036148be1f1f3b9b70c9c415b9170b18abf17f57eb4e72fe313d73",
+        "obs_4f8071b397e241aa6da6a4ed4ada533331e8d6f9b6d4711a1fed207f7e02a4d2",
+        "obs_5be46865f4f41aaa9c7f0ca08454bd75e8095561b985a547813d625998f1410d",
+        "obs_658a65eb688556fcb5f49baf7e9b581f8407259286a9e6ba1111f5f3876d908d",
+        "obs_6a61d347992949806c739fc7e79681d456ff0fff7ce90caf0b5967cdf17e4456",
+        "obs_85ba68fdb682e18d7ffff1f1b6657fe4674a6578233d2d4a4c99e65534ae735d",
+        "obs_8dcde339ac4e6fbca17aeb8edf8fd84510c9030071abe0f7437f939eec3f8329",
+        "obs_90daaea3bed34602b02b55cb2195005c8ce9c3f007da93977b5771ec95d03c7e",
+        "obs_9cd22a257d4d258bff1e6318560cd4499a0d97856098e5547f3238730cd0ebeb",
+        "obs_a6ed327a2a167d81600b0725704a4d9230af3213da0022c4997bfe39182b7355",
+        "obs_a87de7b008d38fc6970f9d6b3c5345df4f32082fc6cffae25176c74a34799e27",
+        "obs_ac8710c5f505fa11fe68d480702756ecc68cfc248d223a0d4025cc0c7e864ddf",
+        "obs_c507f9c44f50b149b1215e337a60378fe5110ea90a4b30880b327e73f44eea15"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }

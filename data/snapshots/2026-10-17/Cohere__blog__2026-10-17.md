@@ -1,0 +1,216 @@
+<!-- url: see sources config -->
+<!-- fetched: 2026-10-17T07:31:06.227361+08:00 -->
+
+The Cohere Blog
+Skip to content
+Introducing North 2: AI without compromisesLearn more about the updates
+Products
+Solutions
+Resources
+Blog
+Research
+Company
+Sign in
+Request a demo
+Platform
+North
+Enterprise-ready AI for business
+Compass
+Intelligent search and discovery
+Models
+Command
+Generative language models
+Transcribe
+New
+Speech recognition model
+North Small Translate
+NEW
+Machine translation model
+Parse
+New
+Document parsing model
+Embed
+Semantic representation model
+Rerank
+Retrieval optimization model
+Models Overview
+Product
+Products Overview
+Total Cost of AI Ownership
+Pricing
+Featured
+North 2: Cohere's latest platform update — with 15+ new features
+Deploy
+Model Vault
+Dedicated model inference platform
+Private Deployments
+On-prem or isolated VPCs
+Security
+Protect your data at every stage
+See deployment options
+By Industry
+Financial Services
+Public Sector
+Technology
+Telecommunications
+Energy and Utilities
+Healthcare
+Manufacturing
+Featured
+Model Vault provides fully-isolated, performant inference with Saas simplicity
+Insights
+Customer Stories
+For Developers
+Developers
+Models Overview
+Docs
+Discord
+LLM University
+Connect
+Partners
+Events
+Webinars
+Merch Store
+Featured
+How CoreWeave used Cohere North to transform its customer support in 90 days
+Blog
+The latest news, launches, and insights
+Read more
+Cohere to acquire AISLE to advance cyber-resilient sovereign AI
+North 2: Enterprise AI without compromises
+Introducing Embed 5—A new family of frontier embedding models
+Research
+Cohere Labs
+Cohere’s ML research lab
+Explorations
+Future(s) of Work
+How will AI change the way we work?
+Aya Models
+Multilingual AI at scale
+All Papers
+Initiatives
+Research Scholars
+Finding the new generation of ML talent
+Open Science Community
+Championing global, open science
+Catalyst Grants
+Supporting impactful ML endeavors
+Resources
+Blog
+Hugging Face
+Events
+Featured
+The future of work debate has an evidence problem
+About
+Careers
+Newsroom
+Blog
+Keep up-to-date on the latest company news, product launches, and industry insights.
+Enterprise AI
+Research
+AI for Developers
+Product Launch
+Company News
+Product Launch
+Introducing North Small Translate: A leading sovereign open-weight machine translation model
+Outsized performance, right-sized footprint — translation built for speed and cost efficiency.
+Sep 10, 2026
+5 min read
+Enterprise AIEnergy & Utilities
+AI for utilities requires capability and control
+Oct 15, 2026
+6 min read
+Enterprise AI
+Agent sprawl: How to manage agent proliferation in the enterprise
+Oct 15, 2026
+5 min read
+Enterprise AI
+AI ROI: How enterprises can measure the return on AI investments
+Oct 15, 2026
+6 min read
+Product launches
+Product LaunchCompany News
+Introducing North Mini Code: Cohere’s first model for developers
+Jun 09, 2026
+3 min read
+Product LaunchTechnology
+Introducing Command A+: Making sovereign agentic capabilities available to all
+May 20, 2026
+4 min read
+Product LaunchResearch
+Introducing Cohere Transcribe: a new state-of-the-art in open-source speech recognition
+Mar 26, 2026
+3 min read
+Explore by topic
+Technology
+Financial Services
+Healthcare & Life Sciences
+Manufacturing
+Energy & Utilities
+Public Sector
+Partner
+Secure AI
+It’s much more comfortable to automate a spreadsheet than it is to rethink why that spreadsheet exists in the first place.
+Katherine Correia
+Customer Education Lead, CohereRead article
+Browse all
+Company NewsSovereign AI
+Cohere to acquire AISLE to advance cyber-resilient sovereign AI
+Oct 15, 2026
+4 min read
+ResearchOpen Science
+Lessons from scaling teams of coding agents: reach the frontier at 30% of the cost
+Oct 14, 2026
+17 min read
+Enterprise AITechnology
+Shared or dedicated inference for Embed & Rerank
+Oct 09, 2026
+7 min read
+Research
+Multilingual Bridges: How Data Mixing Unlocks In-Language Reasoning
+Oct 06, 2026
+9 min read
+Product Launch
+North 2: Enterprise AI without compromises
+Oct 05, 2026
+4 min read
+PartnerCompany News
+Cohere and PwC partner to accelerate secure enterprise AI adoption
+Oct 05, 2026
+1 min read
+TechnologyAI for Developers
+RCP-nDCG@10: A more complete way to measure retrieval relevance
+Sep 30, 2026
+7 min read
+Product LaunchCompany News
+Introducing Embed 5—A new family of frontier embedding models
+Sep 30, 2026
+7 min read
+Product LaunchAI for Developers
+Compass is coming to the cloud
+Sep 25, 2026
+5 min read
+Enterprise AI
+AI change management: A human-centric approach
+Sep 22, 2026
+8 min read
+Company NewsSovereign AI
+Cohere and Aleph Alpha sign agreement to become the first transatlantic sovereign AI solution
+Sep 16, 2026
+3 min read
+PartnerCompany News
+Cohere and OpenText partner to bring trusted agentic AI to governments and regulated industries
+Sep 16, 2026
+1 min read
+Company News
+Who Gets to Define the Rules for AI?
+Sep 13, 2026
+15 min read
+AI for DevelopersResearch
+Inside the megakernel serving engine for North Mini Code
+Sep 08, 2026
+22 min read
+ResearchOpen Science
+Automation’s Early Footprint
+Sep 03, 2026
+13 min read

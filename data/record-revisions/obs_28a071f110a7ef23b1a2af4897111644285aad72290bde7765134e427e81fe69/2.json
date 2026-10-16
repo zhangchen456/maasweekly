@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_28a071f110a7ef23b1a2af4897111644285aad72290bde7765134e427e81fe69",
+  "sourceId": "deepseek-changelog",
+  "date": "2026-10-17",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "DeepSeek",
+  "sourceType": "changelog",
+  "sourceUrl": "https://api-docs.deepseek.com/zh-cn/news/",
+  "title": "DeepSeek · 更新日志来源更新",
+  "summary": "代码示例中base_url和extra_body参数格式微调，无实质功能变化。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-16T23:36:53+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "base_url=\"https",
+        "before": "base_url=\"https://api.deepseek.com\")",
+        "after": "base_url=\"https://api.deepseek.com\","
+      },
+      {
+        "key": "extra_body={\"thinking\"",
+        "before": "extra_body={\"thinking\": {\"type\": \"enabled\"}}",
+        "after": "extra_body={\"thinking\": {\"type\": \"enabled\"}},"
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [],
+    "added_count": 0,
+    "removed_count": 0,
+    "raw_added_count": 2,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-17.json"
+  },
+  "permalink": "/item/obs_28a071f110a7ef23b1a2af4897111644285aad72290bde7765134e427e81fe69/"
+}

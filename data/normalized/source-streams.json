@@ -1,6 +1,710 @@
 {
-  "updated_at": "2026-10-15T23:55:23+00:00",
+  "updated_at": "2026-10-16T23:36:53+00:00",
   "days": [
+    {
+      "date": "2026-10-17",
+      "stats": {
+        "total": 68,
+        "success": 60,
+        "failed": 8,
+        "changed": 24,
+        "unchanged": 36
+      },
+      "changed": [
+        {
+          "platform": "硅基流动",
+          "source_type": "pricing",
+          "url": "https://siliconflow.cn/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "费用发生时段",
+              "before": "费用发生时段: 0点～9点/18点～24点¥ 0.80",
+              "after": "费用发生时段: 0点～9点/18点～24点费用发生时段: 0点～9点/18点～24点¥ 0.80"
+            },
+            {
+              "key": "费用发生时段",
+              "before": "费用发生时段: 0点～9点/18点～24点¥ 3.20",
+              "after": "费用发生时段: 0点～9点/18点～24点费用发生时段: 0点～9点/18点～24点¥ 3.20"
+            }
+          ],
+          "signal_preview": "费用发生时段: 0点～9点/18点～24点费用发生时段: 0点～9点/18点～24点¥ 0.80",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_5be46865f4f41aaa9c7f0ca08454bd75e8095561b985a547813d625998f1410d",
+          "permalink": "/item/obs_5be46865f4f41aaa9c7f0ca08454bd75e8095561b985a547813d625998f1410d/"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "changelog",
+          "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "【模型服务调整】systemone 接口 diffusiongemma 模型将停止服务",
+            "为进一步优化资源配置，提供更先进、优质的技术服务，systemone 接口（/v1/systemone）中的 diffusiongemma 模型将于 2026-10-17 停止服务。",
+            "自停止服务之日起，model 指定为 diffusiongemma 的请求将无法继续使用。systemone 接口的其余模型（Kev-4b、SemIf）不受影响，若您正在使用 diffusiongemma，建议您尽快切换，以免服务受到影响。"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "user/info",
+              "before": "【模型服务调整】ERNIE-Image-Turbo 模型将下线【接口服务调整】对话模型将忽略 repetition_penalty 参数【接口服务调整】生图 API 下线 batch_size 字段、水印默认添加【模型服务调整】Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线【模型价格调整】DeepSeek-V4-Flash 模型分时段定价调整【接口服务调整】/user/info 接口将停止服务【模型价格调整】DeepSeek-V4-Pro 缓存命中输入 tokens 价格调整【模型价格调整】Nex-N2-Pro、DeepSeek-V4-Pro、DeepSeek-V3.2、Qwen3.6 模型价格调整【模型服务调整】GLM-4.7、Kimi-K2.5 等模型将下线【模型服务调整】Kimi-K2、GLM-4.6 等多款模型停止服务【账户安全】未完成实名认证账户将限制使用平台功能【模型服务调整】KAT-Dev、PaddleOCR-VL 等多款模型停止服务【模型服务调整】Qwen3-Coder、ERNIE-4.5 等多款模型停止服务【模型服务调整】MiniMax-M2.1、Qwen2 等多款模型停止服务【价格调整】Qwen3.5-397B-A17B 模型定价调整【模型服务调整】MiniMax-M2、Kimi-Dev-72B 等多款模型停止服务【模型服务调整】GLM-4.5、Qwen3-235B 等模型停止服务【服务调整】平台赠送余额展示形式调整【模型升级】DeepSeek-V3.2-Exp 升级至 V3.2【模型服务调整】Ling-1T、Ring-1T 等模型停止服务【服务调整】DeepSeek-R1/V3 等模型速率限制调整【服务调整】关闭使用等级购买入口【模型服务调整】DeepSeek-V3.1 模型停止服务【模型更新】Kimi-K2-Instruct 升级至 0905 版本【模型服务调整】HunyuanVideo-HD 等视频模型停止服务【模型服务调整】DeepSeek-R1-0120 等模型停止服务【平台维护】6 月 10 日平台维护通知【模型更新】DeepSeek-R1 升级至 0528 版本【模型服务调整】Qwen2-1.5B 等多款模型停止服务【模型服务调整】HunyuanVideo（非 HD）模型停止服务【模型更新】DeepSeek-V3 已升级至 0324 版本【模型更新】DeepSeek-V3 将升级至 0324 版本【服务调整】api.siliconflow.com 端点将停用【服务调整】DeepSeek-R1/V3 取消 RPH 和 RPD 限制【模型服务调整】Marco-o1、FLUX.1 等多款模型停止服务【服务调整】DeepSeek-R1/V3 新增 RPH/RPD 速率限制【模型服务调整】Yi-1.5、SD-3-medium 等多款模型停止服务【价格调整】DeepSeek-V3 价格恢复原价【功能更新】推理模型 reasoning_content 字段分离【新模型上线】DeepSeek-R1 和 DeepSeek-V3 上线【服务调整】图片及视频 URL 有效期调整为 1 小时【价格调整】LTX-Video 模型开始计费【模型服务调整】DeepSeek-V2-Chat 等模型停止服务【模型服务调整】Qwen2.5-Math、Hunyuan-A52B 等模型停止服务【模型服务调整】多款模型停止服务及相关服务更新【价格调整】Vendor-A/Qwen2-72B 模型开始计费",
+              "after": "【模型服务调整】systemone 接口 diffusiongemma 模型将停止服务【模型服务调整】ERNIE-Image-Turbo 模型将下线【接口服务调整】对话模型将忽略 repetition_penalty 参数【接口服务调整】生图 API 下线 batch_size 字段、水印默认添加【模型服务调整】Nex-N2-Pro、Qwen3.5-397B-A17B、MiniMax-M2.5 等模型将下线【模型价格调整】DeepSeek-V4-Flash 模型分时段定价调整【接口服务调整】/user/info 接口将停止服务【模型价格调整】DeepSeek-V4-Pro 缓存命中输入 tokens 价格调整【模型价格调整】Nex-N2-Pro、DeepSeek-V4-Pro、DeepSeek-V3.2、Qwen3.6 模型价格调整【模型服务调整】GLM-4.7、Kimi-K2.5 等模型将下线【模型服务调整】Kimi-K2、GLM-4.6 等多款模型停止服务【账户安全】未完成实名认证账户将限制使用平台功能【模型服务调整】KAT-Dev、PaddleOCR-VL 等多款模型停止服务【模型服务调整】Qwen3-Coder、ERNIE-4.5 等多款模型停止服务【模型服务调整】MiniMax-M2.1、Qwen2 等多款模型停止服务【价格调整】Qwen3.5-397B-A17B 模型定价调整【模型服务调整】MiniMax-M2、Kimi-Dev-72B 等多款模型停止服务【模型服务调整】GLM-4.5、Qwen3-235B 等模型停止服务【服务调整】平台赠送余额展示形式调整【模型升级】DeepSeek-V3.2-Exp 升级至 V3.2【模型服务调整】Ling-1T、Ring-1T 等模型停止服务【服务调整】DeepSeek-R1/V3 等模型速率限制调整【服务调整】关闭使用等级购买入口【模型服务调整】DeepSeek-V3.1 模型停止服务【模型更新】Kimi-K2-Instruct 升级至 0905 版本【模型服务调整】HunyuanVideo-HD 等视频模型停止服务【模型服务调整】DeepSeek-R1-0120 等模型停止服务【平台维护】6 月 10 日平台维护通知【模型更新】DeepSeek-R1 升级至 0528 版本【模型服务调整】Qwen2-1.5B 等多款模型停止服务【模型服务调整】HunyuanVideo（非 HD）模型停止服务【模型更新】DeepSeek-V3 已升级至 0324 版本【模型更新】DeepSeek-V3 将升级至 0324 版本【服务调整】api.siliconflow.com 端点将停用【服务调整】DeepSeek-R1/V3 取消 RPH 和 RPD 限制【模型服务调整】Marco-o1、FLUX.1 等多款模型停止服务【服务调整】DeepSeek-R1/V3 新增 RPH/RPD 速率限制【模型服务调整】Yi-1.5、SD-3-medium 等多款模型停止服务【价格调整】DeepSeek-V3 价格恢复原价【功能更新】推理模型 reasoning_content 字段分离【新模型上线】DeepSeek-R1 和 DeepSeek-V3 上线【服务调整】图片及视频 URL 有效期调整为 1 小时【价格调整】LTX-Video 模型开始计费【模型服务调整】DeepSeek-V2-Chat 等模型停止服务【模型服务调整】Qwen2.5-Math、Hunyuan-A52B 等模型停止服务【模型服务调整】多款模型停止服务及相关服务更新【价格调整】Vendor-A/Qwen2-72B 模型开始计费"
+            }
+          ],
+          "signal_preview": "【模型服务调整】systemone 接口 diffusiongemma 模型将停止服务",
+          "raw_added_count": 4,
+          "raw_removed_count": 1,
+          "id": "obs_4051e83d97671665958b3c00575653d55df7d23d21b890950d4cc3ac1a0d5b64",
+          "permalink": "/item/obs_4051e83d97671665958b3c00575653d55df7d23d21b890950d4cc3ac1a0d5b64/"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "blog",
+          "url": "https://siliconflow.cn/blog",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 2,
+          "added_lines": [
+            "硅基流动上线高速版DeepSeek V4.1 Flash",
+            "编程与 Agent 能力升级，新增原生视觉理解能力，兼顾任务表现与成本效率立即试用"
+          ],
+          "removed_lines": [
+            "Agent 能力系统性升级，稳定承接更多高复杂度端到端智能体任务立即试用",
+            "硅基流动上线高速版DeepSeek-V4-Flash-0731"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "硅基流动上线高速版DeepSeek V4.1 Flash",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_9cd22a257d4d258bff1e6318560cd4499a0d97856098e5547f3238730cd0ebeb",
+          "permalink": "/item/obs_9cd22a257d4d258bff1e6318560cd4499a0d97856098e5547f3238730cd0ebeb/"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "model_list",
+          "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 1,
+          "added_lines": [
+            "Claude Code 和 Codex 中的网页搜索： 通过 Claude Code 的 Web Search 工具或 Codex 的 web_search 功能发起的搜索请求，在 Search API 上线后的前两周内免收 Search API 请求费用。此后将按 Search API 标准价格计费，具体开始计费时间将另行通知。",
+            "Search 和 Fetch 是独立的 API，按请求次数计费。",
+            "| API | 计费单位 | 价格",
+            "| Fetch | 每 1,000 次成功请求 | 5元",
+            "| Search | 每 1,000 次成功请求 | 5元",
+            "接口用法与完整计费规则详见网页搜索与抓取。",
+            "模型调用费用 = token 消耗量 × 模型单价；Search 和 Fetch 按上表中的成功请求次数计费。对应的费用将直接从充值余额或赠送余额中进行扣减。"
+          ],
+          "removed_lines": [
+            "扣减费用 = token 消耗量 × 模型单价，对应的费用将直接从充值余额或赠送余额中进行扣减。"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Claude Code 和 Codex 中的网页搜索： 通过 Claude Code 的 Web Search 工具或 Codex 的 web_search 功能发起的搜索请求，在 Search API 上线后的前两周内免收 Search API 请求费用。此后将按 Search API 标准价格计费，具体开始计费时间将另行通知。",
+          "raw_added_count": 7,
+          "raw_removed_count": 1,
+          "id": "obs_8dcde339ac4e6fbca17aeb8edf8fd84510c9030071abe0f7437f939eec3f8329",
+          "permalink": "/item/obs_8dcde339ac4e6fbca17aeb8edf8fd84510c9030071abe0f7437f939eec3f8329/"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "pricing",
+          "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 1,
+          "added_lines": [
+            "Claude Code 和 Codex 中的网页搜索： 通过 Claude Code 的 Web Search 工具或 Codex 的 web_search 功能发起的搜索请求，在 Search API 上线后的前两周内免收 Search API 请求费用。此后将按 Search API 标准价格计费，具体开始计费时间将另行通知。",
+            "Search 和 Fetch 是独立的 API，按请求次数计费。",
+            "| API | 计费单位 | 价格",
+            "| Fetch | 每 1,000 次成功请求 | 5元",
+            "| Search | 每 1,000 次成功请求 | 5元",
+            "接口用法与完整计费规则详见网页搜索与抓取。",
+            "模型调用费用 = token 消耗量 × 模型单价；Search 和 Fetch 按上表中的成功请求次数计费。对应的费用将直接从充值余额或赠送余额中进行扣减。"
+          ],
+          "removed_lines": [
+            "扣减费用 = token 消耗量 × 模型单价，对应的费用将直接从充值余额或赠送余额中进行扣减。"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Claude Code 和 Codex 中的网页搜索： 通过 Claude Code 的 Web Search 工具或 Codex 的 web_search 功能发起的搜索请求，在 Search API 上线后的前两周内免收 Search API 请求费用。此后将按 Search API 标准价格计费，具体开始计费时间将另行通知。",
+          "raw_added_count": 7,
+          "raw_removed_count": 1,
+          "id": "obs_ac8710c5f505fa11fe68d480702756ecc68cfc248d223a0d4025cc0c7e864ddf",
+          "permalink": "/item/obs_ac8710c5f505fa11fe68d480702756ecc68cfc248d223a0d4025cc0c7e864ddf/"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "changelog",
+          "url": "https://api-docs.deepseek.com/zh-cn/news/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "base_url=\"https",
+              "before": "base_url=\"https://api.deepseek.com\")",
+              "after": "base_url=\"https://api.deepseek.com\","
+            },
+            {
+              "key": "extra_body={\"thinking\"",
+              "before": "extra_body={\"thinking\": {\"type\": \"enabled\"}}",
+              "after": "extra_body={\"thinking\": {\"type\": \"enabled\"}},"
+            }
+          ],
+          "signal_preview": "base_url=\"https://api.deepseek.com\",",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_28a071f110a7ef23b1a2af4897111644285aad72290bde7765134e427e81fe69",
+          "permalink": "/item/obs_28a071f110a7ef23b1a2af4897111644285aad72290bde7765134e427e81fe69/"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "blog",
+          "url": "https://api-docs.deepseek.com/zh-cn/news/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "base_url=\"https",
+              "before": "base_url=\"https://api.deepseek.com\")",
+              "after": "base_url=\"https://api.deepseek.com\","
+            },
+            {
+              "key": "extra_body={\"thinking\"",
+              "before": "extra_body={\"thinking\": {\"type\": \"enabled\"}}",
+              "after": "extra_body={\"thinking\": {\"type\": \"enabled\"}},"
+            }
+          ],
+          "signal_preview": "base_url=\"https://api.deepseek.com\",",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_6a61d347992949806c739fc7e79681d456ff0fff7ce90caf0b5967cdf17e4456",
+          "permalink": "/item/obs_6a61d347992949806c739fc7e79681d456ff0fff7ce90caf0b5967cdf17e4456/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 3,
+          "added_lines": [
+            "Codex Security SDK",
+            "Codex security cookbook",
+            "Designing failover across OpenAI model providers",
+            "Driver reference",
+            "Integration recipes",
+            "Windows app and CLI deployment"
+          ],
+          "removed_lines": [
+            "Building games with Astra",
+            "TypeScript SDK",
+            "Windows app deployment"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Codex security cookbook",
+          "raw_added_count": 6,
+          "raw_removed_count": 3,
+          "id": "obs_85ba68fdb682e18d7ffff1f1b6657fe4674a6578233d2d4a4c99e65534ae735d",
+          "permalink": "/item/obs_85ba68fdb682e18d7ffff1f1b6657fe4674a6578233d2d4a4c99e65534ae735d/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 6,
+          "removed_count": 3,
+          "added_lines": [
+            "Codex Security SDK",
+            "Codex security cookbook",
+            "Designing failover across OpenAI model providers",
+            "Driver reference",
+            "Integration recipes",
+            "Windows app and CLI deployment"
+          ],
+          "removed_lines": [
+            "Building games with Astra",
+            "TypeScript SDK",
+            "Windows app deployment"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Codex security cookbook",
+          "raw_added_count": 6,
+          "raw_removed_count": 3,
+          "id": "obs_1630bcee45f9753de900498bc91f42fa47b4e5236a21022361347abc3b5ccc54",
+          "permalink": "/item/obs_1630bcee45f9753de900498bc91f42fa47b4e5236a21022361347abc3b5ccc54/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 10,
+          "removed_count": 3,
+          "added_lines": [
+            "Added native Decisions integration in GPT-Live. Your app can act while your user is speaking or react to what Live says. Let Live call Decisions directly through native delegation, or trigger decisions as input or output transcript deltas arrive.",
+            "Added nine natural voices for GPT-Live: Nuri, Juni, and Flitz (German); Brise and Sillage (French); Nira (Hindi); Harema and Shida (Japanese); and Noeul (Korean).",
+            "Codex Security SDK",
+            "Codex security cookbook",
+            "Designing failover across OpenAI model providers",
+            "Driver reference",
+            "Integration recipes",
+            "Released prompt-to-voice for all API customers. Create a custom voice from a text description through the API or voice Playground, then reuse it in GPT-Live sessions. Creating a prompt-generated voice is free; speech generation uses regular GPT-Live session billing.",
+            "Windows app and CLI deployment",
+            "v1/audio/voices"
+          ],
+          "removed_lines": [
+            "Building games with Astra",
+            "TypeScript SDK",
+            "Windows app deployment"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Added native Decisions integration in GPT-Live. Your app can act while your user is speaking or react to what Live says. Let Live call Decisions directly through native delegation, or trigger decisions as input or output transcript deltas arrive.",
+          "raw_added_count": 10,
+          "raw_removed_count": 3,
+          "id": "obs_1013ee548c94e488f3ae57371f139e8fada54d27e27a8d62d8c1bd5a438c86b7",
+          "permalink": "/item/obs_1013ee548c94e488f3ae57371f139e8fada54d27e27a8d62d8c1bd5a438c86b7/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 10,
+          "removed_count": 3,
+          "added_lines": [
+            "Added native Decisions integration in GPT-Live. Your app can act while your user is speaking or react to what Live says. Let Live call Decisions directly through native delegation, or trigger decisions as input or output transcript deltas arrive.",
+            "Added nine natural voices for GPT-Live: Nuri, Juni, and Flitz (German); Brise and Sillage (French); Nira (Hindi); Harema and Shida (Japanese); and Noeul (Korean).",
+            "Codex Security SDK",
+            "Codex security cookbook",
+            "Designing failover across OpenAI model providers",
+            "Driver reference",
+            "Integration recipes",
+            "Released prompt-to-voice for all API customers. Create a custom voice from a text description through the API or voice Playground, then reuse it in GPT-Live sessions. Creating a prompt-generated voice is free; speech generation uses regular GPT-Live session billing.",
+            "Windows app and CLI deployment",
+            "v1/audio/voices"
+          ],
+          "removed_lines": [
+            "Building games with Astra",
+            "TypeScript SDK",
+            "Windows app deployment"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Added native Decisions integration in GPT-Live. Your app can act while your user is speaking or react to what Live says. Let Live call Decisions directly through native delegation, or trigger decisions as input or output transcript deltas arrive.",
+          "raw_added_count": 10,
+          "raw_removed_count": 3,
+          "id": "obs_1babb15dc97ae98e0aac3e10636bb68d175de678244650ae9f154d19f1350e8c",
+          "permalink": "/item/obs_1babb15dc97ae98e0aac3e10636bb68d175de678244650ae9f154d19f1350e8c/"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "pricing",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 3,
+          "added_lines": [
+            "| Claude Opus 5 / Claude Opus 4.8 | $10 USD / MTok | $50 USD / MTok",
+            "| Claude Opus 5.5 | $8 USD / MTok | $40 USD / MTok"
+          ],
+          "removed_lines": [
+            "Fast mode is not available on Claude Opus 4.7 (requests with speed: \"fast\" return an error) or Claude Opus 4.6. See Fast mode.",
+            "| Claude Opus 5 / Claude Opus 4.8 | $10 / MTok | $50 / MTok",
+            "| Claude Opus 5.5 | $8 / MTok | $40 / MTok"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| Claude Opus 5 / Claude Opus 4.8 | $10 USD / MTok | $50 USD / MTok",
+          "raw_added_count": 2,
+          "raw_removed_count": 3,
+          "id": "obs_c507f9c44f50b149b1215e337a60378fe5110ea90a4b30880b327e73f44eea15",
+          "permalink": "/item/obs_c507f9c44f50b149b1215e337a60378fe5110ea90a4b30880b327e73f44eea15/"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "fast-mode-2026-02-01",
+              "before": "Fast mode is out of research preview for Claude Opus 5.5, and you no longer need to request access. Requests to Claude Opus 5.5 no longer require the fast-mode-2026-02-01 beta header, and requests that still send it keep working. Claude Opus 5.5 now has a default fast mode rate limit in every usage tier. Fast mode for Claude Opus 5 and Claude Opus 4.8 remains in research preview. Keep sending the beta header with fast mode requests to those models.",
+              "after": "Fast mode is out of research preview for Claude Opus 5.5, and you no longer need to request access. Requests to Claude Opus 5.5 no longer require the fast-mode-2026-02-01 beta header, and requests that still send it keep working. Claude Opus 5.5 now has a default fast mode rate limit in the Start, Build, and Scale usage tiers. Fast mode for Claude Opus 5 and Claude Opus 4.8 remains in research preview. Keep sending the beta header with fast mode requests to those models."
+            }
+          ],
+          "signal_preview": "Fast mode is out of research preview for Claude Opus 5.5, and you no longer need to request access. Requests to Claude Opus 5.5 no longer require the fast-mode-2026-02-01 beta header, and requests that still send it keep working. Claude Opus 5.5 now has a default fast mode rate limit in the Start, Build, and Scale usage tiers. Fast mode for Claude Opus 5 and Claude Opus 4.8 remains in research preview. Keep sending the beta header with fast mode requests to those models.",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_4de4f57b75036148be1f1f3b9b70c9c415b9170b18abf17f57eb4e72fe313d73",
+          "permalink": "/item/obs_4de4f57b75036148be1f1f3b9b70c9c415b9170b18abf17f57eb4e72fe313d73/"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-15 UTC.",
+              "after": "Last updated 2026-10-16 UTC."
+            },
+            {
+              "key": "note",
+              "before": "Note: Gemini 4 Argon is not available on the Free tier or on the Google AI Pro plan.",
+              "after": "Note: Gemini 4 Argon is not available on the Free tier."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-15 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-16 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-10-16 UTC.",
+          "raw_added_count": 3,
+          "raw_removed_count": 3,
+          "id": "obs_4f8071b397e241aa6da6a4ed4ada533331e8d6f9b6d4711a1fed207f7e02a4d2",
+          "permalink": "/item/obs_4f8071b397e241aa6da6a4ed4ada533331e8d6f9b6d4711a1fed207f7e02a4d2/"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "** Gemini 4 can generate completions up to 1 million tokens in length. When a completion exceeds 32K tokens in length, users will be charged for retrievable token usage even if the request ultimately fails due to client or server timeouts. This will take effect on November 13 2026.",
+            "50% Promotional Credits on Gemini 4 Argon, Gemini 3.8 Flash, Gemini 3.7 Flash, and Gemini 3.6 Flash Provisioned Throughput Usage",
+            "Effective October 13, 2026 through November 30, 2026 for Gemini 4 Argon (excluding Gemini 4 Argon Cyber Permissive), and effective August 13, 2026 through December 31, 2026 for Gemini 3.8 Flash, Gemini 3.7 Flash, and Gemini 3.6 Flash, Google Cloud is injecting a monthly billing credit equal to 50% of net eligible Provisioned Throughput spending on these models."
+          ],
+          "removed_lines": [
+            "Effective August 13, 2026 through December 31, 2026, Google Cloud is injecting a monthly billing credit equal to 50% of net eligible Provisioned Throughput spending on Gemini 3.8 Flash, Gemini 3.7 Flash, and Gemini 3.6 Flash models.",
+            "50% Promotional Credits on Gemini 3.8 Flash, Gemini 3.7 Flash and Gemini 3.6 Flash Provisioned Throughput Usage"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "pro-rated",
+              "before": "Issued credits apply to usage across On-Demand Gemini 3.8 Flash, Gemini 3.7 Flash and Gemini 3.6 Flash SKUs, as well as Provisioned Throughput SKUs across all models. Credits are issued on the 7th day of each month following the billing period, and expire 30 days after issuance, under standard Google Cloud Credit Terms of Service. Spend for the initial month is pro-rated strictly for active usage between August 13 and August 31, 2026.",
+              "after": "Issued credits apply to usage across On-Demand Gemini 4 Argon (excluding Gemini 4 Argon Cyber Permissive), Gemini 3.8 Flash, Gemini 3.7 Flash, and Gemini 3.6 Flash SKUs, as well as Provisioned Throughput SKUs across all models. Credits are issued on the 7th day of each month following the billing period, and expire 30 days after issuance, under standard Google Cloud Credit Terms of Service. Spend for the initial month is pro-rated strictly for active usage starting October 13, 2026 for Gemini 4 Argon and August 13, 2026 for Gemini 3.8 Flash, Gemini 3.7 Flash, and Gemini 3.6 Flash."
+            }
+          ],
+          "signal_preview": "** Gemini 4 can generate completions up to 1 million tokens in length. When a completion exceeds 32K tokens in length, users will be charged for retrievable token usage even if the request ultimately fails due to client or server timeouts. This will take effect on November 13 2026.",
+          "raw_added_count": 4,
+          "raw_removed_count": 3,
+          "id": "obs_a6ed327a2a167d81600b0725704a4d9230af3213da0022c4997bfe39182b7355",
+          "permalink": "/item/obs_a6ed327a2a167d81600b0725704a4d9230af3213da0022c4997bfe39182b7355/"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 4,
+          "added_lines": [
+            "Architecting autonomy: A design pattern for high-compute, governed agents in biotech",
+            "By Casey West • 5-minute read",
+            "By Schneider Larbi • 9-minute read",
+            "Four evaluation engineering lessons learned from building agent plugins",
+            "Healthcare & Life Sciences"
+          ],
+          "removed_lines": [
+            "Best practices guide for customizing Gemini models via Reinforcement Learning (RL)",
+            "By Fabien Blanc-paques • 4-minute read",
+            "By Jiaqi Pan • 6-minute read",
+            "Power your agents: Gemini 3.8 Live with Live Avatar is now generally available"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Architecting autonomy: A design pattern for high-compute, governed agents in biotech",
+          "raw_added_count": 5,
+          "raw_removed_count": 4,
+          "id": "obs_3a2f3207f784705530134e7d61efdba7f713015ee2bcf19462a3220dcac14640",
+          "permalink": "/item/obs_3a2f3207f784705530134e7d61efdba7f713015ee2bcf19462a3220dcac14640/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "model_list",
+          "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "Other specialist models",
+            "Other specialist modelsCopy section link",
+            "Specialized models for focused domains and task-specific workloads."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "timestral",
+              "before": "Timestral 1.0Modified MIT",
+              "after": "Timestral 1.0 209MModified MIT"
+            }
+          ],
+          "signal_preview": "Other specialist models",
+          "raw_added_count": 4,
+          "raw_removed_count": 1,
+          "id": "obs_90daaea3bed34602b02b55cb2195005c8ce9c3f007da93977b5771ec95d03c7e",
+          "permalink": "/item/obs_90daaea3bed34602b02b55cb2195005c8ce9c3f007da93977b5771ec95d03c7e/"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "model_list",
+          "url": "https://docs.cohere.com/docs/models",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "| north-small-translate-09-2026 | Live | North Small Translate is a 218B total / 25B active parameter MoE model purpose-built for machine translation across more than 50 languages. | Text | 16k | 16k | Chat"
+          ],
+          "removed_lines": [
+            "| north-small-translate-1-0 | Live | North Small Translate is a 218B total / 25B active parameter MoE model purpose-built for machine translation across more than 50 languages. | Text | 16k | 16k | Chat"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| north-small-translate-09-2026 | Live | North Small Translate is a 218B total / 25B active parameter MoE model purpose-built for machine translation across more than 50 languages. | Text | 16k | 16k | Chat",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_658a65eb688556fcb5f49baf7e9b581f8407259286a9e6ba1111f5f3876d908d",
+          "permalink": "/item/obs_658a65eb688556fcb5f49baf7e9b581f8407259286a9e6ba1111f5f3876d908d/"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "changelog",
+          "url": "https://docs.cohere.com/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Model name: north-small-translate-09-2026"
+          ],
+          "removed_lines": [
+            "Model name: north-small-translate-1-0"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Model name: north-small-translate-09-2026",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_a87de7b008d38fc6970f9d6b3c5345df4f32082fc6cffae25176c74a34799e27",
+          "permalink": "/item/obs_a87de7b008d38fc6970f9d6b3c5345df4f32082fc6cffae25176c74a34799e27/"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 24,
+          "removed_count": 0,
+          "added_lines": [
+            "AA-Robotics",
+            "AA-WER v2 · % of words transcribed incorrectly · Lower is better",
+            "API price per 1,000 images (USD) · Lower is better",
+            "All evaluations",
+            "All indexes",
+            "AllFinance & AccountingStrategy & OpsLegalHealthcare & MedicalEngineeringEconomics",
+            "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiAlibabaZ AIStepFunKimiDeepSeekMistralInstitute of Foundation ModelsReflectionMiniMaxThinking Machines",
+            "Artificial Analysis Decision Index",
+            "Benchmarks of web search APIs for agents, comparing retrieval quality, latency and price",
+            "Capability Index Comparison",
+            "Capability Index Comparison |",
+            "Claude Haiku 5.5 (High)See more",
+            "Coding Agent IndexCostExecution Time",
+            "Compare API providers on speed, latency, price and endpoint accuracy for each model",
+            "Compare leading video models by quality and price, ranked by blind human preference votes",
+            "Controlled Voice Arena Preference Elo · Higher is better",
+            "Cyber IndexCyber Index vs. Cost",
+            "Decision IndexDecision Index vs. Cost per 1M Tasks",
+            "Evaluations",
+            "Explore Speech",
+            "Explore Video",
+            "Explore models",
+            "Explore speech to speech models and compare their performance",
+            "Image Arena Elo · Higher is better"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AA-WER v2 · % of words transcribed incorrectly · Lower is better",
+          "raw_added_count": 85,
+          "raw_removed_count": 130,
+          "id": "obs_45cb69e82c45212e1d53900c1a1734359fe27624594dcacd29f414c0ca3e6f5d",
+          "permalink": "/item/obs_45cb69e82c45212e1d53900c1a1734359fe27624594dcacd29f414c0ca3e6f5d/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "pricing",
+          "url": "https://mistral.ai/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 1,
+          "added_lines": [],
+          "removed_lines": [
+            "Our products"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 1,
+          "id": "obs_a9e0a4cfed8c7bd994a1117b180df62124087940d3116ec3a84364cb3cd29fda",
+          "permalink": "/item/obs_a9e0a4cfed8c7bd994a1117b180df62124087940d3116ec3a84364cb3cd29fda/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "changelog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "Our products",
+            "90 articles"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 3,
+          "id": "obs_022a3a12505305b9d67ea5789b8eabd01cf25aaa26b2297a7b511cfe2f872bc7",
+          "permalink": "/item/obs_022a3a12505305b9d67ea5789b8eabd01cf25aaa26b2297a7b511cfe2f872bc7/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "blog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "Our products",
+            "90 articles"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 3,
+          "id": "obs_c75bff3fa39369a386a3729fb22e01ba1964edd89f19bf6e482dc7b64d8bfc63",
+          "permalink": "/item/obs_c75bff3fa39369a386a3729fb22e01ba1964edd89f19bf6e482dc7b64d8bfc63/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 27,
+          "raw_removed_count": 27,
+          "id": "obs_ca3624b98e554c3d6a677fba69bb598ab88a00b1fba5c80e1647356270313d74",
+          "permalink": "/item/obs_ca3624b98e554c3d6a677fba69bb598ab88a00b1fba5c80e1647356270313d74/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "model_list",
+          "url": "https://cloud.tencent.com/document/product/1729/104753",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=987)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "pricing",
+          "url": "https://cloud.tencent.com/document/product/1729/97731",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=988)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "changelog",
+          "url": "https://cloud.tencent.com/document/product/1729/97765",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=989)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "blog",
+          "url": "https://cloud.tencent.com/document/product/1729/132069",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=988)"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "fetch_failed",
+          "error": "反爬挑战页 (raw_len=5677)"
+        }
+      ]
+    },
     {
       "date": "2026-10-16",
       "stats": {

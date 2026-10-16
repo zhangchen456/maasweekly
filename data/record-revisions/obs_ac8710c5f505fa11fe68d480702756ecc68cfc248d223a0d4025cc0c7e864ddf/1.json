@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_ac8710c5f505fa11fe68d480702756ecc68cfc248d223a0d4025cc0c7e864ddf",
+  "sourceId": "deepseek-pricing",
+  "date": "2026-10-17",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "DeepSeek",
+  "sourceType": "pricing",
+  "sourceUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+  "title": "DeepSeek · 定价来源更新",
+  "summary": "Claude Code 和 Codex 中的网页搜索： 通过 Claude Code 的 Web Search 工具或 Codex 的 web_search 功能发起的搜索请求，在 Search API 上线后的前两周内免收 Search API 请求费用。此后将按 Search API 标准价格计费，具体开始计费时间将另行通知。",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "Claude Code 和 Codex 中的网页搜索： 通过 Claude Code 的 Web Search 工具或 Codex 的 web_search 功能发起的搜索请求，在 Search API 上线后的前两周内免收 Search API 请求费用。此后将按 Search API 标准价格计费，具体开始计费时间将另行通知。",
+      "Search 和 Fetch 是独立的 API，按请求次数计费。",
+      "| API | 计费单位 | 价格",
+      "| Fetch | 每 1,000 次成功请求 | 5元",
+      "| Search | 每 1,000 次成功请求 | 5元",
+      "接口用法与完整计费规则详见网页搜索与抓取。",
+      "模型调用费用 = token 消耗量 × 模型单价；Search 和 Fetch 按上表中的成功请求次数计费。对应的费用将直接从充值余额或赠送余额中进行扣减。"
+    ],
+    "removed_lines": [
+      "扣减费用 = token 消耗量 × 模型单价，对应的费用将直接从充值余额或赠送余额中进行扣减。"
+    ],
+    "added_count": 7,
+    "removed_count": 1,
+    "raw_added_count": 7,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-17.json"
+  },
+  "permalink": "/item/obs_ac8710c5f505fa11fe68d480702756ecc68cfc248d223a0d4025cc0c7e864ddf/"
+}
