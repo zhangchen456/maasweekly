@@ -1,6 +1,818 @@
 {
-  "updated_at": "2026-10-15T00:06:28+00:00",
+  "updated_at": "2026-10-15T23:55:23+00:00",
   "days": [
+    {
+      "date": "2026-10-16",
+      "stats": {
+        "total": 68,
+        "success": 63,
+        "failed": 5,
+        "changed": 24,
+        "unchanged": 39
+      },
+      "changed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "changed",
+          "added_count": 4,
+          "removed_count": 2,
+          "added_lines": [
+            "4~30 秒视频生成，全模态参考输入​​",
+            "决策评估能力（beta）​",
+            "教程: 决策评估（beta） | API: System One API（beta）​",
+            "豆包高性能视频生成模型​"
+          ],
+          "removed_lines": [
+            "豆包最强视频生成模型​",
+            "30 秒超长叙事，全模态参考扩容​​"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "4~30 秒视频生成，全模态参考输入​​",
+          "raw_added_count": 5,
+          "raw_removed_count": 3,
+          "id": "obs_2b875c6f1287fa932686c74f1f4013a60b5f30eb33a07ba5ae223f44494469d8",
+          "permalink": "/item/obs_2b875c6f1287fa932686c74f1f4013a60b5f30eb33a07ba5ae223f44494469d8/",
+          "llm_summary": "新增豆包高性能视频生成模型及决策评估（beta）能力，同时移除旧的视频生成描述，对应产品功能升级与扩展。"
+        },
+        {
+          "platform": "阿里百炼",
+          "source_type": "model_list",
+          "url": "https://help.aliyun.com/zh/model-studio/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "| fun-music-v1 | |",
+            "根据提示词或歌词生成音乐"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 2,
+          "id": "obs_e8193b27f9be0f50f576acda7bf00462dc81a0b0753a05825bd66131c7ac38b1",
+          "permalink": "/item/obs_e8193b27f9be0f50f576acda7bf00462dc81a0b0753a05825bd66131c7ac38b1/",
+          "llm_summary": "移除 fun-music-v1 音乐生成模型及其描述，表明该模型已下架或不再维护。"
+        },
+        {
+          "platform": "硅基流动",
+          "source_type": "pricing",
+          "url": "https://siliconflow.cn/pricing",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 2,
+          "added_lines": [
+            "deepseek-ai/DeepSeek-V4.1-Flash",
+            "¥ 0.40展开更多 7 个模型",
+            "费用发生时段: 0点～2点/8点～24点¥ 0.04",
+            "费用发生时段: 0点～2点/8点～24点¥ 2.00",
+            "费用发生时段: 0点～2点/8点～24点¥ 8.00",
+            "费用发生时段: 2点～8点¥ 0.02",
+            "费用发生时段: 2点～8点¥ 1.00",
+            "费用发生时段: 2点～8点¥ 4.00"
+          ],
+          "removed_lines": [
+            "Pro/deepseek-ai/DeepSeek-V3.1-Terminus",
+            "¥ 0.40展开更多 6 个模型"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-v",
+              "before": "DeepSeek-V3.1-Terminus (Pro)",
+              "after": "DeepSeek-V4.1-Flash"
+            }
+          ],
+          "signal_preview": "deepseek-ai/DeepSeek-V4.1-Flash",
+          "raw_added_count": 10,
+          "raw_removed_count": 4,
+          "id": "obs_4ab902714228693e612552d9e6d87e0f705ad6ca9150ea446b6e82b298d21166",
+          "permalink": "/item/obs_4ab902714228693e612552d9e6d87e0f705ad6ca9150ea446b6e82b298d21166/",
+          "llm_summary": "新增 DeepSeek-V4.1-Flash 模型及分时段定价，同时删除 DeepSeek-V3.1-Terminus (Pro) 的定价，对应模型替换与价格策略更新。"
+        },
+        {
+          "platform": "Kimi",
+          "source_type": "changelog",
+          "url": "https://platform.kimi.com/docs/changelog",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "控制台 + API + kha CLI 三种用法：网页上快速体验，API 集成进自有系统，或在终端用自然语言初始化智能体"
+          ],
+          "removed_lines": [
+            "控制台 + API + hakimi 三种用法：网页上快速体验，API 集成进自有系统，或在终端用自然语言初始化智能体"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "控制台 + API + kha CLI 三种用法：网页上快速体验，API 集成进自有系统，或在终端用自然语言初始化智能体",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_e8c858fd4ce3686199222c98ee7b51d1dcc691ae5cdee3d68e96225b2fb40a0e",
+          "permalink": "/item/obs_e8c858fd4ce3686199222c98ee7b51d1dcc691ae5cdee3d68e96225b2fb40a0e/",
+          "llm_summary": "更新 CLI 工具名称从 hakimi 改为 kha，功能描述不变，属于工具命名调整。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "pricing",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "fast mode is not available on claude opus",
+              "before": "Fast mode is not available on Claude Opus 4.7 (requests with speed: \"fast\" return an error) or Claude Opus 4.6 (requests run at standard speed and are billed at standard rates). See Fast mode.",
+              "after": "Fast mode is not available on Claude Opus 4.7 (requests with speed: \"fast\" return an error) or Claude Opus 4.6. See Fast mode."
+            },
+            {
+              "key": "first-party",
+              "before": "Fast mode, in research preview, provides significantly faster output for Claude Opus 5.5, Claude Opus 5, and Claude Opus 4.8 at premium pricing. Fast mode pricing applies across the full context window, including requests over 200k input tokens. Fast mode is available on the Claude API (first-party) only; it is not available on Claude Platform on AWS or partner-operated cloud platforms.",
+              "after": "Fast mode provides significantly faster output for Claude Opus 5.5, Claude Opus 5, and Claude Opus 4.8 at premium pricing. Fast mode for Claude Opus 5 and Claude Opus 4.8 is in research preview. Fast mode pricing applies across the full context window, including requests over 200k input tokens. Fast mode is available on the Claude API (first-party) and, for Claude Opus 5.5, on Claude in Microsoft Foundry for deployments hosted on Azure; it is not available on Claude Platform on AWS or partner-operated cloud platforms."
+            }
+          ],
+          "signal_preview": "Fast mode is not available on Claude Opus 4.7 (requests with speed: \"fast\" return an error) or Claude Opus 4.6. See Fast mode.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_ea73895ef826a2160bce3556d1fd90e679126cf5ac6690a3fdc1cf762940ce6d",
+          "permalink": "/item/obs_ea73895ef826a2160bce3556d1fd90e679126cf5ac6690a3fdc1cf762940ce6d/",
+          "llm_summary": "更新 Fast mode 的可用性说明，明确 Claude Opus 4.7 不支持、4.6 按标准计费，并移除 research preview 标记，表明 Fast mode 正式发布。"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "changelog",
+          "url": "https://docs.anthropic.com/en/release-notes/api",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 0,
+          "added_lines": [
+            "Fast mode for Claude Opus 5.5 is now available on Claude in Microsoft Foundry for deployments hosted on Azure.",
+            "Fast mode is out of research preview for Claude Opus 5.5, and you no longer need to request access. Requests to Claude Opus 5.5 no longer require the fast-mode-2026-02-01 beta header, and requests that still send it keep working. Claude Opus 5.5 now has a default fast mode rate limit in every usage tier. Fast mode for Claude Opus 5 and Claude Opus 4.8 remains in research preview. Keep sending the beta header with fast mode requests to those models.",
+            "The Compliance API now returns the text each organization member saved as Instructions for Claude in claude.ai and as Global instructions in Cowork, in beta for Claude Enterprise organizations. Call GET /v1/compliance/organizations/{org_uuid}/user_preferences with your existing Compliance Access Key and the read:compliance_user_data scope. See List user preferences."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Fast mode for Claude Opus 5.5 is now available on Claude in Microsoft Foundry for deployments hosted on Azure.",
+          "raw_added_count": 4,
+          "raw_removed_count": 0,
+          "id": "obs_4e67a9e56865850f131fcbe6be3c3531fc613562f338b6ccc485c853a5e8268c",
+          "permalink": "/item/obs_4e67a9e56865850f131fcbe6be3c3531fc613562f338b6ccc485c853a5e8268c/",
+          "llm_summary": "新增 Fast mode 在 Microsoft Foundry 的可用性、结束研究预览无需申请，以及 Compliance API 返回指令文本的 beta 功能，对应产品功能扩展与正式化。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "pricing",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "| $0.75 (text/image/video)"
+          ],
+          "removed_lines": [
+            "| $0.75 (text, image, video)"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-14 UTC.",
+              "after": "Last updated 2026-10-15 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-14 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-15 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "| $0.75 (text/image/video)",
+          "raw_added_count": 3,
+          "raw_removed_count": 3,
+          "id": "obs_19116f248bdfe353a8ad589f855ba172b7fdbde09edb23243dc1e4c62aa3c612",
+          "permalink": "/item/obs_19116f248bdfe353a8ad589f855ba172b7fdbde09edb23243dc1e4c62aa3c612/",
+          "llm_summary": "更新定价页日期，并将定价描述中的标点从逗号改为斜杠，属于格式微调，无实质变化。"
+        },
+        {
+          "platform": "Google Gemini API",
+          "source_type": "blog",
+          "url": "https://blog.google/technology/ai/",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 1,
+          "added_lines": [
+            "How we're helping the world prepare for natural disasters",
+            "Our north star is simple yet ambitious: No one should be surprised by a natural disaster."
+          ],
+          "removed_lines": [
+            "Our Project Suncatcher prototype satellite is in orbit."
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "How we're helping the world prepare for natural disasters",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_8c55aec03ead6d99a96f4d85aca4e6e35f94302f23bc30508cc9854a250090a9",
+          "permalink": "/item/obs_8c55aec03ead6d99a96f4d85aca4e6e35f94302f23bc30508cc9854a250090a9/",
+          "llm_summary": "新增关于自然灾害准备的博客文章，移除卫星原型相关文章，内容主题更新。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "model_list",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "last updated",
+              "before": "Last updated 2026-10-13 UTC.",
+              "after": "Last updated 2026-10-15 UTC."
+            },
+            {
+              "key": "thumb-up",
+              "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-13 UTC.\"],[],[]]",
+              "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Hard to understand\",\"hardToUnderstand\",\"thumb-down\"],[\"Incorrect information or sample code\",\"incorrectInformationOrSampleCode\",\"thumb-down\"],[\"Missing the information/samples I need\",\"missingTheInformationSamplesINeed\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-15 UTC.\"],[],[]]"
+            }
+          ],
+          "signal_preview": "Last updated 2026-10-15 UTC.",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_5eb4c7e74d829d5e138af1153fbea33eef54503223f99a90ddf17c1664fa457e",
+          "permalink": "/item/obs_5eb4c7e74d829d5e138af1153fbea33eef54503223f99a90ddf17c1664fa457e/",
+          "llm_summary": "更新页面日期，反馈数据变化，无实质模型列表变动。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "pricing",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 2,
+          "added_lines": [
+            "Standard ModelPriorityBatch"
+          ],
+          "removed_lines": [
+            "Cache tokens | $1.50 | $1.50",
+            "Standard ModelPriorityBatch / Flex"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 1,
+          "raw_removed_count": 2,
+          "id": "obs_dba013a0662b47e0421a4f22f336dd68f93927b1cd61fb4cbcd7b3730c591006",
+          "permalink": "/item/obs_dba013a0662b47e0421a4f22f336dd68f93927b1cd61fb4cbcd7b3730c591006/",
+          "llm_summary": "移除 Cache tokens 计费行，新增 Standard ModelPriorityBatch 条目，表明定价结构简化或调整。"
+        },
+        {
+          "platform": "Google Vertex AI",
+          "source_type": "blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 3,
+          "added_lines": [
+            "By Will Yin • 8-minute read",
+            "How Visko streams real-time world models on Google Cloud TPUs",
+            "Media & Entertainment",
+            "Small and Medium Businesses",
+            "What the Gemini agent means for startups"
+          ],
+          "removed_lines": [
+            "By Andre Alves • 8-minute read",
+            "How growing Latin American midsize businesses are building in the AI era",
+            "The three things today's hottest startups are looking for in their AI stack"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "by darren mowry •",
+              "before": "By Darren Mowry • 5-minute read",
+              "after": "By Darren Mowry • 6-minute read"
+            }
+          ],
+          "signal_preview": "By Will Yin • 8-minute read",
+          "raw_added_count": 6,
+          "raw_removed_count": 4,
+          "id": "obs_582b93be3c6973df64e1e9718c550106dd9d15e42dc301af6f5a8590ba275ad4",
+          "permalink": "/item/obs_582b93be3c6973df64e1e9718c550106dd9d15e42dc301af6f5a8590ba275ad4/",
+          "llm_summary": "新增关于实时世界模型、Gemini agent 对初创企业意义的文章，移除拉丁美洲中型企业等旧文章，内容更新。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "model_list",
+          "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 0,
+          "added_lines": [
+            "A time series foundation model for zero-shot forecasting with covariate support and probabilistic outputs.",
+            "Models for zero-shot time series forecasting with covariate support and probabilistic outputs.",
+            "Time series models",
+            "Time series modelsCopy section link",
+            "Timestral 1.0 123MModified MIT",
+            "Timestral 1.0 28MModified MIT",
+            "Timestral 1.0 5MModified MIT",
+            "Timestral 1.0Modified MIT"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "A time series foundation model for zero-shot forecasting with covariate support and probabilistic outputs.",
+          "raw_added_count": 8,
+          "raw_removed_count": 0,
+          "id": "obs_e8f4d54ad424c60e70586aeb4c9028452604ba1aced0550e4feafaf830cb92a4",
+          "permalink": "/item/obs_e8f4d54ad424c60e70586aeb4c9028452604ba1aced0550e4feafaf830cb92a4/",
+          "llm_summary": "新增 Timestral 1.0 系列（5M/28M/123M）时序模型，描述为零样本预测与协变量支持，对应新模型发布。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "changelog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 3,
+          "added_lines": [
+            "90 articles",
+            "Introducing Timestral",
+            "State-of-the-art probabilistic forecasts with just 209M parameters, outperforming larger models on CPU."
+          ],
+          "removed_lines": [
+            "Latest research",
+            "Seminal contributions to AI",
+            "89 articles"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "State-of-the-art probabilistic forecasts with just 209M parameters, outperforming larger models on CPU.",
+          "raw_added_count": 4,
+          "raw_removed_count": 4,
+          "id": "obs_e716ea7659eca85890cc24f9e885cfe23a285eb40f14f1d9812ed8551846b5c1",
+          "permalink": "/item/obs_e716ea7659eca85890cc24f9e885cfe23a285eb40f14f1d9812ed8551846b5c1/",
+          "llm_summary": "新增 Introducing Timestral 文章，文章数从 89 增至 90，移除旧研究文章，对应新模型发布宣传。"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "blog",
+          "url": "https://mistral.ai/news/",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 3,
+          "added_lines": [
+            "90 articles",
+            "Introducing Timestral",
+            "State-of-the-art probabilistic forecasts with just 209M parameters, outperforming larger models on CPU."
+          ],
+          "removed_lines": [
+            "Latest research",
+            "Seminal contributions to AI",
+            "89 articles"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "State-of-the-art probabilistic forecasts with just 209M parameters, outperforming larger models on CPU.",
+          "raw_added_count": 4,
+          "raw_removed_count": 4,
+          "id": "obs_3f3bae0c31efe0f69ecf3db1a150a15bd269057bad26d7e7ccf87415acd54578",
+          "permalink": "/item/obs_3f3bae0c31efe0f69ecf3db1a150a15bd269057bad26d7e7ccf87415acd54578/",
+          "llm_summary": "新增 Introducing Timestral 文章，文章数从 89 增至 90，移除旧研究文章，对应新模型发布宣传。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "pricing",
+          "url": "https://cohere.com/pricing",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 1,
+          "added_lines": [
+            "Cohere to acquire AISLE to advance cyber-resilient sovereign AI"
+          ],
+          "removed_lines": [
+            "Cohere and Aleph Alpha sign agreement to become the first transatlantic sovereign AI solution"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "Cohere to acquire AISLE to advance cyber-resilient sovereign AI",
+          "raw_added_count": 1,
+          "raw_removed_count": 1,
+          "id": "obs_7062365df95052ea100d755cf747d22c9eb8ffb8ce6da45987a0a6aa894325eb",
+          "permalink": "/item/obs_7062365df95052ea100d755cf747d22c9eb8ffb8ce6da45987a0a6aa894325eb/",
+          "llm_summary": "新增收购 AISLE 的公告，移除与 Aleph Alpha 的协议，表明战略合作方向变化。"
+        },
+        {
+          "platform": "Cohere",
+          "source_type": "blog",
+          "url": "https://txt.cohere.com/",
+          "status": "changed",
+          "added_count": 5,
+          "removed_count": 7,
+          "added_lines": [
+            "AI ROI: How enterprises can measure the return on AI investments",
+            "AI for utilities requires capability and control",
+            "Agent sprawl: How to manage agent proliferation in the enterprise",
+            "Cohere to acquire AISLE to advance cyber-resilient sovereign AI",
+            "Enterprise AIEnergy & Utilities"
+          ],
+          "removed_lines": [
+            "Enterprise AIFor Business",
+            "Generative AI for business: Use cases, benefits, and adoption",
+            "How small AI models can make a big impact for enterprises",
+            "Introducing Parse: Enterprise document intelligence at scale",
+            "Teams of coding agents are already building large-scale software, but how should they be organized to work most effectively and efficiently?",
+            "When a reasoning model gets an answer wrong, you’d read its reasoning to find out why. But what if that reasoning is in a language you don't speak?",
+            "Why forward-deployed engineers should build capability, not dependency"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "AI ROI: How enterprises can measure the return on AI investments",
+          "raw_added_count": 6,
+          "raw_removed_count": 10,
+          "id": "obs_d3d816ea16ac64e062def0a2b920cc5c88fd937e19ef0775d5d545631009643e",
+          "permalink": "/item/obs_d3d816ea16ac64e062def0a2b920cc5c88fd937e19ef0775d5d545631009643e/",
+          "llm_summary": "新增多篇企业 AI 相关文章（ROI、能源、Agent 管理、收购公告），移除旧文章，内容更新。"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 3,
+          "added_lines": [
+            "\"base_model:nvidia/LocateAnything-3B\",",
+            "\"base_model:quantized:nvidia/LocateAnything-3B\","
+          ],
+          "removed_lines": [
+            "\"arxiv:2309.00071\",",
+            "\"base_model:Qwen/Qwen3-4B-Base\",",
+            "\"base_model:finetune:Qwen/Qwen3-4B-Base\","
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "\"base_model:nvidia/LocateAnything-3B\",",
+          "raw_added_count": 44,
+          "raw_removed_count": 39,
+          "id": "obs_15719d8ac7ec719c1d4c9cfe89155c1b53bc2e51c8d409ed093af542c6cb374e",
+          "permalink": "/item/obs_15719d8ac7ec719c1d4c9cfe89155c1b53bc2e51c8d409ed093af542c6cb374e/",
+          "llm_summary": "新增 nvidia/LocateAnything-3B 及其量化版本，移除 Qwen3-4B-Base 相关条目，对应模型库更新。"
+        },
+        {
+          "platform": "Artificial Analysis",
+          "source_type": "industry",
+          "url": "https://artificialanalysis.ai/",
+          "status": "changed",
+          "added_count": 9,
+          "removed_count": 2,
+          "added_lines": [
+            "Muse Spark Open (Xhigh)",
+            "NVIDIA Releases Nemotron 3.5 Super VL and Nemotron 3.5 Bolt 74B A9B",
+            "Nemotron 3.5 Bolt 74B-A9B",
+            "Nemotron 3.5 Super VL",
+            "New article published · 14 Oct",
+            "New article published · 15 Oct",
+            "New language model evaluation · 15 Oct",
+            "StepFunZ AIXiaomiMiniMaxOpenAIAnthropicMistralMetaSpaceXAIGoogleAlibabaDeepSeekKimi",
+            "XiaomiZ AIStepFunKimiDeepSeekMetaAlibabaMiniMaxThinking Machines"
+          ],
+          "removed_lines": [
+            "Announcing the Artificial Analysis Decision Index",
+            "Claude Haiku 5.5 (Xhigh)"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "claude haiku",
+              "before": "Claude Haiku 5.5 (Max)",
+              "after": "Claude Haiku 5.5 (Max)See more"
+            }
+          ],
+          "signal_preview": "Muse Spark Open (Xhigh)",
+          "raw_added_count": 17,
+          "raw_removed_count": 20,
+          "id": "obs_295764a151d4cb017db842c88ba0cf03e3b878873fd861b861f9f44ee2b7f065",
+          "permalink": "/item/obs_295764a151d4cb017db842c88ba0cf03e3b878873fd861b861f9f44ee2b7f065/",
+          "llm_summary": "新增 Nemotron 3.5 系列评测及新文章，移除 Decision Index 公告，对应评测内容更新。"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "model_list",
+          "url": "https://platform.openai.com/docs/models",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 2,
+          "added_lines": [
+            "Composer Predictions",
+            "Create a site",
+            "Data and connections",
+            "DocsShowcase",
+            "Feature Configuration",
+            "Manage a site",
+            "Publish and share"
+          ],
+          "removed_lines": [
+            "DocsSelect...",
+            "Feature setup"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 7,
+          "raw_removed_count": 2,
+          "id": "obs_2ec72fef1f861b0ae9a3ba9e7fd85f0c2c39c75abac521d356b0cebc0023c82b",
+          "permalink": "/item/obs_2ec72fef1f861b0ae9a3ba9e7fd85f0c2c39c75abac521d356b0cebc0023c82b/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "pricing",
+          "url": "https://platform.openai.com/docs/pricing",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 2,
+          "added_lines": [
+            "Composer Predictions",
+            "Create a site",
+            "Data and connections",
+            "DocsShowcase",
+            "Feature Configuration",
+            "Manage a site",
+            "Publish and share"
+          ],
+          "removed_lines": [
+            "DocsSelect...",
+            "Feature setup"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 7,
+          "raw_removed_count": 2,
+          "id": "obs_5c8bdb4dbf3035ec6cc9e390814416213ebc1ce830b74cd302109b6eb59b5999",
+          "permalink": "/item/obs_5c8bdb4dbf3035ec6cc9e390814416213ebc1ce830b74cd302109b6eb59b5999/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "changelog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 2,
+          "added_lines": [
+            "Composer Predictions",
+            "Create a site",
+            "Data and connections",
+            "DocsShowcase",
+            "Feature Configuration",
+            "Manage a site",
+            "Publish and share"
+          ],
+          "removed_lines": [
+            "DocsSelect...",
+            "Feature setup"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 7,
+          "raw_removed_count": 2,
+          "id": "obs_726d09a01a6a77ddf93979ce12da320835ce1256cfe37f354e866ba1f42b891a",
+          "permalink": "/item/obs_726d09a01a6a77ddf93979ce12da320835ce1256cfe37f354e866ba1f42b891a/"
+        },
+        {
+          "platform": "OpenAI",
+          "source_type": "blog",
+          "url": "https://platform.openai.com/docs/changelog",
+          "status": "changed",
+          "added_count": 7,
+          "removed_count": 2,
+          "added_lines": [
+            "Composer Predictions",
+            "Create a site",
+            "Data and connections",
+            "DocsShowcase",
+            "Feature Configuration",
+            "Manage a site",
+            "Publish and share"
+          ],
+          "removed_lines": [
+            "DocsSelect...",
+            "Feature setup"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 7,
+          "raw_removed_count": 2,
+          "id": "obs_978d972deddf331baf92301aff6a12d433377dcaf80138b4c6a3246f9ba9a336",
+          "permalink": "/item/obs_978d972deddf331baf92301aff6a12d433377dcaf80138b4c6a3246f9ba9a336/"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_b52d35cef49d84641abf67c8a9c41cf0bb8cf57e99705608b5ef0511f98f1dc6",
+          "permalink": "/item/obs_b52d35cef49d84641abf67c8a9c41cf0bb8cf57e99705608b5ef0511f98f1dc6/"
+        },
+        {
+          "platform": "Mistral AI",
+          "source_type": "pricing",
+          "url": "https://mistral.ai/pricing",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "Latest research",
+            "Seminal contributions to AI"
+          ],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 0,
+          "raw_removed_count": 2,
+          "id": "obs_d3418eea5d1a83320930faf28756acebf005fef813630154dbba830da37b89aa",
+          "permalink": "/item/obs_d3418eea5d1a83320930faf28756acebf005fef813630154dbba830da37b89aa/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "model_list",
+          "url": "https://cloud.tencent.com/document/product/1729/104753",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=985)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "pricing",
+          "url": "https://cloud.tencent.com/document/product/1729/97731",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=981)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "changelog",
+          "url": "https://cloud.tencent.com/document/product/1729/97765",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=984)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "blog",
+          "url": "https://cloud.tencent.com/document/product/1729/132069",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=986)"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "fetch_failed",
+          "error": "反爬挑战页 (raw_len=5677)"
+        }
+      ],
+      "highlights": [
+        {
+          "platform": "Mistral AI",
+          "logo_summary": "发布Timestral时序基础模型系列",
+          "items": [
+            {
+              "text": "Mistral AI 发布 Timestral 1.0 时序基础模型系列（5M/28M/123M 参数），支持零样本预测与协变量，209M 参数在 CPU 上超越更大模型",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Anthropic",
+          "logo_summary": "Claude Opus 5.5 Fast mode 正式可用",
+          "items": [
+            {
+              "text": "Claude Opus 5.5 的 Fast mode 结束研究预览，无需申请即可使用，并已在 Microsoft Foundry (Azure) 上线",
+              "type": "release"
+            },
+            {
+              "text": "Claude Opus 5.5/5/4.8 的 Fast mode 定价说明更新，移除 research preview 标记",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "火山方舟",
+          "logo_summary": "新增视频生成与决策评估能力",
+          "items": [
+            {
+              "text": "火山方舟新增豆包高性能视频生成模型，支持 4~30 秒视频生成及全模态参考输入",
+              "type": "release"
+            },
+            {
+              "text": "火山方舟新增决策评估能力（beta），提供 System One API 及教程",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "硅基流动",
+          "logo_summary": "DeepSeek-V4.1-Flash 上架并调整定价",
+          "items": [
+            {
+              "text": "硅基流动上架 deepseek-ai/DeepSeek-V4.1-Flash，替代 DeepSeek-V3.1-Terminus (Pro)，并新增分时段定价（0-2点/8-24点与2-8点不同费率）",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Cohere",
+          "logo_summary": "宣布收购AISLE，强化主权AI",
+          "items": [
+            {
+              "text": "Cohere 宣布收购 AISLE 以推进网络弹性主权 AI，替代与 Aleph Alpha 的协议",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Vertex AI",
+          "logo_summary": "定价页移除缓存token计费行",
+          "items": [
+            {
+              "text": "Google Vertex AI 定价页移除 Cache tokens 计费行（$1.50），并新增 Standard ModelPriorityBatch 条目",
+              "type": "pricing"
+            }
+          ]
+        },
+        {
+          "platform": "阿里百炼",
+          "logo_summary": "下架音乐生成模型 fun-music-v1",
+          "items": [
+            {
+              "text": "阿里百炼模型列表移除 fun-music-v1 音乐生成模型",
+              "type": "sunset"
+            }
+          ]
+        },
+        {
+          "platform": "Kimi",
+          "logo_summary": "更新CLI工具名称为kha",
+          "items": [
+            {
+              "text": "Kimi 更新 changelog，CLI 工具名称由 hakimi 改为 kha，支持控制台、API 和终端三种用法",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "HuggingFace",
+          "logo_summary": "新增NVIDIA LocateAnything-3B模型",
+          "items": [
+            {
+              "text": "HuggingFace 新增 nvidia/LocateAnything-3B 及其量化版本，移除 Qwen3-4B-Base 相关条目",
+              "type": "release"
+            }
+          ]
+        },
+        {
+          "platform": "Artificial Analysis",
+          "logo_summary": "新增Nemotron 3.5系列评测",
+          "items": [
+            {
+              "text": "Artificial Analysis 新增 NVIDIA Nemotron 3.5 Super VL 和 Nemotron 3.5 Bolt 74B-A9B 评测，并发布新文章",
+              "type": "other"
+            }
+          ]
+        },
+        {
+          "platform": "Google Gemini API",
+          "logo_summary": "定价页微调，无实质变化",
+          "items": [
+            {
+              "text": "Google Gemini API 定价页更新日期，并将文本/图像/视频的定价描述从逗号改为斜杠，无实质变化",
+              "type": "other"
+            }
+          ]
+        }
+      ]
+    },
     {
       "date": "2026-10-15",
       "stats": {

@@ -4609,5 +4609,173 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-16": {
+    "highlights": [
+      {
+        "platform": "Mistral AI",
+        "logo_summary": "发布Timestral时序基础模型系列",
+        "items": [
+          {
+            "text": "Mistral AI 发布 Timestral 1.0 时序基础模型系列（5M/28M/123M 参数），支持零样本预测与协变量，209M 参数在 CPU 上超越更大模型",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "Anthropic",
+        "logo_summary": "Claude Opus 5.5 Fast mode 正式可用",
+        "items": [
+          {
+            "text": "Claude Opus 5.5 的 Fast mode 结束研究预览，无需申请即可使用，并已在 Microsoft Foundry (Azure) 上线",
+            "type": "release"
+          },
+          {
+            "text": "Claude Opus 5.5/5/4.8 的 Fast mode 定价说明更新，移除 research preview 标记",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "火山方舟",
+        "logo_summary": "新增视频生成与决策评估能力",
+        "items": [
+          {
+            "text": "火山方舟新增豆包高性能视频生成模型，支持 4~30 秒视频生成及全模态参考输入",
+            "type": "release"
+          },
+          {
+            "text": "火山方舟新增决策评估能力（beta），提供 System One API 及教程",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "硅基流动",
+        "logo_summary": "DeepSeek-V4.1-Flash 上架并调整定价",
+        "items": [
+          {
+            "text": "硅基流动上架 deepseek-ai/DeepSeek-V4.1-Flash，替代 DeepSeek-V3.1-Terminus (Pro)，并新增分时段定价（0-2点/8-24点与2-8点不同费率）",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "Cohere",
+        "logo_summary": "宣布收购AISLE，强化主权AI",
+        "items": [
+          {
+            "text": "Cohere 宣布收购 AISLE 以推进网络弹性主权 AI，替代与 Aleph Alpha 的协议",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Google Vertex AI",
+        "logo_summary": "定价页移除缓存token计费行",
+        "items": [
+          {
+            "text": "Google Vertex AI 定价页移除 Cache tokens 计费行（$1.50），并新增 Standard ModelPriorityBatch 条目",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "阿里百炼",
+        "logo_summary": "下架音乐生成模型 fun-music-v1",
+        "items": [
+          {
+            "text": "阿里百炼模型列表移除 fun-music-v1 音乐生成模型",
+            "type": "sunset"
+          }
+        ]
+      },
+      {
+        "platform": "Kimi",
+        "logo_summary": "更新CLI工具名称为kha",
+        "items": [
+          {
+            "text": "Kimi 更新 changelog，CLI 工具名称由 hakimi 改为 kha，支持控制台、API 和终端三种用法",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "HuggingFace",
+        "logo_summary": "新增NVIDIA LocateAnything-3B模型",
+        "items": [
+          {
+            "text": "HuggingFace 新增 nvidia/LocateAnything-3B 及其量化版本，移除 Qwen3-4B-Base 相关条目",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "Artificial Analysis",
+        "logo_summary": "新增Nemotron 3.5系列评测",
+        "items": [
+          {
+            "text": "Artificial Analysis 新增 NVIDIA Nemotron 3.5 Super VL 和 Nemotron 3.5 Bolt 74B-A9B 评测，并发布新文章",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Google Gemini API",
+        "logo_summary": "定价页微调，无实质变化",
+        "items": [
+          {
+            "text": "Google Gemini API 定价页更新日期，并将文本/图像/视频的定价描述从逗号改为斜杠，无实质变化",
+            "type": "other"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_2b875c6f1287fa932686c74f1f4013a60b5f30eb33a07ba5ae223f44494469d8": "新增豆包高性能视频生成模型及决策评估（beta）能力，同时移除旧的视频生成描述，对应产品功能升级与扩展。",
+      "obs_e8193b27f9be0f50f576acda7bf00462dc81a0b0753a05825bd66131c7ac38b1": "移除 fun-music-v1 音乐生成模型及其描述，表明该模型已下架或不再维护。",
+      "obs_4ab902714228693e612552d9e6d87e0f705ad6ca9150ea446b6e82b298d21166": "新增 DeepSeek-V4.1-Flash 模型及分时段定价，同时删除 DeepSeek-V3.1-Terminus (Pro) 的定价，对应模型替换与价格策略更新。",
+      "obs_e8c858fd4ce3686199222c98ee7b51d1dcc691ae5cdee3d68e96225b2fb40a0e": "更新 CLI 工具名称从 hakimi 改为 kha，功能描述不变，属于工具命名调整。",
+      "obs_ea73895ef826a2160bce3556d1fd90e679126cf5ac6690a3fdc1cf762940ce6d": "更新 Fast mode 的可用性说明，明确 Claude Opus 4.7 不支持、4.6 按标准计费，并移除 research preview 标记，表明 Fast mode 正式发布。",
+      "obs_4e67a9e56865850f131fcbe6be3c3531fc613562f338b6ccc485c853a5e8268c": "新增 Fast mode 在 Microsoft Foundry 的可用性、结束研究预览无需申请，以及 Compliance API 返回指令文本的 beta 功能，对应产品功能扩展与正式化。",
+      "obs_19116f248bdfe353a8ad589f855ba172b7fdbde09edb23243dc1e4c62aa3c612": "更新定价页日期，并将定价描述中的标点从逗号改为斜杠，属于格式微调，无实质变化。",
+      "obs_8c55aec03ead6d99a96f4d85aca4e6e35f94302f23bc30508cc9854a250090a9": "新增关于自然灾害准备的博客文章，移除卫星原型相关文章，内容主题更新。",
+      "obs_5eb4c7e74d829d5e138af1153fbea33eef54503223f99a90ddf17c1664fa457e": "更新页面日期，反馈数据变化，无实质模型列表变动。",
+      "obs_dba013a0662b47e0421a4f22f336dd68f93927b1cd61fb4cbcd7b3730c591006": "移除 Cache tokens 计费行，新增 Standard ModelPriorityBatch 条目，表明定价结构简化或调整。",
+      "obs_582b93be3c6973df64e1e9718c550106dd9d15e42dc301af6f5a8590ba275ad4": "新增关于实时世界模型、Gemini agent 对初创企业意义的文章，移除拉丁美洲中型企业等旧文章，内容更新。",
+      "obs_e8f4d54ad424c60e70586aeb4c9028452604ba1aced0550e4feafaf830cb92a4": "新增 Timestral 1.0 系列（5M/28M/123M）时序模型，描述为零样本预测与协变量支持，对应新模型发布。",
+      "obs_e716ea7659eca85890cc24f9e885cfe23a285eb40f14f1d9812ed8551846b5c1": "新增 Introducing Timestral 文章，文章数从 89 增至 90，移除旧研究文章，对应新模型发布宣传。",
+      "obs_3f3bae0c31efe0f69ecf3db1a150a15bd269057bad26d7e7ccf87415acd54578": "新增 Introducing Timestral 文章，文章数从 89 增至 90，移除旧研究文章，对应新模型发布宣传。",
+      "obs_7062365df95052ea100d755cf747d22c9eb8ffb8ce6da45987a0a6aa894325eb": "新增收购 AISLE 的公告，移除与 Aleph Alpha 的协议，表明战略合作方向变化。",
+      "obs_d3d816ea16ac64e062def0a2b920cc5c88fd937e19ef0775d5d545631009643e": "新增多篇企业 AI 相关文章（ROI、能源、Agent 管理、收购公告），移除旧文章，内容更新。",
+      "obs_15719d8ac7ec719c1d4c9cfe89155c1b53bc2e51c8d409ed093af542c6cb374e": "新增 nvidia/LocateAnything-3B 及其量化版本，移除 Qwen3-4B-Base 相关条目，对应模型库更新。",
+      "obs_295764a151d4cb017db842c88ba0cf03e3b878873fd861b861f9f44ee2b7f065": "新增 Nemotron 3.5 系列评测及新文章，移除 Decision Index 公告，对应评测内容更新。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "bd5d6c4de6c5c9d9eb725eb3b9fa143854d01f04ed8eb33f27fe06ca7d0850fa",
+      "inputRefs": [
+        "obs_15719d8ac7ec719c1d4c9cfe89155c1b53bc2e51c8d409ed093af542c6cb374e",
+        "obs_19116f248bdfe353a8ad589f855ba172b7fdbde09edb23243dc1e4c62aa3c612",
+        "obs_295764a151d4cb017db842c88ba0cf03e3b878873fd861b861f9f44ee2b7f065",
+        "obs_2b875c6f1287fa932686c74f1f4013a60b5f30eb33a07ba5ae223f44494469d8",
+        "obs_3f3bae0c31efe0f69ecf3db1a150a15bd269057bad26d7e7ccf87415acd54578",
+        "obs_4ab902714228693e612552d9e6d87e0f705ad6ca9150ea446b6e82b298d21166",
+        "obs_4e67a9e56865850f131fcbe6be3c3531fc613562f338b6ccc485c853a5e8268c",
+        "obs_582b93be3c6973df64e1e9718c550106dd9d15e42dc301af6f5a8590ba275ad4",
+        "obs_5eb4c7e74d829d5e138af1153fbea33eef54503223f99a90ddf17c1664fa457e",
+        "obs_7062365df95052ea100d755cf747d22c9eb8ffb8ce6da45987a0a6aa894325eb",
+        "obs_8c55aec03ead6d99a96f4d85aca4e6e35f94302f23bc30508cc9854a250090a9",
+        "obs_d3d816ea16ac64e062def0a2b920cc5c88fd937e19ef0775d5d545631009643e",
+        "obs_dba013a0662b47e0421a4f22f336dd68f93927b1cd61fb4cbcd7b3730c591006",
+        "obs_e716ea7659eca85890cc24f9e885cfe23a285eb40f14f1d9812ed8551846b5c1",
+        "obs_e8193b27f9be0f50f576acda7bf00462dc81a0b0753a05825bd66131c7ac38b1",
+        "obs_e8c858fd4ce3686199222c98ee7b51d1dcc691ae5cdee3d68e96225b2fb40a0e",
+        "obs_e8f4d54ad424c60e70586aeb4c9028452604ba1aced0550e4feafaf830cb92a4",
+        "obs_ea73895ef826a2160bce3556d1fd90e679126cf5ac6690a3fdc1cf762940ce6d"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }

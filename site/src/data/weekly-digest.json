@@ -4,6 +4,14 @@
     "start": "2026-10-12",
     "end": "2026-10-18",
     "days": {
+      "2026-10-16": {
+        "substantive": 18,
+        "jitter": 6,
+        "failed": 5,
+        "releases": 5,
+        "pricings": 2,
+        "sunsets": 1
+      },
       "2026-10-15": {
         "substantive": 20,
         "jitter": 3,
@@ -38,12 +46,90 @@
       }
     },
     "totals": {
-      "substantive": 53,
-      "releases": 16,
-      "pricings": 10,
-      "sunsets": 5
+      "substantive": 71,
+      "releases": 21,
+      "pricings": 12,
+      "sunsets": 6
     },
     "highlights": [
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-16",
+        "text": "Mistral AI 发布 Timestral 1.0 时序基础模型系列（5M/28M/123M 参数），支持零样本预测与协变量，209M 参数在 CPU 上超越更大模型",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-16",
+        "text": "Claude Opus 5.5 的 Fast mode 结束研究预览，无需申请即可使用，并已在 Microsoft Foundry (Azure) 上线",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-16",
+        "text": "Claude Opus 5.5/5/4.8 的 Fast mode 定价说明更新，移除 research preview 标记",
+        "type": "pricing"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-10-16",
+        "text": "火山方舟新增豆包高性能视频生成模型，支持 4~30 秒视频生成及全模态参考输入",
+        "type": "release"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-10-16",
+        "text": "火山方舟新增决策评估能力（beta），提供 System One API 及教程",
+        "type": "other"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-10-16",
+        "text": "硅基流动上架 deepseek-ai/DeepSeek-V4.1-Flash，替代 DeepSeek-V3.1-Terminus (Pro)，并新增分时段定价（0-2点/8-24点与2-8点不同费率）",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-16",
+        "text": "Cohere 宣布收购 AISLE 以推进网络弹性主权 AI，替代与 Aleph Alpha 的协议",
+        "type": "other"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-16",
+        "text": "Google Vertex AI 定价页移除 Cache tokens 计费行（$1.50），并新增 Standard ModelPriorityBatch 条目",
+        "type": "pricing"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-16",
+        "text": "阿里百炼模型列表移除 fun-music-v1 音乐生成模型",
+        "type": "sunset"
+      },
+      {
+        "platform": "Kimi",
+        "date": "2026-10-16",
+        "text": "Kimi 更新 changelog，CLI 工具名称由 hakimi 改为 kha，支持控制台、API 和终端三种用法",
+        "type": "other"
+      },
+      {
+        "platform": "HuggingFace",
+        "date": "2026-10-16",
+        "text": "HuggingFace 新增 nvidia/LocateAnything-3B 及其量化版本，移除 Qwen3-4B-Base 相关条目",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-16",
+        "text": "Artificial Analysis 新增 NVIDIA Nemotron 3.5 Super VL 和 Nemotron 3.5 Bolt 74B-A9B 评测，并发布新文章",
+        "type": "other"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-16",
+        "text": "Google Gemini API 定价页更新日期，并将文本/图像/视频的定价描述从逗号改为斜杠，无实质变化",
+        "type": "other"
+      },
       {
         "platform": "xAI",
         "date": "2026-10-15",
