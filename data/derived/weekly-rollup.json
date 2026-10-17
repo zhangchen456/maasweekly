@@ -4,6 +4,14 @@
     "start": "2026-10-12",
     "end": "2026-10-18",
     "days": {
+      "2026-10-18": {
+        "substantive": 5,
+        "jitter": 0,
+        "failed": 8,
+        "releases": 2,
+        "pricings": 1,
+        "sunsets": 0
+      },
       "2026-10-17": {
         "substantive": 20,
         "jitter": 4,
@@ -54,12 +62,30 @@
       }
     },
     "totals": {
-      "substantive": 91,
-      "releases": 27,
-      "pricings": 17,
+      "substantive": 96,
+      "releases": 29,
+      "pricings": 18,
       "sunsets": 7
     },
     "highlights": [
+      {
+        "platform": "DeepSeek",
+        "date": "2026-10-18",
+        "text": "DeepSeek 于 2026-10-18 上线 Search / Fetch API，使用自研搜索引擎，支持网页搜索与抓取，并已集成至 Harness/Claude Code/Codex 的 Server 端工具调用。",
+        "type": "release"
+      },
+      {
+        "platform": "DeepSeek",
+        "date": "2026-10-18",
+        "text": "DeepSeek-V4.1-Flash 模型版本更新为 DeepSeek-V4.1-Flash-1017，旧模型名 deepseek-v4-flash 和 deepseek-v4-flash-vision-exp 仍可调用但已下线，请求由新版本服务并按 Flash 价格计费。",
+        "type": "release"
+      },
+      {
+        "platform": "DeepSeek",
+        "date": "2026-10-18",
+        "text": "Search/Fetch 接口调用目前未计费，将于北京时间 2026 年 11 月 1 日 00:00 起开始计费，此前免收费用。",
+        "type": "pricing"
+      },
       {
         "platform": "OpenAI",
         "date": "2026-10-17",

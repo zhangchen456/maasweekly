@@ -1,6 +1,207 @@
 {
-  "updated_at": "2026-10-16T23:36:53+00:00",
+  "updated_at": "2026-10-17T23:16:27+00:00",
   "days": [
+    {
+      "date": "2026-10-18",
+      "stats": {
+        "total": 68,
+        "success": 60,
+        "failed": 8,
+        "changed": 5,
+        "unchanged": 55
+      },
+      "changed": [
+        {
+          "platform": "DeepSeek",
+          "source_type": "model_list",
+          "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "Search / Fetch API 已上线，使用自研搜索引擎，支持网页搜索与抓取，点此查看使用指南。",
+            "| 模型版本 | DeepSeek-V4.1-Flash-1017 | DeepSeek-V4-Pro-0813",
+            "请注意，当前用户在 DeepSeek Harness/Claude Code/Codex 中使用 DeepSeek API 时，已经会通过 Server 端工具调用访问到 Search/Fetch 接口，这部分 Search/Fetch 接口调用目前未计费，并将于北京时间 2026 年 11 月 1 日 00:00 起按次收取调用费用。"
+          ],
+          "removed_lines": [
+            "Claude Code 和 Codex 中的网页搜索： 通过 Claude Code 的 Web Search 工具或 Codex 的 web_search 功能发起的搜索请求，在 Search API 上线后的前两周内免收 Search API 请求费用。此后将按 Search API 标准价格计费，具体开始计费时间将另行通知。",
+            "| 模型版本 | DeepSeek-V4.1-Flash | DeepSeek-V4-Pro-0813"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-flash",
+              "before": "(1) 模型名请使用 deepseek-flash。旧模型名 deepseek-v4-flash、deepseek-v4-flash-vision-exp 仍可调用，但对应模型已下线，请求将由 DeepSeek-V4.1-Flash 模型提供服务，并按 Flash 价格计费。",
+              "after": "(1) 模型名请使用 deepseek-flash。旧模型名 deepseek-v4-flash、deepseek-v4-flash-vision-exp 仍可调用，但对应模型已下线，请求将由 DeepSeek-V4.1-Flash-1017 模型提供服务，并按 Flash 价格计费。"
+            }
+          ],
+          "signal_preview": "Search / Fetch API 已上线，使用自研搜索引擎，支持网页搜索与抓取，点此查看使用指南。",
+          "raw_added_count": 4,
+          "raw_removed_count": 3,
+          "id": "obs_70ba53be749d67241f42f267fa6f6cf787a472e958443b824d0f9f1c574e88e4",
+          "permalink": "/item/obs_70ba53be749d67241f42f267fa6f6cf787a472e958443b824d0f9f1c574e88e4/"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "pricing",
+          "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+          "status": "changed",
+          "added_count": 3,
+          "removed_count": 2,
+          "added_lines": [
+            "Search / Fetch API 已上线，使用自研搜索引擎，支持网页搜索与抓取，点此查看使用指南。",
+            "| 模型版本 | DeepSeek-V4.1-Flash-1017 | DeepSeek-V4-Pro-0813",
+            "请注意，当前用户在 DeepSeek Harness/Claude Code/Codex 中使用 DeepSeek API 时，已经会通过 Server 端工具调用访问到 Search/Fetch 接口，这部分 Search/Fetch 接口调用目前未计费，并将于北京时间 2026 年 11 月 1 日 00:00 起按次收取调用费用。"
+          ],
+          "removed_lines": [
+            "Claude Code 和 Codex 中的网页搜索： 通过 Claude Code 的 Web Search 工具或 Codex 的 web_search 功能发起的搜索请求，在 Search API 上线后的前两周内免收 Search API 请求费用。此后将按 Search API 标准价格计费，具体开始计费时间将另行通知。",
+            "| 模型版本 | DeepSeek-V4.1-Flash | DeepSeek-V4-Pro-0813"
+          ],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-flash",
+              "before": "(1) 模型名请使用 deepseek-flash。旧模型名 deepseek-v4-flash、deepseek-v4-flash-vision-exp 仍可调用，但对应模型已下线，请求将由 DeepSeek-V4.1-Flash 模型提供服务，并按 Flash 价格计费。",
+              "after": "(1) 模型名请使用 deepseek-flash。旧模型名 deepseek-v4-flash、deepseek-v4-flash-vision-exp 仍可调用，但对应模型已下线，请求将由 DeepSeek-V4.1-Flash-1017 模型提供服务，并按 Flash 价格计费。"
+            }
+          ],
+          "signal_preview": "Search / Fetch API 已上线，使用自研搜索引擎，支持网页搜索与抓取，点此查看使用指南。",
+          "raw_added_count": 4,
+          "raw_removed_count": 3,
+          "id": "obs_4d93d4264e05fd614138cff7c199c3aef6cdb9c178fe016a97aefdf281946a61",
+          "permalink": "/item/obs_4d93d4264e05fd614138cff7c199c3aef6cdb9c178fe016a97aefdf281946a61/"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "changelog",
+          "url": "https://api-docs.deepseek.com/zh-cn/news/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Search / Fetch API is now available, powered by our in-house search engine and supporting web search and fetch. Click here to view the guide."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-flash",
+              "before": "(1) Use deepseek-flash as the model name. The legacy names deepseek-v4-flash and deepseek-v4-flash-vision-exp are still accepted, but the corresponding models have been retired, their requests are served by the DeepSeek-V4.1-Flash model and billed at the Flash price.",
+              "after": "(1) Use deepseek-flash as the model name. It is now served by DeepSeek-V4.1-Flash-1017, and the calling method remains unchanged. The legacy names deepseek-v4-flash and deepseek-v4-flash-vision-exp are still accepted, but the corresponding models have been retired; their requests are served by DeepSeek-V4.1-Flash-1017 and billed at the Flash price."
+            }
+          ],
+          "signal_preview": "Search / Fetch API is now available, powered by our in-house search engine and supporting web search and fetch. Click here to view the guide.",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_988fef5ad1a1e32732067b441a7b3173a56c3f9a89519476550f01a485a7634e",
+          "permalink": "/item/obs_988fef5ad1a1e32732067b441a7b3173a56c3f9a89519476550f01a485a7634e/"
+        },
+        {
+          "platform": "DeepSeek",
+          "source_type": "blog",
+          "url": "https://api-docs.deepseek.com/zh-cn/news/",
+          "status": "changed",
+          "added_count": 1,
+          "removed_count": 0,
+          "added_lines": [
+            "Search / Fetch API is now available, powered by our in-house search engine and supporting web search and fetch. Click here to view the guide."
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [
+            {
+              "key": "deepseek-flash",
+              "before": "(1) Use deepseek-flash as the model name. The legacy names deepseek-v4-flash and deepseek-v4-flash-vision-exp are still accepted, but the corresponding models have been retired, their requests are served by the DeepSeek-V4.1-Flash model and billed at the Flash price.",
+              "after": "(1) Use deepseek-flash as the model name. It is now served by DeepSeek-V4.1-Flash-1017, and the calling method remains unchanged. The legacy names deepseek-v4-flash and deepseek-v4-flash-vision-exp are still accepted, but the corresponding models have been retired; their requests are served by DeepSeek-V4.1-Flash-1017 and billed at the Flash price."
+            }
+          ],
+          "signal_preview": "Search / Fetch API is now available, powered by our in-house search engine and supporting web search and fetch. Click here to view the guide.",
+          "raw_added_count": 2,
+          "raw_removed_count": 1,
+          "id": "obs_21cb8aa8cdf9d12ad3b60edda72cdd3dffce7da4810fe687d39d31c3532b0c7f",
+          "permalink": "/item/obs_21cb8aa8cdf9d12ad3b60edda72cdd3dffce7da4810fe687d39d31c3532b0c7f/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 2,
+          "added_lines": [],
+          "removed_lines": [
+            "\"base_model:nvidia/LocateAnything-3B\",",
+            "\"base_model:quantized:nvidia/LocateAnything-3B\","
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 38,
+          "raw_removed_count": 43,
+          "id": "obs_bd1f5ae1e264a28d53a5cbd1f4ca989797380aa9610d7ce107b3ad7bc94dd565",
+          "permalink": "/item/obs_bd1f5ae1e264a28d53a5cbd1f4ca989797380aa9610d7ce107b3ad7bc94dd565/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=4606)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "model_list",
+          "url": "https://cloud.tencent.com/document/product/1729/104753",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=985)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "pricing",
+          "url": "https://cloud.tencent.com/document/product/1729/97731",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=984)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "changelog",
+          "url": "https://cloud.tencent.com/document/product/1729/97765",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=984)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "blog",
+          "url": "https://cloud.tencent.com/document/product/1729/132069",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=985)"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "fetch_failed",
+          "error": "反爬挑战页 (raw_len=5677)"
+        }
+      ]
+    },
     {
       "date": "2026-10-17",
       "stats": {

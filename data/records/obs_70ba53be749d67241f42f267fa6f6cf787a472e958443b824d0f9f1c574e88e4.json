@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_70ba53be749d67241f42f267fa6f6cf787a472e958443b824d0f9f1c574e88e4",
+  "sourceId": "deepseek-modellist",
+  "date": "2026-10-18",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "DeepSeek",
+  "sourceType": "model_list",
+  "sourceUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+  "title": "DeepSeek · 模型列表来源更新",
+  "summary": "模型列表更新：新增 Search/Fetch API 上线公告，模型版本从 DeepSeek-V4.1-Flash 更新为 DeepSeek-V4.1-Flash-1017，并移除旧版模型版本行。同时新增了 Search/Fetch 接口计费说明，删除旧的 Claude Code/Codex 网页搜索免收费说明。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-17T23:16:27+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "deepseek-flash",
+        "before": "(1) 模型名请使用 deepseek-flash。旧模型名 deepseek-v4-flash、deepseek-v4-flash-vision-exp 仍可调用，但对应模型已下线，请求将由 DeepSeek-V4.1-Flash 模型提供服务，并按 Flash 价格计费。",
+        "after": "(1) 模型名请使用 deepseek-flash。旧模型名 deepseek-v4-flash、deepseek-v4-flash-vision-exp 仍可调用，但对应模型已下线，请求将由 DeepSeek-V4.1-Flash-1017 模型提供服务，并按 Flash 价格计费。"
+      }
+    ],
+    "added_lines": [
+      "Search / Fetch API 已上线，使用自研搜索引擎，支持网页搜索与抓取，点此查看使用指南。",
+      "| 模型版本 | DeepSeek-V4.1-Flash-1017 | DeepSeek-V4-Pro-0813",
+      "请注意，当前用户在 DeepSeek Harness/Claude Code/Codex 中使用 DeepSeek API 时，已经会通过 Server 端工具调用访问到 Search/Fetch 接口，这部分 Search/Fetch 接口调用目前未计费，并将于北京时间 2026 年 11 月 1 日 00:00 起按次收取调用费用。"
+    ],
+    "removed_lines": [
+      "Claude Code 和 Codex 中的网页搜索： 通过 Claude Code 的 Web Search 工具或 Codex 的 web_search 功能发起的搜索请求，在 Search API 上线后的前两周内免收 Search API 请求费用。此后将按 Search API 标准价格计费，具体开始计费时间将另行通知。",
+      "| 模型版本 | DeepSeek-V4.1-Flash | DeepSeek-V4-Pro-0813"
+    ],
+    "added_count": 3,
+    "removed_count": 2,
+    "raw_added_count": 4,
+    "raw_removed_count": 3
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-18.json"
+  },
+  "permalink": "/item/obs_70ba53be749d67241f42f267fa6f6cf787a472e958443b824d0f9f1c574e88e4/"
+}

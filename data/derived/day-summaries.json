@@ -4935,5 +4935,47 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-18": {
+    "highlights": [
+      {
+        "platform": "DeepSeek",
+        "logo_summary": "Search/Fetch API上线，Flash模型版本更新",
+        "items": [
+          {
+            "text": "DeepSeek 于 2026-10-18 上线 Search / Fetch API，使用自研搜索引擎，支持网页搜索与抓取，并已集成至 Harness/Claude Code/Codex 的 Server 端工具调用。",
+            "type": "release"
+          },
+          {
+            "text": "DeepSeek-V4.1-Flash 模型版本更新为 DeepSeek-V4.1-Flash-1017，旧模型名 deepseek-v4-flash 和 deepseek-v4-flash-vision-exp 仍可调用但已下线，请求由新版本服务并按 Flash 价格计费。",
+            "type": "release"
+          },
+          {
+            "text": "Search/Fetch 接口调用目前未计费，将于北京时间 2026 年 11 月 1 日 00:00 起开始计费，此前免收费用。",
+            "type": "pricing"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_70ba53be749d67241f42f267fa6f6cf787a472e958443b824d0f9f1c574e88e4": "模型列表更新：新增 Search/Fetch API 上线公告，模型版本从 DeepSeek-V4.1-Flash 更新为 DeepSeek-V4.1-Flash-1017，并移除旧版模型版本行。同时新增了 Search/Fetch 接口计费说明，删除旧的 Claude Code/Codex 网页搜索免收费说明。",
+      "obs_4d93d4264e05fd614138cff7c199c3aef6cdb9c178fe016a97aefdf281946a61": "定价页面同步更新：新增 Search/Fetch API 上线及计费说明，模型版本更新为 DeepSeek-V4.1-Flash-1017，并移除旧版模型版本行。删除旧的 Claude Code/Codex 网页搜索免收费说明，替换为新的计费时间点。",
+      "obs_988fef5ad1a1e32732067b441a7b3173a56c3f9a89519476550f01a485a7634e": "变更日志更新：模型名称说明从旧模型名仍可调用改为由 DeepSeek-V4.1-Flash-1017 提供服务，并新增 Search/Fetch API 上线公告。",
+      "obs_21cb8aa8cdf9d12ad3b60edda72cdd3dffce7da4810fe687d39d31c3532b0c7f": "博客更新：与 changelog 同步，模型名称说明更新为 DeepSeek-V4.1-Flash-1017 提供服务，并新增 Search/Fetch API 上线公告。",
+      "obs_bd1f5ae1e264a28d53a5cbd1f4ca989797380aa9610d7ce107b3ad7bc94dd565": "行业动态移除：删除了 nvidia/LocateAnything-3B 及其量化版本的 base_model 条目，可能表示该模型从相关列表或追踪中移除。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "d4c4eefb43b6fa339ee629a7809483b18040afb48664d8b67c35c27c3222c5eb",
+      "inputRefs": [
+        "obs_21cb8aa8cdf9d12ad3b60edda72cdd3dffce7da4810fe687d39d31c3532b0c7f",
+        "obs_4d93d4264e05fd614138cff7c199c3aef6cdb9c178fe016a97aefdf281946a61",
+        "obs_70ba53be749d67241f42f267fa6f6cf787a472e958443b824d0f9f1c574e88e4",
+        "obs_988fef5ad1a1e32732067b441a7b3173a56c3f9a89519476550f01a485a7634e",
+        "obs_bd1f5ae1e264a28d53a5cbd1f4ca989797380aa9610d7ce107b3ad7bc94dd565"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }
