@@ -1,6 +1,199 @@
 {
-  "updated_at": "2026-10-17T23:16:27+00:00",
+  "updated_at": "2026-10-18T23:15:16+00:00",
   "days": [
+    {
+      "date": "2026-10-19",
+      "stats": {
+        "total": 68,
+        "success": 60,
+        "failed": 8,
+        "changed": 6,
+        "unchanged": 54
+      },
+      "changed": [
+        {
+          "platform": "阿里百炼",
+          "source_type": "pricing",
+          "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "deepseek-v4.1-flash-1017",
+            "deepseek-v4.1-flash-1017 按峰谷价格计费：闲时为 UTC+8 22:00 至次日 08:00，忙时为其余时段。"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "deepseek-v4.1-flash-: 1017",
+          "raw_added_count": 2,
+          "raw_removed_count": 0,
+          "id": "obs_212aae2fdd3edd1d9bb8fd0db7eaeb11b84723c370ba4434c8cc10df924a3cc3",
+          "permalink": "/item/obs_212aae2fdd3edd1d9bb8fd0db7eaeb11b84723c370ba4434c8cc10df924a3cc3/"
+        },
+        {
+          "platform": "百度千帆",
+          "source_type": "model_list",
+          "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "| DeepSeek-V4.1-flash-1017",
+            "| deepseek-v4.1-flash-1017"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| DeepSeek-V4.1-flash-1017",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_791391a8626e844661c5d4029cfe093a167bf708e0c2059b176b01c7aed06f3b",
+          "permalink": "/item/obs_791391a8626e844661c5d4029cfe093a167bf708e0c2059b176b01c7aed06f3b/"
+        },
+        {
+          "platform": "百度千帆",
+          "source_type": "pricing",
+          "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+          "status": "changed",
+          "added_count": 8,
+          "removed_count": 1,
+          "added_lines": [
+            "| DeepSeek-V4.1-Flash",
+            "| DeepSeek-V4.1-Flash-1017",
+            "| 命中缓存（空闲时段：22:00-次日8:00）",
+            "| 命中缓存（高峰时段：8:00-22:00）",
+            "| 输入（空闲时段：22:00-次日8:00）",
+            "| 输入（高峰时段：8:00-22:00）",
+            "| 输出（空闲时段：22:00-次日8:00）",
+            "| 输出（高峰时段：8:00-22:00）"
+          ],
+          "removed_lines": [
+            "| DeepSeek-V4-Pro"
+          ],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| 命中缓存（空闲时段：22:00-次日8:00）",
+          "raw_added_count": 9,
+          "raw_removed_count": 2,
+          "id": "obs_f520a9787c31c52ed0d377fb1f1a459a4317cebe2cccb7ac5a40df0807f38909",
+          "permalink": "/item/obs_f520a9787c31c52ed0d377fb1f1a459a4317cebe2cccb7ac5a40df0807f38909/"
+        },
+        {
+          "platform": "百度千帆",
+          "source_type": "blog",
+          "url": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp",
+          "status": "changed",
+          "added_count": 2,
+          "removed_count": 0,
+          "added_lines": [
+            "| DeepSeek V4.1 Flash 新版本：许愿式编程一键成真",
+            "| DeepSeek-V4.1-Flash-1017"
+          ],
+          "removed_lines": [],
+          "kind": "substantive",
+          "pairs": [],
+          "signal_preview": "| DeepSeek V4.1 Flash 新版本：许愿式编程一键成真",
+          "raw_added_count": 3,
+          "raw_removed_count": 1,
+          "id": "obs_4fb34cbd0cda27819f45c60ed8073185687ca5c4fa568ef9c555230bcaeeea62",
+          "permalink": "/item/obs_4fb34cbd0cda27819f45c60ed8073185687ca5c4fa568ef9c555230bcaeeea62/"
+        },
+        {
+          "platform": "Anthropic",
+          "source_type": "blog",
+          "url": "https://www.anthropic.com/news",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 2,
+          "raw_removed_count": 2,
+          "id": "obs_b9a52d56127105523deadde3c59c81c75196c1ca6bf98910e720e8647d9aba07",
+          "permalink": "/item/obs_b9a52d56127105523deadde3c59c81c75196c1ca6bf98910e720e8647d9aba07/"
+        },
+        {
+          "platform": "HuggingFace",
+          "source_type": "industry",
+          "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+          "status": "changed",
+          "added_count": 0,
+          "removed_count": 0,
+          "added_lines": [],
+          "removed_lines": [],
+          "kind": "jitter",
+          "pairs": [],
+          "signal_preview": "",
+          "raw_added_count": 29,
+          "raw_removed_count": 29,
+          "id": "obs_c5493fcfd6037dc5f5f298dab556e203a162f8704872972ef81a6698775f04ce",
+          "permalink": "/item/obs_c5493fcfd6037dc5f5f298dab556e203a162f8704872972ef81a6698775f04ce/"
+        }
+      ],
+      "first_fetch": [],
+      "failed": [
+        {
+          "platform": "火山方舟",
+          "source_type": "model_list",
+          "url": "https://www.volcengine.com/docs/82379/1330310",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "pricing",
+          "url": "https://www.volcengine.com/docs/82379/1544106",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "火山方舟",
+          "source_type": "changelog",
+          "url": "https://www.volcengine.com/docs/82379/1159177",
+          "status": "fetch_failed",
+          "error": "提取后内容过短 (raw_len=11902)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "model_list",
+          "url": "https://cloud.tencent.com/document/product/1729/104753",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=987)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "pricing",
+          "url": "https://cloud.tencent.com/document/product/1729/97731",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=988)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "changelog",
+          "url": "https://cloud.tencent.com/document/product/1729/97765",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=987)"
+        },
+        {
+          "platform": "腾讯混元/TokenHub",
+          "source_type": "blog",
+          "url": "https://cloud.tencent.com/document/product/1729/132069",
+          "status": "fetch_failed",
+          "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=988)"
+        },
+        {
+          "platform": "LMArena",
+          "source_type": "industry",
+          "url": "https://lmarena.ai/leaderboard",
+          "status": "fetch_failed",
+          "error": "反爬挑战页 (raw_len=5656)"
+        }
+      ]
+    },
     {
       "date": "2026-10-18",
       "stats": {

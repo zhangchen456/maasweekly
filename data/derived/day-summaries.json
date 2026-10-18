@@ -4977,5 +4977,51 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-19": {
+    "highlights": [
+      {
+        "platform": "百度千帆",
+        "logo_summary": "DeepSeek-V4.1-Flash-1017上架，V4-Pro下架",
+        "items": [
+          {
+            "text": "DeepSeek-V4.1-Flash-1017 新版本上线，支持峰谷定价，并发布博客『许愿式编程一键成真』",
+            "type": "release"
+          },
+          {
+            "text": "DeepSeek-V4-Pro 从定价列表中移除，疑似下架或替换",
+            "type": "sunset"
+          }
+        ]
+      },
+      {
+        "platform": "阿里百炼",
+        "logo_summary": "DeepSeek-V4.1-Flash-1017定价上线，峰谷计费",
+        "items": [
+          {
+            "text": "deepseek-v4.1-flash-1017 新增定价，采用峰谷计费（闲时22:00-08:00，忙时其余时段）",
+            "type": "pricing"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_212aae2fdd3edd1d9bb8fd0db7eaeb11b84723c370ba4434c8cc10df924a3cc3": "新增 deepseek-v4.1-flash-1017 的定价行，并明确峰谷时段划分（闲时22:00-08:00，忙时其余），对应新模型版本上架。",
+      "obs_791391a8626e844661c5d4029cfe093a167bf708e0c2059b176b01c7aed06f3b": "新增 DeepSeek-V4.1-flash-1017 及其别名 deepseek-v4.1-flash-1017，表明该模型已进入千帆模型列表。",
+      "obs_f520a9787c31c52ed0d377fb1f1a459a4317cebe2cccb7ac5a40df0807f38909": "新增 DeepSeek-V4.1-Flash 及 -1017 版本的完整定价项（含缓存命中、输入、输出，并区分峰谷时段），同时删除 DeepSeek-V4-Pro 的定价，显示模型版本替换。",
+      "obs_4fb34cbd0cda27819f45c60ed8073185687ca5c4fa568ef9c555230bcaeeea62": "新增博客文章『DeepSeek V4.1 Flash 新版本：许愿式编程一键成真』，宣传新版本特性，与模型上架同步。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "282e1f571a84e8097f3a51bb3fbf1dd263b4cc5cc4400aee07c805e7d54429bf",
+      "inputRefs": [
+        "obs_212aae2fdd3edd1d9bb8fd0db7eaeb11b84723c370ba4434c8cc10df924a3cc3",
+        "obs_4fb34cbd0cda27819f45c60ed8073185687ca5c4fa568ef9c555230bcaeeea62",
+        "obs_791391a8626e844661c5d4029cfe093a167bf708e0c2059b176b01c7aed06f3b",
+        "obs_f520a9787c31c52ed0d377fb1f1a459a4317cebe2cccb7ac5a40df0807f38909"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }
