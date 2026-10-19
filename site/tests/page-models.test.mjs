@@ -33,11 +33,11 @@ const dangerous={value:'</script><script>throw new Error("injection")</script>\u
 const json=safeJson(dangerous);
 assert.ok(!json.includes('</script>'));
 assert.deepEqual(JSON.parse(json),dangerous);
-const fixture={...release,modelIdentities:{models:[{modelId:'test:one',modelName:'One'}],families:[]},prices:[],evidence:[],changes:[
+const fixture={dataThrough:'2026-10-01',modelIdentities:{models:[{modelId:'test:one',modelName:'One'}],families:[]},prices:[],evidence:[],changes:[
  {modelId:'test:one',status:'active',observationDate:'2026-07-03',id:'outside'},
  {modelId:'test:one',status:'withdrawn',observationDate:'2026-10-01',id:'withdrawn'},
- ...Array.from({length:12},(_,i)=>({modelId:'test:one',status:'active',observationDate:'2026-10-01',id:String(i)})),
- {modelId:'test:one',status:'active',observationDate:'2026-10-02',id:'future'}]};
+ {modelId:'test:one',status:'active',observationDate:'2026-10-02',id:'future'},
+ ...Array.from({length:12},(_,i)=>({modelId:'test:one',status:'active',observationDate:'2026-10-01',id:String(i)}))]};
 assert.deepEqual(pages.createModelIndex(fixture).changes.get('test:one').map(c=>c.id),Array.from({length:10},(_,i)=>String(i)));
 console.log(JSON.stringify({models:catalog.length,prices,changes,allModelOutputParity:true,parityMs,sharedIndex:true,safeHydration:true}));
 
