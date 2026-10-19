@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-19T07:04:08.273299+08:00 -->
+<!-- fetched: 2026-10-19T13:35:35.622370+08:00 -->
 
 AI & Machine Learning | Google Cloud BlogJump to Content
 Cloud

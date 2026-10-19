@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-19T07:04:13.680405+08:00 -->
+<!-- fetched: 2026-10-19T13:35:42.520797+08:00 -->
 
 AI Model & API Providers Analysis | Artificial Analysis
 Artificial Analysis
@@ -26,6 +26,8 @@ Build your own custom benchmark
 Model Recommender
 Get personalized model recommendations that optimize for your priorities across intelligence, speed, and cost
 Changelog
+New language model evaluation · 18 Oct
+DeepSeek V4.1 Flash 1017 (Max)
 New article published · 16 Oct
 Reflection has released Beam, their first model launch
 New language model evaluation · 16 Oct
@@ -63,39 +65,37 @@ Announcing Harvey LAB-AA v1.1: adding hallucination checks to raise the bar for 
 New language model evaluation · 8 Oct
 GPT-6 Sol (Daybreak Blue, max)
 New article published · 7 Oct
-Anthropic has released Claude Haiku 5.5
-New language model evaluation · 7 Oct
-Claude Haiku 5.5 (High)See more
+Anthropic has released Claude Haiku 5.5See more
 Intelligence
 Explore models
 Intelligence, speed and cost of leading language models, based on our independent evaluations
 Intelligence IndexOpen Weights / ProprietaryText Only / Multimodal InputsBy Country
 Artificial Analysis Intelligence Index
 Artificial Analysis Intelligence Index v4.3.2 incorporates 10 evaluations: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1
-27 of 703 models
+27 of 704 models
 Add model from specific provider
 No publicly available API
 Cost per TaskTime per TaskOutput Tokens per Task
 Cost per Intelligence Index Task
 Weighted average cost (USD) per Intelligence Index task · Segmented by token type · Lower is better
-27 of 703 models
+27 of 704 models
 Add model from specific provider
 AnswerReasoningCache WriteCache HitInput
 Intelligence Index vs. Cost per Task
 Artificial Analysis Intelligence Index · Weighted average cost (USD) per Artificial Analysis Intelligence Index task
 Most attractive quadrant
 Pareto line
-StepFunZ AIXiaomiMiniMaxOpenAIAnthropicMistralMetaSpaceXAIReflectionGoogleAlibabaDeepSeekNVIDIAKimi
+StepFunZ AIXiaomiMiniMaxOpenAIAnthropicMistralMetaSpaceXAIReflectionGoogleAlibabaNVIDIADeepSeekKimi
 Intelligence Index vs. Cost per Task, by Model Release
 All reasoning and effort variants of each selected release · Weighted average cost (USD) per Artificial Analysis Intelligence Index task
-10 of 509 releases
+10 of 510 releases
 Most attractive quadrant
 Pareto line
-AnthropicMetaOpenAIGoogleSpaceXAIXiaomiZ AIDeepSeekOther Models
+AnthropicMetaOpenAIGoogleSpaceXAIXiaomiDeepSeekZ AIOther Models
 Frontier Language Model Intelligence, Over Time
 Artificial Analysis Intelligence Index v4.3.2 incorporates 10 evaluations: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1
 16 of 17 model creators
-AnthropicMetaOpenAIGoogleSpaceXAIXiaomiAlibabaZ AIStepFunKimiDeepSeekMistralInstitute of Foundation ModelsReflectionMiniMaxThinking Machines
+AnthropicMetaOpenAIGoogleSpaceXAIXiaomiAlibabaDeepSeekZ AIStepFunKimiMistralInstitute of Foundation ModelsReflectionMiniMaxThinking Machines
 Indexes
 All indexes
 Coding Agent IndexCostExecution Time
@@ -118,7 +118,7 @@ Include language models
 AllFinance & AccountingStrategy & OpsLegalHealthcare & MedicalEngineeringEconomics
 Capability Index Comparison
 Rank among the selected models on each capability index
-15 of 20 models
+15 of 19 models
 Capability Index Comparison |
 | | Finance & Accounting | Strategy & Ops | Legal | Healthcare & Medical | Engineering | Economics
 | Claude Opus 5.5 (Max, Default Fallback) | 1 (61) | 1 (64) | 1 (63) | 1 (61) | 1 (60) | 1 (66)
@@ -127,22 +127,22 @@ Capability Index Comparison |
 | GPT-6 Astra (Max) | 4 (55) | 4 (57) | 3 (59) | 4 (52) | 4 (55) | 4 (60)
 | GPT-6.1 Sol (Max) | 5 (54) | 5 (57) | 4 (58) | 5 (51) | 5 (54) | 5 (59)
 | Grok 4.7 (Xhigh) | 6 (52) | 6 (54) | 6 (54) | 6 (47) | 6 (47) | 6 (56)
-| Kimi K3 (Max) | 7 (47) | 8 (50) | 8 (49) | 8 (45) | 13 (43) | 7 (53)
-| Gemini 3.8 Flash (High) | 8 (47) | 9 (48) | 7 (52) | 12 (42) | 14 (43) | 10 (52)
-| MiMo-V2.6-Pro | 9 (46) | 10 (48) | 11 (45) | 11 (42) | 8 (47) | 8 (53)
-| GLM-5.3 (Max) | 13 (45) | 11 (48) | 13 (42) | 7 (47) | 7 (47) | 12 (51)
-| Qwen3.8 Max (0902) | 10 (46) | 12 (47) | 10 (46) | 13 (41) | 9 (46) | 11 (52)
-| Step 5 Preview | 11 (45) | 13 (47) | 9 (46) | 14 (41) | 10 (45) | 9 (53)
-| Claude Haiku 5.5 (Max) | 14 (44) | 15 (40) | 12 (42) | 10 (44) | 11 (45) | 13 (51)
-| GLM-5.3-Flash | 15 (42) | 14 (45) | 15 (40) | 9 (45) | 12 (44) | 14 (49)
-| DeepSeek V4.1 Flash (Max) | 12 (45) | 7 (52) | 14 (41) | 15 (41) | 15 (39) | 15 (44)
+| Kimi K3 (Max) | 7 (47) | 7 (50) | 8 (49) | 8 (45) | 13 (43) | 7 (53)
+| Gemini 3.8 Flash (High) | 8 (47) | 8 (48) | 7 (52) | 12 (42) | 14 (43) | 10 (52)
+| MiMo-V2.6-Pro | 9 (46) | 9 (48) | 11 (45) | 11 (42) | 8 (47) | 8 (53)
+| GLM-5.3 (Max) | 12 (45) | 10 (48) | 13 (42) | 7 (47) | 7 (47) | 12 (51)
+| Qwen3.8 Max (0902) | 10 (46) | 11 (47) | 10 (46) | 13 (41) | 9 (46) | 11 (52)
+| Step 5 Preview | 11 (45) | 12 (47) | 9 (46) | 14 (41) | 10 (45) | 9 (53)
+| Claude Haiku 5.5 (Max) | 13 (44) | 15 (40) | 12 (42) | 10 (44) | 11 (45) | 13 (51)
+| GLM-5.3-Flash | 14 (42) | 14 (45) | 15 (40) | 9 (45) | 12 (44) | 14 (49)
+| GPT-6 Luna (Max) | 15 (40) | 13 (46) | 14 (40) | 15 (37) | 15 (37) | 15 (45)
 Benchmarks
 All evaluations
 Evaluations
 Intelligence evaluations measured independently by Artificial Analysis · Higher is better
 CodingAgenticTool UsePrivate DatasetUser InteractionFinanceMedicalLegalIntelligence IndexLong ContextMultimodalInstruction FollowingFaithfulnessWritingBusinessSee more
 19 of 28 evaluations
-27 of 703 models
+27 of 704 models
 Add model from specific provider
 No publicly available API
 AA-Briefcase v1.1

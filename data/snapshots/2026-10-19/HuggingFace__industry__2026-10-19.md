@@ -1,11 +1,11 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-19T07:04:13.507732+08:00 -->
+<!-- fetched: 2026-10-19T13:35:42.275945+08:00 -->
 
 [
   {
     "_id": "621ffdc136468d709f180294",
     "id": "sentence-transformers/all-MiniLM-L6-v2",
-    "likes": 6356,
+    "likes": 6357,
     "private": false,
     "downloads": 208935949,
     "tags": [
@@ -97,7 +97,7 @@
   {
     "_id": "64fff537d522560505ad6567",
     "id": "BAAI/bge-small-en-v1.5",
-    "likes": 644,
+    "likes": 645,
     "private": false,
     "downloads": 58081952,
     "tags": [
@@ -132,7 +132,7 @@
   {
     "_id": "621ffdc136468d709f1802ec",
     "id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-    "likes": 1479,
+    "likes": 1480,
     "private": false,
     "downloads": 45009975,
     "tags": [
@@ -236,7 +236,7 @@
   {
     "_id": "65b53851e602b6c2c96e78da",
     "id": "BAAI/bge-m3",
-    "likes": 3908,
+    "likes": 3909,
     "private": false,
     "downloads": 31687693,
     "tags": [
@@ -267,7 +267,7 @@
   {
     "_id": "621ffdc036468d709f174338",
     "id": "google-bert/bert-base-uncased",
-    "likes": 3432,
+    "likes": 3433,
     "private": false,
     "downloads": 30543278,
     "tags": [
@@ -300,7 +300,7 @@
   {
     "_id": "680da718233834890aa01f51",
     "id": "Qwen/Qwen3-0.6B",
-    "likes": 1828,
+    "likes": 1830,
     "private": false,
     "downloads": 29966068,
     "tags": [
@@ -327,7 +327,7 @@
   {
     "_id": "6a6bd1dc7034404148ec9107",
     "id": "Comfy-Org/MiniMax-H3",
-    "likes": 2327,
+    "likes": 2331,
     "private": false,
     "downloads": 25242296,
     "tags": [
@@ -345,7 +345,7 @@
   {
     "_id": "621ffdc036468d709f174358",
     "id": "google-t5/t5-small",
-    "likes": 684,
+    "likes": 686,
     "private": false,
     "downloads": 24230244,
     "tags": [
@@ -388,7 +388,7 @@
   {
     "_id": "639c045c34967bcf4564bdc5",
     "id": "timm/mobilenetv3_small_100.lamb_in1k",
-    "likes": 151,
+    "likes": 153,
     "private": false,
     "downloads": 20161827,
     "tags": [
@@ -467,7 +467,7 @@
   {
     "_id": "621ffdc136468d709f17ea62",
     "id": "openai/clip-vit-base-patch32",
-    "likes": 1617,
+    "likes": 1618,
     "private": false,
     "downloads": 17860422,
     "tags": [
@@ -491,7 +491,7 @@
   {
     "_id": "621ffdc036468d709f17434d",
     "id": "openai-community/gpt2",
-    "likes": 4260,
+    "likes": 4261,
     "private": false,
     "downloads": 16816065,
     "tags": [
@@ -522,7 +522,7 @@
   {
     "_id": "69037c2ff37fdfe285722818",
     "id": "amazon/chronos-2",
-    "likes": 542,
+    "likes": 543,
     "private": false,
     "downloads": 16564577,
     "tags": [
@@ -550,7 +550,7 @@
   {
     "_id": "621ffdc136468d709f17cdba",
     "id": "jonatasgrosman/wav2vec2-large-xlsr-53-japanese",
-    "likes": 108,
+    "likes": 109,
     "private": false,
     "downloads": 15791035,
     "tags": [
@@ -605,7 +605,7 @@
   {
     "_id": "621ffdc136468d709f17b7d7",
     "id": "google/vit-base-patch16-224",
-    "likes": 1038,
+    "likes": 1039,
     "private": false,
     "downloads": 13332668,
     "tags": [
@@ -634,7 +634,7 @@
   {
     "_id": "65c7188324e59a0e4f89d863",
     "id": "nomic-ai/nomic-embed-text-v1.5",
-    "likes": 977,
+    "likes": 978,
     "private": false,
     "downloads": 13303540,
     "tags": [
@@ -666,7 +666,7 @@
   {
     "_id": "65dee9413aec0530562b4f09",
     "id": "argmaxinc/whisperkit-coreml",
-    "likes": 251,
+    "likes": 252,
     "private": false,
     "downloads": 11981711,
     "tags": [

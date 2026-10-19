@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-19T07:03:51.863486+08:00 -->
+<!-- fetched: 2026-10-19T13:35:18.358361+08:00 -->
 
 定价概览 - MiniMax 开放平台文档中心
 Documentation Index

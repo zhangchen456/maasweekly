@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-19T07:04:01.961344+08:00 -->
+<!-- fetched: 2026-10-19T13:35:28.798534+08:00 -->
 
 Models overview - Claude Platform Docs
 Claude Platform Docs

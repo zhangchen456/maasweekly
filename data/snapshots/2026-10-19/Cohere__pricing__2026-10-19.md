@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-19T07:04:10.002874+08:00 -->
+<!-- fetched: 2026-10-19T13:35:37.076938+08:00 -->
 
 Pricing | Secure and Scalable Enterprise AI | Cohere
 Skip to content

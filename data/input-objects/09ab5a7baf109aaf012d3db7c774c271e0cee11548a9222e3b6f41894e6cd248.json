@@ -1,0 +1,574 @@
+{
+  "date": "2026-10-19",
+  "fetched_at": "2026-10-19T13:31:13.635087",
+  "stats": {
+    "total": 68,
+    "success": 60,
+    "failed": 8,
+    "changed": 8,
+    "unchanged": 52
+  },
+  "changes": [
+    {
+      "platform": "火山方舟",
+      "source_type": "model_list",
+      "url": "https://www.volcengine.com/docs/82379/1330310",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11902)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "pricing",
+      "url": "https://www.volcengine.com/docs/82379/1544106",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11902)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "changelog",
+      "url": "https://www.volcengine.com/docs/82379/1159177",
+      "status": "fetch_failed",
+      "error": "提取后内容过短 (raw_len=11902)"
+    },
+    {
+      "platform": "火山方舟",
+      "source_type": "blog",
+      "url": "https://www.volcengine.com/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "model_list",
+      "url": "https://help.aliyun.com/zh/model-studio/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "pricing",
+      "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 0,
+      "added_lines": [
+        "deepseek-v4.1-flash-1017",
+        "deepseek-v4.1-flash-1017 按峰谷价格计费：闲时为 UTC+8 22:00 至次日 08:00，忙时为其余时段。"
+      ],
+      "removed_lines": []
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "changelog",
+      "url": "https://help.aliyun.com/zh/model-studio/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "阿里百炼",
+      "source_type": "blog",
+      "url": "https://qwenlm.github.io/blog/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "model_list",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 1,
+      "added_lines": [
+        "| DeepSeek-V4.1-flash-1017",
+        "| deepseek-v4.1-flash-1017",
+        "更新时间：2026-10-18"
+      ],
+      "removed_lines": [
+        "更新时间：2026-10-14"
+      ]
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "pricing",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "status": "changed",
+      "added_count": 9,
+      "removed_count": 2,
+      "added_lines": [
+        "| DeepSeek-V4.1-Flash",
+        "| DeepSeek-V4.1-Flash-1017",
+        "| 命中缓存（空闲时段：22:00-次日8:00）",
+        "| 命中缓存（高峰时段：8:00-22:00）",
+        "| 输入（空闲时段：22:00-次日8:00）",
+        "| 输入（高峰时段：8:00-22:00）",
+        "| 输出（空闲时段：22:00-次日8:00）",
+        "| 输出（高峰时段：8:00-22:00）",
+        "更新时间：2026-10-18"
+      ],
+      "removed_lines": [
+        "| DeepSeek-V4-Pro",
+        "更新时间：2026-10-09"
+      ]
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "changelog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Mmh8l4qwj",
+      "status": "unchanged"
+    },
+    {
+      "platform": "百度千帆",
+      "source_type": "blog",
+      "url": "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp",
+      "status": "changed",
+      "added_count": 3,
+      "removed_count": 1,
+      "added_lines": [
+        "| DeepSeek V4.1 Flash 新版本：许愿式编程一键成真",
+        "| DeepSeek-V4.1-Flash-1017",
+        "更新时间：2026-10-18"
+      ],
+      "removed_lines": [
+        "更新时间：2026-10-14"
+      ]
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "model_list",
+      "url": "https://cloud.tencent.com/document/product/1729/104753",
+      "status": "fetch_failed",
+      "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=989)"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "pricing",
+      "url": "https://cloud.tencent.com/document/product/1729/97731",
+      "status": "fetch_failed",
+      "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=988)"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "changelog",
+      "url": "https://cloud.tencent.com/document/product/1729/97765",
+      "status": "fetch_failed",
+      "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=987)"
+    },
+    {
+      "platform": "腾讯混元/TokenHub",
+      "source_type": "blog",
+      "url": "https://cloud.tencent.com/document/product/1729/132069",
+      "status": "fetch_failed",
+      "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=988)"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "model_list",
+      "url": "https://cloud.siliconflow.cn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "pricing",
+      "url": "https://siliconflow.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "changelog",
+      "url": "https://docs.siliconflow.cn/docs/release-notes/overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "硅基流动",
+      "source_type": "blog",
+      "url": "https://siliconflow.cn/blog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "model_list",
+      "url": "https://docs.bigmodel.cn/cn/guide/start/model-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "pricing",
+      "url": "https://bigmodel.cn/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "changelog",
+      "url": "https://docs.bigmodel.cn/cn/update/new-releases",
+      "status": "unchanged"
+    },
+    {
+      "platform": "智谱AI",
+      "source_type": "blog",
+      "url": "https://www.bigmodel.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "model_list",
+      "url": "https://platform.kimi.com/docs/api/models-overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "pricing",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "changelog",
+      "url": "https://platform.kimi.com/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Kimi",
+      "source_type": "blog",
+      "url": "https://www.moonshot.cn/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "model_list",
+      "url": "https://platform.minimaxi.com/docs/guides/models-intro",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 3,
+      "added_lines": [
+        "| MiniMax-M3.1-Flash | 原生多模态、1M 上下文的 Frontier Coding 模型，思考深度可调",
+        "按量付费 API 用户存量用户可继续调用至正式下线日，正式下线后相关 API 调用将不再可用。请提前核查调用情况，并在下线前完成模型迁移。M Plan 和 Token Plan 用户M2.5、M2.7 系列模型请求将于【2026年10月19日】统一路由至 M3.1 Flash。原模型名称保留作为兼容入口，用户无需修改模型名称，原有套餐用量权益不受影响。为避免影响业务，请尽快核查调用情况并提前做好模型迁移准备。感谢您一直以来对MiniMax的支持与信任。"
+      ],
+      "removed_lines": [
+        "MiniMax-M3.1-Flash-Preview 暂时仅通过 M Plan 和 MiniMax Code 提供。",
+        "| MiniMax-M3.1-Flash-Preview | 原生多模态、1M 上下文的 Frontier Coding 模型，思考深度可调",
+        "按量付费 API 用户存量用户可继续调用至正式下线日，正式下线后相关 API 调用将不再可用。请提前核查调用情况，并在下线前完成模型迁移。M Plan 和 Token Plan 用户M2.5、M2.7 系列模型请求将于【2026年10月19日】统一路由至 M3.1 Flash Preview。原模型名称保留作为兼容入口，用户无需修改模型名称，原有套餐用量权益不受影响。为避免影响业务，请尽快核查调用情况并提前做好模型迁移准备。感谢您一直以来对MiniMax的支持与信任。"
+      ]
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "pricing",
+      "url": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "changelog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "MiniMax",
+      "source_type": "blog",
+      "url": "https://www.minimaxi.com/news",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "model_list",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "pricing",
+      "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "changelog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "DeepSeek",
+      "source_type": "blog",
+      "url": "https://api-docs.deepseek.com/zh-cn/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "model_list",
+      "url": "https://platform.openai.com/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "pricing",
+      "url": "https://platform.openai.com/docs/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "changelog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "OpenAI",
+      "source_type": "blog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "model_list",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "pricing",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "changelog",
+      "url": "https://docs.anthropic.com/en/release-notes/api",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Anthropic",
+      "source_type": "blog",
+      "url": "https://www.anthropic.com/news",
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 2,
+      "added_lines": [
+        "Oct 1, 2026AnnouncementsBarclays scales Claude to upgrade operations and improve client experience See more",
+        "Oct 18, 2026AnnouncementsInvesting in the public benefit"
+      ],
+      "removed_lines": [
+        "Oct 1, 2026AnnouncementsBarclays scales Claude to upgrade operations and improve client experience",
+        "Sep 23, 2026Science Claude discovers a novel enzyme system with CRISPR-like repeatsSee more"
+      ]
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "model_list",
+      "url": "https://ai.google.dev/gemini-api/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "changelog",
+      "url": "https://ai.google.dev/gemini-api/docs/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Gemini API",
+      "source_type": "blog",
+      "url": "https://blog.google/technology/ai/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "model_list",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "pricing",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "changelog",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Google Vertex AI",
+      "source_type": "blog",
+      "url": "https://cloud.google.com/blog/products/ai-machine-learning",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "model_list",
+      "url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "pricing",
+      "url": "https://mistral.ai/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "changelog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Mistral AI",
+      "source_type": "blog",
+      "url": "https://mistral.ai/news/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "model_list",
+      "url": "https://docs.cohere.com/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "pricing",
+      "url": "https://cohere.com/pricing",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "changelog",
+      "url": "https://docs.cohere.com/changelog",
+      "status": "unchanged"
+    },
+    {
+      "platform": "Cohere",
+      "source_type": "blog",
+      "url": "https://txt.cohere.com/",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "model_list",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "pricing",
+      "url": "https://docs.x.ai/docs/models",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "changelog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "xAI",
+      "source_type": "blog",
+      "url": "https://docs.x.ai/docs/release-notes",
+      "status": "unchanged"
+    },
+    {
+      "platform": "讯飞星辰MaaS",
+      "source_type": "changelog",
+      "url": "https://maas.xfyun.cn/api/v1/gpt-finetune/notice/announcement/list?scope=1",
+      "status": "unchanged"
+    },
+    {
+      "platform": "HuggingFace",
+      "source_type": "industry",
+      "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
+      "status": "changed",
+      "added_count": 38,
+      "removed_count": 38,
+      "added_lines": [
+        "\"downloads\": 11981711,",
+        "\"downloads\": 13303540,",
+        "\"downloads\": 13332668,",
+        "\"downloads\": 15652222,",
+        "\"downloads\": 15791035,",
+        "\"downloads\": 16564577,",
+        "\"downloads\": 16816065,",
+        "\"downloads\": 17860422,",
+        "\"downloads\": 18127252,",
+        "\"downloads\": 20161827,",
+        "\"downloads\": 208935949,",
+        "\"downloads\": 24230244,",
+        "\"downloads\": 25242296,",
+        "\"downloads\": 29966068,",
+        "\"downloads\": 30543278,",
+        "\"downloads\": 31687693,",
+        "\"downloads\": 41852869,",
+        "\"downloads\": 45009975,",
+        "\"downloads\": 58081952,",
+        "\"downloads\": 76815869,",
+        "\"likes\": 1039,",
+        "\"likes\": 109,",
+        "\"likes\": 1266,",
+        "\"likes\": 1480,",
+        "\"likes\": 153,",
+        "\"likes\": 1618,",
+        "\"likes\": 1830,",
+        "\"likes\": 2331,",
+        "\"likes\": 252,",
+        "\"likes\": 3433,"
+      ],
+      "removed_lines": [
+        "\"downloads\": 11958686,",
+        "\"downloads\": 13085868,",
+        "\"downloads\": 13383648,",
+        "\"downloads\": 15596292,",
+        "\"downloads\": 15735652,",
+        "\"downloads\": 16567824,",
+        "\"downloads\": 17231621,",
+        "\"downloads\": 18064414,",
+        "\"downloads\": 18171612,",
+        "\"downloads\": 20676972,"
+      ]
+    },
+    {
+      "platform": "Artificial Analysis",
+      "source_type": "industry",
+      "url": "https://artificialanalysis.ai/",
+      "status": "changed",
+      "added_count": 18,
+      "removed_count": 18,
+      "added_lines": [
+        "10 of 510 releases",
+        "15 of 19 models",
+        "27 of 704 models",
+        "Anthropic has released Claude Haiku 5.5See more",
+        "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiAlibabaDeepSeekZ AIStepFunKimiMistralInstitute of Foundation ModelsReflectionMiniMaxThinking Machines",
+        "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiDeepSeekZ AIOther Models",
+        "DeepSeek V4.1 Flash 1017 (Max)",
+        "New language model evaluation · 18 Oct",
+        "StepFunZ AIXiaomiMiniMaxOpenAIAnthropicMistralMetaSpaceXAIReflectionGoogleAlibabaNVIDIADeepSeekKimi",
+        "| Claude Haiku 5.5 (Max) | 13 (44) | 15 (40) | 12 (42) | 10 (44) | 11 (45) | 13 (51)",
+        "| GLM-5.3 (Max) | 12 (45) | 10 (48) | 13 (42) | 7 (47) | 7 (47) | 12 (51)",
+        "| GLM-5.3-Flash | 14 (42) | 14 (45) | 15 (40) | 9 (45) | 12 (44) | 14 (49)",
+        "| GPT-6 Luna (Max) | 15 (40) | 13 (46) | 14 (40) | 15 (37) | 15 (37) | 15 (45)",
+        "| Gemini 3.8 Flash (High) | 8 (47) | 8 (48) | 7 (52) | 12 (42) | 14 (43) | 10 (52)",
+        "| Kimi K3 (Max) | 7 (47) | 7 (50) | 8 (49) | 8 (45) | 13 (43) | 7 (53)",
+        "| MiMo-V2.6-Pro | 9 (46) | 9 (48) | 11 (45) | 11 (42) | 8 (47) | 8 (53)",
+        "| Qwen3.8 Max (0902) | 10 (46) | 11 (47) | 10 (46) | 13 (41) | 9 (46) | 11 (52)",
+        "| Step 5 Preview | 11 (45) | 12 (47) | 9 (46) | 14 (41) | 10 (45) | 9 (53)"
+      ],
+      "removed_lines": [
+        "10 of 509 releases",
+        "15 of 20 models",
+        "27 of 703 models",
+        "Anthropic has released Claude Haiku 5.5",
+        "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiAlibabaZ AIStepFunKimiDeepSeekMistralInstitute of Foundation ModelsReflectionMiniMaxThinking Machines",
+        "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiZ AIDeepSeekOther Models",
+        "Claude Haiku 5.5 (High)See more",
+        "New language model evaluation · 7 Oct",
+        "StepFunZ AIXiaomiMiniMaxOpenAIAnthropicMistralMetaSpaceXAIReflectionGoogleAlibabaDeepSeekNVIDIAKimi",
+        "| Claude Haiku 5.5 (Max) | 14 (44) | 15 (40) | 12 (42) | 10 (44) | 11 (45) | 13 (51)"
+      ]
+    },
+    {
+      "platform": "LMArena",
+      "source_type": "industry",
+      "url": "https://lmarena.ai/leaderboard",
+      "status": "fetch_failed",
+      "error": "反爬挑战页 (raw_len=5677)"
+    }
+  ]
+}

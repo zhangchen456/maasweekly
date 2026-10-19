@@ -1,12 +1,12 @@
 {
   "date": "2026-10-19",
-  "fetched_at": "2026-10-19T06:59:45.829632",
+  "fetched_at": "2026-10-19T13:31:13.635087",
   "stats": {
     "total": 68,
     "success": 60,
     "failed": 8,
-    "changed": 6,
-    "unchanged": 54
+    "changed": 8,
+    "unchanged": 52
   },
   "changes": [
     {
@@ -133,7 +133,7 @@
       "source_type": "model_list",
       "url": "https://cloud.tencent.com/document/product/1729/104753",
       "status": "fetch_failed",
-      "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=987)"
+      "error": "EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: 提取后内容过短 (raw_len=989)"
     },
     {
       "platform": "腾讯混元/TokenHub",
@@ -232,7 +232,18 @@
       "platform": "MiniMax",
       "source_type": "model_list",
       "url": "https://platform.minimaxi.com/docs/guides/models-intro",
-      "status": "unchanged"
+      "status": "changed",
+      "added_count": 2,
+      "removed_count": 3,
+      "added_lines": [
+        "| MiniMax-M3.1-Flash | 原生多模态、1M 上下文的 Frontier Coding 模型，思考深度可调",
+        "按量付费 API 用户存量用户可继续调用至正式下线日，正式下线后相关 API 调用将不再可用。请提前核查调用情况，并在下线前完成模型迁移。M Plan 和 Token Plan 用户M2.5、M2.7 系列模型请求将于【2026年10月19日】统一路由至 M3.1 Flash。原模型名称保留作为兼容入口，用户无需修改模型名称，原有套餐用量权益不受影响。为避免影响业务，请尽快核查调用情况并提前做好模型迁移准备。感谢您一直以来对MiniMax的支持与信任。"
+      ],
+      "removed_lines": [
+        "MiniMax-M3.1-Flash-Preview 暂时仅通过 M Plan 和 MiniMax Code 提供。",
+        "| MiniMax-M3.1-Flash-Preview | 原生多模态、1M 上下文的 Frontier Coding 模型，思考深度可调",
+        "按量付费 API 用户存量用户可继续调用至正式下线日，正式下线后相关 API 调用将不再可用。请提前核查调用情况，并在下线前完成模型迁移。M Plan 和 Token Plan 用户M2.5、M2.7 系列模型请求将于【2026年10月19日】统一路由至 M3.1 Flash Preview。原模型名称保留作为兼容入口，用户无需修改模型名称，原有套餐用量权益不受影响。为避免影响业务，请尽快核查调用情况并提前做好模型迁移准备。感谢您一直以来对MiniMax的支持与信任。"
+      ]
     },
     {
       "platform": "MiniMax",
@@ -465,8 +476,8 @@
       "source_type": "industry",
       "url": "https://huggingface.co/api/models?sort=downloads&direction=-1&limit=20",
       "status": "changed",
-      "added_count": 29,
-      "removed_count": 29,
+      "added_count": 38,
+      "removed_count": 38,
       "added_lines": [
         "\"downloads\": 11981711,",
         "\"downloads\": 13303540,",
@@ -488,15 +499,16 @@
         "\"downloads\": 45009975,",
         "\"downloads\": 58081952,",
         "\"downloads\": 76815869,",
-        "\"likes\": 108,",
+        "\"likes\": 1039,",
+        "\"likes\": 109,",
         "\"likes\": 1266,",
-        "\"likes\": 1479,",
-        "\"likes\": 1828,",
-        "\"likes\": 2327,",
-        "\"likes\": 3908,",
-        "\"likes\": 419,",
-        "\"likes\": 6356,",
-        "\"likes\": 684,"
+        "\"likes\": 1480,",
+        "\"likes\": 153,",
+        "\"likes\": 1618,",
+        "\"likes\": 1830,",
+        "\"likes\": 2331,",
+        "\"likes\": 252,",
+        "\"likes\": 3433,"
       ],
       "removed_lines": [
         "\"downloads\": 11958686,",
@@ -515,14 +527,48 @@
       "platform": "Artificial Analysis",
       "source_type": "industry",
       "url": "https://artificialanalysis.ai/",
-      "status": "unchanged"
+      "status": "changed",
+      "added_count": 18,
+      "removed_count": 18,
+      "added_lines": [
+        "10 of 510 releases",
+        "15 of 19 models",
+        "27 of 704 models",
+        "Anthropic has released Claude Haiku 5.5See more",
+        "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiAlibabaDeepSeekZ AIStepFunKimiMistralInstitute of Foundation ModelsReflectionMiniMaxThinking Machines",
+        "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiDeepSeekZ AIOther Models",
+        "DeepSeek V4.1 Flash 1017 (Max)",
+        "New language model evaluation · 18 Oct",
+        "StepFunZ AIXiaomiMiniMaxOpenAIAnthropicMistralMetaSpaceXAIReflectionGoogleAlibabaNVIDIADeepSeekKimi",
+        "| Claude Haiku 5.5 (Max) | 13 (44) | 15 (40) | 12 (42) | 10 (44) | 11 (45) | 13 (51)",
+        "| GLM-5.3 (Max) | 12 (45) | 10 (48) | 13 (42) | 7 (47) | 7 (47) | 12 (51)",
+        "| GLM-5.3-Flash | 14 (42) | 14 (45) | 15 (40) | 9 (45) | 12 (44) | 14 (49)",
+        "| GPT-6 Luna (Max) | 15 (40) | 13 (46) | 14 (40) | 15 (37) | 15 (37) | 15 (45)",
+        "| Gemini 3.8 Flash (High) | 8 (47) | 8 (48) | 7 (52) | 12 (42) | 14 (43) | 10 (52)",
+        "| Kimi K3 (Max) | 7 (47) | 7 (50) | 8 (49) | 8 (45) | 13 (43) | 7 (53)",
+        "| MiMo-V2.6-Pro | 9 (46) | 9 (48) | 11 (45) | 11 (42) | 8 (47) | 8 (53)",
+        "| Qwen3.8 Max (0902) | 10 (46) | 11 (47) | 10 (46) | 13 (41) | 9 (46) | 11 (52)",
+        "| Step 5 Preview | 11 (45) | 12 (47) | 9 (46) | 14 (41) | 10 (45) | 9 (53)"
+      ],
+      "removed_lines": [
+        "10 of 509 releases",
+        "15 of 20 models",
+        "27 of 703 models",
+        "Anthropic has released Claude Haiku 5.5",
+        "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiAlibabaZ AIStepFunKimiDeepSeekMistralInstitute of Foundation ModelsReflectionMiniMaxThinking Machines",
+        "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiZ AIDeepSeekOther Models",
+        "Claude Haiku 5.5 (High)See more",
+        "New language model evaluation · 7 Oct",
+        "StepFunZ AIXiaomiMiniMaxOpenAIAnthropicMistralMetaSpaceXAIReflectionGoogleAlibabaDeepSeekNVIDIAKimi",
+        "| Claude Haiku 5.5 (Max) | 14 (44) | 15 (40) | 12 (42) | 10 (44) | 11 (45) | 13 (51)"
+      ]
     },
     {
       "platform": "LMArena",
       "source_type": "industry",
       "url": "https://lmarena.ai/leaderboard",
       "status": "fetch_failed",
-      "error": "反爬挑战页 (raw_len=5656)"
+      "error": "反爬挑战页 (raw_len=5677)"
     }
   ]
 }
