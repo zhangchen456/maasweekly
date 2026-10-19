@@ -1,4 +1,4 @@
-// 价格台账数据完整性测试：schema、八家齐全、数值非负、新鲜度、partial 上限。
+// 价格台账数据完整性测试：schema、来源声明、数值非负；新鲜度与覆盖率由 check-data-health.mjs 告警。
 // 运行：node site/tests/pricing.test.mjs（从任意 cwd）
 import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
@@ -11,8 +11,7 @@ const ledger = JSON.parse(
 assert.ok(ledger.meta, '缺 meta');
 assert.ok(/^\d{4}-\d{2}-\d{2}$/.test(String(ledger.meta.artifact_version)), 'artifact_version 须为日期');
 assert.equal(typeof ledger.meta.published_at, 'number', 'published_at 须为 epoch 秒');
-const ageDays = (Date.now() / 1000 - ledger.meta.published_at) / 86400;
-assert.ok(ageDays <= 4, `数据过期（${ageDays.toFixed(1)} 天前），抓取链路可能中断`);
+assert.ok(Number.isFinite(ledger.meta.published_at) && ledger.meta.published_at > 0, 'published_at 须为有效 epoch 秒');
 
 // providers：八家（partial 时允许缺，但 failed_sources 必须显式声明）
 const EXPECTED = ['anthropic', 'deepseek', 'doubao', 'glm', 'google', 'kimi', 'openai', 'qwen'];
@@ -24,10 +23,10 @@ for (const p of EXPECTED) {
       `${p} 缺失且未声明 failed（providers=${ledger.providers}）`);
   }
 }
-assert.ok(ledger.providers.length >= 6, `可用厂商过少: ${ledger.providers.length}`);
+assert.ok(ledger.providers.length > 0, 'providers 不能为空');
 
 // prices
-assert.ok(Array.isArray(ledger.prices) && ledger.prices.length >= 50, 'prices 条目过少');
+assert.ok(Array.isArray(ledger.prices) && ledger.prices.length > 0, 'prices 不能为空');
 const COMPONENTS = new Set(['input', 'output', 'cache_read', 'cache_write']);
 for (const p of ledger.prices) {
   assert.ok(p.provider && ALLOWED.includes(p.provider), `未知 provider: ${p.provider}`);

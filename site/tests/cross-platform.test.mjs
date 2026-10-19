@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {priceFixture} from './fixtures/price.mjs';
 import { build } from 'esbuild';
 import { readFileSync } from 'node:fs';
 process.chdir(new URL('../',import.meta.url).pathname);
@@ -7,9 +8,10 @@ const {crossPlatformGroups}=await load('src/lib/cross-platform.ts');
 const {modelRelease}=await load('src/lib/model-pages.ts');
 const {selectHomeQuote}=await load('src/lib/home-models.ts');
 const release=modelRelease(),groups=crossPlatformGroups(release);
-assert.equal(groups.length,3);
+assert.equal(groups.length,release.modelIdentities.upstreamModels.length);
 for(const g of groups){
- assert.equal(new Set(g.rows.map(r=>r.availability.platformId)).size,2);
+ const expectedAvailability = release.modelIdentities.availabilities.filter(a=>a.upstreamModelId===g.model.upstreamModelId);
+ assert.deepEqual([...new Set(g.rows.map(r=>r.availability.availabilityId))].sort(), expectedAvailability.map(a=>a.availabilityId).sort());
  for(const row of g.rows){
   // The product contract permits unavailable current quotes; never substitute stale evidence.
   if (!row.input) {
@@ -32,22 +34,19 @@ for(const g of groups){
   assert.deepEqual(row.output.timeCondition,row.input.timeCondition);
  }
 }
-const gemini=release.prices.filter(p=>p.modelId==='google:gemini-3.8-flash');
+const gemini=[{...priceFixture,providerId:'google',sourceId:'google-gemini-pricing'}, {...priceFixture,providerId:'google',sourceId:'google-vertex-pricing',platformId:'google-vertex-ai'}];
 assert.equal(selectHomeQuote(gemini,'google').input.sourceId,'google-gemini-pricing');
-const cloud=gemini.find(p=>p.platformId==='google-vertex-ai' && p.component==='input');
-assert(cloud);
-assert.equal(selectHomeQuote([...gemini,{...cloud,observedAt:'2030-01-01T00:00:00Z'}],'google').input.sourceId,'google-gemini-pricing');
-const old=groups.flatMap(g=>g.rows).find(r=>r.input)?.input;
-assert(old,'at least one valid current quote is required for pairing fixtures');
-const a=release.modelIdentities.availabilities[0];
-const base={...old,modelId:a.modelId,upstreamModelId:a.upstreamModelId,availabilityId:a.availabilityId,platformId:a.platformId,component:'input',observedAt:'2026-10-01T00:00:00Z'};
+assert.equal(selectHomeQuote([...gemini,{...gemini[1],observedAt:'2030-01-01T00:00:00Z'}],'google').input.sourceId,'google-gemini-pricing');
+const a={modelId:'fixture:model',upstreamModelId:'fixture:model',availabilityId:'fixture:availability',platformId:'fixture:platform'};
+const fixtureRelease={...release,modelIdentities:{upstreamModels:[{upstreamModelId:a.upstreamModelId,modelId:a.modelId,developerId:'fixture'}],availabilities:[a],platforms:[],developers:[]}};
+const base={...priceFixture,...a};
 const bad={...base,id:'new-partial',observedAt:'2026-10-02T00:00:00Z',evidenceStatus:'partial'};
-const partial=crossPlatformGroups({...release,prices:[base,bad]});
+const partial=crossPlatformGroups({...fixtureRelease,prices:[base,bad]});
 assert.equal(partial.find(g=>g.model.modelId===a.modelId).rows.find(r=>r.availability.availabilityId===a.availabilityId).input,undefined);
 assert.equal(crossPlatformGroups({...release,modelIdentities:{models:[],families:[]}}).length,0);
 const html=readFileSync('dist/compare/index.html','utf8');
 assert(html.includes('同一模型，不同平台怎么收费？'));
-for(const id of ['google-gemini-api','google-vertex-ai','anthropic-api'])assert(html.includes(`data-platform-id="${id}"`));
+for(const id of new Set(groups.flatMap(g=>g.rows.map(r=>r.availability.platformId))))assert(html.includes(`data-platform-id="${id}"`));
 assert(!html.includes('undefined'));
 if(groups.some(g=>g.rows.some(r=>!r.input))) assert(html.includes('等待完整、最新的价格证据'));
 

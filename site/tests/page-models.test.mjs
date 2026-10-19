@@ -1,5 +1,6 @@
 // Public page output parity against the former per-model scans, plus safe JSON hydration.
 import assert from 'node:assert/strict';
+import {priceFixture} from './fixtures/price.mjs';
 import { build } from 'esbuild';
 import { fileURLToPath } from 'node:url';
 import { performance } from 'node:perf_hooks';
@@ -43,13 +44,13 @@ console.log(JSON.stringify({models:catalog.length,prices,changes,allModelOutputP
 // Homepage selection stays visible without quotes; quote components must share a scenario.
 const home=await load('src/lib/home-models.ts');
 const groups=home.homeModelGroups();
-assert.deepEqual(groups.map(g=>g.id),['flagship','value','coding']);
-assert.equal(groups[0].models.length,8);
-assert.equal(groups[1].models.length,8);
-assert(!groups.slice(0,2).flatMap(g=>g.models).some(p=>p.pick.modelId.includes('coder') || p.pick.modelId.endsWith('-code')));
-assert.equal(groups.flatMap(g=>g.models).length,18);
+const {HOME_MODEL_GROUPS} = await load('src/config/home-model-selection.ts');
+assert.deepEqual(groups.map(g=>({id:g.id,picks:g.models.map(row=>row.pick)})), HOME_MODEL_GROUPS.map(g=>({id:g.id,picks:g.models})));
+assert(!groups.filter(g=>['flagship','value'].includes(g.id)).flatMap(g=>g.models).some(row=>row.pick.modelId.includes('coder') || row.pick.modelId.endsWith('-code')), 'general-purpose selections exclude coding specialists');
 for (const row of groups.flatMap(g=>g.models)) {
-  assert(row.input && row.output && row.modelHref, `${row.pick.modelId}: complete current quote and model page required`);
+  assert(row.quoteStatus, `${row.pick.modelId}: quote or missing-evidence status required`);
+  assert.equal(row.modelHref, catalog.some(m=>m.modelId===row.pick.modelId) ? `/model/${row.pick.modelId}/` : null);
+  if (!row.input) { assert.equal(row.output,undefined); assert.equal(row.cache,undefined); }
 }
 for (const group of groups) for (const row of group.models) {
   assert(row.pick.source.startsWith('https://'));
@@ -58,8 +59,7 @@ for (const group of groups) for (const row of group.models) {
     for(const p of [row.output,row.cache].filter(Boolean))assert.equal(home.quoteScenario(p),home.quoteScenario(row.input));
   }
 }
-const original=release.prices.find(p=>p.component==='input' && p.providerId==='alibaba' && p.quality.state==='fresh' && p.evidenceStatus==='complete' && p.billingMode==='realtime' && p.serviceTier==='standard');
-const base={...original,modelKey:'fixture',modelId:'alibaba:fixture',contextBand:null,timeCondition:null};
+const base={...priceFixture};
 const selected=home.selectHomeQuote([
  {...base,id:'cn-input',region:'cn',amount:'20'},
  {...base,id:'us-cheapest',region:'us',amount:'0.01'},
@@ -73,4 +73,4 @@ assert.equal(home.selectHomeQuote([], 'alibaba').input,undefined);
 const newer={...base,observedAt:'2026-10-02T12:00:00Z',timeCondition:{period:'promotional',tz:'UTC',schedule:'through December 31, 2026'}};
 assert.equal(home.selectHomeQuote([{...base,id:'old',observedAt:'2026-10-01T12:00:00Z'}, {...newer,id:'new'}], 'alibaba').input.id,'new');
 assert.equal(home.selectHomeQuote([{...base,observedAt:'2026-10-01T12:00:00Z'}, {...newer,evidenceStatus:'partial'}], 'alibaba').input,undefined);
-console.log('Homepage groups: all 18 verified quotes, specialist isolation, partial-evidence exclusion and scenario matching passed');
+console.log('Homepage groups: configured picks, missing quote states, partial-evidence exclusion and scenario matching passed');
