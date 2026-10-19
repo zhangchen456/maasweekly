@@ -110,7 +110,13 @@ run "site: rss（Task 05）" bash -c 'cd site && node --experimental-strip-types
 run "site: page ViewModel types" node services/agent-api/node_modules/typescript/bin/tsc --project site/tsconfig.page-models.json
 run "site: page ViewModel parity" bash -c 'cd site && node tests/page-models.test.mjs'
 run "site: cross-platform" bash -c 'cd site && node tests/cross-platform.test.mjs'
-run "data: freshness and coverage advisories" node site/scripts/check-data-health.mjs
+# Keep advisory output visible: run() intentionally discards successful test logs.
+echo "── data: freshness and coverage advisories"
+if node site/scripts/check-data-health.mjs; then
+  PASS=$((PASS + 1))
+else
+  FAILED+=("data: health check execution")
+fi
 run "site: pricing" bash -c 'cd site && node tests/pricing.test.mjs'
 run "site: model-identity-ui（T07-4A）" bash -c 'cd site && node tests/model-identity-ui.test.mjs'
 run "site: model-identity-ui-contract（T07-4A）" bash -c 'cd site && node tests/model-identity-ui-contract.test.mjs'
