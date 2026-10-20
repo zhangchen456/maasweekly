@@ -32,6 +32,16 @@ class EnglishTranslationTests(unittest.TestCase):
         self.assertRaises(ValueError,restore_and_validate,source,'Input pricing $12/MTok',values)
         self.assertRaises(ValueError,restore_and_validate,source,'输入 '+tokens,values)
 
+    def test_chinese_discount_preserves_price_direction_and_numeric_validation(self):
+        for discount,percent in [('五折','50%'),('八折','80%')]:
+            with self.subTest(discount=discount):
+                source=f'取消永久{discount}，改为标准价。'
+                _,values=protect(source)
+                tokens=' '.join(values)
+                restored=restore_and_validate(source,'The permanent '+tokens+' offer was removed; standard pricing now applies.',values)
+                self.assertIn(percent+' of the standard price',restored)
+                self.assertRaises(ValueError,restore_and_validate,source,tokens+' 99',values)
+
     def test_uncertainty_and_removal_are_not_strengthened(self):
         source='LMArena 移除旧模型，或为更新。';_,values=protect(source);tokens=' '.join(values)
         self.assertRaises(ValueError,restore_and_validate,source,tokens+' retired models for updating.',values)
