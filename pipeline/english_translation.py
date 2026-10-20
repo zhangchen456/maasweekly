@@ -43,6 +43,9 @@ def protect(source: str):
         n = Decimal(m[1]) * (10000 if m[2] == '万' else 100000000)
         return format(n, 'f').rstrip('0').rstrip('.') if '.' in format(n, 'f') else format(n, 'f')
     value = re.sub(r'(\d+(?:\.\d+)?)\s*(万|亿)', amount, value)
+    # Chinese discounts state the share of the original price, not the amount off.
+    discounts = {char: (index + 1) * 10 for index, char in enumerate('一二三四五六七八九十')}
+    value = re.sub(r'([一二三四五六七八九十])折', lambda m: f'{discounts[m[1]]}% of the standard price', value)
     months = ['January','February','March','April','May','June','July','August','September','October','November','December']
     value = re.sub(r'(\d{1,2})\s*月\s*(\d{1,2})\s*日?', lambda m: f'{months[int(m[1])-1]} {int(m[2])}' if 1 <= int(m[1]) <= 12 else m[0], value)
     value = re.sub(r'(20\d{2})年(?:底|末)', r'late \1', value)
