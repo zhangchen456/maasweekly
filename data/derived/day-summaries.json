@@ -5023,5 +5023,101 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-20": {
+    "highlights": [
+      {
+        "platform": "MiniMax",
+        "logo_summary": "M3.1 Flash发布，M2系列下线",
+        "items": [
+          {
+            "text": "MiniMax M3.1 Flash 全新发布，定价为输入1.00/百万tokens，输出4.00/百万tokens，缓存0.10/百万tokens",
+            "type": "release"
+          },
+          {
+            "text": "MiniMax M2.5、M2.7 系列模型于2026年10月19日停止新用户调用，存量用户需迁移至M3.1 Flash",
+            "type": "sunset"
+          },
+          {
+            "text": "MiniMax M2、M2.1、M2.1-highspeed 模型从模型列表和定价表中移除",
+            "type": "sunset"
+          }
+        ]
+      },
+      {
+        "platform": "Google Gemini API",
+        "logo_summary": "Veo 3.1预览版即将下线",
+        "items": [
+          {
+            "text": "Veo 3.1 Preview 系列模型（veo-3.1-generate-preview等）将于2026年10月22日关闭，推荐迁移至Gemini Omni Flash",
+            "type": "sunset"
+          },
+          {
+            "text": "Gemini Omni Flash Preview 同样于2026年10月22日关闭，需迁移至正式版Gemini Omni Flash",
+            "type": "sunset"
+          }
+        ]
+      },
+      {
+        "platform": "阿里百炼",
+        "logo_summary": "新增小米模型定价",
+        "items": [
+          {
+            "text": "阿里百炼新增 xiaomi/mimo-v2.6-pro-ultraspeed 模型定价",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Artificial Analysis",
+        "logo_summary": "新增MiniMax M3.1评测",
+        "items": [
+          {
+            "text": "Artificial Analysis 新增 MiniMax-M3.1-Flash 语言模型评测（10月19日）",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "Google Vertex AI",
+        "logo_summary": "博客更新，聚焦行业方案",
+        "items": [
+          {
+            "text": "Google Vertex AI 发布新博客：虚拟车辆构建、LLM评估审计方法，并获2026 IDC MarketScape智能体AI平台领导者",
+            "type": "other"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_ed13535bba37e1a7a5c3de446ad840234a5d76216c473aaed0903124f4c3e59e": "新增了 xiaomi/mimo-v2.6-pro-ultraspeed 的定价行，表明该模型已上架并可供调用。",
+      "obs_f95363b94b946b89f6541156029683e5dae4264b15f0fd949cd8ea0e4ab4fd52": "模型列表新增了文档配置信息，可能为文档中心更新，未涉及具体模型变化。",
+      "obs_69ba2ffdb4266b308494a06a95df7f1220cbdb04c5de1a1c3e8e6c6feb6d77d7": "变更日志新增了文档配置信息，可能为文档中心更新，未涉及具体模型变化。",
+      "obs_8281001377116c740ba581defa03ffba05739ebfd3edd6c9e632f9e7b2b39284": "新增了M3.1 Flash发布公告，同时删除了M2.5、M2.7下线通知及M2、M2.1、M2.1-highspeed的模型条目，表明旧系列正在被替换。",
+      "obs_541517a56b8baf987bf62a34118d264c4ef4483df43b319d70067dea7d97ef91": "新增了M3.1 Flash的定价（输入1.00、输出4.00、缓存0.10），并删除了M2、M2.1、M2.1-highspeed、M2.5的定价行，同时调整了长上下文定价（取消永久五折，改为标准价），对应新模型上架和旧模型下架。",
+      "obs_54098551ea689756a6cff96745b0626e3bf8ba2f7086ca9034414de5f4c2a6ef": "更新了模型列表，将Veo 3.1系列描述从'先进'改为'遗留低成本的视频生成预览模型，将于2026年10月22日关闭'，并新增了类似描述，表明Veo 3.1预览版即将退役。",
+      "obs_bb3e9227268169427d820bc392da4bfd4043525f91a8f1b38f40496d34f0c5e8": "新增了Gemini Omni Flash Preview和Veo 3.1 Preview的弃用警告，均将于2026年10月22日关闭，提示用户迁移至正式版。",
+      "obs_f4bd0e196f2bcbb44febae00dc76cdaa5afbfb13df23e430037ea1db9918ecbc": "仅更新了最后更新时间戳，无实质模型变化。",
+      "obs_e06e56d2774f25eecb7f6425eb809c1476121bceb83c84ee7a58468bd5475a7d": "新增了关于虚拟车辆构建、LLM评估审计、以及获IDC MarketScape领导者等博客文章，删除了关于AI基础设施、CLI远程MCP服务器等旧文章，内容方向有所调整。",
+      "obs_03207068d7c37feb03432b6264c820e61f49d9f36b617ed1c5507f500e0dc6a6": "新增了MiniMax-M3.1-Flash的评测，并更新了模型列表，删除了Claude Haiku 5.5的发布信息，表明评测焦点转移。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "250c54f94a0f31c6a1ba6bddbca79462425365c96b1cf0bc9216d00b8f9c972f",
+      "inputRefs": [
+        "obs_03207068d7c37feb03432b6264c820e61f49d9f36b617ed1c5507f500e0dc6a6",
+        "obs_54098551ea689756a6cff96745b0626e3bf8ba2f7086ca9034414de5f4c2a6ef",
+        "obs_541517a56b8baf987bf62a34118d264c4ef4483df43b319d70067dea7d97ef91",
+        "obs_69ba2ffdb4266b308494a06a95df7f1220cbdb04c5de1a1c3e8e6c6feb6d77d7",
+        "obs_8281001377116c740ba581defa03ffba05739ebfd3edd6c9e632f9e7b2b39284",
+        "obs_bb3e9227268169427d820bc392da4bfd4043525f91a8f1b38f40496d34f0c5e8",
+        "obs_e06e56d2774f25eecb7f6425eb809c1476121bceb83c84ee7a58468bd5475a7d",
+        "obs_ed13535bba37e1a7a5c3de446ad840234a5d76216c473aaed0903124f4c3e59e",
+        "obs_f4bd0e196f2bcbb44febae00dc76cdaa5afbfb13df23e430037ea1db9918ecbc",
+        "obs_f95363b94b946b89f6541156029683e5dae4264b15f0fd949cd8ea0e4ab4fd52"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }

@@ -4,6 +4,14 @@
     "start": "2026-10-19",
     "end": "2026-10-25",
     "days": {
+      "2026-10-20": {
+        "substantive": 10,
+        "jitter": 7,
+        "failed": 5,
+        "releases": 2,
+        "pricings": 1,
+        "sunsets": 4
+      },
       "2026-10-19": {
         "substantive": 6,
         "jitter": 2,
@@ -14,12 +22,60 @@
       }
     },
     "totals": {
-      "substantive": 6,
-      "releases": 1,
-      "pricings": 1,
-      "sunsets": 1
+      "substantive": 16,
+      "releases": 3,
+      "pricings": 2,
+      "sunsets": 5
     },
     "highlights": [
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-20",
+        "text": "MiniMax M3.1 Flash 全新发布，定价为输入1.00/百万tokens，输出4.00/百万tokens，缓存0.10/百万tokens",
+        "type": "release"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-20",
+        "text": "MiniMax M2.5、M2.7 系列模型于2026年10月19日停止新用户调用，存量用户需迁移至M3.1 Flash",
+        "type": "sunset"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-20",
+        "text": "MiniMax M2、M2.1、M2.1-highspeed 模型从模型列表和定价表中移除",
+        "type": "sunset"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-20",
+        "text": "Veo 3.1 Preview 系列模型（veo-3.1-generate-preview等）将于2026年10月22日关闭，推荐迁移至Gemini Omni Flash",
+        "type": "sunset"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-20",
+        "text": "Gemini Omni Flash Preview 同样于2026年10月22日关闭，需迁移至正式版Gemini Omni Flash",
+        "type": "sunset"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-20",
+        "text": "阿里百炼新增 xiaomi/mimo-v2.6-pro-ultraspeed 模型定价",
+        "type": "pricing"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-20",
+        "text": "Artificial Analysis 新增 MiniMax-M3.1-Flash 语言模型评测（10月19日）",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-20",
+        "text": "Google Vertex AI 发布新博客：虚拟车辆构建、LLM评估审计方法，并获2026 IDC MarketScape智能体AI平台领导者",
+        "type": "other"
+      },
       {
         "platform": "百度千帆",
         "date": "2026-10-19",

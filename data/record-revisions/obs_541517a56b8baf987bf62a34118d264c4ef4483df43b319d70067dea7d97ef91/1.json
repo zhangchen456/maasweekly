@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_541517a56b8baf987bf62a34118d264c4ef4483df43b319d70067dea7d97ef91",
+  "sourceId": "minimax-pricing",
+  "date": "2026-10-20",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "MiniMax",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+  "title": "MiniMax · 定价来源更新",
+  "summary": "> 512k 输入 tokens | 6.30 | 25.20 | 1.26* 优先服务可让请求获得优先准入，从而更快响应并降低失败率。调用时将 service_tier 设为 priority 即可启用。该层级按标准价格的 1.5 倍计费。",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "> 512k 输入 tokens | 6.30 | 25.20 | 1.26* 优先服务可让请求获得优先准入，从而更快响应并降低失败率。调用时将 service_tier 设为 priority 即可启用。该层级按标准价格的 1.5 倍计费。",
+      "> 512k 输入 tokens* | 4.20 | 16.80 | 0.84",
+      "| MiniMax-M3.1-Flash | 1.00 | 4.00 | 0.10",
+      "≤ 512k 输入 tokens | 2.10 | 8.40 | 0.42",
+      "≤ 512k 输入 tokens | 3.15 | 12.60 | 0.63",
+      "🎉 新一代 MiniMax M3.1 Flash 全新发布！查看文档 ➔"
+    ],
+    "removed_lines": [
+      "> 512k 输入 tokens 永久五折 | 12.60 6.30 | 50.40 25.20 | 2.52 1.26* 优先服务可让请求获得优先准入，从而更快响应并降低失败率。调用时将 service_tier 设为 priority 即可启用。该层级按标准价格的 1.5 倍计费。",
+      "> 512k 输入 tokens* 永久五折 | 8.40 4.20 | 33.60 16.80 | 1.68 0.84",
+      "| MiniMax-M2 | 2.1 | 8.4 | 0.21 | 2.625",
+      "| MiniMax-M2.1 | 2.1 | 8.4 | 0.21 | 2.625",
+      "| MiniMax-M2.1-highspeed | 4.2 | 16.8 | 0.21 | 2.625",
+      "| MiniMax-M2.5 | 2.1 | 8.4 | 0.21 | 2.625",
+      "| MiniMax-M2.5-highspeed | 4.2 | 16.8 | 0.21 | 2.625",
+      "| MiniMax-M2.7 | 2.1 | 8.4 | 0.42 | 2.625",
+      "| MiniMax-M2.7-highspeed | 4.2 | 16.8 | 0.42 | 2.625",
+      "≤ 512k 输入 tokens 永久五折 | 4.20 2.10 | 16.80 8.40 | 0.84 0.42"
+    ],
+    "added_count": 6,
+    "removed_count": 10,
+    "raw_added_count": 6,
+    "raw_removed_count": 13
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-20.json"
+  },
+  "permalink": "/item/obs_541517a56b8baf987bf62a34118d264c4ef4483df43b319d70067dea7d97ef91/"
+}
