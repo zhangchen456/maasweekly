@@ -5119,5 +5119,193 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-21": {
+    "highlights": [
+      {
+        "platform": "OpenAI",
+        "logo_summary": "Daybreak系列定价重构，新增Ultrafast模式与12小时缓存",
+        "items": [
+          {
+            "text": "OpenAI 发布 Daybreak 系列新定价，gpt-6-astra 输入 $10/百万tokens、输出 $50/百万tokens，gpt-6.1-sol 输入 $2/百万tokens、输出 $10/百万tokens，gpt-6-luna 输入 $0.1/百万tokens、输出 $0.5/百万tokens",
+            "type": "pricing"
+          },
+          {
+            "text": "OpenAI 在 Agents API 新增 Ultrafast 模式，可减少生成 token 间隔时间",
+            "type": "release"
+          },
+          {
+            "text": "OpenAI 新增 12 小时 prompt caching 选项，并调整 sandbox 计费为仅活跃轮次计费",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Mistral AI",
+        "logo_summary": "Voxtral 3 系列发布，语音模型全面升级",
+        "items": [
+          {
+            "text": "Mistral AI 发布 Voxtral 3 系列，包括 Voxtral Mini Transcribe 3、Voxtral Small Transcribe 3、Voxtral TTS 3 及 Premier 版本",
+            "type": "release"
+          },
+          {
+            "text": "Voxtral 3 支持实时转录、零样本语音克隆与流式 TTS，覆盖 9 种语言",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "Cohere",
+        "logo_summary": "Rerank 5 模型发布，定价与文档更新",
+        "items": [
+          {
+            "text": "Cohere 发布 Rerank 5 系列（rerank-v5.0-pro 与 rerank-v5.0-fast），支持多语言与校准相关性分数",
+            "type": "release"
+          },
+          {
+            "text": "Cohere 更新 Rerank 模型文档，明确 v5 为最新一代，v4 标记为上一代",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Anthropic",
+        "logo_summary": "Console 功能扩展，Models API 新增 thinking 类型",
+        "items": [
+          {
+            "text": "Anthropic 在 Models API 中新增 capabilities.thinking.types.between_tools，报告模型是否支持 between_tools 思考类型",
+            "type": "release"
+          },
+          {
+            "text": "Anthropic 为 Claude Enterprise 推出 inference hooks 正式版，并开放 Console 的 Cost 页面给 Developer 角色",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "火山方舟",
+        "logo_summary": "Seedance Managed Agent 替换视觉增强 Agent",
+        "items": [
+          {
+            "text": "火山方舟将视觉增强 Agent 更名为 Seedance Managed Agent，计费方式不变，图片/视频生成归入模型调用费用",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "百度千帆",
+        "logo_summary": "新增百度AI助手与智能搜索生成产品",
+        "items": [
+          {
+            "text": "百度千帆新增『百度AI助手与智能搜索生成』产品，覆盖模型列表、定价、更新日志及博客",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "xAI",
+        "logo_summary": "语音API更名，SpaceXSI STT正式可用",
+        "items": [
+          {
+            "text": "xAI 将 Speech to Text API 更名为 SpaceXSI Speech to Text API，并宣布正式可用，支持 25 种语言",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "Google Vertex AI",
+        "logo_summary": "新增Claude Opus 5.5与Sonnet 5.5，政府服务方案",
+        "items": [
+          {
+            "text": "Google Vertex AI 宣布 Claude Opus 5.5 和 Claude Sonnet 5.5 现已在 Google Antigravity 中可用",
+            "type": "release"
+          },
+          {
+            "text": "Google Vertex AI 推出 Gemini for government services 方案",
+            "type": "release"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_032d9c1ce8db893b214b7c7f2e41286e071ed6c3f1884b00504ce1c11b319653": "将视觉增强 Agent 相关计费说明替换为 Seedance Managed Agent，计费结构不变，仍区分模型调用与工具调用费用。",
+      "obs_0835596db5979269c8dd3a754f87be9e9e1130fa1e5757a6e98193134bc0c9b6": "更新日志中新增使用 Seedance Managed Agent 生成图片和视频的说明，删除视觉增强 Agent 对应条目。",
+      "obs_4585d3c90e438c4c890d050697cc6bd451feaafc5fe003b7ac1518074d2c3cb7": "新增『百度AI助手与智能搜索生成』条目，删除旧的产品简介标题，可能为产品正式上线。",
+      "obs_b6b7fe1d900ed3f914a165cae45cb9fbe19b6639c8b0c96698c2cdcbae2abc4f": "新增『百度AI助手与智能搜索生成』定价条目，删除旧的产品简介标题。",
+      "obs_24613400e8617946a5a595929d387d16c5681377eaf3bc7e306201f15271ef3f": "新增『百度AI助手与智能搜索生成』更新记录，删除旧的产品简介标题。",
+      "obs_c29f5a3833856a1b82d68d7628442b5ca4c9b9fa8b2ff995d0be4ddf9789722f": "新增『百度AI助手与智能搜索生成』博客文章，删除旧的产品简介标题。",
+      "obs_66cb5f8258881e5b048345529b7533a81088e5029957290c65af28e3ee7e99ab": "文档配置发生微小变化，主题色等元数据更新，无实质内容变化。",
+      "obs_8c133314bf3844823d4dd0e1c3502c080bd56a614107bca777bc11bbd4737901": "文档配置发生微小变化，主题色等元数据更新，无实质内容变化。",
+      "obs_ce33b4143106a74d607d40c15b4e7fe3e00ac69c1923dc38d62f110ac13d8a0f": "定价页分类顺序调整，从『语言模型语音视频图像音乐』变为『语言模型视频语音图像音乐』，可能反映产品优先级变化。",
+      "obs_67ec6238f293e12e0e4a2797fee542f00fae78ae2ff5be64b8da338569dfb6da": "定价页重构，新增 Daybreak 系列模型（gpt-6-astra、gpt-6.1-sol、gpt-6-luna）的输入/输出/缓存价格，并调整了区域处理附加费说明，移除旧版定价表。",
+      "obs_42e008460e735d4db7a00fce88ecb3dd151cb7cfa45a65814ce3abb212d4a372": "新增 Agents API 的 Ultrafast 模式、sandbox 计费调整、12小时缓存、预加热 sandbox 等功能说明。",
+      "obs_a6be54c361887c89bc8d178fbd2be49288cff77e4139da3b12c18f8046e6f92a": "博客内容与 changelog 同步，新增 Ultrafast 模式、sandbox 计费、12小时缓存等公告。",
+      "obs_14aa21b0638c8aafffdabe218b16fe7f9a44171538d6b7ebdc11359dfef6e6f8": "新增模型能力描述，说明 thinking.types.between_tools 属性。",
+      "obs_b181ea81e651ccb6723b2ba33773e59b71c28893bb2823ee8e9ebb0fec5dce6d": "新增 Console Cost 页面权限、inference hooks 正式版、Models API 新属性，并更新 Workbench 工具使用支持。",
+      "obs_9ae8bf9a1423a19b2c303f47fef0206f1d060caa8033998090f84eb50bf989b6": "博客新增多篇公告，包括 Usage Policy 更新、Ebola 响应案例、新加坡办公室、投资计划等，删除旧文章。",
+      "obs_e241866fbf9190d651e8f9ceb1f6cb707299688c8d786b824a088c6bbfdf0af6": "博客文章标题更新，新增小企业工具，删除 Connected Apps 相关文章。",
+      "obs_58ba7ad021df6d9058d5579c37f7ae7e5abcfcdf86a1c7f62e1b3c2b0c4ae2a7": "模型列表更新时间从 10-19 更新至 10-20，无实质内容变化。",
+      "obs_c380714f5fe1612dcaef38a1e7a7f8c613db58467529477a1636c24044f61bc5": "新增 Claude Opus 5.5 和 Sonnet 5.5 在 Antigravity 可用的公告，以及 Gemini for government services，删除旧文章。",
+      "obs_3a388b89b95dcfa4be92e1ae5d4ca4991a5e0f1983f9f748ed12f73f4b544262": "模型列表更新，Voxtral Mini Transcribe 2 升级为 3，新增 Voxtral TTS 3 等模型，删除旧分类。",
+      "obs_4cc996a746e703c3311137c7ab5bc306508e727d8957e3e6077e82f43178552a": "新增 Voxtral 3 发布公告，支持听、说、推理、行动。",
+      "obs_d67a0914aaf976f26474a7102992cc70249bca228e0078d82315e484446f22ed": "新增 Voxtral 3 发布博客。",
+      "obs_abcf59f96820fda8a3ff7c9b765f3593d468e0b69ec031e41ba102e6b9211d74": "Rerank 模型文档更新，新增 Rerank 5 系列，标记 v4 为上一代，并更新模型描述。",
+      "obs_d30a5c1a981adac2731aa80873277ca3854d2a1ebfb695c1489d6a00aa025834": "新增 Rerank 5 模型公告，删除旧 API 端点说明，可能为 API 迁移。",
+      "obs_18fc734675f4e28d27a5de5109fdad52e4a238b092bb02fb4a6c60d6fa8c07c0": "新增关于推理模型置信度的文章，删除自动化早期足迹文章。",
+      "obs_c6575bd6880e1f59ebca66b8148d996870f3dbb6395399629fc7ffac44bcea3d": "更新日期至 10-15，新增 SpaceXSI Speech to Text API 正式可用，删除旧 xAI 命名。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "ea93c0adac0a033781830bfae01ab1a9766bd34ce1dec5983425bf356e4685ea",
+      "inputRefs": [
+        "obs_032d9c1ce8db893b214b7c7f2e41286e071ed6c3f1884b00504ce1c11b319653",
+        "obs_0835596db5979269c8dd3a754f87be9e9e1130fa1e5757a6e98193134bc0c9b6",
+        "obs_14aa21b0638c8aafffdabe218b16fe7f9a44171538d6b7ebdc11359dfef6e6f8",
+        "obs_18fc734675f4e28d27a5de5109fdad52e4a238b092bb02fb4a6c60d6fa8c07c0",
+        "obs_24613400e8617946a5a595929d387d16c5681377eaf3bc7e306201f15271ef3f",
+        "obs_3a388b89b95dcfa4be92e1ae5d4ca4991a5e0f1983f9f748ed12f73f4b544262",
+        "obs_42e008460e735d4db7a00fce88ecb3dd151cb7cfa45a65814ce3abb212d4a372",
+        "obs_4585d3c90e438c4c890d050697cc6bd451feaafc5fe003b7ac1518074d2c3cb7",
+        "obs_4cc996a746e703c3311137c7ab5bc306508e727d8957e3e6077e82f43178552a",
+        "obs_58ba7ad021df6d9058d5579c37f7ae7e5abcfcdf86a1c7f62e1b3c2b0c4ae2a7",
+        "obs_66cb5f8258881e5b048345529b7533a81088e5029957290c65af28e3ee7e99ab",
+        "obs_67ec6238f293e12e0e4a2797fee542f00fae78ae2ff5be64b8da338569dfb6da",
+        "obs_8c133314bf3844823d4dd0e1c3502c080bd56a614107bca777bc11bbd4737901",
+        "obs_9ae8bf9a1423a19b2c303f47fef0206f1d060caa8033998090f84eb50bf989b6",
+        "obs_a6be54c361887c89bc8d178fbd2be49288cff77e4139da3b12c18f8046e6f92a",
+        "obs_abcf59f96820fda8a3ff7c9b765f3593d468e0b69ec031e41ba102e6b9211d74",
+        "obs_b181ea81e651ccb6723b2ba33773e59b71c28893bb2823ee8e9ebb0fec5dce6d",
+        "obs_b6b7fe1d900ed3f914a165cae45cb9fbe19b6639c8b0c96698c2cdcbae2abc4f",
+        "obs_c29f5a3833856a1b82d68d7628442b5ca4c9b9fa8b2ff995d0be4ddf9789722f",
+        "obs_c380714f5fe1612dcaef38a1e7a7f8c613db58467529477a1636c24044f61bc5",
+        "obs_c6575bd6880e1f59ebca66b8148d996870f3dbb6395399629fc7ffac44bcea3d",
+        "obs_ce33b4143106a74d607d40c15b4e7fe3e00ac69c1923dc38d62f110ac13d8a0f",
+        "obs_d30a5c1a981adac2731aa80873277ca3854d2a1ebfb695c1489d6a00aa025834",
+        "obs_d67a0914aaf976f26474a7102992cc70249bca228e0078d82315e484446f22ed",
+        "obs_e241866fbf9190d651e8f9ceb1f6cb707299688c8d786b824a088c6bbfdf0af6",
+        "price_14395327d4574a55753af78217066779a5a3745f480d84ef27e9f4945d908c8d",
+        "price_1a66a23d510dfd9b0efc415513fdf42e530785a480b382f4e051cc7c673daf41",
+        "price_4780120d5e2f3f931c8cb7101ef0537e674dd0aec043533b6e9826ba15a7ef35",
+        "price_49bf5c8e070e37a71e9965462b6d96e6d1f8a033eda0fceb841ea1be351e97c5",
+        "price_4aa74fca0d2b11b217986980e6f9de33070d088a1974260cb180cdf99260cd1a",
+        "price_7fa5355139d28f8c80887f7c6b2f710b640fe4a8eafdf82131e60f0417005ba0",
+        "price_83b15b2915d5ad0937dcf09792dce345e33b9d3f477464276fe0641313b27450",
+        "price_87bddfc0b5f32a928fbd264ccd05bc3f1d33751b43ad5f6adcffc731a0d2f659",
+        "price_ae0def897d98b96324a8230956cae62d4e7738cf0833833be68342ba3434bcbb",
+        "price_b1494cb8f091c17fa0143032ef0f2e1bc51f97353004388213e545d296cac039",
+        "price_bbcdf4dc3dddcac5536c50cbfb53637ea5136092af29d6b46211a285deeb75fb",
+        "price_be37198911c9e1e97137e0829575eb4658d39bcae938e4fda9b4e3a660d4bef7",
+        "price_c02fcf827a8200743b5d3741983be8b69853ff41a3f76ca2452734b38e0d6eaa",
+        "price_c05026a7f4f422f8a7514b07605713fe6d285cf8fc4884009b2f5199fa0b6fab",
+        "price_cf9bce3bf0b87bc7ef6debc0b861f5b37407f9c4dc662315ed87b30e7583697c",
+        "price_d55748f843d63d870e2a3397e7697e8a7271bfb1815f4d0bf4d946a216e44522",
+        "price_de70f8cc724e875a0cf8eb66010ccbb469f84fce9078aad607aa3f22c523ad3a",
+        "price_e0cf7ca2a379fdcc364f4d8fe21e1a6db002062a0cc584ecab875c0bc03c0811",
+        "price_ea2d5ad4749f923a762c1fc0317768c16302d16f8ba56ab0ee76f5842e86b6f6",
+        "price_f1f9db86bdf84b6670db3cd91e8aa908f34dd2fe23e269ae1654dd2cd08c4c1b"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }

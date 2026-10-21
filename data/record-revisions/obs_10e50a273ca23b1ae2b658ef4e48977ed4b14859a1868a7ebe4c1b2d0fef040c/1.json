@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_10e50a273ca23b1ae2b658ef4e48977ed4b14859a1868a7ebe4c1b2d0fef040c",
+  "sourceId": "xai-blog",
+  "date": "2026-10-21",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "xAI",
+  "sourceType": "blog",
+  "sourceUrl": "https://docs.x.ai/docs/release-notes",
+  "title": "xAI · 博客来源更新",
+  "summary": "The SpaceXSI Speech to Text API is now generally available. Transcribe audio to text in 25 languages with batch and streaming modes. For more details, check out the Speech to Text docs.",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated: October 13, 2026",
+        "after": "Last updated: October 15, 2026"
+      },
+      {
+        "key": "you can now clone a voice from a short audio clip and use it across the text-to-speech and speech to speech apis",
+        "before": "You can now clone a voice from a short audio clip and use it across the Text-to-Speech and Speech to Speech APIs. Create and manage your voice catalog from the xAI console. For more details, check out the Custom Voices docs and our blog post.",
+        "after": "You can now clone a voice from a short audio clip and use it across the Text-to-Speech and Speech to Speech APIs. Create and manage your voice catalog from the SpaceXSI console. For more details, check out the Custom Voices docs and our blog post."
+      }
+    ],
+    "added_lines": [
+      "The SpaceXSI Speech to Text API is now generally available. Transcribe audio to text in 25 languages with batch and streaming modes. For more details, check out the Speech to Text docs."
+    ],
+    "removed_lines": [
+      "The xAI Speech to Text API is now generally available. Transcribe audio to text in 25 languages with batch and streaming modes. For more details, check out the Speech to Text docs."
+    ],
+    "added_count": 1,
+    "removed_count": 1,
+    "raw_added_count": 3,
+    "raw_removed_count": 3
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-21.json"
+  },
+  "permalink": "/item/obs_10e50a273ca23b1ae2b658ef4e48977ed4b14859a1868a7ebe4c1b2d0fef040c/"
+}

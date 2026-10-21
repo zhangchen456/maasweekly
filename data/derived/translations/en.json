@@ -11011,10 +11011,11 @@
     },
     "896d03771236568ed1540ce643117d277ad2559fefae631091e351df58a32309": {
       "source": "新增了M3.1 Flash的定价（输入1.00、输出4.00、缓存0.10），并删除了M2、M2.1、M2.1-highspeed、M2.5的定价行，同时调整了长上下文定价（取消永久五折，改为标准价），对应新模型上架和旧模型下架。",
+      "translation": "Added pricing for M3.1 Flash (input 1.00, output 4.00, cache 0.10), and removed the pricing rows for M2, M2.1, M2.1-highspeed, and M2.5, while adjusting long context pricing (canceling the permanent half-price and changing it to standard price), corresponding to the new model launch and old model takedown.",
       "model": "spark-x2.5-4b",
       "promptVersion": "spark-en-v1",
-      "status": "failed",
-      "reason": "numbers_changed"
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:15.753951+00:00"
     },
     "b9a97f6b224b6bf14dac796fad66249d99542570c4b3b2313437ae5d4b1c568c": {
       "source": "新增了关于虚拟车辆构建、LLM评估审计、以及获IDC MarketScape领导者等博客文章，删除了关于AI基础设施、CLI远程MCP服务器等旧文章，内容方向有所调整。",
@@ -11063,6 +11064,366 @@
       "promptVersion": "spark-en-v1",
       "status": "success",
       "translatedAt": "2026-10-20T00:34:46.214190+00:00"
+    },
+    "4f8d29686eeb8f1cb38d1b7be04b6a3cbfe24a175b31e3d389d2edc2bdb7cd92": {
+      "source": "Cohere 发布 Rerank 5 系列（rerank-v5.0-pro 与 rerank-v5.0-fast），支持多语言与校准相关性分数",
+      "translation": "Cohere releases the Rerank 5 series (rerank-v5.0-pro and rerank-v5.0-fast), supporting multilingual support and calibration correlation scores.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:39.512896+00:00"
+    },
+    "5b12e511c81ef88bcabdcc2cd4d831ab612f691c45c2dec7133a562f75307818": {
+      "source": "Anthropic 在 Models API 中新增 capabilities.thinking.types.between_tools，报告模型是否支持 between_tools 思考类型",
+      "translation": "Anthropic adds capabilities.thinking.types.between_tools to Models API, and report whether the model supports between_tools thinking type.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:39.687478+00:00"
+    },
+    "1829c8aebd4a2814de44bac9136318775a3494d359f43267f477ef2d749c26f9": {
+      "source": "Console 功能扩展，Models API 新增 thinking 类型",
+      "translation": "Console feature extension, Models API newly adds the thinking type.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:41.439863+00:00"
+    },
+    "b18c29372b48927e197a43589bab8b68c45edd3de8cbbaac6210550c2f2276bc": {
+      "source": "Cohere 更新 Rerank 模型文档，明确 v5 为最新一代，v4 标记为上一代",
+      "translation": "Cohere updates the Rerank model documentation, clarifies that v5 is the latest generation, and marks v4 as the previous generation.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:41.667353+00:00"
+    },
+    "b7cf552581d39a9a5e948169a7d5ff685c7a733099c793443f7bf013a10920d5": {
+      "source": "Daybreak系列定价重构，新增Ultrafast模式与12小时缓存",
+      "translation": "The pricing reconstruction of the Daybreak series introduces the new Ultrafast mode and 12 hourly cache.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:43.534568+00:00"
+    },
+    "172c9b67760d4b4ebfb72dfae0b4bcf38517cc4487599371576b42f2727c3297": {
+      "source": "Google Vertex AI 宣布 Claude Opus 5.5 和 Claude Sonnet 5.5 现已在 Google Antigravity 中可用",
+      "translation": "Google Vertex AI announces that Claude Opus 5.5 and Claude Sonnet 5.5 are now available in Google Antigravity.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:43.535374+00:00"
+    },
+    "1e01d17b851daf8d054536c647e3087dd683ea60825152aedc1f2ec64ce2be77": {
+      "source": "Google Vertex AI 推出 Gemini for government services 方案",
+      "translation": "Google Vertex AI introduces the Gemini for government services solution.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:45.725302+00:00"
+    },
+    "e080d0f898bf7749ce411062b743f02d3cca7a28b827fe4def68aaf310fa2a1f": {
+      "source": "Mistral AI 发布 Voxtral 3 系列，包括 Voxtral Mini Transcribe 3、Voxtral Small Transcribe 3、Voxtral TTS 3 及 Premier 版本",
+      "translation": "Mistral AI launches the Voxtral 3 series, including the Voxtral Mini Transcribe 3, Voxtral Small Transcribe 3, Voxtral TTS 3, and Premier versions.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:45.835644+00:00"
+    },
+    "5c013b7a13c8c3635886a6c95431a1423ddcfe3d41406ee552c0835b013690d0": {
+      "source": "Anthropic 为 Claude Enterprise 推出 inference hooks 正式版，并开放 Console 的 Cost 页面给 Developer 角色",
+      "translation": "Anthropic launches the official version of inference hooks for Claude Enterprise, and opens the Console Cost page for Developer roles.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:47.226678+00:00"
+    },
+    "0e3195b42b0a69d570058d5180537abc6bd2996a2a1dc2151b5d7bfe8bdd48cb": {
+      "source": "OpenAI 在 Agents API 新增 Ultrafast 模式，可减少生成 token 间隔时间",
+      "translation": "OpenAI added Agents API mode in Ultrafast, which can reduce the interval time for generating token.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:47.676496+00:00"
+    },
+    "4f4dce8cb4a4a1e38050282e02c8fb4659e5516671ee31e2665365d32bad98b8": {
+      "source": "OpenAI 发布 Daybreak 系列新定价，gpt-6-astra 输入 $10/百万tokens、输出 $50/百万tokens，gpt-6.1-sol 输入 $2/百万tokens、输出 $10/百万tokens，gpt-6-luna 输入 $0.1/百万tokens、输出 $0.5/百万tokens",
+      "translation": "OpenAI releases the new pricing series of Daybreak, with gpt-6-astra taking inputs of $10/million tokens and outputs of $50/million tokens, gpt-6.1-sol taking inputs of $2/million tokens and outputs of $10/million tokens, and gpt-6-luna taking inputs of $0.1/million tokens and outputs of $0.5/million tokens.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:48.904483+00:00"
+    },
+    "dda0827d9ef0284a59d35f3e5976e351dfb6c2b1eeeba8a941b45eb42a9ed877": {
+      "source": "OpenAI 新增 12 小时 prompt caching 选项，并调整 sandbox 计费为仅活跃轮次计费",
+      "translation": "OpenAI added a 12-hour prompt caching option, and adjusted sandbox billing to charge only for active rounds.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:49.106414+00:00"
+    },
+    "9df5265ff41cbe55af539d904def4fe173713e05fba6ce50658e2482c415e3f6": {
+      "source": "Rerank 5 模型发布，定价与文档更新",
+      "translation": "Rerank 5 model is released, with updated pricing and documentation.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:49.636944+00:00"
+    },
+    "f3f86178ba907506b67d70224f5d1504214936e44a732984d098659c9ac5a891": {
+      "source": "Rerank 模型文档更新，新增 Rerank 5 系列，标记 v4 为上一代，并更新模型描述。",
+      "translation": "The Rerank model documentation has been updated, with the addition of the Rerank 5 series, v4 marked as the previous generation, and the model description updated.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:50.824718+00:00"
+    },
+    "52f345d521babd72e84195f8c2a0ebb0f81f57561c32e358ec85b2853188c273": {
+      "source": "Seedance Managed Agent 替换视觉增强 Agent",
+      "translation": "Seedance Managed Agent replaces visual enhancement Agent",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:51.188811+00:00"
+    },
+    "7f12cc6c55236d7339dad72a06b829f4ea2d2f74b6f42a54b4dd38ec20d4afae": {
+      "source": "Voxtral 3 支持实时转录、零样本语音克隆与流式 TTS，覆盖 9 种语言",
+      "translation": "Voxtral 3 supports real-time transcription, zero-shot voice cloning, and streaming TTS, covering 9 languages.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:51.859140+00:00"
+    },
+    "2b705b3773600e6b5b4355b3065e6ec78e7fb24a865cd82d5ce0a73ede941ec6": {
+      "source": "Voxtral 3 系列发布，语音模型全面升级",
+      "translation": "Voxtral 3 series releases, with the voice model undergoing comprehensive upgrades.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:52.738763+00:00"
+    },
+    "b74390e194cc59723444b85b794e07ab6f81e15ea988e6aec9dd017e69aea787": {
+      "source": "xAI 将 Speech to Text API 更名为 SpaceXSI Speech to Text API，并宣布正式可用，支持 25 种语言",
+      "translation": "xAI renamed Speech to Text API to SpaceXSI Speech to Text API and announced it as officially available, supporting 25 languages.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:52.990264+00:00"
+    },
+    "67ddc2cc7565e752bf64a9c7dd329dc2d93036ef74c488ff7582af4c23bbb7bd": {
+      "source": "博客内容与 changelog 同步，新增 Ultrafast 模式、sandbox 计费、12小时缓存等公告。",
+      "translation": "The blog content and changelog are synchronized, with announcements for the newly added Ultrafast mode, sandbox billing, 12 hourly caching, etc.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:53.879203+00:00"
+    },
+    "ba5e940d2968efc1425937b4c1c52132b1afe23f8214f94264cabe98ba50b5a2": {
+      "source": "博客文章标题更新，新增小企业工具，删除 Connected Apps 相关文章。",
+      "translation": "The blog post title has been updated, a new small business tool has been added, and articles related to Connected Apps have been removed.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:54.485145+00:00"
+    },
+    "b54691cfc88b8e4f2d7ec4105f685ee8214a540c7cdc9bb3ab173cf286e70019": {
+      "source": "博客新增多篇公告，包括 Usage Policy 更新、Ebola 响应案例、新加坡办公室、投资计划等，删除旧文章。",
+      "translation": "The blog added multiple announcements, including updates to Usage Policy, response cases for Ebola, the Singapore office, and investment plans, and removed old articles.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:55.449957+00:00"
+    },
+    "a3b70527bb63822e981cf05ab3186c1d5a52a22114a2484158a5a8551979104b": {
+      "source": "定价页分类顺序调整，从『语言模型语音视频图像音乐』变为『语言模型视频语音图像音乐』，可能反映产品优先级变化。",
+      "translation": "The ordering adjustment of categories on the pricing page, from \"Language Model Speech, Video, Image, Music\" to \"Language Model Video, Speech, Image, Music,\" may reflect a change in product priority.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:55.683358+00:00"
+    },
+    "2a2e342545a12bfc9f1ea4f72f787494230ed651720f2571f693d3784e4fd52c": {
+      "source": "定价页重构，新增 Daybreak 系列模型（gpt-6-astra、gpt-6.1-sol、gpt-6-luna）的输入/输出/缓存价格，并调整了区域处理附加费说明，移除旧版定价表。",
+      "translation": "The pricing page has been restructured. The input, output, and cache pricing for the new Daybreak series models (gpt-6-astra, gpt-6.1-sol, gpt-6-luna) have been added, and the description for the regional processing surcharge has been adjusted. The old pricing table has been removed.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:56.890214+00:00"
+    },
+    "f4f55acd949d49ae1476e497aef13d2bb57c03dcca7ab2cf396fdc35bded3e01": {
+      "source": "文档配置发生微小变化，主题色等元数据更新，无实质内容变化。",
+      "translation": "Minor changes were made to the document configuration, with metadata such as the theme color updated, and there is no substantial content change.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:57.292380+00:00"
+    },
+    "d764a5a12b9b4796126f6ff658ffcba469954cb018e007a02d3fb57992aff34d": {
+      "source": "将视觉增强 Agent 相关计费说明替换为 Seedance Managed Agent，计费结构不变，仍区分模型调用与工具调用费用。",
+      "translation": "Replace the billing description related to the vision enhancement Agent with Seedance Managed Agent, keeping the billing structure unchanged and still distinguishing between model call and tool call fees.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:57.448818+00:00"
+    },
+    "9c632e7b39cc22887cc90f86501e1edd5561b59c04c8680a335f4b0a154342b4": {
+      "source": "新增 Agents API 的 Ultrafast 模式、sandbox 计费调整、12小时缓存、预加热 sandbox 等功能说明。",
+      "translation": "Add feature descriptions for the newly added Agents API Ultrafast mode, sandbox billing adjustments, 12 hourly caching, preheating sandbox, and other related functions.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:59.095695+00:00"
+    },
+    "ba9e48f4ba394181ca1fe76e248cc72585e342d52160ade042d0c3e6687c4d3c": {
+      "source": "新增 Claude Opus 5.5 和 Sonnet 5.5 在 Antigravity 可用的公告，以及 Gemini for government services，删除旧文章。",
+      "translation": "An announcement about adding Claude Opus 5.5 and Sonnet 5.5 to the list of features available for Antigravity, along with Gemini for government services, and the deletion of an old article.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:59.308273+00:00"
+    },
+    "d75c67196363236e820d17e17ac2b450067465d1f7c4c31861363d1a66f57968": {
+      "source": "新增 Console Cost 页面权限、inference hooks 正式版、Models API 新属性，并更新 Workbench 工具使用支持。",
+      "translation": "Added Console Cost page permissions, inference hooks official edition, Models API new attributes, and updated Workbench tool usage support.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:08:59.502489+00:00"
+    },
+    "dfd8514c466c5097647efcb4a4c35f1140366a1f206b483146590f538169179e": {
+      "source": "新增 Voxtral 3 发布公告，支持听、说、推理、行动。",
+      "translation": "New announcements regarding Voxtral 3 have been added, supporting listening, speaking, reasoning, and action.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:01.008618+00:00"
+    },
+    "ff634b518529c30db47853f93b456177662043832429bea2d44f29c5452db770": {
+      "source": "新增 Rerank 5 模型公告，删除旧 API 端点说明，可能为 API 迁移。",
+      "translation": "A new Rerank 5 model announcement has been added, the old API endpoint documentation has been removed, and it may be for API migration.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:01.123474+00:00"
+    },
+    "d79212c5aaab1295f81135591ea4bac9759b89376a93ffc7a00966baaa43e013": {
+      "source": "新增 Voxtral 3 发布博客。",
+      "translation": "Added Voxtral 3 to the blog post.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:01.124477+00:00"
+    },
+    "a25676c3aa1b8557966929ecd801aa53dd2386a1608c9ba46448bacef6cd5f8a": {
+      "source": "新增『百度AI助手与智能搜索生成』定价条目，删除旧的产品简介标题。",
+      "translation": "Add the new pricing entry for \"BAIDU AI Assistant and Intelligent Search Generation,\" and remove the old product introduction title.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:02.961364+00:00"
+    },
+    "07ebd8674c0d82c571ae70548f81afc92640d26ab39273dbf451c8ec257d17b2": {
+      "source": "新增Claude Opus 5.5与Sonnet 5.5，政府服务方案",
+      "translation": "Newly added Claude Opus 5.5 and Sonnet 5.5, government service solution.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:03.469835+00:00"
+    },
+    "c90baabc16d7f00f973de908c7a96d80e9274056568c628dce09796dea8d8942": {
+      "source": "新增『百度AI助手与智能搜索生成』更新记录，删除旧的产品简介标题。",
+      "translation": "Add the update record \"Baidu AI assistant and intelligent search generation\" and remove the old product introduction title.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:04.892172+00:00"
+    },
+    "f7eebe41e80c5d9675da8d595e1225466dd5dc2dde391eb39062fd2627114d40": {
+      "source": "新增『百度AI助手与智能搜索生成』条目，删除旧的产品简介标题，可能为产品正式上线。",
+      "translation": "Add the new entry 'Baidu AI assistant and intelligent search generation', remove the old product introduction title, which may indicate that the product is officially launched.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:05.323050+00:00"
+    },
+    "8e761c321e953ae39b2cc258ffceee4bf07f0a7a0a1a83104aedd248236e40c2": {
+      "source": "新增『百度AI助手与智能搜索生成』博客文章，删除旧的产品简介标题。",
+      "translation": "Add a blog post titled \"Baidu AI Assistant and Smart Search Generation,\" and remove the old product introduction title.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:05.653584+00:00"
+    },
+    "bcf3b0f77137a06adcfe2ed150ffc0307adb11c7e113504ffddf55bfcb10cbb2": {
+      "source": "新增关于推理模型置信度的文章，删除自动化早期足迹文章。",
+      "translation": "Add an article regarding the confidence of reasoning models, and remove the article on the early footprint of automation.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:06.911148+00:00"
+    },
+    "7553a71f260b0be25687d770aefd138efd8b99125f08347f409007af5820abc8": {
+      "source": "新增模型能力描述，说明 thinking.types.between_tools 属性。",
+      "translation": "New model capability description, explaining the thinking.types.between_tools attribute.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:07.192480+00:00"
+    },
+    "eae2903d3f82199ed960de5d6634425c25198298a14ea4e88cc62a79ac12b13b": {
+      "source": "更新日期至 10-15，新增 SpaceXSI Speech to Text API 正式可用，删除旧 xAI 命名。",
+      "translation": "The update date is set to 10-15, the newly added SpaceXSI Speech to Text API is officially available, and the old xAI naming has been removed.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:09.089677+00:00"
+    },
+    "84b1ce677581c67b2c18ff4ff124dbaaf815370fab836e637c34fad6471a5c64": {
+      "source": "更新日志中新增使用 Seedance Managed Agent 生成图片和视频的说明，删除视觉增强 Agent 对应条目。",
+      "translation": "New documentation in the changelog adds instructions for generating images and videos using Seedance Managed Agent, and the corresponding entry for visual enhancement Agent is removed.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:09.774634+00:00"
+    },
+    "a3cec5cc50279a24a72a936d31d6c3a33da2c23b08c925c208d7454f0818c13c": {
+      "source": "模型列表更新时间从 10-19 更新至 10-20，无实质内容变化。",
+      "translation": "The model list update time changed from 10-19 to 10-20, with no substantive content changes.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:11.324287+00:00"
+    },
+    "e0c678b4a1c6940fcc3c1129c63094210ba1bd5819bd2dae63bd3062fc3112fa": {
+      "source": "模型列表更新，Voxtral Mini Transcribe 2 升级为 3，新增 Voxtral TTS 3 等模型，删除旧分类。",
+      "translation": "The model list has been updated, with Voxtral Mini Transcribe 2 upgraded to 3, Voxtral TTS 3 and other models added, and the old category removed.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:11.677397+00:00"
+    },
+    "ed1e4205959d48ba20651a65e16520aba6cfee1e8c7d46efe5beeca91a848a06": {
+      "source": "火山方舟将视觉增强 Agent 更名为 Seedance Managed Agent，计费方式不变，图片/视频生成归入模型调用费用",
+      "translation": "Volcano Ark renames visual enhancement Agent to Seedance Managed Agent, with the billing method unchanged, and image/video generation is included in model call charges.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:13.296062+00:00"
+    },
+    "33d73c9f232b5656f260ab6c431f645dbcc57e5b5dbae7b5b44a08c9571f247e": {
+      "source": "百度千帆新增『百度AI助手与智能搜索生成』产品，覆盖模型列表、定价、更新日志及博客",
+      "translation": "Baidu Qianfan introduces the product 'Baidu AI Assistant and Intelligent Search Generation,' covering the model list, pricing, changelog, and blog.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:15.351233+00:00"
+    },
+    "a9ccb7743b3d1363cee78beeffbb6a4590a822459e40a42afe29ed4f988479c3": {
+      "source": "语音API更名，SpaceXSI STT正式可用",
+      "translation": "The voice API has been renamed, and SpaceXSI STT is now officially available.",
+      "model": "spark-x2.5-4b",
+      "promptVersion": "spark-en-v1",
+      "status": "success",
+      "translatedAt": "2026-10-21T00:09:15.547326+00:00"
     }
   }
 }

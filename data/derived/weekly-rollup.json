@@ -4,6 +4,14 @@
     "start": "2026-10-19",
     "end": "2026-10-25",
     "days": {
+      "2026-10-21": {
+        "substantive": 27,
+        "jitter": 3,
+        "failed": 5,
+        "releases": 9,
+        "pricings": 1,
+        "sunsets": 0
+      },
       "2026-10-20": {
         "substantive": 10,
         "jitter": 7,
@@ -22,12 +30,96 @@
       }
     },
     "totals": {
-      "substantive": 16,
-      "releases": 3,
-      "pricings": 2,
+      "substantive": 43,
+      "releases": 12,
+      "pricings": 3,
       "sunsets": 5
     },
     "highlights": [
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-21",
+        "text": "OpenAI 发布 Daybreak 系列新定价，gpt-6-astra 输入 $10/百万tokens、输出 $50/百万tokens，gpt-6.1-sol 输入 $2/百万tokens、输出 $10/百万tokens，gpt-6-luna 输入 $0.1/百万tokens、输出 $0.5/百万tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-21",
+        "text": "OpenAI 在 Agents API 新增 Ultrafast 模式，可减少生成 token 间隔时间",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-21",
+        "text": "OpenAI 新增 12 小时 prompt caching 选项，并调整 sandbox 计费为仅活跃轮次计费",
+        "type": "other"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-21",
+        "text": "Mistral AI 发布 Voxtral 3 系列，包括 Voxtral Mini Transcribe 3、Voxtral Small Transcribe 3、Voxtral TTS 3 及 Premier 版本",
+        "type": "release"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-21",
+        "text": "Voxtral 3 支持实时转录、零样本语音克隆与流式 TTS，覆盖 9 种语言",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-21",
+        "text": "Cohere 发布 Rerank 5 系列（rerank-v5.0-pro 与 rerank-v5.0-fast），支持多语言与校准相关性分数",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-21",
+        "text": "Cohere 更新 Rerank 模型文档，明确 v5 为最新一代，v4 标记为上一代",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-21",
+        "text": "Anthropic 在 Models API 中新增 capabilities.thinking.types.between_tools，报告模型是否支持 between_tools 思考类型",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-21",
+        "text": "Anthropic 为 Claude Enterprise 推出 inference hooks 正式版，并开放 Console 的 Cost 页面给 Developer 角色",
+        "type": "other"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-10-21",
+        "text": "火山方舟将视觉增强 Agent 更名为 Seedance Managed Agent，计费方式不变，图片/视频生成归入模型调用费用",
+        "type": "other"
+      },
+      {
+        "platform": "百度千帆",
+        "date": "2026-10-21",
+        "text": "百度千帆新增『百度AI助手与智能搜索生成』产品，覆盖模型列表、定价、更新日志及博客",
+        "type": "release"
+      },
+      {
+        "platform": "xAI",
+        "date": "2026-10-21",
+        "text": "xAI 将 Speech to Text API 更名为 SpaceXSI Speech to Text API，并宣布正式可用，支持 25 种语言",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-21",
+        "text": "Google Vertex AI 宣布 Claude Opus 5.5 和 Claude Sonnet 5.5 现已在 Google Antigravity 中可用",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-21",
+        "text": "Google Vertex AI 推出 Gemini for government services 方案",
+        "type": "release"
+      },
       {
         "platform": "MiniMax",
         "date": "2026-10-20",
