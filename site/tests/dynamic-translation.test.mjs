@@ -14,7 +14,19 @@ assert.equal(en.changed[0].added_lines[0],source);
 assert.equal(en.highlights[0].platform,'百度千帆','Provider identity is unchanged');
 assert.deepEqual(localizeEditorial(input,'zh'),input);
 assert.equal(input.highlights[0].items[0].text,source,'No shared Chinese data mutation');
-assert.match(localizeEditorial({text:'新版本尚未翻译的测试内容'},'en').text,/English translation pending/);
+// A failed or unavailable translation must not leak Chinese editorial text
+// into English pages or block publication of the original Chinese data.
+const missing='新版本尚未翻译的测试内容';
+const pending={text:missing,logo_summary:missing,theme:missing,title:missing,body:missing,story:missing,llm_summary:missing};
+const pendingEn=localizeEditorial(pending,'en');
+for(const text of Object.values(pendingEn)) {
+ assert.match(text,/English translation pending/);
+ assert.match(text,/Chinese version/);
+ assert(!/[\u3400-\u9fff]/.test(text),'Pending translation notices remain English');
+ assert(!text.includes(missing),'Untranslated source is not echoed into the notice');
+}
+assert.deepEqual(localizeEditorial(pending,'zh'),pending,'Chinese originals remain available');
+assert.equal(pending.text,missing,'Fallback does not mutate the shared source');
 for(const file of ['dist/en/index.html','dist/en/daily/2026-W41/index.html']) {
  const doc=new JSDOM(readFileSync(file,'utf8')).window.document;
  const summaries=doc.querySelectorAll('.highlight-summary,.highlight-title,.vendor-change-item p,.llm-summary,.story-sec-item p,.story-sec-item h3,.hl-text');
