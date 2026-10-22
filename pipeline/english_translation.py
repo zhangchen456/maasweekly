@@ -39,6 +39,14 @@ def collect_texts(value):
 def protect(source: str):
     value = source.replace('量化版本', 'quantized version')
     for zh, en in BRANDS.items(): value = value.replace(zh, en)
+    # Chinese discounts state the fraction paid: 五折 = 50%, 九五折 = 95%.
+    # Normalize before masking so an accurate English percentage is not
+    # mistaken for an invented number by restore_and_validate.
+    def discount(m):
+        digits = ''.join(str('零一二三四五六七八九'.index(c)) for c in m[1])
+        percent = int(digits) * (10 if len(digits) == 1 else 1)
+        return f'{percent}%'
+    value = re.sub(r'(?<![零一二三四五六七八九十百千万])([一二三四五六七八九][零一二三四五六七八九]?)折', discount, value)
     def amount(m):
         n = Decimal(m[1]) * (10000 if m[2] == '万' else 100000000)
         return format(n, 'f').rstrip('0').rstrip('.') if '.' in format(n, 'f') else format(n, 'f')

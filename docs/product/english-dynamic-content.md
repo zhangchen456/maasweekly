@@ -6,7 +6,9 @@
 
 中文内容SHA256和提示词版本驱动缓存，位于 `data/derived/translations/en.json`，受现有输入快照及流水线写入锁管理。金额、数字、模型名、参数和日期先保护后还原；验证中文残留、截断、占位符缺失/重复、数字改变、多余格式、不确定语气和网页移除被强化为服务下线。
 
-缓存经唯一 `data_store.project_site` 边界生成 `site/src/data/translations-en.json`，英文页面在渲染前替换完整内容字段，保留实体高亮与原始证据。中文不改变。未译或失败字段明确显示 `English translation pending. Chinese original:`，而非静默混入中文或复用已过时内容。
+缓存经唯一 `data_store.project_site` 边界生成 `site/src/data/translations-en.json`，英文页面在渲染前替换完整内容字段，保留实体高亮与原始证据。中文不改变。未译或失败字段明确显示 `English translation pending. Please see the Chinese version for the original.`，原文继续在中文版提供；英文摘要不回显中文，也不复用已过时内容。英文页面的中文残留检查继续阻断其他意外混入的中文。
+
+2026-10-22 修复：保护数字前将中文折扣规范化为应付比例（五折 → 50%、九五折 → 95%），再使用同一占位符和数字完整性校验。准确的折扣翻译不再误报 `numbers_changed`；金额、倍数、数字增减及占位符遗漏的检查保留。
 
 每日和周报工作流在中文摘要生成后、投影提交前运行翻译。专用 `TRANSLATION_API_KEY` 配置为GitHub Actions加密secret，不替换 `LLM_API_KEY`。可选 `TRANSLATION_MODEL`、`TRANSLATION_URL` 覆盖模型和调用地址；客户端不持有密钥，也不触发翻译。缺少密钥时保留已有缓存，不阻塞中文发布。
 
