@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_bfcf2f4d4993c3f4f522331b2ca5e6e317b4fb21c3606121e7b54551e620b13a",
+  "sourceId": "alibaba-pricing",
+  "date": "2026-10-22",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "阿里百炼",
+  "sourceType": "pricing",
+  "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+  "title": "阿里百炼 · 定价来源更新",
+  "summary": "定价页新增了qwen-audio-3.1-tts-plus的定价行，并更新了峰谷计费说明，删除了deepseek-v4.1-flash-1017的峰谷计费描述和qwen3.8-max-prime，可能对应新模型上线和旧模型下架。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-22T00:15:24+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "qwen-audio-3.1-tts-plus |",
+      "| 模型 ID（Model ID） | 输入单价（每万字符） | 免费额度（注）有效期：自开通百炼或模型发布之日起90天内（以较晚者为准）",
+      "部分模型按峰谷价格计费（见下表标注的忙时、闲时单价）：忙时为北京时间 08:00 至 22:00，闲时为北京时间 22:00 至次日 08:00。"
+    ],
+    "removed_lines": [
+      "deepseek-v4.1-flash-1017 按峰谷价格计费：闲时为 UTC+8 22:00 至次日 08:00，忙时为其余时段。",
+      "qwen3.8-max-prime",
+      "更多详情参考优速模式（Prime）",
+      "其中，忙时为北京时间 8:00 - 22:00，闲时为北京时间 22:00 - 次日 8:00。"
+    ],
+    "added_count": 3,
+    "removed_count": 4,
+    "raw_added_count": 3,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-22.json"
+  },
+  "permalink": "/item/obs_bfcf2f4d4993c3f4f522331b2ca5e6e317b4fb21c3606121e7b54551e620b13a/"
+}

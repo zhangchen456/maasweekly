@@ -12055,5 +12055,82 @@
       ],
       "evidence_url": "https://developers.openai.com/api/docs/pricing"
     }
+  ],
+  "2026-10-22": [
+    {
+      "id": "price_3c0404436828564c9c5628b53a4e88d5bc445e65931a7e27c0d15dd1252915e6",
+      "provider": "glm",
+      "model": "glm-5.3-flashx",
+      "component": "input",
+      "current": "2.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "id": "price_038a94413e8e7a4af72debb5d4c98ae8200b31dc5db65fa933d94ee179cd7e24",
+      "provider": "glm",
+      "model": "glm-5.3-flashx",
+      "component": "output",
+      "current": "7.000000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "id": "price_20fa4b52dd5fdce34a57826f2818af649d9c5a6f5aab7d268aa136c23f8e7d5a",
+      "provider": "glm",
+      "model": "glm-5.3-flashx",
+      "component": "cache_read",
+      "current": "0.570000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://open.bigmodel.cn/pricing"
+    },
+    {
+      "id": "price_b55418403d3b767acbbbddf417a140c7c356fa65c5c2994666d7d64da5e5e125",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-tts-plus",
+      "component": "input",
+      "current": "1.400000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    },
+    {
+      "id": "price_06e7b1e68266056ccdca164edef26d3656153591b405e9c9880f75445a018210",
+      "provider": "qwen",
+      "model": "qwen-audio-3.1-tts-plus",
+      "component": "input",
+      "current": "2.190000",
+      "currency": "CNY",
+      "unit": "per_1m_tokens",
+      "unit_quantity": 1000000,
+      "unit_name": "token",
+      "changed_fields": [
+        "amount"
+      ],
+      "evidence_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
+    }
   ]
 }

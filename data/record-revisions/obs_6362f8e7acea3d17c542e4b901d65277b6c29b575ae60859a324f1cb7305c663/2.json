@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_6362f8e7acea3d17c542e4b901d65277b6c29b575ae60859a324f1cb7305c663",
+  "sourceId": "minimax-pricing",
+  "date": "2026-10-22",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "MiniMax",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+  "title": "MiniMax · 定价来源更新",
+  "summary": "定价页新增了多个输入tokens永久五折的定价行，并引入了优先服务层级（按标准价格1.5倍计费），删除了旧的定价行，整体价格结构有调整。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-22T00:15:24+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "> 512k 输入 tokens 永久五折 | 12.60 6.30 | 50.40 25.20 | 2.52 1.26* 优先服务可让请求获得优先准入，从而更快响应并降低失败率。调用时将 service_tier 设为 priority 即可启用。该层级按标准价格的 1.5 倍计费。",
+      "> 512k 输入 tokens* 永久五折 | 8.40 4.20 | 33.60 16.80 | 1.68 0.84",
+      "≤ 512k 输入 tokens 永久五折 | 4.20 2.10 | 16.80 8.40 | 0.84 0.42",
+      "≤ 512k 输入 tokens 永久五折 | 6.30 3.15 | 25.20 12.60 | 1.26 0.63"
+    ],
+    "removed_lines": [
+      "> 512k 输入 tokens | 6.30 | 25.20 | 1.26* 优先服务可让请求获得优先准入，从而更快响应并降低失败率。调用时将 service_tier 设为 priority 即可启用。该层级按标准价格的 1.5 倍计费。",
+      "> 512k 输入 tokens* | 4.20 | 16.80 | 0.84",
+      "≤ 512k 输入 tokens | 2.10 | 8.40 | 0.42",
+      "≤ 512k 输入 tokens | 3.15 | 12.60 | 0.63"
+    ],
+    "added_count": 4,
+    "removed_count": 4,
+    "raw_added_count": 4,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-22.json"
+  },
+  "permalink": "/item/obs_6362f8e7acea3d17c542e4b901d65277b6c29b575ae60859a324f1cb7305c663/"
+}

@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_1e86a842febedd6cbaee119e569152d537d7610aeb7701d09e5282b77fb8b326",
+  "sourceId": "anthropic-pricing",
+  "date": "2026-10-22",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "pricing",
+  "sourceUrl": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+  "title": "Anthropic · 定价来源更新",
+  "summary": "A 1-hour coding session using Claude Opus 5.5 that consumes 50,000 input tokens and 15,000 output tokens:",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "additional usage beyond",
+        "before": "Additional usage beyond 1,550 hours is billed at $0.05 USD per hour, per container",
+        "after": "Additional usage beyond 1,550 hours is billed at $0.05 USD per hour, per container."
+      },
+      {
+        "key": "all tokens consumed by a claude managed agents session are billed at the rates shown in model pricing",
+        "before": "All tokens consumed by a Claude Managed Agents session are billed at the rates shown in Model pricing. Prompt caching multipliers apply identically. Web search triggered inside a session incurs the standard $10 per 1,000 searches. On Claude Platform on AWS, session token and runtime charges convert to Claude Consumption Units at the standard rate. Fast mode premium pricing applies when an agent's model.speed is set to \"fast\".",
+        "after": "All tokens consumed by a Claude Managed Agents session are billed at the rates shown in Model pricing. Prompt caching multipliers apply identically. Web search triggered inside a session incurs the standard $10 USD per 1,000 searches. On Claude Platform on AWS, session token and runtime charges convert to Claude Consumption Units at the standard rate. Fast mode premium pricing applies when an agent's model.speed is set to \"fast\"."
+      },
+      {
+        "key": "non-time-sensitive",
+        "before": "Batch operations: Use the Batch API for non-time-sensitive tasks",
+        "after": "Batch operations: Use the Batch API for non-time-sensitive tasks."
+      },
+      {
+        "key": "claude haiku",
+        "before": "Claude Haiku 5.5 is priced by prompt length: a request whose prompt is over 100,000 tokens pays higher prices. A request's prompt length counts all of its input tokens, including cache reads and cache writes. Each request is priced on its own: a request over the threshold pays the higher prices even when part of its prompt is a cache hit, and earlier requests keep the prices they were billed at. Model pricing and Batch processing list both sets of prices.",
+        "after": "Claude Haiku 5.5 is priced by prompt length: a request whose prompt is over 100,000 tokens pays higher prices. A request's prompt length counts all of its input tokens, including cache reads and cache writes. Each request is priced on its own: a request over the threshold pays the higher prices even when part of its prompt is a cache hit, and earlier requests keep the prices they were billed at. The model pricing and batch processing pricing sections list both sets of prices."
+      },
+      {
+        "key": "per-model",
+        "before": "Claude Platform on AWS bills through AWS Marketplace using Claude Consumption Units (CCUs). Anthropic rates your token usage in USD at standard per-model, per-feature rates, applies any negotiated discount, converts the result to CCUs at $0.01 per CCU, and reports the CCU quantity to AWS Marketplace hourly. Your AWS bill shows a single CCU line item.",
+        "after": "Claude Platform on AWS bills through AWS Marketplace using Claude Consumption Units (CCUs). Anthropic rates your token usage in USD at standard per-model, per-feature rates, applies any negotiated discount, converts the result to CCUs at $0.01 USD per CCU, and reports the CCU quantity to AWS Marketplace hourly. Your AWS bill shows a single CCU line item."
+      },
+      {
+        "key": "per-model",
+        "before": "Claude in Microsoft Foundry bills through the Azure Marketplace using Claude Consumption Units (CCUs). Anthropic rates your token usage in USD at standard per-model, per-feature rates, applies any negotiated discount, converts the result to CCUs at $0.01 per CCU, and reports the CCU quantity to the Azure Marketplace hourly. Your Azure bill shows a single CCU line item.",
+        "after": "Claude in Microsoft Foundry bills through the Azure Marketplace using Claude Consumption Units (CCUs). Anthropic rates your token usage in USD at standard per-model, per-feature rates, applies any negotiated discount, converts the result to CCUs at $0.01 USD per CCU, and reports the CCU quantity to the Azure Marketplace hourly. Your Azure bill shows a single CCU line item."
+      },
+      {
+        "key": "data residency multipliers apply on top of fast mode pricing",
+        "before": "Data residency multipliers apply on top of fast mode pricing",
+        "after": "Data residency multipliers apply on top of fast mode pricing."
+      }
+    ],
+    "added_lines": [
+      "A 1-hour coding session using Claude Opus 5.5 that consumes 50,000 input tokens and 15,000 output tokens:",
+      "Academic and research discounts might be available",
+      "Average webpage (10 kB): ~2,500 tokens",
+      "Each organization receives 1,550 free hours of usage per month.",
+      "Execution time has a minimum of 5 minutes.",
+      "If files are included in the request, execution time is billed even if the tool is not called, because files are preloaded onto the container.",
+      "Implement prompt caching: Reduce costs for repeated context.",
+      "Monitor usage patterns: Track token consumption to identify optimization opportunities.",
+      "Prompt caching multipliers apply on top of fast mode pricing.",
+      "Regional and multi-region endpoints include a 10 percent premium over global endpoints. The Claude API (first-party) is global by default; for first-party data residency options and pricing, see Data residency pricing.",
+      "The Batch API allows asynchronous processing of large volumes of requests with a 50 percent discount on both input and output tokens.",
+      "Usage tracking available in the Claude Console at platform.claude.com",
+      "Use appropriate models: Choose Haiku for simple tasks, Sonnet for most production workloads, and Opus for the most complex reasoning.",
+      "Volume discounts might be available for high-volume users. These are negotiated on a case-by-case basis.",
+      "Web search is available on the Claude API for $10 USD per 1,000 searches, plus standard token costs for search-generated content. Web search results retrieved throughout a conversation are counted as input tokens, in search iterations executed during a single turn and in subsequent conversation turns."
+    ],
+    "removed_lines": [
+      "A one-hour coding session using Claude Opus 5.5 that consumes 50,000 input tokens and 15,000 output tokens:",
+      "Academic and research discounts may be available",
+      "Average web page (10 kB): ~2,500 tokens"
+    ],
+    "added_count": 15,
+    "removed_count": 3,
+    "raw_added_count": 22,
+    "raw_removed_count": 22
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-22.json"
+  },
+  "permalink": "/item/obs_1e86a842febedd6cbaee119e569152d537d7610aeb7701d09e5282b77fb8b326/"
+}

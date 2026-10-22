@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_b53b153cf78f43dcde4c107eb7d21129fdca1e8f97a5050b07c4fe51db2437cd",
+  "sourceId": "volcengine-pricing",
+  "date": "2026-10-22",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "火山方舟",
+  "sourceType": "pricing",
+  "sourceUrl": "https://www.volcengine.com/docs/82379/1544106",
+  "title": "火山方舟 · 定价来源更新",
+  "summary": "定价页将图像生成的价格描述从按分辨率（1.5K以上/以下）改为按像素数（>261万/≤261万），价格数值不变，同时新增了运行和管理后台工具任务，可能为新增功能或服务。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-22T00:15:24+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "> 261 万像素：0.30​",
+      "> 261 万像素：0.60​",
+      "≤ 261 万像素：0.15​",
+      "≤ 261 万像素：0.30​",
+      "运行和管理后台工具任务"
+    ],
+    "removed_lines": [
+      "> 261 万像素（分辨率 1.5K 以上）：0.30​",
+      "> 261 万像素（分辨率 1.5K 以上）：0.60​",
+      "≤ 261 万像素（分辨率 1.5K 及以下）：0.15​",
+      "≤ 261 万像素（分辨率 1.5K 及以下）：0.30​"
+    ],
+    "added_count": 5,
+    "removed_count": 4,
+    "raw_added_count": 6,
+    "raw_removed_count": 5
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-22.json"
+  },
+  "permalink": "/item/obs_b53b153cf78f43dcde4c107eb7d21129fdca1e8f97a5050b07c4fe51db2437cd/"
+}

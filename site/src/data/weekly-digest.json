@@ -4,6 +4,14 @@
     "start": "2026-10-19",
     "end": "2026-10-25",
     "days": {
+      "2026-10-22": {
+        "substantive": 21,
+        "jitter": 3,
+        "failed": 6,
+        "releases": 6,
+        "pricings": 4,
+        "sunsets": 2
+      },
       "2026-10-21": {
         "substantive": 27,
         "jitter": 3,
@@ -30,12 +38,108 @@
       }
     },
     "totals": {
-      "substantive": 43,
-      "releases": 12,
-      "pricings": 3,
-      "sunsets": 5
+      "substantive": 64,
+      "releases": 18,
+      "pricings": 7,
+      "sunsets": 7
     },
     "highlights": [
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-22",
+        "text": "2026-10-21 API版本发布，SDK/CLI更新至2.0.0/1.0.0等",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-22",
+        "text": "新增用户画像、组织级Webhooks、OpenTelemetry导出等企业功能",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-22",
+        "text": "Claude Managed Agents新增Web搜索与Web抓取的组织级控制",
+        "type": "other"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-22",
+        "text": "Rerank 5发布，支持Context Focus，定价页Rerank 4 Fast/Pro更新为Rerank 5 Fast/Pro",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-22",
+        "text": "新增North Automations、Parse、Transcribe Arabic等产品",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-22",
+        "text": "qwen-audio-3.1-tts-plus上线，输入定价1.4/2.19 CNY每百万tokens",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-22",
+        "text": "deepseek-v4.1-flash-1017定价改为峰谷计费，删除qwen3.8-max-prime",
+        "type": "pricing"
+      },
+      {
+        "platform": "硅基流动",
+        "date": "2026-10-22",
+        "text": "DeepSeek-V4.1-Flash升级至DeepSeek-V4.1-Flash-1017，模型ID不变",
+        "type": "release"
+      },
+      {
+        "platform": "智谱AI",
+        "date": "2026-10-22",
+        "text": "GLM-5.3-FlashX-Legal上线，面向法律场景，上下文1M/128K",
+        "type": "release"
+      },
+      {
+        "platform": "智谱AI",
+        "date": "2026-10-22",
+        "text": "glm-5.3-flashx定价更新：输入2.0，输出7.0，缓存0.57 CNY/百万tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-22",
+        "text": "MiniMax新增输入tokens永久五折定价，并引入优先服务层级（1.5倍计费）",
+        "type": "pricing"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-10-22",
+        "text": "图像生成定价改为按像素计费（≤261万像素与>261万像素），删除分辨率描述",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-22",
+        "text": "Gemini Robotics ER 1.6标记为Shut down",
+        "type": "sunset"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-22",
+        "text": "Veo 3 Generate从模型列表移除",
+        "type": "sunset"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-22",
+        "text": "Mistral与NVIDIA合作开发AI原生工程工作流",
+        "type": "other"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-22",
+        "text": "Platform settings新增项目服务层级选择，组织可限制所有项目的服务层级",
+        "type": "other"
+      },
       {
         "platform": "OpenAI",
         "date": "2026-10-21",

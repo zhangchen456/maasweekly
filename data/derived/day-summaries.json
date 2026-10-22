@@ -5307,5 +5307,196 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-22": {
+    "highlights": [
+      {
+        "platform": "Anthropic",
+        "logo_summary": "API版本更新+多项新功能发布",
+        "items": [
+          {
+            "text": "2026-10-21 API版本发布，SDK/CLI更新至2.0.0/1.0.0等",
+            "type": "release"
+          },
+          {
+            "text": "新增用户画像、组织级Webhooks、OpenTelemetry导出等企业功能",
+            "type": "other"
+          },
+          {
+            "text": "Claude Managed Agents新增Web搜索与Web抓取的组织级控制",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Cohere",
+        "logo_summary": "Rerank 5发布，产品线更新",
+        "items": [
+          {
+            "text": "Rerank 5发布，支持Context Focus，定价页Rerank 4 Fast/Pro更新为Rerank 5 Fast/Pro",
+            "type": "release"
+          },
+          {
+            "text": "新增North Automations、Parse、Transcribe Arabic等产品",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "阿里百炼",
+        "logo_summary": "新模型上线+定价结构调整",
+        "items": [
+          {
+            "text": "qwen-audio-3.1-tts-plus上线，输入定价1.4/2.19 CNY每百万tokens",
+            "type": "release"
+          },
+          {
+            "text": "deepseek-v4.1-flash-1017定价改为峰谷计费，删除qwen3.8-max-prime",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "硅基流动",
+        "logo_summary": "DeepSeek模型升级至1017版本",
+        "items": [
+          {
+            "text": "DeepSeek-V4.1-Flash升级至DeepSeek-V4.1-Flash-1017，模型ID不变",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "智谱AI",
+        "logo_summary": "新模型GLM-5.3-FlashX-Legal上线",
+        "items": [
+          {
+            "text": "GLM-5.3-FlashX-Legal上线，面向法律场景，上下文1M/128K",
+            "type": "release"
+          },
+          {
+            "text": "glm-5.3-flashx定价更新：输入2.0，输出7.0，缓存0.57 CNY/百万tokens",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "MiniMax",
+        "logo_summary": "定价调整：新增永久五折优惠",
+        "items": [
+          {
+            "text": "MiniMax新增输入tokens永久五折定价，并引入优先服务层级（1.5倍计费）",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "火山方舟",
+        "logo_summary": "定价文档更新，像素计费简化",
+        "items": [
+          {
+            "text": "图像生成定价改为按像素计费（≤261万像素与>261万像素），删除分辨率描述",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Google Gemini API",
+        "logo_summary": "Gemini Robotics ER 1.6下线",
+        "items": [
+          {
+            "text": "Gemini Robotics ER 1.6标记为Shut down",
+            "type": "sunset"
+          }
+        ]
+      },
+      {
+        "platform": "Google Vertex AI",
+        "logo_summary": "模型列表移除Veo 3 Generate",
+        "items": [
+          {
+            "text": "Veo 3 Generate从模型列表移除",
+            "type": "sunset"
+          }
+        ]
+      },
+      {
+        "platform": "Mistral AI",
+        "logo_summary": "与NVIDIA合作推进工程AI",
+        "items": [
+          {
+            "text": "Mistral与NVIDIA合作开发AI原生工程工作流",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "OpenAI",
+        "logo_summary": "平台设置新增服务层级控制",
+        "items": [
+          {
+            "text": "Platform settings新增项目服务层级选择，组织可限制所有项目的服务层级",
+            "type": "other"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_a11d0e89f80a66bcf24588a20835ff70d909490b893c353919508efa70661ab7": "模型列表更新了四边面模型的产物格式描述，新增了[100000, 2000000]范围及运行和管理后台工具任务，删除了旧的[100000, 2000000]产物格式说明，可能对应模型能力或参数范围的调整。",
+      "obs_b53b153cf78f43dcde4c107eb7d21129fdca1e8f97a5050b07c4fe51db2437cd": "定价页将图像生成的价格描述从按分辨率（1.5K以上/以下）改为按像素数（>261万/≤261万），价格数值不变，同时新增了运行和管理后台工具任务，可能为新增功能或服务。",
+      "obs_bfcf2f4d4993c3f4f522331b2ca5e6e317b4fb21c3606121e7b54551e620b13a": "定价页新增了qwen-audio-3.1-tts-plus的定价行，并更新了峰谷计费说明，删除了deepseek-v4.1-flash-1017的峰谷计费描述和qwen3.8-max-prime，可能对应新模型上线和旧模型下架。",
+      "obs_0a27fa5a4314ef495e6cda07131597e19e79f818abdedfb25df1ad9176a3feb4": "变更日志新增了DeepSeek-V4.1-Flash升级至DeepSeek-V4.1-Flash-1017的公告，说明模型ID不变，请求将直接由新版本服务，同时保留了其他模型服务调整信息。",
+      "obs_3d17eac11cc782ff883bc7696e041bc52ea294fcf8d6def0e4bb09e5c642efb0": "模型列表新增了GLM-5.3-FlashX-Legal，面向法律专业场景优化，支持1M上下文和128K输出，同时文档配置有细微变化。",
+      "obs_cf191a98894dd7d7c79bc9595c7d9de119870597a93e53c1205a55904d5b06a7": "变更日志的文档配置有细微变化，但未发现实质性的功能或模型变更。",
+      "obs_6362f8e7acea3d17c542e4b901d65277b6c29b575ae60859a324f1cb7305c663": "定价页新增了多个输入tokens永久五折的定价行，并引入了优先服务层级（按标准价格1.5倍计费），删除了旧的定价行，整体价格结构有调整。",
+      "obs_b0f1cf7e16926fd9872ed3fa4c1f681a950a10cd93673a190939efd742cbac09": "新增了平台设置中项目服务层级选择的功能说明，允许组织限制所有项目的服务层级。",
+      "obs_093d61cd0edf8ade0ba8d8ed0aabe378cbb8f8ee35e8f304e747ca58c0dc5d85": "博客新增了与服务层级选择相关的公告，与changelog内容一致。",
+      "obs_18e6690e780566c584979b9287c71fd0832404acea1480589a81e2c6d3d115a4": "模型列表更新了部分文案，如联系支持团队的方式、输出质量描述等，并新增了开发者资源介绍，删除了旧的引导语，整体为文档优化。",
+      "obs_1e86a842febedd6cbaee119e569152d537d7610aeb7701d09e5282b77fb8b326": "定价页新增了多个计费说明，如免费使用时长、执行时间最低5分钟、提示缓存乘数等，并调整了部分表述，整体为定价细节的补充和澄清。",
+      "obs_dc279828c8e571972e659c4376d707c9191df6f160beec23a3bc80fc84a2b36b": "变更日志新增了API版本2026-10-21、SDK/CLI更新、用户画像、组织级Webhooks、OpenTelemetry导出等多项新功能，并更新了迁移指南，整体为重大版本更新。",
+      "obs_028d40ca8306715bdcd4308b914e45df025602f13cdbe7ebcaccfdabbaf86492": "博客新增了关于Enterprise Frontier Safeguards和Long-Term Benefit Trust新成员的文章，删除了旧文章，内容更新。",
+      "obs_ffa53733b0b8e2c8260401075c38a14ffc2da533450f3d5cd0e7c1fc6849324d": "模型列表将Gemini Robotics ER 1.6标记为Shut down，表示该模型已下线。",
+      "obs_e8e9ef7f80dd521c3b25f6944feb9b5e2abf8aaa874cac5231dd60c2c4074dc9": "模型列表移除了Veo 3 Generate，可能表示该模型已不再提供。",
+      "obs_5da506360615338946df60fd69f816c454ce967b612a41c9ab12a3684d33c603": "变更日志更新了时间戳，但未发现实质性的功能变更。",
+      "obs_0d6a3f1f3bb8e657e74f1dd881ffe3232cf2af74eaf3a6c60c00b88b9c10324f": "博客新增了关于Google Cloud将OpenAI模型引入客户的文章，删除了关于BigQuery成本管理的文章，内容更新。",
+      "obs_7accede23345d041c100a6fd77a1c0dea92f9d33b9175298b760d24b9bc8d82f": "新增了与NVIDIA合作开发AI工程工作流的公告。",
+      "obs_88ab3191002b2615af1262fdc935b3c4acd45373045a54533811f0552ef45aba": "博客新增了与NVIDIA合作的文章，与changelog内容一致。",
+      "obs_bc6b28021edafe227dc3fa67cf33ae900df5e409979eb08e5e4a6c7f39fafac7": "定价页将Rerank 4 Fast/Pro更新为Rerank 5 Fast/Pro，并新增了Life Sciences类别和Rerank 5的宣传语，删除了North 2的宣传，对应Rerank 5的发布。",
+      "obs_fdc0fa9a648a5aead7568bbb95c570f4fcbae9a83e7e9ee40c37725947d902d8": "博客新增了Rerank 5、North Automations、Parse、Transcribe Arabic等产品发布文章，删除了旧文章，整体为产品更新。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "631fe40f9c1dbc9e1a4171ff8acf4f48a4fe6202a581d190571c7627926a6597",
+      "inputRefs": [
+        "obs_028d40ca8306715bdcd4308b914e45df025602f13cdbe7ebcaccfdabbaf86492",
+        "obs_093d61cd0edf8ade0ba8d8ed0aabe378cbb8f8ee35e8f304e747ca58c0dc5d85",
+        "obs_0a27fa5a4314ef495e6cda07131597e19e79f818abdedfb25df1ad9176a3feb4",
+        "obs_0d6a3f1f3bb8e657e74f1dd881ffe3232cf2af74eaf3a6c60c00b88b9c10324f",
+        "obs_18e6690e780566c584979b9287c71fd0832404acea1480589a81e2c6d3d115a4",
+        "obs_1e86a842febedd6cbaee119e569152d537d7610aeb7701d09e5282b77fb8b326",
+        "obs_3d17eac11cc782ff883bc7696e041bc52ea294fcf8d6def0e4bb09e5c642efb0",
+        "obs_5da506360615338946df60fd69f816c454ce967b612a41c9ab12a3684d33c603",
+        "obs_6362f8e7acea3d17c542e4b901d65277b6c29b575ae60859a324f1cb7305c663",
+        "obs_7accede23345d041c100a6fd77a1c0dea92f9d33b9175298b760d24b9bc8d82f",
+        "obs_88ab3191002b2615af1262fdc935b3c4acd45373045a54533811f0552ef45aba",
+        "obs_a11d0e89f80a66bcf24588a20835ff70d909490b893c353919508efa70661ab7",
+        "obs_b0f1cf7e16926fd9872ed3fa4c1f681a950a10cd93673a190939efd742cbac09",
+        "obs_b53b153cf78f43dcde4c107eb7d21129fdca1e8f97a5050b07c4fe51db2437cd",
+        "obs_bc6b28021edafe227dc3fa67cf33ae900df5e409979eb08e5e4a6c7f39fafac7",
+        "obs_bfcf2f4d4993c3f4f522331b2ca5e6e317b4fb21c3606121e7b54551e620b13a",
+        "obs_cf191a98894dd7d7c79bc9595c7d9de119870597a93e53c1205a55904d5b06a7",
+        "obs_dc279828c8e571972e659c4376d707c9191df6f160beec23a3bc80fc84a2b36b",
+        "obs_e8e9ef7f80dd521c3b25f6944feb9b5e2abf8aaa874cac5231dd60c2c4074dc9",
+        "obs_fdc0fa9a648a5aead7568bbb95c570f4fcbae9a83e7e9ee40c37725947d902d8",
+        "obs_ffa53733b0b8e2c8260401075c38a14ffc2da533450f3d5cd0e7c1fc6849324d",
+        "price_038a94413e8e7a4af72debb5d4c98ae8200b31dc5db65fa933d94ee179cd7e24",
+        "price_06e7b1e68266056ccdca164edef26d3656153591b405e9c9880f75445a018210",
+        "price_20fa4b52dd5fdce34a57826f2818af649d9c5a6f5aab7d268aa136c23f8e7d5a",
+        "price_3c0404436828564c9c5628b53a4e88d5bc445e65931a7e27c0d15dd1252915e6",
+        "price_b55418403d3b767acbbbddf417a140c7c356fa65c5c2994666d7d64da5e5e125"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }
