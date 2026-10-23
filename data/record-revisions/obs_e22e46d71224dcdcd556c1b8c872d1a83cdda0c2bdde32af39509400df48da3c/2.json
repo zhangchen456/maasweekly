@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_e22e46d71224dcdcd556c1b8c872d1a83cdda0c2bdde32af39509400df48da3c",
+  "sourceId": "alibaba-pricing",
+  "date": "2026-10-23",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "阿里百炼",
+  "sourceType": "pricing",
+  "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+  "title": "阿里百炼 · 定价来源更新",
+  "summary": "新增 MiniMax-M3.1-Flash、glm-5.3-prime、qwen-audio-3.1-tts-next 的定价行，并包含512k Token分档价格（如2.1元/8.4元等），对应新模型上架。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-23T00:11:10+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [],
+    "added_lines": [
+      "MiniMax/MiniMax-M3.1-Flash",
+      "glm-5.3-prime |",
+      "| qwen-audio-3.1-tts-next | 6.781 | 5.104",
+      "| 模型 ID | 输入单价（元/百万 Token） | 输出单价（元/百万 Token）",
+      "输入不超过 512k Token：2.1元",
+      "输入不超过 512k Token：8.4元",
+      "输入超过 512k Token：16.8元 |",
+      "输入超过 512k Token：4.2元 |"
+    ],
+    "removed_lines": [],
+    "added_count": 8,
+    "removed_count": 0,
+    "raw_added_count": 8,
+    "raw_removed_count": 0
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-23.json"
+  },
+  "permalink": "/item/obs_e22e46d71224dcdcd556c1b8c872d1a83cdda0c2bdde32af39509400df48da3c/"
+}

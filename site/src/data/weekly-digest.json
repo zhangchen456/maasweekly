@@ -4,6 +4,14 @@
     "start": "2026-10-19",
     "end": "2026-10-25",
     "days": {
+      "2026-10-23": {
+        "substantive": 19,
+        "jitter": 1,
+        "failed": 5,
+        "releases": 6,
+        "pricings": 2,
+        "sunsets": 1
+      },
       "2026-10-22": {
         "substantive": 21,
         "jitter": 3,
@@ -38,12 +46,84 @@
       }
     },
     "totals": {
-      "substantive": 64,
-      "releases": 18,
-      "pricings": 7,
-      "sunsets": 7
+      "substantive": 83,
+      "releases": 24,
+      "pricings": 9,
+      "sunsets": 8
     },
     "highlights": [
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-23",
+        "text": "Anthropic 推出 Claude Models on Google Cloud (Anthropic managed)，Claude API 现可通过 Google Cloud 项目访问，并支持 Fast mode for Claude Opus 5.5",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-23",
+        "text": "Anthropic 将 Agent Skills 开放标准捐赠给 Agentic AI Foundation，超70个Agent平台采用",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-23",
+        "text": "Anthropic 定价页新增 CCU 计费单元（$0.01/CCU）及 Web search 定价（$10/千次搜索）",
+        "type": "pricing"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-23",
+        "text": "OpenAI 新增 ChatGPT EDU 及 Education plans，面向高等教育场景",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-23",
+        "text": "OpenAI 发布 Decisions API 正式版，基于 gpt-6-luna，支持跨请求共享输入缓存折扣及图片输入",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-23",
+        "text": "阿里百炼 model_list 将 MiniMax-M3 替换为 MiniMax-M3.1-Flash，mimo-v2.5-pro 保持不变",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-23",
+        "text": "阿里百炼 pricing 新增 MiniMax-M3.1-Flash、glm-5.3-prime、qwen-audio-3.1-tts-next 定价，含512k Token分档价格",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-23",
+        "text": "Google Gemini API 移除 veo-3.1-generate-preview 和 veo-3.1-lite-generate-preview，推荐迁移至 Gemini Omni Flash",
+        "type": "sunset"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-23",
+        "text": "Mistral AI model_list 新增 Z.ai GLM 5.3 Flash 及 GLM 5.3 FlashOpen（第三方多模态模型，1M上下文），并新增通用文本嵌入模型",
+        "type": "release"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-23",
+        "text": "Cohere 发布 Model Vault 机密计算公测，基于NVIDIA GPU和Azure，提供硬件级保护与远程证明",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-23",
+        "text": "Artificial Analysis 将 Coding Agent Index 升级至 v2.0，采用 FrontierCode v1.1 等新基准",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-23",
+        "text": "新增 Ling 3.1 Flash 1019 评测，并更新 Claude 5.x、GLM-5.3、GPT-6 等模型排名",
+        "type": "other"
+      },
       {
         "platform": "Anthropic",
         "date": "2026-10-22",

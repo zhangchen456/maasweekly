@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_464ae959394dbabfc8d140d56191bd9125fe23eafef3ac02010637b3232a9d13",
+  "sourceId": "google-gemini-modellist",
+  "date": "2026-10-23",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Gemini API",
+  "sourceType": "model_list",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/models",
+  "title": "Google Gemini API · 模型列表来源更新",
+  "summary": "移除 veo-3.1-generate-preview 和 veo-3.1-lite-generate-preview，并注明这些模型于2026-10-22关闭，推荐使用 Gemini Omni Flash。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-23T00:11:10+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "last updated",
+        "before": "Last updated 2026-10-21 UTC.",
+        "after": "Last updated 2026-10-22 UTC."
+      },
+      {
+        "key": "thumb-up",
+        "before": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-21 UTC.\"],[],[]]",
+        "after": "[[[\"Easy to understand\",\"easyToUnderstand\",\"thumb-up\"],[\"Solved my problem\",\"solvedMyProblem\",\"thumb-up\"],[\"Other\",\"otherUp\",\"thumb-up\"]],[[\"Missing the information I need\",\"missingTheInformationINeed\",\"thumb-down\"],[\"Too complicated / too many steps\",\"tooComplicatedTooManySteps\",\"thumb-down\"],[\"Out of date\",\"outOfDate\",\"thumb-down\"],[\"Samples / code issue\",\"samplesCodeIssue\",\"thumb-down\"],[\"Other\",\"otherDown\",\"thumb-down\"]],[\"Last updated 2026-10-22 UTC.\"],[],[]]"
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [
+      "veo-3.1-generate-preview",
+      "veo-3.1-lite-generate-preview",
+      "| Legacy low-cost video generation preview model (shutting down October 22, 2026). We recommend updating to Gemini Omni Flash.",
+      "| Legacy video generation preview model (shutting down October 22, 2026). We recommend updating to Gemini Omni Flash.",
+      "| Veo 3.1 Lite"
+    ],
+    "added_count": 0,
+    "removed_count": 5,
+    "raw_added_count": 2,
+    "raw_removed_count": 7
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-23.json"
+  },
+  "permalink": "/item/obs_464ae959394dbabfc8d140d56191bd9125fe23eafef3ac02010637b3232a9d13/"
+}

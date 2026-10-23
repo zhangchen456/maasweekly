@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_7aab17b14d792257c7bde547dab369f4ca4b0de067dc4cbd751e222a643b3b56",
+  "sourceId": "anthropic-pricing",
+  "date": "2026-10-23",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "pricing",
+  "sourceUrl": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+  "title": "Anthropic · 定价来源更新",
+  "summary": "定价页大幅更新：新增 CCU 计费单元、Web search 定价、Google Cloud 托管端点说明，并调整了部分表述（如标点），整体对应 Claude on Google Cloud 新服务上线。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-23T00:11:10+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "academic and research discounts might be available",
+        "before": "Academic and research discounts might be available",
+        "after": "Academic and research discounts might be available."
+      },
+      {
+        "key": "all payments are in usd",
+        "before": "All payments are in USD",
+        "after": "All payments are in USD."
+      },
+      {
+        "key": "all tokens consumed by a claude managed agents session are billed at the rates shown in model pricing",
+        "before": "All tokens consumed by a Claude Managed Agents session are billed at the rates shown in Model pricing. Prompt caching multipliers apply identically. Web search triggered inside a session incurs the standard $10 USD per 1,000 searches. On Claude Platform on AWS, session token and runtime charges convert to Claude Consumption Units at the standard rate. Fast mode premium pricing applies when an agent's model.speed is set to \"fast\".",
+        "after": "All tokens consumed by a Claude Managed Agents session are billed at the rates shown in Model pricing. Prompt caching multipliers apply identically. Web search triggered inside a session incurs the standard $10 USD per 1,000 searches. On Claude Platform on AWS, session token and runtime charges convert to Claude Consumption Units at the standard rate (see Claude Platform on AWS pricing). Fast mode premium pricing applies when an agent's model.speed is set to \"fast\"."
+      },
+      {
+        "key": "billing is based on actual monthly usage",
+        "before": "Billing is based on actual monthly usage",
+        "after": "Billing is based on actual monthly usage."
+      },
+      {
+        "key": "multi-region",
+        "before": "Google Cloud global, multi-region, and regional endpoints",
+        "after": "Claude Models on Google Cloud (Google managed) global, multi-region, and regional endpoints"
+      },
+      {
+        "key": "enterprise customers can contact sales for custom pricing",
+        "before": "Enterprise customers can contact sales for custom pricing",
+        "after": "Enterprise customers can contact sales for custom pricing."
+      },
+      {
+        "key": "first-party",
+        "before": "Fast mode provides significantly faster output for Claude Opus 5.5, Claude Opus 5, and Claude Opus 4.8 at premium pricing. Fast mode for Claude Opus 5 and Claude Opus 4.8 is in research preview. Fast mode pricing applies across the full context window, including requests over 200k input tokens. Fast mode is available on the Claude API (first-party) and, for Claude Opus 5.5, on Claude in Microsoft Foundry for deployments hosted on Azure; it is not available on Claude Platform on AWS or partner-operated cloud platforms.",
+        "after": "Fast mode provides significantly faster output for Claude Opus 5.5, Claude Opus 5, and Claude Opus 4.8 at premium pricing. Fast mode for Claude Opus 5 and Claude Opus 4.8 is in research preview. Fast mode pricing applies across the full context window, including requests over 200k input tokens. Fast mode is available on the Claude API (first-party) and, for Claude Opus 5.5, on Claude Models on Google Cloud (Anthropic managed) and on Claude in Microsoft Foundry for deployments hosted on Azure."
+      }
+    ],
+    "added_lines": [
+      "Amazon Bedrock global versus regional endpoints for Opus 4.7, Haiku 4.5, and later models, or the legacy integration for all other models on Bedrock",
+      "Claude Models on Google Cloud (Google managed) offers global endpoints and multi-region endpoints (dynamic routing within a geographic area) for these models, and regional endpoints for Claude Sonnet 4.6 and earlier models.",
+      "Claude models are available on Amazon Bedrock and Claude Models on Google Cloud (Google managed). For official pricing, visit:",
+      "Credit card and invoicing options are available.",
+      "Standard usage tiers use the pricing shown in Model pricing.",
+      "This applies to the Claude API (first-party), Claude Platform on AWS, and Claude Models on Google Cloud (Anthropic managed). On Claude in Microsoft Foundry, the same 1.1x multiplier applies to deployments that use the US Data Zone Standard deployment type (see Inference geography). Partner-operated platforms, Bedrock and Claude Models on Google Cloud (Google managed), have independent regional pricing. See Bedrock pricing and Google Cloud pricing for details. Earlier models do not support the inference_geo parameter and always use standard pricing; requests that include the parameter on these models return a 400 error.",
+      "This section covers partner-operated cloud platforms, where the cloud provider invoices you. For Anthropic-operated cloud platforms billed through a marketplace, see Claude Platform on AWS pricing, Claude Models on Google Cloud (Anthropic managed) billing, and Claude in Microsoft Foundry pricing.",
+      "Usage tracking is available in the Claude Console at platform.claude.com.",
+      "Web search is available on the Claude API for $10 USD per 1,000 searches, plus standard token costs for search-generated content. Web search results retrieved throughout a conversation are counted as input tokens, in search iterations run during a single turn and in subsequent conversation turns.",
+      "| CCU price | $0.01 USD per CCU (fixed; discounts apply at token-to-CCU conversion, not to the CCU price)",
+      "| Cache read tokens | 40,000 × $4 × 0.05 / 1,000,000 | $0.008 USD",
+      "| Conversion | Token usage rated in USD at standard per-model, per-feature rates (same as Claude API pricing), then converted to CCUs at $0.01 USD per CCU",
+      "| Input tokens | 50,000 × $4 / 1,000,000 | $0.20 USD",
+      "| Output tokens | 15,000 × $20 / 1,000,000 | $0.30 USD",
+      "| Session runtime | $0.08 USD per session-hour | running status duration",
+      "| Session runtime | 1.0 hour × $0.08 | $0.08 USD",
+      "| Total | | $0.428 USD",
+      "| Total | | $0.58 USD",
+      "| Uncached input tokens | 10,000 × $4 / 1,000,000 | $0.04 USD"
+    ],
+    "removed_lines": [
+      "Amazon Bedrock global vs regional endpoints for Opus 4.7, Haiku 4.5, and later models, or the legacy integration for all other models on Bedrock",
+      "Claude models are available on Amazon Bedrock and Google Cloud. For official pricing, visit:",
+      "Credit card and invoicing options available"
+    ],
+    "added_count": 19,
+    "removed_count": 3,
+    "raw_added_count": 26,
+    "raw_removed_count": 26
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-23.json"
+  },
+  "permalink": "/item/obs_7aab17b14d792257c7bde547dab369f4ca4b0de067dc4cbd751e222a643b3b56/"
+}

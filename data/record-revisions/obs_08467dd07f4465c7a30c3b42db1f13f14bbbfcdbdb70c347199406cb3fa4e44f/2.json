@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_08467dd07f4465c7a30c3b42db1f13f14bbbfcdbdb70c347199406cb3fa4e44f",
+  "sourceId": "alibaba-modellist",
+  "date": "2026-10-23",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "阿里百炼",
+  "sourceType": "model_list",
+  "sourceUrl": "https://help.aliyun.com/zh/model-studio/models",
+  "title": "阿里百炼 · 模型列表来源更新",
+  "summary": "模型列表将 MiniMax-M3 替换为 MiniMax-M3.1-Flash，mimo-v2.5-pro 未变，表明该平台对 MiniMax 系列进行了版本升级。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-23T00:11:10+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "mimo-v2.5-pro",
+        "before": "| MiniMax-M3 | mimo-v2.5-pro |",
+        "after": "| MiniMax-M3.1-Flash | mimo-v2.5-pro |"
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [],
+    "added_count": 0,
+    "removed_count": 0,
+    "raw_added_count": 1,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-23.json"
+  },
+  "permalink": "/item/obs_08467dd07f4465c7a30c3b42db1f13f14bbbfcdbdb70c347199406cb3fa4e44f/"
+}
