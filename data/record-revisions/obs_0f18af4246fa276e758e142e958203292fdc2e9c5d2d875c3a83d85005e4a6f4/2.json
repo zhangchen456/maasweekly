@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_0f18af4246fa276e758e142e958203292fdc2e9c5d2d875c3a83d85005e4a6f4",
+  "sourceId": "aa-industry",
+  "date": "2026-10-24",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "新增 Kimi K3.1 Pro 评测结果（Intelligence Index 第 4），并引入 AA-PersonalityBench 新评测维度；同时调整 Elo 计算方式，移除部分旧模型列表。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-24T00:07:01+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "agentic interactive",
+        "before": "Agentic interactive 3D experiences, (Elo-500)/2000",
+        "after": "Agentic interactive 3D experiences, Elo"
+      },
+      {
+        "key": "agentic knowledge work",
+        "before": "Agentic knowledge work, (Elo-500)/2000",
+        "after": "Agentic knowledge work, Elo"
+      },
+      {
+        "key": "real-world",
+        "before": "Agentic real-world work tasks, (Elo-500)/2000",
+        "after": "Agentic real-world work tasks, Elo"
+      }
+    ],
+    "added_lines": [
+      "AA-PersonalityBench: Expressiveness Score",
+      "AA-PersonalityBench: Organization Score",
+      "AA-PersonalityBench: Slop Score",
+      "AA-PersonalityBench: Transparency Score",
+      "AnthropicMetaKimiOpenAIGoogleSpaceXAIXiaomiAlibabaDeepSeekZ AIStepFunMiniMaxMistralInstitute of Foundation ModelsReflectionThinking Machines",
+      "AnthropicMetaKimiOpenAIGoogleSpaceXAIXiaomiDeepSeekZ AIOther Models",
+      "CodingAgenticTool UsePrivate DatasetUser InteractionFinanceMedicalLegalIntelligence IndexPersonalityLong ContextMultimodalInstruction FollowingFaithfulnessWritingBusinessSee more",
+      "Evaluations measured independently by Artificial Analysis · AA-PersonalityBench scores are percentile ranks from 1 to 100",
+      "Kimi K3.1 Pro",
+      "Kimi K3.1 Pro launches at 4th on the Intelligence Index and will lead open weights models",
+      "Muse Wonder Full (Max)See more",
+      "Nemotron 3.5 Bolt E4B 4GB (Reasoning)",
+      "New article published · 23 Oct",
+      "New language model evaluation · 23 Oct",
+      "Rich, varied, well-crafted language",
+      "StepFunZ AIXiaomiOpenAIAnthropicMistralMetaSpaceXAIKimiReflectionGoogleAlibabaMiniMaxNVIDIADeepSeek",
+      "Truthful, acknowledges uncertainty, non-sycophantic",
+      "Use of filler and generic language",
+      "Well-structured, scannable, answer-first",
+      "| DeepSeek V4.1 Flash 1017 (Max) | 10 (48) | 10 (52) | 11 (46) | 9 (44) | 12 (45) | 14 (51)",
+      "| GLM-5.3 (Max) | 15 (45) | 13 (48) | 15 (42) | 11 (42) | 9 (47) | 13 (51)",
+      "| Gemini 3.8 Flash (High) | 11 (47) | 11 (48) | 9 (52) | 15 (40) | 15 (43) | 11 (52)",
+      "| Gemini 4 Argon (High) | 6 (54) | 6 (56) | 3 (60) | 8 (48) | 4 (55) | 4 (60)"
+    ],
+    "removed_lines": [
+      "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiAlibabaDeepSeekZ AIStepFunKimiMiniMaxMistralInstitute of Foundation ModelsReflectionThinking Machines",
+      "AnthropicMetaOpenAIGoogleSpaceXAIXiaomiDeepSeekZ AIOther Models",
+      "CodingAgenticTool UsePrivate DatasetUser InteractionFinanceMedicalLegalIntelligence IndexLong ContextMultimodalInstruction FollowingFaithfulnessWritingBusinessSee more"
+    ],
+    "added_count": 23,
+    "removed_count": 3,
+    "raw_added_count": 36,
+    "raw_removed_count": 28
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-24.json"
+  },
+  "permalink": "/item/obs_0f18af4246fa276e758e142e958203292fdc2e9c5d2d875c3a83d85005e4a6f4/"
+}

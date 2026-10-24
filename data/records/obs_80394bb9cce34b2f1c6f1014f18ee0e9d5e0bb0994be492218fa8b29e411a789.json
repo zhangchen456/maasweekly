@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_80394bb9cce34b2f1c6f1014f18ee0e9d5e0bb0994be492218fa8b29e411a789",
+  "sourceId": "minimax-pricing",
+  "date": "2026-10-24",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "MiniMax",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.minimaxi.com/docs/guides/pricing-paygo",
+  "title": "MiniMax · 定价来源更新",
+  "summary": "H3 系列定价表全面重构：新增 H3-Lite、H3-Highspeed 等模型，删除旧的按秒计费模式，改为按输出分辨率（480P/768P/2K）计费，并调整 Context-IR 和 Max 的价格。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-24T00:07:01+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "minimax-h",
+        "before": "MiniMax-H3 | 2K | 按秒计费 | 0.80 元/秒",
+        "after": "MiniMax-H3-Context-IR | ¥5.80 | ¥23.00"
+      },
+      {
+        "key": "minimax-h",
+        "before": "MiniMax-H3 | 768P | 按秒计费 | 0.50 元/秒",
+        "after": "MiniMax-H3-Max-Turbo：首帧、尾帧图片免费；不支持视频输入和参考生视频。"
+      },
+      {
+        "key": "minimax-h",
+        "before": "MiniMax-H3 | 图片 | 5 张以内免费，超出部分 0.20 元/张",
+        "after": "MiniMax-H3-Max：每次任务前 2 张图片免费，超出部分按张计费；输入视频按时长及输出分辨率计费。音频输入免费。"
+      },
+      {
+        "key": "minimax-h",
+        "before": "MiniMax-H3 | 视频 | 按输入视频时长及生成视频分辨率计费：2K 0.80 元/秒，768P 0.50 元/秒",
+        "after": "MiniMax-H3-Regeneration | 768P → 2K | ¥0.30 | ¥0.30 | ¥0.15"
+      }
+    ],
+    "added_lines": [
+      "H3 系列扩展模型 |",
+      "H3 系列旗舰模型 |",
+      "| 480P | ¥0.16 | ¥0.16 | ¥0.13",
+      "| 480P | ¥0.17 | 不支持 | 免费",
+      "| 480P | ¥0.33 | ¥0.37 | ¥0.50",
+      "| 768P | ¥0.50 | ¥0.50 | ¥0.20",
+      "| MiniMax-H3",
+      "| MiniMax-H3 | 支持 | 支持 | 支持 | 图片、视频、音频",
+      "| MiniMax-H3-Highspeed",
+      "| MiniMax-H3-Highspeed | 支持 | 支持 | 支持 | 图片、视频、音频",
+      "| MiniMax-H3-Lite",
+      "| MiniMax-H3-Lite | 支持 | 支持 | 支持 | 图片、视频、音频",
+      "| MiniMax-H3-Max",
+      "| MiniMax-H3-Max | 支持 | 支持 | 支持 | 图片、视频、音频",
+      "| MiniMax-H3-Max-Turbo",
+      "| MiniMax-H3-Max-Turbo | 支持 | 支持 | 支持 | 不支持",
+      "| 模型 | 文生 t2v | 图生 i2v | 首尾帧 fl2v | 参考生 ref",
+      "| 模型 | 输出分辨率 | 输出视频",
+      "| 模型/接口 | 规格 | 输出视频",
+      "| 模型/接口 | 输入价格",
+      "任务类型：同一模型、同一分辨率下，各任务类型单价相同；音频输入免费。",
+      "兼顾质量与速度，适合日常内容创作 | 768P | ¥0.40 | ¥0.40 | ¥0.20",
+      "再生成费用在原任务费用之外单独收取，包含再生成视频输出费及输入素材费。",
+      "原任务的输入素材重新计费：图片前 5 张免费，超出部分按张计费；视频按原输入时长计费；音频免费。",
+      "图片输入：每次任务前 5 张免费，超出部分按张计费；单价不随图片或输出视频分辨率变化。",
+      "支持图片、视频和音频参考，适合多素材视频创作 | 768P | ¥0.50 | ¥0.97 | ¥0.50"
+    ],
+    "removed_lines": [
+      "MiniMax-H3 | 音频 | 免费",
+      "MiniMax-H3-Context-IR | 5.80 元/百万 tokens | 23.00 元/百万 tokens",
+      "MiniMax-H3-Max | 480P | 按秒计费 | 0.33 元/秒",
+      "MiniMax-H3-Max | 768P | 按秒计费 | 0.50 元/秒视频生成-输入素材价格",
+      "MiniMax-H3-Max | 图片 | 2 张以内免费，超出部分 0.50 元/张",
+      "MiniMax-H3-Max | 视频 | 按输入视频时长及生成视频分辨率计费：480P 0.37 元/秒，768P 0.97 元/秒视频再生成-输出价格将已生成的 768P 视频进一步生成为 2K 视频，按视频再生成输出秒数计费。"
+    ],
+    "added_count": 26,
+    "removed_count": 6,
+    "raw_added_count": 36,
+    "raw_removed_count": 19
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-24.json"
+  },
+  "permalink": "/item/obs_80394bb9cce34b2f1c6f1014f18ee0e9d5e0bb0994be492218fa8b29e411a789/"
+}

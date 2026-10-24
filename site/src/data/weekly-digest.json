@@ -4,6 +4,14 @@
     "start": "2026-10-19",
     "end": "2026-10-25",
     "days": {
+      "2026-10-24": {
+        "substantive": 11,
+        "jitter": 5,
+        "failed": 8,
+        "releases": 4,
+        "pricings": 4,
+        "sunsets": 1
+      },
       "2026-10-23": {
         "substantive": 19,
         "jitter": 1,
@@ -46,12 +54,84 @@
       }
     },
     "totals": {
-      "substantive": 83,
-      "releases": 24,
-      "pricings": 9,
-      "sunsets": 8
+      "substantive": 94,
+      "releases": 28,
+      "pricings": 13,
+      "sunsets": 9
     },
     "highlights": [
+      {
+        "platform": "Kimi",
+        "date": "2026-10-24",
+        "text": "Kimi K3.1 Pro 旗舰模型正式发布，并新增 kimi-k3.1-pro 和 kimi-k3.1-pro-highspeed 参数约束说明",
+        "type": "release"
+      },
+      {
+        "platform": "Kimi",
+        "date": "2026-10-24",
+        "text": "K2 系列模型将于 2026-10-31 起停止向新注册用户开放，计划 12 月底下线所有 K2 系列模型",
+        "type": "sunset"
+      },
+      {
+        "platform": "Kimi",
+        "date": "2026-10-24",
+        "text": "K3 系列模型支持 1,048,576 tokens 上下文窗口，K2 系列支持 262,144 tokens",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-24",
+        "text": "Claude Fable 5.1 发布，作为 Claude Fable 5 的继任者，面向长时运行代理编码、知识工作和研究",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-24",
+        "text": "Claude Sonnet 5 定价调整：$2/$10 每 MTok 成为标准价格，原定 9 月涨价至 $3/$15 的计划取消",
+        "type": "pricing"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-24",
+        "text": "Claude Managed Agents 进入 beta，Structured outputs 支持 Claude Haiku 4.5，1小时缓存不再需要 beta 头",
+        "type": "other"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-24",
+        "text": "MiniMax-H3 系列新增 H3-Lite、H3-Highspeed 等模型，并重构定价为按输出分辨率计费",
+        "type": "release"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-24",
+        "text": "MiniMax-H3-Context-IR 定价调整为 ¥5.80/百万 tokens 输入，¥23.00/百万 tokens 输出",
+        "type": "pricing"
+      },
+      {
+        "platform": "MiniMax",
+        "date": "2026-10-24",
+        "text": "MiniMax-H3-Max 视频生成价格调整，新增 480P 档位 ¥0.16/秒，768P ¥0.50/秒",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-24",
+        "text": "Gemini 3 起，tuned model 端点预测价格在非全球区域为基座模型的 1.5 倍，全球区域与基座模型同价",
+        "type": "pricing"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-24",
+        "text": "Kimi K3.1 Pro 在 Intelligence Index 排名第 4，并成为开源权重模型的领先者",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-24",
+        "text": "新增 AA-PersonalityBench 评测维度（Expressiveness、Organization、Slop、Transparency）",
+        "type": "other"
+      },
       {
         "platform": "Anthropic",
         "date": "2026-10-23",

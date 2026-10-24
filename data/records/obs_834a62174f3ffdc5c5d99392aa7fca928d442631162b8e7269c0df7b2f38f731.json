@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_834a62174f3ffdc5c5d99392aa7fca928d442631162b8e7269c0df7b2f38f731",
+  "sourceId": "kimi-pricing",
+  "date": "2026-10-24",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Kimi",
+  "sourceType": "pricing",
+  "sourceUrl": "https://platform.kimi.com/docs/pricing/chat",
+  "title": "Kimi · 定价来源更新",
+  "summary": "新增 K3 系列 1,048,576 tokens 上下文窗口说明，以及 K2 系列下线公告（2026-10-31 停止新用户开放，12 月底下线）；同时更新计费说明，将 1M 改为 1 MTok，并简化缓存计费描述。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-24T00:07:01+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "模型推理接口对 input 和 output 均实行按量计费",
+        "before": "模型推理接口对 Input 和 Output 均实行按量计费。对于 K3 系列模型，缓存写入按 TTL（5min / 1h）单独计费；缓存命中的输入仅按缓存命中价格计费，不再重复收取缓存写入费用。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。",
+        "after": "模型推理接口对 Input 和 Output 均实行按量计费。对于 K3 系列模型，缓存写入按 TTL（5min / 1h）单独计费；缓存命中的输入仅按缓存命中价格计费，不再重复收取缓存写入费用。如果您上传并抽取文档内容，并将抽取的文档内容作为 Input 传输给模型，那么文档内容也将按量计费。文件相关接口（文件内容抽取/文件存储）限时免费，即您只上传并抽取文档时，文件接口本身不产生费用。关于如何提高缓存命中率、选择合适的 TTL 档位，详见 上下文缓存最佳实践 。"
+      },
+      {
+        "key": "🎉 kimi k",
+        "before": "🎉 Kimi K3 旗舰模型已正式发布，快来体验吧！",
+        "after": "🎉 Kimi K3.1 Pro 已正式发布，快来体验吧！"
+      }
+    ],
+    "added_lines": [
+      "K2 系列模型均支持 262,144 tokens 上下文窗口。",
+      "K3 系列模型均支持 1,048,576 tokens 上下文窗口。",
+      "Kimi K3.1 Pro 模型介绍",
+      "尊敬的 Kimi 用户，K2 系列模型将于 2026 年 10 月 31 日起停止向新注册用户开放，已注册用户不受影响；我们计划在 12 月底下线所有 K2 系列模型，请提前做好 迁移准备。",
+      "此处 1 MTok = 1,000,000 tokens，表格中的价格代表每消耗 1 MTok 的价格。",
+      "注：Kimi API 对重复的请求前缀 自动启用 上下文缓存计费，缓存有效期（time-to-live，TTL）默认为 5min。TTL 设置及成本优化建议详见 上下文缓存最佳实践。"
+    ],
+    "removed_lines": [
+      "此处 1M = 1,000,000，表格中的价格代表每消耗 1M tokens 的价格。",
+      "注：缓存写入 是指将请求前缀写入 上下文缓存 所产生的费用。Kimi API 对重复的请求前缀自动启用上下文缓存，缓存条目按有效期（TTL）分为 5min 和 1h 两档，不指定 TTL 时默认按 5min 档。在有效期内命中缓存的输入仅按”输入价格（缓存命中）“计费，命中后缓存有效期自动续期，不再收取缓存写入费用。"
+    ],
+    "added_count": 6,
+    "removed_count": 2,
+    "raw_added_count": 8,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-24.json"
+  },
+  "permalink": "/item/obs_834a62174f3ffdc5c5d99392aa7fca928d442631162b8e7269c0df7b2f38f731/"
+}

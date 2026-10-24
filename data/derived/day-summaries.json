@@ -5640,5 +5640,119 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-24": {
+    "highlights": [
+      {
+        "platform": "Kimi",
+        "logo_summary": "K3.1 Pro发布，K2系列即将下线",
+        "items": [
+          {
+            "text": "Kimi K3.1 Pro 旗舰模型正式发布，并新增 kimi-k3.1-pro 和 kimi-k3.1-pro-highspeed 参数约束说明",
+            "type": "release"
+          },
+          {
+            "text": "K2 系列模型将于 2026-10-31 起停止向新注册用户开放，计划 12 月底下线所有 K2 系列模型",
+            "type": "sunset"
+          },
+          {
+            "text": "K3 系列模型支持 1,048,576 tokens 上下文窗口，K2 系列支持 262,144 tokens",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Anthropic",
+        "logo_summary": "新模型发布，多项功能转正",
+        "items": [
+          {
+            "text": "Claude Fable 5.1 发布，作为 Claude Fable 5 的继任者，面向长时运行代理编码、知识工作和研究",
+            "type": "release"
+          },
+          {
+            "text": "Claude Sonnet 5 定价调整：$2/$10 每 MTok 成为标准价格，原定 9 月涨价至 $3/$15 的计划取消",
+            "type": "pricing"
+          },
+          {
+            "text": "Claude Managed Agents 进入 beta，Structured outputs 支持 Claude Haiku 4.5，1小时缓存不再需要 beta 头",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "MiniMax",
+        "logo_summary": "H3系列模型定价重构，新增多档位",
+        "items": [
+          {
+            "text": "MiniMax-H3 系列新增 H3-Lite、H3-Highspeed 等模型，并重构定价为按输出分辨率计费",
+            "type": "release"
+          },
+          {
+            "text": "MiniMax-H3-Context-IR 定价调整为 ¥5.80/百万 tokens 输入，¥23.00/百万 tokens 输出",
+            "type": "pricing"
+          },
+          {
+            "text": "MiniMax-H3-Max 视频生成价格调整，新增 480P 档位 ¥0.16/秒，768P ¥0.50/秒",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Google Vertex AI",
+        "logo_summary": "定价规则调整，聚焦区域差异",
+        "items": [
+          {
+            "text": "Gemini 3 起，tuned model 端点预测价格在非全球区域为基座模型的 1.5 倍，全球区域与基座模型同价",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Artificial Analysis",
+        "logo_summary": "新增Kimi K3.1 Pro评测，榜单更新",
+        "items": [
+          {
+            "text": "Kimi K3.1 Pro 在 Intelligence Index 排名第 4，并成为开源权重模型的领先者",
+            "type": "release"
+          },
+          {
+            "text": "新增 AA-PersonalityBench 评测维度（Expressiveness、Organization、Slop、Transparency）",
+            "type": "other"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_c82a57d16d2624e880fec9571fe433c02492b7d7683709579b6318ffd8436792": "文档配置变化，主题色等元数据调整，无实质模型列表变更。",
+      "obs_825b64b3194fbcf8d3336583ba734e3ca794855929ac7bd06411ecc6df6facd5": "文档配置变化，与 model_list 相同，无实质内容更新。",
+      "obs_22cfa4b2bf1d5ad4e79de7628fe5b0471f76fb057afc56ece701463b2fb583f5": "新增 kimi-k3.1-pro 和 kimi-k3.1-pro-highspeed 的参数约束说明，并明确与 kimi-k3 一致；同时删除旧参数约束描述，对应新模型上架。",
+      "obs_834a62174f3ffdc5c5d99392aa7fca928d442631162b8e7269c0df7b2f38f731": "新增 K3 系列 1,048,576 tokens 上下文窗口说明，以及 K2 系列下线公告（2026-10-31 停止新用户开放，12 月底下线）；同时更新计费说明，将 1M 改为 1 MTok，并简化缓存计费描述。",
+      "obs_110351e29342fe716764c5e81b49e59fe62e2d8c22fb96c877da9f3f5f182c4b": "公告标题从 K3 旗舰模型更新为 K3.1 Pro，对应新模型发布。",
+      "obs_80394bb9cce34b2f1c6f1014f18ee0e9d5e0bb0994be492218fa8b29e411a789": "H3 系列定价表全面重构：新增 H3-Lite、H3-Highspeed 等模型，删除旧的按秒计费模式，改为按输出分辨率（480P/768P/2K）计费，并调整 Context-IR 和 Max 的价格。",
+      "obs_518d0aec7f9ea4ffad84fc2bfe76857bc205f46d6b63a0cbe4a3cd8d51c1f8a8": "新增 Claude Models on Google Cloud (Anthropic managed) 的模型 ID 列表，包含 claude-fable-5-1、claude-opus-5-5 等，对应新模型上架。",
+      "obs_49f0ce160952a0129147135fe17f0edb258e8359695a1e1aadf89736b5e5712d": "新增 Claude Fable 5.1 发布、Managed Agents beta、Structured outputs 支持 Haiku 4.5、1小时缓存无需 beta 头、Sonnet 5 定价转正等多项更新；同时移除旧 beta 状态描述，对应功能转正。",
+      "obs_39daa08f85b95e1fa058e5d8ed530a030f68c936472f890ce74ff0b4500a1d9d": "调整 tuned model 端点定价规则：从统一 1.5 倍改为区分全球区域（同价）和非全球区域（1.5 倍），并明确适用于 Gemini 3 及之后模型。",
+      "obs_1cf6835ad0c81ca21fa04398c18e10cb9b43a53876fccbc6d501dbc3b449d8f1": "更新日期至 2026-10-22，无实质内容变化。",
+      "obs_0f18af4246fa276e758e142e958203292fdc2e9c5d2d875c3a83d85005e4a6f4": "新增 Kimi K3.1 Pro 评测结果（Intelligence Index 第 4），并引入 AA-PersonalityBench 新评测维度；同时调整 Elo 计算方式，移除部分旧模型列表。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "5f077b4c53a417774891260a08ed9f636a1b74358073498ea358f7d87b29b7c8",
+      "inputRefs": [
+        "obs_0f18af4246fa276e758e142e958203292fdc2e9c5d2d875c3a83d85005e4a6f4",
+        "obs_110351e29342fe716764c5e81b49e59fe62e2d8c22fb96c877da9f3f5f182c4b",
+        "obs_1cf6835ad0c81ca21fa04398c18e10cb9b43a53876fccbc6d501dbc3b449d8f1",
+        "obs_22cfa4b2bf1d5ad4e79de7628fe5b0471f76fb057afc56ece701463b2fb583f5",
+        "obs_39daa08f85b95e1fa058e5d8ed530a030f68c936472f890ce74ff0b4500a1d9d",
+        "obs_49f0ce160952a0129147135fe17f0edb258e8359695a1e1aadf89736b5e5712d",
+        "obs_518d0aec7f9ea4ffad84fc2bfe76857bc205f46d6b63a0cbe4a3cd8d51c1f8a8",
+        "obs_80394bb9cce34b2f1c6f1014f18ee0e9d5e0bb0994be492218fa8b29e411a789",
+        "obs_825b64b3194fbcf8d3336583ba734e3ca794855929ac7bd06411ecc6df6facd5",
+        "obs_834a62174f3ffdc5c5d99392aa7fca928d442631162b8e7269c0df7b2f38f731",
+        "obs_c82a57d16d2624e880fec9571fe433c02492b7d7683709579b6318ffd8436792"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }
