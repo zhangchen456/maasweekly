@@ -1,6 +1,6 @@
 # 运行与数据新鲜度修复（2026-10-26）
 
-状态：**本地候选已验证，尚未推送、合并或发布**。基于生产提交 `6fb8e2b7517d099aca4fa27822af8a889ce961a8`。
+状态：**已发布并完成线上验收（2026-10-26 11:53，Asia/Shanghai）**。修复基于生产起点提交 `6fb8e2b7517d099aca4fa27822af8a889ce961a8`。
 
 ## 问题与修复
 
@@ -41,11 +41,22 @@ SWE保留mini-SWE-agent环境并记录每行版本，Terminal保留2.1口径；�
 
 第一轮75通过/1失败的英文刷新测试已修正：从已翻译且有价格记录的详情页选择刷新样本，不依赖推荐列表必定非空，不放宽推荐条件；第二轮完整构建通过。
 
-本地发布包：`dist-release/rl_343944ea51_f1b4ab685a24/`；75,352个文件，2,384,569,087字节，已保留供审批和后续使用。
+本地验收发布包曾保留于 `dist-release/rl_343944ea51_f1b4ab685a24/`，75,352个文件，2,384,569,087字节；生产由合并提交重新构建同一数据集，完成验收后清理本地重复包。
 公开数据版本：`ds_f1b4ab685a244b3358a36713c2d89cf59ac62b0ebe206fc86320e4f82bb1456b`，数据截至2026-10-26。
 候选状态为67路正常/1路Arena失败，10路价格正常；历史未再观察到的报价保留原金额和时间并标stale。
 
 完整构建记录见 [validation.txt](validation.txt)，机器可读结果见 [validation.json](validation.json)，候选覆盖状态见 [candidate-data.json](candidate-data.json)。
 实际读取证据见 [信源复测](sources-live-result.json) 与 [价格复测](prices-live-result.json)。
 
-Git推送被自动批准审查拒绝，未向远端提交本次源码或数据；本地完成后需用户明确批准推送并创建PR。
+## 发布记录
+
+用户在完整本地验收后明确“批准确认”推送、创建 PR，并在检查通过后合并上线。
+[PR #10](https://github.com/zhangchen456/maasweekly/pull/10) 已合并为 `162fb349840587f6a4cd48c7a39022e4b5a4c075`；受验提交到 PR head 的差异仅为文档，代码与数据一致。
+[生产 workflow 40264337387](https://github.com/zhangchen456/maasweekly/actions/runs/40264337387) 已成功完成：在合并提交重新执行标准构建，76项检查通过、0失败，clean-tree与manifest通过；蓝绿激活及REST/MCP/RSS/Skill四入口验收全部通过。
+生产 release 为 `rl_162fb34984_f1b4ab685a24`，数据截至2026-10-26。验证摘要见 [deployment-validation.json](deployment-validation.json) 和 [deployment-validation.txt](deployment-validation.txt)。
+
+独立匿名只读核验将公开status的来源、价格来源、覆盖计数等逐项与本地候选比较，并核对Kimi全部24条、Google前100条价格记录以及首页/中英文榜单，全部一致。
+公开来源状态从47正常/12未知/9失败变为67正常/1失败；价格来源从8正常/2未知变为10正常。该变化包含状态口径纠正与抓取恢复，不表示新增了20个来源。
+前后证据分别为 [production-before.json](production-before.json) 和 [production-after.json](production-after.json)。
+
+此前推送因缺少明确出站授权被自动批准审查拒绝；获得用户授权后推送成功。首次合并也因 PR 没有 GitHub 检查记录被拒绝；核实仓库没有 PR 触发工作流、已提交的本地76/0验证记录与代码一致后，补齐依据并合并成功。

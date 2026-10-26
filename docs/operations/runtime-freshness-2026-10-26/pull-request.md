@@ -11,4 +11,6 @@
 
 证据：docs/operations/runtime-freshness-2026-10-26/README.md、validation.json、validation.txt。
 
-剩余：Arena的Cloudflare拦截；正式周报仍为2026-10-13；此次手工榜单复核未新增自动调度。当前未推送、合并或部署。
+发布：PR #10已合并，workflow40264337387成功；生产重新执行76项检查、0失败，四入口验收与独立线上核对通过，release为rl_162fb34984_f1b4ab685a24。详见本目录README.md与deployment-validation.*。
+
+剩余：Arena的Cloudflare拦截；正式周报仍为2026-10-13；此次手工榜单复核未新增自动调度。

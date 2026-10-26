@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-10-26T03:53:06.924823+00:00",
+  "datasetVersion": "ds_f1b4ab685a244b3358a36713c2d89cf59ac62b0ebe206fc86320e4f82bb1456b",
+  "dataThrough": "2026-10-26",
+  "sourceStates": {
+    "ok": 67,
+    "failing": 1
+  },
+  "priceSourceStates": {
+    "ok": 10
+  },
+  "publicStatusMatchesCandidate": true,
+  "priceSamplesMatchCandidate": {
+    "kimi": {
+      "recordsMatched": 24,
+      "quality": {
+        "fresh": 24
+      }
+    },
+    "google": {
+      "recordsMatched": 100,
+      "quality": {
+        "stale": 24,
+        "fresh": 76
+      }
+    }
+  },
+  "publicPages": 3,
+  "latestWeekly": "2026-10-13",
+  "result": "passed",
+  "server": {"activeApiSlot": "green", "nginx": "active", "api": "active", "failedUnits": 0, "diskUsedPercent": 47, "diskAvailableGiB": 20, "retainedReleases": 3, "incomingEmpty": true},
+  "previousReleaseId": "rl_6fb8e2b751_36d729c032d0",
+  "releaseId": "rl_162fb34984_f1b4ab685a24",
+  "gitCommit": "162fb349840587f6a4cd48c7a39022e4b5a4c075",
+  "pullRequest": "https://github.com/zhangchen456/maasweekly/pull/10",
+  "workflow": "https://github.com/zhangchen456/maasweekly/actions/runs/40264337387"
+}
