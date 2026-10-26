@@ -24,6 +24,20 @@ def snapshot(provider, day='2026-10-02', raw=RAW):
     return ContentSnapshot('snap-'+sha[:24],provider+':pricing','https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing',datetime.fromisoformat(day).replace(tzinfo=timezone.utc).timestamp(),200,'text/html',sha,raw)
 
 class CrossPlatformTests(unittest.TestCase):
+    def test_current_claude_table_uses_200k_columns_and_ignores_haiku_100k_columns(self):
+        raw = (ROOT/'tests/fixtures/pricing/vertex_pricing_2026-10-26.html').read_text()
+        result = VertexPricingExtractor('vertex-anthropic').extract(snapshot('vertex-anthropic', '2026-10-26', raw))
+        self.assertFalse(normalize_and_validate(result).rejected)
+        self.assertEqual({f.model_key for f in result.price_facts}, {'claude-sonnet-5.5', 'claude-opus-5.5'})
+        prices = {(f.model_key, f.component, f.region, f.billing_mode, f.context_band.min_input_tokens): f.amount
+                  for f in result.price_facts if f.component in ('input', 'output')}
+        self.assertEqual(prices['claude-sonnet-5.5', 'input', 'global', 'realtime', 0], '2.000000')
+        self.assertEqual(prices['claude-sonnet-5.5', 'output', 'global', 'realtime', 200001], '10.000000')
+        self.assertEqual(prices['claude-opus-5.5', 'input', 'us', 'realtime', 0], '4.400000')
+        self.assertEqual(len(result.price_facts), len({f.fact_key for f in result.price_facts}))
+        unknown = raw.replace('200K', '400K')
+        self.assertEqual(VertexPricingExtractor('vertex-anthropic').extract(snapshot('vertex-anthropic', raw=unknown)).price_facts, [])
+
     def test_actual_cloud_table_separates_platform_regions_and_tiers(self):
         google=VertexPricingExtractor('vertex-google').extract(snapshot('vertex-google'))
         claude=VertexPricingExtractor('vertex-anthropic').extract(snapshot('vertex-anthropic'))

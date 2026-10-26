@@ -1,0 +1,125 @@
+{
+  "status": "local_candidate",
+  "datasetVersion": "ds_f1b4ab685a244b3358a36713c2d89cf59ac62b0ebe206fc86320e4f82bb1456b",
+  "dataThrough": "2026-10-26",
+  "sourceStates": {
+    "ok": 67,
+    "failing": 1
+  },
+  "failedSources": [
+    "lmarena-industry"
+  ],
+  "priceStreams": [
+    {
+      "sourceKey": "anthropic:pricing",
+      "sourceId": "anthropic-pricing",
+      "providerId": "anthropic",
+      "state": "ok",
+      "coverage": "full",
+      "lastAttemptAt": "2026-10-26T01:57:19Z",
+      "lastSuccessAt": "2026-10-26T01:57:19Z",
+      "reason": null
+    },
+    {
+      "sourceKey": "deepseek:pricing",
+      "sourceId": "deepseek-pricing",
+      "providerId": "deepseek",
+      "state": "ok",
+      "coverage": "full",
+      "lastAttemptAt": "2026-10-26T01:57:08Z",
+      "lastSuccessAt": "2026-10-26T01:57:08Z",
+      "reason": null
+    },
+    {
+      "sourceKey": "doubao:pricing",
+      "sourceId": "volcengine-pricing",
+      "providerId": "volcengine",
+      "state": "ok",
+      "coverage": "full",
+      "lastAttemptAt": "2026-10-26T01:57:28Z",
+      "lastSuccessAt": "2026-10-26T01:57:28Z",
+      "reason": null
+    },
+    {
+      "sourceKey": "glm:pricing",
+      "sourceId": "zhipu-pricing",
+      "providerId": "zhipu",
+      "state": "ok",
+      "coverage": "full",
+      "lastAttemptAt": "2026-10-26T01:57:29Z",
+      "lastSuccessAt": "2026-10-26T01:57:29Z",
+      "reason": null
+    },
+    {
+      "sourceKey": "google:pricing",
+      "sourceId": "google-gemini-pricing",
+      "providerId": "google",
+      "state": "ok",
+      "coverage": "full",
+      "lastAttemptAt": "2026-10-26T01:57:39Z",
+      "lastSuccessAt": "2026-10-26T01:57:39Z",
+      "reason": null
+    },
+    {
+      "sourceKey": "kimi:pricing",
+      "sourceId": "kimi-pricing",
+      "providerId": "kimi",
+      "state": "ok",
+      "coverage": "full",
+      "lastAttemptAt": "2026-10-26T01:57:38Z",
+      "lastSuccessAt": "2026-10-26T01:57:38Z",
+      "reason": null
+    },
+    {
+      "sourceKey": "openai:pricing",
+      "sourceId": "openai-pricing",
+      "providerId": "openai",
+      "state": "ok",
+      "coverage": "full",
+      "lastAttemptAt": "2026-10-26T01:57:43Z",
+      "lastSuccessAt": "2026-10-26T01:57:43Z",
+      "reason": null
+    },
+    {
+      "sourceKey": "qwen:pricing",
+      "sourceId": "alibaba-pricing",
+      "providerId": "alibaba",
+      "state": "ok",
+      "coverage": "full",
+      "lastAttemptAt": "2026-10-26T01:57:49Z",
+      "lastSuccessAt": "2026-10-26T01:57:49Z",
+      "reason": null
+    },
+    {
+      "sourceKey": "vertex-anthropic:pricing",
+      "sourceId": "google-vertex-pricing",
+      "providerId": "google",
+      "state": "ok",
+      "coverage": "full",
+      "lastAttemptAt": "2026-10-26T01:57:54Z",
+      "lastSuccessAt": "2026-10-26T01:57:54Z",
+      "reason": null
+    },
+    {
+      "sourceKey": "vertex-google:pricing",
+      "sourceId": "google-vertex-pricing",
+      "providerId": "google",
+      "state": "ok",
+      "coverage": "full",
+      "lastAttemptAt": "2026-10-26T01:58:05Z",
+      "lastSuccessAt": "2026-10-26T01:58:05Z",
+      "reason": null
+    }
+  ],
+  "priceQuality": {
+    "fresh": 1162,
+    "stale": 835
+  },
+  "priceStaleReasons": {
+    "not_observed_in_latest_fetch": 835
+  },
+  "weekly": {
+    "count": 29,
+    "latestId": "2026-10-13"
+  }
+}

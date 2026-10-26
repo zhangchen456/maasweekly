@@ -15,7 +15,7 @@ _MODELS = {
 
 
 class VertexPricingExtractor:
-    version = 'vertex-2'
+    version = 'vertex-3'
 
     def __init__(self, provider_id):
         if provider_id not in _MODELS:
@@ -44,7 +44,13 @@ class VertexPricingExtractor:
             else:
                 if label not in ('Global', 'US Multi-Region (US)', 'EU Multi-Region (EU)'):
                     continue
-                if len(headers) != 4 or headers[:2] != ['Model', 'Type']:
+                if len(headers) not in (4, 6) or headers[:2] != ['Model', 'Type']:
+                    continue
+                # Haiku's added 100K columns do not change Sonnet/Opus's
+                # 200K columns. Unknown band shapes must remain rejected.
+                if not all('200K' in h and '1M' in h and 'tokens' in h for h in headers[2:4]):
+                    continue
+                if len(headers) == 6 and not all('100K' in h and '1M' in h and 'tokens' in h for h in headers[4:6]):
                     continue
             if not all('200K' in h and 'tokens' in h for h in headers[3:5] if google) or ('1M' not in ' '.join(headers)):
                 continue

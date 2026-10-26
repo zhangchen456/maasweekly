@@ -74,6 +74,7 @@ class LoadedInputs:
         self.current: dict = {}                   # price-facts/current.json
         self.weekly: list[dict] = []              # {id, frontmatter, structured}
         self.daily_changes: dict = {}             # standard source streams + independent summaries
+        self.source_runtime: dict = {}            # committed fetch attempts, including unchanged
         self.source_registry: list[dict] = []
         self.provider_map: dict = {}
 
@@ -125,9 +126,10 @@ def load_all(input_root: Path, provider_map_path: Path) -> LoadedInputs:
             "structured": structured,
         })
 
-    # 来源状态流（滚动窗口；窗口外推导为 unknown）
-    from data_store import compose_daily
+    # Read both fallbacks and actual attempts from the same committed input view.
+    from data_store import compose_daily, read
     li.daily_changes = compose_daily(root, view=view)
+    li.source_runtime = read(root, "data/normalized/source-runtime.json", {}, view=view)
     return li
 
 
