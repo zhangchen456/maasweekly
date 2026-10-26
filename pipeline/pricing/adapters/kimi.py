@@ -39,20 +39,13 @@ from .common import (
     stable_identity
 )
 
-_EXTRACTOR_VERSION_KIMI = "kimi-3"
+_EXTRACTOR_VERSION_KIMI = "kimi-4"
 
 class KimiPricingExtractor:
-    """解析 Kimi（Moonshot）价格页（M6：真实 JS bundle 数据）。
+    """Parse the rendered pricing tables by leaf headers, including cache TTLs.
 
-    Kimi 文档站用 Mintlify 框架，价格不在 <table> 而是内联在 JS bundle 的
-    结构化对象里：``rows:[[`kimi-k3`,`1M tokens`,`¥2.00`,`¥20.00`,`¥100.00`,`1,048,576 tokens`]]``
-    列序固定：[0]模型 [1]计费单位 [2]输入(缓存命中) [3]输入(缓存未命中) [4]输出 [5]上下文窗口。
-    → [2]cache_read, [3]input, [4]output。
-
-    模型分散在多个子页（chat-k3/chat-k27-code/chat-k26...），单页只有 1-2 个模型。
-    KimiProvider 在 fetch 内部抓主页提取子页链接、逐个渲染子页、合成一个含全部
-    子页 rows 的 HTML snapshot；本 extractor 从拼接 HTML 里正则提取所有 rows 块。
-    多行 rows（``[[...],[...]]``，一个子页含多模型）用递归正则展开。
+    Current K3/K2 tables use grouped headers with different column counts.
+    Historical six-column JS rows and Markdown remain replayable fallbacks.
     """
 
     version = _EXTRACTOR_VERSION_KIMI
@@ -70,8 +63,10 @@ class KimiPricingExtractor:
         models, facts, evidence = [], [], []
         ev_idx = 0
         for table in _parse_html_tables(html):
-            header = table.rows[0]
-            if not any("缓存未命中" in h for h in header):
+            header = table.rows[max(0, table.header_rows - 1)]
+            # K3/K2 now have grouped headers. Read leaf labels, never assume
+            # the former cache/input/output column order still applies.
+            if not any(h == "输入" or "缓存未命中" in h for h in header) or not any("输出" in h for h in header):
                 continue
             ev, ev_idx = _evidence_for_html(snapshot, ev_idx, table, self.version)
             evidence.append(ev)
@@ -83,9 +78,14 @@ class KimiPricingExtractor:
                     comp, tc = None, None
                     if "缓存写入" in label:
                         comp = "cache_write"
-                        duration = "1h" if "1h" in label else "5m"
+                        if re.search(r"1h|1小时", label):
+                            duration = "1h"
+                        elif re.search(r"5min|5m|5分钟", label):
+                            duration = "5m"
+                        else:
+                            continue
                         tc = TimeCondition(period="cache_write_" + duration, tz="UTC", schedule=duration)
-                    elif "缓存未命中" in label:
+                    elif label == "输入" or "缓存未命中" in label:
                         comp = "input"
                     elif "缓存命中" in label:
                         comp = "cache_read"
@@ -99,7 +99,8 @@ class KimiPricingExtractor:
                             "realtime", price, region=_region_for("kimi"), time_condition=tc))
                 models.append(ModelProfile(provider_id="kimi", model_key=name,
                     display_name=name, model_class="flagship", lifecycle_status="active",
-                    context_window_tokens=_parse_tokens(row[-1]), evidence_id=ev.evidence_id))
+                    context_window_tokens=_parse_tokens(row[-1]) if "窗口" in header[-1] else None,
+                    evidence_id=ev.evidence_id))
         return ExtractionResult(snapshot_id=snapshot.snapshot_id, extractor_version=self.version,
             models=models, price_facts=facts, evidence=evidence, warnings=_drift_warnings("kimi", facts))
 

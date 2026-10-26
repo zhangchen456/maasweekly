@@ -16,6 +16,9 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from datetime import datetime
+from zoneinfo import ZoneInfo
+import math
 
 from .loaders import ExportError
 
@@ -62,9 +65,9 @@ def _price_source_id(pm: dict, source_key: str) -> str:
 
 
 class SourceStatusIndex:
-    """Task 01 来源状态：daily_changes failed 联查（滚动窗口，精度=日）。"""
+    """Committed fetch state, with the historical diff window as a legacy fallback."""
 
-    def __init__(self, daily_changes: dict, source_registry: list[dict]):
+    def __init__(self, daily_changes: dict, source_registry: list[dict], runtime: dict | None = None):
         # url → sourceId（primary_url 与 url_aliases 都算）
         self._url_to_sid: dict[str, str] = {}
         for s in source_registry:
@@ -91,6 +94,30 @@ class SourceStatusIndex:
                     slot["seen"].add(sid)
                     slot["failed"].add(sid)
         self._by_day = by_day
+        self._runtime = {}
+        known = {s["source_id"] for s in source_registry}
+        if runtime is not None and not isinstance(runtime, dict):
+            raise ExportError("来源运行状态必须为对象")
+        for value in (runtime or {}).values():
+            if not isinstance(value, dict):
+                raise ExportError("来源运行状态记录必须为对象")
+            sid = value.get("sourceId")
+            if sid not in known:  # The runtime also contains leaderboard collectors.
+                continue
+            outcome = value.get("outcome")
+            if outcome not in ("success", "unchanged", "failed"):
+                raise ExportError(f"非法来源运行状态: {sid}")
+            for key in ("latestAttemptAt", "lastSuccessAt"):
+                stamp = value.get(key)
+                if stamp is None and key == "lastSuccessAt":
+                    continue
+                if isinstance(stamp, bool) or not isinstance(stamp, (int, float)) or not math.isfinite(stamp) or not 0 < stamp < 253402214400:
+                    raise ExportError(f"非法来源运行时间: {sid}/{key}")
+            if outcome != "failed" and value.get("lastSuccessAt") is None:
+                raise ExportError(f"来源成功记录缺少成功时间: {sid}")
+            previous = self._runtime.get(sid)
+            if previous is None or value["latestAttemptAt"] > previous["latestAttemptAt"]:
+                self._runtime[sid] = value
 
     def _resolve_entry(self, entry: dict) -> str | None:
         url = entry.get("url")
@@ -101,6 +128,15 @@ class SourceStatusIndex:
 
     def status_of(self, source_id: str) -> dict:
         """{state, reason, lastAttemptDate, lastSuccessDate}（unknown 时时间为 null）。"""
+        current = self._runtime.get(source_id)
+        if current:
+            def date(stamp):
+                return datetime.fromtimestamp(stamp, ZoneInfo("Asia/Shanghai")).date().isoformat() if stamp else None
+            failed = current["outcome"] == "failed"
+            return {"state": "failing" if failed else "ok",
+                    "reason": "fetch_failed" if failed else None,
+                    "lastAttemptDate": date(current["latestAttemptAt"]),
+                    "lastSuccessDate": date(current.get("lastSuccessAt"))}
         days = sorted(d for d, slot in self._by_day.items()
                       if source_id in slot["seen"])
         if not days:
@@ -109,10 +145,7 @@ class SourceStatusIndex:
         last = days[-1]
         slot = self._by_day[last]
         if source_id in slot["failed"]:
-            err = next((c.get("error") for c in
-                        (self._by_day[last].get("entries_failed") or [])
-                        if self._resolve_entry(c) == source_id), None)
-            return {"state": "failing", "reason": err,
+            return {"state": "failing", "reason": "fetch_failed",
                     "lastAttemptDate": last,
                     "lastSuccessDate": _last_ok(days, self._by_day, source_id)}
         return {"state": "ok", "reason": None, "lastAttemptDate": last,
@@ -275,7 +308,12 @@ def project_price_fact(pfv: dict, pm: dict,
     provider_id = _price_provider_of(pm, pfv["provider_id"])
     source_id = _price_source_id(pm, source_key)
     src = price_source_status.get(source_key) or {}
-    stale = pfv.get("field_state") == "stale" or src.get("status") != "ok"
+    # A successful source fetch does not re-confirm facts absent from that
+    # observation. Keep their immutable versions, but do not label them fresh.
+    observed = pfv.get("observed_at")
+    latest_success = src.get("lastSuccessEpoch")
+    not_observed = observed is not None and latest_success is not None and observed < latest_success
+    stale = pfv.get("field_state") == "stale" or src.get("status") != "ok" or not_observed
     ev = {
         "id": pfv["version_id"],
         "factKey": pfv["fact_key"],
@@ -299,7 +337,7 @@ def project_price_fact(pfv: dict, pm: dict,
         "evidenceStatus": pfv.get("evidence_status"),
         "quality": {
             "state": "stale" if stale else "fresh",
-            "reason": pfv.get("stale_reason") or (src.get("reason") if stale else None),
+            "reason": pfv.get("stale_reason") or (src.get("reason") if stale else None) or ("not_observed_in_latest_fetch" if not_observed else None),
             "lastSuccessAt": src.get("lastSuccessAt"),
         },
         "links": {
@@ -421,6 +459,7 @@ def build_price_source_status(current: dict) -> dict:
             "coverage": src.get("coverage"),
             "reason": src.get("reason"),
             "lastSuccessAt": _iso(src.get("last_success_at")),
+            "lastSuccessEpoch": src.get("last_success_at"),
         }
     return out
 

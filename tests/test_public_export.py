@@ -533,5 +533,58 @@ class TestIdentityCatalog(unittest.TestCase):
         self.assertNotEqual(run_cli('--check', '--output-dir', str(self.out)).returncode, 0)
 
 
+class TestSourceRuntimeStatus(unittest.TestCase):
+    def test_successful_source_does_not_make_absent_old_price_fresh(self):
+        from public_export.projector import build_price_source_status, project_price_fact
+        old = make_price_event()['pfv']
+        when = old['observed_at'] + 86400
+        sources = build_price_source_status({'sources': {'openai:pricing': {'status': 'ok', 'last_success_at': when}}})
+        pm = json.loads(PROVIDER_MAP.read_text())
+        projected = project_price_fact(old, pm, sources, {})
+        self.assertEqual(projected['quality']['state'], 'stale')
+        self.assertEqual(projected['quality']['reason'], 'not_observed_in_latest_fetch')
+        self.assertEqual((projected['id'], projected['amount'], projected['observedAt']),
+                         (old['version_id'], old['amount'], old['observedAt']))
+        current = dict(old, observed_at=when)
+        self.assertEqual(project_price_fact(current, pm, sources, {})['quality']['state'], 'fresh')
+
+    def test_unchanged_success_clears_historical_failure_without_new_change(self):
+        from public_export.projector import SourceStatusIndex
+        from datetime import datetime, timezone
+        stamp = datetime(2026, 10, 25, 23, 14, tzinfo=timezone.utc).timestamp()
+        registry = [{"source_id": "openai-blog", "primary_url": "https://example.com/blog"}]
+        old = {"days": [{"date": "2026-09-07", "failed": [{"url": "https://example.com/blog", "error": "old failure"}]}]}
+        index = SourceStatusIndex(old, registry, {"http_test": {"sourceId": "openai-blog",
+            "outcome": "unchanged", "latestAttemptAt": stamp, "lastSuccessAt": stamp}})
+        self.assertEqual(index.status_of("openai-blog"), {"state": "ok", "reason": None,
+            "lastAttemptDate": "2026-10-26", "lastSuccessDate": "2026-10-26"})
+
+    def test_latest_attempt_wins_and_failed_attempt_keeps_actual_last_success(self):
+        from public_export.projector import SourceStatusIndex
+        registry = [{"source_id": "test"}]
+        runtime = {"older": {"sourceId": "test", "outcome": "success", "latestAttemptAt": 1792713600, "lastSuccessAt": 1792713600},
+                   "newer": {"sourceId": "test", "outcome": "failed", "latestAttemptAt": 1792972800, "lastSuccessAt": 1792713600}}
+        for entries in (runtime, dict(reversed(list(runtime.items())))):
+            self.assertEqual(SourceStatusIndex({}, registry, entries).status_of("test"),
+                {"state": "failing", "reason": "fetch_failed", "lastAttemptDate": "2026-10-26", "lastSuccessDate": "2026-10-23"})
+
+    def test_loader_uses_committed_runtime_and_rejects_invalid_runtime(self):
+        from public_export.loaders import load_all, ExportError
+        from public_export.projector import SourceStatusIndex
+        from input_snapshot import capture
+        fixture = FixtureRepo()
+        self.addCleanup(fixture.cleanup)
+        runtime = {"http_test": {"sourceId": "openai-blog", "outcome": "unchanged",
+                               "latestAttemptAt": 1792972800, "lastSuccessAt": 1792972800}}
+        path = fixture._p("data/normalized/source-runtime.json")
+        path.write_text(json.dumps(runtime))
+        capture(fixture.root, "runtime-fixture")
+        path.write_text('{}')
+        loaded = load_all(fixture.root, PROVIDER_MAP)
+        self.assertEqual(loaded.source_runtime, runtime)
+        bad = {"test": {**runtime['http_test'], "latestAttemptAt": float('nan')}}
+        with self.assertRaises(ExportError): SourceStatusIndex({}, loaded.source_registry, bad)
+
+
 if __name__ == "__main__":
     unittest.main()

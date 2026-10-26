@@ -151,11 +151,11 @@ class KimiPlaywrightProvider(PlaywrightSourceProvider):
         #    rows:[[ 块；非模型行由 extractor 的 kimi/moonshot 过滤排除）
         combined = "<html><body>" + "\n".join(fragments) + "</body></html>"
         snap = self._assemble(source, combined, time.time())
-        # 空内容防护：站点再迁移时 rows 完全消失 → 抓取失败（沿用旧数据），
-        # 而不是产出空快照污染归档
-        if "rows:[[" not in combined:
+        # Accept current rendered tables or legacy rows; the extractor and
+        # normalizer still reject unrelated/empty tables before publication.
+        if "rows:[[" not in combined and "<table" not in combined:
             raise RuntimeError(
-                "kimi 页面无 rows:[[ 数据，疑似站点结构再迁移，需人工检查")
+                "kimi 页面无价格表数据，疑似站点结构再迁移，需人工检查")
         return snap
 
 
