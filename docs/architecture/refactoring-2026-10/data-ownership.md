@@ -7,7 +7,8 @@
 | 原始快照、响应证据 | data/snapshots；现有抓取器 | 归档器、回放 |
 | 来源条目/修订 | data/records、record-revisions；record_archive | exporter、详情页、projector |
 | 价格事实/证据/事件 | data/price-facts、price-evidence、price-records、price-record-revisions；pricing/archive | exporter、价格投影；不新增另一套事实归档 |
-| 信源滚动状态与清洗后的变更输入 | data/normalized/source-streams.json；sync-diff-to-site | exporter SourceStatusIndex、摘要、site projector |
+| 信源实际抓取状态 | data/normalized/source-runtime.json；staged_fetch，经RunJournal提交 | exporter SourceStatusIndex优先读取同一已提交InputView，成功未变也更新实际状态 |
+| 信源滚动变化输入 | data/normalized/source-streams.json；sync-diff-to-site | 摘要、site projector；缺少运行状态时供SourceStatusIndex历史回退 |
 | 当日价格变化摘要输入 | data/normalized/price-events.json；fetch-prices | 摘要、site projector；原价格事件权威仍为 price-records |
 | 每日摘要 | data/derived/day-summaries.json；llm-digest | site projector、周摘要；来源状态写入失败不由摘要覆盖 |
 | 周聚合/串讲 | data/derived/weekly-rollup.json（sync）及 week-summaries.json（LLM） | site projector；滚动摘要不是正式周报 |
