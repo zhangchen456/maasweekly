@@ -1,0 +1,13 @@
+通过: 76 | 失败: 0
+✓ manifest: rl_162fb34984_f1b4ab685a24（75352 文件，2384569087 字节）
+✓ release 校验通过
+· ✓ 服务器 current: rl_162fb34984_f1b4ab685a24
+· ✓ REST /api/v1/status datasetVersion=ds_f1b4ab685a244b3358a36713c2d89cf59ac62b0ebe206fc86320e4f82bb1456b
+· ✓ REST /api/v1/changes?limit=10 datasetVersion=ds_f1b4ab685a244b3358a36713c2d89cf59ac62b0ebe206fc86320e4f82bb1456b
+· ✓ MCP initialize 可达
+· ✓ MCP 五工具齐备
+· ✓ MCP 工具调用 datasetVersion=ds_f1b4ab685a244b3358a36713c2d89cf59ac62b0ebe206fc86320e4f82bb1456b
+· ✓ RSS /feed.xml（rss+xml + ETag + 304）
+· ✓ RSS /feed/weekly.xml（rss+xml + ETag + 304）
+· ✓ Skill manifest + install.sh 可达
+✓ 在线验收通过: current=rl_162fb34984_f1b4ab685a24 / datasetVersion=ds_f1b4ab685a244b3358a36713c2d89cf59ac62b0ebe206fc86320e4f82bb1456b（REST+MCP+RSS+Skill 四入口）
