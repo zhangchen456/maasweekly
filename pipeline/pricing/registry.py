@@ -25,7 +25,7 @@ class SourceRegistryEntry:
 
 
 # Registry 版本：结构变更时升版，写入 GoalRun 可观测性记录
-REGISTRY_VERSION = "2026-10-02.2"
+REGISTRY_VERSION = "2026-10-26.1"
 
 _REGISTRY: list[SourceRegistryEntry] = [
     SourceRegistryEntry(
@@ -75,8 +75,8 @@ _REGISTRY: list[SourceRegistryEntry] = [
         page_language="zh",
         region="cn",
         required=True,
-        adapter_version="kimi-3",
-        fetcher_version="playwright-1",  # 新站价格已在单页（chat），rows:[[ 提取沿用
+        adapter_version="kimi-4",
+        fetcher_version="playwright-1",  # 单页 chat 的分组表头，叶子列明确映射
     ),
     SourceRegistryEntry(
         source_key="glm:pricing",
@@ -112,13 +112,13 @@ _REGISTRY: list[SourceRegistryEntry] = [
         source_key="vertex-google:pricing", provider_id="vertex-google",
         url="https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
         page_language="en", region="global", required=False,
-        adapter_version="vertex-2", fetcher_version="playwright-1",
+        adapter_version="vertex-3", fetcher_version="playwright-1",
     ),
     SourceRegistryEntry(
         source_key="vertex-anthropic:pricing", provider_id="vertex-anthropic",
         url="https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
         page_language="en", region="global", required=False,
-        adapter_version="vertex-2", fetcher_version="playwright-1",
+        adapter_version="vertex-3", fetcher_version="playwright-1",
     ),
 ]
 

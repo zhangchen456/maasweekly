@@ -21,6 +21,7 @@ import hashlib
 from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 from pathlib import Path
+from urllib.parse import urlsplit
 
 # 路径配置（以仓库根目录为基准，脚本可从任意位置运行）
 BASE_DIR = Path(__file__).resolve().parent.parent.parent  # repo root
@@ -55,7 +56,18 @@ def observed_at(url):
 def fetch_page(url):
     registry = json.loads((BASE_DIR / 'pipeline/config/source_registry.json').read_text())
     source_id = next((row['source_id'] for row in registry['sources'] if url in row.get('url_aliases', []) or row.get('primary_url') == url), None)
-    return staged_fetch(url, lambda: _fetch_page(url), version='source-text-1', source_id=source_id)
+    version = 'source-text-2' if is_volcengine_doc(url) or is_tencent_doc(url) else 'source-text-1'
+    return staged_fetch(url, lambda: _fetch_page(url), version=version, source_id=source_id)
+
+
+def is_volcengine_doc(url):
+    parsed = urlsplit(url)
+    return parsed.scheme == 'https' and parsed.hostname in ('www.volcengine.com', 'docs.volcengine.com') and parsed.path.startswith('/docs/')
+
+
+def is_tencent_doc(url):
+    parsed = urlsplit(url)
+    return parsed.scheme == 'https' and parsed.hostname == 'cloud.tencent.com' and parsed.path.startswith('/document/product/1729/')
 
 
 # 抓取优先级: P0 必抓
@@ -79,88 +91,61 @@ def _fetch_page(url):
     if "huggingface.co/api" in url:
         return fetch_via_curl(url)
 
-    # 腾讯云文档站：EdgeOne WAF JS 挑战，curl 直拿是挑战页。
-    # 用 playwright 解一次挑战拿 EO-Bot-Js-Token cookie，后续 curl 复用（约 1 小时有效）
-    if "cloud.tencent.com" in url:
+    if is_tencent_doc(url):
         return fetch_tencent(url)
 
     content, err = fetch_via_curl(url)
     if content and len(content.strip()) > 100:
         return content, None
+    if is_volcengine_doc(url):
+        return fetch_volcengine_doc(url)
 
     return None, err if err else "内容过短"
 
 
-# ---- 腾讯 EdgeOne WAF ----
-# 挑战页 JS 计算 EO-Bot-Js-Token cookie（domain=.tencent.com, max-age=3600）后 reload。
-# curl 无法执行该 JS；playwright headless 可解（约 6 秒）。token 内存缓存，整个 run 只解一次。
-_TENCENT_TOKEN_CACHE = {"token": None, "fetched_at": 0}
+def fetch_volcengine_doc(url):
+    """The migrated official docs are a JS shell. Wait for actual article text."""
+    return fetch_rendered_doc(url, '#doc-viewer-container', is_volcengine_doc)
 
 
-def _get_tencent_token():
-    """playwright 解 EdgeOne 挑战拿 cookie token。失败返回 None。"""
-    import time as _time
+def fetch_rendered_doc(url, selector, allowed):
+    """Read a public article in one browser context; never transfer WAF cookies."""
+    import asyncio
 
-    # 50 分钟内的 token 直接复用
-    if _TENCENT_TOKEN_CACHE["token"] and _time.time() - _TENCENT_TOKEN_CACHE["fetched_at"] < 3000:
-        return _TENCENT_TOKEN_CACHE["token"]
-
-    try:
-        import asyncio
+    async def render():
         from playwright.async_api import async_playwright
-    except ImportError:
-        return None
-
-    async def solve():
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=True)
-            page = await browser.new_page()
             try:
-                try:
-                    await page.goto("https://cloud.tencent.com/document/product/1729/104753",
-                                    wait_until="commit", timeout=15000)
-                except Exception:
-                    pass  # commit 后无论加载快慢，轮询 cookie 即可
-                for _ in range(40):  # 最多等 20 秒
-                    cookies = await page.context.cookies()
-                    for c in cookies:
-                        if c["name"] == "EO-Bot-Js-Token":
-                            return c["value"]
-                    await page.wait_for_timeout(500)
-                return None
+                page = await browser.new_page()
+                response = await page.goto(url, wait_until='domcontentloaded', timeout=35000)
+                if not response or response.status >= 400 or not allowed(page.url):
+                    return None, "官方文档返回错误或跳转到未知地址"
+                article = page.locator(selector)
+                await article.wait_for(state='visible', timeout=25000)
+                await page.wait_for_function("selector => document.querySelector(selector)?.textContent.trim().length > 100", arg=selector, timeout=20000)
+                if not allowed(page.url):
+                    return None, "官方文档跳转到未知地址"
+                html = await article.inner_html()
+                if looks_like_challenge(html):
+                    return None, "官方文档返回反爬挑战页"
+                text = extract_text_from_html(html)
+                return (text, None) if len(text.strip()) > 100 else (None, "渲染后正文过短")
             finally:
                 await browser.close()
 
     try:
-        token = asyncio.run(solve())
-    except Exception:
-        token = None
-    if token:
-        _TENCENT_TOKEN_CACHE["token"] = token
-        _TENCENT_TOKEN_CACHE["fetched_at"] = _time.time()
-    return token
+        return asyncio.run(render())
+    except Exception as error:
+        return None, f"官方文档渲染失败: {type(error).__name__}"
 
 
 def fetch_tencent(url):
-    """腾讯域抓取：curl + EO-Bot-Js-Token cookie。"""
-    content, err = fetch_via_curl(url)  # 先试无 cookie（万一 WAF 放行）
-    if content:
+    """Read rendered public docs when curl receives only a challenge shell."""
+    content, _ = fetch_via_curl(url)
+    if content and len(content.strip()) > 100:
         return content, None
-
-    token = _get_tencent_token()
-    if not token:
-        return None, f"EdgeOne 挑战无法解（playwright 未安装或超时）；curl 直抓: {err}"
-
-    # 首次使用新 token 偶发空响应（WAF 预热），间隔 2 秒重试一次
-    import time as _time
-    for attempt in range(2):
-        if attempt:
-            _time.sleep(2)
-            token = _get_tencent_token()  # 可能已刷新
-        content, err = fetch_via_curl(url, cookie=f"EO-Bot-Js-Token={token}")
-        if content:
-            return content, None
-    return None, err
+    return fetch_rendered_doc(url, '.J-markdown-box', is_tencent_doc)
 
 
 # 反爬挑战页特征：命中任一即判抓取失败（否则快照被污染，每天 Ray ID 变化产生假 diff）
@@ -171,6 +156,8 @@ CHALLENGE_MARKERS = [
     "Checking your browser before accessing",
     "Please enable cookies",
     "challenge-error-text",      # openai.com 自建 JS 挑战页
+    "Performing security verification",
+    "This website uses a security service to protect against malicious bots",
 ]
 
 
@@ -182,7 +169,7 @@ def looks_like_challenge(content):
     return any(m in head for m in CHALLENGE_MARKERS)
 
 
-def fetch_via_curl(url, cookie=None):
+def fetch_via_curl(url):
     """用 curl 抓取页面/API，返回文本内容"""
     import subprocess
     import re
@@ -193,17 +180,16 @@ def fetch_via_curl(url, cookie=None):
     else:
         headers = ["-H", "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"]
 
-    if cookie:
-        headers = headers + ["-H", f"Cookie: {cookie}"]
-
     try:
-        cmd = ["curl", "-sL", "--compressed", "--max-time", "30"] + headers + [
+        cmd = ["curl", "-sL", "--fail-with-body", "--compressed", "--max-time", "30"] + headers + [
              "-H", "Accept: text/html,application/json,*/*",
              url]
         result = subprocess.run(
             cmd,
             capture_output=True, text=True, timeout=35
         )
+        if result.returncode:
+            return None, f"HTTP 或传输失败 (curl_exit={result.returncode})"
         content = result.stdout.strip()
         if not content or len(content) < 10:
             return None, f"curl 返回空 (stderr: {result.stderr[:200]})"

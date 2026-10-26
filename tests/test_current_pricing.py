@@ -11,8 +11,8 @@ from pipeline.pricing.normalize import normalize_and_validate
 from pipeline.pricing.archive import verify_evidence_for_fact, html_excerpt_to_text
 
 class CurrentPricingTests(unittest.TestCase):
-    def extract(self, provider, observed=1790899200):
-        raw = (Path(__file__).parent / 'fixtures/pricing' / f'{provider}_pricing_2026-10-02.html').read_text()
+    def extract(self, provider, observed=1790899200, day='2026-10-02'):
+        raw = (Path(__file__).parent / 'fixtures/pricing' / f'{provider}_pricing_{day}.html').read_text()
         sha = hashlib.sha256(raw.encode()).hexdigest()
         snap = ContentSnapshot('snap-' + sha[:24], provider + ':pricing', 'https://official.example/pricing', observed, 200, 'text/html', sha, raw, 'playwright-1')
         result = get_extractor(snap.source_key).extract(snap)
@@ -47,6 +47,20 @@ class CurrentPricingTests(unittest.TestCase):
         self.assertEqual(p['input'].amount,'20.000000');self.assertEqual(p['output'].amount,'100.000000');self.assertEqual(p['cache_read'].amount,'2.000000')
         self.assertEqual(len([f for f in r.price_facts if f.model_key=='kimi-k3' and f.component=='cache_write']),2)
         self.assertEqual(self.prices(r,'kimi-k2.7-code')['input'].amount,'6.500000')
+
+    def test_kimi_current_grouped_headers_keep_input_output_and_cache_distinct(self):
+        r = self.extract('kimi', 1792972800, '2026-10-26')
+        p = self.prices(r, 'kimi-k3.1-pro')
+        self.assertEqual(p['input'].amount, '13.000000')
+        self.assertEqual(p['output'].amount, '68.000000')
+        self.assertEqual(p['cache_read'].amount, '1.300000')
+        writes = {f.time_condition.schedule: f.amount for f in r.price_facts
+                  if f.model_key == 'kimi-k3.1-pro' and f.component == 'cache_write'}
+        self.assertEqual(writes, {'5m': '13.000000', '1h': '26.000000'})
+        self.assertEqual(len(r.models), 6)
+        self.assertEqual(len(r.price_facts), 24)
+        self.assertEqual(self.prices(r, 'kimi-k2.7-code')['input'].amount, '6.500000')
+        self.assertFalse(any(f.component == 'cache_write' and f.model_key.startswith('kimi-k2') for f in r.price_facts))
 
     def test_deepseek_footnote_and_utc_schedule(self):
         r=self.extract('deepseek');p=self.prices(r,'deepseek-flash')

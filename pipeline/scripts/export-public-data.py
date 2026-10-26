@@ -87,7 +87,7 @@ def build_release(input_root: Path) -> dict:
         raise ExportError(f"model identity registry/catalog 加载失败: {exc}") from exc
     li = loaders.load_all(input_root, PROVIDER_MAP)
     pm = li.provider_map
-    si = projector.SourceStatusIndex(li.daily_changes, li.source_registry)
+    si = projector.SourceStatusIndex(li.daily_changes, li.source_registry, li.source_runtime)
     ps = projector.build_price_source_status(li.current)
     le = projector.build_latest_event_by_fact(li.price_records)
 
