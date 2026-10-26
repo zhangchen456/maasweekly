@@ -92,7 +92,9 @@ const u=switchUrl({location:{href:'https://daily.maas.click/pricing/?modelId=a%3
 assert.equal(new URL(switchUrl({location:{href:'https://daily.maas.click/weekly/?q=foo#bar'}},{href:'/en/',dataset:{translated:'false',language:'en'}})).searchParams.get('untranslated'),'1');
 assert.equal(pageType('/en/model/alibaba:qwen-plus/'),'model_detail');assert.equal(pageType('/en/'),'home');
 // Exercise English refresh against paginated API responses and a changed version.
-const page=featuredModels()[0];const html=readFileSync(`dist/en/model/${page.model.modelId}/index.html`,'utf8');
+const page=translatedModels().find(page=>page.prices.length>0);
+assert(page,'English refresh needs a translated model with price records, independent of promotion eligibility');
+const html=readFileSync(`dist/en/model/${page.model.modelId}/index.html`,'utf8');
 const dom=new JSDOM(html,{runScripts:'outside-only'});dom.window.AbortSignal=AbortSignal;
 const code=stripTypeScriptTypes(readFileSync('src/scripts/model-refresh.ts','utf8').replace(/^import .*;\n/gm,''));
 const cellsCode=stripTypeScriptTypes(readFileSync('src/lib/price-display.ts','utf8').replace(/^import .*;\n/gm,'').replace(/export /g,''));
