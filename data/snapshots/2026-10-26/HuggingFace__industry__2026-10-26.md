@@ -1,5 +1,5 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-26T07:14:29.167448+08:00 -->
+<!-- fetched: 2026-10-26T13:40:13.138842+08:00 -->
 
 [
   {
@@ -236,7 +236,7 @@
   {
     "_id": "65b53851e602b6c2c96e78da",
     "id": "BAAI/bge-m3",
-    "likes": 3927,
+    "likes": 3928,
     "private": false,
     "downloads": 29659669,
     "tags": [
@@ -267,7 +267,7 @@
   {
     "_id": "621ffdc036468d709f174338",
     "id": "google-bert/bert-base-uncased",
-    "likes": 3053,
+    "likes": 3055,
     "private": false,
     "downloads": 28972374,
     "tags": [
@@ -361,7 +361,7 @@
   {
     "_id": "680da718233834890aa01f51",
     "id": "Qwen/Qwen3-0.6B",
-    "likes": 1850,
+    "likes": 1851,
     "private": false,
     "downloads": 23833726,
     "tags": [
@@ -388,7 +388,7 @@
   {
     "_id": "621ffdc036468d709f17434d",
     "id": "openai-community/gpt2",
-    "likes": 3891,
+    "likes": 3893,
     "private": false,
     "downloads": 20867408,
     "tags": [

@@ -1,10 +1,10 @@
 <!-- url: see sources config -->
-<!-- fetched: 2026-10-26T07:14:16.145971+08:00 -->
+<!-- fetched: 2026-10-26T13:40:02.776220+08:00 -->
 
 Newsroom \ Anthropic
 Skip to main content
 News
-Latest newsOctober 25, 2026
+Latest newsOctober 26, 2026
 AnnouncementsSep 22, 2026
 Introducing Claude Opus 5.5
 Claude Opus 5.5 leads in agentic coding and knowledge work, and costs 40% less to run than Opus 5 on typical workloads.
