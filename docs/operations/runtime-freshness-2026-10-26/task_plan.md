@@ -8,7 +8,11 @@
 - [x] 修复 Kimi / Vertex 价格结构漂移，恢复火山/腾讯6路；Arena官方拦截仍保留失败，未伪造成功。
 - [x] 核对并更新三份手工榜单，保留同一评测口径与证据（RunJournal reviewed-leaderboards_cc3717203baa4cc4bef2e4fce4515035）。
 - [x] 使用真实 Umami tracker 在隔离环境拦截上报，检查自定义事件（copy/model各1，无生产上报）。
-- [ ] 完成针对性测试、标准构建/回归与改动审查，交付候选。
+- [x] 完成针对性测试、标准构建/回归与改动审查，交付候选（76通过/0失败，manifest校验通过）。
+
+## 待用户批准
+
+推送本地分支到公开仓库 zhangchen456/maasweekly 并创建PR。自动批准审查此前拒绝推送，当前没有远端分支或PR，未合并、未部署。
 
 ## 错误记录
 - worktree 创建首次失败：partial clone 缺失 7376 个对象。首轮 bulk fetch negotiation 失败；禁用 negotiation 后补齐，重新创建成功。
