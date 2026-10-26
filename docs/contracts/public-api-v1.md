@@ -43,9 +43,10 @@ Decimal 字符串（如 `"1.500000"`），禁止浮点。原币种（USD/CNY）�
   summary 为 null（不编造）。
 - **withdrawn**：保留在 items 集合；changes 列表默认隐藏，
   `includeWithdrawn=true` 显式返回；`/items/{id}` 始终可读（含修订链）。
-- `quality.state`：fresh/stale/unknown。Task 01 来源流的状态由
-  daily_changes 的 failed 记录联查推导（精度=日）；Task 02 价格流由
-  current.json sources 推导。失败沿用的旧数据标 stale，不显示 fresh。
+- `quality.state`：fresh/stale/unknown。Task 01 来源流优先读取同一已提交输入快照中的
+  source-runtime（包含成功但未变化的抓取），历史缺失时才回退到 daily_changes（精度=日）；
+  Task 02 价格流由 current.json sources 与该事实的实际观察时间推导。失败沿用、或最新成功
+  抓取未再次观察到的旧价格标 stale，后者的 reason 为 `not_observed_in_latest_fetch`。
 - 公开投影不含 provenance（Task 01 记录的 diff_file 含本地路径）。
 
 ## 3. 价格（prices）

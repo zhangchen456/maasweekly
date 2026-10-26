@@ -74,6 +74,7 @@ run "test_public_retention（公开历史引用完整性）" python3 -m unittest
 run "test_cross_platform（关系与官方价格）" python3 -m unittest discover -s tests -p 'test_cross_platform.py'
 run "test_regression_diagnostics（CI failure evidence）" python3 -m unittest discover -s tests -p 'test_regression_diagnostics.py'
 run "test_current_pricing（official table drift）" python3 -m unittest discover -s tests -p 'test_current_pricing.py'
+run "test_source_fetch（official article fallback）" python3 -m unittest discover -s tests -p 'test_source_fetch.py'
 run "test_monitor_collection（T05 controlled receipts）" python3 -m unittest discover -s tests -p 'test_monitor_collection.py'
 run "test_record_archive（Task 01）" python3 -m unittest discover -s tests -p 'test_record_archive.py'
 run "test_price_archive（Task 02）" python3 -m unittest discover -s tests -p 'test_price_archive.py'
