@@ -1,0 +1,21 @@
+# Findings
+
+- 10/23–26 每日流水线成功；10/26 75/75 回归、四入口验证通过。公开数据截至10/26。
+- SourceStatusIndex 只从 changed/failed 推断，漏掉成功但未变化；entries_failed 从未保存，失败 reason 也丢失。标准 source-runtime.json 已含实际尝试/成功时间，可从 frozen InputView 读取。
+- 今日通用来源7路失败（火山2、腾讯4、LMArena）；价格2路失败（Kimi、Vertex Anthropic）。
+- Kimi 渲染后为两张真实table：K3六列、K2四列，均为两层分组表头。增加缓存写入5m/1h；旧缓存未命中识别不再适用。对应价格回归7项通过。
+- Vertex Anthropic 增加100K价格列，表头由4列变6列；Sonnet/Opus仍在200K列，不能混用Haiku的100K。
+- 火山旧URL跳转 docs.volcengine.com，静态HTML是12049字节空壳；渲染后 #doc-viewer-container 为真实正文，模型列表17张表，约17400字。新增仅限官方docs域名的有界渲染兜底。
+- AA新增Kimi K3.1 Pro等；SWE Verified mini-SWE-agent数据可从官方内嵌JSON核对；Terminal 2.1官方Harbor页面需要渲染。
+- Umami当前tracker支持keepalive；通过真实tracker隔离复现验证自定义事件，不将实际站点流量读数存入代码分支。
+- 来源状态公开导出19项测试通过，包含 unchanged清除旧失败、最新尝试优先、读取frozen InputView而非未提交运行记录。
+- Terminal 2.1 rev.6渲染成功；SWE前10条与旧样本一致，需明确“此次重新核对”日期而非评测发布时间。
+- Arena官方重定向到arena.ai；无登录隔离浏览器仍被Cloudflare拦截，不伪造抓取成功，不自动解验证码。
+- 腾讯在常规浏览器与无登录headless中均能渲染正文，原问题为WAF Cookie转交curl流程失效。替换为在原浏览器上下文直接读取 .J-markdown-box；六路正式抓取函数联网复测全部通过。
+- 正式价格collect联网复测：Kimi 24 facts/6 models，Vertex Anthropic 89 facts/2 models，均0 rejected。fixtures回归：7项current pricing +5项cross-platform通过。
+- 真实Cloud Umami脚本隔离测试：copy=1、model_click=1、两页pageview；全部上报被本地route拦截，productionRequestsSent=0，无未知外联；现有analytics单测12/12通过，无需改埋点。
+- source fallback故障测试3项、pipeline recovery测试18项通过。三份榜单重核对后schema/vendor通过，data-health 0 advisories。
+- 标准全量价格抓取10/10来源成功，ledger 1851行；已通过RunJournal归档，不是只改解析器或日期。
+- 新公开候选 ds_f1b4ab685a244b3358a36713c2d89cf59ac62b0ebe206fc86320e4f82bb1456b：来源67 ok/1 failing（Arena），价格10 ok；1997条历史当前事实中1162 fresh、835未在最新抓取再出现而标stale，原金额/观察时间保留。公开schema校验通过。
+- 最终质量补丁的4项定向测试通过，未将内部lastSuccessEpoch投影到公开响应；固定原因代码不透出原始错误。
+- 第一轮标准构建回归75通过/1失败：multilingual.test在英文刷新测试中直接取featuredModels()[0]。新的真实stale标记使推荐列表可为空；改为从translatedModels中选有价格记录的样本，不放宽推荐条件。
