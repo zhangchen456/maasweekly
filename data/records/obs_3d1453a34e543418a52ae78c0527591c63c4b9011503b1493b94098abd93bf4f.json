@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_3d1453a34e543418a52ae78c0527591c63c4b9011503b1493b94098abd93bf4f",
+  "sourceId": "anthropic-blog",
+  "date": "2026-10-27",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "blog",
+  "sourceUrl": "https://www.anthropic.com/news",
+  "title": "Anthropic · 博客来源更新",
+  "summary": "博客日期从 10 月 26 日更新至 10 月 27 日，新增了 Anthropic 向 SEC 提交 S-1 文件（IPO 申请）的公告，同时删除了关于 Model Hardware Standard 的预览文章，显示公司重点转向资本市场活动。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-27T00:36:04+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "latest newsoctober",
+        "before": "Latest newsOctober 26, 2026",
+        "after": "Latest newsOctober 27, 2026"
+      }
+    ],
+    "added_lines": [
+      "Anthropic files S-1 with the SEC for proposed initial public offering"
+    ],
+    "removed_lines": [
+      "Previewing the Model Hardware Standard",
+      "We’re opening a research preview of the Model Hardware Standard (MHS), a shared specification for AI agents to safely operate physical devices, to a first group of scientific research labs and advanced manufacturers."
+    ],
+    "added_count": 1,
+    "removed_count": 2,
+    "raw_added_count": 3,
+    "raw_removed_count": 4
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-27.json"
+  },
+  "permalink": "/item/obs_3d1453a34e543418a52ae78c0527591c63c4b9011503b1493b94098abd93bf4f/"
+}

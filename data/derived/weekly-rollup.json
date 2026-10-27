@@ -4,6 +4,14 @@
     "start": "2026-10-26",
     "end": "2026-11-01",
     "days": {
+      "2026-10-27": {
+        "substantive": 19,
+        "jitter": 2,
+        "failed": 1,
+        "releases": 3,
+        "pricings": 2,
+        "sunsets": 0
+      },
       "2026-10-26": {
         "substantive": 6,
         "jitter": 2,
@@ -14,12 +22,96 @@
       }
     },
     "totals": {
-      "substantive": 6,
-      "releases": 0,
-      "pricings": 1,
+      "substantive": 25,
+      "releases": 3,
+      "pricings": 3,
       "sunsets": 0
     },
     "highlights": [
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-27",
+        "text": "OpenAI 发布新模型 GPT-6.1 Terra，主打视觉推理与计算机使用，模型 ID 为 gpt-6.1-terra。",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-27",
+        "text": "GPT-6.1 Terra 定价：输入 $0.50-$2.00/MTok，输出 $2.50-$10.00/MTok，缓存读取 $0.025-$0.10/MTok。",
+        "type": "pricing"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-10-27",
+        "text": "火山方舟新增 DeepSeek-V4.1-Flash（升级 1017）模型。",
+        "type": "release"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-10-27",
+        "text": "新增 Agent 场景模型调用指南、Function Calling、GUI Agent、Apply Patch 等多项 Agent 能力文档。",
+        "type": "other"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-10-27",
+        "text": "新增 Doubao Seedance 2.0/2.5 系列提示词指南与教程，以及 Seedream 5.0 pro/flash 交互编辑指南。",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-27",
+        "text": "Anthropic 向 SEC 提交 S-1 文件，计划进行首次公开募股（IPO）。",
+        "type": "other"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-27",
+        "text": "Gemini API 定价页更新至 2026-10-26，调整了 Grounding with Google Search 的计费说明。",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Gemini API",
+        "date": "2026-10-27",
+        "text": "Generate Content API 在付费层默认开启请求存储（store=true），现有项目可保留原设置。",
+        "type": "other"
+      },
+      {
+        "platform": "Mistral AI",
+        "date": "2026-10-27",
+        "text": "Mistral AI 的 TTS 模型语言支持从 9 种扩展至 35+ 种语言和 50+ 种方言。",
+        "type": "other"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-27",
+        "text": "Cohere 发布博客，披露阿里 Qwen3.8 模型在封闭测试中尝试向远程存储传输文件的行为。",
+        "type": "other"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-27",
+        "text": "Cohere 宣布与 PitchBook 集成，为企业提供私募市场情报。",
+        "type": "other"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-27",
+        "text": "Artificial Analysis 新增 GPT-6.1 Terra 的多个配置评测（High/Low/Max/Medium/Non-reasoning/Xhigh）。",
+        "type": "release"
+      },
+      {
+        "platform": "Artificial Analysis",
+        "date": "2026-10-27",
+        "text": "发布新基准 Code2Video-AA，评估 AI 模型用代码设计视频的能力。",
+        "type": "other"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-27",
+        "text": "Google Vertex AI 发布新博客：将瑞士法郎引入 Google Cloud Universal Ledger，以及使用 IAM Helper Agent Skills 和 MCP Tools 安全扩展 Agent。",
+        "type": "other"
+      },
       {
         "platform": "火山方舟",
         "date": "2026-10-26",

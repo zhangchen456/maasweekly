@@ -1,0 +1,370 @@
+<!-- url: see sources config -->
+<!-- fetched: 2026-10-26T13:38:54.581391+08:00 -->
+
+本文介绍了方舟平台的新版本产品功能特性，欢迎体验。​
+模型更新信息请见：​
+模型发布公告​
+历史产品更新公告：​
+产品更新公告 2025​
+产品更新公告 2024​
+202609​
+​
+|
+功能模块​
+|
+功能说明​
+|
+模型推理​
+|
+新增在线推理（低优）模式，支持通过请求参数 service_tier=flex 使用低优资源进行推理。Flex 拥有独立的 TPM 配额与更优惠的价格，适用于时延不敏感的场景；请求在服务端排队重试，可通过 X-Ark-Max-Wait-Timeout-Ms 设置服务端超时时间（最长 20 分钟）。​
+新增模型级与接入点级 用量上限，支持按模型或接入点维度设置用量控制。达到上限后，平台将自动暂停对应模型服务或接入点服务。​
+|
+Managed Agents​
+|
+支持项目维度权限管理。​
+支持 Dream 异步记忆整理：基于 1 个 MemoryStore 和多个 Session，产出 1 个新的 MemoryStore，自动完成去重、合并与洞察沉淀。​
+Session 挂载 MemoryStore 时支持只读 / 读写两种模式，开启读写后，Agent 可通过沙箱工具在 Session 运行过程中沉淀记忆。​
+Session 详情页新增文件资源系统，支持预览、上传文件资源，方便查看资源状态与挂载路径等信息。​
+支持豆包工作与 Managed Agents 集成。​
+支持通过 Open API 开通 Managed Agents 服务。​
+|
+Coding Plan / Agent Plan​
+|
+新版控制台页面已更新上线，新增实践案例板块，支持查看语言模型的负载情况。​
+视觉模型 新增支持 doubao-seedance-2.5、doubao-seedream-5-0-pro。​
+语言模型 上线：deepseek-v4.1-flash、kimi-k2-8-preview、doubao-seed-2.1-pro、doubao-seed-2.1-lite。​
+个人版 Medium 套餐支持专属 Harness-Computer Use Agent。​
+|
+API​
+|
+Responses API、Messages API 兼容 Web Search 能力，新增 豆包搜索源。​
+支持接入三方工具 Claude Code / Codex 使用 Web Search。​
+Responses API 兼容 Apply Patch 工具。​
+API兼容性能力升级。​
+|
+模型精调​
+|
+精调效果指标 支持多任务对比，便于在同一视图中对比不同任务的训练指标曲线。​
+语言模型精调支持在 训练样本 中传入音频和视频内容。​
+|
+ArkCLI​
+|
+ArkCLI 支持数据集注册管理能力。​
+|
+体验中心​
+|
+Responses API 支持解析外接 link reader，无需开通云服务，由平台支持联网和非 PDF 解析体验。​
+Doubao-Seedance-2.5 支持样片生成模式。​
+|
+其他​
+|
+版权真人库 上线，支持使用艺人人脸创作短剧等视频，并可获取艺人授权函。​
+Gallery 功能 发布，支持查看 Seedance 优质影视作品及部分开源制作信息。​
+​
+202608​
+​
+|
+功能模块​
+|
+功能说明​
+|
+体验中心​
+|
+支持 Managed Agents 体验​
+语音体验中心 升级至新版控制台，支持开通前免费额度体验等能力​
+|
+Managed Agents​
+|
+新增支持 下载自定义 skill​
+Credentials 优化：支持自定义 Header 鉴权、自定义 MCP 二次编辑​
+Environments 新增可复用的 TOS 产物存储配置，并支持 Session 级覆盖，让 Agent 产物默认可按环境统一落盘到指定 TOS 目录，同时保持特殊场景的灵活覆盖​
+支持用户消息排队机制，让用户在 Agent 忙碌时也能连续发送消息而不再被拒绝，并在运行间隙自动消费排队消息以提升对话连续性和纠偏效率​
+新增 Quickstart 引导流程，帮助新用户通过模板或自然语言在 3 分钟内完成 Agent 初始化、环境配置、试运行和 API 接入​
+支持用户在 Managed Agents 中更方便地 查看、配置和管理 Skill，并可在搭建 Agent 时直接选择和编排可用 Skill​
+支持用户在 MA 中按需 配置模型思考模式、推理强度、速度参数，让 Agent 在搭建和运行时可更灵活地控制模型行为​
+|
+开通管理​
+|
+支持 关闭 Managed Agents 服务​
+|
+Coding plan / Agent plan​
+|
+新增 跨服务授权能力 并优化企业版用户组方案，新增预设角色、权限入口和分层用户组配置​
+Agent / Coding Plan 创建 和 续费 接口新增 AgreementAccepted 字段​
+|
+API​
+|
+支持通过 Files API 下载 Managed Agents session 产物 文件​
+错误码 优化：Managed Agents 的错误按下发通道，区分 HTTP 阶段错误码、SSE 阶段错误码​
+新增 session 查询 接口返回子 agent 配置快照​
+Chat / Responses API 支持 reasoning_effort 参数兼容，超出当前模型或 API 支持范围的取值可按兼容逻辑处理​
+​
+202607​
+​
+|
+功能模块​
+|
+功能说明​
+|
+体验中心​
+|
+新增 Doubao-音频生成-1.0 体验，支持时间戳和多语种能力​
+支持 Doubao-Seed-Evolving 模型 1M 超长上下文，提升长程任务处理能力与 Token 使用效率​
+|
+模型推理​
+|
+新增 Doubao-Seed-2-1-turbo 系列在线推理（低延迟）能力​
+|
+模型精调​
+|
+新增 plugin 的 min/max replicas 配置，用于保障实例常驻、降低 FaaS 冷启动风险的同时，约束扩容上限以确保资源使用可控​
+更新 FaaS 服务拉起 时机，任务创建完成即拉起 FaaS 服务​
+Seed-2.0 系列 语言模型 SFT 支持音频、视频输入，拓展多模态内容理解场景​
+|
+Managed Agent​
+|
+新增 Managed Agents 产品演示案例集​
+支持 Environment 配置自定义脚本​
+新增 Agent thinking 与 message 流式输出能力​
+支持 Session 创建时对 Agent、Environment 配置进行 override 覆盖​
+支持 Credentials 通过环境变量 ENV 注入，包含托管凭证与换签场景​
+支持 自定义 skill​
+|
+Coding plan / Agent plan​
+|
+上线 Doubao-Seed-2.1-turbo 模型​
+上线 Doubao-Seed-Evolving 模型​
+Agent Plan Medium 及以上档位套餐上线 Kimi K3 模型​
+Agent Plan 上线 Harness 能力 “Agent 进化”​
+|
+API​
+|
+新增模型激活 API，包括 批量开通基础模型、启用自动开通新模型、关闭自动开通新模型、查询模型开通详情、查询模型开通列表​
+上线官方 产物验证 接口​
+|
+版权商业化​
+|
+新增周星驰《功夫女足》版权资源​
+​
+202606​
+​
+|
+功能模块​
+|
+功能说明​
+|
+体验中心​
+|
+支持 Doubao-Seed-2.1 系列模型​
+全新 Canvas 能力升级​
+新增 Doubao-音频生成-1.0​
+|
+Agent Plan / Coding Plan​
+|
+新增 Agent plan 开通模型和 Harness 超额后付费​
+新增 创建个人版套餐、续费个人版套餐、查询个人版套餐、查询 Agent Plan 支持的模型列表、轮换个人版 API Key、查询 Coding Plan 支持的模型列表 等 API​
+|
+API​
+|
+新增 Embedding API 通过 multi_embedding 开启 multi-vector 输出及压缩传输，并为视频输入开放可配置抽帧参数，以提升细粒度检索效果与长视频处理可控性​
+新增 Doubao-Seedance-2.0 支持 4K 分辨率​
+​
+202605​
+​
+|
+功能模块​
+|
+功能说明​
+|
+体验中心​
+|
+支持 vaka 知识助手​
+Doubao-Seed3D-2.0 模型新增 obj/usd/usdz 格式​
+新增音频理解功能，支持 Doubao-Seed-2.0-lite、Doubao-Seed-2.0-mini 模型​
+Doubao-Seedream-5.0-lite 支持 4K 分辨率​
+|
+模型部署​
+|
+在线推理新增 低延迟模式，支持 Doubao-Seed-2.0 系列模型​
+|
+用量统计​
+|
+新增用量明细 查询 与 导出 能力​
+|
+API​
+|
+Contents Generations API 新增 priority 字段，支持请求级别设置同推理接入点下的任务优先级​
+Seedance 2.0 系列模型输入图片格式新增支持 heic、heif 格式​
+|
+Agent Plan/Coding Plan​
+|
+发布 Agent Plan API，支持通过 API 创建个人版套餐，获取套餐 AFP 额度，获取套餐用量详情​
+全新上线 Agent Plan，支持全模态模型及专属 Harness，并采用精细化积分计费模式​
+支持 DeepSeek-V4 系列模型​
+新增专属 权益：购买 Agent Plan Medium 及以上套餐赠送 Arkclaw 轻量版​
+支持 Responses API​
+支持接入最新版 Codex CLI​
+​
+202604​
+​
+|
+功能模块​
+|
+功能说明​
+|
+文档/链接​
+|
+体验中心​
+|
+Doubao-Seedance-2.0 模型支持 1080p​
+支持 Doubao-Seed3D-2.0 模型​
+|
+体验中心​
+|
+模型推理​
+|
+自定义推理接入点详情页可查看 thinking 参数默认值并支持修改，当 API 调用显式传入 thinking.type、reasoning_effort 中任意一个时，以 API 请求传入值为准​
+切换模型版本时，切换前后保持默认思考模式配置​
+Doubao-Seedance-2.0 支持使用本账号下近 30 天内由 Doubao-Seedance-2.0 及 Doubao-Seedance-2.0-fast 生成的含人脸视频、Doubao-Seedance-2.0 及 Doubao-Seedance-2.0-fast 生成的含人脸视频对应的尾帧图片、Doubao-Seedream-5.0-lite 文生图得到的含人脸图片模型的含人脸原始产物，作为输入素材，再次调用 Doubao-Seedance-2.0 系列模型进行二次创作​
+|
+在线推理​
+|
+模型精调​
+|
+支持通过 runtime.max_concurrency 参数设置 plugin 函数实例最大请求并发数​
+|
+模型精调​
+|
+Token 计算器​
+|
+支持 Doubao-Seedance-2.0、Doubao-Seedance-2.0-fast​
+|
+token计算器​
+|
+开通管理​
+|
+新增开通模型低延迟模式按钮，使用低延迟模式需先在开通管理中开通低延迟模式​
+|
+开通管理​
+|
+API Key 管理​
+|
+支持按照 API Key 维度查看分账账单​
+|
+用量统计​
+|
+API​
+|
+Chat API 按 token 付费支持低延迟模式，支持模型为doubao-seed-2.0-pro、doubao-seed-2.0-lite​
+Image Generation API输入图大小限制从10MB扩大到 30MB​
+|
+对话(Chat) API​
+图片生成 API​
+|
+Agent Plan​
+|
+Agent Plan 支持 Doubao-Seedream-5.0 & Doubao-Seedance-2.0​
+|
+套餐概览​
+​
+202603​
+​
+|
+功能模块​
+|
+功能说明​
+|
+文档/链接​
+|
+模型推理​
+|
+切换模型支持配置消息通知服务（SNS）获取切换进度​
+|
+在线推理​
+|
+模型精调​
+|
+支持在训练任务详情页前往全栈可观测平台配置训练任务状态通知​
+plugin 支持python 3.11/3.12​
+增加预估 step 展示，并对异常 step 状态进行提醒​
+|
+模型精调​
+|
+Coding Plan​
+|
+doubao-embedding-vision-251215 模型支持 coding plan​
+|
+记忆增强-Embedding模型​
+|
+API​
+|
+Responses API Prefill 模式支持上下文缓存​
+|
+Prefill 模式​
+​
+202602​
+​
+|
+功能模块​
+|
+功能说明​
+|
+文档/链接​
+|
+体验中心​
+|
+支持Doubao-Seedance-2.0、Doubao-Seedream-5.0 体验​
+Doubao-seed-2.0-Pro/Lite/Mini 模型支持长视频理解和视觉定位​
+|
+体验中心​
+|
+模型推理​
+|
+视频生成模型支持通过 VMP 配置监控告警​
+|
+模型推理​
+|
+API​
+|
+Doubao-seed-2.0-Pro/Lite/Mini 模型错误码变更：当用户请求平台过快时，Error Code将从ServerOverloaded，变更为 RequestBurstTooFast。后续模型也将遵从此规则​
+Doubao-seed-2.0-Pro/Lite/Mini 模型图像/视频理解升级​
+视觉模型增加安全审核错误码​
+|
+API​
+|
+应用实验室​
+|
+长视频理解应用升级到 Doubao-Seed-2.0​
+|
+应用实验室​
+​
+202601​
+​
+|
+功能模块​
+|
+功能说明​
+|
+文档/链接​
+|
+体验中心​
+|
+语音模型-实时语音模型 Doubao-Realtime-O 版本支持辩论模式，唱歌能力​
+Seedream 4.0 故事书支持下载​
+|
+体验中心​
+|
+API​
+|
+Doubao-Seedance-1.5-pro 模型支持1080p​
+Doubao-Seedance-1.5-pro 模型支持 Draft 样片模式​
+|
+Video Generation API​
+|
+Coding Plan​
+|
+Coding Plan 升级支持auto模式、支持多模型​
+|
+Coding Plan​
+​
+​

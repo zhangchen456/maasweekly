@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "price_fc8e9707b2395ecedeff853f44b14493c1d9735b1696449e48412759859dac90",
+  "date": "2026-10-27",
+  "recordType": "price_change",
+  "fact_key": "90bc04612704b97a4a4183b4a9cf384e11088acbb860d13957c30990fe96952f",
+  "provider": "openai",
+  "model": "gpt-realtime-2.1",
+  "component": "cache_read",
+  "currency": "USD",
+  "unitQuantity": 1000000,
+  "unitName": "token",
+  "region": "global",
+  "billingMode": "realtime",
+  "serviceTier": "standard",
+  "contextBand": null,
+  "timeCondition": null,
+  "beforeVersionId": "pfv_5b85ed510285610ea3b6741091a8b3de5d2e539b861cf6626bc5e9affe862542",
+  "afterVersionId": "pfv_78c75024ac716387f611a88d4806b4f33a37de87340d4e4bcee48db9563c2a15",
+  "beforeEvidenceId": "ev_62d99626db3ff2ff40dc17bba94ef04e7788a6b7866aa6616d92aa16141d3af2",
+  "afterEvidenceId": "ev_6f83a616a91ee40c11cb810edf22bfa85d1599e4711a89fd2494d28d46d7b9a5",
+  "beforeObservedAt": "2026-10-26T01:57:43+00:00",
+  "afterObservedAt": "2026-10-27T00:29:51+00:00",
+  "changeType": "amount_changed",
+  "changedFields": [
+    "amount"
+  ],
+  "comparison": {
+    "previous": "0.5",
+    "current": "0.4",
+    "direction": "down",
+    "percent": "-20.00"
+  },
+  "revision": 1,
+  "status": "active",
+  "revisedAt": null,
+  "revisionReason": null,
+  "permalink": "/item/price_fc8e9707b2395ecedeff853f44b14493c1d9735b1696449e48412759859dac90/",
+  "provenance": {}
+}
