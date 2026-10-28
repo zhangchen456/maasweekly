@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_f09aca23640141afb7249b29df6643a2e1d085dcba7749d812ac9689f97ab288",
+  "sourceId": "google-vertex-pricing",
+  "date": "2026-10-28",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Google Vertex AI",
+  "sourceType": "pricing",
+  "sourceUrl": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+  "title": "Google Vertex AI · 定价来源更新",
+  "summary": "定价页新增 Gemini ER 2.0 与 Gemini Robotics 定价，含 2027 年生效价格，并更新非全球区域价格。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-28T00:34:10+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "non-global",
+        "before": "Non-global |",
+        "after": "Non-global | $1.10 | $0.055"
+      }
+    ],
+    "added_lines": [
+      "(Starting January 1, 2027) |",
+      "(Starting January 1, 2027) | $0.000001 | $0.000001",
+      "(through December 31, 2026) |",
+      "Cached input",
+      "Gemini ER 2.0",
+      "Gemini ER 2.0*",
+      "Gemini Robotics",
+      "Global | $1.00 | $0.05",
+      "Global | $10.00 | $10.00",
+      "Global | $18.00 | $18.00",
+      "Global | $2.00 | $0.10",
+      "Global | $20.00 | $20.00",
+      "Global | $3.60 | $0.18",
+      "Global | $36.00 | $36.00",
+      "Global | $4.00 | $0.20",
+      "Global | $5.00 | $5.00",
+      "Global | $7.20 | $0.36",
+      "Input (text, image, video, audio) | $2.00 | $0.20",
+      "Non-global | $11.00 | $11.00",
+      "Non-global | $19.80 | $19.80",
+      "Non-global | $2.20 | $0.11",
+      "Non-global | $22.00 | $22.00",
+      "Non-global | $3.96 | $0.198",
+      "Non-global | $39.60 | $39.60",
+      "Non-global | $4.40 | $0.22",
+      "Non-global | $5.50 | $5.50",
+      "Non-global | $7.92 | $0.396",
+      "Text output (response and reasoning) | $10.00 |"
+    ],
+    "removed_lines": [],
+    "added_count": 28,
+    "removed_count": 0,
+    "raw_added_count": 30,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-28.json"
+  },
+  "permalink": "/item/obs_f09aca23640141afb7249b29df6643a2e1d085dcba7749d812ac9689f97ab288/"
+}

@@ -4,6 +4,14 @@
     "start": "2026-10-26",
     "end": "2026-11-01",
     "days": {
+      "2026-10-28": {
+        "substantive": 24,
+        "jitter": 1,
+        "failed": 1,
+        "releases": 5,
+        "pricings": 4,
+        "sunsets": 0
+      },
       "2026-10-27": {
         "substantive": 19,
         "jitter": 2,
@@ -22,12 +30,84 @@
       }
     },
     "totals": {
-      "substantive": 25,
-      "releases": 3,
-      "pricings": 3,
+      "substantive": 49,
+      "releases": 8,
+      "pricings": 7,
       "sunsets": 0
     },
     "highlights": [
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-28",
+        "text": "Anthropic 提交 S-1 注册声明，启动 IPO 流程",
+        "type": "other"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-28",
+        "text": "Claude Opus 5.5 与 Claude Fable 5.1 新增 thinking 限制与工具调用变更",
+        "type": "release"
+      },
+      {
+        "platform": "Anthropic",
+        "date": "2026-10-28",
+        "text": "Claude Managed Agents 新增自托管沙箱、环境变量凭据与 web_fetch 域限制",
+        "type": "other"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-10-28",
+        "text": "Doubao Seedance 2.5 与 Doubao Seedream 5.0 pro 文档更新，新增 4~30 秒视频生成与全模态参考输入",
+        "type": "release"
+      },
+      {
+        "platform": "火山方舟",
+        "date": "2026-10-28",
+        "text": "新增 1080p/4k 位深选项与 500000 TPM 限制，移除旧版定价条目",
+        "type": "pricing"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-28",
+        "text": "新增 MiniMax-M3.1-Flash、Tripo/Tripo-P1.0、ZHIPU/GLM-5.3、deepseek-v4.1-flash 等模型",
+        "type": "release"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-28",
+        "text": "qwen3.8-flash 输入价格上调至 1.094 元/百万tokens，输出上调至 3.427 元/百万tokens",
+        "type": "pricing"
+      },
+      {
+        "platform": "阿里百炼",
+        "date": "2026-10-28",
+        "text": "Tripo 系列新增 9 个 3D 处理工具，计费规则改为积分制",
+        "type": "pricing"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-28",
+        "text": "Gemini Robotics ER 2 模型上线，支持空间与时间推理、多步规划",
+        "type": "release"
+      },
+      {
+        "platform": "Google Vertex AI",
+        "date": "2026-10-28",
+        "text": "Gemini ER 2.0 与 Gemini Robotics 定价新增，含 2027 年生效价格",
+        "type": "pricing"
+      },
+      {
+        "platform": "Cohere",
+        "date": "2026-10-28",
+        "text": "North Mini Code 与 North Small Translate 模型版本号更新为 1.0",
+        "type": "release"
+      },
+      {
+        "platform": "OpenAI",
+        "date": "2026-10-28",
+        "text": "model_list 与 pricing 页面新增 Account security notification，移除 Use API/provider credentials",
+        "type": "other"
+      },
       {
         "platform": "OpenAI",
         "date": "2026-10-27",

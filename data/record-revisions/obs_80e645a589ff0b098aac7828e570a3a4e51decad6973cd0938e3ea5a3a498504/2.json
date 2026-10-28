@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_80e645a589ff0b098aac7828e570a3a4e51decad6973cd0938e3ea5a3a498504",
+  "sourceId": "anthropic-blog",
+  "date": "2026-10-28",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "blog",
+  "sourceUrl": "https://www.anthropic.com/news",
+  "title": "Anthropic · 博客来源更新",
+  "summary": "博客新增 IPO 注册声明、与 GSA 合作扩展、药物研发加速文章，移除企业安全防护与对齐相关旧文。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-28T00:34:10+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "announcementsoct",
+        "before": "AnnouncementsOct 6, 2026",
+        "after": "AnnouncementsOct 26, 2026"
+      },
+      {
+        "key": "latest newsoctober",
+        "before": "Latest newsOctober 27, 2026",
+        "after": "Latest newsOctober 28, 2026"
+      }
+    ],
+    "added_lines": [
+      "Early progress on accelerating drug development with Claude",
+      "Expanding our partnership with GSA to bring Claude to all levels of government",
+      "ScienceOct 27, 2026",
+      "Today, Anthropic, PBC filed a registration statement on Form S-1 with the U.S. Securities and Exchange Commission relating to its proposed initial public offering of its Class A common stock.",
+      "We are expanding our partnership with the General Services Administration (GSA) through a new agreement that gives government partners a 40% discount on Claude Enterprise, Claude for Government, and the Claude API.",
+      "We're at the start of a major effort to speed up drug development with Claude. Over the past several months, our scientists have engaged in deep research partnerships with six organizations developing new medicines."
+    ],
+    "removed_lines": [
+      "Developing Enterprise Frontier Safeguards with our customers",
+      "Improving our alignment and security efforts",
+      "On July 30, we reported three incidents in which Claude models gained unauthorized access to real computer systems. We are conducting an in-depth analysis of both incidents, and planning to work with METR for an independent review. In the meantime, we’re sharing some of the changes we’ve made over the past month.",
+      "We’re announcing Enterprise Frontier Safeguards (EFS), a solution that combines the privacy of zero data retention with state-of-the-art safeguards for detecting misuse. EFS works by storing data in cloud infrastructure controlled by the customer, not Anthropic."
+    ],
+    "added_count": 6,
+    "removed_count": 4,
+    "raw_added_count": 9,
+    "raw_removed_count": 8
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-28.json"
+  },
+  "permalink": "/item/obs_80e645a589ff0b098aac7828e570a3a4e51decad6973cd0938e3ea5a3a498504/"
+}

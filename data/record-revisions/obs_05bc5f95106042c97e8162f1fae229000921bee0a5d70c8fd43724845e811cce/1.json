@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_05bc5f95106042c97e8162f1fae229000921bee0a5d70c8fd43724845e811cce",
+  "sourceId": "anthropic-modellist",
+  "date": "2026-10-28",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "model_list",
+  "sourceUrl": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+  "title": "Anthropic · 模型列表来源更新",
+  "summary": "A human-readable name for the model.",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "state-of-the-art",
+        "before": "Claude is a family of state-of-the-art large language models developed by Anthropic. Compare the current lineup, find the model ID for every platform, and open each model's page for its full specs and resources.",
+        "after": "Claude is a family of state-of-the-art large language models developed by Anthropic. Compare the current lineup, find the model ID for every platform, and open each model’s page for its full specs and resources."
+      },
+      {
+        "key": "up-front",
+        "before": "Each model's capabilities object also includes thinking.types.between_tools, which reports whether the model accepts thinking: {type: \"between_tools\"}, the setting that turns off up-front thinking. supported is false when the model rejects \"between_tools\" with a 400 error. Even when supported is true, the API can still reject a \"between_tools\" request for another reason, such as an effort level that the model doesn't allow with \"between_tools\". For Claude Sonnet 5.5, for example, the Models API reports thinking.types.between_tools.supported as true and thinking.types.disabled.supported as false.",
+        "after": "Each model’s capabilities object also includes thinking.types.between_toolsPreview with links to the API reference available — press Tab until focus enters the card, Escape to return., which reports whether the model accepts thinking: {type: \"between_tools\"}, the setting that turns off up-front thinking. supported is false when the model rejects \"between_tools\" with a 400 error. Even when supported is true, the API can still reject a \"between_tools\" request for another reason, such as an effort level that the model doesn’t allow with \"between_tools\". For Claude Sonnet 5.5, for example, the Models API reports thinking.types.between_tools.supported as true and thinking.types.disabled.supported as false."
+      },
+      {
+        "key": "long-horizon",
+        "before": "If you're unsure which model to use, start with Claude Opus 5.5 for most workloads. Use Claude Fable 5.1 for demanding reasoning and long-horizon agentic work, or when your evals on Claude Opus 5.5 at higher effort still fall short. All current models support text and image input, text output, multilingual capabilities, vision, and tool use. Each model's page lists the platforms it's available on.",
+        "after": "If you’re unsure which model to use, start with Claude Opus 5.5 for most workloads. Use Claude Fable 5.1 for demanding reasoning and long-horizon agentic work, or when your evals on Claude Opus 5.5 at higher effort still fall short. All current models support text and image input, text output, multilingual capabilities, vision, and tool use. Each model’s page lists the platforms it’s available on."
+      },
+      {
+        "key": "reliable-knowledge",
+        "before": "Once you've picked a model, learn how to make your first API call. To understand how model IDs, aliases, and snapshots work, see Model IDs and versioning; for the reliable-knowledge and training-data cutoffs behind each model, see Anthropic's Transparency Hub.",
+        "after": "Once you’ve picked a model, learn how to make your first API call. To understand how model IDs, aliases, and snapshots work, see Model IDs and versioning; for the reliable-knowledge and training-data cutoffs behind each model, see Anthropic’s Transparency Hub."
+      }
+    ],
+    "added_lines": [
+      "\"deprecated\"",
+      "A human-readable name for the model.",
+      "Defaults to 20. Ranges from 1 to 1000.",
+      "Each model in the response also has a linePreview with links to the API reference available — press Tab until focus enters the card, Escape to return. field, which names the model line it belongs to. Claude Opus 4.5 and Claude Opus 4.6 both report opus. Use line to group models, for example, in a model picker. line is null when a model belongs to no line. Read line instead of inferring it from the model’s id. Anthropic might add more lines, so don’t treat the set of values as fixed.",
+      "Each model’s capabilities object also includes server_toolsPreview with links to the API reference available — press Tab until focus enters the card, Escape to return., which reports whether the model accepts the web search and code execution tools. It doesn’t cover other server tools, such as web fetch. server_tools.web_search.supported and server_tools.code_execution.supported are true when the model accepts at least one version of that tool, not necessarily every version. server_tools.supported is true when the model accepts at least one of the two tools. Even when a tool is supported, your organization’s settings can still cause a request that uses it to fail. For example, an administrator can disable web search.",
+      "Each model’s capabilities object includes thinking.types.disabledPreview with links to the API reference available — press Tab until focus enters the card, Escape to return., which reports whether the model accepts thinking: {type: \"disabled\"}, the setting that turns thinking off. supported is false when the model rejects \"disabled\" with a 400 error, and true on a model that doesn’t support thinking. Even when supported is true, the API can still reject a \"disabled\" request for another reason. One such reason is an effort level that the model doesn’t allow with thinking off.",
+      "Explore Claude’s capabilities and development flow.",
+      "Filter the list to models in any of the given lifecycle stages (active, deprecated, or retired). Up to 3 values. When omitted, the list contains the active and deprecated models; retired models appear only when retired is requested explicitly.",
+      "First ID in the data list. Can be used as the before_id for the previous page.",
+      "For Models, this is always \"model\".",
+      "Headers anthropic-version anthropic-workspace-id",
+      "ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.",
+      "ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.",
+      "Indicates if there are more results in the requested page direction.",
+      "Last ID in the data list. Can be used as the after_id for the next page.",
+      "List Models",
+      "List available models.",
+      "Maximum input context window size in tokens for this model.",
+      "Maximum value for the max_tokens parameter when using this model.",
+      "Number of items to return per page.",
+      "Object mapping capability names to their support details. Keys are always present for all known capabilities.",
+      "Object type.",
+      "One of the following:",
+      "Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace."
+    ],
+    "removed_lines": [
+      "Each model in the response also has a line field, which names the model line it belongs to. Claude Opus 4.5 and Claude Opus 4.6 both report opus. Use line to group models, for example, in a model picker. line is null when a model belongs to no line. Read line instead of inferring it from the model's id. Anthropic might add more lines, so don't treat the set of values as fixed.",
+      "Each model's capabilities object also includes server_tools, which reports whether the model accepts the web search and code execution tools. It doesn't cover other server tools, such as web fetch. server_tools.web_search.supported and server_tools.code_execution.supported are true when the model accepts at least one version of that tool, not necessarily every version. server_tools.supported is true when the model accepts at least one of the two tools. Even when a tool is supported, your organization's settings can still cause a request that uses it to fail. For example, an administrator can disable web search.",
+      "Each model's capabilities object includes thinking.types.disabled, which reports whether the model accepts thinking: {type: \"disabled\"}, the setting that turns thinking off. supported is false when the model rejects \"disabled\" with a 400 error, and true on a model that doesn't support thinking. Even when supported is true, the API can still reject a \"disabled\" request for another reason. One such reason is an effort level that the model doesn't allow with thinking off.",
+      "Explore Claude's capabilities and development flow.",
+      "Output quality: When migrating from a previous model generation, you might notice larger improvements in overall performance. If you're on Claude Opus 5 or earlier, see the Claude Opus 5.5 migration guide.",
+      "The top-level code_execution capability is a different check. It reports whether code that Claude runs in the code execution tool can call the request's other tools, as in programmatic tool calling. For Claude Haiku 4.5, for example, the Models API reports server_tools.code_execution.supported as true and code_execution.supported as false."
+    ],
+    "added_count": 24,
+    "removed_count": 6,
+    "raw_added_count": 73,
+    "raw_removed_count": 12
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-28.json"
+  },
+  "permalink": "/item/obs_05bc5f95106042c97e8162f1fae229000921bee0a5d70c8fd43724845e811cce/"
+}

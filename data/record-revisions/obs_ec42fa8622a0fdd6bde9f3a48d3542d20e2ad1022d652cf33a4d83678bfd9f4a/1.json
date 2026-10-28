@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_ec42fa8622a0fdd6bde9f3a48d3542d20e2ad1022d652cf33a4d83678bfd9f4a",
+  "sourceId": "alibaba-pricing",
+  "date": "2026-10-28",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "阿里百炼",
+  "sourceType": "pricing",
+  "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+  "title": "阿里百炼 · 定价来源更新",
+  "summary": "Tripo/Tripo-AnimationRetarget |",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "计费规则",
+        "before": "计费规则：输入不计费，输出按次数计费。",
+        "after": "计费规则：输入不计费，输出按次计费，价格以积分计，1积分 = 0.07元。"
+      }
+    ],
+    "added_lines": [
+      "Tripo/Tripo-AnimationRetarget |",
+      "Tripo/Tripo-AutoRig |",
+      "Tripo/Tripo-ConvertFormat |",
+      "Tripo/Tripo-ImageToSplat |",
+      "Tripo/Tripo-MeshCompletion |",
+      "Tripo/Tripo-Retopology |",
+      "Tripo/Tripo-RigCheck |",
+      "Tripo/Tripo-Segmentation |",
+      "Tripo/Tripo-SmartSegmentation |",
+      "Tripo/Tripo-Texture |",
+      "qwen-audio-3.1-realtime-flash |",
+      "仅基础项：使用Tripo-H3.1文生3D生成白模，费用 = 10 × 0.07元 = 0.7元。",
+      "仅输出文本时，按文本输出单价计费；输出文本和音频时，仅对音频收取输出费用，伴随文本不另收输出费。",
+      "单图生3D（不含贴图） |",
+      "图片生成Gaussian Splat |",
+      "基础项+附加项：使用Tripo-H3.1单图生3D，带高清贴图（4K）和四边面网格，费用 = （20 + 20 + 5）× 0.07元 = 3.15元。",
+      "基础项：每次调用只计其中一项，动画重定向按动画个数计费。",
+      "多图生3D（不含贴图） |",
+      "文生3D（不含贴图） |",
+      "智能分割（图片输入） |",
+      "智能分割（模型输入） |",
+      "计费公式：费用 = （基础项积分 + 所开启附加项的积分之和）× 0.07元。",
+      "重拓扑v1.0（基础） |",
+      "重拓扑v2.0（智能） |",
+      "附加项：按需开启，可同时开启多项，每项在基础项积分上累加计费；没有附加项或未开启时仅计基础项积分。",
+      "高精度几何（Ultra） |"
+    ],
+    "removed_lines": [
+      "单图生3D/多图生3D |",
+      "标准版+带标清贴图 |",
+      "标准版+带高清贴图 |",
+      "超清版+带标清贴图 |",
+      "超清版+带高清贴图 |"
+    ],
+    "added_count": 26,
+    "removed_count": 5,
+    "raw_added_count": 27,
+    "raw_removed_count": 6
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-28.json"
+  },
+  "permalink": "/item/obs_ec42fa8622a0fdd6bde9f3a48d3542d20e2ad1022d652cf33a4d83678bfd9f4a/"
+}

@@ -5977,5 +5977,157 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-28": {
+    "highlights": [
+      {
+        "platform": "Anthropic",
+        "logo_summary": "IPO申请+多模型能力更新与安全功能扩展",
+        "items": [
+          {
+            "text": "Anthropic 提交 S-1 注册声明，启动 IPO 流程",
+            "type": "other"
+          },
+          {
+            "text": "Claude Opus 5.5 与 Claude Fable 5.1 新增 thinking 限制与工具调用变更",
+            "type": "release"
+          },
+          {
+            "text": "Claude Managed Agents 新增自托管沙箱、环境变量凭据与 web_fetch 域限制",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "火山方舟",
+        "logo_summary": "视频生成模型系列更新与定价调整",
+        "items": [
+          {
+            "text": "Doubao Seedance 2.5 与 Doubao Seedream 5.0 pro 文档更新，新增 4~30 秒视频生成与全模态参考输入",
+            "type": "release"
+          },
+          {
+            "text": "新增 1080p/4k 位深选项与 500000 TPM 限制，移除旧版定价条目",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "阿里百炼",
+        "logo_summary": "多模型上新与价格调整，3D生成工具扩展",
+        "items": [
+          {
+            "text": "新增 MiniMax-M3.1-Flash、Tripo/Tripo-P1.0、ZHIPU/GLM-5.3、deepseek-v4.1-flash 等模型",
+            "type": "release"
+          },
+          {
+            "text": "qwen3.8-flash 输入价格上调至 1.094 元/百万tokens，输出上调至 3.427 元/百万tokens",
+            "type": "pricing"
+          },
+          {
+            "text": "Tripo 系列新增 9 个 3D 处理工具，计费规则改为积分制",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Google Vertex AI",
+        "logo_summary": "Gemini Robotics ER 2 发布，定价页更新",
+        "items": [
+          {
+            "text": "Gemini Robotics ER 2 模型上线，支持空间与时间推理、多步规划",
+            "type": "release"
+          },
+          {
+            "text": "Gemini ER 2.0 与 Gemini Robotics 定价新增，含 2027 年生效价格",
+            "type": "pricing"
+          }
+        ]
+      },
+      {
+        "platform": "Cohere",
+        "logo_summary": "模型版本更新与博客内容替换",
+        "items": [
+          {
+            "text": "North Mini Code 与 North Small Translate 模型版本号更新为 1.0",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "OpenAI",
+        "logo_summary": "文档内容替换，无实质模型变化",
+        "items": [
+          {
+            "text": "model_list 与 pricing 页面新增 Account security notification，移除 Use API/provider credentials",
+            "type": "other"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_9a9614c9563f1785da294138714b35da2a769e49a119bc853e1f74913f4f9b66": "模型列表更新显示 Doubao Seedance 2.5 与 Doubao Seedream 5.0 pro 文档替换旧版，新增视频生成参数（分辨率、位深、时长）与 Function Calling 能力，同时移除旧教程与 DeepSeek-V4.1-Flash 条目。",
+      "obs_652b9e7cab7ee05caed709cb1200348c1548589d2e8c3858d53009c92c1250ab": "定价页删除了多个旧价格条目（如 0.0015 元/GB/小时、0.45 元/CU/小时等），可能对应旧模型或服务下线，但未新增明确新价格。",
+      "obs_b9424551784ebd448d7bea4a2c5abf83e3ff4dd9c70b7565ddf7a56a0fbddcd8": "变更日志移除 API Key 管理、Agent/Coding Plan 相关更新，包括 Kimi K3 模型上线与 Harness 能力，可能表示这些功能已转正或文档重组。",
+      "obs_fcf430c41b378a2b888f0febaa64a69d497f31a07c9808baeaf06efa542128d0": "模型列表大幅调整：新增 MiniMax-M3.1-Flash、Tripo-P1.0、GLM-5.3、deepseek-v4.1-flash 等，同时移除旧版本（如 kimi-k3、glm-5.2），并更新多个模型条目为最新版本。",
+      "obs_ec42fa8622a0fdd6bde9f3a48d3542d20e2ad1022d652cf33a4d83678bfd9f4a": "定价页新增 Tripo 系列 9 个工具与 qwen-audio-3.1-realtime-flash 定价，同时删除旧 3D 生成计费项，计费规则改为积分制（1积分=0.07元）。",
+      "obs_fca27ea15c4d606b86cf4c4cb3382562ec36812a2336cf0b025fee5c5c1796fc": "文档配置信息发生微小变化，但内容实质未变，可能为内部元数据更新。",
+      "obs_1525158fd8ae2ca3a37c891efb0a79716285661c2378d36bf5268d8e3fd60e2f": "变更日志同样仅文档配置变化，无实质内容更新。",
+      "obs_5849413a557d779e7a04d04b91d3a2e7de89bc21954bc93849f2bc321ec55e63": "模型列表页面新增 Account security notification，移除 Use API/provider credentials，可能为文档结构调整。",
+      "obs_4b4a741b859fa45a8e25af3cf55afc5be08d398cfd36278163b085bf1ad9b372": "定价页同样新增 Account security notification，移除旧凭据说明，无价格变化。",
+      "obs_1dcef785ad0e9b298796a2d010163dbeaf900282224be3ed3faa8e8487b6a4d9": "变更日志同步更新，新增安全通知，移除旧凭据内容。",
+      "obs_05d5a0a603c2151b887cb59640e00d31a2c882dedcc6b5c7271ac147eac7b4cd": "博客页面新增 Account security notification，移除旧凭据内容，可能为安全公告。",
+      "obs_05bc5f95106042c97e8162f1fae229000921bee0a5d70c8fd43724845e811cce": "模型列表文档更新：新增 deprecated 生命周期状态、分页参数、server_tools 与 thinking.types 说明，移除旧版 capabilities 描述，反映 API 文档完善。",
+      "obs_456bde409f525af9c57aaaa8d3abe943d8d818ef8eca5ee5c019f7c859ae3b14": "定价页更新：新增运行时计费说明、价格单位说明，移除旧版工具成本描述，整体为文档重构。",
+      "obs_0649ece5b4c7c6401afe002ebc6d53d68af9fa7248a84bf9682e10d655fa2603": "变更日志新增多项 Claude Managed Agents 功能（自托管沙箱、环境变量凭据、web_fetch 限制）、推理钩子 beta、模型 thinking 限制说明，同时更新缓存诊断与合规 API 端点。",
+      "obs_80e645a589ff0b098aac7828e570a3a4e51decad6973cd0938e3ea5a3a498504": "博客新增 IPO 注册声明、与 GSA 合作扩展、药物研发加速文章，移除企业安全防护与对齐相关旧文。",
+      "obs_227901556d03609a4a3f68f95c21ccd5f462b09bd0520c8678d1e5433dd3ad3b": "定价页更新日期至 2026-10-27，并新增 Gemini 4 Argon 的计费说明（所有 token 均计费，含思考 token）。",
+      "obs_d2d619364cd2249a260841673bb46b6513e10a72c272ec23b6b3b22ac22398d0": "模型列表更新日期至 2026-10-27，新增 Gemini Robotics ER 2 模型描述。",
+      "obs_f09aca23640141afb7249b29df6643a2e1d085dcba7749d812ac9689f97ab288": "定价页新增 Gemini ER 2.0 与 Gemini Robotics 定价，含 2027 年生效价格，并更新非全球区域价格。",
+      "obs_affec4ff8b690ed44536421b2618534ee1030a8e1e6af978b3763eed059f3177": "博客新增 Gemini Robotics Embodied Reasoning 2 发布文章，移除生物技术相关旧文。",
+      "obs_100f03ea41b0732bed5ccb8513a156069c703eb004e7b874e43dc107bda809fd": "模型列表更新 North Mini Code 与 North Small Translate 版本号从 1-0/09-2026 改为 1.0，参数与上下文长度不变。",
+      "obs_459ccf22de9d8fbbda536546b6a978baaa4ad1f13e31993c6341e54aec0848f0": "定价页新增 Ada 相关文章，移除 CoreWeave 案例，可能为内容替换。",
+      "obs_b1b9767c6d306b200fc26013d5957c0190afa8c880467eb0feedf1152445d4ed": "变更日志同步更新模型名称版本号，与 model_list 一致。",
+      "obs_3fa54bf7dfc5901190245ac9c389cd2a3d83e89c7f27e4fee3c0a013b1968302": "博客新增 Ada 文章，移除 CoreWeave 案例，内容更新。",
+      "obs_8d3ac2ffcfbc155d11d20a6c37e83b3df1491205e71d0c0edecc0a95bd7e57eb": "行业指数更新：新增多家厂商（StepFun、Thinking Machines、NVIDIA 等）到厂商列表，并调整评估描述。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "6f2fd5a196fe7f3e122804e94a1774f85a12f31d6e79dc19efd576d43daed9f6",
+      "inputRefs": [
+        "obs_05bc5f95106042c97e8162f1fae229000921bee0a5d70c8fd43724845e811cce",
+        "obs_05d5a0a603c2151b887cb59640e00d31a2c882dedcc6b5c7271ac147eac7b4cd",
+        "obs_0649ece5b4c7c6401afe002ebc6d53d68af9fa7248a84bf9682e10d655fa2603",
+        "obs_100f03ea41b0732bed5ccb8513a156069c703eb004e7b874e43dc107bda809fd",
+        "obs_1525158fd8ae2ca3a37c891efb0a79716285661c2378d36bf5268d8e3fd60e2f",
+        "obs_1dcef785ad0e9b298796a2d010163dbeaf900282224be3ed3faa8e8487b6a4d9",
+        "obs_227901556d03609a4a3f68f95c21ccd5f462b09bd0520c8678d1e5433dd3ad3b",
+        "obs_3fa54bf7dfc5901190245ac9c389cd2a3d83e89c7f27e4fee3c0a013b1968302",
+        "obs_456bde409f525af9c57aaaa8d3abe943d8d818ef8eca5ee5c019f7c859ae3b14",
+        "obs_459ccf22de9d8fbbda536546b6a978baaa4ad1f13e31993c6341e54aec0848f0",
+        "obs_4b4a741b859fa45a8e25af3cf55afc5be08d398cfd36278163b085bf1ad9b372",
+        "obs_5849413a557d779e7a04d04b91d3a2e7de89bc21954bc93849f2bc321ec55e63",
+        "obs_652b9e7cab7ee05caed709cb1200348c1548589d2e8c3858d53009c92c1250ab",
+        "obs_80e645a589ff0b098aac7828e570a3a4e51decad6973cd0938e3ea5a3a498504",
+        "obs_8d3ac2ffcfbc155d11d20a6c37e83b3df1491205e71d0c0edecc0a95bd7e57eb",
+        "obs_9a9614c9563f1785da294138714b35da2a769e49a119bc853e1f74913f4f9b66",
+        "obs_affec4ff8b690ed44536421b2618534ee1030a8e1e6af978b3763eed059f3177",
+        "obs_b1b9767c6d306b200fc26013d5957c0190afa8c880467eb0feedf1152445d4ed",
+        "obs_b9424551784ebd448d7bea4a2c5abf83e3ff4dd9c70b7565ddf7a56a0fbddcd8",
+        "obs_d2d619364cd2249a260841673bb46b6513e10a72c272ec23b6b3b22ac22398d0",
+        "obs_ec42fa8622a0fdd6bde9f3a48d3542d20e2ad1022d652cf33a4d83678bfd9f4a",
+        "obs_f09aca23640141afb7249b29df6643a2e1d085dcba7749d812ac9689f97ab288",
+        "obs_fca27ea15c4d606b86cf4c4cb3382562ec36812a2336cf0b025fee5c5c1796fc",
+        "obs_fcf430c41b378a2b888f0febaa64a69d497f31a07c9808baeaf06efa542128d0",
+        "price_03f3e189ae0f854015af845af2e4f0273102edfaf8dd06c41d24f7601ac93e3b",
+        "price_2ae2a287cd8049973511ca315354f60d63014d2e12bf0d436c6bd42a23f8fd4f",
+        "price_2d2ca291674f00600ad41f8bf0968214cae3e133c2728e25cf94747d01857645",
+        "price_33fd713e6ec79038183e29a0a37bdbf690ec77c2e964c53602f6ede4c03e8bb7",
+        "price_9766f124dc20de85496f109a8c26c24a7d4bd0af8c4065d291b91646e2c90098",
+        "price_ec5fe91f5540bfe056a20447385b75bfa969ac3aaacb80113033e8765b8f4a1f"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }

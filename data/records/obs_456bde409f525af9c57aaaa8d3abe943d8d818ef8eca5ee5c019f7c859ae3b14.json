@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_456bde409f525af9c57aaaa8d3abe943d8d818ef8eca5ee5c019f7c859ae3b14",
+  "sourceId": "anthropic-pricing",
+  "date": "2026-10-28",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "pricing",
+  "sourceUrl": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+  "title": "Anthropic · 定价来源更新",
+  "summary": "定价页更新：新增运行时计费说明、价格单位说明，移除旧版工具成本描述，整体为文档重构。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-28T00:34:10+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "all tokens consumed by a claude managed agents session are billed at the rates shown in model pricing",
+        "before": "All tokens consumed by a Claude Managed Agents session are billed at the rates shown in Model pricing. Prompt caching multipliers apply identically. Web search triggered inside a session incurs the standard $10 USD per 1,000 searches. On Claude Platform on AWS, session token and runtime charges convert to Claude Consumption Units at the standard rate (see Claude Platform on AWS pricing). Fast mode premium pricing applies when an agent's model.speed is set to \"fast\".",
+        "after": "All tokens consumed by a Claude Managed Agents session are billed at the rates shown in Model pricing. Prompt caching multipliers apply identically. Web search triggered inside a session incurs the standard $10 USD per 1,000 searches. On Claude Platform on AWS, session token and runtime charges convert to Claude Consumption Units at the standard rate (see Claude Platform on AWS pricing). Fast mode premium pricing applies when an agent’s model.speed is set to \"fast\"."
+      },
+      {
+        "key": "claude haiku",
+        "before": "Claude Haiku 5.5 is priced by prompt length: a request whose prompt is over 100,000 tokens pays higher prices. A request's prompt length counts all of its input tokens, including cache reads and cache writes. Each request is priced on its own: a request over the threshold pays the higher prices even when part of its prompt is a cache hit, and earlier requests keep the prices they were billed at. The model pricing and batch processing pricing sections list both sets of prices.",
+        "after": "Claude Haiku 5.5 is priced by prompt length: a request whose prompt is over 100,000 tokens pays higher prices. A request’s prompt length counts all of its input tokens, including cache reads and cache writes. Each request is priced on its own: a request over the threshold pays the higher prices even when part of its prompt is a cache hit, and earlier requests keep the prices they were billed at. The model pricing and batch processing pricing sections list both sets of prices."
+      },
+      {
+        "key": "the data residency multiplier also applies",
+        "before": "The data residency multiplier also applies: when an agent's model.inference_geo is pinned to \"us\", tokens consumed by sessions running that agent are billed at 1.1x the standard rates, the same multiplier that applies to US-only inference on the Messages API.",
+        "after": "The data residency multiplier also applies: when an agent’s model.inference_geo is pinned to \"us\", tokens consumed by sessions running that agent are billed at 1.1x the standard rates, the same multiplier that applies to US-only inference on the Messages API."
+      },
+      {
+        "key": "the text editor tool uses the same pricing structure as other tools used with claude",
+        "before": "The text editor tool uses the same pricing structure as other tools used with Claude. It follows the standard input and output token pricing based on the Claude model you're using.",
+        "after": "The text editor tool uses the same pricing structure as other tools used with Claude. It follows the standard input and output token pricing based on the Claude model you’re using."
+      },
+      {
+        "key": "tokens are pieces of text that models process",
+        "before": "Tokens are pieces of text that models process. How many tokens the same text produces depends on the model's tokenizer, the language, and the type of content. Claude 4.7 and later models and Claude Mythos Preview use a newer tokenizer that produces approximately 30 percent more tokens for the same text than earlier models. To see how many tokens a request uses on a specific model, count it with token counting and that model's ID.",
+        "after": "Tokens are pieces of text that models process. How many tokens the same text produces depends on the model’s tokenizer, the language, and the type of content. Claude 4.7 and later models and Claude Mythos Preview use a newer tokenizer that produces approximately 30 percent more tokens for the same text than earlier models. To see how many tokens a request uses on a specific model, count it with token counting and that model’s ID."
+      }
+    ],
+    "added_lines": [
+      "If you’re also using bash or text editor tools alongside computer use, those tools have their own token costs as documented in their respective pages.",
+      "Learn about Anthropic’s pricing structure for models and features",
+      "Runtime is measured to the millisecond and accrues only while the session’s status is running. Time spent idle (waiting for your next message or a tool confirmation), rescheduling, or terminated does not count toward runtime.",
+      "This page provides detailed pricing information for Anthropic’s models and features. All prices are in USD.",
+      "| Modifier | Why it doesn’t apply"
+    ],
+    "removed_lines": [
+      "If you're also using bash or text editor tools alongside computer use, those tools have their own token costs as documented in their respective pages.",
+      "Learn about Anthropic's pricing structure for models and features",
+      "Runtime is measured to the millisecond and accrues only while the session's status is running. Time spent idle (waiting for your next message or a tool confirmation), rescheduling, or terminated does not count toward runtime.",
+      "This page provides detailed pricing information for Anthropic's models and features. All prices are in USD.",
+      "| Modifier | Why it doesn't apply"
+    ],
+    "added_count": 5,
+    "removed_count": 5,
+    "raw_added_count": 10,
+    "raw_removed_count": 10
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-28.json"
+  },
+  "permalink": "/item/obs_456bde409f525af9c57aaaa8d3abe943d8d818ef8eca5ee5c019f7c859ae3b14/"
+}

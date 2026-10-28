@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_8d3ac2ffcfbc155d11d20a6c37e83b3df1491205e71d0c0edecc0a95bd7e57eb",
+  "sourceId": "aa-industry",
+  "date": "2026-10-28",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Artificial Analysis",
+  "sourceType": "industry",
+  "sourceUrl": "https://artificialanalysis.ai/",
+  "title": "Artificial Analysis · 行业数据来源更新",
+  "summary": "行业指数更新：新增多家厂商（StepFun、Thinking Machines、NVIDIA 等）到厂商列表，并调整评估描述。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-28T00:34:10+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "artificial analysis intelligence index v",
+        "before": "Artificial Analysis Intelligence Index v4.3.2 incorporates 10 evaluations: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1",
+        "after": "Artificial Analysis Intelligence Index v4.3.2 incorporates 10 evaluations: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, and AA-LCR v1.1"
+      },
+      {
+        "key": "intelligence",
+        "before": "Intelligence, speed and cost of leading language models, based on our independent evaluations",
+        "after": "Intelligence, speed, and cost of leading language models, based on our independent evaluations"
+      },
+      {
+        "key": "weighted average of aa-omniscience-decision",
+        "before": "Weighted average of AA-Omniscience-Decision, HLE-MultiChoice, When2Call and WildGuardTest · Higher is better",
+        "after": "Weighted average of AA-Omniscience-Decision, HLE-MultiChoice, When2Call, and WildGuardTest · Higher is better"
+      }
+    ],
+    "added_lines": [
+      "AnthropicMetaKimiOpenAIGoogleSpaceXAIXiaomiAlibabaDeepSeekZ AIInclusionAIStepFunMiniMaxMistralInstitute of Foundation ModelsReflectionThinking Machines",
+      "StepFunThinking MachinesXiaomiOpenAIAnthropicMistralMetaInclusionAISpaceXAIKimiReflectionGoogleAlibabaZ AIMiniMaxNVIDIADeepSeek"
+    ],
+    "removed_lines": [
+      "AnthropicMetaKimiOpenAIGoogleSpaceXAIXiaomiAlibabaDeepSeekZ AIStepFunMiniMaxMistralInstitute of Foundation ModelsReflectionThinking Machines",
+      "StepFunThinking MachinesXiaomiOpenAIAnthropicMistralMetaSpaceXAIKimiReflectionGoogleAlibabaZ AIMiniMaxNVIDIADeepSeek"
+    ],
+    "added_count": 2,
+    "removed_count": 2,
+    "raw_added_count": 9,
+    "raw_removed_count": 9
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-28.json"
+  },
+  "permalink": "/item/obs_8d3ac2ffcfbc155d11d20a6c37e83b3df1491205e71d0c0edecc0a95bd7e57eb/"
+}

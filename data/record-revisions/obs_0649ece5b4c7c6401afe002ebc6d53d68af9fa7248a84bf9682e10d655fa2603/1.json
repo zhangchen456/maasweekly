@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_0649ece5b4c7c6401afe002ebc6d53d68af9fa7248a84bf9682e10d655fa2603",
+  "sourceId": "anthropic-changelog",
+  "date": "2026-10-28",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 1,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.anthropic.com/en/release-notes/api",
+  "title": "Anthropic · 更新日志来源更新",
+  "summary": "In Claude Managed Agents, the web_fetch tool now fetches only URLs that have already appeared in the session, for example in the text of a user message, in a web_search result, or in a page that web_fetch returned earlier. This reduces the risk of data exfiltration. A URL that appears only in Claude’s own output, the agent’s system prompt, an attached document, or the output of a tool such as bash, read, or an MCP tool does not count: a web_fetch call for it returns a url_not_in_prior_context error result to the agent. To let the agent fetch a URL, send it in the text of a user.message event.",
+  "summaryOrigin": "rule",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": null,
+  "revisionReason": null,
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "opt-in",
+        "before": "Claude Fable 5 runs safety classifiers on requests and during response generation. When a classifier declines a request, the Messages API returns stop_reason: \"refusal\". You are not billed for a request refused before any output is generated. An opt-in fallbacks parameter (in beta on the Claude API and Claude Platform on AWS; not supported on the Message Batches API) re-runs refused requests on another model, billed at the fallback model's rates. See Handling stop reasons.",
+        "after": "Claude Fable 5 runs safety classifiers on requests and during response generation. When a classifier declines a request, the Messages API returns stop_reason: \"refusal\". You are not billed for a request refused before any output is generated. An opt-in fallbacks parameter (in beta on the Claude API and Claude Platform on AWS; not supported on the Message Batches API) re-runs refused requests on another model, billed at the fallback model’s rates. See Handling stop reasons."
+      },
+      {
+        "key": "v1/sessions",
+        "before": "Claude Managed Agents session event streams now support event deltas. Opt in with the event_deltas[] query parameter on GET /v1/sessions/{session_id}/events/stream. The event_start and event_delta events preview an agent message's text as it's generated, before the complete agent.message event arrives.",
+        "after": "Claude Managed Agents session event streams now support event deltas. Opt in with the event_deltas[] query parameter on GET /v1/sessions/{session_id}/events/stream. The event_start and event_delta events preview an agent message’s text as it’s generated, before the complete agent.message event arrives."
+      },
+      {
+        "key": "v1/sessions",
+        "before": "Claude Managed Agents session thread event streams now support event deltas. GET /v1/sessions/{session_id}/threads/{thread_id}/stream accepts the same event_deltas[] query parameter as the session-level stream, so you can preview a subagent's text as the model generates it. A connection previews only the thread it's reading. See Preview session thread events.",
+        "after": "Claude Managed Agents session thread event streams now support event deltas. GET /v1/sessions/{session_id}/threads/{thread_id}/stream accepts the same event_deltas[] query parameter as the session-level stream, so you can preview a subagent’s text as the model generates it. A connection previews only the thread it’s reading. See Preview session thread events."
+      },
+      {
+        "key": "self-hosted",
+        "before": "Claude Managed Agents sessions that run in a self-hosted sandbox can now attach memory stores. The Python, TypeScript, and Go SDK workers download each attached store into the sandbox at its mount_path and sync the agent's changes back to the store. See Memory stores in self-hosted sandboxes.",
+        "after": "Claude Managed Agents sessions that run in a self-hosted sandbox can now attach memory stores. The Python, TypeScript, and Go SDK workers download each attached store into the sandbox at its mount_path and sync the agent’s changes back to the store. See Memory stores in self-hosted sandboxes."
+      },
+      {
+        "key": "claude managed agents vaults now support an injection_location setting on environment variable credentials (the environment variable tab)",
+        "before": "Claude Managed Agents vaults now support an injection_location setting on environment variable credentials (the Environment variable tab). It controls whether the credential's value is substituted, at egress, into the agent's outbound request headers, the request body, or both.",
+        "after": "Claude Managed Agents vaults now support an injection_location setting on environment variable credentials (the Environment variable tab). It controls whether the credential’s value is substituted, at egress, into the agent’s outbound request headers, the request body, or both."
+      },
+      {
+        "key": "claude managed agents vaults now support environment variable credentials",
+        "before": "Claude Managed Agents vaults now support environment variable credentials, so you can securely inject secrets into the agent's sandbox for CLIs, SDKs, and other services that authenticate through environment variables.",
+        "after": "Claude Managed Agents vaults now support environment variable credentials, so you can securely inject secrets into the agent’s sandbox for CLIs, SDKs, and other services that authenticate through environment variables."
+      },
+      {
+        "key": "up-front",
+        "before": "Code written for Claude Sonnet 5 can break on Claude Sonnet 5.5 in five ways. To turn off up-front thinking, send thinking: {\"type\": \"between_tools\"} instead of \"disabled\", at high effort or below. Forced tool use (tool_choice types any and tool) returns a 400 error. Thinking blocks are tied to the model and the conversation. On the Claude API and Google Cloud, the earlier computer_20251124 computer use tool isn't accepted. The advisor tool rejects Claude Opus 4.8, Claude Opus 4.7, and Claude Sonnet 5 as advisors. See What's new in Claude Sonnet 5.5 for each change and the Claude Sonnet 5.5 migration guide for before-and-after requests. For model-specific prompting patterns, see Prompting Claude Sonnet 5.5.",
+        "after": "Code written for Claude Sonnet 5 can break on Claude Sonnet 5.5 in five ways. To turn off up-front thinking, send thinking: {\"type\": \"between_tools\"} instead of \"disabled\", at high effort or below. Forced tool use (tool_choice types any and tool) returns a 400 error. Thinking blocks are tied to the model and the conversation. On the Claude API and Google Cloud, the earlier computer_20251124 computer use tool isn’t accepted. The advisor tool rejects Claude Opus 4.8, Claude Opus 4.7, and Claude Sonnet 5 as advisors. See What’s new in Claude Sonnet 5.5 for each change and the Claude Sonnet 5.5 migration guide for before-and-after requests. For model-specific prompting patterns, see Prompting Claude Sonnet 5.5."
+      },
+      {
+        "key": "cache-diagnosis-2026-04-07",
+        "before": "For cache diagnostics, the API now stores a request's fingerprint only when the request includes the diagnostics object. A request that sends only the cache-diagnosis-2026-04-07 beta header is still accepted, but no fingerprint is stored. A later turn that points previous_message_id at it reports previous_message_not_found. Include diagnostics on every turn, with \"previous_message_id\": null on the first.",
+        "after": "For cache diagnostics, the API now stores a request’s fingerprint only when the request includes the diagnostics object. A request that sends only the cache-diagnosis-2026-04-07 beta header is still accepted, but no fingerprint is stored. A later turn that points previous_message_id at it reports previous_message_not_found. Include diagnostics on every turn, with \"previous_message_id\": null on the first."
+      },
+      {
+        "key": "long-running",
+        "before": "In Claude Code, we've expanded Auto mode to more users for long-running tasks. See the Claude Code documentation.",
+        "after": "In Claude Code, we’ve expanded Auto mode to more users for long-running tasks. See the Claude Code documentation."
+      },
+      {
+        "key": "in claude managed agents",
+        "before": "In Claude Managed Agents, sessions follow your organization's web search settings on the Capabilities page of the Claude Console: the Allow web search setting since October 6, and its web search domain restrictions since October 14. The agent receives only the search results that both the organization's domain restrictions and the allowed_domains or blocked_domains list on the agent's web_search tool allow. See Restrict web search and web fetch domains.",
+        "after": "In Claude Managed Agents, sessions follow your organization’s web search settings on the Capabilities page of the Claude Console: the Allow web search setting since October 6, and its web search domain restrictions since October 14. The agent receives only the search results that both the organization’s domain restrictions and the allowed_domains or blocked_domains list on the agent’s web_search tool allow. See Restrict web search and web fetch domains."
+      }
+    ],
+    "added_lines": [
+      "In Claude Managed Agents, the web_fetch tool now fetches only URLs that have already appeared in the session, for example in the text of a user message, in a web_search result, or in a page that web_fetch returned earlier. This reduces the risk of data exfiltration. A URL that appears only in Claude’s own output, the agent’s system prompt, an attached document, or the output of a tool such as bash, read, or an MCP tool does not count: a web_fetch call for it returns a url_not_in_prior_context error result to the agent. To let the agent fetch a URL, send it in the text of a user.message event.",
+      "In Claude Managed Agents, the web_fetch tool now follows your organization’s web fetch domain restrictions set on the Capabilities page of the Claude Console. A URL, including one reached by a redirect, must pass both the organization’s list and the allowed_domains or blocked_domains list on the agent’s web_fetch tool. See Restrict web search and web fetch domains.",
+      "Inference hooks are now in beta for Claude Enterprise organizations. Point Claude at your organization’s AI security server, and each governed prompt across claude.ai, Cowork, and Claude Code is held for the server’s allow or deny verdict before inference proceeds. Requests are signed, failure handling is configurable, and every denial is recorded in the compliance Activity Feed. See Inference hooks.",
+      "Like Claude Fable 5, both models require 30-day data retention and aren’t available under zero data retention unless expressly authorized by Anthropic. See Model-specific data retention requirements.",
+      "On Claude Fable 5.1 and Claude Mythos 5.1, tool_choice types any and tool aren’t supported and return a 400 error. auto and none are unchanged. To guarantee schema-conformant tool inputs, use strict tool use or structured outputs.",
+      "On Claude Opus 5, disabling thinking is allowed only at effort high or below: thinking: {\"type\": \"disabled\"} with effort xhigh or max returns a 400 error, a breaking change from Claude Opus 4.8. See What’s new in Claude Opus 5.",
+      "On Claude Opus 5.5, thinking can’t be disabled: thinking: {\"type\": \"disabled\"} and thinking: {\"type\": \"enabled\", ...} return a 400 error. Omit the thinking field and control thinking depth with the effort parameter. tool_choice types any and tool also return a 400 error, as on Claude Fable 5.1; use auto with strict tool use. On the Claude API and Google Cloud, computer use on this model requires the computer_toolset_20260801 toolset and the earlier computer_20251124 tool returns a 400 error; on Amazon Bedrock, computer_20251124 keeps working. See the Claude Opus 5.5 migration guide.",
+      "Self-hosted sandboxes are now available for Claude Managed Agents, as an alternative to running tool execution in Anthropic’s infrastructure. See Self-hosted sandboxes.",
+      "Text generated by Claude Fable 5.1 and Claude Mythos 5.1 carries Anthropic’s text watermark, and supported image, video, and audio files that Claude produces through the code execution tool carry C2PA Content Credentials when you retrieve them through the Files API on the Claude API. Marking requires no changes to your requests or response handling.",
+      "The Compliance API local session endpoints are out of beta for Claude for Microsoft 365 sessions in Excel, PowerPoint, Word, and Outlook (product_surface values beginning with office_agents). See Sessions on users’ machines.",
+      "The Compliance API local session endpoints now also return transcripts of Claude Science sessions (product_surface value claude_science) and Claude for Microsoft 365 sessions in Excel, PowerPoint, Word, and Outlook (product_surface values beginning with office_agents), in beta for Claude Enterprise organizations, with your existing Compliance Access Key and the read:compliance_user_data scope. See Sessions on users’ machines.",
+      "The Compliance API local session endpoints now also return transcripts of Claude in Chrome sessions (product_surface value claude_in_chrome), in beta for Claude Enterprise organizations, with your existing Compliance Access Key and the read:compliance_user_data scope. See Sessions on users’ machines.",
+      "The Compliance API now returns transcripts of Cowork and Claude Code sessions that run on your users’ machines, in beta for Claude Enterprise organizations. GET /v1/compliance/apps/sessions/local lists sessions across your organization, GET /v1/compliance/apps/sessions/local/{session_id} retrieves one session’s metadata, and GET /v1/compliance/apps/sessions/local/{session_id}/messages returns its transcript, all with your existing Compliance Access Key and the read:compliance_user_data scope. See Sessions on users’ machines.",
+      "The Compliance API now returns transcripts of Cowork sessions started on claude.ai web or mobile, in beta for Claude Enterprise organizations. GET /v1/compliance/apps/sessions/remote lists sessions and GET /v1/compliance/apps/sessions/remote/{session_id}/messages returns one session’s transcript, using your existing Compliance Access Key with the read:compliance_user_data scope. See Sessions in the cloud.",
+      "The Python, TypeScript, Go, Java, Ruby, PHP, and C# SDKs now include support for code_execution_20260120, the code execution tool version that adds REPL state persistence and is the minimum version for programmatic tool calling. To adopt it, set the tool’s type to code_execution_20260120; no beta header is required. It’s available on Claude Fable 5, Claude Mythos 5, Claude Opus 4.5 and newer, and Claude Sonnet 4.5 and newer; see the code execution tool’s Compatibility section.",
+      "The advisor tool now supports a max_tokens parameter to cap the advisor model’s output for each call, reducing latency and output token cost for workloads that don’t need full-length advisor responses. Set tools[].max_tokens on the advisor tool definition; see Capping advisor output.",
+      "The default behavior of extended thinking in Claude 4 models returns a summary of Claude’s full thinking process, with the full thinking encrypted and returned in the signature field of thinking block output.",
+      "The fallbacks parameter now supports a \"default\" mode, which applies Anthropic’s recommended fallback models by refusal category. Server-side fallback is in beta, and the \"default\" mode requires the server-side-fallback-2026-07-01 beta header. See Refusals and fallback.",
+      "The new SDK and CLI versions also have breaking changes that don’t depend on the API version, and they are licensed under Apache 2.0 instead of the MIT License. See SDK and CLI changes.",
+      "The stop_details.category field on refusal responses now includes \"reasoning_extraction\" on Claude Fable 5, returned when a request is blocked under Anthropic’s Terms of Service restrictions on reverse engineering or duplicating model outputs. The existing \"cyber\" and \"bio\" categories are unchanged. No beta header is required."
+    ],
+    "removed_lines": [],
+    "added_count": 20,
+    "removed_count": 0,
+    "raw_added_count": 186,
+    "raw_removed_count": 186
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-28.json"
+  },
+  "permalink": "/item/obs_0649ece5b4c7c6401afe002ebc6d53d68af9fa7248a84bf9682e10d655fa2603/"
+}
