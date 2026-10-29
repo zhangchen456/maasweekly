@@ -720,7 +720,23 @@ PYEOF
 
 cmd="${1:-}"; shift || true
 ensure_layout
+if [ -f "$ROOT/shared/runtime-mode" ]; then
+  case "$cmd" in
+    activate|rollback) die "runtime mode active: use the code-only runtime deployment path" 4 ;;
+    cleanup|cleanup-plan) echo 'runtime retention is managed separately'; exit 0 ;;
+    status) exec /usr/bin/python3 /usr/local/lib/maasweekly/runtime-control.py status ;;
+  esac
+fi
 case "$cmd" in
+  data-update)
+    [ $# -eq 0 ] || die "data-update takes no arguments" 2
+    exec /bin/bash /usr/local/lib/maasweekly/data-job.sh
+    ;;
+  runtime-activate)
+    [ $# -eq 1 ] || die "runtime-activate requires one upload ID" 2
+    [[ "$1" =~ ^rl_[0-9a-f]{10}_000000000000$ ]] || die "invalid runtime ID" 2
+    exec /usr/bin/python3 /usr/local/lib/maasweekly/runtime-control.py install "$1"
+    ;;
   activate)
     [ $# -eq 1 ] || die "用法: activate <release-id>（退出 2）" 2
     rid="$1"; validate_rid "$rid"

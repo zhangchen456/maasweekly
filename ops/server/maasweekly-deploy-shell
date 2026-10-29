@@ -56,6 +56,14 @@ case "$cmd" in
     reason="${rest#* --reason }"
     exec sudo -n "$ACTIVATE" rollback "$rid" --reason "$reason"
     ;;
+  data-update )
+    exec sudo -n "$ACTIVATE" data-update
+    ;;
+  runtime-activate\ *)
+    rid="${cmd#runtime-activate }"
+    echo "$rid" | grep -Eq '^rl_[0-9a-f]{10}_000000000000$' || reject "非法 runtime ID"
+    exec sudo -n "$ACTIVATE" runtime-activate "$rid"
+    ;;
   status )
     exec sudo -n "$ACTIVATE" status
     ;;

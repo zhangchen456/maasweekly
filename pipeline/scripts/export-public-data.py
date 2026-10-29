@@ -71,7 +71,7 @@ def _build_model_identities(identity_projector) -> dict:
     return catalog
 
 
-def build_release(input_root: Path) -> dict:
+def build_release(input_root: Path, input_view=None) -> dict:
     """加载 → 投影 → 校验 → 返回 {collections, datasetVersion, dataThrough}。"""
     # catalog 与实体投影必须使用同一输入根的 registry，每次构建重置缓存和错误。
     from model_identity.projector import ModelIdentityProjector
@@ -85,7 +85,7 @@ def build_release(input_root: Path) -> dict:
         model_identities.update(relations)
     except (OSError, ValueError, KeyError, TypeError) as exc:
         raise ExportError(f"model identity registry/catalog 加载失败: {exc}") from exc
-    li = loaders.load_all(input_root, PROVIDER_MAP)
+    li = loaders.load_all(input_root, PROVIDER_MAP, input_view=input_view)
     pm = li.provider_map
     si = projector.SourceStatusIndex(li.daily_changes, li.source_registry, li.source_runtime)
     ps = projector.build_price_source_status(li.current)
@@ -104,7 +104,7 @@ def build_release(input_root: Path) -> dict:
          for e in (li.current.get("facts") or {}).values()),
         key=canonical.prices_sort_key)
     cross_platform.annotate(prices, availability_mapping)
-    rev = projector.build_evidence_reverse_index(li.fact_versions)
+    rev = li.public_evidence_index if li.public_evidence_index is not None else projector.build_evidence_reverse_index(li.fact_versions)
     reachable = {e["version_id"] for e in (li.current.get("facts") or {}).values()} | \
         {v for r in li.price_records
          for v in (r.get("beforeVersionId"), r.get("afterVersionId")) if v}

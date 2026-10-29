@@ -3,11 +3,12 @@ import Layout from '../layouts/Layout.astro';
 import HomeOverview from '../components/HomeOverview.astro';
 import '../styles/home-overview.css';
 import '../styles/workspace.css';
+import { runtimeReports } from '../lib/runtime';
 import { getCollection } from 'astro:content';
 import { logoFor } from '../lib/platforms';
 import { homePage, highlightEntities, fmtWeekRange } from '../lib/home-page';
 const { data, today, currentWeek, pastWeeks, substantive, highlights, platformsInSignals, platformOrder, HL_TYPE, typeLabel, dateLong, dateShort, weekday, storySections, storyParas, priceChanges, weekHighlightCount } = homePage(Astro.url.pathname.startsWith('/en/') ? 'en' : 'zh');
-const reports = await getCollection('weekly', ({ data }) => data.date <= new Date().toISOString().slice(0, 10));
+const reports = runtimeReports() ?? await getCollection('weekly', ({ data }) => data.date <= new Date().toISOString().slice(0, 10));
 reports.sort((a, b) => b.data.date.localeCompare(a.data.date));
 const latestReport = reports[0];
 

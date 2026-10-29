@@ -56,3 +56,32 @@ AR-08 最终 6a78846238：53/53 全量标准 release 359.087s、仓库外四入�
 发布准备：合并今日数据，唯一冲突为已移除的 price-ledger.rendered.html，保留 Astro 实现。9份标准输入显式最终切入，原迁移标记保留；七集合新旧/当前数据完全相同，DS0da7/dataThrough20261002。服务器root既有密钥可用，maasdeploy本地密钥不可用；正式CI有既有部署凭据，采用非公开候选预验后CI发布，避免并发切换。
 
 2026-10-02正式上线完成：commit8ebc6b9e4e，RID rl_8ebc6b9e4e_0da7f0c0f2bc；本地和Linux CI均53/53，蓝绿/四入口/旧游标/真实代理链/线上浏览器通过。完整证据、资源边界及回退见 docs/architecture/refactoring-2026-10/release-2026-10-02.md。远端存储DEFERRED。
+
+
+## 2026-10-29 数据/代码解耦
+- 开始实施已同意方案，读取存储迁移、标准输入、公共合同与构建协议。
+- 完成工具/依赖盘点；生产连接与对象桶准备方式已异步询问，尚未得到答案。
+- 尚未改生产、停止原 writer、删除 Git 数据或迁移账号 SQLite。
+
+用户选择现有服务器 PG，并明确暂不使用对象存储；方案已同步。
+
+已完成生产隔离基础设施：复用 PG18 main，不安装/重启；新增 maasdata peer 账号与 maas_data 独立库（连接上限4，work_mem4MB），创建 shared/data-store/{blobs,backups,reports} 0700。现有应用/写入/调度未切换。部署脚本 ops/provision-data-store.sh 已应用成功。
+本地8项真实PG专项通过；首次全量因历史 NUL 失败，已保留为 payload_json 无损文本并补测；192057逻辑文件全量重跑 session88255，独立DB maas_shadow_drill、blobs在/private/tmp/maas-decoupling-20261029。
+
+真实输入全量影子导入成功：192057逻辑文件，178489个新内容对象；事务提交与结构化payload/原始字节验证通过。原文独立复制5341唯一对象、783493910字节，逐对象校验0失败，既有缺原文26份显式保留。开始pg_dump→空库→空文件目录恢复及七集合对账。
+
+pg_dump→空库→空目录恢复通过：192057文件/310270867逻辑字节；原exporter七集合SHA和datasetVersion ds_3622dedc逐项相同，耗时226.54s（迁移恢复演练，不是日常发布耗时）。报告归档至docs/architecture/data-code-decoupling-2026-10-29/parity.json。
+
+数据库直读第一次 canonical 对账发现仅 status.priceStreams 顺序不同；补 source_order 元数据后 datasetVersion一致。进一步文件bytes对账发现嵌套JSON对象键序仍导致4个文件hash不同，未激活此候选。现改为JSONB查询表示+同事务有序JSON表示，reader禁止旧库未补齐时导出；全量backfill已完成，正在做严格7文件bytes+内存复核。
+
+PG专项已扩至14项（含端到端固定样本、不可达历史事实证据时间、源顺序、有界解码键状态），传输4项、标准输入6项、旧导出20项均通过。影子数据包与代码/config哈希已上传；开始限额服务器导入session待记录（root命令不切换应用）。
+
+基础代码已提交 dff5b929d3（分支codex/data-code-decoupling-20261029），原有站点修改未提交。新提交SHA运行完整独立CLI成功：baselineByteParity=true，21.28s，子进程峰1404MiB（Mac；不代替Linux预算）。候选未激活。服务器影子导入session98656仍运行，unpack已加内存/CPU限额。后续需在独立工作树实施C网页运行，避免改动现有未提交Layout/指南内容。
+
+2026-10-29：完成服务器影子导入、Linux候选对账和真实备份恢复。C运行时分支完成本机回归；仍需独立运行包、Linux SSR部署适配、7周期、writer切换。无对象存储，无Git历史重写。完整状态见 docs/architecture/data-code-runtime-2026-10-29.md。
+
+独立代码包180489902字节、不含业务归档，从/private/tmp运行18项SSR验收通过。C仍待Linux/蓝绿/回退和7周期；生产writer未切换。
+
+2026-10-29 用户明确要求正式切换。现网已由旧静态站切到runtime/ad91dc2ce9的blue槽，数据来自shared/public-data/v1与PG。Linux18项SSR验证通过，实际切流→回退旧站→再切新站通过；旧绿槽签发的cursor在新蓝槽200。首次因静态favicon目录权限自动回退，修复仅public client目录权限后通过。当前应用RSS约247MiB。独立采集容器已构建，非root+Chromium sandbox+专用PG peer连接通过；初次数据缓存prepare已完成。下一步更新固定writer代码（schema7、恢复mutable、setgid目录继承），跑validate和真实update，然后启用新的daily/weekly/code工作流并移除Git当前树的运行数据；未完成部分不能标done。
+
+2026-10-29 writer切换候选：71项PG/发布/恢复/工作流测试通过。独立run日志入writer_run_logs，不混入业务inputVersion，保持离线重放幂等；schema7记录最新完整采集head，素材准备失败不丢已入库事实。root固定SSH入口、容器凭据stdin、FD安全安装与候选权限核验已复核；尚待服务器完整validate和真实日更。

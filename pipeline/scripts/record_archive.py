@@ -420,12 +420,19 @@ def load_revision(revisions_root: Path, record_id: str, revision: int) -> dict:
 
 def build_index(records_root: Path) -> list[dict]:
     """从 data/records/*.json 生成稳定排序的可重建索引。"""
+    def records():
+        for f in sorted(records_root.glob("obs_*.json")):
+            try:
+                yield json.loads(f.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as e:
+                raise ArchiveError(f"归档损坏，无法生成索引: {f} ({e})")
+    return index_records(records())
+
+
+def index_records(records) -> list[dict]:
+    """Same index projection for filesystem and committed database records."""
     items = []
-    for f in sorted(records_root.glob("obs_*.json")):
-        try:
-            r = json.loads(f.read_text(encoding="utf-8"))
-        except json.JSONDecodeError as e:
-            raise ArchiveError(f"归档损坏，无法生成索引: {f} ({e})")
+    for r in records:
         items.append({
             "id": r["id"], "date": r["date"], "platform": r["platform"],
             "sourceId": r["sourceId"], "kind": r["kind"], "status": r["status"],

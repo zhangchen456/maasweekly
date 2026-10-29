@@ -23,6 +23,8 @@ def read(root: Path, rel: str, default=None, view=None):
         if rel not in view.files:
             if default is not None: return default
             raise FileNotFoundError('committed input missing: ' + rel)
+        if hasattr(view, 'read_json'):
+            return view.read_json(rel)
         return json.loads(view.path(rel).read_text(encoding='utf-8'))
     p = root / rel
     if not p.exists():
@@ -105,9 +107,9 @@ def record_summary_failure(root: Path, rel: str, key: str, model: str):
     write(root, rel, entries)
 
 
-def compose_weekly(root: Path):
-    weeks = read(root, WEEKLY, [])
-    stories = read(root, WEEK_SUMMARIES, {})
+def compose_weekly(root: Path, view=None):
+    weeks = read(root, WEEKLY, [], view=view)
+    stories = read(root, WEEK_SUMMARIES, {}, view=view)
     for week in weeks:
         story = stories.get(week['week'], {}).get('story')
         if story: week['story'] = story

@@ -1,5 +1,4 @@
-name: 统一生产 release 发布
-
+name: 独立代码发布
 on:
   workflow_call:
     inputs:
@@ -11,109 +10,103 @@ on:
         required: true
 permissions:
   contents: read
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # Only this job owns the production lock; callers never hold it.
-    # Keep running activation transactions. Queue all pending candidates,
-    # then skip superseded ones using main ancestry/runtime diff checks.
+    timeout-minutes: 30
     concurrency:
       group: maas-production-deploy-main
       cancel-in-progress: false
       queue: max
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: maas_shadow_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
     env:
-      DEPLOY_HOST: 47.237.135.97
-      DEPLOY_USER: maasdeploy
-      MAAS_DEPLOY_MODE: release
-      MAAS_VERIFY_MAIN_CANDIDATE: '1'
+      MAAS_SHADOW_TEST_DSN: host=127.0.0.1 port=5432 user=postgres password=postgres dbname=maas_shadow_test
     steps:
-      - name: Set monitoring output directory
-        run: echo "MAAS_MONITOR_OUTPUT=$RUNNER_TEMP/monitor-stages" >> "$GITHUB_ENV"
-      - name: Checkout exact candidate
+      - name: Checkout code and small configuration
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.commit }}
+          filter: blob:none
           fetch-depth: 0
-      - name: Setup Python
-        uses: actions/setup-python@v5
+          sparse-checkout: |
+            .github
+            agent-skill
+            config
+            data/model-registry
+            ops
+            packages
+            pipeline
+            schemas
+            scripts
+            services
+            site
+            tests
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Select main candidate
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            site/package-lock.json
+            services/agent-api/package-lock.json
+      - name: Confirm exact eligible main code
         id: candidate
         env:
           CANDIDATE_SHA: ${{ inputs.commit }}
         run: |
-          git fetch --no-tags origin main
+          git fetch --no-tags --filter=blob:none origin main
           RESULT=$(python3 scripts/workflow-policy.py candidate --sha "$CANDIDATE_SHA")
           echo "$RESULT"
-          echo "eligible=$(echo "$RESULT" | python3 -c 'import sys,json; print(str(json.load(sys.stdin)["eligible"]).lower())')" >> "$GITHUB_OUTPUT"
-      - name: Install Python dependencies
+          echo "eligible=$(echo "$RESULT" | python3 -c 'import json,sys;print(str(json.load(sys.stdin)["eligible"]).lower())')" >> "$GITHUB_OUTPUT"
+      - name: Install locked Python dependencies
         if: steps.candidate.outputs.eligible == 'true'
-        run: pip install -q -c requirements.lock.txt -r requirements.txt
-      - name: Setup Chromium for admin acceptance
+        run: pip install -r requirements.lock.txt -r requirements.shadow.lock.txt
+      - name: Database, publication and deployment contracts
         if: steps.candidate.outputs.eligible == 'true'
-        run: python3 -m playwright install chromium --with-deps
-      - name: Setup Node
+        run: |
+          python -m unittest discover -s tests -p 'test_shadow*.py'
+          python -m unittest discover -s tests -p test_data_publication.py
+          python -m unittest discover -s tests -p test_database_writer.py
+          python -m unittest discover -s tests -p test_runtime_control.py
+          python -m unittest discover -s tests -p test_runtime_package.py
+          python -m unittest discover -s tests -p test_workflow_release_contract.py
+      - name: Build code-only runtime
         if: steps.candidate.outputs.eligible == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: |
-            site/package-lock.json
-            services/agent-api/package-lock.json
-      - name: Setup SSH key
+        run: bash scripts/build-runtime-release.sh --output "$RUNNER_TEMP/runtime"
+      - name: Configure fixed SSH destination
         if: steps.candidate.outputs.eligible == 'true'
         env:
           DEPLOY_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
         run: |
           mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
           printf '%s\n' "$DEPLOY_PRIVATE_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          cp ops/known_hosts.production ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
-      - name: Build release and deploy
+      - name: Upload, verify Linux runtime and switch slots
         id: deploy
         if: steps.candidate.outputs.eligible == 'true'
         env:
-          MAAS_REGRESSION_LOG_ROOT: ${{ runner.temp }}/regression-failures
-          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
           CANDIDATE_SHA: ${{ inputs.commit }}
         run: |
-          set -o pipefail
-          python3 scripts/monitor-record.py build-deploy 2>&1 | tee "$RUNNER_TEMP/release-build.txt"
-      - name: Online verify (four surfaces)
+          git fetch --no-tags --filter=blob:none origin main
+          ELIGIBLE=$(python3 scripts/workflow-policy.py candidate --sha "$CANDIDATE_SHA" | python3 -c 'import json,sys;print(str(json.load(sys.stdin)["eligible"]).lower())')
+          if [ "$ELIGIBLE" != true ]; then echo 'superseded code candidate'; exit 0; fi
+          RID="rl_${CANDIDATE_SHA:0:10}_000000000000"
+          rsync -az -e "ssh -i $HOME/.ssh/id_ed25519 -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=ops/known_hosts.production" "$RUNNER_TEMP/runtime/" "maasdeploy@47.237.135.97:/srv/maasweekly/incoming/$RID/"
+          ssh -i "$HOME/.ssh/id_ed25519" -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=ops/known_hosts.production maasdeploy@47.237.135.97 "runtime-activate $RID"
+          echo "deployed=true" >> "$GITHUB_OUTPUT"
+      - name: Verify public entry points
         if: steps.deploy.outputs.deployed == 'true'
-        env:
-          MAAS_SSH_KEY: /home/runner/.ssh/id_ed25519
-          RELEASE_ID: ${{ steps.deploy.outputs.rid }}
-        run: python3 scripts/monitor-record.py release-verify
-      - name: Summarize release diagnostics
-        if: always() && steps.candidate.outputs.eligible == 'true'
         run: |
-          if [ -f "$RUNNER_TEMP/release-build.txt" ]; then
-            python3 scripts/architecture-observability.py "$RUNNER_TEMP/release-build.txt" --mixed > "$RUNNER_TEMP/release-diagnostics.json"
-          fi
-      - name: Archive release diagnostics
-        if: always() && steps.candidate.outputs.eligible == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-diagnostics-${{ inputs.commit }}
-          path: |
-            ${{ runner.temp }}/release-build.txt
-            ${{ runner.temp }}/release-diagnostics.json
-            ${{ runner.temp }}/regression-failures/
-          if-no-files-found: ignore
-          retention-days: 14
-      - name: Collect sanitized release task records
-        if: always()
-        run: python3 scripts/monitor-collect.py --stages "$MAAS_MONITOR_OUTPUT" --output "$RUNNER_TEMP/monitor-inbox"
-      - name: Archive sanitized release task records
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: monitor-release-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/monitor-inbox/
-          retention-days: 14
-          if-no-files-found: warn
+          curl --fail --silent --show-error --max-time 30 https://daily.maas.click/api/v1/status
+          curl --fail --silent --show-error --max-time 30 https://daily.maas.click/feed.xml > /dev/null

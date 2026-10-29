@@ -1,174 +1,55 @@
 name: 周报数据准备
-
-# 每周一北京时间 09:00（UTC 01:00）跑一次：抓取 + 汇总本周 diff，
-# 为周报写作准备素材。周报 Markdown 本身由人工/Agent 写好后放入 data/weekly/，
-# 再通过手动触发本工作流的 "import" 模式导入站点并构建部署。
 on:
   schedule:
-    - cron: '0 1 * * 1'  # UTC 01:00 周一 = 北京时间 09:00
+    - cron: '0 1 * * 1'
   workflow_dispatch:
     inputs:
       mode:
-        description: '运行模式'
+        description: 'aggregate只准备素材；import导入稿件；full完整更新'
         type: choice
-        default: 'aggregate'
-        options:
-          - aggregate   # 只抓取+汇总本周 diff 素材
-          - import      # 导入 data/weekly 新周报到站点并构建部署
-          - full        # 抓取 + 导入 + 构建部署
-
+        default: aggregate
+        options: [aggregate, import, full]
   workflow_call:
     inputs:
       mode:
         type: string
         default: import
 permissions:
-  contents: write
-
+  contents: read
 jobs:
   weekly:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     concurrency:
       group: maas-data-write-main
       cancel-in-progress: false
       queue: max
-    outputs:
-      sha: ${{ steps.datacommit.outputs.sha }}
-      mode: ${{ steps.mode.outputs.mode }}
     steps:
-      - name: Set monitoring output directory
-        run: echo "MAAS_MONITOR_OUTPUT=$RUNNER_TEMP/monitor-stages" >> "$GITHUB_ENV"
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: main
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      # Python 依赖（始终装：build-release run-all-tests 的 test_price_archive
-      # 需要 bs4；import/full 模式 commit 前不装会被 build-release 拒载）
-      - name: Install Python dependencies
-        run: pip install -c requirements.lock.txt -r requirements.txt
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: site/package-lock.json
-
-      - name: Resolve mode
-        id: mode
+          sparse-checkout: |
+            ops
+            data/weekly
+      - name: Configure fixed SSH destination
         env:
-          REQUESTED_MODE: ${{ inputs.mode }}
+          DEPLOY_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
         run: |
-          if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            echo "mode=full" >> "$GITHUB_OUTPUT"
-          else
-            case "$REQUESTED_MODE" in
-              aggregate|import|full) echo "mode=$REQUESTED_MODE" >> "$GITHUB_OUTPUT" ;;
-              *) echo "invalid weekly mode" >&2; exit 2 ;;
-            esac
-          fi
-
-      # ---- 抓取 + 汇总 diff ----
-      - name: Setup Playwright
-        run: |
-          pip install --quiet -c requirements.lock.txt playwright beautifulsoup4
-          python3 -m playwright install chromium --with-deps
-
-      - name: Fetch sources & generate diff
-        if: steps.mode.outputs.mode != 'import'
-        run: python3 pipeline/scripts/fetch_sources.py
-        env:
-          TZ: Asia/Shanghai
-
-      - name: Sync diff data to site
-        if: steps.mode.outputs.mode != 'aggregate'
-        run: python3 scripts/monitor-record.py diff-sync
-
-      # ---- 周度串讲（LLM，失败不阻塞）----
-      - name: LLM weekly story
-        if: steps.mode.outputs.mode != 'aggregate'
-        run: python3 scripts/monitor-record.py weekly-summary
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+      - name: Publish weekly data without a code build
         env:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
-        continue-on-error: true
-
-      # ---- 导入周报 ----
-      - name: Import weekly reports
-        if: steps.mode.outputs.mode != 'aggregate'
-        run: |
-          python3 scripts/monitor-record.py weekly-import
-
-      - name: Translate dynamic content to English
-        if: steps.mode.outputs.mode != 'aggregate'
-        run: python3 scripts/monitor-record.py dynamic-translation
-        env:
           TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
-          TZ: Asia/Shanghai
-        continue-on-error: true
-
-      # ---- 生成由数据驱动的 tracked 产物（§5.2：所有数据驱动的 tracked 文件
-      #      必须在 commit 前生成并提交，否则 build-release.sh [3/6] tracked
-      #      diff gate 拒载。aggregate 模式只汇总素材不部署，不生成产物）----
-      - name: Prebuild site artifacts
-        if: steps.mode.outputs.mode != 'aggregate'
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          REQUESTED_MODE: ${{ inputs.mode }}
         run: |
-          python3 scripts/monitor-record.py site-projection
-          python3 site/scripts/build-skill-package.py
-      - name: Export public data
-        if: steps.mode.outputs.mode != 'aggregate'
-        run: python3 scripts/monitor-record.py public-export
-      - name: Validate public data
-        if: steps.mode.outputs.mode != 'aggregate'
-        run: python3 scripts/monitor-record.py public-validation # fixed export-public-data.py --check
-
-      # ---- 提交数据（§5.2：先入库）----
-      # aggregate 模式提交素材（data/weekly 等汇总）；full/import 模式提交
-      # 素材 + public projection + site prebuild 产物。
-      - name: Commit new data + public projection
-        id: datacommit
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ site/src/content/ site/src/data/ site/public/maas-skill/
-          bash scripts/commit-workflow-data.sh "data: 周报更新 $(date +'%Y-%m-%d')"
-
-      - name: Collect sanitized task records
-        if: always()
-        run: python3 scripts/monitor-collect.py --stages "$MAAS_MONITOR_OUTPUT" --output "$RUNNER_TEMP/monitor-inbox"
-      - name: Archive sanitized task records
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: monitor-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/monitor-inbox/
-          retention-days: 14
-          if-no-files-found: warn
-
-      - name: Preserve interrupted pipeline inputs
-        if: always() && hashFiles('data/pipeline-pending.json') != ''
-        run: python3 scripts/architecture-recovery-bundle.py --output "$RUNNER_TEMP/pipeline-recovery.tar.gz"
-      - name: Upload interrupted pipeline recovery
-        if: always() && hashFiles('data/pipeline-pending.json') != ''
-        uses: actions/upload-artifact@v4
-        with:
-          name: pipeline-recovery-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/pipeline-recovery.tar.gz
-          retention-days: 14
-          if-no-files-found: error
-
-  deploy:
-    name: Deploy release
-    needs: weekly
-    if: needs.weekly.outputs.mode != 'aggregate'
-    uses: ./.github/workflows/release-deploy.yml
-    with:
-      commit: ${{ needs.weekly.outputs.sha }}
-    secrets: inherit
-    permissions:
-      contents: read
+          case "$REQUESTED_MODE" in
+            aggregate) MODE=aggregate ;;
+            import) MODE=import ;;
+            full|'') MODE=weekly ;;
+            *) exit 2 ;;
+          esac
+          python3 ops/request-data-update.py --mode "$MODE" --drafts data/weekly

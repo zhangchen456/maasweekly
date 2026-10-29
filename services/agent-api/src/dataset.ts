@@ -13,13 +13,15 @@ import { readFile } from 'node:fs/promises';
 import { loadDatasetInWorker } from './dataset-loader.js';
 import path from 'node:path';
 
-import { SCHEMA_VERSION, type Manifest, type ManifestFileEntry, type ModelIdentityCatalog,
+import { SCHEMA_VERSION, type Manifest as PublicManifest, type ManifestFileEntry, type ModelIdentityCatalog,
   type ChangeEntity, type ItemEntity, type PriceEntity, type EvidenceEntity, type WeeklyEntity, type StatusEntity } from './public-contract/entities.js';
 import { DatasetError, DS_RE, validateManifest, validateIdentityCatalog, validatePricePlatforms, validateCollections } from './public-contract/validation.js';
 import { readVerified } from './public-contract/node-reader.js';
 export * from './public-contract/entities.js';
 export { DatasetError } from './public-contract/validation.js';
 
+/** Internal publication metadata; the public v1 manifest schema is unchanged. */
+export interface Manifest extends PublicManifest {site?:{inputVersion:string;codeCommit:string;formatVersion:1}}
 export class Dataset {
   readonly version: string;
   readonly dataThrough: string;
@@ -132,7 +134,14 @@ export class Dataset {
     }
   }
 
-  static validateManifest(manifest: Manifest): void { validateManifest(manifest); }
+  static validateManifest(manifest: Manifest): void {
+    validateManifest(manifest);
+    if(manifest.site!==undefined){
+      const s=manifest.site;
+      if(!s||!/^in_[0-9a-f]{64}$/.test(s.inputVersion)||! /^[0-9a-f]{40}$/.test(s.codeCommit)||s.formatVersion!==1
+        ||Object.keys(s).some(k=>!['inputVersion','codeCommit','formatVersion'].includes(k)))throw new DatasetError('publication page inputs invalid');
+    }
+  }
 
   static load(root: string, version?: string): Dataset {
     const rootAbs = path.resolve(root);
@@ -225,9 +234,14 @@ export interface DatasetHolderOptions {
   maxRetainedVersions?: number;
   maxRetainedBytes?: number;
   loader?: (root: string, manifest: Manifest, signal: AbortSignal) => Promise<Dataset>;
+  prepare?: (dataset: Dataset) => Promise<void>;
+  publicationFile?: 'manifest.json'|'publication.json';
 }
 export type ReloadResult = 'changed' | 'unchanged' | 'superseded' | 'failed';
 
+export function publicationKey(manifest:Manifest):string {
+  const s=manifest.site;return manifest.datasetVersion+(s?':'+s.inputVersion+':'+s.codeCommit+':'+s.formatVersion:'');
+}
 export class DatasetHolder {
   #current: Dataset | null = null;
   #retained = new Map<string, Dataset>();
@@ -240,6 +254,7 @@ export class DatasetHolder {
   #jobs = new Map<string, Promise<Dataset>>();
   #queue: Promise<void> = Promise.resolve();
   #options: Required<DatasetHolderOptions>;
+  #requiresAsyncPreparation: boolean;
   lastReloadError: string | null = null;
   lastReloadAt: string | null = null;
   readonly metrics = { businessLoads: 0, unchangedPolls: 0, cacheHits: 0, cacheMisses: 0 };
@@ -247,7 +262,8 @@ export class DatasetHolder {
   constructor(root: string, options: DatasetHolderOptions = {}) {
     this.#root = path.resolve(root);
     this.#options = { maxRetainedVersions: 2, maxRetainedBytes: 128 * 1024 * 1024,
-      loader: loadDatasetInWorker, ...options };
+      loader: loadDatasetInWorker, prepare: async () => {}, publicationFile:'manifest.json', ...options };
+    this.#requiresAsyncPreparation = Boolean(options.prepare);
     if (!Number.isSafeInteger(this.#options.maxRetainedVersions) || this.#options.maxRetainedVersions < 0
       || !Number.isSafeInteger(this.#options.maxRetainedBytes) || this.#options.maxRetainedBytes < 0) {
       throw new DatasetError('invalid retained cache budget');
@@ -289,6 +305,7 @@ export class DatasetHolder {
     this.#generation++;
     try {
       if (this.#closed) throw new DatasetError('holder closed');
+      if (this.#requiresAsyncPreparation) throw new DatasetError('configured preparation requires reloadAsync');
       this.metrics.businessLoads++;
       this.accept(Dataset.load(this.#root)); return true;
     } catch (error) {
@@ -297,7 +314,7 @@ export class DatasetHolder {
   }
 
   private async manifest(version?: string): Promise<Manifest> {
-    const file = version ? path.join(this.#root, 'releases', version, 'manifest.json') : path.join(this.#root, 'manifest.json');
+    const file = version ? path.join(this.#root, 'releases', version, 'manifest.json') : path.join(this.#root, this.#options.publicationFile);
     const manifest = JSON.parse(await readFile(file, 'utf8')) as Manifest;
     Dataset.validateManifest(manifest);
     if (version && manifest.datasetVersion !== version) throw new DatasetError('release manifest version mismatch');
@@ -305,15 +322,16 @@ export class DatasetHolder {
   }
 
   private load(manifest: Manifest): Promise<Dataset> {
-    const existing = this.#jobs.get(manifest.datasetVersion);
+    const key=publicationKey(manifest);
+    const existing = this.#jobs.get(key);
     if (existing) return existing;
     const job = this.#queue.then(async () => {
       if (this.#closed) throw new DatasetError('holder closed');
       this.metrics.businessLoads++;
       return this.#options.loader(this.#root, manifest, this.#abort.signal);
     });
-    this.#jobs.set(manifest.datasetVersion, job);
-    const clear = () => { if (this.#jobs.get(manifest.datasetVersion) === job) this.#jobs.delete(manifest.datasetVersion); };
+    this.#jobs.set(key, job);
+    const clear = () => { if (this.#jobs.get(key) === job) this.#jobs.delete(key); };
     void job.then(clear, clear);
     this.#queue = job.then(() => undefined, () => undefined);
     return job;
@@ -327,14 +345,15 @@ export class DatasetHolder {
       if (this.#closed) throw new DatasetError('holder closed');
       const manifest = await this.manifest();
       if (this.#closed) return 'superseded';
-      if (manifest.datasetVersion === this.#current?.version && !force) {
+      if (this.#current && publicationKey(manifest)===publicationKey(this.#current.manifest) && !force) {
         this.metrics.unchangedPolls++; return 'unchanged';
       }
       if (this.#closed || request < this.#latestCandidateRequest) return 'superseded';
       this.#latestCandidateRequest = request; generation = ++this.#generation;
       const ds = await this.load(manifest);
+      await this.#options.prepare(ds);
       const latest = await this.manifest();
-      if (generation !== this.#generation || this.#closed || latest.datasetVersion !== ds.version) return 'superseded';
+      if (generation !== this.#generation || this.#closed || publicationKey(latest) !== publicationKey(ds.manifest)) return 'superseded';
       this.accept(ds); return 'changed';
     } catch (error) {
       if (generation !== this.#generation) return 'superseded';

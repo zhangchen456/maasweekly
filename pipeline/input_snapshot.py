@@ -16,7 +16,7 @@ PATTERNS = (
     'data/records/*.json', 'data/record-revisions/*/*.json',
     'data/price-records/*.json', 'data/price-record-revisions/*/*.json',
     'data/diff/*.json', 'data/diff/*.md', 'data/price-facts/current.json', 'data/price-facts/versions/*.json', 'data/price-evidence/*.json', 'data/price-snapshots/*.json',
-    'data/normalized/**/*.json', 'data/derived/**/*.json', 'data/editorial/**/*.md',
+    'data/weekly/*.md', 'data/normalized/**/*.json', 'data/derived/**/*.json', 'data/editorial/**/*.md',
 )
 IMMUTABLE = ('data/record-revisions/', 'data/price-record-revisions/', 'data/price-facts/versions/', 'data/price-evidence/', 'data/price-snapshots/')
 
@@ -144,7 +144,10 @@ def restore_mutable(root: Path, view: InputView):
     for logical, p in role_files(root).items():
         if logical.startswith(IMMUTABLE): continue
         if logical not in expected: p.unlink()
-    for logical in sorted(expected): atomic(safe(root, logical), view.path(logical).read_bytes())
+    for logical in sorted(expected):
+        target=safe(root,logical);raw=view.path(logical).read_bytes()
+        if target.exists() and target.read_bytes()==raw:continue
+        atomic(target,raw)
 
 
 def prune_checkpoints(root: Path, pointer):

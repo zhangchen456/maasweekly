@@ -1,3 +1,4 @@
+import { siteRuntime } from './runtime.ts';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { modelRelease } from './model-pages';
@@ -5,6 +6,7 @@ import type { WorkspaceData } from './pricing-workspace';
 
 /** Single server-side boundary. Missing optional snapshots differ from malformed inputs. */
 export function readPageJson<T>(relative: string, optional = false): T | null {
+  if(siteRuntime())return siteRuntime()!.json('data/'+relative,optional) as T|null;
   const file = path.resolve(process.cwd(), '..', 'data', relative);
   try { return JSON.parse(readFileSync(file, 'utf8')) as T; }
   catch (error) { if (optional && (error as NodeJS.ErrnoException).code === 'ENOENT') return null; throw error; }
@@ -40,5 +42,6 @@ export function pricingPage() {
 
 /** Projection is built by AR-03's sole projector before Astro; no independent business writer. */
 export function readPageProjection<T>(relative: string): T {
+  if(siteRuntime())return siteRuntime()!.projection(relative) as T;
   return JSON.parse(readFileSync(path.resolve(process.cwd(),'src','data',relative),'utf8')) as T;
 }

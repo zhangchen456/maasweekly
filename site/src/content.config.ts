@@ -1,9 +1,11 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+const runtimeBuild = process.env.MAAS_SITE_RENDER_MODE === 'server';
+
 // 周报 collection
 const weeklyReports = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/weekly' }),
+  loader: runtimeBuild ? async () => [] : glob({ pattern: '**/*.md', base: './src/content/weekly' }),
   schema: z.object({
     title: z.string(),
     date: z.string(),
@@ -35,7 +37,7 @@ const platforms = defineCollection({
 
 // 周报结构化数据 (extract-structured.py 生成)
 const weeklyStructured = defineCollection({
-  loader: glob({ pattern: '**/*.json', base: './src/content/weekly-structured' }),
+  loader: runtimeBuild ? async () => [] : glob({ pattern: '**/*.json', base: './src/content/weekly-structured' }),
   schema: z.object({
     date: z.string(),
     period: z.string().optional(),

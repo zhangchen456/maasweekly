@@ -1,0 +1,78 @@
+name: Data store integration
+
+on:
+  pull_request:
+    paths:
+      - 'pipeline/shadow_store.py'
+      - 'pipeline/data_publication.py'
+      - 'pipeline/page_projection.py'
+      - 'tests/test_data_publication.py'
+      - 'pipeline/english_translation.py'
+      - 'config/model-normalization-rules.json'
+      - 'pipeline/data_store.py'
+      - 'pipeline/blob_store.py'
+      - 'pipeline/input_snapshot.py'
+      - 'pipeline/public_export/**'
+      - 'pipeline/scripts/export-public-data.py'
+      - 'pipeline/migrations/**'
+      - 'pipeline/scripts/*database*'
+      - 'pipeline/scripts/activate-data-candidate.py'
+      - 'pipeline/scripts/*shadow*'
+      - 'ops/*shadow*'
+      - 'tests/test_shadow*'
+      - 'requirements.shadow.lock.txt'
+      - '.github/workflows/data-store-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  postgres:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: maas_shadow_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            pipeline
+            config
+            tests
+            ops
+            scripts
+            schemas
+            packages
+            site/src/lib/public-contract
+            services/agent-api/src/public-contract
+            data/model-registry
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.shadow.lock.txt
+      - name: PostgreSQL and archive transfer contracts
+        env:
+          # Disposable CI service credentials; no production access or secrets.
+          MAAS_SHADOW_TEST_DSN: host=127.0.0.1 port=5432 user=postgres password=postgres dbname=maas_shadow_test
+        run: |
+          python -m unittest discover -s tests -p 'test_shadow*.py' -v
+          python -m unittest discover -s tests -p 'test_data_publication.py' -v
+      - name: Standard input and blob storage regressions
+        run: |
+          python -m unittest discover -s tests -p test_standard_inputs.py
+          python tests/test_blob_storage.py
+      - name: Operational shell syntax
+        run: bash -n ops/provision-data-store.sh ops/backup-data-store.sh ops/import-shadow-bundle.sh
