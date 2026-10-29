@@ -79,4 +79,11 @@ class ActivationTests(unittest.TestCase):
             with self.connection.cursor() as c:c.execute('DELETE FROM maas_data.data_candidates')
         with self.assertRaises(ValueError):activate(self.connection,candidate,root,'empty')
         self.assertFalse((root/'publication.json').exists())
+    def test_legacy_bootstrap_preserves_previous_cursor_versions(self):
+        import shutil
+        first,m=self.candidate();old=self.target();activate(self.connection,first,old,'empty')
+        root=self.base.resolve()/'bootstrap';shutil.copytree(old,root);(root/'publication.json').unlink()
+        second,m2=self.candidate(2);activate(self.connection,second,root,'empty')
+        pointer=json.loads((root/'publication.json').read_bytes())
+        self.assertIn(m['datasetVersion'],[r['datasetVersion'] for r in pointer['retainedVersions']])
 if __name__=='__main__':unittest.main()

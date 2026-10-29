@@ -88,6 +88,10 @@ def activate(connection, candidate, root, expected_hash, *, allow_rollback=False
             raw = pointer.read_bytes() if pointer.exists() else None
             current_hash = digest(raw) if raw is not None else 'empty'
             current = json.loads(raw) if raw is not None else None
+            # Initial shared-cache bootstrap retains the legacy cursor snapshots.
+            if current is None and (root/'manifest.json').exists():
+                no_links(root/'manifest.json')
+                current=json.loads((root/'manifest.json').read_bytes())
             with connection:
                 with connection.cursor() as cursor:
                     # Resolve a previous crash, without guessing from dates or versions.
