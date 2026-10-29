@@ -13,7 +13,7 @@ permissions:
 jobs:
   data-update:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 100
     concurrency:
       group: maas-data-write-main
       cancel-in-progress: false

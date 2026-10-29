@@ -19,7 +19,7 @@ def docker(root,mode,body):
     args += [image,'python','/code/ops/data-writer/run.py']
     log=STORE/'reports'/('writer-'+str(time.time_ns())+'-'+mode+'.log')
     with log.open('wb') as output:
-        try:result=subprocess.run(args,input=body,stdout=output,stderr=subprocess.STDOUT,timeout=2700)
+        try:result=subprocess.run(args,input=body,stdout=output,stderr=subprocess.STDOUT,timeout=5400)
         except BaseException:
             subprocess.run(['docker','stop','--time','20','maas-data-writer'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
             raise
