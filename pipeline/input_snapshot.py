@@ -144,7 +144,10 @@ def restore_mutable(root: Path, view: InputView):
     for logical, p in role_files(root).items():
         if logical.startswith(IMMUTABLE): continue
         if logical not in expected: p.unlink()
-    for logical in sorted(expected): atomic(safe(root, logical), view.path(logical).read_bytes())
+    for logical in sorted(expected):
+        target=safe(root,logical);raw=view.path(logical).read_bytes()
+        if target.exists() and target.read_bytes()==raw:continue
+        atomic(target,raw)
 
 
 def prune_checkpoints(root: Path, pointer):
