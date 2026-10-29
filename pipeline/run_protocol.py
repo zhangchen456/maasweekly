@@ -2,6 +2,7 @@
 from __future__ import annotations
 import fcntl
 import json
+import os
 import re
 import time
 import uuid
@@ -57,8 +58,16 @@ class RunJournal:
             else:
                 if self.recover: raise ValueError('no pending run to recover')
                 if self.path.exists(): raise ValueError('execution runId already exists; use a new runId')
-                capture(self.root, self.run_id + '_baseline')
-                pointer = json.loads(safe(self.root, POINTER).read_text())
+                pointer_path = safe(self.root, POINTER)
+                if os.environ.get('MAAS_PIPELINE_PINNED_BASELINE') == '1' and pointer_path.exists():
+                    # The isolated writer restores a committed cache and serializes
+                    # all stages. A previous stage already captured this baseline.
+                    # Finish still captures/checks all bytes; recovery is unchanged.
+                    pointer = json.loads(pointer_path.read_text())
+                    InputView(self.root, pointer)
+                else:
+                    capture(self.root, self.run_id + '_baseline')
+                    pointer = json.loads(pointer_path.read_text())
                 self.data = {'schemaVersion': 1, 'runId': self.run_id, 'family': self.family, 'state': 'running',
                              'trigger': __import__('os').environ.get('GITHUB_EVENT_NAME', 'manual'), 'runLink': workflow_link(), 'startedAt': utc(), 'runDate': datetime.now(ZoneInfo('Asia/Shanghai')).strftime('%Y-%m-%d'),
                              'baselinePointer': pointer, 'sources': {}, 'rawBackups': {}}

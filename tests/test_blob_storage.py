@@ -9,7 +9,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 BASE=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(BASE/'pipeline'))
-from blob_store import FilesystemBlobStore, CachedBlobReader, BlobIntegrityError
+from blob_store import FilesystemBlobStore, CachedBlobReader, BlobIntegrityError, read_contained_file
 from storage_migration import build_manifest, copy_objects, verify_objects, restore, cleanup_plan, validate_manifest, RESTORE_PENDING
 from snapshot_reader import SnapshotReader
 from input_snapshot import assert_no_pending
@@ -23,6 +23,20 @@ class BlobStorageTests(unittest.TestCase):
             p=self.source/'data/snapshots/2026-10-01'/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw)
         self.manifest=build_manifest(self.source,'1'*40)
     def tearDown(self): self.temp.cleanup()
+
+    def test_descriptor_reader_rejects_leaf_parent_root_links_and_special_files(self):
+        import os
+        folder=self.root/'confined';folder.mkdir();outside=self.root/'outside';outside.mkdir()
+        (folder/'ok.json').write_bytes(b'{"ok":true}');(outside/'secret.json').write_bytes(b'outside')
+        self.assertEqual(read_contained_file(folder,'ok.json'),b'{"ok":true}')
+        (folder/'leaf.json').symlink_to(outside/'secret.json')
+        (folder/'parent').symlink_to(outside,target_is_directory=True)
+        root_link=self.root/'root-link';root_link.symlink_to(folder,target_is_directory=True)
+        for base,name in [(folder,'leaf.json'),(folder,'parent/secret.json'),(root_link,'ok.json'),(folder,'../outside/secret.json')]:
+            with self.assertRaises(BlobIntegrityError):read_contained_file(base,name)
+        if hasattr(os,'mkfifo') and hasattr(os,'O_NOFOLLOW'):
+            os.mkfifo(folder/'pipe.json')
+            with self.assertRaises(BlobIntegrityError):read_contained_file(folder,'pipe.json')
 
     def test_atomic_concurrent_upload_and_corruption_refuses_overwrite(self):
         raw=b'concurrent same bytes';sha=hashlib.sha256(raw).hexdigest()
