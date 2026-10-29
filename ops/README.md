@@ -1,7 +1,8 @@
 # ops/：发布、激活、回滚与生产运维
 
-Task 06 产物。本目录是发布协议的客户端与服务器侧脚本 + 生产配置候选。
-**未到授权点 A 前所有服务器文件均为候选**（install-production.sh 不会被执行）。
+当前生产为独立数据更新 + SSR 代码发布。日常入口、固定 SSH 动作、日志、回退和备份见 [独立发布手册](../docs/architecture/data-runtime-operations.md)，真实切换结果见 [运行记录](../docs/architecture/data-code-runtime-2026-10-29.md)。
+
+下文保留 Task 06 静态 release 协议的历史说明。开启 runtime-mode 后，旧 activate/rollback/cleanup 入口不会覆盖共享数据或 SSR；不能用旧静态部署脚本更新当前生产。
 
 ## 文件总览
 

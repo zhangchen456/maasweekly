@@ -22,7 +22,7 @@ services/agent-api/node_modules/
 services/agent-api/dist/
 dist-release/
 
-# AR-04 local writer control; completed run metadata and immutable input views remain tracked.
+# Local writer control; runtime archives live outside Git.
 data/.pipeline.lock
 data/price-runs/staging/
 data/pipeline-runs/staging/
@@ -32,3 +32,15 @@ data/pipeline-runs/staging/
 
 # Generated protected report bodies, bundled outside the static web root
 data/private-weekly/
+
+# Runtime business data and generated projections (PG/filesystem are authoritative).
+/data/*
+!/data/model-registry/
+!/data/weekly/
+/site/src/data/*
+!/site/src/data/changelog.ts
+!/site/src/data/platform-logos.json
+!/site/src/data/industry_sources.json
+/site/src/content/weekly/
+/site/src/content/weekly-structured/
+/site/src/content/timeline.json
