@@ -9,6 +9,7 @@ import json
 import os
 import re
 from pathlib import Path
+from blob_store import read_contained_file
 
 POINTER = 'data/inputs-current.json'
 PENDING = 'data/pipeline-pending.json'
@@ -69,8 +70,14 @@ def capture(root: Path, run_id: str, *, publish=True):
         structured = safe(root, f'data/derived/weekly-structured/{md.stem}.json')
         if not structured.exists() or json.loads(structured.read_text()).get('date') != md.stem: raise ValueError('formal weekly projection missing')
         if hashes is not None and hashes.get(md.stem) != digest(md.read_bytes()): raise ValueError('weekly projection input hash differs')
-    for logical, p in role_files(root).items():
-        raw = p.read_bytes()
+    # Contents are opened through O_NOFOLLOW directory descriptors below.
+    # Path-returning role_files/safe retain their full resolution checks.
+    candidates = {}
+    for pattern in PATTERNS:
+        for p in root.glob(pattern):
+            if p.is_file(): candidates[str(p.relative_to(root))] = p
+    for logical, p in sorted(candidates.items()):
+        raw = read_contained_file(root, logical)
         if p.suffix == '.json': json.loads(raw)
         target = p
         if logical.startswith(('data/records/', 'data/price-records/')):
