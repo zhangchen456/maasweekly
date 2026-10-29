@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_bcb831535efbc5493de2a1b501f7d42ffae98ffb2500257a8b6e1209dae75d1a",
+  "sourceId": "kimi-modellist",
+  "date": "2026-10-29",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Kimi",
+  "sourceType": "model_list",
+  "sourceUrl": "https://platform.kimi.com/docs/api/models-overview",
+  "title": "Kimi · 模型列表来源更新",
+  "summary": "kimi-k3.1-pro 和 kimi-k3.1-pro-highspeed 的参数说明从单独列出改为并入 K3 系列统一描述，表格列名从 kimi-k3 改为 K3 系列，文档结构优化。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-29T01:00:15+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "kimi-k3.1-pro",
+        "before": "kimi-k3.1-pro 和 kimi-k3.1-pro-highspeed 的参数约束也与 kimi-k3 完全一致。下表中 kimi-k3 一列，以及下文针对 kimi-k3 的参数配置和迁移说明，均适用于这两个模型。",
+        "after": "kimi-k3.1-pro 和 kimi-k3.1-pro-highspeed 的参数约束也与 kimi-k3 完全一致。下表中 K3 系列 一列，以及下文针对 kimi-k3 的参数配置和迁移说明，均适用于这两个模型。"
+      }
+    ],
+    "added_lines": [
+      "| 参数 | K3 系列 | kimi-k2.7-code | kimi-k2.6"
+    ],
+    "removed_lines": [
+      "| 参数 | kimi-k3 | kimi-k2.7-code | kimi-k2.6"
+    ],
+    "added_count": 1,
+    "removed_count": 1,
+    "raw_added_count": 2,
+    "raw_removed_count": 2
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-29.json"
+  },
+  "permalink": "/item/obs_bcb831535efbc5493de2a1b501f7d42ffae98ffb2500257a8b6e1209dae75d1a/"
+}

@@ -6129,5 +6129,180 @@
       "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
       "model": "xopdeepseekv4flash0731"
     }
+  },
+  "2026-10-29": {
+    "highlights": [
+      {
+        "platform": "Google Gemini API",
+        "logo_summary": "新嵌入模型上线+搜索限流调整",
+        "items": [
+          {
+            "text": "gemini-embedding-2 正式上线，替代 gemini-embedding-2-preview，定价 $0.15/百万 tokens",
+            "type": "release"
+          },
+          {
+            "text": "Gemini 3 及以上模型搜索 Grounding 新增每日 1,500 次请求默认限流，超量需申请更高配额",
+            "type": "other"
+          },
+          {
+            "text": "Gemini API CLI (gemini-api) beta 发布，支持无状态零依赖命令行调用",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "火山方舟",
+        "logo_summary": "DeepSeek 新模型上架+文档体系扩充",
+        "items": [
+          {
+            "text": "DeepSeek-V4.1-Flash（升级 1017）新增至模型列表",
+            "type": "release"
+          },
+          {
+            "text": "新增 Doubao Seedance 2.5 提示词指南与教程、Seedream 5.0 pro/flash 交互编辑指南等文档",
+            "type": "other"
+          },
+          {
+            "text": "新增 GUI Agent 能力、Apply Patch 代码补丁工具及 Function Calling 文档",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Google Vertex AI",
+        "logo_summary": "Veo 3.1 系列模型上架",
+        "items": [
+          {
+            "text": "Veo 3.1 Fast、Veo 3.1 Generate、Veo 3.1 Lite preview 新增至模型列表",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "Mistral AI",
+        "logo_summary": "第三方开源模型上新",
+        "items": [
+          {
+            "text": "DeepSeek V4.1 Flash 1017 新增，标注 MIT 许可，1M 上下文窗口",
+            "type": "release"
+          },
+          {
+            "text": "Z.ai GLM 5.3 及 GLM 5.3 Flash 新增，许可标注从 Open 改为 MIT",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "OpenAI",
+        "logo_summary": "ChatGPT 订阅用户获 API 额度福利",
+        "items": [
+          {
+            "text": "ChatGPT Pro 和 Business 订阅用户每月可领取最高 $500 免费 API credits",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "阿里百炼",
+        "logo_summary": "mimo 模型版本迭代",
+        "items": [
+          {
+            "text": "mimo-v2.6-pro-ultraspeed 新增，mimo-v2.5-pro 下线",
+            "type": "release"
+          }
+        ]
+      },
+      {
+        "platform": "Kimi",
+        "logo_summary": "K3 系列文档参数表更新",
+        "items": [
+          {
+            "text": "kimi-k3.1-pro 与 kimi-k3.1-pro-highspeed 参数说明并入 K3 系列统一描述",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "Anthropic",
+        "logo_summary": "AI for Science 计划扩展",
+        "items": [
+          {
+            "text": "AI for Science 扩展至 20 家科研基金会与机构，新增合作公告",
+            "type": "other"
+          }
+        ]
+      },
+      {
+        "platform": "xAI",
+        "logo_summary": "新增自定义审核控制功能",
+        "items": [
+          {
+            "text": "模型列表新增 Custom Moderation Controls 功能",
+            "type": "other"
+          }
+        ]
+      }
+    ],
+    "sourceSummaries": {
+      "obs_2c8087e6c86229f280ffc14e882e49cf19fe8acd02a1ac174001bf6a500f6bd9": "新增了 DeepSeek-V4.1-Flash（升级 1017）模型，同时补充了 Doubao Seedance 2.0/2.5、Seedream 5.0 系列教程与提示词指南，以及 Agent 场景、Function Calling、GUI Agent 等能力文档；移除了 Doubao Seed Evolving 和若干分辨率/位深规格说明，对应模型文档体系调整。",
+      "obs_62b1edd604b413d71c41d70c6563f582b793facd5d706c327649de1e76fece9b": "新增了使用 Webhook 接收事件通知的说明，可能对应新的计费事件推送能力。",
+      "obs_7eff3358c5b061ed84b5722fc5ba7015293d7c59344b9c8a8a39837dc8102233": "mimo-v2.6-pro-ultraspeed 新增，mimo-v2.5-pro 删除，对应模型版本升级迭代。",
+      "obs_1059717cf7fca20e8c9bcd2849dd71f9b565b69ad053a4b58ac17270c2414a3d": "文档配置元数据发生变化（主题色等），页面结构无实质内容变化。",
+      "obs_c7b2d6ef9c1c4a7da5ec9c91b675af43d138b0a42dc3ef962b46e8494d9abf11": "文档配置元数据发生变化（主题色等），页面结构无实质内容变化。",
+      "obs_bcb831535efbc5493de2a1b501f7d42ffae98ffb2500257a8b6e1209dae75d1a": "kimi-k3.1-pro 和 kimi-k3.1-pro-highspeed 的参数说明从单独列出改为并入 K3 系列统一描述，表格列名从 kimi-k3 改为 K3 系列，文档结构优化。",
+      "obs_5e142eea971f35feb5598d805a2f50a9b93b5a76d646b525e79a8d64b2d77b0a": "页面元数据更新（docsConfig 新增），同时移除了搜索和跳转相关 UI 元素，属于页面结构调整。",
+      "obs_ec1be52973b51ad053e156d088d7bcd9a65e3d9afd2c129b3dd5ee2e7cced8f1": "页面元数据更新（docsConfig 新增），同时移除了搜索和跳转相关 UI 元素，属于页面结构调整。",
+      "obs_1f93be86ec235be24e1846533fd14d903aed3c80f502137d9f75bcd8fa59c632": "新增 API credits for ChatGPT subscribers 相关条目，对应订阅用户 API 额度福利。",
+      "obs_95b349d1f9b2fe1d8439514a9ff2892a16e0e6a693c3ac43516ccbf784c69f16": "新增 API credits for ChatGPT subscribers 相关条目，对应订阅用户 API 额度福利。",
+      "obs_072600ea9ba8f067af1e958c900905728d15b23b9c0144038b774fdd612da1f9": "新增 API credits for ChatGPT subscribers 条目，说明 ChatGPT Pro 和 Business 订阅用户每月可领取最高 500 美元免费 API credits。",
+      "obs_f116658fb393b909f917836be0c41d29077eb03969972794e9acc1c5ce1c9373": "新增 API credits for ChatGPT subscribers 公告，说明订阅用户每月可领取最高 500 美元免费 API credits 的福利。",
+      "obs_a63b7d97549472bc9906885e0ea5c3b92a1962d7f270867e799d5f160867f38a": "Tokens 定义说明文本有增删，内容实质未变，属于文档微调。",
+      "obs_cfeaa43d18dd66aafd6d55444c282ab4880605503d594be56436c463c8ade942": "SDK 支持 code_execution_20260120 的说明文本有细微变化，内容实质未变。",
+      "obs_f64dc06c77adb77c22751c41d054d3db5d805a42293e2a314151107c735e6cea": "新增 AI for Science 扩展至 20 个科研基金会与研究机构的公告，删除 Claude Mythos and Fable 5.1 发布文章，博客焦点从模型发布转向科研合作。",
+      "obs_957d84a3bde9376d31eb8cc66d04d2fe938dc511587c02d121a93d6e63e724a4": "gemini-embedding-2 正式版替代 gemini-embedding-2-preview，同时更新了实验模型说明文本，页面更新时间从 10-22 更新至 10-28。",
+      "obs_d587bccc0ecaa91d64c91578c44830fff5e97be1eff4621b9b5070a33d8e25c1": "新增 gemini-embedding-001 嵌入模型定价（$0.15/百万 tokens），同时为 Gemini 3 及以上模型的搜索 Grounding 新增每日 1,500 次请求的默认限流说明，并补充了 Gemini Embedding 2 的计费说明。",
+      "obs_bac16a946d9feafc83244304b58507dabfc05c07e679f714bc72b4ae031e22c3": "新增 Gemini API CLI (gemini-api) beta 发布说明，支持无状态零依赖命令行调用，面向 AI 编码代理和 CI 流水线场景。",
+      "obs_8a9b10dda76ca98622030350b727f854283afef862d71ca3cc417f51833d07d5": "新增 Connected Apps 管理功能与 Gemini app 沉浸式探索新主题，删除 DevFest 2026 和 Guided Vision 相关文章。",
+      "obs_132f2aa53d00c965c286c36f3eaaad389f4b7d6ed37b9293ececcc6277cbaa75": "Veo 3.1 Fast、Veo 3.1 Generate、Veo 3.1 Lite preview 新增，对应旧版 Veo 3.1 系列条目删除，模型版本更新。",
+      "obs_22add2acca1154eacc5dfa8abb73d74f3fe0bafaf291b8113dcf0ecdeb3c06ab": "新增 Partner models 定价说明，删除旧的 $0.0005/page 定价条目，定价结构说明调整。",
+      "obs_d268f8bd195a0b5230c6cf27a1dd3d6974b69111ee4a529648b880cec23b0773": "页面最后更新日期从 10-22 更新至 10-26，无实质内容变化。",
+      "obs_bb4a86b0f1f996b2d10d9fdbc952630ee7834441becf309c3747c1f600a95c54": "新增 DeepSeek V4.1 Flash 1017（MIT 许可）和 Z.ai GLM 5.3/GLM 5.3 Flash（许可从 Open 改为 MIT），第三方开源模型列表更新。",
+      "obs_310d69df2add453737969b01e3f90229f9034f05cc775bfb9fc193415499d3c9": "新增 AWS 上构建金融研究助手的教程，删除 Model Vault 安全技术文章，内容焦点从安全转向应用案例。",
+      "obs_29cc5f5377b659b028b3d694a21da92bd8218f96807ae7ff5a508afef3d15d5f": "新增 Custom Moderation Controls 功能条目，模型列表能力扩展。"
+    },
+    "provenance": {
+      "status": "success",
+      "inputSha256": "f1ab4ec53aee63fcd63b1889c65a25bbd775b8a245c645827a6a9e04eaeca4a3",
+      "inputRefs": [
+        "obs_072600ea9ba8f067af1e958c900905728d15b23b9c0144038b774fdd612da1f9",
+        "obs_1059717cf7fca20e8c9bcd2849dd71f9b565b69ad053a4b58ac17270c2414a3d",
+        "obs_132f2aa53d00c965c286c36f3eaaad389f4b7d6ed37b9293ececcc6277cbaa75",
+        "obs_1f93be86ec235be24e1846533fd14d903aed3c80f502137d9f75bcd8fa59c632",
+        "obs_22add2acca1154eacc5dfa8abb73d74f3fe0bafaf291b8113dcf0ecdeb3c06ab",
+        "obs_29cc5f5377b659b028b3d694a21da92bd8218f96807ae7ff5a508afef3d15d5f",
+        "obs_2c8087e6c86229f280ffc14e882e49cf19fe8acd02a1ac174001bf6a500f6bd9",
+        "obs_310d69df2add453737969b01e3f90229f9034f05cc775bfb9fc193415499d3c9",
+        "obs_5e142eea971f35feb5598d805a2f50a9b93b5a76d646b525e79a8d64b2d77b0a",
+        "obs_62b1edd604b413d71c41d70c6563f582b793facd5d706c327649de1e76fece9b",
+        "obs_7eff3358c5b061ed84b5722fc5ba7015293d7c59344b9c8a8a39837dc8102233",
+        "obs_8a9b10dda76ca98622030350b727f854283afef862d71ca3cc417f51833d07d5",
+        "obs_957d84a3bde9376d31eb8cc66d04d2fe938dc511587c02d121a93d6e63e724a4",
+        "obs_95b349d1f9b2fe1d8439514a9ff2892a16e0e6a693c3ac43516ccbf784c69f16",
+        "obs_a63b7d97549472bc9906885e0ea5c3b92a1962d7f270867e799d5f160867f38a",
+        "obs_bac16a946d9feafc83244304b58507dabfc05c07e679f714bc72b4ae031e22c3",
+        "obs_bb4a86b0f1f996b2d10d9fdbc952630ee7834441becf309c3747c1f600a95c54",
+        "obs_bcb831535efbc5493de2a1b501f7d42ffae98ffb2500257a8b6e1209dae75d1a",
+        "obs_c7b2d6ef9c1c4a7da5ec9c91b675af43d138b0a42dc3ef962b46e8494d9abf11",
+        "obs_cfeaa43d18dd66aafd6d55444c282ab4880605503d594be56436c463c8ade942",
+        "obs_d268f8bd195a0b5230c6cf27a1dd3d6974b69111ee4a529648b880cec23b0773",
+        "obs_d587bccc0ecaa91d64c91578c44830fff5e97be1eff4621b9b5070a33d8e25c1",
+        "obs_ec1be52973b51ad053e156d088d7bcd9a65e3d9afd2c129b3dd5ee2e7cced8f1",
+        "obs_f116658fb393b909f917836be0c41d29077eb03969972794e9acc1c5ce1c9373",
+        "obs_f64dc06c77adb77c22751c41d054d3db5d805a42293e2a314151107c735e6cea",
+        "price_51d8d2c24b38ada3053abe3451d4d88ddaca8ffe9b9ee54880fe06fd92b6ac4a"
+      ],
+      "promptVersion": "4c0f518417536f55c688621d6906b08eed84e8a7b640e19fac9d65775319e2ac",
+      "model": "xopdeepseekv4flash0731"
+    }
   }
 }

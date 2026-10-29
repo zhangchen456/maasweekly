@@ -1,0 +1,94 @@
+{
+  "source": "OpenRouter Rankings (vendor aggregate)",
+  "source_url": "https://openrouter.ai/rankings",
+  "snapshot_date": "2026-10-28",
+  "as_of": "2026-10-29T01:02:39.111Z",
+  "window": {
+    "start": "2026-10-22",
+    "end": "2026-10-28"
+  },
+  "manual": false,
+  "note": "按模型 permaslug 厂商前缀聚合的 token 份额（7 日滚动窗口）。口径为 top-50 近似：分母含 other 长尾聚合行，未上榜模型计入长尾。",
+  "shares": [
+    {
+      "rank": 1,
+      "vendor": "DeepSeek",
+      "vendor_key": "deepseek",
+      "tokens_t": 64.61,
+      "share_pct": 34.5,
+      "change_pp": 4.2
+    },
+    {
+      "rank": 2,
+      "vendor": "智谱AI",
+      "vendor_key": "z-ai",
+      "tokens_t": 21.12,
+      "share_pct": 11.3,
+      "change_pp": 0.9
+    },
+    {
+      "rank": 3,
+      "vendor": "OpenAI",
+      "vendor_key": "openai",
+      "tokens_t": 16.3,
+      "share_pct": 8.7,
+      "change_pp": 1.8
+    },
+    {
+      "rank": 4,
+      "vendor": "Anthropic",
+      "vendor_key": "anthropic",
+      "tokens_t": 14.11,
+      "share_pct": 7.5,
+      "change_pp": -0.3
+    },
+    {
+      "rank": 5,
+      "vendor": "腾讯",
+      "vendor_key": "tencent",
+      "tokens_t": 12.01,
+      "share_pct": 6.4,
+      "change_pp": -0.5
+    },
+    {
+      "rank": 6,
+      "vendor": "MiniMax",
+      "vendor_key": "minimax",
+      "tokens_t": 7.65,
+      "share_pct": 4.1,
+      "change_pp": -2.9
+    },
+    {
+      "rank": 7,
+      "vendor": "NVIDIA",
+      "vendor_key": "nvidia",
+      "tokens_t": 7.1,
+      "share_pct": 3.8,
+      "change_pp": -0.4
+    },
+    {
+      "rank": 8,
+      "vendor": "Stepfun",
+      "vendor_key": "stepfun",
+      "tokens_t": 5.63,
+      "share_pct": 3.0,
+      "change_pp": 1.6
+    },
+    {
+      "rank": 9,
+      "vendor": "Xiaomi",
+      "vendor_key": "xiaomi",
+      "tokens_t": 5.56,
+      "share_pct": 3.0,
+      "change_pp": -3.3
+    },
+    {
+      "rank": 10,
+      "vendor": "Typesafe",
+      "vendor_key": "typesafe",
+      "tokens_t": 5.02,
+      "share_pct": 2.7,
+      "change_pp": 0.2
+    }
+  ]
+}

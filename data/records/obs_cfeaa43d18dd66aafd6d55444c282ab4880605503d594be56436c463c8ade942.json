@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "obs_cfeaa43d18dd66aafd6d55444c282ab4880605503d594be56436c463c8ade942",
+  "sourceId": "anthropic-changelog",
+  "date": "2026-10-29",
+  "recordType": "source_observation",
+  "changeType": "source_updated",
+  "revision": 2,
+  "status": "active",
+  "platform": "Anthropic",
+  "sourceType": "changelog",
+  "sourceUrl": "https://docs.anthropic.com/en/release-notes/api",
+  "title": "Anthropic · 更新日志来源更新",
+  "summary": "SDK 支持 code_execution_20260120 的说明文本有细微变化，内容实质未变。",
+  "summaryOrigin": "llm",
+  "observedAt": null,
+  "timePrecision": "date",
+  "revisedAt": "2026-10-29T01:00:15+00:00",
+  "revisionReason": "摘要更新",
+  "kind": "substantive",
+  "diff": {
+    "pairs": [
+      {
+        "key": "the python",
+        "before": "The Python, TypeScript, Go, Java, Ruby, PHP, and C# SDKs now include support for code_execution_20260120, the code execution tool version that adds REPL state persistence and is the minimum version for programmatic tool calling. To adopt it, set the tool’s type to code_execution_20260120; no beta header is required. It’s available on Claude Fable 5, Claude Mythos 5, Claude Opus 4.5 and newer, and Claude Sonnet 4.5 and newer; see the code execution tool’s Compatibility section.",
+        "after": "The Python, TypeScript, Go, Java, Ruby, PHP, and C# SDKs now include support for code_execution_20260120, the code execution tool version that adds REPL state persistence and is the minimum version for programmatic tool calling. To adopt it, set the tool’s type to code_execution_20260120; no beta header is required. It’s available on Claude Fable 5, Claude Mythos 5, Claude Opus 4.5 and newer, and Claude Sonnet 4.5 and newer; see the code execution tool’s API support section."
+      }
+    ],
+    "added_lines": [],
+    "removed_lines": [],
+    "added_count": 0,
+    "removed_count": 0,
+    "raw_added_count": 1,
+    "raw_removed_count": 1
+  },
+  "evidenceLevel": "source_diff",
+  "diffCompleteness": "unknown",
+  "provenance": {
+    "diff_file": "/home/runner/work/maasweekly/maasweekly/data/diff/2026-10-29.json"
+  },
+  "permalink": "/item/obs_cfeaa43d18dd66aafd6d55444c282ab4880605503d594be56436c463c8ade942/"
+}
