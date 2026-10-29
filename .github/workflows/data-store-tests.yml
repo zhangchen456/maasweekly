@@ -19,6 +19,14 @@ on:
       - 'pipeline/scripts/activate-data-candidate.py'
       - 'pipeline/scripts/*shadow*'
       - 'ops/*shadow*'
+      - 'ops/data-writer/**'
+      - 'ops/runtime*'
+      - 'ops/server/**'
+      - 'tests/test_database_writer.py'
+      - 'tests/test_runtime*'
+      - 'tests/test_workflow_release_contract.py'
+      - '.github/workflows/*.yml'
+      - '.gitignore'
       - 'tests/test_shadow*'
       - 'requirements.shadow.lock.txt'
       - '.github/workflows/data-store-tests.yml'
@@ -41,7 +49,7 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U postgres -d maas_shadow_test"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
@@ -49,6 +57,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
+            .github
             pipeline
             config
             tests
@@ -62,7 +71,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -r requirements.shadow.lock.txt
+      - run: python -m pip install -c requirements.lock.txt -r requirements.shadow.lock.txt PyYAML
       - name: PostgreSQL and archive transfer contracts
         env:
           # Disposable CI service credentials; no production access or secrets.
@@ -70,9 +79,13 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_shadow*.py' -v
           python -m unittest discover -s tests -p 'test_data_publication.py' -v
+          python -m unittest discover -s tests -p test_database_writer.py
+          python -m unittest discover -s tests -p test_runtime_control.py
+          python -m unittest discover -s tests -p test_runtime_package.py
+          python -m unittest discover -s tests -p test_workflow_release_contract.py
       - name: Standard input and blob storage regressions
         run: |
           python -m unittest discover -s tests -p test_standard_inputs.py
           python tests/test_blob_storage.py
       - name: Operational shell syntax
-        run: bash -n ops/provision-data-store.sh ops/backup-data-store.sh ops/import-shadow-bundle.sh
+        run: bash -n ops/provision-data-store.sh ops/backup-data-store.sh ops/import-shadow-bundle.sh ops/runtime-job.sh ops/data-writer/job.sh ops/server/maasweekly-activate ops/server/maasweekly-deploy-shell
