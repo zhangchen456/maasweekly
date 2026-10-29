@@ -1,9 +1,11 @@
+import { siteRuntime } from './runtime.ts';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 // Offline translations are loaded once per immutable build.
 const editorialFields = new Set(['text','logo_summary','theme','title','body','story','llm_summary']);
 let translations: Record<string,string> | undefined;
 function dictionary() {
+  if(siteRuntime())return (siteRuntime()!.projection('translations-en.json') as {texts:Record<string,string>}).texts;
   if (!translations) {
     try {
       const value = JSON.parse(readFileSync(path.resolve(process.cwd(),'src/data/translations-en.json'),'utf8'));

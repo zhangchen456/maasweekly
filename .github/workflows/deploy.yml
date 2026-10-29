@@ -23,7 +23,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          filter: blob:none
           fetch-depth: 0
+          sparse-checkout: |
+            .github
+            scripts
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -46,19 +50,19 @@ jobs:
           echo "sha=$SHA" >> "$GITHUB_OUTPUT"
           echo "deploy=$(echo "$RESULT" | python3 -c 'import json,sys; print(str(json.load(sys.stdin)["deploy"]).lower())')" >> "$GITHUB_OUTPUT"
           echo "import_weekly=$(echo "$RESULT" | python3 -c 'import json,sys; print(str(json.load(sys.stdin)["importWeekly"]).lower())')" >> "$GITHUB_OUTPUT"
-  import-weekly:
+  deploy:
     needs: changes
-    if: needs.changes.outputs.import_weekly == 'true'
+    if: needs.changes.outputs.deploy == 'true'
+    uses: ./.github/workflows/release-deploy.yml
+    with:
+      commit: ${{ needs.changes.outputs.sha }}
+    secrets: inherit
+  import-weekly:
+    needs: [changes, deploy]
+    if: always() && needs.changes.outputs.import_weekly == 'true' && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped')
     uses: ./.github/workflows/weekly-update.yml
     with:
       mode: import
     secrets: inherit
     permissions:
-      contents: write
-  deploy:
-    needs: changes
-    if: needs.changes.outputs.deploy == 'true' && needs.changes.outputs.import_weekly != 'true'
-    uses: ./.github/workflows/release-deploy.yml
-    with:
-      commit: ${{ needs.changes.outputs.sha }}
-    secrets: inherit
+      contents: read

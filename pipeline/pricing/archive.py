@@ -868,12 +868,18 @@ def _commit_event(records_root: Path, revisions_root: Path, event: dict) -> None
 # ---------------------------------------------------------------------------
 
 def build_price_index(records_root: Path) -> list[dict]:
+    def records():
+        for f in sorted(records_root.glob("price_*.json")):
+            try:
+                yield json.loads(f.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as e:
+                raise ArchiveError(f"价格记录损坏，无法生成索引: {f}: {e}")
+    return index_price_records(records())
+
+
+def index_price_records(records) -> list[dict]:
     items = []
-    for f in sorted(records_root.glob("price_*.json")):
-        try:
-            r = json.loads(f.read_text(encoding="utf-8"))
-        except json.JSONDecodeError as e:
-            raise ArchiveError(f"价格记录损坏，无法生成索引: {f}: {e}")
+    for r in records:
         items.append({
             "id": r["id"], "date": r["date"], "provider": r["provider"],
             "model": r["model"], "component": r["component"],
@@ -1055,6 +1061,13 @@ def validate_price_archive(data_root: Path, *, versions_root: Path,
         if evid and evid not in evidence:
             errors.append(f"版本证据引用悬空: {vid} → {evid}")
 
+    # Index once: checking each current fact must not rescan all historical versions.
+    latest_observed = {}
+    for version in versions.values():
+        key = version.get("fact_key")
+        observed = version.get("observed_at") or 0
+        latest_observed[key] = max(latest_observed.get(key, observed), observed)
+
     # current 与版本一致
     if current_file.exists():
         try:
@@ -1073,9 +1086,7 @@ def validate_price_archive(data_root: Path, *, versions_root: Path,
                 # current 须指向该 fact_key 观察时间最新的版本。同一
                 # observed_at 可能并列多个版本（证据摘录变化产生新版本，
                 # 金额不变）——指向任一并列最新版本均合法
-                max_obs = max((x.get("observed_at") or 0
-                               for x in versions.values()
-                               if x.get("fact_key") == fk), default=None)
+                max_obs = latest_observed.get(fk)
                 if max_obs is not None \
                         and (v.get("observed_at") or 0) < max_obs:
                     errors.append(f"current 未指向最新版本: {fk} → {vid} "

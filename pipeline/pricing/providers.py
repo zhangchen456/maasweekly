@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import hashlib
+import os
 import asyncio
 import re
 import time
@@ -50,7 +51,7 @@ class PlaywrightSourceProvider:
             from playwright.async_api import async_playwright
             cls._playwright = await async_playwright().start()
             try:
-                cls._browser = await cls._playwright.chromium.launch(headless=True,
+                cls._browser = await cls._playwright.chromium.launch(headless=True,chromium_sandbox=os.environ.get('MAAS_BROWSER_SANDBOX')=='1',
                     args=["--disable-blink-features=AutomationControlled"])
                 return cls._browser
             except BaseException:

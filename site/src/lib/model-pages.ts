@@ -1,3 +1,4 @@
+import { siteRuntime } from './runtime.ts';
 import { HOME_MODEL_GROUPS } from '../config/home-model-selection.ts';
 import { loadVerifiedRelease } from './release.ts';
 import { safeWebUrl } from './seo.ts';
@@ -5,6 +6,7 @@ import { safeWebUrl } from './seo.ts';
 // A build reads one verified snapshot; pages never query production while building.
 let snapshot: ReturnType<typeof loadVerifiedRelease> | undefined;
 export function modelRelease() {
+  if(siteRuntime())return siteRuntime()!.release();
   return snapshot ??= loadVerifiedRelease(undefined, {
     select: ['modelIdentities', 'prices', 'changes', 'evidence', 'weekly'],
   });
@@ -17,7 +19,7 @@ type Model = NonNullable<Release['modelIdentities']>['models'][number];
 type Price = NonNullable<Release['prices']>[number];
 type Change = NonNullable<Release['changes']>[number];
 
-let index: ReturnType<typeof createModelIndex> | undefined;
+const indexes = new WeakMap<Release,ReturnType<typeof createModelIndex>>();
 /** One pass per verified build snapshot; preserve release ordering within each model. */
 export function createModelIndex(release: Release) {
   const fromDate = new Date(`${release.dataThrough}T00:00:00Z`);
@@ -43,7 +45,10 @@ export function createModelIndex(release: Release) {
   }
   return { models, prices, changes, evidence, from, to };
 }
-export function modelIndex() { return index ??= createModelIndex(modelRelease()); }
+export function modelIndex() {
+  const release=modelRelease();let index=indexes.get(release);
+  if(!index){index=createModelIndex(release);indexes.set(release,index);}return index;
+}
 
 export function modelPage(modelId: string) {
   const release = modelRelease();

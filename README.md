@@ -4,6 +4,8 @@
 
 架构改造：[2026-10 执行任务清单](docs/architecture/refactoring-2026-10/README.md)（8 项本地改造及逐项回归已完成；[交付与验收入口](docs/architecture/refactoring-2026-10/delivery-index.md)。生产未发布，远端存储暂缓）。
 
+数据与代码解耦：[方案](docs/architecture/data-code-decoupling-2026-10-29.md)与[实施状态](docs/architecture/data-code-decoupling-2026-10-29/progress.md)。目标为现有服务器 PostgreSQL + Git/release 外独立文件目录，暂不使用对象存储。目前迁移及数据库直接导出为隔离候选；现有采集 writer、每日数据提交与全站发布尚未切换。
+
 线上地址：**https://daily.maas.click** （旧域名 `week.maas.click` / `mw.zhangchen456.xyz` 已 301 跳转到新域名）
 
 部署：aliyun-099（47.237.135.97），Nginx 静态站 + Node REST/MCP。当前发布使用不可变 release、manifest 校验与蓝绿槽位，根目录 `/srv/maasweekly/`；旧 `/var/www/maasweekly` 为 legacy 路径。客户端协议和恢复入口见 `ops/README.md`。

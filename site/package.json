@@ -11,9 +11,11 @@
     "preview": "astro preview",
     "astro": "astro",
     "prebuild": "python3 ../scripts/generate-public-contract.py --check && python3 ../pipeline/scripts/project-site-data.py && python3 ../pipeline/scripts/validate-archive.py && python3 ../pipeline/scripts/validate-price-archive.py",
-    "build:skill": "python3 scripts/build-skill-package.py"
+    "build:skill": "python3 scripts/build-skill-package.py",
+    "build:runtime": "python3 ../scripts/generate-public-contract.py --check && python3 scripts/build-skill-package.py && MAAS_SITE_RENDER_MODE=server astro sync --force && MAAS_SITE_RENDER_MODE=server astro build"
   },
   "dependencies": {
+    "@astrojs/node": "11.1.9",
     "astro": "^7.2.10",
     "marked": "^18.0.11"
   },

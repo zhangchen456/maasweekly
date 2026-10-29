@@ -1,4 +1,6 @@
 ---
+import { siteRuntime } from '../../lib/runtime';
+import { readPageProjection } from '../../lib/page-data';
 import Layout from '../../layouts/Layout.astro';
 import { localizeEditorial } from '../../lib/dynamic-translation';
 import { priceChangeLink } from '../../lib/record-links';
@@ -87,13 +89,14 @@ export async function getStaticPaths() {
 }
 
 const locale = Astro.url.pathname.startsWith('/en/') ? 'en' : 'zh';
-const week = localizeEditorial(Astro.props.week, locale);
+const rawWeek=siteRuntime() ? siteRuntime()!.dailyWeek(Astro.params.week??'') : Astro.props.week;
+if(!rawWeek)return new Response('Not found',{status:404});
+const week = localizeEditorial(rawWeek, locale);
 
 // 拉该周各日明细
-const dailyPath = path.join(process.cwd(), 'src/data/daily_changes.json');
 let daysByDate: Record<string, any> = {};
 try {
-  const daily = localizeEditorial(JSON.parse(fs.readFileSync(dailyPath, 'utf-8')), locale);
+  const daily = localizeEditorial(readPageProjection<any>('daily_changes.json'), locale);
   daysByDate = Object.fromEntries((daily.days || []).map((d: any) => [d.date, d]));
 } catch {}
 
@@ -121,7 +124,7 @@ const weekOfItem = (dateStr: string) => {
 let weekRecords: any[] = [];
 try {
   const idxPath = path.join(process.cwd(), 'src/data/record-index.json');
-  const allIdx = JSON.parse(fs.readFileSync(idxPath, 'utf-8'));
+  const allIdx = readPageProjection<any[]>('record-index.json');
   weekRecords = allIdx.filter((r: any) => weekOfItem(r.date) === week.week);
 } catch {}
 const recordsByDate: Record<string, any[]> = {};

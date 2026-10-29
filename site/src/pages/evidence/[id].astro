@@ -1,6 +1,7 @@
 ---
 // 价格证据详情页：/evidence/ev_.../
 // 数据源：data/price-evidence/<ev_id>.json（持久归档，不可变）
+import { siteRuntime } from '../../lib/runtime';
 import Layout from '../../layouts/Layout.astro';
 import { logoFor } from '../../lib/platforms';
 import fs from 'node:fs';
@@ -52,7 +53,10 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { record, factsByEvidence } = Astro.props;
+const runtime=siteRuntime();
+const record=runtime ? await runtime.evidence(Astro.params.id??'') : Astro.props.record;
+if(!record)return new Response('Not found',{status:404});
+const factsByEvidence=runtime ? new Map([[record.id,await runtime.facts(record.id)]]) : Astro.props.factsByEvidence;
 const evid: string = record.id;
 
 const PROVIDER_LABEL: Record<string, string> = {

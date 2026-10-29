@@ -97,3 +97,16 @@ test('Plus MCP weekly returns full structured report only with current entitleme
   const expiring=s.pro.mint(s.a.user.id,'expiry','api');s.setNow(start+31*86400000);await denied(expiring.token);
  } finally {server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));s.account.close();}
 });
+
+
+test('SSR weekly rendering runs only after current entitlement and never caches authorization',async()=>{
+ const s=setup();let calls=0,fail=false;
+ const render=async()=>{calls++;if(fail)throw new Error('database unavailable');return '<p>PRIVATE_SSR_WEEKLY</p>';};
+ const server=http.createServer(createProHandler(s.pro,{current:null} as DatasetHolder,{origin:'http://localhost',secure:false},false,render));
+ try{await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));const url=`http://127.0.0.1:${(server.address() as {port:number}).port}/api/pro/weekly/2026-10-01`;
+  assert.equal((await fetch(url)).status,401);assert.equal((await fetch(url,{headers:{Cookie:`maas_session=${s.b.session}`}})).status,403);assert.equal(calls,0);
+  const headers={Cookie:`maas_session=${s.a.session}`};let result=await fetch(url,{headers});assert.equal(result.status,200);assert.match(await result.text(),/PRIVATE_SSR_WEEKLY/);assert.match(result.headers.get('cache-control')!,/private, no-store/);assert.equal(calls,1);
+  fail=true;result=await fetch(url,{headers});assert.equal(result.status,503);assert.ok(!(await result.text()).includes('PRIVATE_SSR_WEEKLY'));assert.equal(calls,2);
+  s.pro.grant(s.a.user.id,start,start+86400000,'operator','revoked',true);assert.equal((await fetch(url,{headers})).status,403);assert.equal(calls,2);
+ }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));s.account.close();}
+});

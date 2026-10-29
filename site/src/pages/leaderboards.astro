@@ -4,10 +4,12 @@ import '../styles/leaderboards.css';
 import BoardSection from '../components/leaderboards/BoardSection.astro';
 import RankTable from '../components/leaderboards/RankTable.astro';
 import { logoFor } from '../lib/platforms';
+import { siteRuntime } from '../lib/runtime';
 import fs from 'node:fs';
 import path from 'node:path';
 
 function readJson(p) {
+  if(siteRuntime())return siteRuntime()!.json('data/derived/'+p.replace('src/data/',''),true);
   try { return JSON.parse(fs.readFileSync(path.join(process.cwd(), p), 'utf-8')); }
   catch (e) { return null; }
 }

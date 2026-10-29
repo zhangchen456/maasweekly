@@ -1,6 +1,7 @@
 ---
 import '../styles/style-lab.css';
-import daily from '../data/daily_changes.json';
+import { readPageProjection } from '../lib/page-data';
+const daily = readPageProjection<any>('daily_changes.json');
 import { priceUnit } from '../lib/price-display';
 import { featuredModels, modelRelease, providerLabels } from '../lib/model-pages';
 import { logoFor } from '../lib/platforms';
