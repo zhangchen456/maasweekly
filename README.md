@@ -2,49 +2,32 @@
 
 全球 MaaS 平台追踪站：周度报告 + 每日信源变化（热点每天更新），数据由自动抓取管线驱动。
 
-架构改造：[2026-10 执行任务清单](docs/architecture/refactoring-2026-10/README.md)（8 项本地改造及逐项回归已完成；[交付与验收入口](docs/architecture/refactoring-2026-10/delivery-index.md)。生产未发布，远端存储暂缓）。
-
-数据与代码解耦：[方案](docs/architecture/data-code-decoupling-2026-10-29.md)与[实施状态](docs/architecture/data-code-decoupling-2026-10-29/progress.md)。目标为现有服务器 PostgreSQL + Git/release 外独立文件目录，暂不使用对象存储。目前迁移及数据库直接导出为隔离候选；现有采集 writer、每日数据提交与全站发布尚未切换。
+当前数据与代码已分开部署：网页和 API 从现有服务器 PostgreSQL 与独立文件目录读取数据。日更/周更工作流独立发布数据，功能改动才构建代码包；不使用对象存储。实施与验证状态见 [运行记录](docs/architecture/data-code-runtime-2026-10-29.md)，操作入口见 [独立发布手册](docs/architecture/data-runtime-operations.md)。
 
 线上地址：**https://daily.maas.click** （旧域名 `week.maas.click` / `mw.zhangchen456.xyz` 已 301 跳转到新域名）
 
-部署：aliyun-099（47.237.135.97），Nginx 静态站 + Node REST/MCP。当前发布使用不可变 release、manifest 校验与蓝绿槽位，根目录 `/srv/maasweekly/`；旧 `/var/www/maasweekly` 为 legacy 路径。客户端协议和恢复入口见 `ops/README.md`。
+部署：aliyun-099（47.237.135.97），Nginx + Node SSR/REST/MCP。当前发布使用不可变 release、manifest 校验与蓝绿槽位，根目录 `/srv/maasweekly/`；旧 `/var/www/maasweekly` 为 legacy 路径。客户端协议和恢复入口见 `ops/README.md`。
 
 ## 仓库结构
 
 ```
 maasweekly/
-├── site/                    # Astro v7 静态站点（随统一 release 发布）
-│   ├── src/content/weekly/      # 周报 Markdown（带 frontmatter）
-│   ├── src/content/weekly-structured/  # 周报结构化 JSON（extract-structured.py 生成）
-│   ├── src/content/platforms/   # 平台信源 JSON（split-sources.py 生成）
-│   ├── src/data/               # 榜单/定价/每日变化等数据源
-│   └── src/pages/changes.astro # 每日动态页（消费 data/diff）
-├── pipeline/                # 数据管线
-│   ├── scripts/fetch_sources.py        # 每日抓取 16 平台 + 行业信源，快照 + diff
-│   ├── scripts/sync-diff-to-site.py    # 聚合 diff JSON 到站点数据源
-│   └── config/maas_official_sources.json  # 信源配置（67 个 URL）
-├── data/                    # 抓取产物与历史数据（git 跟踪）
-│   ├── snapshots/YYYY-MM-DD/    # 每日原始快照
-│   ├── diff/YYYY-MM-DD.md|json  # 每日变化报告（人读 + 机读）
-│   ├── records/obs_*.json       # 来源变化条目持久归档（稳定 ID，/item/ 详情页数据源）
-│   └── record-revisions/        # 条目历史版本（每修订一版，不可覆盖）
-│   ├── price-{facts,evidence,records,runs}/  # 价格事实/证据/事件归档（Task 02，内容寻址）
-│   ├── public/v1/               # 公开数据 release（Task 03，export-public-data.py 产出）
-│   ├── weekly/                  # 周报源文件
-│   ├── daily/                   # 早期每日追踪报告（7 月前）
-│   └── weekly-archive-early/    # 更早期手写周报存档
-├── services/agent-api/       # REST API v1 + MCP /api/mcp（Task 03/04，Node 22 + TS；本地 127.0.0.1:8787，生产蓝绿 8788/8789）
-├── agent-skill/maas-daily/   # Agent Skill 源（Task 04：SKILL.md 路由 + references）
-└── .github/workflows/       # 自动化
-    ├── daily-update.yml     # 每天凌晨 05:00 抓取 + 构建 + 部署
-    └── weekly-update.yml    # 每周一 09:00 抓取汇总 + 周报导入 + 部署
+├── site/                    # Astro SSR 页面、静态资产与手工配置
+├── services/agent-api/       # Node 22 REST/MCP、网页运行时、账号与后台功能
+├── pipeline/                # 采集、校验、数据库迁移与数据发布
+├── data/model-registry/     # 手工模型身份定义（代码配置）
+├── data/weekly/             # 手工周报稿件
+├── agent-skill/maas-daily/   # Agent Skill 源
+├── ops/                     # 独立 writer、固定 SSH 入口、蓝绿切换与恢复
+└── .github/workflows/       # 日更/周更只发数据；release-deploy 只发代码
 ```
+
+运行数据目录独立于 Git 和代码包；开发机已有的数据只是本地副本。服务器结构化输入保存在 `maas_data`，原始材料在 `/srv/maasweekly/shared/data-store/blobs`，公开只读文件在 `shared/public-data/v1`。
 
 ### 公开 API（Task 03，已发布）
 
-`pipeline/scripts/export-public-data.py` 把 Task 01/02 归档与正式周报投影为
-版本化公开数据（`data/public/v1/`），`services/agent-api`（Node 22 + TS）
+`pipeline/scripts/export-database-data.py` 从固定数据库输入导出
+版本化公开数据（服务器共享数据目录），`services/agent-api`（Node 22 + TS）
 提供匿名只读 REST API：`/api/v1/changes | prices | items/{id} |
 evidence/{id} | weekly | weekly/{id} | models | status`，支持筛选、cursor 固定版本
 翻页、ETag/304、Problem JSON。合同：`docs/contracts/public-api-v1.md`；
@@ -67,8 +50,8 @@ OpenAPI：`site/public/openapi-v1.json`。
 `docs/contracts/mcp-v1.md`。本地跑：
 
 ```bash
-python3 pipeline/scripts/export-public-data.py
-cd services/agent-api && npm ci && npm run build && npm start   # 127.0.0.1:8787
+cd services/agent-api && npm ci && npm run build
+PUBLIC_DATA_ROOT=/absolute/path/to/public/v1 npm start   # 127.0.0.1:8787
 ```
 
 ## 自动更新机制
@@ -80,16 +63,24 @@ cd services/agent-api && npm ci && npm run build && npm start   # 127.0.0.1:8787
 1. `fetch_sources.py` 抓取全部信源（模型列表 / 定价 / 更新日志 / 博客）
 2. 与最近一次快照逐行 diff，产出 `data/diff/YYYY-MM-DD.md|json`
 3. `sync-diff-to-site.py` 聚合最近 14 天 diff 到 `site/src/data/daily_changes.json`
-4. 摘要、榜单及公开投影生成；数据先提交到仓库
-5. 从精确提交执行统一测试、构建与 release 发布（蓝绿激活 + 四入口验证）
+4. 摘要、榜单及投影生成，固定输入与修订写入数据库
+5. 校验候选与网页后原子发布共享数据，网站自动读取新版本；不提交 Git、不构建网站
 
 站点 `/changes` 页面按天展示每个平台的变化条目，点击展开新增/删除行。
 
 ### 每周（周报）
 
-`weekly-update.yml` 每周一 09:00 抓取汇总素材。新周报写好后放入 `data/weekly/YYYY-MM-DD.md`，手动触发工作流选 `import` 或 `full` 模式，即导入站点（`import-weekly.py` + `extract-structured.py`）并部署。
+`weekly-update.yml` 每周一 09:00 抓取汇总素材。新周报写好后放入 `data/weekly/YYYY-MM-DD.md`，手动触发工作流选 `import` 或 `full` 模式，即导入数据库、验证并发布内容。只提交周报稿件也会走数据导入，不构建代码。
 
-## 本地开发
+## 构建与本地开发
+
+生产代码构建（干净提交，输出目录必须在仓库外且尚不存在）：
+
+```bash
+bash scripts/build-runtime-release.sh --output /absolute/path/to/new-runtime
+```
+
+本地完整页面预览需要单独恢复的测试数据/数据库，见 [运行手册](docs/architecture/data-runtime-operations.md)。下面是保留的历史静态调试链路，需要本地已有完整数据；新检出不自带生产归档。
 
 ```bash
 cd site
@@ -109,7 +100,7 @@ python3 pipeline/scripts/archive-source-changes.py --check     # 只校验不写
 
 ## 历史 GitHub Pages 初始化方式
 
-以下为早期部署说明，不是当前生产发布入口；当前发布使用 `ops/deploy-release.sh` 与 `ops/verify-release.sh`，遵守 `ops/README.md` 的发布协议。
+以下仅为历史记录。当前生产发布使用 `.github/workflows/release-deploy.yml` 和 `scripts/build-runtime-release.sh`，遵守独立发布手册。
 
 1. 新建 GitHub 仓库，推送本目录
 2. 仓库 Settings → Pages → Source 选 **GitHub Actions**
@@ -121,7 +112,7 @@ python3 pipeline/scripts/archive-source-changes.py --check     # 只校验不写
 - 信源配置：`pipeline/config/maas_official_sources.json`
 - 来源注册表：`pipeline/config/source_registry.json`（稳定 source_id ↔ 平台/类型/URL 别名）。**新增信源步骤**：先在 maas_official_sources.json 加信源 → 抓取产生 diff 后，如果 `archive-source-changes.py` 报"来源未映射"，在 source_registry.json 的 sources 数组补一条 `{source_id, display_name, source_type, url_aliases, primary_url}`——source_id 一旦分配不可更改，URL 变化只追加 url_aliases（国内 9 + 海外 7 平台，6 维度信源 + 行业数据源）
 - diff 算法：按行集合对比，过滤 10 字符以下短行，噪声较多的页面（JS 渲染的 SPA）可能误报，后续可换 HTML 结构化 diff
-- 历史周报：53 期（2025-10 ~ 2026-09），完整存于 `data/weekly/` 与 `data/weekly-archive-early/`
+- 手工周报稿件在 `data/weekly/`；正式内容及修订进入数据库，早期手写存档保存在仓库外备份。
 
 ## 账号与模型关注 v1
 
