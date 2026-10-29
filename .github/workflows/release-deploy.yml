@@ -13,7 +13,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 70
     concurrency:
       group: maas-production-deploy-main
       cancel-in-progress: false
@@ -102,8 +102,8 @@ jobs:
           ELIGIBLE=$(python3 scripts/workflow-policy.py candidate --sha "$CANDIDATE_SHA" | python3 -c 'import json,sys;print(str(json.load(sys.stdin)["eligible"]).lower())')
           if [ "$ELIGIBLE" != true ]; then echo 'superseded code candidate'; exit 0; fi
           RID="rl_${CANDIDATE_SHA:0:10}_000000000000"
-          rsync -az -e "ssh -i $HOME/.ssh/id_ed25519 -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=ops/known_hosts.production" "$RUNNER_TEMP/runtime/" "maasdeploy@47.237.135.97:/srv/maasweekly/incoming/$RID/"
-          ssh -i "$HOME/.ssh/id_ed25519" -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=ops/known_hosts.production maasdeploy@47.237.135.97 "runtime-activate $RID"
+          rsync -az -e "ssh -i $HOME/.ssh/id_ed25519 -o BatchMode=yes -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=120 -o StrictHostKeyChecking=yes -o UserKnownHostsFile=ops/known_hosts.production" "$RUNNER_TEMP/runtime/" "maasdeploy@47.237.135.97:/srv/maasweekly/incoming/$RID/"
+          ssh -i "$HOME/.ssh/id_ed25519" -o BatchMode=yes -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=120 -o StrictHostKeyChecking=yes -o UserKnownHostsFile=ops/known_hosts.production maasdeploy@47.237.135.97 "runtime-activate $RID"
           echo "deployed=true" >> "$GITHUB_OUTPUT"
       - name: Verify public entry points
         if: steps.deploy.outputs.deployed == 'true'
