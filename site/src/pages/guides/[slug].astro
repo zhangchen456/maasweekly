@@ -7,7 +7,9 @@ export function getStaticPaths() {
   return priceGuides.map(guide => ({ params: { slug: guide.slug }, props: { guide } }));
 }
 const en = Astro.url.pathname.startsWith('/en/');
-const guide = en ? priceGuidesEnglish.find(item => item.slug === Astro.props.guide.slug)! : Astro.props.guide;
+const baseGuide=Astro.props.guide??priceGuides.find(item=>item.slug===Astro.params.slug);
+if(!baseGuide)return new Response('Not found',{status:404});
+const guide = en ? priceGuidesEnglish.find(item => item.slug === baseGuide.slug)! : baseGuide;
 const t = (zh, english) => en ? english : zh;
 const canonical = canonicalUrl(Astro.url.pathname);
 const organization = { '@type': 'Organization', name: 'MaaS Daily', url: canonicalUrl('/about/') };

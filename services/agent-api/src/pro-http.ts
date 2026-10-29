@@ -27,7 +27,7 @@ async function read(req: IncomingMessage) {
   try { const v = JSON.parse(Buffer.concat(buffers).toString()); if (!v || typeof v !== 'object' || Array.isArray(v)) throw new Error(); return v as Record<string,unknown>; }
   catch { throw new AccountError(400,'invalid_json','请求格式错误'); }
 }
-export function createProHandler(store: ProStore | null, holder: DatasetHolder, config: AccountConfig, mailAvailable: boolean) {
+export function createProHandler(store: ProStore | null, holder: DatasetHolder, config: AccountConfig, mailAvailable: boolean, renderWeekly?: (id:string)=>Promise<string|null>) {
   const limiter = new ClientRateLimiter({capacity:120,refillPerMinute:60,trustLoopbackProxy:config.trustProxy});
   return async (req: IncomingMessage,res: ServerResponse) => {
     const send = (value: unknown, status=200, type='application/json; charset=utf-8') => { res.writeHead(status,{'Content-Type':type}); res.end(type.startsWith('application/json') ? JSON.stringify(value) : String(value)); };
@@ -66,7 +66,11 @@ export function createProHandler(store: ProStore | null, holder: DatasetHolder, 
         store.require(user.id);
         const id=route.slice(7); if (!/^\d{4}-\d{2}-\d{2}$/.test(id)) throw new AccountError(404,'not_found','周报不存在');
         const root=process.env.PRIVATE_WEEKLY_ROOT ?? (process.env.MAAS_RELEASE_DIR ? path.join(process.env.MAAS_RELEASE_DIR,'data/private-weekly') : path.resolve(process.env.PUBLIC_DATA_ROOT ?? 'data/public/v1','../../private-weekly'));
-        let html:string;try{html=readFileSync(path.join(root,id+'.html'),'utf8');}catch{throw new AccountError(404,'not_found','周报暂不可用');}
+        let html:string;
+        if(renderWeekly){
+          let value:string|null;try{value=await renderWeekly(id);}catch{throw new AccountError(503,'weekly_unavailable','周报暂不可用');}
+          if(value===null)throw new AccountError(404,'not_found','周报不存在');html=value;
+        }else try{html=readFileSync(path.join(root,id+'.html'),'utf8');}catch{throw new AccountError(404,'not_found','周报暂不可用');}
         store.event('weekly_read',id,user.id);send(html,200,'text/html; charset=utf-8');return;
       }
       if(route==='billing'&&req.method==='GET'){const payments=new PaymentStore(new AdminStore(store.accounts));send({...payments.user(user.id),entitlement:store.entitlement(user.id),checkoutAvailability:process.env.MAAS_PAYMENT_MODE==='simulator'&&['localhost','127.0.0.1'].includes(new URL(config.origin).hostname)?'simulator':'unavailable',reason:'real_sandbox_provider_not_configured'});return;}

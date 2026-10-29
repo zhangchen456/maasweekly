@@ -2,8 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { logoFor } from '../lib/platforms';
 import { getCollection } from 'astro:content';
-import fs from 'node:fs';
-import path from 'node:path';
+import industrySourceConfig from '../data/industry_sources.json';
 
 const platforms = await getCollection('platforms');
 
@@ -12,13 +11,7 @@ const chinaPlatforms = platforms.filter(p => p.data.region === 'china');
 const overseasPlatforms = platforms.filter(p => p.data.region === 'overseas');
 
 // 读取行业源
-const industryPath = path.join(process.cwd(), 'src/data/industry_sources.json');
-let industrySources = [];
-try {
-  industrySources = JSON.parse(fs.readFileSync(industryPath, 'utf-8'));
-} catch (e) {
-  // noop
-}
+const industrySources = industrySourceConfig;
 
 // 第三方渠道按 type 分组
 const typeGroups = [

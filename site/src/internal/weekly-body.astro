@@ -1,0 +1,10 @@
+---
+import ReportBody from '../components/ReportBody.astro';
+import { siteRuntime } from '../lib/runtime';
+export const prerender = false;
+if((Astro.locals as {internalWeekly?:boolean}).internalWeekly!==true)return new Response('Not found',{status:404});
+const report=siteRuntime()?.weekly(Astro.params.id??'');
+if(!report)return new Response('Not found',{status:404});
+Astro.response.headers.set('Cache-Control','private, no-store');
+---
+<ReportBody data={report} />

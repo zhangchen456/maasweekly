@@ -2,6 +2,7 @@
 // 条目详情页：/item/obs_.../（来源变化）与 /item/price_.../（价格事件，Task 02）
 // 数据源：data/records/*.json（obs_）+ data/price-records/*.json（price_）
 // 修订历史：data/record-revisions/<id>/ 与 data/price-record-revisions/<id>/
+import { siteRuntime } from '../../lib/runtime';
 import Layout from '../../layouts/Layout.astro';
 import { logoFor } from '../../lib/platforms';
 import fs from 'node:fs';
@@ -50,7 +51,9 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { record } = Astro.props;
+const runtime=siteRuntime();
+const record = runtime ? await runtime.record(Astro.params.id??'') : Astro.props.record;
+if(!record)return new Response('Not found',{status:404});
 const rid: string = record.id;
 const isPrice: boolean = record.recordType === 'price_change';
 
@@ -58,7 +61,8 @@ const isPrice: boolean = record.recordType === 'price_change';
 const revRoot = isPrice ? 'price-record-revisions' : 'record-revisions';
 const revDir = path.join(process.cwd(), '..', 'data', revRoot, rid);
 let revisions: any[] = [];
-try {
+if(runtime)revisions=await runtime.revisions(rid);
+else try {
   revisions = fs.readdirSync(revDir)
     .filter((f: string) => f.endsWith('.json'))
     .map((f: string) => JSON.parse(

@@ -15,7 +15,10 @@ import { performance, monitorEventLoopDelay } from 'node:perf_hooks';
 import { JsonlLogger, instrumentRequest, freshnessSummary } from './observability.js';
 import { randomUUID } from 'node:crypto';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { SiteDataStore } from './site-data-store.js';
+import { SiteRuntime } from './site-runtime.js';
+import { createSiteHandler, type AstroHandler } from './site-http.js';
+import { pathToFileURL, fileURLToPath } from 'node:url';
 import { DatasetHolder } from './dataset.js';
 import { createMcpHandler, DEFAULT_MCP_CONFIG } from './mcp.js';
 import { createHandler, type ServerConfig } from './http.js';
@@ -33,7 +36,10 @@ const PORT = parseInt(process.env.PORT ?? '8787', 10);
 const HOST = process.env.HOST ?? '127.0.0.1';
 const DATA_ROOT = process.env.PUBLIC_DATA_ROOT
   ?? path.join(repoRoot, 'data', 'public', 'v1');
-const RELOAD_MS = parseInt(process.env.RELOAD_INTERVAL_MS ?? (process.env.MAAS_RELEASE_DIR ? '0' : '30000'), 10);
+const SITE_ENTRY=process.env.MAAS_SITE_ENTRY;
+const siteStore=SITE_ENTRY ? new SiteDataStore({connectionString:process.env.MAAS_SITE_DATABASE_URL}) : null;
+const siteRuntime=siteStore ? new SiteRuntime(siteStore) : null;
+const RELOAD_MS = parseInt(process.env.RELOAD_INTERVAL_MS ?? (SITE_ENTRY ? '5000' : process.env.MAAS_RELEASE_DIR ? '0' : '30000'), 10);
 if (!Number.isSafeInteger(RELOAD_MS) || RELOAD_MS < 0) throw new Error('invalid RELOAD_INTERVAL_MS');
 const TRUST_PROXY = process.env.MAAS_TRUST_LOOPBACK_PROXY === '1';
 
@@ -67,6 +73,7 @@ import { setCursorSecret } from './query.js';
 setCursorSecret(process.env.CURSOR_SECRET ?? randomUUID());
 
 const holder = new DatasetHolder(DATA_ROOT, {
+  ...(siteRuntime ? {prepare:dataset=>siteRuntime.prepare(dataset),publicationFile:'publication.json' as const} : {}),
   maxRetainedVersions: parseInt(process.env.RETAINED_DATASET_MAX_VERSIONS ?? '2', 10),
   maxRetainedBytes: parseInt(process.env.RETAINED_DATASET_MAX_BYTES ?? String(128 * 1024 * 1024), 10),
 });
@@ -101,7 +108,14 @@ const proConfig = { origin: accountOrigin, secure: accountUrl.protocol === 'http
 const adminStore = accountStore ? new AdminStore(accountStore) : null;
 const adminHandler = createAdminHandler(adminStore, holder, proConfig, logger?.emit);
 const paymentWebhook=createPaymentWebhook(adminStore?new PaymentStore(adminStore):null,accountOrigin);
-const proHandler = createProHandler(proStore, holder, proConfig, Boolean(createMailer()));
+let site:ReturnType<typeof createSiteHandler>|undefined;
+if(siteRuntime&&SITE_ENTRY){
+  if(!holder.current)throw new Error('versioned site data unavailable');
+  siteRuntime.install();
+  const module=await siteRuntime.run(holder.current,()=>import(pathToFileURL(path.resolve(SITE_ENTRY)).href)) as {handler:AstroHandler};
+  site=createSiteHandler(holder,siteRuntime,module.handler,accountOrigin);
+}
+const proHandler = createProHandler(proStore, holder, proConfig, Boolean(createMailer()),site?.weekly);
 const mcpHandler = instrumentRequest(createMcpHandler(holder, mcpConfig), holder, releaseId, logger?.emit);
 const proMcpHandler = proStore ? createMcpHandler(holder, mcpConfig, {store:proStore,config:proConfig}) : proHandler;
 const server = http.createServer((req, res) => {
@@ -117,6 +131,7 @@ const server = http.createServer((req, res) => {
     void mcpHandler(req, res);
     return;
   }
+  if(site&&!pathname.startsWith('/api/')){void site.handle(req,res);return;}
   void restHandler(req, res);
 });
 const loop = logger ? monitorEventLoopDelay({ resolution: 20 }) : undefined;
@@ -147,7 +162,7 @@ const shutdown = () => {
   if (timer) clearInterval(timer);
   if (sampleTimer) clearInterval(sampleTimer);
   loop?.disable(); holder.close();
-  server.close(() => { void (async () => { accountStore?.close(); await logger?.close(); process.exit(0); })(); });
+  server.close(() => { void (async () => { accountStore?.close();siteRuntime?.uninstall();await siteStore?.close(); await logger?.close(); process.exit(0); })(); });
   setTimeout(() => process.exit(0), 3000).unref();
 };
 process.on('SIGTERM', shutdown);

@@ -21,6 +21,8 @@ def migrate(connection):
         with connection.cursor() as cursor:
             cursor.execute('SELECT pg_advisory_xact_lock(184067231, 1)')
             cursor.execute(sql)
+            cursor.execute('SELECT max(version) FROM maas_data.schema_versions')
+            return cursor.fetchone()[0]
 
 
 def entries(connection, version):

@@ -1,4 +1,5 @@
 ---
+import { siteRuntime } from '../../lib/runtime';
 import Layout from '../../layouts/Layout.astro';
 import ReportBody from '../../components/ReportBody.astro';
 import { getCollection } from 'astro:content';
@@ -11,11 +12,11 @@ export async function getStaticPaths() {
   }));
 }
 
-const { report } = Astro.props;
-
-// 取结构化数据
-const structured = await getCollection('weeklyStructured', (e) => e.id === report.id);
-const data = structured[0]?.data;
+const runtime=siteRuntime();
+const weekly=runtime?.weekly(Astro.params.id??'');
+if(runtime&&!weekly)return new Response('Not found',{status:404});
+const report=runtime ? {id:weekly.id,data:weekly} : Astro.props.report;
+const data=runtime ? weekly : (await getCollection('weeklyStructured', (e) => e.id === report.id))[0]?.data;
 const sample=report.id==='2026-05-03';
 ---
 
@@ -36,7 +37,7 @@ const sample=report.id==='2026-05-03';
       <p class="weekly-preview">{data?.headline?.slice(0,3).map((h:any)=>h.title).join('；')}</p>
       <section data-weekly-gate data-weekly-id={report.id}><span class="plus-badge">Plus</span><h2>深入理解本周变化</h2><p>完整分析、趋势与观察要点仅向 Plus 用户开放。公测期间免费，无需支付方式。</p><button id="weekly-enable" type="button">登录并免费开启 Plus</button><p id="weekly-status" role="status">正在查询权益…</p></section>
       <div id="weekly-content" hidden></div>
-      <template data-private-weekly>{data && <ReportBody data={data} />}</template>
+      {!runtime && <template data-private-weekly>{data && <ReportBody data={data} />}</template>}
     </>}
   </article>
 </Layout>
