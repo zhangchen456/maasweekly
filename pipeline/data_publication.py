@@ -122,7 +122,7 @@ def activate(connection, candidate, root, expected_hash, *, allow_rollback=False
                     raise ValueError('incomplete page projections')
             connection.commit()
             version = manifest['datasetVersion']
-            releases = root / 'releases'; no_links(releases); releases.mkdir(mode=0o750, exist_ok=True)
+            releases = root / 'releases'; no_links(releases); releases.mkdir(mode=0o2750, exist_ok=True)
             target = no_links(releases / version)
             if target.exists():
                 old = json.loads((target / 'manifest.json').read_bytes())
@@ -130,7 +130,7 @@ def activate(connection, candidate, root, expected_hash, *, allow_rollback=False
             else:
                 staging = Path(tempfile.mkdtemp(prefix='.candidate-', dir=releases))
                 try:
-                    staging.chmod(0o750)
+                    staging.chmod(0o2750)
                     for entry in manifest['files']:
                         name = Path(entry['path']).name
                         source = no_links(candidate / entry['path'])

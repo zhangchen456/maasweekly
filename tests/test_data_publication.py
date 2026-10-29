@@ -39,6 +39,7 @@ class ActivationTests(unittest.TestCase):
         self.assertEqual((root/'publication.json').read_bytes(),first)
         second,m2=self.candidate(2)
         activate(self.connection,second,root,digest(first))
+        self.assertTrue((root/'releases'/m2['datasetVersion']).stat().st_mode & 0o2000)
         pointer=json.loads((root/'publication.json').read_bytes())
         self.assertEqual({r['datasetVersion'] for r in pointer['retainedVersions']},{m['datasetVersion'],m2['datasetVersion']})
         self.assertTrue((root/'releases'/m['datasetVersion']/'items.json').exists())
@@ -79,6 +80,13 @@ class ActivationTests(unittest.TestCase):
             with self.connection.cursor() as c:c.execute('DELETE FROM maas_data.data_candidates')
         with self.assertRaises(ValueError):activate(self.connection,candidate,root,'empty')
         self.assertFalse((root/'publication.json').exists())
+    def test_cli_commits_activation_without_nested_connection_context(self):
+        import subprocess
+        candidate,_=self.candidate();env=dict(os.environ,MAAS_DATA_DSN=os.environ['MAAS_SHADOW_TEST_DSN'])
+        command=[sys.executable,str(Path(__file__).resolve().parents[1]/'pipeline/scripts/activate-data-candidate.py'),'--candidate-dir',str(candidate),'--public-root',str(self.target()),'--expected-publication-sha256','empty']
+        result=subprocess.run(command,env=env,capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertEqual(json.loads(result.stdout)['status'],'activated')
     def test_legacy_bootstrap_preserves_previous_cursor_versions(self):
         import shutil
         first,m=self.candidate();old=self.target();activate(self.connection,first,old,'empty')
