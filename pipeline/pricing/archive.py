@@ -1061,6 +1061,12 @@ def validate_price_archive(data_root: Path, *, versions_root: Path,
         if evid and evid not in evidence:
             errors.append(f"版本证据引用悬空: {vid} → {evid}")
 
+    # Index once: checking each current fact must not rescan all historical versions.
+    latest_observed = {}
+    for version in versions.values():
+        key = version.get("fact_key")
+        latest_observed[key] = max(latest_observed.get(key, 0), version.get("observed_at") or 0)
+
     # current 与版本一致
     if current_file.exists():
         try:
@@ -1079,9 +1085,7 @@ def validate_price_archive(data_root: Path, *, versions_root: Path,
                 # current 须指向该 fact_key 观察时间最新的版本。同一
                 # observed_at 可能并列多个版本（证据摘录变化产生新版本，
                 # 金额不变）——指向任一并列最新版本均合法
-                max_obs = max((x.get("observed_at") or 0
-                               for x in versions.values()
-                               if x.get("fact_key") == fk), default=None)
+                max_obs = latest_observed.get(fk)
                 if max_obs is not None \
                         and (v.get("observed_at") or 0) < max_obs:
                     errors.append(f"current 未指向最新版本: {fk} → {vid} "
