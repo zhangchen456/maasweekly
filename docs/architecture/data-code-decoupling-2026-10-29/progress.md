@@ -4,7 +4,7 @@
 
 - 用户授权：现有服务器 PostgreSQL；明确暂不使用对象存储。
 - 原文目标：服务器 `/srv/maasweekly/shared/data-store/blobs`，独立 filesystem CAS。
-- 本地：PG17 隔离 socket，9项专项通过；真实192057文件影子导入与原文复制演练完成。
+- 本地：PG17 隔离 socket，14项数据库专项、5项传输专项通过；真实192057文件影子导入与原文复制演练完成。
 - 服务器：已有PG18 main。新增独立 maas_data 数据库、maasdata peer账号（4连接），blobs/backups/reports目录0700；原站点与调度未修改。
 - JSONB 不支持历史NUL字符，已增加 payload_json 无损表示，并覆盖NUL/孤立surrogate恢复与数据库篡改测试。
 - 备份脚本已编写，尚未安装调度；本地备份不能当作异地备份，最终生产切换前需确定异地恢复副本。
@@ -12,3 +12,9 @@
 - 下一步：服务器影子数据校验；独立数据发布与网页读取尚未实施，现有 writer/发布不变。
 
 原有成本指南/favicon/研究材料仍保留，不属于本轮新实现。
+
+## 独立数据候选
+
+提交dff5b929d3的export-database-data.py已实际运行：PostgreSQL直读→公开七集合→文件/版本校验→候选审计，约21.28秒；baselineByteParity=true，与当前已发布七个业务文件逐字节一致，未激活。见database-candidate.json。
+
+Linux服务器影子导入尚在执行；网页SSR、独立数据激活、writer/调度切换尚未实施。不能把数据库候选完成宣称为整个解耦完成。
