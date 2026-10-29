@@ -75,3 +75,5 @@ pg_dump→空库→空目录恢复通过：192057文件/310270867逻辑字节；
 数据库直读第一次 canonical 对账发现仅 status.priceStreams 顺序不同；补 source_order 元数据后 datasetVersion一致。进一步文件bytes对账发现嵌套JSON对象键序仍导致4个文件hash不同，未激活此候选。现改为JSONB查询表示+同事务有序JSON表示，reader禁止旧库未补齐时导出；全量backfill已完成，正在做严格7文件bytes+内存复核。
 
 PG专项已扩至14项（含端到端固定样本、不可达历史事实证据时间、源顺序、有界解码键状态），传输4项、标准输入6项、旧导出20项均通过。影子数据包与代码/config哈希已上传；开始限额服务器导入session待记录（root命令不切换应用）。
+
+基础代码已提交 dff5b929d3（分支codex/data-code-decoupling-20261029），原有站点修改未提交。新提交SHA运行完整独立CLI成功：baselineByteParity=true，21.28s，子进程峰1404MiB（Mac；不代替Linux预算）。候选未激活。服务器影子导入session98656仍运行，unpack已加内存/CPU限额。后续需在独立工作树实施C网页运行，避免改动现有未提交Layout/指南内容。
