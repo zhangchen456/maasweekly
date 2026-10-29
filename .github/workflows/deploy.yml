@@ -59,7 +59,7 @@ jobs:
     secrets: inherit
   import-weekly:
     needs: [changes, deploy]
-    if: needs.changes.outputs.import_weekly == 'true'
+    if: always() && needs.changes.outputs.import_weekly == 'true' && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped')
     uses: ./.github/workflows/weekly-update.yml
     with:
       mode: import

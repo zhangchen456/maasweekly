@@ -30,7 +30,7 @@ class WorkflowGraph(unittest.TestCase):
         jobs=workflow('deploy')['jobs']
         self.assertEqual(jobs['import-weekly']['needs'],['changes','deploy'])
         self.assertEqual(jobs['import-weekly']['with']['mode'],'import')
-        self.assertEqual(policy.classify(['data/weekly/2026-10-01.md']),{'deploy':True,'importWeekly':True})
+        self.assertEqual(policy.classify(['data/weekly/2026-10-01.md']),{'deploy':False,'importWeekly':True})
     def test_code_upload_identity_comes_from_fixed_commit(self):
         text=(BASE/'.github/workflows/release-deploy.yml').read_text()
         self.assertIn('rl_${CANDIDATE_SHA:0:10}_000000000000',text)

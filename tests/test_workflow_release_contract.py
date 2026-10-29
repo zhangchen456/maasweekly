@@ -29,6 +29,7 @@ class IndependentPublicationTests(unittest.TestCase):
  def test_weekly_import_follows_successful_code_deployment(self):
   jobs=doc('deploy.yml')['jobs'];self.assertEqual(jobs['import-weekly']['needs'],['changes','deploy'])
   self.assertEqual(jobs['import-weekly']['with']['mode'],'import')
+  self.assertIn("needs.deploy.result == 'skipped'",jobs['import-weekly']['if'])
  def test_server_keeps_data_visibility_atomic_and_requires_exact_old_pointer(self):
   source=(BASE/'pipeline/data_publication.py').read_text()
   self.assertIn('publication compare-and-swap failed',source)

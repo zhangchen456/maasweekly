@@ -10,6 +10,8 @@ import subprocess
 def classify(paths: list[str]) -> dict:
     weekly = any(p.startswith('data/weekly/') and p.endswith('.md') for p in paths)
     def runtime(p):
+        if p.startswith('data/weekly/') and p.endswith('.md'):
+            return False
         if p.startswith(('data/', 'site/src/content/')):
             return True
         if p.startswith(('docs/', 'research/')) or p.endswith('.md'):
