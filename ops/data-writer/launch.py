@@ -71,6 +71,8 @@ def main():
             time.sleep(2)
         else:raise ValueError('runtime has not accepted the published data')
         print(json.dumps({'status':'published','datasetVersion':expected,'codeDeployment':False,'gitCommit':False}),flush=True)
+        if 'pricing_all_failed' in receipt.get('warnings',[]):
+            raise RuntimeError('other data published using previous prices; all live pricing sources failed')
 if __name__=='__main__':
     try:main()
     except Exception as error:
