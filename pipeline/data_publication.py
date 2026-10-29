@@ -13,6 +13,7 @@ from pathlib import Path
 import re
 import shutil
 import tempfile
+import uuid
 
 from public_export.validator import validate_release_files
 from public_export.retention import checked_references
@@ -128,9 +129,11 @@ def activate(connection, candidate, root, expected_hash, *, allow_rollback=False
                 old = json.loads((target / 'manifest.json').read_bytes())
                 if old['files'] != manifest['files'] or validate_release_files(root, old): raise ValueError('immutable release conflict')
             else:
-                staging = Path(tempfile.mkdtemp(prefix='.candidate-', dir=releases))
+                staging = releases / ('.candidate-' + uuid.uuid4().hex)
+                # mkdir inherits the reader group and setgid from releases.
+                # chmod by a non-member owner would clear that inherited bit.
+                staging.mkdir(mode=0o750)
                 try:
-                    staging.chmod(0o2750)
                     for entry in manifest['files']:
                         name = Path(entry['path']).name
                         source = no_links(candidate / entry['path'])

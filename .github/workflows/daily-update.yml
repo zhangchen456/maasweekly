@@ -1,246 +1,43 @@
 name: 每日信源抓取与站点更新
-
-# 每天北京时间凌晨 05:00（UTC 21:00 前一日）抓取全部信源，产出 diff，
-# 同步到站点数据源并构建部署到 aliyun-099（daily.maas.click，旧域名 301 跳转）。
-# 也支持手动触发。
 on:
   schedule:
-    - cron: '0 21 * * *'  # UTC 21:00（前一日）= 北京时间 05:00
+    - cron: '0 21 * * *'
   workflow_dispatch:
     inputs:
       skip_fetch:
-        description: '跳过抓取，仅重新构建站点'
+        description: '跳过抓取，从数据库重新发布数据'
         type: boolean
         default: false
-
 permissions:
-  contents: write
-  issues: write
-
+  contents: read
 jobs:
-  update-and-deploy:
+  data-update:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     concurrency:
       group: maas-data-write-main
       cancel-in-progress: false
       queue: max
-    outputs:
-      sha: ${{ steps.datacommit.outputs.sha }}
-      pricing: ${{ steps.fetch_prices.outcome }}
     steps:
-      - name: Set monitoring output directory
-        run: echo "MAAS_MONITOR_OUTPUT=$RUNNER_TEMP/monitor-stages" >> "$GITHUB_ENV"
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: main
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      # Python 依赖（始终装：build-release run-all-tests 的 test_price_archive
-      # 需要 bs4；skip_fetch=true 时抓取步骤的 pip install 被跳过，此处兜底）
-      - name: Install Python dependencies
-        run: pip install -c requirements.lock.txt -r requirements.txt
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: site/package-lock.json
-
-      # Chromium also serves isolated admin acceptance, including skip_fetch builds.
-      - name: Setup Playwright
-        run: |
-          pip install --quiet -c requirements.lock.txt playwright beautifulsoup4
-          python3 -m playwright install chromium --with-deps
-
-      # ---- 1. 抓取信源（可跳过）----
-      - name: Fetch sources & generate diff
-        if: ${{ !inputs.skip_fetch }}
-        run: python3 pipeline/scripts/fetch_sources.py
+          sparse-checkout: ops
+      - name: Configure fixed SSH destination
         env:
-          TZ: Asia/Shanghai
-
-      # ---- 2. 同步 diff 数据到站点（含 diff_clean 降噪/配对/分类）----
-      - name: Sync diff data to site
-        if: ${{ !inputs.skip_fetch }}
-        run: python3 scripts/monitor-record.py diff-sync
-
-      # ---- 2.2 八家厂商 API 价格结构化抓取（playwright；失败不阻塞，保留旧 ledger）----
-      # 必须在 llm-digest 之前：fetch-prices 产出当日 price_changes，llm-digest 消费它生成"今日要点"
-      # 退出码：0=全成功/部分成功（沿用降级） 2=全部来源失败（环境失效，末尾健康检查步骤会置红 run）
-      - name: Fetch model pricing
-        id: fetch_prices
-        if: ${{ !inputs.skip_fetch }}
+          DEPLOY_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
         run: |
-          pip install --quiet -c requirements.lock.txt beautifulsoup4
-          python3 pipeline/scripts/fetch-prices.py
-        env:
-          TZ: Asia/Shanghai
-        continue-on-error: true
-
-      # ---- 2.25 价格解析器离线回归（防厂商页改版导致的解析器退化）----
-      - name: Pricing extractors regression
-        if: ${{ !inputs.skip_fetch }}
-        run: |
-          pip install --quiet -c requirements.lock.txt beautifulsoup4
-          python3 tests/test_pricing_extractors.py
-
-      # ---- 2.3 LLM 提炼"今日要点"（消费 diff + price_changes；失败不阻塞，前端回退规则版预览）----
-      - name: LLM digest highlights
-        if: ${{ !inputs.skip_fetch }}
-        run: python3 scripts/monitor-record.py daily-summary
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+      - name: Collect, validate and publish independent data
         env:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
-          TZ: Asia/Shanghai
-        continue-on-error: true
-
-      # ---- 2.35 重跑 sync：把 llm-digest 产出的 highlights 聚合进 weekly-digest.json ----
-      # （首次 sync 在 highlights 生成之前跑，周归档会缺当日要点；此步幂等补齐）
-      - name: Re-sync with highlights
-        if: ${{ !inputs.skip_fetch }}
-        run: python3 scripts/monitor-record.py diff-sync
-
-      # ---- 2.4 OpenRouter 榜单数据抓取（CC BY 4.0；失败不阻塞，保留旧快照）----
-      - name: Fetch leaderboards data
-        id: fetch_leaderboards
-        if: ${{ !inputs.skip_fetch }}
-        run: python3 pipeline/scripts/fetch-leaderboards.py
-        env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          TZ: Asia/Shanghai
-        continue-on-error: true
-
-      # ---- 3. 抓取文章配图（可选，失败不阻塞）----
-      - name: Fetch article images
-        if: ${{ !inputs.skip_fetch }}
-        run: python3 site/scripts/fetch-images.py
-        continue-on-error: true
-
-      - name: Translate dynamic content to English
-        run: python3 scripts/monitor-record.py dynamic-translation
-        env:
           TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
-          TZ: Asia/Shanghai
-        continue-on-error: true
-
-      # ---- 4. 生成由数据驱动的 tracked 产物（§5.2：所有数据驱动的 tracked 文件
-      #      必须在 commit 前生成并提交，否则 build-release.sh [3/6] tracked diff
-      #      gate 拒载。含 public projection + site prebuild 产物）----
-      # 4a. site prebuild 产物（maas-skill/；价格组件由 Astro 构建）
-      - name: Prebuild site artifacts
-        id: prebuild
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          SKIP_FETCH: ${{ inputs.skip_fetch }}
         run: |
-          python3 scripts/monitor-record.py site-projection
-          python3 site/scripts/build-skill-package.py
-      # 4b. 公开数据投影（skip_fetch=true 时也跑——把仓库已有新数据重新生成
-      # projection，用于故障恢复）
-      - name: Export public data
-        run: python3 scripts/monitor-record.py public-export
-      - name: Validate public data
-        run: python3 scripts/monitor-record.py public-validation # fixed export-public-data.py --check
-
-      # ---- 5. 先提交数据（§5.2：数据先入库，构建/发布从精确 SHA 进行）----
-      # commit 包含原始抓取数据 + public projection（data/public/v1/ 属 data/）。
-      # skip_fetch=true 时仍执行：仅提交 projection 变化用于恢复发布。
-      - name: Commit new data + public projection
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ site/src/data/ site/public/maas-skill/ site/public/logos/
-          if [ "${{ inputs.skip_fetch }}" = "true" ]; then
-            bash scripts/commit-workflow-data.sh "data: 重建 public projection $(date +'%Y-%m-%d')"
-          else
-            bash scripts/commit-workflow-data.sh "data: 每日信源抓取 $(date +'%Y-%m-%d')"
-          fi
-        id: datacommit
-
-      - name: Collect sanitized task records
-        if: always()
-        run: python3 scripts/monitor-collect.py --stages "$MAAS_MONITOR_OUTPUT" --output "$RUNNER_TEMP/monitor-inbox"
-      - name: Archive sanitized task records
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: monitor-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/monitor-inbox/
-          retention-days: 14
-          if-no-files-found: warn
-
-      - name: Preserve interrupted pipeline inputs
-        if: always() && hashFiles('data/pipeline-pending.json') != ''
-        run: python3 scripts/architecture-recovery-bundle.py --output "$RUNNER_TEMP/pipeline-recovery.tar.gz"
-      - name: Upload interrupted pipeline recovery
-        if: always() && hashFiles('data/pipeline-pending.json') != ''
-        uses: actions/upload-artifact@v4
-        with:
-          name: pipeline-recovery-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/pipeline-recovery.tar.gz
-          retention-days: 14
-          if-no-files-found: error
-
-  deploy:
-    name: Deploy release
-    needs: update-and-deploy
-    uses: ./.github/workflows/release-deploy.yml
-    with:
-      commit: ${{ needs.update-and-deploy.outputs.sha }}
-    secrets: inherit
-    permissions:
-      contents: read
-  finish:
-    needs: [update-and-deploy, deploy]
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      # ---- 8. 运行健康检查（最后一步：数据已提交部署，此时才把坏消息置红）----
-      # fetch-prices 的 continue-on-error 会吞掉失败让 run 保持绿色；
-      # 全部来源抓取失败（退出码 2）意味着运行环境完全失效（如 Playwright 未装、
-      # 断网），不能与「部分失败沿用」同等静默。放在最后：既不阻塞当日的
-      # 构建/部署/数据提交，又能让失败在 run 列表里可见（红色 + 邮件通知）。
-      - name: Run health check
-        if: ${{ !inputs.skip_fetch && needs.update-and-deploy.outputs.pricing == 'failure' }}
-        run: |
-          echo "✗ 价格抓取全部来源失败（退出码 2）——运行环境疑似完全失效"
-          echo "（Playwright 未安装 / 网络不可达 / registry 全部失效），请检查："
-          echo "  1. runner 的 playwright/chromium 安装日志（Setup Playwright 步骤）"
-          echo "  2. fetch_prices 输出中的 RUN-STATUS 行与各来源失败原因"
-          echo "  3. 上游网站是否全部不可达（本机网络出口）"
-          exit 1
-
-      - name: Check upstream workflow failures
-        if: ${{ needs.update-and-deploy.result == 'failure' || needs.deploy.result == 'failure' }}
-        run: exit 1
-
-      # ---- 9. 失败通知：任何前置步骤失败时创建/追加 GitHub Issue（零外部依赖）----
-      - name: Notify failure via GitHub Issue
-        if: ${{ failure() && !inputs.skip_fetch }}
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          FAILED="update=${{ needs.update-and-deploy.result }} deploy=${{ needs.deploy.result }} pricing=${{ needs.update-and-deploy.outputs.pricing }}"
-          EXISTING=$(gh issue list --repo "$GITHUB_REPOSITORY" --search "CI 失败 daily-update in:title" --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
-          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          BODY="## daily-update CI 失败
-
-          **时间**: $(date -u +'%Y-%m-%dT%H:%M:%SZ')
-          **Run**: ${RUN_URL}
-          **失败步骤**: ${FAILED:-未知}
-
-          ### 常见根因
-          1. 新 vendor 进榜但 platform-logos.json 未注册 → 需补 logo（或检查 fetch-leaderboards 的自动补全日志）
-          2. 手动榜单 snapshot_date 过期 → 需手动更新数据
-          3. fetch_prices 全部来源失败 → 检查 Playwright/网络
-
-          修复后关闭此 Issue。"
-          if [ -n "$EXISTING" ]; then
-            printf '%s\n' "$BODY" > "$RUNNER_TEMP/failure-body.md"
-            gh issue comment "$EXISTING" --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/failure-body.md"
-          else
-            printf '%s\n' "$BODY" > "$RUNNER_TEMP/failure-body.md"
-            gh issue create --repo "$GITHUB_REPOSITORY" --title "CI 失败: daily-update $(date +'%Y-%m-%d')" --body-file "$RUNNER_TEMP/failure-body.md"
-          fi
+          MODE=update
+          if [ "$SKIP_FETCH" = true ]; then MODE=rebuild; fi
+          python3 ops/request-data-update.py --mode "$MODE"

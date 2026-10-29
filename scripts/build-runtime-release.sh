@@ -19,6 +19,19 @@ mkdir -p "$output/agent-api" "$output/site" "$output/metadata" "$output/scripts"
 cp -R services/agent-api/dist services/agent-api/package.json services/agent-api/package-lock.json "$output/agent-api/"
 cp -R site/dist site/package.json site/package-lock.json "$output/site/"
 cp scripts/verify-runtime-site.mjs "$output/scripts/"
+python3 - "$output" "$commit" <<'TOOLING'
+from pathlib import Path
+import shutil,sys
+root=Path.cwd();out=Path(sys.argv[1])/'tooling'
+for folder in ['pipeline','config','data/model-registry','site/scripts','ops/data-writer']:
+ for p in (root/folder).rglob('*'):
+  if p.is_file() and '__pycache__' not in p.parts and p.suffix in ['.py','.json','.sql','.sh']:
+   target=out/p.relative_to(root);target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,target)
+for name in ['requirements.lock.txt','ops/backup-data-store.sh']:
+ target=out/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(root/name,target)
+(out/'code-commit').write_text(sys.argv[2]+'\n')
+(out/'site/src/data').mkdir(parents=True,exist_ok=True);(out/'site/src/content').mkdir(parents=True,exist_ok=True)
+TOOLING
 (cd "$output/agent-api" && npm ci --omit=dev --prefer-offline --silent)
 (cd "$output/site" && npm ci --omit=dev --prefer-offline --silent)
 python3 - "$output" "$commit" <<'MANIFEST'
@@ -30,7 +43,7 @@ for p in sorted(root.rglob('*')):
         if not p.resolve().is_relative_to(root.resolve()):raise ValueError('package symlink escape')
         files.append({'path':str(p.relative_to(root)),'symlink':str(p.readlink())})
     elif p.is_file():
-        files.append({'path':str(p.relative_to(root)),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
+        files.append({'path':str(p.relative_to(root)),'bytes':p.stat().st_size,'executable':bool(p.stat().st_mode&0o111),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
 manifest={'format':'maas-runtime-candidate-v1','codeCommit':sys.argv[2],'pageFormatVersion':1,
           'activated':False,'productionCompatible':False,'requires':'isolated Linux SSR/permission/blue-green/rollback acceptance before production activation',
           'dataIncluded':False,'files':files,'totalBytes':sum(f.get('bytes',0) for f in files)}

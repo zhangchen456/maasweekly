@@ -135,12 +135,34 @@ def recover_pending():
     tmp=ROOT/'.runtime-current';tmp.unlink(missing_ok=True);tmp.symlink_to((backup/'current').read_text());os.replace(tmp,ROOT/'current')
     run('nginx','-t');run('systemctl','reload','nginx');pending.unlink()
 
+def install_package(rid):
+    if not re.fullmatch('rl_[a-f0-9]{10}_000000000000',rid):raise ValueError('invalid runtime upload ID')
+    import importlib.util,pwd
+    module=Path(__file__).with_name('runtime-package.py')
+    spec=importlib.util.spec_from_file_location('runtime_package',module);package_module=importlib.util.module_from_spec(spec);spec.loader.exec_module(package_module)
+    package,manifest=package_module.install(ROOT/'incoming'/rid,ROOT/'runtime')
+    if rid!='rl_'+manifest['codeCommit'][:10]+'_000000000000':raise ValueError('upload/code mismatch')
+    requirements=package/'tooling/requirements.lock.txt'
+    if requirements.read_bytes()!=(ROOT/'runtime/build-tools/writer/requirements.lock.txt').read_bytes():raise ValueError('writer dependency image must be rebuilt before this code release')
+    (package/'tooling/site/src/data').mkdir(parents=True,exist_ok=True);(package/'tooling/site/src/content').mkdir(parents=True,exist_ok=True)
+    executables={f['path'] for f in manifest['files'] if f.get('executable')}
+    reader=pwd.getpwnam('maasagent').pw_gid;writer=pwd.getpwnam('maasdata').pw_gid
+    for item in [package,*package.rglob('*')]:
+        is_tooling=item==package/'tooling' or (package/'tooling') in item.parents
+        os.chown(item,0,writer if is_tooling else reader,follow_symlinks=False)
+        if not item.is_symlink():item.chmod(0o750 if item.is_dir() or str(item.relative_to(package)) in executables else 0o640)
+    package.chmod(0o755)
+    run('runuser','-u','maasdata','--','env','MAAS_SHADOW_DSN=dbname=maas_data','python3',str(package/'tooling/pipeline/scripts/shadow-data.py'),'migrate')
+    env={**os.environ,'PGHOST':'/var/run/postgresql','PGDATABASE':'maas_data','PGUSER':'maasagent'}
+    subprocess.run(['runuser','-u','maasagent','--','node',str(package/'scripts/verify-runtime-site.mjs'),'--package-root',str(package),'--data-root',str(SHARED/'public-data/v1')],env=env,check=True)
+    stage(manifest['codeCommit']);return activate(manifest['codeCommit'])
+
 def main():
     if os.geteuid()!=0:raise ValueError('root required')
-    p=argparse.ArgumentParser();p.add_argument('action',choices=['stage','activate','rollback','status']);p.add_argument('code',nargs='?');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('action',choices=['stage','activate','rollback','status','install']);p.add_argument('code',nargs='?');a=p.parse_args()
     if a.action=='status':print((SHARED/'runtime.json').read_text());return
     with (ROOT/'locks/release.lock').open('a+b') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
         recover_pending()
-        print(json.dumps(stage(a.code) if a.action=='stage' else rollback() if a.action=='rollback' else activate(a.code)))
+        print(json.dumps(install_package(a.code) if a.action=='install' else stage(a.code) if a.action=='stage' else rollback() if a.action=='rollback' else activate(a.code)))
 if __name__=='__main__':main()

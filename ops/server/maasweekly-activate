@@ -728,6 +728,15 @@ if [ -f "$ROOT/shared/runtime-mode" ]; then
   esac
 fi
 case "$cmd" in
+  data-update)
+    [ $# -eq 0 ] || die "data-update takes no arguments" 2
+    exec /bin/bash /usr/local/lib/maasweekly/data-job.sh
+    ;;
+  runtime-activate)
+    [ $# -eq 1 ] || die "runtime-activate requires one upload ID" 2
+    [[ "$1" =~ ^rl_[0-9a-f]{10}_000000000000$ ]] || die "invalid runtime ID" 2
+    exec /usr/bin/python3 /usr/local/lib/maasweekly/runtime-control.py install "$1"
+    ;;
   activate)
     [ $# -eq 1 ] || die "用法: activate <release-id>（退出 2）" 2
     rid="$1"; validate_rid "$rid"
