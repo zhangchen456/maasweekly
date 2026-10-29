@@ -257,6 +257,26 @@ with patch('pricing.runner.provider_for',return_value=Provider()): m.main()
             time.sleep(.001)
         latest = next(iter(read(self.root, 'data/normalized/source-runtime.json').values()))
         self.assertEqual(latest['outcome'], 'unchanged'); self.assertEqual(latest['lastSuccessAt'], previous)
+    def test_isolated_pinned_baseline_still_captures_finish_and_rejects_corruption(self):
+        import input_snapshot
+        self.fx.add_obs();initial=capture(self.root,'pinned-original')
+        from data_store import write
+        with patch.dict(os.environ,{'MAAS_PIPELINE_PINNED_BASELINE':'1'}),patch('run_protocol.capture',wraps=input_snapshot.capture) as captures:
+            with RunJournal(self.root,'test','pinned-stage') as run:
+                self.assertEqual(captures.call_count,0)
+                self.assertEqual(run.data['baselinePointer']['inputVersion'],initial)
+                write(self.root,'data/normalized/pinned-test.json',{'new':'committed'})
+                run.finish('success')
+            self.assertEqual(captures.call_count,1)
+        view=load_view(self.root);self.assertNotEqual(view.version,initial)
+        self.assertEqual(json.loads(view.path('data/normalized/pinned-test.json').read_text()),{'new':'committed'})
+        manifest=self.root/'data/input-manifests'/(view.version+'.json')
+        value=json.loads(manifest.read_text());value['files'].pop('data/normalized/pinned-test.json');manifest.write_text(json.dumps(value))
+        with patch.dict(os.environ,{'MAAS_PIPELINE_PINNED_BASELINE':'1'}):
+            with self.assertRaisesRegex(ValueError,'manifest integrity'):
+                with RunJournal(self.root,'test','corrupt-pinned-stage'):pass
+        self.assertFalse((self.root/'data/pipeline-pending.json').exists())
+
     def test_price_cli_new_http_same_prices_is_unchanged_with_new_observation(self):
         import time
         shutil.copytree(BASE / 'pipeline/config', self.root / 'pipeline/config', dirs_exist_ok=True)
