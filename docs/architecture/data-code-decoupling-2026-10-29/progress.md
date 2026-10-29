@@ -1,6 +1,6 @@
 # 实施状态
 
-当前阶段：A/B，未切换现有数据 writer 和生产读取。
+当前阶段：A/B迁移恢复通过，生产读取已切换C运行时；D独立writer/工作流已实现，完整服务器验收进行中。本文下方保留早期迁移记录，当前状态以 [运行记录](../data-code-runtime-2026-10-29.md) 为准。
 
 - 用户授权：现有服务器 PostgreSQL；明确暂不使用对象存储。
 - 原文目标：服务器 `/srv/maasweekly/shared/data-store/blobs`，独立 filesystem CAS。

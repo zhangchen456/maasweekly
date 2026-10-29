@@ -34,7 +34,9 @@ def step(script,args=(),credentials=None,optional=False):
     env.update(credentials or {})
     print('stage',script,flush=True)
     result=subprocess.run([sys.executable,str(CODE/script),*args],cwd=CODE,env=env)
-    if result.returncode and not optional:raise RuntimeError('stage failed: '+script)
+    if result.returncode:
+        print('stage exit',script,result.returncode,flush=True)
+        if not optional:raise RuntimeError('stage failed: '+script)
     return result.returncode
 
 def initialize(connection,published,blobs):
@@ -61,6 +63,42 @@ def initialize(connection,published,blobs):
     for child in (destination/'data').iterdir():child.rename(data/child.name)
     (destination/'data').rmdir();destination.rmdir()
 
+def ingest(parent,code):
+    # Exit this process before exporting: Python retains large import heaps even
+    # after local variables are freed. Import+export must fit the same 1.5GiB cap.
+    if os.getuid()==0:raise ValueError('unprivileged writer required')
+    import psycopg2
+    from psycopg2.extras import Json
+    connection=psycopg2.connect(os.environ['MAAS_DATA_DSN']);blobs=FilesystemBlobStore(STORE/'blobs')
+    try:
+        version=capture(CODE,'database-writer-'+uuid.uuid4().hex)
+        raw_manifest=build_manifest(CODE,code);copied=copy_objects(CODE,raw_manifest,blobs)
+        if copied['failures']:raise ValueError('raw copy failed')
+        import_view(connection,CODE,blobs,source_commit=code,parent=parent if version!=parent else None)
+        with connection:
+            with connection.cursor() as cursor:
+                # Execution logs are audit history, not inputs: replaying an old
+                # observation must not change its committed business snapshot.
+                for pattern in ['data/pipeline-runs/*/*.json','data/price-runs/*/*.json']:
+                    for path in CODE.glob(pattern):
+                        raw=path.read_bytes();json.loads(raw)
+                        cursor.execute('INSERT INTO maas_data.writer_run_logs(logical_path,sha256,payload_json) VALUES(%s,%s,%s) ON CONFLICT(logical_path) DO UPDATE SET sha256=excluded.sha256,payload_json=excluded.payload_json,updated_at=now()', [str(path.relative_to(CODE)),hashlib.sha256(raw).hexdigest(),raw.decode()])
+                cursor.execute('INSERT INTO maas_data.input_raw_manifests(input_version,manifest) VALUES(%s,%s) ON CONFLICT DO NOTHING',[version,Json(raw_manifest)])
+                cursor.execute("INSERT INTO maas_data.writer_heads(name,input_version) VALUES('public',%s) ON CONFLICT(name) DO UPDATE SET input_version=excluded.input_version,updated_at=now()",[version])
+        durable_write(WORK/'ingestion.json',(json.dumps({'inputVersion':version})+'\n').encode())
+    finally:connection.close()
+
+def prepare_candidate(version,code,mode,expected_hash,warnings):
+    run_id=uuid.uuid4().hex;candidate=PUBLIC.parent/'candidates'/run_id
+    report=WORK/'candidate-report.json'
+    args=['--input-version',version,'--code-commit',code,'--config-root',str(CODE),'--blob-root',str(STORE/'blobs'),'--candidate-dir',str(candidate),'--report',str(report)]
+    if mode=='validate':args+=['--expected-manifest',str(PUBLIC/'manifest.json')]
+    step('pipeline/scripts/export-database-data.py',args)
+    if hashlib.sha256((PUBLIC/'publication.json').read_bytes()).hexdigest()!=expected_hash:raise ValueError('publication changed during collection')
+    receipt={'candidate':str(candidate),'inputVersion':version,'codeCommit':code,'expectedPublicationSha256':expected_hash,'warnings':warnings}
+    durable_write(WORK/'candidate.json',(json.dumps(receipt)+'\n').encode())
+    print(json.dumps({'status':'candidate_ready','inputVersion':version,'mode':mode}),flush=True)
+
 def main():
     os.umask(0o027)
     incoming=request(sys.stdin.buffer.read(1048577));mode=incoming['mode'];secrets=incoming.get('secrets',{})
@@ -84,6 +122,11 @@ def main():
         with connection.cursor() as cursor:
             cursor.execute("SELECT input_version FROM maas_data.writer_heads WHERE name='public'");head=cursor.fetchone()
         parent=head[0] if head else published['site']['inputVersion']
+        connection.commit()
+        # Validation reads the already committed database head; it neither
+        # rewrites the cache nor repeats a completed import/restore drill.
+        if mode=='validate':
+            prepare_candidate(parent,code,mode,expected_hash,[]);return
         initialize(connection,{**published,'site':{**published['site'],'inputVersion':parent}},blobs)
         if mode=='prepare':print(json.dumps({'status':'cache_ready'}));return
         warnings=[]
@@ -110,31 +153,13 @@ def main():
             value={'sourceCommit':source,'drafts':[{'date':d['date'],'sha256':hashlib.sha256(d['markdown'].encode()).hexdigest()} for d in incoming['drafts']]}
             if path.exists() and json.loads(path.read_text())!=value:raise ValueError('draft source identity conflict')
             durable_write(path,(json.dumps(value)+'\n').encode())
-        version=capture(CODE,'database-writer-'+uuid.uuid4().hex)
-        raw=build_manifest(CODE,code);copied=copy_objects(CODE,raw,blobs)
-        if copied['failures']:raise ValueError('raw copy failed')
-        import_view(connection,CODE,blobs,source_commit=code,parent=parent if version!=parent else None)
-        with connection:
-            with connection.cursor() as cursor:
-                # Execution logs are audit history, not inputs: replaying an old
-                # observation must not change its committed business snapshot.
-                for pattern in ['data/pipeline-runs/*/*.json','data/price-runs/*/*.json']:
-                    for path in CODE.glob(pattern):
-                        raw=path.read_bytes();json.loads(raw)
-                        cursor.execute('INSERT INTO maas_data.writer_run_logs(logical_path,sha256,payload_json) VALUES(%s,%s,%s) ON CONFLICT(logical_path) DO UPDATE SET sha256=excluded.sha256,payload_json=excluded.payload_json,updated_at=now()', [str(path.relative_to(CODE)),hashlib.sha256(raw).hexdigest(),raw.decode()])
-                cursor.execute('INSERT INTO maas_data.input_raw_manifests(input_version,manifest) VALUES(%s,%s) ON CONFLICT DO NOTHING',[version,Json(raw)])
-                cursor.execute("INSERT INTO maas_data.writer_heads(name,input_version) VALUES('public',%s) ON CONFLICT(name) DO UPDATE SET input_version=excluded.input_version,updated_at=now()",[version])
-        run_id=uuid.uuid4().hex;candidate=PUBLIC.parent/'candidates'/run_id
-        report=WORK/'candidate-report.json'
-        args=['--input-version',version,'--code-commit',code,'--config-root',str(CODE),'--blob-root',str(STORE/'blobs'),'--candidate-dir',str(candidate),'--report',str(report)]
-        if mode=='validate':args+=['--expected-manifest',str(PUBLIC/'manifest.json')]
-        step('pipeline/scripts/export-database-data.py',args)
-        if hashlib.sha256((PUBLIC/'publication.json').read_bytes()).hexdigest()!=expected_hash:raise ValueError('publication changed during collection')
-        receipt={'candidate':str(candidate),'inputVersion':version,'codeCommit':code,'expectedPublicationSha256':expected_hash,'warnings':warnings}
-        durable_write(WORK/'candidate.json',(json.dumps(receipt)+'\n').encode())
-        print(json.dumps({'status':'candidate_ready','inputVersion':version,'mode':mode}),flush=True)
+        step('ops/data-writer/run.py',['--ingest',parent,code])
+        version=json.loads((WORK/'ingestion.json').read_text())['inputVersion']
+        prepare_candidate(version,code,mode,expected_hash,warnings)
     finally:connection.close()
 if __name__=='__main__':
-    try:main()
+    try:
+        if len(sys.argv)==4 and sys.argv[1]=='--ingest':ingest(sys.argv[2],sys.argv[3])
+        else:main()
     except Exception as error:
         print('data writer failed: '+type(error).__name__,file=sys.stderr);sys.exit(2)
