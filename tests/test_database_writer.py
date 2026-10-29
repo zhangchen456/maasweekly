@@ -1,6 +1,6 @@
 import importlib.util,json,os,sys,unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch,MagicMock
 BASE=Path(__file__).resolve().parents[1];sys.path.insert(0,str(BASE/'pipeline'))
 spec=importlib.util.spec_from_file_location('database_writer',BASE/'ops/data-writer/run.py');writer=importlib.util.module_from_spec(spec);spec.loader.exec_module(writer)
 class WriterEnvelopeTests(unittest.TestCase):
@@ -17,6 +17,17 @@ class WriterEnvelopeTests(unittest.TestCase):
   mutable=fixture.root/'data/normalized/source-streams.json';original=mutable.read_bytes();mutable.unlink()
   with patch.object(writer,'CODE',fixture.root),patch.object(writer,'WORK',fixture.root):writer.initialize(None,{'site':{'inputVersion':version}},None)
   self.assertEqual(mutable.read_bytes(),original)
+ def test_rebuild_exports_committed_head_without_mutating_cache(self):
+  import tempfile,io
+  with tempfile.TemporaryDirectory() as folder:
+   public=Path(folder)/'v1';public.mkdir();(public/'publication.json').write_text(json.dumps({'site':{'inputVersion':'published'}}))
+   connection=MagicMock();connection.cursor.return_value.__enter__.return_value.fetchone.return_value=('committed-head',)
+   stdin=MagicMock();stdin.buffer=io.BytesIO(b'{"mode":"rebuild"}')
+   with patch.object(writer,'PUBLIC',public),patch.object(writer,'STORE',Path(folder)),patch.object(writer.os,'getuid',return_value=993),patch.dict(os.environ,{'MAAS_CODE_COMMIT':'a'*40,'MAAS_DATA_DSN':'test'}),patch.object(writer.sys,'stdin',stdin),patch('psycopg2.connect',return_value=connection),patch.object(writer,'initialize') as initialize,patch.object(writer,'step') as step,patch.object(writer,'prepare_candidate') as prepare:
+    writer.main()
+   initialize.assert_not_called();step.assert_not_called()
+   self.assertEqual(prepare.call_args.args[:3],('committed-head','a'*40,'rebuild'))
+   connection.close.assert_called_once()
  def test_browser_does_not_inherit_provider_credentials(self):
   with patch.dict(os.environ,{'LLM_API_KEY':'secret','TRANSLATION_API_KEY':'secret2','OPENROUTER_API_KEY':'secret3'}),patch.object(writer.subprocess,'run') as run:
    run.return_value.returncode=0;writer.step('pipeline/scripts/fetch_sources.py')
