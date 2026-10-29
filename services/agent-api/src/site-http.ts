@@ -1,4 +1,5 @@
 /** Bound the rendered response; cache only public GETs under their data version. */
+import {createHash} from 'node:crypto';
 import { IncomingMessage, type ServerResponse } from 'node:http';
 import { Socket } from 'node:net';
 import { Writable } from 'node:stream';
@@ -72,7 +73,9 @@ export function createSiteHandler(holder:DatasetHolder,runtime:SiteRuntime,handl
         // Query strings are used by client scripts; templates depend only on the pathname.
         const result=await render(parsed.pathname);
         if(result.status>=500)throw new Error('render unavailable');
-        res.writeHead(result.status,{...result.headers,'Cache-Control':'no-cache','X-Content-Type-Options':'nosniff',
+        const etag='\"'+createHash('sha256').update(result.body).digest('hex')+'\"';
+        if(result.status===200&&(req.headers['if-none-match']??'').split(',').map(s=>s.trim()).some(s=>s===etag||s==='W/'+etag||s==='*')){res.writeHead(304,{'ETag':etag,'Cache-Control':'no-cache'});res.end();return;}
+        res.writeHead(result.status,{...result.headers,'ETag':etag,'Cache-Control':'no-cache','X-Content-Type-Options':'nosniff',
           'Content-Length':result.body.length});
         res.end(req.method==='HEAD'?undefined:result.body);
       }catch{send(503,'Page temporarily unavailable');}

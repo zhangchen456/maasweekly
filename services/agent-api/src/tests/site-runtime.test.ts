@@ -53,3 +53,16 @@ test('oversized page output fails instead of returning partial or cached HTML',a
  const handler:AstroHandler=async(_req,res)=>{res.writeHead(200);res.end(Buffer.alloc(8*1024*1024+1));};
  await assert.rejects(capturePage(handler,'/','http://localhost'));
 });
+
+test('SSR public responses support stable ETag and weak conditional GET',async()=>{
+ const http=await import('node:http');const {createSiteHandler}=await import('../site-http.js');
+ const {root,fx}=fixture(),rt=runtime();const holder=new DatasetHolder(root,{publicationFile:'publication.json',prepare:d=>rt.prepare(d)});
+ let server:ReturnType<typeof http.createServer>|undefined;
+ try{
+  fx.writeRelease(ds(1),{changes:[{id:'obs_'+'a'.repeat(64),observationDate:'2026-09-10'}]});bind(root,1);assert.equal(await holder.reloadAsync(),'changed');
+  const site=createSiteHandler(holder,rt,async(_req,res)=>{res.writeHead(200,{'Content-Type':'application/rss+xml'});res.end('<rss>stable</rss>');},'http://localhost');
+  server=http.createServer(site.handle);await new Promise<void>(resolve=>server!.listen(0,'127.0.0.1',resolve));const address=server.address() as {port:number};
+  const url='http://127.0.0.1:'+address.port+'/feed.xml';const first=await fetch(url),etag=first.headers.get('etag');assert.equal(first.status,200);assert.ok(etag);await first.text();
+  const cached=await fetch(url,{headers:{'If-None-Match':'W/'+etag}});assert.equal(cached.status,304);assert.equal(await cached.text(),'');
+ }finally{server?.closeAllConnections();if(server)await new Promise<void>(resolve=>server!.close(()=>resolve()));holder.close();rmSync(root,{recursive:true,force:true});}
+});
