@@ -5,6 +5,8 @@ semantic snapshot identities remain in archival metadata and migration manifests
 """
 from __future__ import annotations
 import hashlib
+import errno
+import stat
 from collections import OrderedDict
 import os
 import re
@@ -32,6 +34,39 @@ def safe_path(root: Path, relative: str) -> Path:
     return current
 
 
+def read_contained_file(root: Path, relative: str) -> bytes:
+    """Read through directory descriptors: no ancestor or leaf link is followed.
+
+    Keep safe_path for path-returning/writing callers. This reader checks the
+    boundary at open time and avoids repeating recursive pathname resolution.
+    """
+    rel = Path(relative)
+    if rel.is_absolute() or '..' in rel.parts or not rel.parts:
+        raise BlobIntegrityError('file path escape')
+    if not all(hasattr(os, name) for name in ['O_DIRECTORY', 'O_NOFOLLOW', 'O_NONBLOCK']):
+        return safe_path(root, relative).read_bytes()
+    directory = None
+    try:
+        directory = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        for part in rel.parts[:-1]:
+            child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=directory)
+            os.close(directory); directory = child
+        file = os.open(rel.parts[-1], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=directory)
+        try:
+            if not stat.S_ISREG(os.fstat(file).st_mode):
+                raise BlobIntegrityError('non-regular input file')
+            with os.fdopen(file, 'rb', closefd=False) as stream:
+                return stream.read()
+        finally:
+            os.close(file)
+    except OSError as error:
+        if error.errno in [errno.ELOOP, errno.ENOTDIR]:
+            raise BlobIntegrityError('input symlink or non-directory rejected') from None
+        raise
+    finally:
+        if directory is not None: os.close(directory)
+
+
 class BlobStore(Protocol):
     def putIfAbsent(self, sha256: str, raw: bytes) -> bool: ...
     def get(self, sha256: str, *, expected_bytes: int | None = None) -> bytes: ...
@@ -46,7 +81,8 @@ class FilesystemBlobStore:
         return safe_path(self.root, f'sha256/{sha256[:2]}/{sha256}')
 
     def get(self, sha256: str, *, expected_bytes: int | None = None) -> bytes:
-        raw = self.path(sha256).read_bytes()
+        if not re.fullmatch('[0-9a-f]{64}', sha256): raise BlobIntegrityError('invalid blob hash')
+        raw = read_contained_file(self.root, f'sha256/{sha256[:2]}/{sha256}')
         if checksum(raw) != sha256: raise BlobIntegrityError('blob checksum mismatch')
         if expected_bytes is not None and len(raw) != expected_bytes: raise BlobIntegrityError('blob byte count mismatch')
         return raw
