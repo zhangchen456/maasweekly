@@ -10,6 +10,11 @@ from input_snapshot import capture,assert_no_pending,load_view,restore_mutable
 from storage_migration import restore,build_manifest,copy_objects,validate_manifest
 from data_publication import durable_write
 ALLOWED={'LLM_API_KEY','TRANSLATION_API_KEY','OPENROUTER_API_KEY'}
+PINNED_STAGES={
+ 'pipeline/scripts/fetch_sources.py','pipeline/scripts/sync-diff-to-site.py',
+ 'pipeline/scripts/fetch-prices.py','pipeline/scripts/llm-digest.py',
+ 'pipeline/scripts/fetch-leaderboards.py','pipeline/scripts/translate-dynamic-en.py',
+}
 
 def request(raw):
     if len(raw)>1048576:raise ValueError('request too large')
@@ -32,6 +37,9 @@ def step(script,args=(),credentials=None,optional=False):
     # The browser stages never inherit the LLM/provider credentials.
     for key in ALLOWED:env.pop(key,None)
     env.update(credentials or {})
+    # Weekly draft injection is an out-of-protocol input change: its two import
+    # stages keep the ordinary full baseline capture. Only serialized stages opt in.
+    env['MAAS_PIPELINE_PINNED_BASELINE']='1' if script in PINNED_STAGES else '0'
     print('stage',script,flush=True)
     result=subprocess.run([sys.executable,str(CODE/script),*args],cwd=CODE,env=env)
     if result.returncode:
