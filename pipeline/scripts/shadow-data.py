@@ -37,8 +37,7 @@ def main():
     connection = psycopg2.connect(os.environ['MAAS_SHADOW_DSN'])
     try:
         if args.action == 'migrate':
-            migrate(connection)
-            result = {'schemaVersion': 3}
+            result = {'schemaVersion': migrate(connection)}
         elif args.action == 'import':
             actual = subprocess.check_output(['git', '-C', str(args.source_root), 'rev-parse', 'HEAD'], text=True).strip()
             if actual != args.commit:

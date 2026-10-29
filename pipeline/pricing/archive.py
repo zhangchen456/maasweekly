@@ -868,12 +868,18 @@ def _commit_event(records_root: Path, revisions_root: Path, event: dict) -> None
 # ---------------------------------------------------------------------------
 
 def build_price_index(records_root: Path) -> list[dict]:
+    def records():
+        for f in sorted(records_root.glob("price_*.json")):
+            try:
+                yield json.loads(f.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as e:
+                raise ArchiveError(f"价格记录损坏，无法生成索引: {f}: {e}")
+    return index_price_records(records())
+
+
+def index_price_records(records) -> list[dict]:
     items = []
-    for f in sorted(records_root.glob("price_*.json")):
-        try:
-            r = json.loads(f.read_text(encoding="utf-8"))
-        except json.JSONDecodeError as e:
-            raise ArchiveError(f"价格记录损坏，无法生成索引: {f}: {e}")
+    for r in records:
         items.append({
             "id": r["id"], "date": r["date"], "provider": r["provider"],
             "model": r["model"], "component": r["component"],

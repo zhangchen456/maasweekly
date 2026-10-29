@@ -19,6 +19,7 @@ sys.path.insert(0, str(BASE / 'pipeline'))
 from blob_store import FilesystemBlobStore
 from input_snapshot import atomic
 from shadow_store import PostgresInputView
+from page_projection import store_projections
 
 
 def main():
@@ -70,6 +71,7 @@ def main():
         # Record a verified candidate, not a published/latest pointer. Existing
         # code/config must explicitly opt into it after compatibility smoke tests.
         with connection:
+            projection_names = store_projections(connection, args.config_root.resolve(), view, args.code_commit)
             with connection.cursor() as cursor:
                 cursor.execute('''INSERT INTO maas_data.data_candidates
                   (dataset_version,input_version,code_commit,data_through,files)
@@ -80,10 +82,17 @@ def main():
                   (release['datasetVersion'], view.version, args.code_commit))
                 if cursor.fetchone()[0] != manifest['files']:
                     raise ValueError('candidate audit conflicts with verified output')
+                cursor.execute('''UPDATE maas_data.data_candidates SET page_format_version=1
+                  WHERE dataset_version=%s AND input_version=%s AND code_commit=%s''',
+                  (release['datasetVersion'], view.version, args.code_commit))
+        manifest['site'] = {'inputVersion':view.version,'codeCommit':args.code_commit,'formatVersion':1}
+        atomic(destination / 'publication.json', (json.dumps(manifest,ensure_ascii=False,indent=2)+'\n').encode())
         report = {'status': 'verified_candidate', 'activated': False,
                   'datasetVersion': release['datasetVersion'], 'inputVersion': view.version,
                   'codeCommit': args.code_commit, 'dataThrough': release['dataThrough'],
                   'baselineByteParity': True if args.expected_manifest else None,
+                  'pageFormatVersion': 1, 'pageProjections': projection_names,
+                  'publicationSha256': hashlib.sha256((destination / 'publication.json').read_bytes()).hexdigest(),
                   'manifestSha256': hashlib.sha256((destination / 'manifest.json').read_bytes()).hexdigest(),
                   'files': manifest['files'], 'elapsedSeconds': time.monotonic() - started}
         atomic(args.report, (json.dumps(report, indent=2) + '\n').encode())

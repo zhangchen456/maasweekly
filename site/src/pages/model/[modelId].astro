@@ -1,4 +1,5 @@
 ---
+import { siteRuntime } from '../../lib/runtime';
 import BillingConditions from '../../components/BillingConditions.astro';
 import EvidenceLinks from '../../components/EvidenceLinks.astro';
 import ChangeList from '../../components/ChangeList.astro';
@@ -13,7 +14,8 @@ export function getStaticPaths() {
     params: { modelId: model.modelId }, props: { page: modelPage(model.modelId) },
   }));
 }
-const { page } = Astro.props;
+if(siteRuntime()&&!modelRelease().modelIdentities!.models.some(m=>m.modelId===Astro.params.modelId))return new Response('Not found',{status:404});
+const page=siteRuntime() ? modelPage(Astro.params.modelId!) : Astro.props.page;
 const { model, prices, changes, sources, keys, from, to, dataThrough, datasetVersion } = page;
 const catalog = modelRelease().modelIdentities!;
 const upstream = catalog.upstreamModels?.find(u => u.modelId === model.modelId);

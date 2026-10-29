@@ -14,6 +14,7 @@
  * 4. 文件存在 + bytes + SHA-256 与清单一致后才能 JSON.parse。
  * 错误信息只含相对路径与规则名，不泄露本机绝对路径或恶意原文。
  */
+import { siteRuntime } from './runtime.ts';
 import { readFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 
@@ -71,6 +72,7 @@ export function loadVerifiedRelease(
   baseDir?: string,
   opts?: { select?: Array<keyof typeof COLLECTION_FILE> },
 ): PublicRelease {
+  if (baseDir === undefined && siteRuntime()) return siteRuntime()!.release();
   const root = baseDir ?? defaultPublicReleaseDir();
   const manifestPath = path.join(root, 'manifest.json');
   if (!existsSync(manifestPath)) {

@@ -41,7 +41,7 @@
 用户已授权实施 docs/architecture/data-code-decoupling-2026-10-29.md。保留此前本地成本指南/favicon/历史材料改动。
 
 - [x] A：冻结实际输入/公开版本与基线，确认部署资源。
-- [ ] B：PostgreSQL schema、幂等影子导入、独立 filesystem 与恢复，全量数据对账。
+- [x] B：PostgreSQL schema、幂等影子导入、独立 filesystem 与恢复，全量数据对账。
 - [ ] C：独立数据版本激活/API/SSR/缓存/RSS/sitemap，固定样本与真实数据验收。
 - [ ] D：正常周期验证后切换 writer，停止每日数据 Git commit 与全站构建。
 - [ ] E：另行处理 Git 历史，保留原仓库恢复入口，不直接重写历史。
@@ -60,3 +60,6 @@
 B/C兼容修复补充：保留有序JSON表示，canonical和7业务文件bytes均与基线一致；单次直读导出约20s，Mac进程峰值由1988MiB经可达事实精简降至1568MiB，再经有界字段名复用降至1487MiB。不能当作Linux整机预算达标；服务器导出需单独限额验证。影子代码同步遇SSH连接timeout，改用两次连接和30秒超时，不更改SSH配置。
 
 服务器影子unpack首次被严格路径校验拒绝：本机BSD tar附带 ._sha256 AppleDouble元数据。已仅对明确的._元数据路径、regular类型、<=1MiB和AppleDouble魔数作跳过；不提取元数据，不放宽真实SHA对象校验。新增专项5项通过，重试可复用已校验对象。
+
+2026-10-29 B 完成：现有 PostgreSQL18 专用 maas_data 已导入；原文 CAS 位于 /srv/maasweekly/shared/data-store/blobs。Linux 七业务文件逐字节一致，导出33.89s、峰值914MiB。服务器真实 pg_dump→独立空库恢复→全量192057逻辑文件/178989对象验证通过；演练数据库已清理。数据库备份与原文副本已存到本机仓库外 maasweekly-data-backups/2026-10-29，数据库SHA与服务器一致。
+C 代码候选：同进程 SSR、只读查询、请求版本固定、内部 publication.json 原子发布/审计恢复、缓存、RSS/sitemap、受限周报鉴权完成本机验证。公开 v1 schema 未改变。76组完整旧链路回归、202 API tests、61数据tests、18真实SSR入口通过。独立运行包、Linux SSR/蓝绿/回退和7个正常周期仍待验收；未启用新writer、未改生产流量、未停止数据Git提交。不能标全部完成。

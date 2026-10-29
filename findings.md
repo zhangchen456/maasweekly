@@ -41,3 +41,8 @@ AR-06 预核对：data/snapshots 有 2197 文件/248330316 bytes；2188 个独�
 
 B空恢复七集合对账已通过。C增加可选 PostgresInputView，直接批量读取结构化JSON，不必每次恢复192k文件；标准loader默认FS路径不变，独立入口尚在验证。
 服务器影子包传输很慢，尚未恢复线上影子数据；正在只读检查服务器能否直接从同一Git仓库拉取冻结输入以加速一次性迁移，绝不复制本地凭据。
+
+C运行时：新托管工作树 /Users/zhangchen/.codex/worktrees/data-code-runtime/maasweekly，分支codex/data-runtime-20261029。原目录成本指南/favicon未提交改动保留。考虑Node adapter middleware与API同进程共享Dataset，避免重复常驻全量数据。Plus周报旧保护依赖build:done剥离template，SSR不得直接发送私有template，需认证后渲染。官方Node adapter文档已核对handler(req,res,next,locals)。
+环境：新工作树不在本回合静态写入白名单，写入需通过require_escalated；默认python3切到系统3.9，明确使用/Users/zhangchen/miniconda3/bin/python3（3.12）继续。
+
+发布绑定最终使用内部 publication.json；公开 manifest/schema不扩展。SSR模式显式配置MAAS_SITE_ENTRY；默认静态链路继续工作。publication.json同时固定公开文件和页面输入/code版本；仅翻译变化也触发重载。完整旧链路76组通过，真实SSR18入口通过（含周报全文内部locals隔离）。

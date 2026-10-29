@@ -267,6 +267,23 @@ import_view(c,Path(sys.argv[2]),CrashStore(Path(sys.argv[3])),source_commit='a'*
         for key in ('changes', 'items', 'prices', 'evidence', 'weekly', 'status', 'modelIdentities'):
             self.assertEqual(json.dumps(expected[key], ensure_ascii=False, indent=2),
                              json.dumps(actual[key], ensure_ascii=False, indent=2), key)
+        from page_projection import projections, store_projections
+        from pricing.archive import build_price_index
+        sys.path.insert(0, str(base / 'pipeline/scripts'))
+        from record_archive import build_index
+        materialized = dict(projections(fixture.root, view))
+        self.assertEqual(materialized['site/src/data/record-index.json'],
+                         build_index(fixture.root / 'data/records'))
+        self.assertEqual(materialized['site/src/data/price-record-index.json'],
+                         build_price_index(fixture.root / 'data/price-records'))
+        with self.connection:
+            store_projections(self.connection, fixture.root, view, 'a' * 40)
+        with self.connection.cursor() as cursor:
+            cursor.execute('SELECT name,payload_json,sha256,bytes FROM maas_data.page_projections')
+            for name, body, sha, size in cursor.fetchall():
+                self.assertEqual(json.loads(body), materialized[name])
+                self.assertEqual(len(body.encode()), size)
+                self.assertEqual(hashlib.sha256(body.encode()).hexdigest(), sha)
 
 
 if __name__ == '__main__':

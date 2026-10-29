@@ -1,19 +1,17 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { runtimeReports } from '../../lib/runtime';
 import { getCollection } from 'astro:content';
-import fs from 'node:fs';
-import path from 'node:path';
+import { readPageProjection } from '../../lib/page-data';
 
 // 归档索引页：/weekly/
 // 汇总两类归档：AI 周度归档（每日动态按周聚合）+ 深度周报（人工/Agent 写作）
 
 // 周度归档（每日动态聚合）
-const weeklyPath = path.join(process.cwd(), 'src/data/weekly-digest.json');
-let weeks: any[] = [];
-try { weeks = JSON.parse(fs.readFileSync(weeklyPath, 'utf-8')); } catch {}
+const weeks = readPageProjection<any[]>('weekly-digest.json');
 
 // 深度周报
-const reports = await getCollection('weekly', ({ data }) => data.date <= new Date().toISOString().slice(0, 10));
+const reports = runtimeReports() ?? await getCollection('weekly', ({ data }) => data.date <= new Date().toISOString().slice(0, 10));
 reports.sort((a, b) => b.data.date.localeCompare(a.data.date));
 
 const fmtWeekRange = (w: any) => {

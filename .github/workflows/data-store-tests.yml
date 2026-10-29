@@ -4,6 +4,11 @@ on:
   pull_request:
     paths:
       - 'pipeline/shadow_store.py'
+      - 'pipeline/data_publication.py'
+      - 'pipeline/page_projection.py'
+      - 'tests/test_data_publication.py'
+      - 'pipeline/english_translation.py'
+      - 'config/model-normalization-rules.json'
       - 'pipeline/data_store.py'
       - 'pipeline/blob_store.py'
       - 'pipeline/input_snapshot.py'
@@ -11,6 +16,7 @@ on:
       - 'pipeline/scripts/export-public-data.py'
       - 'pipeline/migrations/**'
       - 'pipeline/scripts/*database*'
+      - 'pipeline/scripts/activate-data-candidate.py'
       - 'pipeline/scripts/*shadow*'
       - 'ops/*shadow*'
       - 'tests/test_shadow*'
@@ -44,6 +50,7 @@ jobs:
         with:
           sparse-checkout: |
             pipeline
+            config
             tests
             ops
             scripts
@@ -60,7 +67,9 @@ jobs:
         env:
           # Disposable CI service credentials; no production access or secrets.
           MAAS_SHADOW_TEST_DSN: host=127.0.0.1 port=5432 user=postgres password=postgres dbname=maas_shadow_test
-        run: python -m unittest discover -s tests -p 'test_shadow*.py' -v
+        run: |
+          python -m unittest discover -s tests -p 'test_shadow*.py' -v
+          python -m unittest discover -s tests -p 'test_data_publication.py' -v
       - name: Standard input and blob storage regressions
         run: |
           python -m unittest discover -s tests -p test_standard_inputs.py
