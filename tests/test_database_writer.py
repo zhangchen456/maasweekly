@@ -23,4 +23,21 @@ class WriterEnvelopeTests(unittest.TestCase):
    self.assertFalse(writer.ALLOWED.intersection(run.call_args.kwargs['env']))
    writer.step('pipeline/scripts/llm-digest.py',credentials={'LLM_API_KEY':'scoped'})
    env=run.call_args.kwargs['env'];self.assertEqual(env['LLM_API_KEY'],'scoped');self.assertNotIn('TRANSLATION_API_KEY',env)
+
+@unittest.skipUnless(os.environ.get('MAAS_SHADOW_TEST_DSN'),'isolated PostgreSQL DSN required')
+class WriterIngestTests(unittest.TestCase):
+ from test_shadow_store import ShadowTests as _Fixture
+ setUp=_Fixture.setUp
+ tearDown=_Fixture.tearDown
+ write=_Fixture.write
+ def test_completed_logs_do_not_replace_raw_recovery_manifest(self):
+  log=self.root/'data/price-runs/2026-10-29/fixture.json';log.parent.mkdir(parents=True);log.write_text('{"state":"committed","runId":"fixture"}\n')
+  with patch.object(writer,'CODE',self.root),patch.object(writer,'WORK',self.root),patch.object(writer,'STORE',self.base),patch.dict(os.environ,{'MAAS_DATA_DSN':os.environ['MAAS_SHADOW_TEST_DSN']}):
+   writer.ingest(self.version,'a'*40)
+  with self.connection.cursor() as cursor:
+   cursor.execute('SELECT manifest FROM maas_data.input_raw_manifests WHERE input_version=%s',[self.version]);manifest=cursor.fetchone()[0]
+   self.assertEqual(manifest['scope'],'raw-snapshots-local-drill')
+   cursor.execute('SELECT payload_json FROM maas_data.writer_run_logs WHERE logical_path=%s',[str(log.relative_to(self.root))]);self.assertEqual(cursor.fetchone()[0],log.read_text())
+  self.assertEqual(json.loads((self.root/'ingestion.json').read_text())['inputVersion'],self.version)
+
 if __name__=='__main__':unittest.main()

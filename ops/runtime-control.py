@@ -142,6 +142,11 @@ def install_package(rid):
     spec=importlib.util.spec_from_file_location('runtime_package',module);package_module=importlib.util.module_from_spec(spec);spec.loader.exec_module(package_module)
     package,manifest=package_module.install(ROOT/'incoming'/rid,ROOT/'runtime')
     if rid!='rl_'+manifest['codeCommit'][:10]+'_000000000000':raise ValueError('upload/code mismatch')
+    active=SHARED/'runtime.json'
+    if active.exists():
+        current=json.loads(active.read_text())
+        if current.get('code')==manifest['codeCommit']:
+            probe(current['port']);return {**current,'status':'already_active'}
     requirements=package/'tooling/requirements.lock.txt'
     if requirements.read_bytes()!=(ROOT/'runtime/build-tools/writer/requirements.lock.txt').read_bytes():raise ValueError('writer dependency image must be rebuilt before this code release')
     (package/'tooling/site/src/data').mkdir(parents=True,exist_ok=True);(package/'tooling/site/src/content').mkdir(parents=True,exist_ok=True)
