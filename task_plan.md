@@ -34,3 +34,29 @@
 用户同意按计划上线。整合 origin/main 6efd666e1 的今日数据；七集合新旧逐字节一致。接下来标准全量构建 → 服务器非公开候选与资源验证 → 安装候选helper/config → 正式workflow蓝绿发布 → 四入口/限流/诊断验收与回退资料归档。远端存储继续DEFERRED。
 
 2026-10-02正式上线完成：commit8ebc6b9e4e，RID rl_8ebc6b9e4e_0da7f0c0f2bc；本地和Linux CI均53/53，蓝绿/四入口/旧游标/真实代理链/线上浏览器通过。完整证据、资源边界及回退见 docs/architecture/refactoring-2026-10/release-2026-10-02.md。远端存储DEFERRED。
+
+
+# 2026-10-29 数据与代码解耦（当前执行任务）
+
+用户已授权实施 docs/architecture/data-code-decoupling-2026-10-29.md。保留此前本地成本指南/favicon/历史材料改动。
+
+- [x] A：冻结实际输入/公开版本与基线，确认部署资源。
+- [ ] B：PostgreSQL schema、幂等影子导入、独立 filesystem 与恢复，全量数据对账。
+- [ ] C：独立数据版本激活/API/SSR/缓存/RSS/sitemap，固定样本与真实数据验收。
+- [ ] D：正常周期验证后切换 writer，停止每日数据 Git commit 与全站构建。
+- [ ] E：另行处理 Git 历史，保留原仓库恢复入口，不直接重写历史。
+
+约束：阶段完成不等于整个目标完成；已指定现有服务器 PostgreSQL + 独立 filesystem，暂不使用对象存储。迁移保留 ID、修订、版本、游标和证据字节。
+
+用户最新选择：现有服务器 PostgreSQL，暂不使用对象存储；原文使用服务器独立 filesystem CAS。
+错误：本地 initdb sandbox shmget EPERM，改为隔离实例申请系统权限；首次 SSH 默认密钥不存在，按既有 aliyun-099 配置改用已配置密钥，不读取或打印密钥。
+
+影子导入首次失败：历史输入含 NUL，JSONB 拒收（UntranslatableCharacter）。为这些 JSON 增加无损 text 表示并验证原始字节与结构内容，不删除或替换历史字符。专项 8 tests 已通过；真实全量重跑中。
+
+对账工具首次读取 exporter 返回值时发生 KeyError；其注释声称 collections，但实际返回扁平七集合。已对齐实际接口并重跑，无需修改 exporter。9项PG专项、10项blob回归、6项标准输入、20项公开导出回归通过。
+
+公网status已核验：datasetVersion ds_3622dedc、dataThrough2026-10-29、lastReloadError=null。普通sandbox DNS不可用，改用授权网络读取成功。传输首试本机旧rsync拒绝 --chmod=F600,D700，改为临时文件chmod0600后-rtp；未影响远端数据。
+
+B/C兼容修复补充：保留有序JSON表示，canonical和7业务文件bytes均与基线一致；单次直读导出约20s，Mac进程峰值由1988MiB经可达事实精简降至1568MiB，再经有界字段名复用降至1487MiB。不能当作Linux整机预算达标；服务器导出需单独限额验证。影子代码同步遇SSH连接timeout，改用两次连接和30秒超时，不更改SSH配置。
+
+服务器影子unpack首次被严格路径校验拒绝：本机BSD tar附带 ._sha256 AppleDouble元数据。已仅对明确的._元数据路径、regular类型、<=1MiB和AppleDouble魔数作跳过；不提取元数据，不放宽真实SHA对象校验。新增专项5项通过，重试可复用已校验对象。

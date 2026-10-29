@@ -26,3 +26,18 @@ Cross-file consistency: immutable committed input view maps logical data paths t
 AR-06 预核对：data/snapshots 有 2197 文件/248330316 bytes；2188 个独立 SHA/247229743 bytes。199 个价格快照元数据 SHA 中 173 可匹配现存原始字节，26 无匹配。属于迁移前遗留缺口，不能将 metadata 当成已恢复 raw；迁移必须显式登记，保持事实/摘录/公开版本不变。
 
 最终容量：冷加载 worker+完整验证/索引比早期同步基线慢（1x398ms/10x3680ms），但同版本轮询约0.16ms且业务解析0，加载期间旧版服务与分页正确。C10 P95/loop满足200/50ms；内存先于延迟值得关注，包含GeoIP/worker/历史/额外limiter的10x子进程maxRSS约3.03GiB不能等同生产单实例。暂缓DB/队列，多实例与资源升级按实际部署内存/流量目标启动；没有精确扩容日期。
+
+
+## 2026-10-29 解耦预研
+- 已有 PostgreSQL 17 psql/postgres/initdb/pg_ctl，可隔离创建本地测试实例；没有 Docker。
+- 既有 blob_store 是校验 SHA256 的本地 adapter，可复用；远端桶仍未指定。
+- 当前 InputView 固定文件及 hash，适合作为影子导入的冻结边界，不能从活跃文件混读。
+- 公开 load_all 已统一读取标准输入；现有 API Dataset 仍从版本化七集合 JSON 构建索引。
+- 本地未提交成本指南等改动属于本任务开始前状态，不能混作本轮产物或丢弃。
+
+当前固定 InputView 含 192,057 个逻辑文件、310,270,867 字节，公开版本 ds_3622dedc。用户否定对象存储，采用 PG + 仓库外 filesystem，不依赖远端桶。
+
+服务器只读盘点：Ubuntu 26.04、2核、3494MiB内存/约2025MiB available、磁盘20GiB剩余；已安装 PG18，main 5432 online，localhost/128MB buffers，数据库盘点只见默认 postgres（约7.9MB）。不需要重复安装数据库。
+
+B空恢复七集合对账已通过。C增加可选 PostgresInputView，直接批量读取结构化JSON，不必每次恢复192k文件；标准loader默认FS路径不变，独立入口尚在验证。
+服务器影子包传输很慢，尚未恢复线上影子数据；正在只读检查服务器能否直接从同一Git仓库拉取冻结输入以加速一次性迁移，绝不复制本地凭据。
