@@ -16,8 +16,10 @@ def main():
     for path in [a.candidate_dir,a.public_root]:
         if no_links(path).is_relative_to(BASE):p.error('data directories must be outside the code checkout')
     import psycopg2
-    with psycopg2.connect(os.environ['MAAS_DATA_DSN']) as connection:
+    connection=psycopg2.connect(os.environ['MAAS_DATA_DSN'])
+    try:
         print(json.dumps(activate(connection,a.candidate_dir,a.public_root,a.expected_publication_sha256,allow_rollback=a.allow_rollback)))
+    finally:connection.close()
 if __name__=='__main__':
     try:main()
     except Exception as e:

@@ -115,7 +115,7 @@ def fetch_rendered_doc(url, selector, allowed):
     async def render():
         from playwright.async_api import async_playwright
         async with async_playwright() as p:
-            browser = await p.chromium.launch(headless=True)
+            browser = await p.chromium.launch(headless=True,chromium_sandbox=os.environ.get('MAAS_BROWSER_SANDBOX')=='1')
             try:
                 page = await browser.new_page()
                 response = await page.goto(url, wait_until='domcontentloaded', timeout=35000)
