@@ -16,7 +16,7 @@ PATTERNS = (
     'data/records/*.json', 'data/record-revisions/*/*.json',
     'data/price-records/*.json', 'data/price-record-revisions/*/*.json',
     'data/diff/*.json', 'data/diff/*.md', 'data/price-facts/current.json', 'data/price-facts/versions/*.json', 'data/price-evidence/*.json', 'data/price-snapshots/*.json',
-    'data/normalized/**/*.json', 'data/derived/**/*.json', 'data/editorial/**/*.md',
+    'data/weekly/*.md', 'data/normalized/**/*.json', 'data/derived/**/*.json', 'data/editorial/**/*.md',
 )
 IMMUTABLE = ('data/record-revisions/', 'data/price-record-revisions/', 'data/price-facts/versions/', 'data/price-evidence/', 'data/price-snapshots/')
 

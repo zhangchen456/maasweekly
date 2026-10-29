@@ -6,18 +6,25 @@ CODE=Path('/code');WORK=Path('/work');PUBLIC=Path('/public/v1');STORE=Path('/sto
 sys.path.insert(0,str(CODE/'pipeline'))
 from blob_store import FilesystemBlobStore
 from shadow_store import restore_view,import_view
-from input_snapshot import capture,assert_no_pending
+from input_snapshot import capture,assert_no_pending,load_view,restore_mutable
 from storage_migration import restore,build_manifest,copy_objects,validate_manifest
 from data_publication import durable_write
 ALLOWED={'LLM_API_KEY','TRANSLATION_API_KEY','OPENROUTER_API_KEY'}
 
 def request(raw):
-    if len(raw)>65536:raise ValueError('request too large')
+    if len(raw)>1048576:raise ValueError('request too large')
     value=json.loads(raw)
-    if not isinstance(value,dict) or set(value)-{'mode','secrets'}:raise ValueError('invalid request')
-    if value.get('mode') not in ['prepare','validate','update','publish']:raise ValueError('invalid mode')
+    if not isinstance(value,dict) or set(value)-{'mode','secrets','drafts','sourceCommit','runContext'}:raise ValueError('invalid request')
+    if value.get('mode') not in ['prepare','validate','update','publish','weekly','aggregate','import','rebuild']:raise ValueError('invalid mode')
     keys=value.get('secrets',{})
     if not isinstance(keys,dict) or set(keys)-ALLOWED or any(not isinstance(v,str) or len(v)>16384 or '\0' in v for v in keys.values()):raise ValueError('invalid credentials envelope')
+    drafts=value.get('drafts',[])
+    if not isinstance(drafts,list) or len(drafts)>52:raise ValueError('invalid drafts')
+    for draft in drafts:
+        if not isinstance(draft,dict) or set(draft)!={'date','markdown'} or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',draft['date']) or not isinstance(draft['markdown'],str) or len(draft['markdown'].encode())>131072 or '\0' in draft['markdown']:raise ValueError('invalid draft')
+    if drafts and not re.fullmatch('[a-f0-9]{40}',value.get('sourceCommit','')):raise ValueError('draft source commit required')
+    context=value.get('runContext',{})
+    if not isinstance(context,dict) or set(context)-{'GITHUB_RUN_ID','GITHUB_REPOSITORY','GITHUB_EVENT_NAME'} or any(not isinstance(v,str) or len(v)>256 or '\0' in v for v in context.values()):raise ValueError('invalid run context')
     return value
 
 def step(script,args=(),credentials=None,optional=False):
@@ -37,7 +44,8 @@ def initialize(connection,published,blobs):
     if pointer.exists():
         try:ready=json.loads(pointer.read_text())['inputVersion']==version;assert_no_pending(CODE)
         except (ValueError,KeyError):ready=False
-    if ready:return
+    if ready:
+        restore_mutable(CODE,load_view(CODE));return
     # Preserve interrupted observations rather than silently deleting the cache.
     archive=WORK/'recovery'/str(time.time_ns());archive.mkdir(parents=True)
     for child in list(data.iterdir()):
@@ -48,13 +56,15 @@ def initialize(connection,published,blobs):
     raw=validate_manifest(row[0]);destination=WORK/('restore-'+uuid.uuid4().hex)
     print('restoring committed input',version,flush=True)
     restore_view(connection,version,blobs,destination)
+    restore_mutable(destination,load_view(destination))
     restore(destination,raw,blobs)
     for child in (destination/'data').iterdir():child.rename(data/child.name)
     (destination/'data').rmdir();destination.rmdir()
 
 def main():
     os.umask(0o027)
-    incoming=request(sys.stdin.buffer.read(65537));mode=incoming['mode'];secrets=incoming.get('secrets',{})
+    incoming=request(sys.stdin.buffer.read(1048577));mode=incoming['mode'];secrets=incoming.get('secrets',{})
+    os.environ.update(incoming.get('runContext',{}))
     if os.getuid()==0:raise ValueError('unprivileged writer required')
     code=os.environ['MAAS_CODE_COMMIT']
     if not re.fullmatch('[0-9a-f]{40}',code):raise ValueError('fixed code commit required')
@@ -71,34 +81,56 @@ def main():
             if not candidate.is_relative_to(PUBLIC.parent/'candidates'):raise ValueError('candidate root escape')
             result=activate(connection,candidate,PUBLIC,receipt['expectedPublicationSha256'])
             print(json.dumps(result));return
-        initialize(connection,published,blobs)
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT input_version FROM maas_data.writer_heads WHERE name='public'");head=cursor.fetchone()
+        parent=head[0] if head else published['site']['inputVersion']
+        initialize(connection,{**published,'site':{**published['site'],'inputVersion':parent}},blobs)
         if mode=='prepare':print(json.dumps({'status':'cache_ready'}));return
-        if mode=='update':
+        warnings=[]
+        if mode in ['update','weekly','aggregate']:
             step('pipeline/scripts/fetch_sources.py')
             step('pipeline/scripts/sync-diff-to-site.py')
+        if mode=='update':
             pricing=step('pipeline/scripts/fetch-prices.py',['--concurrency','1'],optional=True)
-            if pricing:print('health warning: all pricing sources failed; retained previous price facts',flush=True)
+            if pricing:warnings.append('pricing_all_failed')
             step('pipeline/scripts/llm-digest.py',credentials={'LLM_API_KEY':secrets.get('LLM_API_KEY','')},optional=True)
             step('pipeline/scripts/sync-diff-to-site.py')
             step('pipeline/scripts/fetch-leaderboards.py',credentials={'OPENROUTER_API_KEY':secrets.get('OPENROUTER_API_KEY','')},optional=True)
             step('pipeline/scripts/translate-dynamic-en.py',credentials={'TRANSLATION_API_KEY':secrets.get('TRANSLATION_API_KEY','')},optional=True)
+        if mode in ['weekly','import']:
+            for draft in incoming.get('drafts',[]):
+                path=CODE/'data/weekly'/(draft['date']+'.md');path.parent.mkdir(parents=True,exist_ok=True);path.write_text(draft['markdown'])
+            step('pipeline/scripts/llm-weekly-digest.py',['--all'],credentials={'LLM_API_KEY':secrets.get('LLM_API_KEY','')},optional=True)
+            step('site/scripts/import-weekly.py')
+            step('pipeline/scripts/translate-dynamic-en.py',credentials={'TRANSLATION_API_KEY':secrets.get('TRANSLATION_API_KEY','')},optional=True)
         step('pipeline/scripts/project-site-data.py')
         step('pipeline/scripts/validate-archive.py');step('pipeline/scripts/validate-price-archive.py')
+        if incoming.get('drafts'):
+            source=incoming['sourceCommit'];path=CODE/'data/derived/import-provenance'/(source+'.json');path.parent.mkdir(parents=True,exist_ok=True)
+            value={'sourceCommit':source,'drafts':[{'date':d['date'],'sha256':hashlib.sha256(d['markdown'].encode()).hexdigest()} for d in incoming['drafts']]}
+            if path.exists() and json.loads(path.read_text())!=value:raise ValueError('draft source identity conflict')
+            durable_write(path,(json.dumps(value)+'\n').encode())
         version=capture(CODE,'database-writer-'+uuid.uuid4().hex)
         raw=build_manifest(CODE,code);copied=copy_objects(CODE,raw,blobs)
         if copied['failures']:raise ValueError('raw copy failed')
-        parent=published['site']['inputVersion']
         import_view(connection,CODE,blobs,source_commit=code,parent=parent if version!=parent else None)
         with connection:
             with connection.cursor() as cursor:
+                # Execution logs are audit history, not inputs: replaying an old
+                # observation must not change its committed business snapshot.
+                for pattern in ['data/pipeline-runs/*/*.json','data/price-runs/*/*.json']:
+                    for path in CODE.glob(pattern):
+                        raw=path.read_bytes();json.loads(raw)
+                        cursor.execute('INSERT INTO maas_data.writer_run_logs(logical_path,sha256,payload_json) VALUES(%s,%s,%s) ON CONFLICT(logical_path) DO UPDATE SET sha256=excluded.sha256,payload_json=excluded.payload_json,updated_at=now()', [str(path.relative_to(CODE)),hashlib.sha256(raw).hexdigest(),raw.decode()])
                 cursor.execute('INSERT INTO maas_data.input_raw_manifests(input_version,manifest) VALUES(%s,%s) ON CONFLICT DO NOTHING',[version,Json(raw)])
+                cursor.execute("INSERT INTO maas_data.writer_heads(name,input_version) VALUES('public',%s) ON CONFLICT(name) DO UPDATE SET input_version=excluded.input_version,updated_at=now()",[version])
         run_id=uuid.uuid4().hex;candidate=PUBLIC.parent/'candidates'/run_id
         report=WORK/'candidate-report.json'
         args=['--input-version',version,'--code-commit',code,'--config-root',str(CODE),'--blob-root',str(STORE/'blobs'),'--candidate-dir',str(candidate),'--report',str(report)]
         if mode=='validate':args+=['--expected-manifest',str(PUBLIC/'manifest.json')]
         step('pipeline/scripts/export-database-data.py',args)
         if hashlib.sha256((PUBLIC/'publication.json').read_bytes()).hexdigest()!=expected_hash:raise ValueError('publication changed during collection')
-        receipt={'candidate':str(candidate),'inputVersion':version,'codeCommit':code,'expectedPublicationSha256':expected_hash}
+        receipt={'candidate':str(candidate),'inputVersion':version,'codeCommit':code,'expectedPublicationSha256':expected_hash,'warnings':warnings}
         durable_write(WORK/'candidate.json',(json.dumps(receipt)+'\n').encode())
         print(json.dumps({'status':'candidate_ready','inputVersion':version,'mode':mode}),flush=True)
     finally:connection.close()

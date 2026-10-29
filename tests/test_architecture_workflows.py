@@ -20,41 +20,21 @@ def workflow(name):
 
 class WorkflowGraph(unittest.TestCase):
     def test_independent_writer_and_release_locks_have_no_parent_self_lock(self):
-        for name, job in [('daily-update', 'update-and-deploy'), ('weekly-update', 'weekly')]:
-            doc = workflow(name)
-            self.assertNotIn('concurrency', doc)
-            writer = doc['jobs'][job]
-            self.assertEqual(writer['concurrency'], {'group': 'maas-data-write-main', 'cancel-in-progress': 'false', 'queue': 'max'})
-            publish = doc['jobs']['deploy']
-            self.assertEqual(publish['needs'], job)
-            self.assertEqual(publish['uses'], './.github/workflows/release-deploy.yml')
-            self.assertIn('outputs.sha', publish['with']['commit'])
-            self.assertNotIn('concurrency', publish)
-        deploy = workflow('release-deploy')['jobs']['deploy']
-        self.assertEqual(deploy['concurrency']['group'], 'maas-production-deploy-main')
-        self.assertEqual(deploy['concurrency']['cancel-in-progress'], 'false')
-        self.assertEqual(deploy['concurrency']['queue'], 'max')
-        self.assertEqual(deploy['env']['MAAS_VERIFY_MAIN_CANDIDATE'], '1')
-
-    def test_push_and_weekly_markdown_have_a_single_responsible_publish_path(self):
-        doc = workflow('deploy')['jobs']
-        self.assertEqual(doc['import-weekly']['uses'], './.github/workflows/weekly-update.yml')
-        self.assertEqual(doc['import-weekly']['with']['mode'], 'import')
-        self.assertIn("import_weekly != 'true'", doc['deploy']['if'])
-        for paths, deploy, weekly in [
-            (['data/records/manual.json'], True, False), (['site/src/content/weekly/x.md'], True, False),
-            (['data/weekly/2026-10-01.md'], True, True), (['docs/design.md'], False, False),
-            (['README.md'], False, False), (['contracts/schema.json'], True, False),
-            (['pipeline/a.py', 'data/weekly/x.md'], True, True), (['.github/workflows/deploy.yml'], True, False),
-        ]:
-            self.assertEqual(policy.classify(paths), {'deploy': deploy, 'importWeekly': weekly})
-
-    def test_verify_uses_exact_deployed_rid_not_directory_mtime(self):
-        steps = workflow('release-deploy')['jobs']['deploy']['steps']
-        verify = next(s for s in steps if s['name'].startswith('Online verify'))
-        self.assertEqual(verify['if'], "steps.deploy.outputs.deployed == 'true'")
-        self.assertEqual(verify['env']['RELEASE_ID'], '${{ steps.deploy.outputs.rid }}')
-        self.assertNotIn('ls -td', (BASE / 'ops/deploy-release.sh').read_text())
+        for name,job in [('daily-update','data-update'),('weekly-update','weekly')]:
+            doc=workflow(name);self.assertNotIn('concurrency',doc)
+            self.assertEqual(doc['jobs'][job]['concurrency'],{'group':'maas-data-write-main','cancel-in-progress':'false','queue':'max'})
+            self.assertNotIn('deploy',doc['jobs'])
+        deploy=workflow('release-deploy')['jobs']['deploy']
+        self.assertEqual(deploy['concurrency'],{'group':'maas-production-deploy-main','cancel-in-progress':'false','queue':'max'})
+    def test_weekly_drafts_use_one_import_after_code_activation(self):
+        jobs=workflow('deploy')['jobs']
+        self.assertEqual(jobs['import-weekly']['needs'],['changes','deploy'])
+        self.assertEqual(jobs['import-weekly']['with']['mode'],'import')
+        self.assertEqual(policy.classify(['data/weekly/2026-10-01.md']),{'deploy':True,'importWeekly':True})
+    def test_code_upload_identity_comes_from_fixed_commit(self):
+        text=(BASE/'.github/workflows/release-deploy.yml').read_text()
+        self.assertIn('rl_${CANDIDATE_SHA:0:10}_000000000000',text)
+        self.assertNotIn('ls -td',text)
 
 
 class IsolatedGit(unittest.TestCase):

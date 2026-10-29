@@ -46,3 +46,5 @@ C运行时：新托管工作树 /Users/zhangchen/.codex/worktrees/data-code-runt
 环境：新工作树不在本回合静态写入白名单，写入需通过require_escalated；默认python3切到系统3.9，明确使用/Users/zhangchen/miniconda3/bin/python3（3.12）继续。
 
 发布绑定最终使用内部 publication.json；公开 manifest/schema不扩展。SSR模式显式配置MAAS_SITE_ENTRY；默认静态链路继续工作。publication.json同时固定公开文件和页面输入/code版本；仅翻译变化也触发重载。完整旧链路76组通过，真实SSR18入口通过（含周报全文内部locals隔离）。
+
+实际Linux修复：CLI不能外层with psycopg2.connect再调用内部with connection，改为显式close；缓存恢复需restore_mutable还原逻辑别名；不属于网站组的writer在已有setgid父目录下mkdir继承组，不得chmod强设setgid（内核会清位）；代码包public client目录需给nginx读取，其他代码分别限定maasagent/maasdata组。实际SSR切换和回退已通过。

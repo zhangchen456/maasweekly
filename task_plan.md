@@ -63,3 +63,5 @@ B/C兼容修复补充：保留有序JSON表示，canonical和7业务文件bytes�
 
 2026-10-29 B 完成：现有 PostgreSQL18 专用 maas_data 已导入；原文 CAS 位于 /srv/maasweekly/shared/data-store/blobs。Linux 七业务文件逐字节一致，导出33.89s、峰值914MiB。服务器真实 pg_dump→独立空库恢复→全量192057逻辑文件/178989对象验证通过；演练数据库已清理。数据库备份与原文副本已存到本机仓库外 maasweekly-data-backups/2026-10-29，数据库SHA与服务器一致。
 C 代码候选：同进程 SSR、只读查询、请求版本固定、内部 publication.json 原子发布/审计恢复、缓存、RSS/sitemap、受限周报鉴权完成本机验证。公开 v1 schema 未改变。76组完整旧链路回归、202 API tests、61数据tests、18真实SSR入口通过。独立运行包、Linux SSR/蓝绿/回退和7个正常周期仍待验收；未启用新writer、未改生产流量、未停止数据Git提交。不能标全部完成。
+
+最新授权与执行：用户“那你切换吧”。已完成真实Linux18项、反向代理失败恢复、实际回退再切换、旧cursor和资源验证并上线SSR。7个正常周期尚未完成，本次依用户要求在实际服务器与回退验证通过后切流；正在实施writer/CI切换。Root runtime-mode保护阻止旧全站激活覆盖新服务。首次自动审批拒绝递归开放other读取权限，改为tooling root:maasdata目录750/文件640的最小组读取并成功执行，无剩余审批阻塞。

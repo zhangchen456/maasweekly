@@ -81,3 +81,7 @@ PG专项已扩至14项（含端到端固定样本、不可达历史事实证据�
 2026-10-29：完成服务器影子导入、Linux候选对账和真实备份恢复。C运行时分支完成本机回归；仍需独立运行包、Linux SSR部署适配、7周期、writer切换。无对象存储，无Git历史重写。完整状态见 docs/architecture/data-code-runtime-2026-10-29.md。
 
 独立代码包180489902字节、不含业务归档，从/private/tmp运行18项SSR验收通过。C仍待Linux/蓝绿/回退和7周期；生产writer未切换。
+
+2026-10-29 用户明确要求正式切换。现网已由旧静态站切到runtime/ad91dc2ce9的blue槽，数据来自shared/public-data/v1与PG。Linux18项SSR验证通过，实际切流→回退旧站→再切新站通过；旧绿槽签发的cursor在新蓝槽200。首次因静态favicon目录权限自动回退，修复仅public client目录权限后通过。当前应用RSS约247MiB。独立采集容器已构建，非root+Chromium sandbox+专用PG peer连接通过；初次数据缓存prepare已完成。下一步更新固定writer代码（schema7、恢复mutable、setgid目录继承），跑validate和真实update，然后启用新的daily/weekly/code工作流并移除Git当前树的运行数据；未完成部分不能标done。
+
+2026-10-29 writer切换候选：71项PG/发布/恢复/工作流测试通过。独立run日志入writer_run_logs，不混入业务inputVersion，保持离线重放幂等；schema7记录最新完整采集head，素材准备失败不丢已入库事实。root固定SSH入口、容器凭据stdin、FD安全安装与候选权限核验已复核；尚待服务器完整validate和真实日更。

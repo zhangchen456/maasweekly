@@ -30,7 +30,8 @@ class ActivationTests(unittest.TestCase):
             with self.connection.cursor() as c:
                 c.execute('INSERT INTO maas_data.data_candidates(dataset_version,input_version,code_commit,data_through,files,page_format_version) VALUES(%s,%s,%s,%s,%s,1) ON CONFLICT DO NOTHING',[manifest['datasetVersion'],version,code,manifest['dataThrough'],Json(manifest['files'])])
         return candidate,manifest
-    def target(self):return self.base.resolve()/'public-cache'
+    def target(self):
+        root=self.base.resolve()/'public-cache';root.mkdir(exist_ok=True);root.chmod(0o2750);return root
     def test_activation_is_idempotent_and_preserves_immutable_versions(self):
         candidate,m=self.candidate();root=self.target()
         result=activate(self.connection,candidate,root,'empty');self.assertEqual(result['status'],'activated')
@@ -39,7 +40,8 @@ class ActivationTests(unittest.TestCase):
         self.assertEqual((root/'publication.json').read_bytes(),first)
         second,m2=self.candidate(2)
         activate(self.connection,second,root,digest(first))
-        self.assertTrue((root/'releases'/m2['datasetVersion']).stat().st_mode & 0o2000)
+        if sys.platform.startswith('linux'):
+            self.assertTrue((root/'releases'/m2['datasetVersion']).stat().st_mode & 0o2000)
         pointer=json.loads((root/'publication.json').read_bytes())
         self.assertEqual({r['datasetVersion'] for r in pointer['retainedVersions']},{m['datasetVersion'],m2['datasetVersion']})
         self.assertTrue((root/'releases'/m['datasetVersion']/'items.json').exists())
