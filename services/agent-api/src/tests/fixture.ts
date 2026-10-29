@@ -14,6 +14,7 @@ export interface FixtureChange {
   familyName?: string;
   id: string;
   observationDate: string;
+  sourceId?: string;
   providerId?: string | null;
   recordType?: string;
   status?: string;
@@ -55,6 +56,7 @@ export class ReleaseFixture {
 
   /** 写一套完整 release（覆盖指定版本目录），并更新 manifest。 */
   writeRelease(version: string, opts: {
+    dataThrough?: string;
     modelIdentities?: ModelIdentityCatalog;
     providers?: {providerId:string;displayName:string;region:string}[];
     changes?: FixtureChange[];
@@ -72,7 +74,7 @@ export class ReleaseFixture {
       status: c.status ?? 'active',
       recordType: c.recordType ?? 'source_observation',
       providerId: c.providerId ?? 'openai',
-      sourceId: 'openai-blog',
+      sourceId: c.sourceId ?? 'openai-blog',
       sourceType: 'blog',
       observedAt: null,
       observationDate: c.observationDate,
@@ -206,7 +208,7 @@ export class ReleaseFixture {
       schemaVersion: '1.0',
       datasetVersion: version,
       generatedAt: '2026-09-16T00:00:00Z',
-      dataThrough: '2026-09-16',
+      dataThrough: opts.dataThrough ?? '2026-09-16',
       coverage: {},
       files,
       retainedVersions: [],
@@ -224,7 +226,7 @@ export class ReleaseFixture {
       schemaVersion: '1.0',
       datasetVersion: version,
       generatedAt: '2026-09-16T00:00:00Z',
-      dataThrough: '2026-09-16',
+      dataThrough: opts.dataThrough ?? '2026-09-16',
       coverage: {},
       files,
       retainedVersions: [
