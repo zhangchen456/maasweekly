@@ -26,3 +26,8 @@
 C仍缺Linux独立SSR包运行、Nginx和蓝绿激活器适配、故障/回退演练及7个正常采集周期。D还未实施：每日writer仍写原文件并提交Git、触发旧全站构建；不能宣称已缩短现网更新时间。服务器当前只部署B影子工具，schema3；C新增schema4/5尚未安装。
 
 后续先独立包和Linux候选验证，再接正常周期影子对账；符合C验收条件后切换writer与部署工作流。Git历史重写单独决策。原工作区成本计算器/指南/favicon等改动保留在原checkout，未纳入此分支。
+
+
+## 独立运行包复核
+
+从干净提交f6b36da945构建 `/private/tmp/maas-decoupling-20261029/runtime-package`，生产依赖和编译代码合计180,489,902字节，不包含业务data归档。以 `/private/tmp` 为cwd、明确外部PG与数据目录启动18项SSR验收全部通过；RSS462,356,480字节。包的metadata/runtime-manifest.json记录代码SHA与文件/符号链接清单；productionCompatible=false，不能交给旧激活器。此次Mac验收不代替Linux资源/权限和蓝绿回退验收。

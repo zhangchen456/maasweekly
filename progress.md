@@ -79,3 +79,5 @@ PG专项已扩至14项（含端到端固定样本、不可达历史事实证据�
 基础代码已提交 dff5b929d3（分支codex/data-code-decoupling-20261029），原有站点修改未提交。新提交SHA运行完整独立CLI成功：baselineByteParity=true，21.28s，子进程峰1404MiB（Mac；不代替Linux预算）。候选未激活。服务器影子导入session98656仍运行，unpack已加内存/CPU限额。后续需在独立工作树实施C网页运行，避免改动现有未提交Layout/指南内容。
 
 2026-10-29：完成服务器影子导入、Linux候选对账和真实备份恢复。C运行时分支完成本机回归；仍需独立运行包、Linux SSR部署适配、7周期、writer切换。无对象存储，无Git历史重写。完整状态见 docs/architecture/data-code-runtime-2026-10-29.md。
+
+独立代码包180489902字节、不含业务归档，从/private/tmp运行18项SSR验收通过。C仍待Linux/蓝绿/回退和7周期；生产writer未切换。
