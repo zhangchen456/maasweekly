@@ -1065,7 +1065,8 @@ def validate_price_archive(data_root: Path, *, versions_root: Path,
     latest_observed = {}
     for version in versions.values():
         key = version.get("fact_key")
-        latest_observed[key] = max(latest_observed.get(key, 0), version.get("observed_at") or 0)
+        observed = version.get("observed_at") or 0
+        latest_observed[key] = max(latest_observed.get(key, observed), observed)
 
     # current 与版本一致
     if current_file.exists():
