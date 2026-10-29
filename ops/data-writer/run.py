@@ -133,7 +133,7 @@ def main():
         connection.commit()
         # Validation reads the already committed database head; it neither
         # rewrites the cache nor repeats a completed import/restore drill.
-        if mode=='validate':
+        if mode in ['validate','rebuild']:
             prepare_candidate(parent,code,mode,expected_hash,[]);return
         initialize(connection,{**published,'site':{**published['site'],'inputVersion':parent}},blobs)
         if mode=='prepare':print(json.dumps({'status':'cache_ready'}));return
