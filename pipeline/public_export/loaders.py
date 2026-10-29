@@ -77,52 +77,83 @@ class LoadedInputs:
         self.source_runtime: dict = {}            # committed fetch attempts, including unchanged
         self.source_registry: list[dict] = []
         self.provider_map: dict = {}
+        self.public_evidence_index: dict | None = None
 
 
-def load_all(input_root: Path, provider_map_path: Path) -> LoadedInputs:
+def load_all(input_root: Path, provider_map_path: Path, input_view=None) -> LoadedInputs:
     """从仓库正式归档加载全部输入（input_root = 仓库根）。"""
     li = LoadedInputs()
     root = input_root.resolve()
     from input_snapshot import load_view
-    view = load_view(root)
+    view = input_view if input_view is not None else load_view(root)
     def files(relative, pattern):
         if view: return view.glob(relative + '/' + pattern)
         return [(str(p.relative_to(root)), _safe_path(root, p.relative_to(root))) for p in sorted(_safe_path(root, relative).glob(pattern))]
     def input_path(relative):
         return view.path(relative) if view else _safe_path(root, relative)
+    def json_inputs(relative, pattern):
+        if view is not None and hasattr(view, 'iter_json'):
+            return view.iter_json(relative, pattern)
+        return ((logical, read_json(f)) for logical, f in files(relative, pattern))
+    def input_json(relative):
+        if view is not None and hasattr(view, 'read_json'):
+            return view.read_json(relative)
+        return read_json(input_path(relative))
 
     li.provider_map = load_provider_map(provider_map_path)
     li.source_registry = load_source_registry(
         _safe_path(root, "pipeline/config/source_registry.json"))
 
-    for _, f in files('data/records', 'obs_*.json'): li.records.append(read_json(f))
-    for logical, f in files('data/record-revisions', '*/*.json'):
-        value = read_json(f); li.record_revisions.setdefault(value['id'], []).append(value)
+    for _, value in json_inputs('data/records', 'obs_*.json'): li.records.append(value)
+    for logical, value in json_inputs('data/record-revisions', '*/*.json'):
+        li.record_revisions.setdefault(value['id'], []).append(value)
     for revisions in li.record_revisions.values(): revisions.sort(key=lambda value: value['revision'])
-    for _, f in files('data/price-records', 'price_*.json'): li.price_records.append(read_json(f))
-    for logical, f in files('data/price-record-revisions', '*/*.json'):
-        value = read_json(f); li.price_revisions.setdefault(value['id'], []).append(value)
+    for _, value in json_inputs('data/price-records', 'price_*.json'): li.price_records.append(value)
+    for logical, value in json_inputs('data/price-record-revisions', '*/*.json'):
+        li.price_revisions.setdefault(value['id'], []).append(value)
     for revisions in li.price_revisions.values(): revisions.sort(key=lambda value: value['revision'])
-    for _, f in files('data/price-facts/versions', 'pfv_*.json'):
-        value = read_json(f); li.fact_versions[value['version_id']] = value
-    for _, f in files('data/price-evidence', 'ev_*.json'):
-        value = read_json(f); li.evidence[value['id']] = value
-    li.current = read_json(input_path('data/price-facts/current.json'))
+    li.current = input_json('data/price-facts/current.json')
+    compact = bool(getattr(view, 'compact_archives', False))
+    reachable = {e['version_id'] for e in (li.current.get('facts') or {}).values()} | {
+        v for record in li.price_records for v in (record.get('beforeVersionId'), record.get('afterVersionId')) if v}
+    evidence_index = {} if compact else None
+    for _, value in json_inputs('data/price-facts/versions', 'pfv_*.json'):
+        vid = value['version_id']
+        if not compact or vid in reachable:
+            li.fact_versions[vid] = value
+        if compact and value.get('evidence_id'):
+            slot = evidence_index.setdefault(value['evidence_id'], {'fact_ids': [], 'observed': None})
+            if vid in reachable:
+                slot['fact_ids'].append(vid)
+            # Preserve the existing exporter's observedAt semantics exactly,
+            # including observations on facts not otherwise publicly reachable.
+            stamp = value.get('observedAt')
+            if stamp:
+                old = slot['observed']
+                slot['observed'] = [min(old[0], stamp), max(old[1], stamp)] if old else [stamp, stamp]
+    if compact:
+        for slot in evidence_index.values():
+            slot['fact_ids'].sort()
+        li.public_evidence_index = evidence_index
+    for _, value in json_inputs('data/price-evidence', 'ev_*.json'):
+        li.evidence[value['id']] = value
 
     # 正式周报：md frontmatter + structured json 一一对应（门禁）
     weekly_md_dir = _safe_path(root, "data/editorial/weekly")
     structured_dir = _safe_path(root, "data/derived/weekly-structured")
-    for logical, mf in files("data/editorial/weekly", "*.md"):
+    weekly_files = ((logical, None) for logical in sorted(view.files) if Path(logical).match('data/editorial/weekly/*.md')) \
+        if view is not None and hasattr(view, 'read_text') else files('data/editorial/weekly', '*.md')
+    for logical, mf in weekly_files:
         wid = Path(logical).stem
-        sf = input_path(f"data/derived/weekly-structured/{wid}.json")
-        if not sf.exists():
+        sf = f'data/derived/weekly-structured/{wid}.json'
+        if (view is not None and sf not in view.files) or (view is None and not _safe_path(root, sf).exists()):
             raise ExportError(f"正式周报缺结构化投影: {wid}（先跑 extract-structured.py）")
-        structured = read_json(sf)
+        structured = input_json(sf)
         if structured.get("date") != wid:
             raise ExportError(f"周报结构化 id 不一致: {wid} vs {structured.get('date')}")
         li.weekly.append({
             "id": wid,
-            "frontmatter": _parse_frontmatter(mf.read_text(encoding="utf-8")),
+            "frontmatter": _parse_frontmatter(view.read_text(logical) if mf is None else mf.read_text(encoding='utf-8')),
             "structured": structured,
         })
 

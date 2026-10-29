@@ -56,3 +56,22 @@ AR-08 最终 6a78846238：53/53 全量标准 release 359.087s、仓库外四入�
 发布准备：合并今日数据，唯一冲突为已移除的 price-ledger.rendered.html，保留 Astro 实现。9份标准输入显式最终切入，原迁移标记保留；七集合新旧/当前数据完全相同，DS0da7/dataThrough20261002。服务器root既有密钥可用，maasdeploy本地密钥不可用；正式CI有既有部署凭据，采用非公开候选预验后CI发布，避免并发切换。
 
 2026-10-02正式上线完成：commit8ebc6b9e4e，RID rl_8ebc6b9e4e_0da7f0c0f2bc；本地和Linux CI均53/53，蓝绿/四入口/旧游标/真实代理链/线上浏览器通过。完整证据、资源边界及回退见 docs/architecture/refactoring-2026-10/release-2026-10-02.md。远端存储DEFERRED。
+
+
+## 2026-10-29 数据/代码解耦
+- 开始实施已同意方案，读取存储迁移、标准输入、公共合同与构建协议。
+- 完成工具/依赖盘点；生产连接与对象桶准备方式已异步询问，尚未得到答案。
+- 尚未改生产、停止原 writer、删除 Git 数据或迁移账号 SQLite。
+
+用户选择现有服务器 PG，并明确暂不使用对象存储；方案已同步。
+
+已完成生产隔离基础设施：复用 PG18 main，不安装/重启；新增 maasdata peer 账号与 maas_data 独立库（连接上限4，work_mem4MB），创建 shared/data-store/{blobs,backups,reports} 0700。现有应用/写入/调度未切换。部署脚本 ops/provision-data-store.sh 已应用成功。
+本地8项真实PG专项通过；首次全量因历史 NUL 失败，已保留为 payload_json 无损文本并补测；192057逻辑文件全量重跑 session88255，独立DB maas_shadow_drill、blobs在/private/tmp/maas-decoupling-20261029。
+
+真实输入全量影子导入成功：192057逻辑文件，178489个新内容对象；事务提交与结构化payload/原始字节验证通过。原文独立复制5341唯一对象、783493910字节，逐对象校验0失败，既有缺原文26份显式保留。开始pg_dump→空库→空文件目录恢复及七集合对账。
+
+pg_dump→空库→空目录恢复通过：192057文件/310270867逻辑字节；原exporter七集合SHA和datasetVersion ds_3622dedc逐项相同，耗时226.54s（迁移恢复演练，不是日常发布耗时）。报告归档至docs/architecture/data-code-decoupling-2026-10-29/parity.json。
+
+数据库直读第一次 canonical 对账发现仅 status.priceStreams 顺序不同；补 source_order 元数据后 datasetVersion一致。进一步文件bytes对账发现嵌套JSON对象键序仍导致4个文件hash不同，未激活此候选。现改为JSONB查询表示+同事务有序JSON表示，reader禁止旧库未补齐时导出；全量backfill已完成，正在做严格7文件bytes+内存复核。
+
+PG专项已扩至14项（含端到端固定样本、不可达历史事实证据时间、源顺序、有界解码键状态），传输4项、标准输入6项、旧导出20项均通过。影子数据包与代码/config哈希已上传；开始限额服务器导入session待记录（root命令不切换应用）。

@@ -23,6 +23,8 @@ def read(root: Path, rel: str, default=None, view=None):
         if rel not in view.files:
             if default is not None: return default
             raise FileNotFoundError('committed input missing: ' + rel)
+        if hasattr(view, 'read_json'):
+            return view.read_json(rel)
         return json.loads(view.path(rel).read_text(encoding='utf-8'))
     p = root / rel
     if not p.exists():
