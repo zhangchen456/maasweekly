@@ -1,20 +1,20 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
-import {fileURLToPath} from 'node:url';
+import {editorialDataset} from './editorial-fixture.js';
 import {randomUUID} from 'node:crypto';
 import {AccountStore} from '../account-store.js';
 import {AdminStore} from '../admin-store.js';
 import {AdminMonitor} from '../admin-monitor.js';
 import {EditorialStore} from '../editorial-store.js';
 import {EditorialService} from '../editorial-service.js';
-import {Dataset,type DatasetHolder} from '../dataset.js';
+import {type DatasetHolder} from '../dataset.js';
 import {MockModel} from '../editorial-model.js';
 import {createAdminHandler} from '../admin-http.js';
 import {editorialCoverage} from '../editorial-coverage.js';
 function record(id:string,sourceId='google-vertex-changelog',at=Date.parse('2026-09-27T10:00Z'),outcome='fetch_failed',version:string|null=null){return {schemaVersion:1,batchId:id,sources:[{id:sourceId,name:sourceId,platform:'google',kind:'changelog',budgetHours:48}],runs:[{id,kind:'prices',trigger:'manual',state:outcome==='fetch_failed'?'failed':'succeeded',stage:'fetch',startedAt:at,finishedAt:at+60000,observedAt:at+60000,inputVersion:version,outputVersion:null,result:outcome==='fetch_failed'?'failed':'success',validation:'unknown',publication:'not_run',errorCode:null,runLink:null,sources:[{sourceId,attemptAt:at,successAt:['success','unchanged'].includes(outcome)?at:null,dataThrough:null,outcome,coverage:outcome==='fetch_failed'?'missing':'full',errorCode:null}]}]};}
 test('D01 real HTTP rejects stale normal approval/publication, allows acknowledged partial and excludes unrelated observations',async()=>{
- const a=new AccountStore(':memory:',()=>Date.parse('2026-10-04T08:00Z'),'d01-isolated-secret-at-least-32-chars'),ad=new AdminStore(a),m=new AdminMonitor(ad),st=new EditorialStore(ad),ds=Dataset.load(fileURLToPath(new URL('../../../../data/public/v1',import.meta.url)));ds.status.sourceStreams=[];const holder={current:ds} as DatasetHolder,s=new EditorialService(st,holder),user=a.verify('d01@example.test',a.issueCode('d01@example.test'));ad.setMember(user.user.id,true,'operator','isolated D01');const config={origin:'',secure:false},server=http.createServer(createAdminHandler(ad,holder,config));await new Promise<void>(r=>server.listen(0,'127.0.0.1',r));config.origin=`http://127.0.0.1:${(server.address() as {port:number}).port}`;const id='weekly-2026-09-28';
+ const a=new AccountStore(':memory:',()=>Date.parse('2026-10-04T08:00Z'),'d01-isolated-secret-at-least-32-chars'),ad=new AdminStore(a),m=new AdminMonitor(ad),st=new EditorialStore(ad),ds=editorialDataset();ds.status.sourceStreams=[];const holder={current:ds} as DatasetHolder,s=new EditorialService(st,holder),user=a.verify('d01@example.test',a.issueCode('d01@example.test'));ad.setMember(user.user.id,true,'operator','isolated D01');const config={origin:'',secure:false},server=http.createServer(createAdminHandler(ad,holder,config));await new Promise<void>(r=>server.listen(0,'127.0.0.1',r));config.origin=`http://127.0.0.1:${(server.address() as {port:number}).port}`;const id='weekly-2026-09-28';
  const post=async(op:string,input:Record<string,unknown>)=>{const r=await fetch(config.origin+'/api/admin/weekly'+(op==='create'?'':'/'+id+'/'+op),{method:'POST',headers:{Cookie:'maas_session='+user.session,Origin:config.origin,'Content-Type':'application/json','Idempotency-Key':randomUUID()},body:JSON.stringify({...input,reason:'D01 integration',...(op==='create'?{}:{expectedVersion:st.issue(id).version})})});return {status:r.status,value:await r.json() as any};};
  const prepare=(coverage='normal',ack?:string)=>post('prepare',{coverage,coverageNote:'Google Vertex采集失败；投影未同步，覆盖受限，不代表无变化',monitorAcknowledgedHash:ack});
  const draft=async()=>{const i=st.issue(id),pack=(await new MockModel().call({stage:'analyze',periodEnd:i.periodEnd,windowFrom:i.windowFrom,windowTo:i.windowTo,dataThrough:i.dataThrough!,coverage:i.coverage,coverageNote:i.coverageNote,selection:i.selection,inputs:st.inputs(id),upstream:null})).output;assert.equal((await post('revisions',{package:pack})).status,200);};
