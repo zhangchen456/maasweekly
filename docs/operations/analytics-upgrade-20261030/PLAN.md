@@ -64,3 +64,9 @@ node --test site/tests/analytics.test.mjs：14/14 通过。
 
 基于生产提交 ac95849ff 的独立 worktree：analytics-worktree-20261030，分支 codex/analytics-20261030。
 完整 API 回归 205/205 通过；SSR 生产构建通过。Umami 已由用户登录（Websites 页面），Google Search Console 已登录本站 Overview，但浏览器内容读取仍持续超时；登录不等于服务端查询授权已配置。
+
+## 实测数据与统计口径修复
+
+2026-10-30 22:30 北京时间：Chrome 原生窗口读取可用，浏览器标签 DOM 通道仍超时。Umami 近7天：66 visitors、67 visits、94 views、79% bounce、10s duration。Google Search Console 当前3个月筛选实际图表覆盖2026-09-30至2026-10-28：2 clicks、3.56K impressions、0.1% CTR、8.5 average position。索引概览5,633已索引、3,047未索引。不同来源时间窗和计量不可合并；上述均为人工读取快照，自动同步尚未接通。
+
+统一正式内容导出在价值激活、活跃账号、跨日回访中的口径，共用过滤条件；补充跨日导出回归，账号及统计25/25测试通过，API构建通过。应用仍未发布。
