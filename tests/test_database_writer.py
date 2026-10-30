@@ -4,6 +4,11 @@ from unittest.mock import patch,MagicMock
 BASE=Path(__file__).resolve().parents[1];sys.path.insert(0,str(BASE/'pipeline'))
 spec=importlib.util.spec_from_file_location('database_writer',BASE/'ops/data-writer/run.py');writer=importlib.util.module_from_spec(spec);spec.loader.exec_module(writer)
 class WriterEnvelopeTests(unittest.TestCase):
+ def test_resume_requires_exact_checkpoint_and_rejects_draft_injection(self):
+  version='in_'+'a'*64
+  self.assertEqual(writer.request(json.dumps({'mode':'resume','inputVersion':version}).encode())['inputVersion'],version)
+  for value in [{'mode':'resume'},{'mode':'resume','inputVersion':'latest'},{'mode':'update','inputVersion':version},{'mode':'resume','inputVersion':version,'drafts':[{}]}]:
+   with self.assertRaises(ValueError):writer.request(json.dumps(value).encode())
  def test_request_rejects_arbitrary_environment_or_mode(self):
   for value in [{'mode':'update','secrets':{'PATH':'evil'}},{'mode':'shell'},{'mode':'update','secrets':{'LLM_API_KEY':'bad\0value'}},{'mode':'update','command':'rm'}]:
    with self.assertRaises(ValueError):writer.request(json.dumps(value).encode())
@@ -41,6 +46,14 @@ class WriterIngestTests(unittest.TestCase):
  setUp=_Fixture.setUp
  tearDown=_Fixture.tearDown
  write=_Fixture.write
+ def test_resume_rejects_changed_mutable_input_without_import_or_pointer_change(self):
+  pointer=self.root/'data/inputs-current.json';before=pointer.read_bytes()
+  self.write('a.json',{'id':'fixture:changed','revision':2})
+  with patch.object(writer,'CODE',self.root),patch.object(writer,'WORK',self.root),patch.object(writer,'STORE',self.base),patch.dict(os.environ,{'MAAS_DATA_DSN':os.environ['MAAS_SHADOW_TEST_DSN']}):
+   with self.assertRaisesRegex(ValueError,'recovery input changed'):writer.ingest(self.version,'a'*40,self.version)
+  self.assertEqual(pointer.read_bytes(),before)
+  with self.connection.cursor() as cursor:
+   cursor.execute('SELECT count(*) FROM maas_data.input_versions');self.assertEqual(cursor.fetchone()[0],0)
  def test_completed_logs_do_not_replace_raw_recovery_manifest(self):
   log=self.root/'data/price-runs/2026-10-29/fixture.json';log.parent.mkdir(parents=True);log.write_text('{"state":"committed","runId":"fixture"}\n')
   with patch.object(writer,'CODE',self.root),patch.object(writer,'WORK',self.root),patch.object(writer,'STORE',self.base),patch.dict(os.environ,{'MAAS_DATA_DSN':os.environ['MAAS_SHADOW_TEST_DSN']}):

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Root-owned, reversible SSR slot switch. Shared data is never rolled back here."""
-import argparse,fcntl,json,os,re,subprocess,tempfile,time
+import argparse,fcntl,json,os,re,subprocess,tempfile,time,sys
 from pathlib import Path
 from urllib.request import urlopen,Request
 from urllib.error import HTTPError
@@ -13,6 +13,19 @@ def atomic(path,body):
     fd,name=tempfile.mkstemp(dir=path.parent)
     with os.fdopen(fd,'wb') as f:f.write(body);f.flush();os.fsync(f.fileno())
     os.chmod(name,0o644);os.replace(name,path)
+
+def retire_previous(previous, candidate):
+    """Drain old requests only after the new route and recovery state are durable."""
+    slot = previous.get('slot')
+    if slot not in ('blue', 'green') or slot == candidate['slot']:
+        return
+    time.sleep(30)
+    try:
+        subprocess.run(['systemctl', 'stop', 'maas-agent@'+slot],
+                       check=True, timeout=45, stdout=subprocess.DEVNULL)
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
+        # A cleanup failure must not undo a healthy, committed deployment.
+        print('warning: previous API slot could not be stopped: '+str(error), file=sys.stderr)
 def fetch(port,route):
     try:
         with urlopen('http://127.0.0.1:'+str(port)+route,timeout=20) as r:return r.status,r.read()
@@ -104,6 +117,7 @@ location ~ ^/(?:logos/|brand/|favicon[^/]*\\.(?:svg|png|ico)$|apple-touch-icon\\
     atomic(SHARED/'runtime-mode',b'enabled\n')
     temp=ROOT/'.runtime-current';temp.unlink(missing_ok=True);temp.symlink_to(package);os.replace(temp,ROOT/'current')
     (SHARED/'runtime-switch-pending.json').unlink(missing_ok=True)
+    retire_previous(previous, candidate)
     return {**candidate,'status':'active','recovery':str(backup)}
 
 def rollback():

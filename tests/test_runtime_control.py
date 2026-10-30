@@ -11,7 +11,7 @@ class RuntimeControlTests(unittest.TestCase):
   for f,body in zip(self.files,payloads):f.write_text(body)
   self.before=[p.read_bytes() for p in self.files];(self.root/'current').symlink_to('releases/old')
   (self.shared/'runtime-candidate.json').write_text(json.dumps({'code':'a'*10,'slot':'blue','port':8788,'datasetVersion':'ds_test'}))
-  self.patches=[patch.object(control,'ROOT',self.root),patch.object(control,'SHARED',self.shared),patch.object(control,'FILES',self.files),patch.object(control,'probe',return_value='ds_test')]
+  self.patches=[patch.object(control,'ROOT',self.root),patch.object(control,'SHARED',self.shared),patch.object(control,'FILES',self.files),patch.object(control,'probe',return_value='ds_test'),patch.object(control.time,'sleep'),patch.object(control.subprocess,'run')]
   for p in self.patches:p.start();self.addCleanup(p.stop)
  def test_stage_exposes_only_public_client_assets_to_nginx(self):
   package=self.root/'runtime'/('a'*10);server=package/'site/dist/server';server.mkdir(parents=True);(server/'entry.mjs').write_text('code');server.chmod(0o750)
@@ -45,4 +45,25 @@ class RuntimeControlTests(unittest.TestCase):
   (self.shared/'runtime-mode').write_text('enabled')
   with patch.object(control,'run'):control.recover_pending()
   self.assertEqual([p.read_bytes() for p in self.files],self.before);self.assertFalse((self.shared/'runtime-mode').exists())
+ def test_old_slot_stops_only_after_success_and_state_commit(self):
+  (self.shared/'runtime.json').write_text(json.dumps({'code':'b'*10,'slot':'green','port':8789}))
+  def stopped(*args,**kwargs):
+   self.assertEqual(json.loads((self.shared/'runtime.json').read_text())['slot'],'blue')
+   self.assertFalse((self.shared/'runtime-switch-pending.json').exists())
+  with patch.object(control,'run'),patch.object(control.subprocess,'run',side_effect=stopped) as stop:
+   control.activate('a'*10)
+  self.assertEqual(stop.call_args.args[0],['systemctl','stop','maas-agent@green'])
+ def test_failed_switch_never_retires_previous(self):
+  with patch.object(control,'run',side_effect=subprocess.CalledProcessError(1,['nginx'])),patch.object(control,'retire_previous') as retire:
+   with self.assertRaises(subprocess.CalledProcessError):control.activate('a'*10)
+  retire.assert_not_called()
+ def test_retirement_failure_keeps_new_deployment(self):
+  with patch.object(control,'run'),patch.object(control.subprocess,'run',side_effect=subprocess.TimeoutExpired(['systemctl'],45)):
+   result=control.activate('a'*10)
+  self.assertEqual(result['status'],'active')
+  self.assertEqual(json.loads((self.shared/'runtime.json').read_text())['slot'],'blue')
+ def test_retirement_does_not_stop_same_or_unknown_slot(self):
+  with patch.object(control.subprocess,'run') as stop:
+   for old in [{'slot':'blue'},{'slot':'invalid'},{}]:control.retire_previous(old,{'slot':'blue'})
+  stop.assert_not_called()
 if __name__=='__main__':unittest.main()
