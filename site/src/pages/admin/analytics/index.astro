@@ -6,6 +6,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     <label>日期范围<select name="preset"><option value="7">近7天</option><option value="28">近28天</option><option value="custom">自定义日期</option></select></label>
     <label>开始日期<input name="from" type="date" /></label><label>结束日期（含当天）<input name="to" type="date" /></label>
     <button type="submit">查询</button>
+    <button id="analytics-export" type="button" disabled>导出分析 CSV</button>
   </form>
   <p id="analytics-status" role="status" aria-live="polite"></p>
   <p class="admin-note">默认北京时间。网站访客、注册账号与Agent请求分别统计；成功读取不等于阅读完成，公测激活不代表付费。</p>
