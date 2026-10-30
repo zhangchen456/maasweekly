@@ -7,6 +7,7 @@ const t = (zh: string, english: string) => en ? english : zh;
 <Layout title={t('反馈产品问题 — MaaS Daily', 'Report a problem — MaaS Daily')} description={t('提交产品问题、复现步骤与截图，查看处理进展。', 'Report a problem with screenshots and track its status.')} locale={locale} noindex={true}>
   <main class="feedback-page" data-feedback-page data-locale={locale}>
     <header><p class="eyebrow">PRODUCT FEEDBACK</p><h1>{t('告诉我们，哪里出了问题。', 'Tell us what went wrong.')}</h1><p>{t('描述你遇到的错误，附上复现步骤和截图。提交后可在这里查看处理进度。', 'Describe the issue, add steps and screenshots, and track progress here.')}</p></header>
+    <p>{t('举报违规内容时，请在标题注明“内容举报”，提供页面位置和文字说明，不要上传或转发违法影像。', 'For content reports, use “Content report” in the title and provide the page location and a written description. Do not upload or forward illegal imagery.')} <a href="/aup/">{t('查看使用政策与举报流程', 'Acceptable use and reporting process')}</a>。{t('未登录也可邮件举报：', 'You can also report without signing in: ')}<a href="mailto:zhangchen3508@gmail.com?subject=MaaS%20Daily%20内容举报">zhangchen3508@gmail.com</a></p>
     <p id="feedback-status" role="status" aria-live="polite"></p>
     <div id="feedback-guest"><p>{t('登录后即可提交反馈，方便跟踪同一个问题。', 'Sign in to submit and track your report.')}</p><button id="feedback-login" type="button">{t('登录 / 注册', 'Sign in / Register')}</button></div>
     <div id="feedback-workspace" hidden>
