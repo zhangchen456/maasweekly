@@ -93,9 +93,11 @@ test('value activation is distinct from beta enrollment and excludes anonymous/s
   db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_read','real',ids[1]!,f.now()+DAY);
   db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_read','real',null,f.now());
   db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('report_export','real',ids[2]!,f.now()+7*DAY);
+  db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_export','real',ids[3]!,f.now());
+  db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_export','real',ids[3]!,f.now()+DAY);
   f.set(f.now()+8*DAY);
   const result=analyticsBusiness(f.admin,analyticsRange(new URLSearchParams({from:'2026-08-01',to:'2026-08-08'}),f.now()),f.now());
-  assert.equal(result.valueActivation7d.numerator,1);assert.equal(result.valueActivation7d.denominator,6);
-  assert.equal(result.valueUsage.activeAccounts,2);assert.equal(result.valueUsage.returningAccounts,1);
+  assert.equal(result.valueActivation7d.numerator,2);assert.equal(result.valueActivation7d.denominator,6);
+  assert.equal(result.valueUsage.activeAccounts,3);assert.equal(result.valueUsage.returningAccounts,2);
  } finally {f.accounts.close();}
 });

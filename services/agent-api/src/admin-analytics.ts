@@ -38,6 +38,7 @@ export function trackAnalyticsRequest(admin:AdminStore,req:IncomingMessage,res:S
     catch{try{admin.db.prepare("UPDATE analytics_health SET value=value+1,updated=? WHERE key='request_failures'").run(admin.accounts.now());}catch{/* cannot report a failed database through itself */}}});
 }
 const EXPORTS="(event='report_export' OR (event='content_export' AND NOT EXISTS(SELECT 1 FROM pro_content c WHERE c.id=target AND json_extract(c.payload,'$.sample')=1)))";
+const VALUE_EVENT="(e.event IN ('content_read','report_read','weekly_read','report_export','agent_tool_success') OR (e.event='content_export' AND NOT EXISTS(SELECT 1 FROM pro_content c WHERE c.id=e.target AND json_extract(c.payload,'$.sample')=1)))";
 const READS="('content_read','report_read','weekly_read')";
 export function analyticsBusiness(admin:AdminStore,r:AnalyticsRange,now:number) {
   const db=admin.db,start=Number(db.prepare("SELECT updated FROM analytics_health WHERE key='collection_start'").get()!.updated);
@@ -55,9 +56,9 @@ export function analyticsBusiness(admin:AdminStore,r:AnalyticsRange,now:number) 
   const denominator=count('SELECT count(*) AS n FROM account_registrations WHERE created>=? AND created<?',r.start,matureEnd);
   const activated=count('SELECT count(*) AS n FROM account_registrations r JOIN pro_beta_access b ON b.userId=r.userId WHERE r.created>=? AND r.created<? AND b.created>=r.created AND b.created<r.created+?',r.start,matureEnd,7*DAY);
   // Value activation uses server-observed reads/exports/tool success, not beta enrollment.
-  const valueActivated=count(`SELECT count(*) AS n FROM account_registrations r WHERE r.created>=? AND r.created<? AND EXISTS(SELECT 1 FROM pro_events e WHERE e.userId=r.userId AND e.created>=r.created AND e.created<r.created+? AND (e.event IN ('content_read','report_read','weekly_read','report_export','agent_tool_success') OR (e.event='content_export' AND NOT EXISTS(SELECT 1 FROM pro_content c WHERE c.id=e.target AND json_extract(c.payload,'$.sample')=1))))`,r.start,matureEnd,7*DAY);
-  const activeAccounts=count(`SELECT count(DISTINCT userId) AS n FROM pro_events WHERE userId IS NOT NULL AND created>=? AND created<? AND event IN ('content_read','report_read','weekly_read','report_export','agent_tool_success')`,r.start,r.end);
-  const returningAccounts=count(`SELECT count(*) AS n FROM (SELECT userId FROM pro_events WHERE userId IS NOT NULL AND created>=? AND created<? AND event IN ('content_read','report_read','weekly_read','report_export','agent_tool_success') GROUP BY userId HAVING count(DISTINCT CAST((created+28800000)/86400000 AS INTEGER))>=2)`,r.start,r.end);
+  const valueActivated=count(`SELECT count(*) AS n FROM account_registrations r WHERE r.created>=? AND r.created<? AND EXISTS(SELECT 1 FROM pro_events e WHERE e.userId=r.userId AND e.created>=r.created AND e.created<r.created+? AND ${VALUE_EVENT})`,r.start,matureEnd,7*DAY);
+  const activeAccounts=count(`SELECT count(DISTINCT userId) AS n FROM pro_events e WHERE userId IS NOT NULL AND created>=? AND created<? AND ${VALUE_EVENT}`,r.start,r.end);
+  const returningAccounts=count(`SELECT count(*) AS n FROM (SELECT userId FROM pro_events e WHERE userId IS NOT NULL AND created>=? AND created<? AND ${VALUE_EVENT} GROUP BY userId HAVING count(DISTINCT CAST((created+28800000)/86400000 AS INTEGER))>=2)`,r.start,r.end);
   const first=`WITH first AS (SELECT userId,min(created) AS firstAt FROM pro_events WHERE event IN ${READS} AND userId IS NOT NULL GROUP BY userId) `;
   const cohortStart=Math.max(r.start,start),retentionEnd=Math.min(r.end,now-28*DAY+1);
   const readers=count(first+'SELECT count(*) AS n FROM first WHERE firstAt>=? AND firstAt<?',cohortStart,r.end);
