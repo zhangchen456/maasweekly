@@ -19,9 +19,13 @@ export function validateAnalyticsConfig(config) {
 export function pageType(path) {
   path = path.replace(/^\/en(?=\/|$)/, '') || '/';
   if (path === '/') return 'home';
+  if (/^\/item\/price_/.test(path)) return 'price_detail';
+  if (/^\/item\/obs_/.test(path)) return 'change_detail';
   const section = path.split('/')[1];
   return ({ model: 'model_detail', models: 'model_catalog', changes: 'changes',
-    pricing: 'prices', leaderboards: 'leaderboard', agent: 'agent',
+    pricing: 'prices', evidence: 'evidence', daily: 'daily_archive', weekly: 'weekly',
+    guides: 'guide', subscription: 'subscription', account: 'account', pro: 'professional',
+    compare: 'comparison', sources: 'sources', method: 'methodology', feedback: 'feedback', leaderboards: 'leaderboard', agent: 'agent',
     feed: 'feed', 'feed.xml': 'feed', 'maas-skill': 'skill' })[section] || 'other';
 }
 
@@ -87,6 +91,8 @@ export function startAnalytics(win, config, canonicalUrl) {
         } catch { return false; }
       } else if (payload.name === 'copy' && COPY_KINDS.has(data.kind)) {
         result.data.kind = data.kind;
+      } else if (payload.name === 'subscription_click' || payload.name === 'comparison_click' || payload.name === 'search_used') {
+        // Intent only; successful business actions belong to server-side records.
       } else return false;
     } else {
       if (path === lastPage) return false;
@@ -123,6 +129,8 @@ export function startAnalytics(win, config, canonicalUrl) {
         const match = url.pathname.match(/^(?:\/en)?\/model\/([^/]+)\/?$/);
         const modelId = match ? decodeURIComponent(match[1]) : '';
         if (MODEL_ID.test(modelId)) track('model_click', { model_id: modelId });
+        else if (/^\/(?:en\/)?subscription\/?$/.test(url.pathname)) track('subscription_click', {});
+        else if (/^\/(?:en\/)?compare\/?$/.test(url.pathname)) track('comparison_click', {});
       }
     } catch { /* Not a trackable link. */ }
   };
@@ -131,6 +139,13 @@ export function startAnalytics(win, config, canonicalUrl) {
   win.document.addEventListener('auxclick', click, true);
   win.document.addEventListener('maas:copy-success', event => {
     if (COPY_KINDS.has(event.detail?.kind)) track('copy', { kind: event.detail.kind });
+  });
+
+  // One committed search interaction, never the entered text or field name.
+  win.document.addEventListener('change', event => {
+    if (event.target?.matches?.('input[type="search"]') && event.target.value.trim()) {
+      track('search_used', {});
+    }
   });
 
   const script = win.document.createElement('script');

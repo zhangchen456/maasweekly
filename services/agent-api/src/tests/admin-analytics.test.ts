@@ -82,3 +82,20 @@ test('admin revocation during external await rejects the finished aggregation',a
  const server=http.createServer(handler);await new Promise<void>(r=>server.listen(0,'127.0.0.1',r));
  try{const promise=fetch(`http://127.0.0.1:${(server.address() as any).port}/api/admin/analytics`,{headers:{Cookie:'maas_session='+u.session}});await ready;f.admin.setMember(u.user.id,false,'ops','revoked during query');release();const response=await promise;assert.equal(response.status,403);assert.equal((await response.json() as any).code,'forbidden');}finally{release();server.closeAllConnections();external.closeAllConnections();await Promise.all([new Promise<void>(r=>server.close(()=>r())),new Promise<void>(r=>external.close(()=>r()))]);f.accounts.close();}
 });
+
+test('value activation is distinct from beta enrollment and excludes anonymous/sample events',()=>{
+ const f=fixture(),db=f.accounts.db;
+ try {
+  const ids=Array.from({length:6},(_,i)=>f.login('value'+i+'@example.test').user.id);
+  db.prepare('INSERT INTO pro_beta_access VALUES(?,?)').run(ids[0]!,f.now());
+  db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('sample_read','sample',ids[0]!,f.now());
+  db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_read','real',ids[1]!,f.now());
+  db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_read','real',ids[1]!,f.now()+DAY);
+  db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_read','real',null,f.now());
+  db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('report_export','real',ids[2]!,f.now()+7*DAY);
+  f.set(f.now()+8*DAY);
+  const result=analyticsBusiness(f.admin,analyticsRange(new URLSearchParams({from:'2026-08-01',to:'2026-08-08'}),f.now()),f.now());
+  assert.equal(result.valueActivation7d.numerator,1);assert.equal(result.valueActivation7d.denominator,6);
+  assert.equal(result.valueUsage.activeAccounts,2);assert.equal(result.valueUsage.returningAccounts,1);
+ } finally {f.accounts.close();}
+});
