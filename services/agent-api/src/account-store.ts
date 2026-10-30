@@ -31,13 +31,20 @@ export class AccountStore {
       CREATE TABLE IF NOT EXISTS sessions(hash TEXT PRIMARY KEY, userId TEXT NOT NULL REFERENCES users(id), expires INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS account_profiles(userId TEXT PRIMARY KEY REFERENCES users(id), displayName TEXT NOT NULL DEFAULT '', created INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS account_state(userId TEXT NOT NULL REFERENCES users(id), key TEXT NOT NULL, value TEXT NOT NULL, updated INTEGER NOT NULL, PRIMARY KEY(userId,key));
+      CREATE TABLE IF NOT EXISTS account_value_events(id TEXT PRIMARY KEY,userId TEXT NOT NULL REFERENCES users(id),event TEXT NOT NULL,target TEXT NOT NULL,created INTEGER NOT NULL);
+      CREATE INDEX IF NOT EXISTS account_value_events_user_time ON account_value_events(userId,created);
+      CREATE TABLE IF NOT EXISTS account_value_metadata(key TEXT PRIMARY KEY,created INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS watches(userId TEXT NOT NULL REFERENCES users(id), modelId TEXT NOT NULL, since INTEGER NOT NULL, PRIMARY KEY(userId, modelId));
       CREATE TABLE IF NOT EXISTS mail_jobs(id TEXT PRIMARY KEY, userId TEXT NOT NULL REFERENCES users(id), payload TEXT NOT NULL, created INTEGER NOT NULL, lease INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'pending', mail TEXT);
       CREATE TABLE IF NOT EXISTS mail_items(userId TEXT NOT NULL REFERENCES users(id), eventKey TEXT NOT NULL, jobId TEXT NOT NULL REFERENCES mail_jobs(id), PRIMARY KEY(userId,eventKey));
       CREATE INDEX IF NOT EXISTS sessions_expiry ON sessions(expires);
       CREATE INDEX IF NOT EXISTS jobs_pending ON mail_jobs(status, lease);`);
+    this.db.prepare("INSERT OR IGNORE INTO account_value_metadata VALUES('collection_start',?)").run(this.now());
   }
   close() { this.db.close(); }
+  private valueEvent(id: string, event: string, target = '') {
+    this.db.prepare('INSERT INTO account_value_events VALUES(?,?,?,?,?)').run(randomUUID(),id,event,target,this.now());
+  }
   transaction<T>(fn: () => T): T {
     this.db.exec('BEGIN IMMEDIATE');
     try { const result = fn(); this.db.exec('COMMIT'); return result; }
@@ -147,12 +154,15 @@ export class AccountStore {
     if (!catalog.models.some(m => m.modelId === modelId)) throw new AccountError(400, 'unknown_model', '请选择目录中的模型');
     this.transaction(() => {
       if (this.watches(id).length >= 50 && !this.watches(id).some(w => w.modelId === modelId)) throw new AccountError(400, 'watch_limit', '最多关注 50 个模型');
-      this.db.prepare('INSERT OR IGNORE INTO watches VALUES(?,?,?)').run(id, modelId, this.now());
+      const inserted=this.db.prepare('INSERT OR IGNORE INTO watches VALUES(?,?,?)').run(id, modelId, this.now());
+      if (inserted.changes) this.valueEvent(id,'model_followed',modelId);
     });
   }
   unwatch(id: string, modelId: string) { this.db.prepare('DELETE FROM watches WHERE userId=? AND modelId=?').run(id, modelId); }
   preferences(id: string, enabled: boolean) {
     this.transaction(() => {
+      const previous=this.db.prepare('SELECT emailEnabled FROM users WHERE id=?').get(id);
+      if (enabled && previous && !previous.emailEnabled) this.valueEvent(id,'reminder_enabled');
       this.db.prepare('UPDATE users SET emailSince=CASE WHEN emailEnabled=0 AND ?=1 THEN ? ELSE emailSince END,emailEnabled=? WHERE id=?').run(Number(enabled), this.now(), Number(enabled), id);
       if (!enabled) this.cancelPending(id);
     });

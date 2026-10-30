@@ -264,3 +264,18 @@ test('password HTTP supports email verification then password login without mail
     assert.equal(me.user.hasPassword, true); assert.ok(!JSON.stringify(me).includes('digest'));
   } finally { server.closeAllConnections(); await new Promise<void>(resolve => server.close(() => resolve())); store.close(); }
 });
+
+ test('successful reminder transitions are recorded once and rollback with business state', () => {
+ const store=new AccountStore(':memory:',()=>100000,'value-events-test-secret-at-least-32-characters');
+ try {
+ const u=store.verify('events@example.test',store.issueCode('events@example.test')).user;
+ store.preferences(u.id,true);store.preferences(u.id,true);
+ assert.equal(store.db.prepare('SELECT count(*) AS n FROM account_value_events').get()!.n,1);
+ store.preferences(u.id,false);store.preferences(u.id,true);
+ assert.equal(store.db.prepare('SELECT count(*) AS n FROM account_value_events').get()!.n,2);
+ store.preferences(u.id,false);
+ store.db.exec("CREATE TRIGGER fail_value BEFORE INSERT ON account_value_events BEGIN SELECT RAISE(ABORT,'test'); END");
+ assert.throws(()=>store.preferences(u.id,true));
+ assert.equal(store.db.prepare('SELECT emailEnabled FROM users WHERE id=?').get(u.id)!.emailEnabled,0);
+ }finally{store.close();}
+ });
