@@ -82,6 +82,10 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
       }
       const user = store.user(session);
       if (!user) throw new AccountError(401, 'unauthenticated', '请先登录');
+      if (route === 'usage' && req.method === 'POST') {
+        if(Object.keys(input).some(k=>k!=='event'))throw new AccountError(400,'invalid_event','无效统计事件');
+        store.recordWorkspaceUsage(user.id,input.event);reply(res,200,{recorded:true});return;
+      }
       if (route === 'feedback' && req.method === 'POST') { reply(res, 201, feedback!.submit(user.id, input)); return; }
       if (route === 'feedback' && req.method === 'GET') { reply(res, 200, {items: feedback!.list(user.id)}); return; }
       const screenshot = /^feedback\/([0-9a-f-]{36})\/image\/([0-2])$/.exec(route);

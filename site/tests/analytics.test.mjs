@@ -248,3 +248,11 @@ test('subscription CTA records free beta intent before login, but not existing-m
   dom.virtualConsole.removeAllListeners('jsdomError'); button.click();assert.equal(intents,1);
   dom.window.close();
 });
+
+test('workspace completion signals are once per document, allowlisted and omit calculation data',()=>{
+ const d=browser('',BASE+'/pricing/'),w=d.window,events=[];startAnalytics(w,enabled,BASE);provider(w,events);
+ const emit=name=>w.document.dispatchEvent(new w.CustomEvent('maas:workspace-result',{detail:{event:name,amount:123,email:'private@example.test'}}));
+ emit('comparison_completed');emit('comparison_completed');emit('cost_estimate_completed');emit('unknown');
+ assert.equal(events.length,2);assert.ok(!JSON.stringify(events).includes('private'));assert.ok(!JSON.stringify(events).includes('123'));
+ assert.deepEqual(events[0].data,{page_type:'prices'});d.window.close();
+});

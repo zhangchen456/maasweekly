@@ -159,3 +159,35 @@ test('collection health preserves null history, commits success atomically and r
   f.login('health@example.test');assert.equal(read().lastRecorded.registration,new Date(f.now()).toISOString());
  }finally{f.accounts.close();}
 });
+
+test('growth reports exact Beijing D7 with complete-day maturity, earliest action and configured campaigns',()=>{
+ const f=fixture(at('2026-08-01')),a=f.accounts,db=a.db;
+ try {
+  f.set(at('2026-08-01')+23*3600000);
+  const ids=Array.from({length:5},(_,i)=>a.verify(`growth${i}@example.test`,a.issueCode(`growth${i}@example.test`),{first:'social',last:'social',firstCampaign:'weekly-wechat-v1',lastCampaign:'weekly-wechat-v1'}).user.id);
+  const start=f.now();
+  a.recordWorkspaceUsage(ids[0]!,'comparison_completed');a.recordWorkspaceUsage(ids[0]!,'comparison_completed');
+  assert.equal(db.prepare("SELECT count(*) n FROM account_value_events WHERE event='comparison_completed'").get()!.n,1);
+  f.set(at('2026-08-02'));a.recordWorkspaceUsage(ids[0]!,'cost_estimate_completed');
+  assert.throws(()=>a.recordWorkspaceUsage(ids[0]!,'email@private.test'));
+  // Before registration excluded; sample read excluded; D6/D8 do not count as D7.
+  db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_read','real',ids[1]!,start-1);
+  db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('sample_read','sample',ids[1]!,start+1);
+  for(const day of [6,8])db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_read','real',ids[1]!,at('2026-08-01')+day*DAY);
+  db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_read','real',ids[0]!,at('2026-08-08'));
+  const query=()=>analyticsBusiness(f.admin,analyticsRange(new URLSearchParams({from:'2026-08-01',to:'2026-08-01'}),f.now()),f.now()).growth;
+  f.set(at('2026-08-08')+DAY-1);assert.equal(query().retentionDay7.denominator,0);assert.equal(query().retentionDay7.rate,null);
+  f.set(at('2026-08-09'));const result=query();
+  assert.deepEqual(result.retentionDay7,{numerator:1,denominator:5,immature:0,rate:.2});
+  assert.equal(result.firstActions.find(x=>x.event==='comparison_completed')!.accounts,1);
+  assert.equal(result.firstActions.find(x=>x.event==='no_recorded_action')!.accounts,3);
+  assert.equal(result.campaigns[0]!.firstCampaign,'weekly-wechat-v1');assert.equal(result.campaigns[0]!.day7Rate,.2);
+  const bad=a.verify('campaign-bad@example.test',a.issueCode('campaign-bad@example.test'),{firstCampaign:'private@example.test'});
+  assert.equal(db.prepare('SELECT firstCampaign FROM account_registration_campaigns WHERE userId=?').get(bad.user.id)!.firstCampaign,null);
+ }finally{a.close();}
+});
+
+test('API campaign allowlist matches shared configuration',async()=>{
+ const {readFileSync}=await import('node:fs');const {campaigns}=await import('../analytics-campaigns.js');
+ assert.deepEqual(campaigns,JSON.parse(readFileSync(new URL('../../../../packages/analytics/campaigns.json',import.meta.url),'utf8')));
+});
