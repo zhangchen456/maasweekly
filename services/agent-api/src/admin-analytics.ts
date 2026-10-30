@@ -69,7 +69,7 @@ export function analyticsBusiness(admin:AdminStore,r:AnalyticsRange,now:number) 
   const sourceStart=Number(db.prepare("SELECT created FROM account_value_metadata WHERE key='source_start'").get()!.created);
   const funnelStart=Math.max(start,accountActionsSince,sourceStart);
   // Cohort is registrations in the requested range; each mature account has a full 7-day outcome window.
-  const funnel=db.prepare(`WITH activity AS (
+  const cohortSql=`WITH activity AS (
     SELECT e.userId,e.created FROM pro_events e WHERE e.userId IS NOT NULL AND ${VALUE_EVENT}
     UNION ALL SELECT userId,created FROM account_value_events WHERE event IN ('model_followed','reminder_enabled')
   ), cohort AS (
@@ -77,10 +77,15 @@ export function analyticsBusiness(admin:AdminStore,r:AnalyticsRange,now:number) 
       CASE WHEN r.created<=? THEN 1 ELSE 0 END AS mature,
       (SELECT count(DISTINCT CAST((a.created+28800000)/86400000 AS INTEGER)) FROM activity a WHERE a.userId=r.userId AND a.created>=r.created AND a.created<r.created+? AND a.created<?) AS activeDays
     FROM account_registrations r LEFT JOIN account_registration_sources s ON s.userId=r.userId WHERE r.created>=? AND r.created<?
-  ) SELECT firstSource,lastSource,count(*) AS registered,sum(mature) AS mature,
+  ) `;
+  const aggregates=`count(*) AS registered,sum(mature) AS mature,
     sum(CASE WHEN mature=1 AND activeDays>=1 THEN 1 ELSE 0 END) AS used,
-    sum(CASE WHEN mature=1 AND activeDays>=2 THEN 1 ELSE 0 END) AS returned
-    FROM cohort GROUP BY firstSource,lastSource ORDER BY registered DESC,firstSource,lastSource`).all(now-7*DAY,7*DAY,now,Math.max(r.start,funnelStart),r.end) as unknown as {firstSource:string;lastSource:string;registered:number;mature:number;used:number;returned:number}[];
-  const freeFunnel={...coverage(funnelStart),windowDays:7,items:funnel.map(row=>({...row,immature:row.registered-row.mature,useRate:row.mature>=5?row.used/row.mature:null,returnRate:row.used>=5?row.returned/row.used:null}))};
+    sum(CASE WHEN mature=1 AND activeDays>=2 THEN 1 ELSE 0 END) AS returned`;
+  const args=[now-7*DAY,7*DAY,now,Math.max(r.start,funnelStart),r.end];
+  type CohortCounts={registered:number;mature:number;used:number;returned:number};
+  const funnel=db.prepare(cohortSql+`SELECT firstSource,lastSource,${aggregates} FROM cohort GROUP BY firstSource,lastSource ORDER BY registered DESC,firstSource,lastSource`).all(...args) as unknown as (CohortCounts&{firstSource:string;lastSource:string})[];
+  const weeklyCohorts=db.prepare(cohortSql+`SELECT date(created/1000,'unixepoch','+8 hours','weekday 0','-6 days') AS weekStart,${aggregates} FROM cohort GROUP BY weekStart ORDER BY weekStart DESC`).all(...args) as unknown as (CohortCounts&{weekStart:string})[];
+  const metrics=<T extends CohortCounts>(row:T)=>({...row,immature:row.registered-row.mature,useRate:row.mature>=5?row.used/row.mature:null,returnRate:row.used>=5?row.returned/row.used:null});
+  const freeFunnel={...coverage(funnelStart),windowDays:7,items:funnel.map(metrics),weekly:weeklyCohorts.map(metrics)};
   return {freeFunnel,accountActions:{...coverage(accountActionsSince),items:accountActions},asOf:new Date(now).toISOString(),coverage:coverage(start),profilesCreated:count('SELECT count(*) AS n FROM account_profiles WHERE created>=? AND created<?',r.start,r.end),registrations:{count:registered,...coverage(start),historicalUnknown:count('SELECT count(*) AS n FROM users WHERE id NOT IN (SELECT userId FROM account_registrations)')},betaActivated:count('SELECT count(*) AS n FROM pro_beta_access WHERE created>=? AND created<?',r.start,r.end),professionalReads:{requests:count(`SELECT count(*) AS n FROM pro_events WHERE event IN ${READS} AND created>=? AND created<?`,r.start,r.end),accounts:count(`SELECT count(DISTINCT userId) AS n FROM pro_events WHERE event IN ${READS} AND created>=? AND created<?`,r.start,r.end)},exports:{requests:count(`SELECT count(*) AS n FROM pro_events WHERE ${EXPORTS} AND created>=? AND created<?`,r.start,r.end),accounts:count(`SELECT count(DISTINCT userId) AS n FROM pro_events WHERE ${EXPORTS} AND created>=? AND created<?`,r.start,r.end)},events,weekly:{items:weeklyItems,truncated:weekly.length>100},agents:{...coverage(start),failures:Number(db.prepare("SELECT value FROM analytics_health WHERE key='request_failures'").get()?.value??0),items:db.prepare('SELECT channel,sum(count) AS requests,sum(CASE WHEN status>=200 AND status<300 THEN count ELSE 0 END) AS httpSuccess FROM analytics_requests WHERE day>=? AND day<? GROUP BY channel ORDER BY channel').all(r.start,r.end)},valueActivation7d:{...rate(valueActivated,denominator,registered-denominator),...coverage(start)},valueUsage:{activeAccounts,returningAccounts},activation7d:{...rate(activated,denominator,registered-denominator),...coverage(start)},retentionWeek4:{...rate(returned,matured,readers-matured),...coverage(start)}};
 }

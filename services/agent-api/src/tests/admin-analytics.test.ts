@@ -130,3 +130,18 @@ test('free funnel uses one mature registration cohort and excludes pre-registrat
   assert.deepEqual(r.freeFunnel.items,[{firstSource:'search',lastSource:'ai',registered:6,mature:5,used:2,returned:1,immature:1,useRate:.4,returnRate:null}]);
  }finally{a.close();}
 });
+
+test('weekly registration cohorts respect Beijing Monday boundary and maturity without mixing weeks',()=>{
+ const f=fixture(),a=f.accounts;try{
+  f.set(Date.parse('2026-08-02T23:59:00+08:00'));
+  const ids=Array.from({length:5},(_,i)=>f.login(`week${i}@example.test`).user.id);
+  a.db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_read','real',ids[0]!,f.now());
+  a.db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_read','real',ids[0]!,f.now()+2*60000);
+  f.set(Date.parse('2026-08-03T12:00:00+08:00'));const recent=f.login('next-week@example.test').user.id;
+  a.db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run('content_read','real',recent,f.now());
+  f.set(Date.parse('2026-08-10T00:00:00+08:00'));
+  const result=analyticsBusiness(f.admin,analyticsRange(new URLSearchParams({from:'2026-08-01',to:'2026-08-09'}),f.now()),f.now()).freeFunnel;
+  assert.deepEqual(result.weekly,[{weekStart:'2026-08-03',registered:1,mature:0,used:0,returned:0,immature:1,useRate:null,returnRate:null},{weekStart:'2026-07-27',registered:5,mature:5,used:1,returned:1,immature:0,useRate:.2,returnRate:null}]);
+  assert.equal(result.weekly.reduce((n,r)=>n+r.registered,0),result.items.reduce((n,r)=>n+r.registered,0));
+ }finally{a.close();}
+});
