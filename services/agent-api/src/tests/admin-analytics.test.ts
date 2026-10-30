@@ -101,3 +101,32 @@ test('value activation is distinct from beta enrollment and excludes anonymous/s
   assert.equal(result.valueUsage.activeAccounts,3);assert.equal(result.valueUsage.returningAccounts,2);
  } finally {f.accounts.close();}
 });
+
+test('registration attribution is allowlisted, atomic and never overwritten on later login',()=>{
+ const f=fixture(),a=f.accounts;try{
+  const email='source@example.test';const u=a.verify(email,a.issueCode(email),{first:'search',last:'ai',email:'discard'}).user;
+  assert.equal(a.db.prepare('SELECT firstSource FROM account_registration_sources WHERE userId=?').get(u.id)!.firstSource,'search');
+  f.set(f.now()+60001);a.verify(email,a.issueCode(email),{first:'social',last:'social'});
+  assert.equal(a.db.prepare('SELECT lastSource FROM account_registration_sources WHERE userId=?').get(u.id)!.lastSource,'ai');
+  const bad=a.verify('bad@example.test',a.issueCode('bad@example.test'),{first:'private@example.test',last:'https://secret.test/token'}).user;
+  assert.equal(a.db.prepare('SELECT firstSource FROM account_registration_sources WHERE userId=?').get(bad.id)!.firstSource,'unknown');
+  a.db.exec("CREATE TRIGGER reject_source BEFORE INSERT ON account_registration_sources BEGIN SELECT RAISE(ABORT,'test'); END");
+  assert.throws(()=>a.verify('rollback@example.test',a.issueCode('rollback@example.test'),{first:'search',last:'search'}));
+  assert.equal(a.db.prepare("SELECT 1 FROM users WHERE email='rollback@example.test'").get(),undefined);
+ }finally{a.close();}
+});
+
+test('free funnel uses one mature registration cohort and excludes pre-registration, late and immature outcomes',()=>{
+ const f=fixture(),a=f.accounts,db=a.db;try{
+  const ids=Array.from({length:5},(_,i)=>a.verify(`funnel${i}@example.test`,a.issueCode(`funnel${i}@example.test`),{first:'search',last:'ai'}).user.id);
+  const add=(id:string,event:string,t:number)=>db.prepare('INSERT INTO pro_events VALUES(?,?,?,?)').run(event,'real',id,t);
+  add(ids[0]!,'content_export',f.now());add(ids[0]!,'content_export',f.now()+DAY);
+  db.prepare('INSERT INTO account_value_events VALUES(?,?,?,?,?)').run('test-follow',ids[1]!,'model_followed','model',f.now());
+  add(ids[2]!,'content_read',f.now()-1);add(ids[2]!,'content_read',f.now()+7*DAY);
+  add(ids[3]!,'sample_read',f.now());
+  f.set(f.now()+6*DAY);const recent=a.verify('recent@example.test',a.issueCode('recent@example.test'),{first:'search',last:'ai'}).user.id;add(recent,'content_read',f.now());
+  f.set(f.now()+DAY);
+  const r=analyticsBusiness(f.admin,analyticsRange(new URLSearchParams({from:'2026-08-01',to:'2026-08-07'}),f.now()),f.now());
+  assert.deepEqual(r.freeFunnel.items,[{firstSource:'search',lastSource:'ai',registered:6,mature:5,used:2,returned:1,immature:1,useRate:.4,returnRate:null}]);
+ }finally{a.close();}
+});
