@@ -45,6 +45,7 @@ const localizedContent = en ? englishHtml(content) : content;
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={en ? englishUi(description) : description} />
     {activePath === '/' && <meta name="baidu-site-verification" content="codeva-UXsh2qWgbK" />}
+    {activePath === '/' && <meta name="waffo-verify" content="ee94fc5e4822ab3870acd97b2d4f99c6" />}
     <title>{en ? englishUi(title) : title}</title>
     <link rel="canonical" href={canonical} />
     {zhRoute && enRoute && <><link rel="alternate" hreflang="zh-CN" href={canonicalUrl(zhRoute)} /><link rel="alternate" hreflang="en" href={canonicalUrl(enRoute)} /></>}
