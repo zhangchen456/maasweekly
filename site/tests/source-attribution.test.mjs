@@ -30,3 +30,15 @@ test('Google AI referrals are distinct from search',()=>{
  const d=page('https://daily.maas.click/','https://gemini.google.com/app/private-chat');
  assert.equal(d.window.registrationSource().first,'ai');d.window.close();
 });
+test('account verification includes only source channels and password login is unchanged',async()=>{
+ const d=page('https://daily.maas.click/?utm_source=google','https://google.com/search?q=private');
+ const requests=[];d.window.fetch=async(url,init)=>{requests.push({url,init});return {ok:!url.endsWith('/me'),status:url.endsWith('/me')?401:200,json:async()=>({})};};
+ const client=fs.readFileSync(new URL('../src/scripts/account-client.ts',import.meta.url),'utf8').replace(/^import[^\n]+\n/,'').replace(/export /g,'');
+ d.window.eval((await transform(client,{loader:'ts'})).code);
+ await d.window.accountApi('verify',{email:'test@example.test',code:'123456'});
+ const body=JSON.parse(requests.find(r=>r.url.endsWith('/verify')).init.body);
+ assert.deepEqual(body.attribution,{first:'search',last:'search'});
+ await d.window.accountApi('login',{email:'test@example.test',password:'secret'});
+ assert.equal(JSON.parse(requests.find(r=>r.url.endsWith('/login')).init.body).attribution,undefined);
+ d.window.close();
+});
