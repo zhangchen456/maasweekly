@@ -1,3 +1,5 @@
+import {registrationSource} from './source-attribution';
+registrationSource();
 export interface AccountMe {
   user: { id: string; email: string; displayName: string; created: number; plan: string; hasPassword: boolean };
   preferences: { emailEnabled: boolean };
@@ -6,6 +8,7 @@ export interface AccountMe {
 }
 export class AccountApiError extends Error { constructor(message: string, readonly status: number) { super(message); } }
 export async function accountApi<T>(route: string, payload?: unknown, keepalive = false): Promise<T> {
+  if(route==='verify' && payload && typeof payload==='object') payload={...payload,attribution:registrationSource()};
   const response = await fetch(`/api/account/${route}`, { credentials: 'same-origin', cache: 'no-store', keepalive,
     ...(payload === undefined ? {} : { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }) });
   let value; try { value = await response.json(); } catch { throw new AccountApiError('服务暂不可用，请稍后重试', response.status); }

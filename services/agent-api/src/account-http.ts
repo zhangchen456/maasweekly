@@ -64,7 +64,7 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
       if (route === 'verify' && req.method === 'POST') {
         const address = email(input.email);
         if (typeof input.code !== 'string' || !/^\d{6}$/.test(input.code)) throw new AccountError(400, 'invalid_code', '请输入六位验证码');
-        const result = store.verify(address, input.code);
+        const result = store.verify(address, input.code, input.attribution);
         if (session) store.logout(session);
         res.setHeader('Set-Cookie', cookie(result.session, 30 * 86400));
         reply(res, 200, { authenticated: true }); return;
