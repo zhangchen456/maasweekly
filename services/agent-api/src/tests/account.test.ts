@@ -279,3 +279,21 @@ test('password HTTP supports email verification then password login without mail
  assert.equal(store.db.prepare('SELECT emailEnabled FROM users WHERE id=?').get(u.id)!.emailEnabled,0);
  }finally{store.close();}
  });
+
+test('optional workspace usage requires same-origin account session and strips arbitrary data',async()=>{
+ let clock=start;const store=new AccountStore(':memory:',()=>clock,SECRET),u=login(store);
+ const server=http.createServer(createAccountHandler(store,null,{current:null} as unknown as DatasetHolder,{origin:'http://localhost',secure:false}));
+ await new Promise<void>(r=>server.listen(0,'127.0.0.1',r));const base=`http://127.0.0.1:${(server.address() as any).port}/api/account/usage`;
+ const post=(payload:unknown,cookie='',origin='http://localhost')=>fetch(base,{method:'POST',headers:{'Content-Type':'application/json',Origin:origin,Cookie:cookie},body:JSON.stringify(payload)});
+ try{
+  assert.equal((await post({event:'comparison_completed'})).status,401);
+  assert.equal((await post({event:'comparison_completed'},'maas_session='+u.session,'http://foreign.test')).status,403);
+  assert.equal((await post({event:'comparison_completed',amount:123},'maas_session='+u.session)).status,400);
+  assert.equal((await post({event:'unknown'},'maas_session='+u.session)).status,400);
+  for(let i=0;i<2;i++){const response=await post({event:'comparison_completed'},'maas_session='+u.session);assert.equal(response.status,200);assert.equal(response.headers.get('cache-control'),'no-store');}
+  assert.equal(store.db.prepare('SELECT count(*) n FROM account_value_events').get()!.n,1);
+  clock+=86400000;await post({event:'comparison_completed'},'maas_session='+u.session);
+  assert.equal(store.db.prepare('SELECT count(*) n FROM account_value_events').get()!.n,2);
+  assert.equal(store.db.prepare('SELECT target FROM account_value_events LIMIT 1').get()!.target,'');
+ }finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));store.close();}
+});
