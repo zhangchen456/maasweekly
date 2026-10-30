@@ -1,3 +1,4 @@
+import {configuredWaffoTest,WaffoTestStore,createWaffoTestHandler} from './waffo-test.js';
 import { PaymentStore } from './payment-store.js';
 import { createPaymentWebhook } from './payment-http.js';
 import { trackAnalyticsRequest } from './admin-analytics.js';
@@ -108,6 +109,8 @@ const proConfig = { origin: accountOrigin, secure: accountUrl.protocol === 'http
 const adminStore = accountStore ? new AdminStore(accountStore) : null;
 const adminHandler = createAdminHandler(adminStore, holder, proConfig, logger?.emit);
 const paymentWebhook=createPaymentWebhook(adminStore?new PaymentStore(adminStore):null,accountOrigin);
+const waffoConfig=configuredWaffoTest(accountOrigin);
+const waffoHandler=createWaffoTestHandler(adminStore&&waffoConfig?new WaffoTestStore(adminStore,waffoConfig.config,waffoConfig.client):null,accountOrigin);
 let site:ReturnType<typeof createSiteHandler>|undefined;
 if(siteRuntime&&SITE_ENTRY){
   if(!holder.current)throw new Error('versioned site data unavailable');
@@ -122,6 +125,7 @@ const server = http.createServer((req, res) => {
   if(adminStore)trackAnalyticsRequest(adminStore,req,res);
   const pathname = (req.url ?? '').split('?')[0] ?? '';
   if (pathname === '/api/pro/mcp') { void proMcpHandler(req, res); return; }
+  if (pathname.startsWith('/api/payment/waffo/')) {void waffoHandler(req,res);return;}
   if (pathname==='/api/payment/webhook') { void paymentWebhook(req,res);return;}
   if (pathname.startsWith('/api/pro/')) { void proHandler(req, res); return; }
   if (pathname.startsWith('/api/admin/')) { void adminHandler(req, res); return; }
