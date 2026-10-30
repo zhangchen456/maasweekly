@@ -194,3 +194,26 @@ test('page semantics use real routes and the adapter remains a small standalone 
   const source = fs.readFileSync(new URL('../public/analytics.js', import.meta.url));
   assert.ok(zlib.gzipSync(source).length < 3072, 'adapter exceeds 3 KiB gzip budget');
 });
+
+ test('content classifications cover commercial and evidence journeys', () => {
+  for (const [path, type] of [['/en/item/price_abc/', 'price_detail'], ['/item/obs_abc/', 'change_detail'], ['/en/evidence/ev_abc/', 'evidence'], ['/weekly/2026-10-01/', 'weekly'], ['/subscription/', 'subscription'], ['/compare/', 'comparison']]) assert.equal(pageType(path), type);
+ });
+ test('commercial intent events discard arbitrary identity and payment properties', () => {
+  const dom = browser();
+  startAnalytics(dom.window, enabled, BASE);
+  for (const name of ['subscription_click', 'comparison_click']) {
+    const result = dom.window.maasAnalyticsBeforeSend('event', {...payload(), name, data: {email: 'private@example.com', amount: 999}});
+    assert.deepEqual(result.data, {page_type: 'changes'});
+  }
+  assert.equal(dom.window.maasAnalyticsBeforeSend('event', {...payload(), name: 'payment_success'}), false);
+  dom.window.close();
+ });
+
+test('search interaction records usage without sending search text', () => {
+ const dom=browser('<input type="search" value="private@example.com">');
+ const events=[];startAnalytics(dom.window,enabled,BASE);provider(dom.window,events);
+ dom.window.document.querySelector('input').dispatchEvent(new dom.window.Event('change',{bubbles:true}));
+ assert.equal(events.length,1);assert.equal(events[0].name,'search_used');
+ assert.ok(!JSON.stringify(events).includes('private@example.com'));
+ dom.window.close();
+});
