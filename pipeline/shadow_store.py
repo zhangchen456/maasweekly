@@ -12,7 +12,24 @@ import re
 from pathlib import Path
 
 from blob_store import FilesystemBlobStore, safe_path
-from input_snapshot import InputView, atomic, canonical, assert_no_pending
+from input_snapshot import InputView, atomic, canonical, canonical_digest, assert_no_pending
+
+# Bound decoded payload batches by bytes as well as count. Large individual
+# documents are processed alone; the limit is not a maximum document size.
+DOCUMENT_BATCH_BYTES = 2 * 1024 * 1024
+DOCUMENT_BATCH_COUNT = 128
+
+
+def document_batches(metadata):
+    batch, size = [], 0
+    for sha, meta in metadata.items():
+        if batch and (size + meta['bytes'] > DOCUMENT_BATCH_BYTES or len(batch) >= DOCUMENT_BATCH_COUNT):
+            yield batch
+            batch, size = [], 0
+        batch.append(sha)
+        size += meta['bytes']
+    if batch:
+        yield batch
 
 
 def migrate(connection):
@@ -44,11 +61,11 @@ def entries(connection, version):
           FROM resolved r JOIN maas_data.documents d ON d.sha256=r.sha256
           ORDER BY r.logical_path''', (version,))
         return {logical: {'path': physical, 'sha256': sha, 'bytes': size}
-                for logical, physical, sha, size in cursor.fetchall()}
+                for logical, physical, sha, size in cursor}
 
 
 def _validate_files(files, version):
-    if 'in_' + hashlib.sha256(canonical(files).encode()).hexdigest() != version:
+    if 'in_' + canonical_digest(files) != version:
         raise ValueError('input version content mismatch')
     for logical, meta in files.items():
         for value in (logical, meta['path']):
@@ -75,11 +92,9 @@ def verify_view(connection, version, store):
     _validate_files(files, version)
     by_sha = {v['sha256']: v for v in files.values()}
     json_shas = {v['sha256'] for logical, v in files.items() if Path(logical).suffix == '.json'}
-    keys = list(by_sha)
     checked = fallback = ordered = 0
     with connection.cursor() as cursor:
-        for offset in range(0, len(keys), 500):
-            batch = keys[offset:offset + 500]
+        for batch in document_batches(by_sha):
             cursor.execute('''SELECT sha256,bytes,payload,payload_json FROM maas_data.documents
                               WHERE sha256=ANY(%s)''', (batch,))
             rows = cursor.fetchall()
@@ -102,6 +117,8 @@ def verify_view(connection, version, store):
                 if sha in json_shas and not _jsonb_safe(original) and (payload is not None or payload_json is None):
                     raise ValueError('exceptional JSON representation is invalid')
                 checked += 1
+            # Do not retain the preceding decoded batch while fetching the next.
+            del rows
     return {'inputVersion': version, 'files': len(files), 'verifiedObjects': checked,
             'orderedJsonObjects': ordered, 'fallbackJsonObjects': fallback}
 
@@ -116,11 +133,10 @@ def backfill_ordered_json(connection, version, store):
     files = entries(connection, version)
     _validate_files(files, version)
     hashes = {v['sha256']: v for name, v in files.items() if Path(name).suffix == '.json'}
-    keys = list(hashes)
     updated = 0
     with connection.cursor() as cursor:
-        for offset in range(0, len(keys), 500):
-            cursor.execute('SELECT sha256 FROM maas_data.documents WHERE sha256=ANY(%s) AND payload_json IS NULL', (keys[offset:offset + 500],))
+        for batch in document_batches(hashes):
+            cursor.execute('SELECT sha256 FROM maas_data.documents WHERE sha256=ANY(%s) AND payload_json IS NULL', (batch,))
             rows = []
             for (sha,) in cursor.fetchall():
                 raw = store.get(sha, expected_bytes=hashes[sha]['bytes'])
@@ -162,7 +178,6 @@ def import_view(connection, root, store, *, source_commit, parent=None):
     pointer = json.loads(pointer_bytes)
     view = InputView(root, pointer)
     _validate_files(view.files, view.version)
-    manifest = json.loads(safe_path(root, pointer['manifestPath']).read_bytes())
     with connection:
         with connection.cursor() as cursor:
             cursor.execute('SELECT pg_advisory_xact_lock(184067231, 2)')
@@ -179,6 +194,7 @@ def import_view(connection, root, store, *, source_commit, parent=None):
             if parent == view.version:
                 raise ValueError('input cannot parent itself')
             docs, deltas = {}, []
+            batch_bytes = 0
             copied = 0
             for logical, meta in view.files.items():
                 if previous.get(logical) == meta:
@@ -186,6 +202,11 @@ def import_view(connection, root, store, *, source_commit, parent=None):
                     # merely because this batch contains no changes to a path.
                     store.verify(meta['sha256'], expected_bytes=meta['bytes'])
                     continue
+                if docs and (batch_bytes + meta['bytes'] > DOCUMENT_BATCH_BYTES or len(docs) >= DOCUMENT_BATCH_COUNT):
+                    execute_values(cursor, '''INSERT INTO maas_data.documents
+                      (sha256,bytes,payload,entity_id,revision,payload_json) VALUES %s ON CONFLICT DO NOTHING''', list(docs.values()))
+                    docs.clear()
+                    batch_bytes = 0
                 raw = view.path(logical).read_bytes()
                 if len(raw) != meta['bytes'] or hashlib.sha256(raw).hexdigest() != meta['sha256']:
                     raise ValueError('source changed during import')
@@ -198,29 +219,30 @@ def import_view(connection, root, store, *, source_commit, parent=None):
                                        str(entity['revision']) if entity.get('revision') is not None else None,
                                        json.dumps(value, ensure_ascii=True) if Path(logical).suffix == '.json' else None)
                 deltas.append((view.version, logical, meta['path'], meta['sha256']))
-                if len(docs) >= 500:
-                    execute_values(cursor, '''INSERT INTO maas_data.documents
-                      (sha256,bytes,payload,entity_id,revision,payload_json) VALUES %s ON CONFLICT DO NOTHING''', list(docs.values()))
-                    docs.clear()
+                batch_bytes += meta['bytes']
             if docs:
                 execute_values(cursor, '''INSERT INTO maas_data.documents
                   (sha256,bytes,payload,entity_id,revision,payload_json) VALUES %s ON CONFLICT DO NOTHING''', list(docs.values()))
+            docs.clear()
             deltas.extend((view.version, logical, None, None) for logical in previous.keys() - view.files.keys())
+            del previous
             assert_no_pending(root)
             if safe_path(root, 'data/inputs-current.json').read_bytes() != pointer_bytes:
                 raise ValueError('input pointer changed during import')
             cursor.execute('''INSERT INTO maas_data.input_versions
               (version,parent_version,source_commit,origin_run_id,file_count,byte_count)
               VALUES (%s,%s,%s,%s,%s,%s)''', (view.version, parent, source_commit,
-                 manifest['originRunId'], len(view.files), sum(v['bytes'] for v in view.files.values())))
+                 view.origin_run_id, len(view.files), sum(v['bytes'] for v in view.files.values())))
             if deltas:
                 execute_values(cursor, '''INSERT INTO maas_data.input_deltas
                   (input_version,logical_path,physical_path,sha256) VALUES %s''', deltas, page_size=1000)
+            delta_count = len(deltas)
+            del deltas
             if entries(connection, view.version) != view.files:
                 raise ValueError('database import parity failed')
             verify_view(connection, view.version, store)
             ensure_source_order(connection, view.version, store)
-    return {'inputVersion': view.version, 'files': len(view.files), 'deltaFiles': len(deltas),
+    return {'inputVersion': view.version, 'files': len(view.files), 'deltaFiles': delta_count,
             'copiedObjects': copied, 'idempotent': False}
 
 
