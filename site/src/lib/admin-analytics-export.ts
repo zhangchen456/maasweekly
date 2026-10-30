@@ -26,6 +26,14 @@ export function analyticsCsv(result:Result):string {
   }
  };
  cohort('注册周',b.freeFunnel.weekly);cohort('首次→最近来源',b.freeFunnel.items);
+ if(b.growth){
+  const g=b.growth;
+  add('新增增长指标','','采集起点',g.completeSince,'ISO时间',g.availability,'仅此后新注册账号；首次行为观察注册后7天；对比/估算为浏览器报告，非服务端核验计算');
+  for(const x of g.firstActions)add('首次有效行为',x.event,'账号',x.accounts,'账号',g.availability,'相同时刻按事件名排序；无记录不等于未使用');
+  const d=g.retentionDay7;
+  for(const [key,value] of Object.entries(d))add('第7天留存','',key,value,key==='rate'?'比例0至1':'账号',value===null?'insufficient_sample':g.availability,'注册日为第0天；北京时间第7天使用，整日结束才进入分母；至少5个成熟账号展示比例');
+  for(const x of g.campaigns)for(const [key,value] of Object.entries(x))if(!['firstCampaign','lastCampaign'].includes(key))add('推广活动',x.firstCampaign+' → '+x.lastCampaign,key,value,key.endsWith('Rate')?'比例0至1':'账号',value===null?'insufficient_sample':g.availability,'7天使用和第7天留存采用各自成熟分母；unknown含缺失或未配置活动');
+ }
  for(const row of b.agents.items){add('API请求',row.channel,'完成请求',row.requests,'请求',b.agents.availability,'不是用户数');add('API请求',row.channel,'HTTP 2xx',row.httpSuccess,'请求',b.agents.availability,'HTTP成功不等于工具业务成功');}
  const h=b.dataHealth.requestCollection;
  add('采集健康','','最近成功写入',h.lastSuccessAt,'ISO时间',h.lastSuccessAt?'observed':'unknown','全部历史记录，不受筛选范围限制');

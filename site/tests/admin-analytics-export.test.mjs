@@ -30,3 +30,8 @@ test('export reauthorizes and cannot download after role revocation',async()=>{
  const button=win.document.getElementById('analytics-export');assert.equal(button.disabled,false);button.click();await new Promise(r=>setTimeout(r,10));
  assert.equal(calls,2);assert.equal(downloads,0);assert.equal(button.disabled,true);assert.equal(win.document.getElementById('admin-private').hidden,true);d.window.close();
 });
+
+test('CSV exports first actions, configured campaigns and exact D7 mature denominators',()=>{
+ const data=fixture();data.business.growth={...coverage,firstActions:[{event:'comparison_completed',accounts:2}],retentionDay7:{numerator:1,denominator:4,immature:2,rate:null},campaigns:[{firstCampaign:'weekly-wechat-v1',lastCampaign:'weekly-wechat-v1',registered:6,mature:5,used:2,returned:1,eligible:4,retained:1,useRate:.4,returnRate:null,day7Rate:null}]};
+ const csv=analyticsCsv(data);assert.ok(csv.includes('"首次有效行为","comparison_completed","账号","2"'));assert.ok(csv.includes('"第7天留存","","denominator","4"'));assert.ok(csv.includes('"第7天留存","","rate","","比例0至1","insufficient_sample"'));assert.ok(csv.includes('weekly-wechat-v1 → weekly-wechat-v1'));assert.ok(!csv.includes('undefined'));
+});

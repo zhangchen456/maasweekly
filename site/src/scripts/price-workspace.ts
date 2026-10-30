@@ -1,4 +1,5 @@
 import { formatTimestamp } from '../../public/time-display.js';
+import {recordWorkspaceResult} from './workspace-analytics';
 import { savedState } from './account-client';
 import type { WorkspaceData, LedgerPrice, WorkspaceModel, PriceVariant, SourceCondition } from '../lib/pricing-workspace';
 interface WorkspaceElements {
@@ -175,7 +176,7 @@ export function startPriceWorkspace() {
         return;
     }
     else
-        selected.add(m.key); renderCatalog(); renderCompare(); renderHero(); }
+        selected.add(m.key); renderCatalog(); renderCompare(); renderHero(); if(selectedModels().filter(m=>metric(m)!==null).length>=2)recordWorkspaceResult('comparison_completed'); }
     function renderProviders() { $('providers').replaceChildren(); for (const p of providers) {
         const count = models.filter(m => m.provider === p).length;
         const b = el('button', 'provider' + (p === provider && !query ? ' active' : ''));
@@ -349,9 +350,14 @@ export function startPriceWorkspace() {
     $('clear').onclick = () => { selected.clear(); renderCatalog(); renderCompare(); renderHero(); };
     $('components').querySelectorAll('button').forEach(b => b.onclick = () => { component = b.dataset.component!; $('components').querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b)); renderCompare(); });
     function volumes() { input = Number($('input-volume').value); output = Number($('output-volume').value); $('input-value').textContent = fmt(input); $('output-value').textContent = fmt(output); renderCompare(); }
+    function estimateCompleted() {
+      if(Number.isFinite(input)&&Number.isFinite(output)&&input>=0&&output>=0&&input+output>0&&selectedModels().length>=2&&selectedModels().some(m=>{const n=cost(m);return n!==null&&Number.isFinite(n);}))recordWorkspaceResult('cost_estimate_completed');
+    }
+    $('input-volume').onchange = () => {volumes();estimateCompleted();};
+    $('output-volume').onchange = () => {volumes();estimateCompleted();};
     $('input-volume').oninput = volumes;
     $('output-volume').oninput = volumes;
-    document.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach(b => b.onclick = () => { const [i, o] = b.dataset.preset!.split(','); $('input-volume').value = i; $('output-volume').value = o; volumes(); });
+    document.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach(b => b.onclick = () => { const [i, o] = b.dataset.preset!.split(','); $('input-volume').value = i; $('output-volume').value = o; volumes(); estimateCompleted(); });
     $('fx').onchange = () => { const n = Number($('fx').value); if (!Number.isFinite(n) || n <= 0 || n > 1000) {
         $('fx').value = String(fx);
         toast('请输入大于 0、且不超过 1000 的汇率。');
