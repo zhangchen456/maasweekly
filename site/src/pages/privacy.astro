@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="隐私政策 — MaaS Daily" description="MaaS Daily 隐私政策：数据收集、用途、服务商、保存方式和个人信息权利。">
+  <article class="prose legal-page">
+    <h1>隐私政策</h1>
+    <p>生效及最后更新日期：2026 年 10 月 30 日 · 版本 1.0</p>
+    <p>MaaS Daily 的运营者及个人信息处理者为<strong>章晨（中国，个人运营）</strong>。隐私咨询、数据访问、更正、删除及账户注销申请，请联系 <a href="mailto:zhangchen3508@gmail.com">zhangchen3508@gmail.com</a>。本政策适用于 https://daily.maas.click/ 提供的服务。</p>
+    <h2>1. 收集的信息与用途</h2>
+    <ul>
+      <li><strong>账户信息：</strong>邮箱、您填写的显示名称、账户标识、注册时间、密码的加盐哈希及登录会话，用于验证身份、登录、账户安全和提供服务。我们不以明文保存账户密码。</li>
+      <li><strong>使用与偏好：</strong>关注的模型、保存的比较与偏好、邮件提醒开关、套餐及额度、导出或工具调用等服务使用记录，用于同步设置、提供功能、计量及分析服务使用情况。部分业务事件关联账户，并非匿名统计。</li>
+      <li><strong>访问统计：</strong>页面路径、访问时间、来源站点、经筛选的推广参数、浏览器与设备相关信息、语言、屏幕尺寸及点击事件，用于了解访问和改进网站。我们的统计适配器不发送密码、邮箱、搜索输入内容或任意完整查询参数；注册来源仅记录搜索、社交、AI、推荐等渠道类别。</li>
+      <li><strong>反馈与通信：</strong>反馈标题、描述、页面路径、您上传的截图、回复和邮件投递状态，用于处理问题、发送您请求的通知及排查投递故障。请在上传截图前遮盖无关个人信息。</li>
+      <li><strong>订单与支付：</strong>在您使用收银台时，支付服务处理您提交的邮箱、账单资料及支付信息。本站接收订单标识、商品、金额、币种、付款与订阅状态，以及回调中提供的买家邮箱、账单信息或支付方式末四位等字段，用于核对订单、权益、退款和争议。本站不保存完整卡号或银行卡安全码。管理员测试订单与正式账户权益分开处理。</li>
+      <li><strong>运行与安全信息：</strong>请求路径、响应状态、时间和浏览器标识等运行日志，用于故障定位和安全保障。网络服务在传输时会处理 IP 地址；本站专用流量日志不写入 IP、Cookie、授权头或原始查询字符串，其他基础设施或安全日志可能包含网络信息。</li>
+    </ul>
+    <p>我们仅在提供您请求的服务、履行合同或法定义务、取得适用同意等合法基础上处理信息。可选处理和必要服务会予以区分；依法需要单独同意的事项，不以本政策替代该同意。不会因您拒绝无关的可选处理而拒绝提供基础服务。</p>
+    <h2>2. Cookie、本地存储与统计选择</h2>
+    <p>登录使用必要的会话 Cookie，有效期最长 30 天；退出登录会撤销相应会话。浏览器本地存储用于主题、语言、未登录时的关注或偏好、统计选择等，通常保留到您清理本站数据。来源归因使用标签页会话存储，30 分钟后不再用于该次归因；清理浏览器数据可能使您退出登录或丢失本地偏好。</p>
+    <p>我们使用 Umami Cloud 进行访问统计，并尊重浏览器的 Do Not Track 设置。您也可以通过下方按钮停止当前浏览器上的可选 Umami 统计和新注册来源归因。此选择不删除此前已保存的数据，也不关闭登录、安全、订单或提供服务所需的业务记录。</p>
+    <p><button type="button" id="disable-analytics">关闭此浏览器的可选统计</button> <span id="analytics-choice" role="status" aria-live="polite"></span></p>
+    <h2>3. 服务商与信息提供</h2>
+    <p>我们使用以下服务商完成相应功能，仅在相应用途所需范围内处理信息。您访问外部网站后，也应阅读其政策。</p>
+    <ul>
+      <li><strong>阿里云：</strong>托管网站、应用和数据库，处理服务运行所需的信息。<a href="https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-privacy-policy">隐私政策</a>。</li>
+      <li><strong>Umami Cloud：</strong>处理访问及交互统计。<a href="https://umami.is/privacy">隐私政策</a>。</li>
+      <li><strong>Resend：</strong>处理收件邮箱、验证码或通知邮件内容及投递信息。<a href="https://resend.com/legal/privacy-policy">隐私政策</a>。邮件提醒可在账户中心关闭，或使用提醒邮件提供的退订链接；验证码及必要的服务通知与可选提醒不同。</li>
+      <li><strong>Waffo Pancake：</strong>提供收银台、订单、订阅与支付相关处理，并可能由其支付合作方完成支付。<a href="https://waffo.ai/en/privacy">隐私政策</a>。仅在您使用相关支付功能时产生相应支付处理。</li>
+    </ul>
+    <p>我们不出售您的个人信息，也不将账户邮箱提供给广告商用于定向广告。除您请求的服务、依法履行义务或保护合法权益所必需的情形外，不向无关第三方披露个人信息。收到法定要求时，我们会核实范围并依法处理。</p>
+    <h2>4. 存储位置、期限与安全</h2>
+    <p>网站使用云端托管，上述国际服务商可能在您所在国家或地区以外处理数据。具体处理地区取决于实际部署及服务商基础设施；如涉及依法需履行的跨境告知、单独同意或其他程序，我们应在相应处理前履行，不以您浏览本政策推定同意。</p>
+    <p>账户、偏好及相关业务记录在提供服务所需期间保存；注销、处理目的完成或依法应删除时，删除或匿名化不再必要的信息。当前账户及业务记录没有统一的自动到期删除周期，删除申请由运营者核实处理。验证码有效期 10 分钟；登录会话最长 30 天。失效不等于所有相关安全记录立即删除。</p>
+    <p>账户数据库备份按最近 14 份成功快照轮换保存。删除生效后，备份中的残留信息仅用于安全与恢复，随备份轮换清除；如从备份恢复，应重新执行已确认的删除。依法需保留的交易或安全证据按适用法定期限保存，并限制其他用途。第三方独立保存的信息受其政策及法律义务约束，您可通过我们或相应服务商申请处理。</p>
+    <p>我们使用 HTTPS、密码哈希、访问权限控制和备份等措施保护信息，但无法承诺任何系统绝对安全。发生个人信息安全事件时，我们将采取补救措施，并依法履行通知和报告义务。</p>
+    <h2>5. 您的权利与申请方式</h2>
+    <p>您可在账户中心更正显示名称、管理关注与提醒，并可通过 <a href="mailto:zhangchen3508@gmail.com?subject=MaaS%20Daily%20个人信息请求">联系邮箱</a>申请访问、复制、更正、删除个人信息、注销账户、撤回适用同意，或就处理规则提出问题。申请请说明所用账户邮箱和诉求，不要发送密码、私钥或完整银行卡信息。</p>
+    <p>我们会采取合理方式核实身份并及时答复；无法满足或需要延长处理时，会说明原因及适用限制。撤回同意不影响撤回前基于同意进行的合法处理；删除必要账户信息可能使相关功能无法继续。注销账户与取消付费订阅是不同操作，有订阅时请同时提出取消要求，以免遗漏续费处理。您也可依法向有关主管机构投诉。</p>
+    <h2>6. 未成年人及政策更新</h2>
+    <p>本站账户与购买服务面向成年人，不主动面向未满 18 周岁的用户提供注册或购买服务。如您认为我们在不适当情况下处理了未成年人信息，请联系我们核实处理。</p>
+    <p>本政策发生重大变化时，我们会通过站内公告或账户邮箱通知，并在依法需要时另行取得同意。页面顶部记录更新时间。新的数据用途不会仅因本政策更新而自动获得您的授权。</p>
+    <p><a href="/terms/">查看服务条款与退款规则</a> · <a href="/account/">前往账户中心</a></p>
+  </article>
+</Layout>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('#disable-analytics');
+  const status = document.querySelector<HTMLElement>('#analytics-choice');
+  try {
+    if (localStorage.getItem('umami.disabled') && status) status.textContent = '当前浏览器已关闭可选统计。';
+  } catch {}
+  button?.addEventListener('click', () => {
+    try {
+      localStorage.setItem('umami.disabled', '1');
+      sessionStorage.removeItem('maas-source-session-v1');
+      window.location.reload();
+    } catch { if (status) status.textContent = '浏览器不允许保存此选择，请启用浏览器的 Do Not Track 设置。'; }
+  });
+</script>
+<style>.legal-page{max-width:820px;margin:0 auto;line-height:1.85;overflow-wrap:anywhere}.legal-page h2{margin-top:2rem}.legal-page li{margin:.6rem 0}.legal-page button{font:inherit;color:var(--paper);background:var(--panel-solid);border:1px solid var(--line-strong);padding:10px 14px;border-radius:6px;cursor:pointer}.legal-page button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}</style>
