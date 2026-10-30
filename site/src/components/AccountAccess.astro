@@ -43,6 +43,7 @@ const t = (zh: string, english: string) => en ? english : zh;
   </form>
   <p><button id="account-mode-register" type="button">{t('注册账号', 'Create account')}</button> · <button id="account-mode-recover" type="button">{t('忘记密码 / 老账号设置密码', 'Forgot password / Set password')}</button> · <button id="account-mode-login" type="button" hidden>{t('返回登录', 'Back to sign in')}</button></p>
   <p class="account-dialog-note">{t('注册时验证邮箱，完成后设置密码。后续使用邮箱和密码登录。', 'Verify your email to register, then set a password for future sign-ins.')}</p>
+  <p class="account-dialog-note">{t("注册或购买前，请阅读", "Before registering or purchasing, read our")} <a href="/terms/">{t("服务条款", "Terms")}</a> {t("及", "and")} <a href="/privacy/">{t("隐私政策", "Privacy Policy")}</a>。</p>
 </dialog>
 <script>import '../scripts/account-access'; import '../scripts/account-plan';</script>
 <style is:global>
