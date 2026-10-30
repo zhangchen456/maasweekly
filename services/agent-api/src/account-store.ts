@@ -33,6 +33,7 @@ export class AccountStore {
       CREATE TABLE IF NOT EXISTS account_state(userId TEXT NOT NULL REFERENCES users(id), key TEXT NOT NULL, value TEXT NOT NULL, updated INTEGER NOT NULL, PRIMARY KEY(userId,key));
       CREATE TABLE IF NOT EXISTS account_value_events(id TEXT PRIMARY KEY,userId TEXT NOT NULL REFERENCES users(id),event TEXT NOT NULL,target TEXT NOT NULL,created INTEGER NOT NULL);
       CREATE INDEX IF NOT EXISTS account_value_events_user_time ON account_value_events(userId,created);
+      CREATE TABLE IF NOT EXISTS account_registration_sources(userId TEXT PRIMARY KEY REFERENCES users(id),firstSource TEXT NOT NULL,lastSource TEXT NOT NULL,created INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS account_value_metadata(key TEXT PRIMARY KEY,created INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS watches(userId TEXT NOT NULL REFERENCES users(id), modelId TEXT NOT NULL, since INTEGER NOT NULL, PRIMARY KEY(userId, modelId));
       CREATE TABLE IF NOT EXISTS mail_jobs(id TEXT PRIMARY KEY, userId TEXT NOT NULL REFERENCES users(id), payload TEXT NOT NULL, created INTEGER NOT NULL, lease INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'pending', mail TEXT);
@@ -40,6 +41,7 @@ export class AccountStore {
       CREATE INDEX IF NOT EXISTS sessions_expiry ON sessions(expires);
       CREATE INDEX IF NOT EXISTS jobs_pending ON mail_jobs(status, lease);`);
     this.db.prepare("INSERT OR IGNORE INTO account_value_metadata VALUES('collection_start',?)").run(this.now());
+    this.db.prepare("INSERT OR IGNORE INTO account_value_metadata VALUES('source_start',?)").run(this.now());
   }
   close() { this.db.close(); }
   private valueEvent(id: string, event: string, target = '') {
@@ -65,7 +67,7 @@ export class AccountStore {
     });
   }
   revokeCode(email: string, code: string) { this.db.prepare('DELETE FROM challenges WHERE email=? AND hash=?').run(email, this.codeHash(email, code)); }
-  verify(email: string, code: string) {
+  verify(email: string, code: string, attribution?: unknown) {
     // Failed attempts must commit as well: return an error marker from the transaction.
     const result = this.transaction(() => {
       const row = this.db.prepare('SELECT * FROM challenges WHERE email=?').get(email) as unknown as Challenge | undefined;
@@ -80,6 +82,10 @@ export class AccountStore {
         this.db.prepare('INSERT INTO organizations VALUES(?,?)').run(org, '个人空间');
         this.db.prepare('INSERT INTO users(id,email,organizationId,unsubscribeToken) VALUES(?,?,?,?)').run(id, email, org, token());
         if (this.db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='account_registrations'").get()) this.db.prepare('INSERT INTO account_registrations VALUES(?,?)').run(id,this.now());
+        const source=attribution as {first?:unknown;last?:unknown}|undefined;
+        const allowed=['search','social','ai','referral','campaign','unknown'];
+        const clean=(v:unknown)=>typeof v==='string'&&allowed.includes(v)?v:'unknown';
+        this.db.prepare('INSERT INTO account_registration_sources VALUES(?,?,?,?)').run(id,clean(source?.first),clean(source?.last),this.now());
         user = this.db.prepare('SELECT * FROM users WHERE id=?').get(id) as unknown as User;
       }
       this.profile(user);
