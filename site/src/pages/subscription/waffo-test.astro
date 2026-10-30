@@ -1,0 +1,28 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="Waffo 测试支付" noindex={true}>
+ <main style="max-width:720px;margin:48px auto;padding:24px">
+  <h1>Waffo 测试支付</h1>
+  <p>仅供管理员验收。测试商品：Plus 月订阅，USD 9.99。请仅使用 Waffo 测试卡。</p>
+  <p>测试结果不会改变正式套餐权益。返回此页不代表付款成功，以收到的已验证回调为准。</p>
+  <p id="waffo-message" role="status">正在检查测试配置…</p>
+  <button id="waffo-checkout" disabled>打开测试收银台</button>
+  <button id="waffo-refresh">查询测试结果</button>
+  <button id="waffo-cancel" disabled>取消此测试订阅</button>
+  <pre id="waffo-events"></pre>
+ </main>
+</Layout>
+<script>
+let requestKey=sessionStorage.getItem('waffo-test-request')||crypto.randomUUID();
+sessionStorage.setItem('waffo-test-request',requestKey);
+let checkout=new URLSearchParams(location.search).get('checkout')||sessionStorage.getItem('waffo-test-checkout');
+const message=document.getElementById('waffo-message')!,events=document.getElementById('waffo-events')!;
+const start=document.getElementById('waffo-checkout') as HTMLButtonElement,cancel=document.getElementById('waffo-cancel') as HTMLButtonElement;
+async function api(route:string,body?:unknown){const r=await fetch('/api/payment/waffo/'+route,{credentials:'same-origin',cache:'no-store',...(body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{})});const result=await r.json();if(!r.ok)throw Error(result.message||'请求失败');return result;}
+async function refresh(){try{const config=await api('status');start.disabled=false;message.textContent=`测试环境已连接：${config.name}，${config.currency} ${config.amount} / 月`;if(checkout){const result=await api('status?checkout='+encodeURIComponent(checkout));events.textContent=result.events.length?JSON.stringify(result.events,null,2):'尚未收到已验证回调，请稍后查询。';cancel.disabled=!result.events.length;}}catch(e){start.disabled=true;cancel.disabled=true;events.textContent='';message.textContent=e instanceof Error?e.message:'查询失败';}}
+start.onclick=async()=>{start.disabled=true;try{const result=await api('checkout',{requestKey});checkout=result.id;sessionStorage.setItem('waffo-test-checkout',result.id);location.assign(result.checkoutUrl);}catch(e){message.textContent=e instanceof Error?e.message:'结果未知，请重试同一请求';start.disabled=false;}};
+document.getElementById('waffo-refresh')!.onclick=()=>void refresh();
+cancel.onclick=async()=>{cancel.disabled=true;try{const result=await api('cancel',{checkout});message.textContent=`取消请求结果：${result.status}。最终状态请查询回调。`;}catch(e){message.textContent=e instanceof Error?e.message:'取消结果未知';}finally{cancel.disabled=false;}};
+void refresh();
+</script>
