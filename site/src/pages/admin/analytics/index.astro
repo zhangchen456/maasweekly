@@ -9,6 +9,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
   </form>
   <p id="analytics-status" role="status" aria-live="polite"></p>
   <p class="admin-note">默认北京时间。网站访客、注册账号与Agent请求分别统计；成功读取不等于阅读完成，公测激活不代表付费。</p>
+  <section><h2>数据采集状态</h2><div id="analytics-health"></div><p class="admin-note">最近记录时间针对全部已保存数据，不受日期筛选限制。没有新记录不等于采集故障；失败次数为可记录的累计写入失败，数据库完全不可用时可能无法记下故障。请求日汇总按北京时间整日计数，不是访客数，也不证明无缺失。</p></section>
   <section><h2>网站流量</h2><p id="analytics-website-state"></p><dl id="analytics-website" class="admin-summary"></dl>
     <div class="admin-grid"><div><h3>热门页面（最多20项）</h3><div id="analytics-pages"></div></div><div><h3>来源（最多20项）</h3><div id="analytics-sources"></div></div></div>
     <p class="admin-note">沿用Umami口径，内测访问可能混入；来源排行不作为所有访问的分母，Direct表示缺少可识别来源。</p>

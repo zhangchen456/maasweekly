@@ -145,3 +145,17 @@ test('weekly registration cohorts respect Beijing Monday boundary and maturity w
   assert.equal(result.weekly.reduce((n,r)=>n+r.registered,0),result.items.reduce((n,r)=>n+r.registered,0));
  }finally{a.close();}
 });
+
+test('collection health preserves null history, commits success atomically and retains failures after recovery',async()=>{
+ const f=fixture();const {EventEmitter}=await import('node:events');
+ const fire=()=>{const response=Object.assign(new EventEmitter(),{statusCode:200});trackAnalyticsRequest(f.admin,{url:'/api/v1/models',headers:{}} as any,response as any);response.emit('finish');response.emit('finish');};
+ const read=()=>analyticsBusiness(f.admin,analyticsRange(new URLSearchParams(),f.now()+1),f.now()+1).dataHealth;
+ try{
+  assert.equal(read().requestCollection.lastSuccessAt,null);assert.equal(read().requestCollection.lastFailureAt,null);assert.equal(read().lastRecorded.registration,null);
+  fire();assert.equal(read().requestCollection.lastSuccessAt,new Date(f.now()).toISOString());assert.equal(read().requestDays[0]!.requests,1);
+  f.accounts.db.exec("CREATE TRIGGER reject_health BEFORE UPDATE ON analytics_health WHEN NEW.key='request_last_success' BEGIN SELECT RAISE(ABORT,'test'); END");
+  f.set(f.now()+60000);fire();assert.equal(read().requestCollection.failures,1);assert.equal(read().requestDays[0]!.requests,1);assert.equal(read().requestCollection.lastFailureAt,new Date(f.now()).toISOString());
+  f.accounts.db.exec('DROP TRIGGER reject_health');f.set(f.now()+60000);fire();assert.equal(read().requestDays[0]!.requests,2);assert.equal(read().requestCollection.failures,1);assert.equal(read().requestCollection.lastSuccessAt,new Date(f.now()).toISOString());
+  f.login('health@example.test');assert.equal(read().lastRecorded.registration,new Date(f.now()).toISOString());
+ }finally{f.accounts.close();}
+});
