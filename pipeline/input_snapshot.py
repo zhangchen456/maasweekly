@@ -26,6 +26,15 @@ def canonical(value): return json.dumps(value, ensure_ascii=False, sort_keys=Tru
 def digest(raw): return hashlib.sha256(raw).hexdigest()
 
 
+def canonical_digest(value):
+    """Hash identical canonical bytes without allocating the whole JSON string."""
+    checksum = hashlib.sha256()
+    encoder = json.JSONEncoder(ensure_ascii=False, sort_keys=True, separators=(',', ':'))
+    for chunk in encoder.iterencode(value):
+        checksum.update(chunk.encode())
+    return checksum.hexdigest()
+
+
 def safe(root: Path, relative: str):
     p = Path(relative)
     if p.is_absolute() or '..' in p.parts: raise ValueError('input checkpoint path escape')
@@ -94,7 +103,7 @@ def capture(root: Path, run_id: str, *, publish=True):
                 if target.read_bytes() != raw: raise ValueError('immutable input object collision')
             else: atomic(target, raw)
         files[logical] = {'path': str(target.relative_to(root)), 'bytes': len(raw), 'sha256': digest(raw)}
-    version = 'in_' + digest(canonical(files).encode())
+    version = 'in_' + canonical_digest(files)
     relative = f'data/input-manifests/{version}.json'
     manifest = {'schemaVersion': 1, 'inputVersion': version, 'originRunId': run_id, 'files': files}
     target = safe(root, relative)
@@ -120,7 +129,8 @@ class InputView:
         if pointer['manifestPath'] != f'data/input-manifests/{self.version}.json': raise ValueError('input manifest path')
         manifest = json.loads(safe(root, pointer['manifestPath']).read_text())
         self.files = manifest['files']
-        if manifest.get('schemaVersion') != 1 or manifest.get('inputVersion') != self.version or 'in_' + digest(canonical(self.files).encode()) != self.version:
+        self.origin_run_id = manifest.get('originRunId')
+        if manifest.get('schemaVersion') != 1 or manifest.get('inputVersion') != self.version or 'in_' + canonical_digest(self.files) != self.version:
             raise ValueError('input manifest integrity')
         self._verified = set()
     def path(self, logical):

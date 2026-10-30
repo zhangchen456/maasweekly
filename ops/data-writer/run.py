@@ -19,8 +19,11 @@ PINNED_STAGES={
 def request(raw):
     if len(raw)>1048576:raise ValueError('request too large')
     value=json.loads(raw)
-    if not isinstance(value,dict) or set(value)-{'mode','secrets','drafts','sourceCommit','runContext'}:raise ValueError('invalid request')
-    if value.get('mode') not in ['prepare','validate','update','publish','weekly','aggregate','import','rebuild']:raise ValueError('invalid mode')
+    if not isinstance(value,dict) or set(value)-{'mode','secrets','drafts','sourceCommit','runContext','inputVersion'}:raise ValueError('invalid request')
+    if value.get('mode') not in ['prepare','validate','update','publish','weekly','aggregate','import','rebuild','resume']:raise ValueError('invalid mode')
+    if value.get('mode')=='resume':
+        if not isinstance(value.get('inputVersion'),str) or not re.fullmatch('in_[a-f0-9]{64}',value['inputVersion']) or value.get('drafts'):raise ValueError('resume requires an explicit input version and no drafts')
+    elif 'inputVersion' in value:raise ValueError('inputVersion is only valid for resume')
     keys=value.get('secrets',{})
     if not isinstance(keys,dict) or set(keys)-ALLOWED or any(not isinstance(v,str) or len(v)>16384 or '\0' in v for v in keys.values()):raise ValueError('invalid credentials envelope')
     drafts=value.get('drafts',[])
@@ -71,7 +74,7 @@ def initialize(connection,published,blobs):
     for child in (destination/'data').iterdir():child.rename(data/child.name)
     (destination/'data').rmdir();destination.rmdir()
 
-def ingest(parent,code):
+def ingest(parent,code,expected_version=None):
     # Exit this process before exporting: Python retains large import heaps even
     # after local variables are freed. Import+export must fit the same 1.5GiB cap.
     if os.getuid()==0:raise ValueError('unprivileged writer required')
@@ -79,7 +82,8 @@ def ingest(parent,code):
     from psycopg2.extras import Json
     connection=psycopg2.connect(os.environ['MAAS_DATA_DSN']);blobs=FilesystemBlobStore(STORE/'blobs')
     try:
-        version=capture(CODE,'database-writer-'+uuid.uuid4().hex)
+        version=capture(CODE,'database-writer-'+uuid.uuid4().hex,publish=expected_version is None)
+        if expected_version is not None and version!=expected_version:raise ValueError('recovery input changed; refusing import')
         raw_manifest=build_manifest(CODE,code);copied=copy_objects(CODE,raw_manifest,blobs)
         if copied['failures']:raise ValueError('raw copy failed')
         import_view(connection,CODE,blobs,source_commit=code,parent=parent if version!=parent else None)
@@ -135,7 +139,13 @@ def main():
         # rewrites the cache nor repeats a completed import/restore drill.
         if mode in ['validate','rebuild']:
             prepare_candidate(parent,code,mode,expected_hash,[]);return
-        initialize(connection,{**published,'site':{**published['site'],'inputVersion':parent}},blobs)
+        if mode=='resume':
+            assert_no_pending(CODE)
+            view=load_view(CODE)
+            if view is None or view.version!=incoming['inputVersion']:raise ValueError('recovery checkpoint changed')
+            del view
+        else:
+            initialize(connection,{**published,'site':{**published['site'],'inputVersion':parent}},blobs)
         if mode=='prepare':print(json.dumps({'status':'cache_ready'}));return
         warnings=[]
         if mode in ['update','weekly','aggregate']:
@@ -161,13 +171,15 @@ def main():
             value={'sourceCommit':source,'drafts':[{'date':d['date'],'sha256':hashlib.sha256(d['markdown'].encode()).hexdigest()} for d in incoming['drafts']]}
             if path.exists() and json.loads(path.read_text())!=value:raise ValueError('draft source identity conflict')
             durable_write(path,(json.dumps(value)+'\n').encode())
-        step('ops/data-writer/run.py',['--ingest',parent,code])
+        args=['--ingest',parent,code]
+        if mode=='resume':args.append(incoming['inputVersion'])
+        step('ops/data-writer/run.py',args)
         version=json.loads((WORK/'ingestion.json').read_text())['inputVersion']
         prepare_candidate(version,code,mode,expected_hash,warnings)
     finally:connection.close()
 if __name__=='__main__':
     try:
-        if len(sys.argv)==4 and sys.argv[1]=='--ingest':ingest(sys.argv[2],sys.argv[3])
+        if len(sys.argv) in (4,5) and sys.argv[1]=='--ingest':ingest(sys.argv[2],sys.argv[3],sys.argv[4] if len(sys.argv)==5 else None)
         else:main()
     except Exception as error:
         print('data writer failed: '+type(error).__name__,file=sys.stderr);sys.exit(2)

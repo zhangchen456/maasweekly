@@ -14,7 +14,7 @@ def docker(root,mode,body):
     image=(SHARED/'data-writer-image').read_text().strip()
     if not re.fullmatch('sha256:[a-f0-9]{64}',image):raise ValueError('pin the local writer image digest')
     mounts=[(root/'tooling','/code','ro'),(writer,'/work','rw'),(writer/'data','/code/data','rw'),(root/'tooling/data/model-registry','/code/data/model-registry','ro'),(writer/'site-data','/code/site/src/data','rw'),(writer/'content','/code/site/src/content','rw'),(STORE/'blobs','/store/blobs','rw'),(public,'/public','rw'),(Path('/var/run/postgresql'),'/var/run/postgresql','ro')]
-    args=['docker','run','--rm','-i','--init','--name','maas-data-writer','--user',f'{uid}:{gid}','--read-only','--tmpfs','/tmp:rw,size=256m','--shm-size','256m','--memory','1536m','--memory-swap','1536m','--cpus','1','--pids-limit','256','--cap-drop','ALL','--cap-add','SYS_CHROOT','--security-opt','no-new-privileges','--security-opt','seccomp='+str(root/'tooling/ops/data-writer/seccomp.json'),'-e','MAAS_DATA_DSN=dbname=maas_data user=maasdata host=/var/run/postgresql','-e','MAAS_CODE_COMMIT='+(root/'tooling/code-commit').read_text().strip()]
+    args=['docker','run','--rm','-i','--init','--name','maas-data-writer','--user',f'{uid}:{gid}','--read-only','--tmpfs','/tmp:rw,size=256m','--shm-size','256m','--memory','1536m','--memory-swap','2560m','--cpus','1','--pids-limit','256','--cap-drop','ALL','--cap-add','SYS_CHROOT','--security-opt','no-new-privileges','--security-opt','seccomp='+str(root/'tooling/ops/data-writer/seccomp.json'),'-e','MAAS_DATA_DSN=dbname=maas_data user=maasdata host=/var/run/postgresql','-e','MAAS_CODE_COMMIT='+(root/'tooling/code-commit').read_text().strip()]
     for source,target,access in mounts:args+=['-v',f'{source}:{target}:{access}']
     args += [image,'python','/code/ops/data-writer/run.py']
     log=STORE/'reports'/('writer-'+str(time.time_ns())+'-'+mode+'.log')
@@ -32,7 +32,7 @@ def main():
     body=sys.stdin.buffer.read(1048577)
     if len(body)>1048576:raise ValueError('request too large')
     incoming=json.loads(body);mode=incoming.get('mode')
-    if mode not in ['prepare','validate','update','weekly','aggregate','import','rebuild']:raise ValueError('invalid mode')
+    if mode not in ['prepare','validate','update','weekly','aggregate','import','rebuild','resume']:raise ValueError('invalid mode')
     with (ROOT/'locks/release.lock').open('a+b') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
         root=runtime();docker(root,mode,body)

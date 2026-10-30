@@ -29,3 +29,13 @@ root 在服务器执行 `python3 /usr/local/lib/maasweekly/runtime-control.py st
 标准生产构建入口为 `bash scripts/build-runtime-release.sh --output <仓库外新目录>`，要求干净固定提交、Node 22/Python 3.12，包不含运行数据。单元测试使用固定小样本，真实数据验证在服务器独立完成。
 
 本地完整网页预览需要独立的测试 PG/公开数据目录和 `MAAS_SITE_ENTRY`，可用 `scripts/verify-runtime-site.mjs --package-root <包> --data-root <外部候选>` 做隔离验收。旧 `npm run build`/`build-release.sh` 保留历史静态链路，需要完整本地输入；不再是生产发布入口。不要为构建向 Git 重新加入业务数据。
+
+## 低内存服务器与中断入库恢复
+
+输入清单按流式 canonical JSON 计算原有校验值；文档导入/验证同时受 128 条和 2 MiB 原始数据批量限制，单个更大的文档独立处理。容器最多使用 1536 MiB 内存及 1024 MiB 交换空间；主机需要先配置交换空间，交换不是容量扩容的替代品。
+
+代码切换在新路由冒烟通过、恢复信息落盘后，等待 30 秒排空旧请求再停止旧 API 槽位。旧包仍保留，回滚会重新启动对应槽位；停止失败只发出警告，不撤销已经成功的发布。
+
+若采集和归档校验已经完成、任务在入库阶段中断，先读取 writer/data/inputs-current.json 并保留故障日志，再通过受限 data-update 动作提交 `{"mode":"resume","inputVersion":"in_<完整64位哈希>"}`。此模式不重新抓取、不用数据库旧版本重置缓存，仍执行归档验证、固定版本入库、候选验证、备份和原子发布。输入版本不匹配、有未完成流水线标记或重算版本不一致时拒绝恢复，不修改公开指针。不要对仍在运行或未完成采集的任务使用此模式。
+
+root 管理的 `/usr/local/lib/maasweekly/runtime-control.py` 与 `data-update.py` 分别来自 `ops/runtime-control.py` 与 `ops/data-writer/launch.py`，需要显式备份和安装；仅代码包发布不会自动替换 root 控制器。
