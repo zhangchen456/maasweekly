@@ -1,20 +1,24 @@
+import {analyticsCsv} from './admin-analytics-export';
 import {adminApi,AdminApiError} from './admin-client';
 interface Rate {numerator:number;denominator:number;immature:number;rate:number|null;status:string;availability:string}
 interface Coverage {availability:string;completeSince:string}
-interface Result {
+export interface Result {
  range:{from:string;to:string;timezone:string;end:number};
  website:{availability:string;lastSuccessAt:string|null;reason?:string;stats:{pageviews:number;visitors:number;visits:number}|null;pages:{label:string;count:number}[]|null;sources:{label:string;count:number}[]|null;rankingUnit:string;asOf?:string};
  business:{dataHealth:{asOf:string;requestCollection:{lastSuccessAt:string|null;failures:number;lastFailureAt:string|null};lastRecorded:{registration:string|null;accountAction:string|null;coreUsage:string|null};requestDays:{day:number;requests:number}[]};freeFunnel:Coverage&{windowDays:number;weekly:{weekStart:string;registered:number;mature:number;immature:number;used:number;returned:number;useRate:number|null;returnRate:number|null}[];items:{firstSource:string;lastSource:string;registered:number;mature:number;immature:number;used:number;returned:number;useRate:number|null;returnRate:number|null}[]};accountActions:Coverage&{items:{event:string;requests:number;accounts:number}[]};asOf:string;coverage:Coverage;profilesCreated:number;registrations:Coverage&{count:number;historicalUnknown:number};betaActivated:number;professionalReads:{requests:number;accounts:number};exports:{requests:number;accounts:number};events:{event:string;count:number;accounts:number}[];weekly:{items:{id:string;kind:string;requests:number;readers:number;returningReaders:number}[];truncated:boolean};agents:Coverage&{failures:number;items:{channel:string;requests:number;httpSuccess:number}[]};valueActivation7d:Rate;valueUsage:{activeAccounts:number;returningAccounts:number};activation7d:Rate;retentionWeek4:Rate};
 }
 const form=document.getElementById('analytics-filter') as HTMLFormElement|null;
 if(form){
+ const exportButton=document.getElementById('analytics-export') as HTMLButtonElement;
+ let exportParams:string|null=null;
+ const invalidateExport=()=>{exportParams=null;exportButton.disabled=true;};
  const el=(id:string)=>document.getElementById('analytics-'+id)!;let generation=0,ready=false;
  const time=(s:string|number)=>new Date(s).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false});
- const clear=()=>{generation++;ready=false;for(const id of ['status','health','website-state','website','pages','sources','coverage','business','weekly','agents','cohorts'])el(id).replaceChildren();};
+ const clear=()=>{generation++;ready=false;invalidateExport();for(const id of ['status','health','website-state','website','pages','sources','coverage','business','weekly','agents','cohorts'])el(id).replaceChildren();};
  const text=(id:string,value:string)=>{el(id).textContent=value;};
  const summary=(id:string,items:[string,string|number][])=>{const list=el(id);list.replaceChildren();for(const [key,value] of items){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=key;dd.textContent=String(value);list.append(dt,dd);}};
  const table=(id:string,headers:string[],rows:(string|number)[][])=>{const host=el(id);host.replaceChildren();if(!rows.length){host.textContent='该范围内没有记录';return;}const wrap=document.createElement('div');wrap.className='admin-table-wrap';const t=document.createElement('table'),head=document.createElement('thead'),tr=document.createElement('tr');for(const h of headers){const th=document.createElement('th');th.textContent=h;tr.append(th);}head.append(tr);t.append(head);const body=document.createElement('tbody');for(const row of rows){const tr=document.createElement('tr');for(const value of row){const td=document.createElement('td');td.textContent=String(value);tr.append(td);}body.append(tr);}t.append(body);wrap.append(t);host.append(wrap);};
- async function load(){if(!ready)return;const current=++generation;text('status','正在查询…');try{const data=new FormData(form!),preset=String(data.get('preset')),params=new URLSearchParams({preset});if(preset==='custom'){params.set('from',String(data.get('from')));params.set('to',String(data.get('to')));}const result=await adminApi<Result>('analytics?'+params);if(current!==generation)return;
+ async function load(){if(!ready)return;const current=++generation;invalidateExport();text('status','正在查询…');try{const data=new FormData(form!),preset=String(data.get('preset')),params=new URLSearchParams({preset});if(preset==='custom'){params.set('from',String(data.get('from')));params.set('to',String(data.get('to')));}const result=await adminApi<Result>('analytics?'+params);if(current!==generation)return;
    const {business:b,website:w,range:r}=result;text('status',`${r.from} 至 ${r.to} · 北京时间 · 数据截至 ${time(r.end)}`);
    text('website-state',w.availability==='available'?`查询成功于 ${time(w.asOf!)} · 排行单位：${w.rankingUnit==='views'?'浏览量':'访客'}`:`不可用（${w.reason==='not_configured'?'未配置服务端统计凭据':w.reason==='busy'?'查询繁忙':'统计查询失败或配置无效'}）· 最近成功：${w.lastSuccessAt?time(w.lastSuccessAt):'尚无成功记录'}`);
    if(w.stats){summary('website',[['浏览量',w.stats.pageviews],['访客（Umami去重口径）',w.stats.visitors],['访问次数（会话）',w.stats.visits]]);table('pages',['页面',w.rankingUnit==='views'?'浏览量':'访客'],w.pages!.map(x=>[x.label,x.count]));table('sources',['来源',w.rankingUnit==='views'?'浏览量':'访客'],w.sources!.map(x=>[x.label,x.count]));}else{for(const id of ['website','pages','sources'])el(id).replaceChildren();}
@@ -41,7 +45,22 @@ if(form){
    const rows=b.freeFunnel.items;
    if(!rows.length){const empty=document.createElement('p');empty.textContent='尚无新队列记录';el('cohorts').append(empty);}
    for(const row of rows){const p=document.createElement('p');p.textContent=`${channels[row.firstSource]??'未知'} → ${channels[row.lastSource]??'未知'}：注册 ${row.registered}，成熟 ${row.mature}，观察中 ${row.immature}；已使用 ${row.used}，跨日回访 ${row.returned}；使用率 ${row.useRate===null?'样本不足':(row.useRate*100).toFixed(1)+'%'}，使用后回访率 ${row.returnRate===null?'样本不足':(row.returnRate*100).toFixed(1)+'%'}`;el('cohorts').append(p);}
+   exportParams=params.toString();exportButton.disabled=false;
  }catch(e){if(current!==generation)return;for(const id of ['health','website-state','website','pages','sources','coverage','business','weekly','agents','cohorts'])el(id).replaceChildren();if(e instanceof AdminApiError&&(e.status===401||e.status===403)){clear();document.dispatchEvent(new CustomEvent('maas:admin-cleared'));document.getElementById('admin-private')!.hidden=true;}text('status',e instanceof Error?e.message:'查询失败，请重试。');}}
+ exportButton.addEventListener('click',async()=>{
+  if(!ready||!exportParams)return;
+  const params=exportParams,current=generation;exportButton.disabled=true;
+  try{
+   // Re-query through admin authorization; never download a cached snapshot after revocation.
+   const result=await adminApi<Result>('analytics?'+params);
+   if(!ready||current!==generation||params!==exportParams)return;
+   const url=URL.createObjectURL(new Blob([analyticsCsv(result)],{type:'text/csv;charset=utf-8'}));
+   const link=document.createElement('a');link.href=url;link.download=`maas-analytics-${result.range.from}-${result.range.to}.csv`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+   text('status','已导出重新查询的统计结果；文件包含查询时间、范围及口径说明。');
+  }catch(e){if(current!==generation)return;if(e instanceof AdminApiError&&(e.status===401||e.status===403)){clear();document.dispatchEvent(new CustomEvent('maas:admin-cleared'));document.getElementById('admin-private')!.hidden=true;}text('status',e instanceof Error?e.message:'导出失败，请重试。');}
+  finally{if(current===generation&&ready&&exportParams)exportButton.disabled=false;}
+ });
+ form.addEventListener('input',()=>{generation++;invalidateExport();});
  form.addEventListener('submit',e=>{e.preventDefault();void load();});document.addEventListener('maas:admin-ready',()=>{ready=true;void load();});document.addEventListener('maas:admin-cleared',clear);window.addEventListener('pagehide',clear);
  const preset=form.elements.namedItem('preset') as HTMLSelectElement;const toggle=()=>{for(const name of ['from','to']){const input=form.elements.namedItem(name) as HTMLInputElement;input.disabled=preset.value!=='custom';input.required=preset.value==='custom';}};preset.addEventListener('change',toggle);toggle();
 }
