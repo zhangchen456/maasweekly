@@ -217,3 +217,34 @@ test('search interaction records usage without sending search text', () => {
  assert.ok(!JSON.stringify(events).includes('private@example.com'));
  dom.window.close();
 });
+
+
+test('free beta intent preserves no arbitrary payload and respects opt-out', () => {
+  const dom = browser('', BASE + '/subscription/'), events = [];
+  startAnalytics(dom.window, enabled, BASE); provider(dom.window, events);
+  const emit = () => dom.window.document.dispatchEvent(new dom.window.CustomEvent('maas:beta-activation-intent', {detail:{email:'private@example.test'}}));
+  emit(); assert.equal(events.length, 1);
+  assert.equal(events[0].name, 'beta_activation_intent');
+  assert.deepEqual(events[0].data, {page_type:'subscription'});
+  dom.window.localStorage.setItem('umami.disabled','1'); emit(); assert.equal(events.length,1);
+  dom.window.close();
+});
+
+test('subscription CTA records free beta intent before login, but not existing-member navigation', async () => {
+  const dom = browser('<div data-subscription><button id="subscription-plus"></button><p id="subscription-status"></p><span data-current-free></span><span data-current-plus></span><span data-plus-label></span></div>', BASE+'/subscription/');
+  let intents=0, logins=0, account=null, change;
+  dom.window.document.addEventListener('maas:beta-activation-intent',()=>intents++);
+  dom.window.currentAccount=()=>account;
+  dom.window.onAccountChange=fn=>{change=fn;fn();};
+  dom.window.openAccountLogin=()=>logins++;
+  dom.window.fetch=async()=>({ok:true,json:async()=>({entitlement:{status:'active',source:'beta'},betaAvailable:true})});
+  const source=fs.readFileSync(new URL('../src/scripts/subscription.ts', import.meta.url),'utf8').replace(/^import[^\n]+\n/,'');
+  dom.window.eval((await transform(source,{loader:'ts'})).code);
+  const button=dom.window.document.getElementById('subscription-plus');
+  button.click(); assert.equal(intents,1); assert.equal(logins,1);
+  account={user:{id:'test'}};change();await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(button.textContent,'进入 Plus 工作空间');
+  // Calling the handler reaches jsdom's unsupported navigation but must not count a beta intention.
+  dom.virtualConsole.removeAllListeners('jsdomError'); button.click();assert.equal(intents,1);
+  dom.window.close();
+});

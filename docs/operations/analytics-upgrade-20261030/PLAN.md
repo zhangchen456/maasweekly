@@ -74,3 +74,9 @@ node --test site/tests/analytics.test.mjs：14/14 通过。
 ## 用户确认的免费方案
 
 Umami 设置/API keys 实测显示“API access requires a Pro plan”。用户明确选择暂不付费，继续站内统计，Umami 保留手动核对。不得自动升级或把外部数据缺失显示成零；服务端保持 not_configured 状态。Search Console 当前可人工读取，但尚无服务端查询凭据。
+
+## 第一批上线与免费意向下一批
+
+第一批 PR #19 已合并并成功发布：af10d6312dfe0de8d5527d88763c6a6d5d25adac。GitHub Actions 41072504319 成功；服务器 shared/runtime.json 确认版本，公网 analytics.js 包含新事件。用户选择先完善免费使用和升级意向统计。
+
+新增 beta_activation_intent，区分套餐入口、免费开通点击和服务端激活；已开通用户进入工作空间不计意向，遵守 DNT/退出统计。前端17项测试和SSR构建通过。详细口径见 EVENTS.md；来源归因与完整漏斗仍待完成。
