@@ -91,7 +91,7 @@ export function startAnalytics(win, config, canonicalUrl) {
         } catch { return false; }
       } else if (payload.name === 'copy' && COPY_KINDS.has(data.kind)) {
         result.data.kind = data.kind;
-      } else if (payload.name === 'subscription_click' || payload.name === 'comparison_click' || payload.name === 'search_used') {
+      } else if (payload.name === 'subscription_click' || payload.name === 'comparison_click' || payload.name === 'search_used' || payload.name === 'beta_activation_intent') {
         // Intent only; successful business actions belong to server-side records.
       } else return false;
     } else {
@@ -139,6 +139,10 @@ export function startAnalytics(win, config, canonicalUrl) {
   win.document.addEventListener('auxclick', click, true);
   win.document.addEventListener('maas:copy-success', event => {
     if (COPY_KINDS.has(event.detail?.kind)) track('copy', { kind: event.detail.kind });
+  });
+
+  win.document.addEventListener('maas:beta-activation-intent', () => {
+    if (pageType(win.location.pathname) === 'subscription') track('beta_activation_intent', {});
   });
 
   // One committed search interaction, never the entered text or field name.
