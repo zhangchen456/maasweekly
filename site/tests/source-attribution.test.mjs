@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {transform} from 'esbuild';
 import {JSDOM} from 'jsdom';
+const campaigns=JSON.parse(fs.readFileSync(new URL('../../packages/analytics/campaigns.json',import.meta.url),'utf8'));
 const source=fs.readFileSync(new URL('../src/scripts/source-attribution.ts',import.meta.url),'utf8');
-const code=(await transform(source.replace(/export /g,''),{loader:'ts'})).code;
+const code=(await transform(source.replace(/^import[^\n]+\n/,'const campaigns='+JSON.stringify(campaigns)+';\n').replace(/export /g,''),{loader:'ts'})).code;
 function page(url,referrer){const dom=new JSDOM('',{url,referrer,runScripts:'outside-only'});dom.window.eval(code);return dom;}
 test('source session retains first and latest channel without URLs, terms or identity',()=>{
  const d=page('https://daily.maas.click/?utm_source=google&q=secret','https://google.com/search?q=private');
@@ -41,4 +42,17 @@ test('account verification includes only source channels and password login is u
  await d.window.accountApi('login',{email:'test@example.test',password:'secret'});
  assert.equal(JSON.parse(requests.find(r=>r.url.endsWith('/login')).init.body).attribution,undefined);
  d.window.close();
+});
+
+test('only registered campaign IDs persist across internal navigation; arbitrary text is discarded',()=>{
+ const d=page('https://daily.maas.click/?utm_source=wechat&utm_campaign=weekly-wechat-v1','https://weixin.qq.com/');
+ assert.equal(d.window.registrationSource().firstCampaign,'weekly-wechat-v1');
+ d.window.history.replaceState({},'', '/subscription/?utm_campaign=private@example.test');
+ assert.equal(d.window.registrationSource().lastCampaign,'weekly-wechat-v1');
+ assert.ok(!d.window.sessionStorage.getItem('maas-source-session-v1').includes('private'));
+ d.window.localStorage.setItem('umami.disabled','1');assert.equal(d.window.registrationSource(),undefined);d.window.close();
+});
+test('server campaign allowlist matches canonical public config',()=>{
+ const server=fs.readFileSync(new URL('../../services/agent-api/src/analytics-campaigns.ts',import.meta.url),'utf8');
+ assert.deepEqual(JSON.parse(server.match(/= (\[.*\]);/)[1]),campaigns);
 });

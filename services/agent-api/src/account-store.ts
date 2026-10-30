@@ -1,3 +1,4 @@
+import { campaigns } from './analytics-campaigns.js';
 import { DatabaseSync } from 'node:sqlite';
 import { createHash, createHmac, randomBytes, randomInt, randomUUID, timingSafeEqual, scrypt } from 'node:crypto';
 import { mkdirSync, chmodSync } from 'node:fs';
@@ -33,6 +34,8 @@ export class AccountStore {
       CREATE TABLE IF NOT EXISTS account_state(userId TEXT NOT NULL REFERENCES users(id), key TEXT NOT NULL, value TEXT NOT NULL, updated INTEGER NOT NULL, PRIMARY KEY(userId,key));
       CREATE TABLE IF NOT EXISTS account_value_events(id TEXT PRIMARY KEY,userId TEXT NOT NULL REFERENCES users(id),event TEXT NOT NULL,target TEXT NOT NULL,created INTEGER NOT NULL);
       CREATE INDEX IF NOT EXISTS account_value_events_user_time ON account_value_events(userId,created);
+      CREATE INDEX IF NOT EXISTS account_value_events_user_event_time ON account_value_events(userId,event,created);
+      CREATE TABLE IF NOT EXISTS account_registration_campaigns(userId TEXT PRIMARY KEY REFERENCES users(id),firstCampaign TEXT,lastCampaign TEXT,created INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS account_registration_sources(userId TEXT PRIMARY KEY REFERENCES users(id),firstSource TEXT NOT NULL,lastSource TEXT NOT NULL,created INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS account_value_metadata(key TEXT PRIMARY KEY,created INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS watches(userId TEXT NOT NULL REFERENCES users(id), modelId TEXT NOT NULL, since INTEGER NOT NULL, PRIMARY KEY(userId, modelId));
@@ -42,6 +45,15 @@ export class AccountStore {
       CREATE INDEX IF NOT EXISTS jobs_pending ON mail_jobs(status, lease);`);
     this.db.prepare("INSERT OR IGNORE INTO account_value_metadata VALUES('collection_start',?)").run(this.now());
     this.db.prepare("INSERT OR IGNORE INTO account_value_metadata VALUES('source_start',?)").run(this.now());
+    this.db.prepare("INSERT OR IGNORE INTO account_value_metadata VALUES('growth_start',?)").run(this.now());
+  }
+  recordWorkspaceUsage(userId:string,event:unknown) {
+    if(event!=='comparison_completed' && event!=='cost_estimate_completed')throw new AccountError(400,'invalid_event','无效统计事件');
+    // Browser-reported result, not a server-verified calculation; at most one per account/event/Beijing day.
+    return this.transaction(()=>{
+      const since=Math.floor((this.now()+28800000)/86400000)*86400000-28800000;
+      if(!this.db.prepare('SELECT 1 FROM account_value_events WHERE userId=? AND event=? AND created>=? AND created<?').get(userId,event,since,since+86400000))this.valueEvent(userId,event);
+    });
   }
   close() { this.db.close(); }
   private valueEvent(id: string, event: string, target = '') {
@@ -82,10 +94,12 @@ export class AccountStore {
         this.db.prepare('INSERT INTO organizations VALUES(?,?)').run(org, '个人空间');
         this.db.prepare('INSERT INTO users(id,email,organizationId,unsubscribeToken) VALUES(?,?,?,?)').run(id, email, org, token());
         if (this.db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='account_registrations'").get()) this.db.prepare('INSERT INTO account_registrations VALUES(?,?)').run(id,this.now());
-        const source=attribution as {first?:unknown;last?:unknown}|undefined;
+        const source=attribution as {first?:unknown;last?:unknown;firstCampaign?:unknown;lastCampaign?:unknown}|undefined;
         const allowed=['search','social','ai','referral','campaign','unknown'];
         const clean=(v:unknown)=>typeof v==='string'&&allowed.includes(v)?v:'unknown';
         this.db.prepare('INSERT INTO account_registration_sources VALUES(?,?,?,?)').run(id,clean(source?.first),clean(source?.last),this.now());
+        const campaign=(v:unknown)=>typeof v==='string'&&campaigns.includes(v)?v:null;
+        this.db.prepare('INSERT INTO account_registration_campaigns VALUES(?,?,?,?)').run(id,campaign(source?.firstCampaign),campaign(source?.lastCampaign),this.now());
         user = this.db.prepare('SELECT * FROM users WHERE id=?').get(id) as unknown as User;
       }
       this.profile(user);
