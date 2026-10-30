@@ -70,3 +70,7 @@ node --test site/tests/analytics.test.mjs：14/14 通过。
 2026-10-30 22:30 北京时间：Chrome 原生窗口读取可用，浏览器标签 DOM 通道仍超时。Umami 近7天：66 visitors、67 visits、94 views、79% bounce、10s duration。Google Search Console 当前3个月筛选实际图表覆盖2026-09-30至2026-10-28：2 clicks、3.56K impressions、0.1% CTR、8.5 average position。索引概览5,633已索引、3,047未索引。不同来源时间窗和计量不可合并；上述均为人工读取快照，自动同步尚未接通。
 
 统一正式内容导出在价值激活、活跃账号、跨日回访中的口径，共用过滤条件；补充跨日导出回归，账号及统计25/25测试通过，API构建通过。应用仍未发布。
+
+## 用户确认的免费方案
+
+Umami 设置/API keys 实测显示“API access requires a Pro plan”。用户明确选择暂不付费，继续站内统计，Umami 保留手动核对。不得自动升级或把外部数据缺失显示成零；服务端保持 not_configured 状态。Search Console 当前可人工读取，但尚无服务端查询凭据。
