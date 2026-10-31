@@ -1,5 +1,5 @@
 import { uiEnglish } from './ui-en';
-import supplemental from '../data/ui-translations-en.json';
+import supplemental from '../data/ui-translations-en.json' with { type: 'json' };
 import { decodeHTML } from 'entities';
 import { localizedHref } from './locale-routes';
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -24,7 +24,7 @@ export function englishUi(text: string): string {
   if (evidenceCount) return `Pricing facts citing this evidence (${evidenceCount[1]})`;
   const revisionCount = trim.match(/^修订历史（(\d+) 版）$/);
   if (revisionCount) return `Revision history (${revisionCount[1]} versions)`;
-  const datedWeekday = trim.match(/^(\d{4}-\d{2}-\d{2})\s+周([日一二三四五六])$/);
+  const datedWeekday = trim.match(/^((?:\d{4}-\d{2}-\d{2})|(?:\d{2}\.\d{2}))\s+周([日一二三四五六])$/);
   if (datedWeekday) return `${datedWeekday[1]} ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat']['日一二三四五六'.indexOf(datedWeekday[2])]}`;
   const fullDate = trim.match(/^(\d{4})年(\d{1,2})月(\d{1,2})日$/);
   if (fullDate) return `${fullDate[1]}-${fullDate[2].padStart(2,'0')}-${fullDate[3].padStart(2,'0')}`;

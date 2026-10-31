@@ -31,6 +31,7 @@ for name in ['requirements.lock.txt','ops/backup-data-store.sh']:
  target=out/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(root/name,target)
 (out/'code-commit').write_text(sys.argv[2]+'\n')
 (out/'site/src/data').mkdir(parents=True,exist_ok=True);(out/'site/src/content').mkdir(parents=True,exist_ok=True)
+shutil.copyfile(root/'site/src/data/ui-translations-en.json',out/'pipeline/ui-translations-en.json')
 TOOLING
 (cd "$output/agent-api" && npm ci --omit=dev --prefer-offline --silent)
 (cd "$output/site" && npm ci --omit=dev --prefer-offline --silent)

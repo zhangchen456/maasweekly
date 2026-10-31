@@ -9,7 +9,7 @@ export function sitemapUrls(){
   const release=runtime.release();
   const routes=new Set<string>();
   const add=(route:string)=>{routes.add(canonicalUrl(route));routes.add(canonicalUrl('/en'+(route==='/'?'/':route)));};
-  for(const route of ['/','/models/','/pricing/','/compare/','/guides/','/leaderboards/','/changes/','/weekly/','/agent/','/method/','/about/'])add(route);
+  for(const route of ['/','/models/','/pricing/','/compare/','/guides/','/leaderboards/','/changes/','/weekly/','/agent/','/method/','/about/','/terms/','/privacy/','/aup/'])add(route);
   for(const guide of priceGuides)add('/guides/'+guide.slug+'/');
   for(const report of release.weekly??[])add('/weekly/'+report.id+'/');
   const weeks=new Set((runtime.projection('weekly-digest.json') as {week:string}[]).map(w=>w.week));

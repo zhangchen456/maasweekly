@@ -29,7 +29,7 @@ const providerLabel = providerLabels[providerId] ?? providerId;
 const hasContent = prices.length > 0 || changes.length > 0;
 ---
 <Layout title={`${model.modelName} API 价格与价格变化 — MaaS Daily`}
-  description={`查询 ${model.modelName} 的 API 报价、输入输出和缓存计费条件、原币种与单位、近期价格变化及证据。数据截至 ${dataThrough}。`}
+  description={locale === 'en' ? `Find API quotes, input/output and cache billing conditions, original currencies and units, recent price changes and evidence for ${model.modelName}. Data through ${dataThrough}.` : `查询 ${model.modelName} 的 API 报价、输入输出和缓存计费条件、原币种与单位、近期价格变化及证据。数据截至 ${dataThrough}。`}
   noindex={!hasContent}>
   <section class="model-hero">
     <div class="shell">
@@ -81,7 +81,7 @@ const hasContent = prices.length > 0 || changes.length > 0;
 
     <section class="model-section">
       <div class="section-head"><h2>最近变化</h2><a class="section-link" href={`/changes/?modelId=${model.modelId}`}>浏览变化 →</a></div>
-      <p class="muted small">{from} 至 {dataThrough} 的数据窗口，最多展示最近 10 条。没有记录不代表窗口之外没有变化。</p>
+      <p class="muted small">{locale === 'en' ? `Data window: ${from} to ${dataThrough}; showing up to 10 recent records. No records here does not mean there were no changes outside this window.` : `${from} 至 ${dataThrough} 的数据窗口，最多展示最近 10 条。没有记录不代表窗口之外没有变化。`}</p>
       <div id="recent-changes" class="recent-changes">
         <ChangeList changes={changes} />
       </div>

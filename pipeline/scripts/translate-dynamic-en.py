@@ -55,9 +55,17 @@ def translate(source, key, url, model):
 
 def main():
     texts=collect_texts(compose_daily(BASE)) | collect_texts(compose_weekly(BASE))
+    # Current archive summaries are editorial; raw diffs and evidence are excluded.
+    for folder in ['records','price-records']:
+        for file in (BASE/'data'/folder).glob('*.json'):
+            record=json.loads(file.read_text())
+            texts |= collect_texts({'title':record.get('title',''),'text':record.get('summary','')})
     cache=read(BASE,CACHE,{'schemaVersion':1,'entries':{}})
     key=os.environ.get('TRANSLATION_API_KEY',''); model=os.environ.get('TRANSLATION_MODEL',MODEL)
     available=projected_texts(cache)
+    bundled=BASE/'pipeline/ui-translations-en.json'
+    if not bundled.exists(): bundled=BASE/'site/src/data/ui-translations-en.json'
+    if bundled.exists(): available={**json.loads(bundled.read_text()).get('texts',{}),**available}
     pending=[s for s in sorted(texts) if s not in available]
     if '--check' in sys.argv:
         print(json.dumps({'required':len(texts),'missing':len(pending)})); return int(bool(pending))
