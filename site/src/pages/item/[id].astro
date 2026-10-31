@@ -3,6 +3,7 @@
 // 数据源：data/records/*.json（obs_）+ data/price-records/*.json（price_）
 // 修订历史：data/record-revisions/<id>/ 与 data/price-record-revisions/<id>/
 import { siteRuntime } from '../../lib/runtime';
+import {localizeEditorial} from '../../lib/dynamic-translation';
 import Layout from '../../layouts/Layout.astro';
 import { logoFor } from '../../lib/platforms';
 import fs from 'node:fs';
@@ -54,6 +55,8 @@ export async function getStaticPaths() {
 const runtime=siteRuntime();
 const record = runtime ? await runtime.record(Astro.params.id??'') : Astro.props.record;
 if(!record)return new Response('Not found',{status:404});
+const en = Astro.url.pathname.startsWith('/en/');
+const localizedSummary=record.summary ? localizeEditorial({text:record.summary},en?'en':'zh').text : '';
 const rid: string = record.id;
 const isPrice: boolean = record.recordType === 'price_change';
 
@@ -325,7 +328,7 @@ const priceCondText = () => {
   </script>
 </Layout>
 ) : (
-<Layout title={`${record.title} — MaaS Daily`} description={record.summary?.slice(0, 160) || `${record.platform} ${record.date} 来源变化摘录`} noindex={record.status === 'withdrawn'}>
+<Layout title={`${record.title} — MaaS Daily`} description={localizedSummary?.slice(0, 160) || `${record.platform} ${record.date} 来源变化摘录`} noindex={record.status === 'withdrawn'}>
   <header class="hero">
     <div class="hero-main">
       <a href={`/daily/${weekId}/`} class="back-link">← {weekId} 周归档</a>
@@ -353,7 +356,7 @@ const priceCondText = () => {
     <div class="card summary-card">
       <h2>摘要</h2>
       {record.summary ? (
-        <p class="summary-text">{record.summary}</p>
+        <p class="summary-text">{localizedSummary}</p>
       ) : (
         <p class="summary-text muted">暂无摘要。本条目为来源变化的原始摘录。</p>
       )}

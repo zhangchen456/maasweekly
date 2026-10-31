@@ -1,5 +1,5 @@
 import type { Locale } from './locales';
-export const sharedRoutes = ['/', '/models/', '/pricing/', '/method/', '/agent/', '/subscription/', '/subscription/payments/', '/subscription/sandbox/', '/account/', '/feedback/', '/account/unsubscribe/', '/pro/', '/pro/weekly/', '/pro/unsubscribe/', '/leaderboards/', '/changes/', '/sources/', '/weekly/', '/compare/', '/guides/', '/about/', '/changelog/'];
+export const sharedRoutes = ['/', '/models/', '/pricing/', '/method/', '/agent/', '/subscription/', '/subscription/payments/', '/subscription/sandbox/', '/account/', '/feedback/', '/account/unsubscribe/', '/pro/', '/pro/weekly/', '/pro/unsubscribe/', '/leaderboards/', '/changes/', '/sources/', '/weekly/', '/compare/', '/guides/', '/about/', '/aup/', '/terms/', '/privacy/', '/changelog/'];
 export function localizedRoute(path: string, locale: Locale) {
   const base = path.replace(/^\/en(?=\/|$)/, '') || '/';
   const normalized = base === '/' ? '/' : `${base.replace(/\/+$/, '')}/`;

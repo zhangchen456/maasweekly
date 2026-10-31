@@ -11,6 +11,8 @@ const module={exports:{}};
 new Function('module','exports',bundle.outputFiles[0].text)(module,module.exports);
 const {englishUi,englishHtml}=module.exports;
 assert.equal(englishUi('2 项信号'),'2 signals');
+assert.equal(englishUi('10.31 周六'),'10.31 Sat');
+assert.equal(englishUi('摘要更新；变更内容更新；分类更新'),'Summary updated; change content updated; category updated');
 assert.equal(englishUi('3 / 14 条记录'),'3 / 14 records');
 assert.equal(englishUi('3 条变化 · 最近 10.26'),'3 changes · latest 10.26');
 assert.equal(englishUi('…共 48 条，仅列前 30。'),'… 48 records; showing the first 30.');

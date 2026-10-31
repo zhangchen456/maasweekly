@@ -1,3 +1,4 @@
+import uiCatalog from '../data/ui-translations-en.json' with { type: 'json' };
 import reviewed from '../data/editorial-translations-en.json' with { type: 'json' };
 import { siteRuntime } from './runtime.ts';
 import { readFileSync } from 'node:fs';
@@ -26,7 +27,8 @@ export function localizeEditorial<T>(value:T, locale:'zh'|'en'):T {
   const walk = (item:unknown, field=''):unknown => {
     if (typeof item === 'string') {
       if (!editorialFields.has(field) || !/[\u3400-\u9fff]/.test(item)) return item;
-      return reviewed.texts[item as keyof typeof reviewed.texts] ?? texts[item] ?? 'English translation pending. Please see the Chinese version for the original.';
+      const translated=reviewed.texts[item as keyof typeof reviewed.texts] ?? texts[item] ?? uiCatalog.texts[item as keyof typeof uiCatalog.texts] ?? 'English translation pending. Please see the Chinese version for the original.';
+      return /[\u3400-\u9fff]/.test(translated) ? 'English translation pending. Please see the Chinese version for the original.' : translated;
     }
     if (Array.isArray(item)) return item.map(child=>walk(child,field));
     if (item && typeof item === 'object') return Object.fromEntries(Object.entries(item).map(([key,child])=>[key,walk(child,key)]));
