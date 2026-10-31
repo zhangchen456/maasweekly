@@ -1,3 +1,4 @@
+import { localizedHref } from '../lib/locale-routes';
 import {currentAccount,onAccountChange,openAccountLogin} from './account-client';
 const root=document.querySelector<HTMLElement>('[data-subscription]');
 if(root){
@@ -23,5 +24,5 @@ if(root){
   }catch{if(version!==generation)return;button.disabled=true;status.textContent=t('暂时无法查询权益，请刷新重试。','Could not load your plan. Please refresh.');}
  }
  onAccountChange(()=>{void load();});
- button.onclick=()=>{if(active){location.assign('/pro/');return;}if(!currentAccount()||available)document.dispatchEvent(new CustomEvent('maas:beta-activation-intent'));if(!currentAccount()){pendingLogin=true;openAccountLogin();return;}if(available)void activate();};
+ button.onclick=()=>{if(active){location.assign(localizedHref('/pro/',document.documentElement.lang === 'en' ? 'en' : 'zh'));return;}if(!currentAccount()||available)document.dispatchEvent(new CustomEvent('maas:beta-activation-intent'));if(!currentAccount()){pendingLogin=true;openAccountLogin();return;}if(available)void activate();};
 }

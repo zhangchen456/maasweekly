@@ -161,7 +161,7 @@ const observedRange = relatedFacts.length > 0
     <div class="card">
       <h2>摘录</h2>
       <p class="muted">以下为当时官方页面的安全文本化摘录，本站不执行来源 HTML。观察时间见下方关联事实。</p>
-      <pre class="excerpt">{record.excerptText || '（无摘录内容）'}</pre>
+      <pre class="excerpt" data-original-language={Boolean(record.excerptText)}>{record.excerptText || (Astro.url.pathname.startsWith('/en/') ? 'No excerpt available' : '（无摘录内容）')}</pre>
     </div>
 
     {relatedFacts.length > 0 && (

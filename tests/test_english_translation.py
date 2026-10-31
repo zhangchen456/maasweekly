@@ -10,6 +10,54 @@ sys.path.insert(0,str(ROOT/'pipeline'))
 from english_translation import collect_texts, projected_texts, protect, restore_and_validate, text_key, PROMPT_VERSION, normalize_terms
 
 class EnglishTranslationTests(unittest.TestCase):
+    def test_large_and_chinese_quantities_remain_exact(self):
+        _,values=protect('参数 2.88万亿，融资十亿美元，训练三周，近亿元，市值跌破千亿。十分关注，两三倍。')
+        joined=' '.join(values.values())
+        for number in ['2880000000000','1000000000','100000000','100000000000','3']:
+            self.assertIn(number,joined)
+        masked,_=protect('十分关注')
+        self.assertEqual(masked,'十分关注','An idiom is not a quantity')
+        _,spaced=protect('总参数 1.6 万亿，激活参数 480 亿，融资 10 亿美元')
+        self.assertEqual(list(spaced.values()),['1600000000000','48000000000','1000000000'])
+        self.assertEqual(normalize_terms('参数2.88万亿','2880000000000 parameters'),'2.88 trillion parameters')
+        self.assertEqual(normalize_terms('参数2.88万亿','model-2880000000000 https://example.com/2880000000000'),'model-2880000000000 https://example.com/2880000000000')
+        self.assertEqual(normalize_terms('参数2.88万亿，版本20261017','2880000000000 parameters, version 20261017'),'2.88 trillion parameters, version 20261017')
+
+    def test_long_passages_validate_facts_again_after_assembly(self):
+        spec=importlib.util.spec_from_file_location('translate_ui_chunks',ROOT/'pipeline/scripts/translate-ui-en.py')
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        source=('型号 GPT-6.1-sol 输入价格 $12/MTok。型号 Claude-5 输出价格 $15/MTok。')*5
+        self.assertEqual(''.join(module.editorial_parts(source)),source)
+        class Translator:
+            def translate(self,part,*args):
+                if part==source:return {'source':part,'status':'failed'}
+                _,values=protect(part)
+                return {'source':part,'status':'success','translation':'Observed '+ ' '.join(values.values())}
+        entry=module.translate_source(source,'fake-key','https://example.com','spark-x2.5-4b',Translator())
+        self.assertEqual(entry['status'],'success')
+        self.assertEqual(entry['translation'].count('$12/MTok'),5)
+        class BrokenTranslator:
+            def translate(self,part,*args):return {'source':part,'status':'failed'} if part==source else {'source':part,'status':'success','translation':'Facts omitted.'}
+        self.assertEqual(module.translate_source(source,'fake-key','https://example.com','spark-x2.5-4b',BrokenTranslator())['status'],'failed')
+
+    def test_ui_batch_validates_each_translation_independently(self):
+        spec=importlib.util.spec_from_file_location('translate_ui',ROOT/'pipeline/scripts/translate-ui-en.py')
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        sources=['输入价格 $12/MTok','输出价格 $15/MTok']
+        requests=[]
+        class Reply:
+            def __enter__(self):return self
+            def __exit__(self,*args):pass
+            def read(self):
+                return json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'0':'Input price KEEP000TOKEN','1':'Output price KEEP000TOKEN 99'})}}]}).encode()
+        def response(request,timeout):requests.append(json.loads(request.data));return Reply()
+        with patch.object(module.urllib.request,'urlopen',response):
+            good,missing=module.translate_batch(sources,'fake-test-key','https://example.com','spark-x2.5-4b')
+        self.assertEqual(good,{sources[0]:'Input price $12/MTok'})
+        self.assertEqual(missing,[sources[1]],'Invalid facts must be retried, never published')
+        self.assertEqual(sources,['输入价格 $12/MTok','输出价格 $15/MTok'])
+        self.assertNotIn('fake-test-key',json.dumps(requests))
+
     def test_scope_excludes_original_evidence_and_identity(self):
         data={'highlights':[{'platform':'中文厂商','logo_summary':'新增模型','items':[{'text':'模型上线'}]}],
               'changed':[{'llm_summary':'信源解读','added_lines':['原始证据'],'signal_preview':'原文预览','url':'https://example.com/中文'}],
@@ -55,6 +103,11 @@ class EnglishTranslationTests(unittest.TestCase):
         self.assertEqual(projected_texts({'entries':{text_key(source):good}}),{source:'Today’s highlights'})
         for bad in [{**good,'status':'failed'},{**good,'promptVersion':'old'},{**good,'source':'已修改内容'}]:
             self.assertEqual(projected_texts({'entries':{text_key(source):bad}}),{})
+        scaled='参数3万亿'
+        old={**good,'source':scaled,'translation':'30000 billion parameters'}
+        self.assertEqual(projected_texts({'entries':{text_key(scaled):old}}),{},'Old compound-scale translations cannot be reused')
+        corrected={**old,'translation':'3000000000000 parameters','quantityVersion':3}
+        self.assertEqual(projected_texts({'entries':{text_key(scaled):corrected}}),{scaled:'3 trillion parameters'})
 
     def test_quantization_uses_the_technical_term(self):
         self.assertEqual(normalize_terms('新增量化版本','Added quantitative version'),'Added quantized version')
