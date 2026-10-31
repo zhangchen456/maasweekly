@@ -167,7 +167,7 @@ def main():
             if view is None or view.version!=incoming['inputVersion']:raise ValueError('recovery checkpoint changed')
             del view
         else:
-            initialize(connection,{**published,'site':{**published['site'],'inputVersion':parent}},blobs)
+            timed('initialize',initialize,connection,{**published,'site':{**published['site'],'inputVersion':parent}},blobs)
         if mode=='prepare':print(json.dumps({'status':'cache_ready'}));return
         warnings=[]
         if mode in ['update','weekly','aggregate']:
