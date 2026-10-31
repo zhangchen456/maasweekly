@@ -5,6 +5,22 @@ import {JSDOM} from 'jsdom';
 import {transform} from 'esbuild';
 const read=p=>fs.readFileSync(new URL(p,import.meta.url),'utf8');
 const compile=async s=>(await transform(s.replace(/^import[^\n]*\n/gm,'').replace(/export /g,''),{loader:'ts'})).code;
+test('costs use the published FX snapshot and preserve explicit user overrides',async()=>{
+ const template=read('../src/components/PriceWorkspace.astro').replace(/^---[\s\S]*?---/,'').replace(/<script[\s\S]*?<\/script>/g,'');
+ const prices=['input','output'].map((component,i)=>({provider:'openai',model:'a',modelId:'openai:a',component,amount:String([2,8][i]),amount_per_1m:String([2,8][i]),currency:'USD',unit_quantity:1000000,unit_name:'token',region:'global',billing_mode:'realtime',service_tier:'standard',context_band:null,time_condition:null,observed_at:1,field_state:'confirmed'}));
+ for(const [fx_snapshot,expected] of [[{base:'USD',rates:{CNY:'7.1',USD:'1'},as_of:'2026-09-07'},7.1],[{base:'CNY',rates:{USD:'.125'}},8],[{base:'USD',rates:{CNY:'0'}},7]]){
+  const html='<html lang="en"><body>'+template+'<script id="goal-data" type="application/json">'+JSON.stringify({prices,meta:{},fx_snapshot,modelIdentities:{models:[{modelId:'openai:a',modelName:'A'}],families:[]}})+'</script></body></html>';
+  const d=new JSDOM(html,{url:'https://daily.maas.click/en/pricing/?modelId=openai:a',runScripts:'outside-only'}),w=d.window;
+  w.eval(await compile(read('../src/lib/workspace-share.ts')));w.onAccountChange=()=>{};w.currentAccount=()=>null;w.formatTimestamp=v=>v;w.savedState=(_key,defaults,apply)=>{apply(defaults);return()=>{}};w.recordWorkspaceResult=()=>{};
+  w.eval(await compile(read('../src/scripts/price-workspace.ts')));
+  const fx=w.document.getElementById('fx'),label=w.document.getElementById('fx-label');
+  assert.equal(Number(fx.value),expected);
+  assert.match(w.document.getElementById('comparison-table').textContent,new RegExp('¥'+String(expected*4).replace('.','\\.')));
+  if(fx_snapshot.as_of){assert.match(label.textContent,/Reference estimate · not a live exchange rate · 2026-09-07/);}
+  fx.value='9';fx.dispatchEvent(new w.Event('change'));assert.match(w.document.getElementById('comparison-table').textContent,/¥36/);assert.equal(label.textContent,'Manual estimate · not a live exchange rate');
+  d.window.close();
+ }
+});
 test('optional result collection excludes amounts and respects opt-out, DNT and anonymous accounts',async()=>{
  const d=new JSDOM('',{url:'https://daily.maas.click/pricing/',runScripts:'outside-only'}),w=d.window,calls=[],events=[];
  w.currentAccount=()=>null;w.accountApi=async(...args)=>calls.push(args);w.document.addEventListener('maas:workspace-result',e=>events.push(e.detail));

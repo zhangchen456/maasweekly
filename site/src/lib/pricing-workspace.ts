@@ -14,7 +14,7 @@ export interface LedgerPrice {
 export interface WorkspaceData {
   prices: LedgerPrice[]; providers?: string[];
   meta: { published_at?: number; partial?: boolean; failed_sources?: string[]; artifact_version?: string };
-  fx_snapshot?: { base?: string; rates?: Record<string, number>; effective_at?: number; as_of?: string };
+  fx_snapshot?: { base?: string; rates?: Record<string, number | string>; effective_at?: number; as_of?: string };
   provider_logos?: Record<string, string>;
   modelIdentities?: { models: {modelId:string;modelName:string;familyId?:string;familyName?:string}[]; families:{familyId:string;familyName:string}[] };
 }
