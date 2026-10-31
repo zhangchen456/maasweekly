@@ -32,6 +32,7 @@ DIFF_DIR = BASE_DIR / "data" / "diff"
 sys.path.insert(0, str(BASE_DIR / 'pipeline'))
 from run_protocol import current_journal, managed_entry
 from staged_fetch import fetch as staged_fetch, wanted, source_key
+from arena_source import URL as ARENA_DATASET_URL, FORMAT as ARENA_FORMAT, fetch_dataset as fetch_arena_dataset
 
 
 def configure_root(root):
@@ -56,7 +57,7 @@ def observed_at(url):
 def fetch_page(url):
     registry = json.loads((BASE_DIR / 'pipeline/config/source_registry.json').read_text())
     source_id = next((row['source_id'] for row in registry['sources'] if url in row.get('url_aliases', []) or row.get('primary_url') == url), None)
-    version = 'source-text-2' if is_volcengine_doc(url) or is_tencent_doc(url) else 'source-text-1'
+    version = 'arena-dataset-1' if url == ARENA_DATASET_URL else 'source-text-2' if is_volcengine_doc(url) or is_tencent_doc(url) else 'source-text-1'
     return staged_fetch(url, lambda: _fetch_page(url), version=version, source_id=source_id)
 
 
@@ -87,6 +88,13 @@ def _fetch_page(url):
     抓取页面内容。curl 抓取 + HTML 文本提取。
     返回 (content, error)
     """
+    if url == ARENA_DATASET_URL:
+        try:
+            return fetch_arena_dataset(url), None
+        except (ValueError, KeyError, TypeError):
+            return None, 'JSON 结构非法'
+        except Exception as error:
+            return None, 'Arena dataset fetch failed: ' + type(error).__name__
     # HuggingFace API 用 curl 直接抓 JSON
     if "huggingface.co/api" in url:
         return fetch_via_curl(url)
@@ -471,6 +479,9 @@ def main():
         print(f"    ✓ 保存: {snapshot_path.name} ({len(content)} chars)")
         
         yesterday_path = find_yesterday_snapshot(name, "industry", today)
+        if url == ARENA_DATASET_URL and yesterday_path and ARENA_FORMAT not in yesterday_path.read_text(encoding='utf-8'):
+            # A new official transport/coverage is a baseline, not mass model removals.
+            yesterday_path = None
         if yesterday_path:
             old_content = yesterday_path.read_text(encoding="utf-8")
             diff = simple_diff(old_content, content, name, "industry")
