@@ -21,9 +21,10 @@ def ms(value):
         return int(d.timestamp() * 1000) if d.tzinfo else None
     except (ValueError, TypeError): return None
 
-def collect(root=ROOT, stages=None):
-    registry = safe_json(root/'pipeline/config/source_registry.json',root)['sources']
-    providers = safe_json(root/'pipeline/config/public_providers.json',root)
+def collect(root=ROOT, stages=None, config_root=None):
+    config_root = config_root or root
+    registry = safe_json(config_root/'pipeline/config/source_registry.json',config_root)['sources']
+    providers = safe_json(config_root/'pipeline/config/public_providers.json',config_root)
     sources = {s['source_id']: {'id': s['source_id'], 'name': s['display_name'] + ' / ' + s['type_label'], 'platform': providers['sourceToProvider'].get(s['source_id']) or 'unknown', 'kind': s['source_type'], 'budgetHours': 48} for s in registry}
     aliases = {('http_' + hashlib.sha256(u.encode()).hexdigest()[:24]): s['source_id'] for s in registry for u in [s.get('primary_url'),*s.get('url_aliases',[])] if u}
     aliases.update(providers['pricingSourceKeyToSourceId'])

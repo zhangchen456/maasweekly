@@ -28,7 +28,8 @@ class SourceFetchTests(unittest.TestCase):
             old.parent.mkdir(parents=True);old.write_text('Old web leaderboard model rows that are not the dataset format')
             fetch.configure_root(root)
             try:
-                with patch.object(fetch,'load_sources',return_value={'platforms':[],'industry_sources':[{'name':'LMArena','api_url':fetch.ARENA_DATASET_URL}]}),patch.object(fetch,'fetch_page',return_value=(fetch.ARENA_FORMAT+'\nOfficial new model observations',None)),patch.object(fetch,'run_timestamp',return_value=datetime(2026,10,31)):
+                with patch.object(fetch,'load_sources',return_value={'platforms':[],'industry_sources':[{'name':'LMArena','api_url':fetch.ARENA_DATASET_URL}]}),patch.object(fetch,'fetch_page',return_value=(fetch.ARENA_FORMAT+'\nOfficial new model observations',None)),patch.object(fetch,'run_timestamp',return_value=datetime(2026,10,31)),patch.object(fetch,'datetime',wraps=datetime) as clock:
+                    clock.now.return_value=datetime(2026,10,31)
                     result=fetch.main()
                 self.assertEqual(result['success'],1)
                 change=json.loads((root/'data/diff/2026-10-31.json').read_text())['changes'][0]
