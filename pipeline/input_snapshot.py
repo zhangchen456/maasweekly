@@ -170,6 +170,36 @@ def restore_mutable(root: Path, view: InputView):
         atomic(target,raw)
 
 
+
+def assert_mutable_matches(root: Path, view: InputView):
+    """A read-only stage must not change the committed generation it will import.
+
+    Immutable history was fully captured by the journal; archival gates and the
+    mandatory full CAS/SQL verification remain separate. This is not a cache of
+    verification results across jobs. Compare every mutable input, including
+    additions/deletions, before consuming that exact committed generation.
+    """
+    archived = set()
+    for pattern in PATTERNS:
+        if pattern.startswith(IMMUTABLE):
+            archived.update(str(p.relative_to(root)) for p in root.glob(pattern) if p.is_file())
+    if archived != {name for name in view.files if name.startswith(IMMUTABLE)}:
+        raise ValueError('immutable input inventory changed after commit')
+    expected = {name for name in view.files if not name.startswith(IMMUTABLE)}
+    actual = role_files(root, mutable_only=True)
+    if set(actual) != expected: raise ValueError('mutable input inventory changed after commit')
+    for logical in actual:
+        raw = read_contained_file(root, logical)
+        meta = view.files[logical]
+        if len(raw) == meta['bytes'] and digest(raw) == meta['sha256']: continue
+        # Current record checkpoints point to their immutable revision; spacing
+        # may differ, but the same semantic comparison is required by capture.
+        if logical.startswith(('data/records/', 'data/price-records/')):
+            frozen = read_contained_file(root, meta['path'])
+            if len(frozen) == meta['bytes'] and digest(frozen) == meta['sha256'] and json.loads(raw) == json.loads(frozen): continue
+        raise ValueError('mutable input changed after commit: ' + logical)
+
+
 def prune_checkpoints(root: Path, pointer):
     """Keep current + previous runtime checkpoints; source/fact/evidence archives are untouched.
     Historical input hashes remain in run records and Git commits. Full checkpoints are a
