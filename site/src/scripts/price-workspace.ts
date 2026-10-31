@@ -117,7 +117,7 @@ export function startPriceWorkspace() {
         return n / fx; if (r.currency === 'USD')
         return n * fx; const converted = num(r.converted_amount_per_1m); if(converted === null)return null; return r.converted_currency === currency ? converted : r.converted_currency === 'CNY' && currency === 'USD' ? converted / fx : r.converted_currency === 'USD' && currency === 'CNY' ? converted * fx : null; }
     function condition(r: LedgerPrice) { const c = parse(r.context_band), t = parse(r.time_condition); const parts = [r.region === 'cn' ? '中国大陆' : r.region === 'global' ? '全球' : r.region || '区域未标注']; if (c) {
-        parts.push(typeof c === 'object' ? `${c.min_input_tokens ?? 0}–${c.max_input_tokens ?? '不限'} 输入 tokens` : String(c));
+        parts.push(typeof c === 'object' ? `${c.min_input_tokens ?? c.min ?? 0}–${c.max_input_tokens ?? c.max ?? '不限'} 输入 tokens` : String(c));
     }
     else
         parts.push('上下文未分档'); if (t)
@@ -137,7 +137,7 @@ export function startPriceWorkspace() {
     }
     const models = [...map.values()].sort((a, b) => a.name.localeCompare(b.name));
     for (const m of models) {
-        m.options = [...m.variants.values()].sort((a, b) => { const score = (v: PriceVariant) => { const t=parse(v.rows[0].time_condition), c=parse(v.rows[0].context_band); return (t && typeof t === 'object' && t.period === 'off_peak' ? 10 : 0) + (c && typeof c === 'object' ? Number(c.min_input_tokens || 0) : 0); }; return score(a) - score(b) || a.label.localeCompare(b.label); });
+        m.options = [...m.variants.values()].sort((a, b) => { const score = (v: PriceVariant) => { const t=parse(v.rows[0].time_condition), c=parse(v.rows[0].context_band); return (t && typeof t === 'object' && t.period === 'off_peak' ? 10 : 0) + (c && typeof c === 'object' ? Number(c.min_input_tokens ?? c.min ?? 0) : 0); }; return score(a) - score(b) || a.label.localeCompare(b.label); });
         m.variant = 0;
     }
     const providers = [...new Set(models.map(m => m.provider))].sort((a, b) => { const rank = (p: string) => order.includes(p) ? order.indexOf(p) : 100; return rank(a) - rank(b) || a.localeCompare(b); });
