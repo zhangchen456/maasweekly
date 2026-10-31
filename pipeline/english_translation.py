@@ -47,10 +47,25 @@ def protect(source: str):
         percent = int(digits) * (10 if len(digits) == 1 else 1)
         return f'{percent}%'
     value = re.sub(r'(?<![零一二三四五六七八九十百千万])([一二三四五六七八九][零一二三四五六七八九]?)折', discount, value)
+    def chinese_number(text):
+        digits = {'零':0,'〇':0,'一':1,'二':2,'两':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9}
+        if all(c in digits for c in text): return int(''.join(str(digits[c]) for c in text))
+        total=section=current=0
+        for c in text:
+            if c in digits: current=digits[c]
+            elif c in '十百千': section+=(current or 1)*{'十':10,'百':100,'千':1000}[c];current=0
+            elif c=='万': section=(section+current or 1)*10000;current=0
+            elif c=='亿': total+=(section+current or 1)*100000000;section=current=0
+        return total+section+current
+    # Quantities written in Chinese must survive the same number checks as Arabic digits.
+    # Restrict conversion to explicit measures; do not rewrite idioms such as 十分关注.
+    value = re.sub(r'([一二两三四五六七八九])([一二两三四五六七八九])(?=倍)',lambda m:f'{chinese_number(m[1])}–{chinese_number(m[2])}',value)
+    value = re.sub(r'(?<![数几零〇一二两三四五六七八九十百千万亿\d])([零〇一二两三四五六七八九十百千万亿]+)(?=美元|美金|港元|元|个|家|款|位|次|项|条|期|周|天|小时|秒|个月|年|倍|轮|块|金|银|铜)',lambda m:str(chinese_number(m[1])),value)
+    value = re.sub(r'(?<![数几零〇一二两三四五六七八九十百千万亿\d])([零〇一二两三四五六七八九十百千万亿]*(?:万亿|亿|万))(?=$|[。，；、）)]|级|参数)',lambda m:str(chinese_number(m[1])),value)
     def amount(m):
-        n = Decimal(m[1]) * (10000 if m[2] == '万' else 100000000)
+        n = Decimal(m[1]) * {'万':10000,'亿':100000000,'万亿':1000000000000}[m[2]]
         return format(n, 'f').rstrip('0').rstrip('.') if '.' in format(n, 'f') else format(n, 'f')
-    value = re.sub(r'(\d+(?:\.\d+)?)\s*(万|亿)', amount, value)
+    value = re.sub(r'(\d+(?:\.\d+)?)\s*(万亿|亿|万)', amount, value)
     months = ['January','February','March','April','May','June','July','August','September','October','November','December']
     value = re.sub(r'(\d{1,2})\s*月\s*(\d{1,2})\s*日?', lambda m: f'{months[int(m[1])-1]} {int(m[2])}' if 1 <= int(m[1]) <= 12 else m[0], value)
     value = re.sub(r'(20\d{2})年(?:底|末)', r'late \1', value)
@@ -106,4 +121,5 @@ def projected_texts(cache):
     return {entry['source']: normalize_terms(entry['source'], entry['translation']) for key, entry in cache.get('entries', {}).items()
             if entry.get('status') == 'success' and entry.get('promptVersion') == PROMPT_VERSION
             and isinstance(entry.get('source'), str) and key == text_key(entry['source'])
+            and ('万亿' not in entry['source'] or entry.get('quantityVersion') == 2)
             and isinstance(entry.get('translation'), str) and not HAN.search(entry['translation'])}

@@ -1,7 +1,7 @@
 name: Spark English translation backfill
 on:
   push:
-    branches: [codex/en-translation-supplement-20261031]
+    branches: [codex/en-translation-retry-20261031]
   workflow_dispatch:
 permissions:
   contents: read
@@ -15,7 +15,15 @@ jobs:
         with:
           python-version: '3.12'
       - name: Translate display text with existing Spark credentials
-        run: python3 pipeline/scripts/translate-ui-en.py --cache /tmp/ui-en-cache.json
+        run: python3 pipeline/scripts/translate-ui-en.py --cache /tmp/ui-en-cache.json --batch-only
+        env:
+          TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: spark-english-batch
+          path: site/src/data/ui-translations-en.json
+      - name: Retry remaining texts in short validated passages
+        run: python3 pipeline/scripts/translate-ui-en.py --cache /tmp/ui-en-cache.json --retry-only
         env:
           TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
       - uses: actions/upload-artifact@v4
