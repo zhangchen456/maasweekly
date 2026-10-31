@@ -35,20 +35,42 @@ def request(raw):
     if not isinstance(context,dict) or set(context)-{'GITHUB_RUN_ID','GITHUB_REPOSITORY','GITHUB_EVENT_NAME'} or any(not isinstance(v,str) or len(v)>256 or '\0' in v for v in context.values()):raise ValueError('invalid run context')
     return value
 
-def step(script,args=(),credentials=None,optional=False):
+def timed(label, callback, *args, **kwargs):
+    started=time.monotonic()
+    try:return callback(*args,**kwargs)
+    finally:print(json.dumps({'kind':'writer.timing','stage':label,'elapsedSeconds':round(time.monotonic()-started,3)}),flush=True)
+
+def step(script,args=(),credentials=None,optional=False,pinned=False):
     env={**os.environ,'PATH':str(Path(sys.executable).parent)+':'+os.environ.get('PATH',''),'TZ':'Asia/Shanghai','MAAS_BROWSER_SANDBOX':'1'}
     # The browser stages never inherit the LLM/provider credentials.
     for key in ALLOWED:env.pop(key,None)
     env.update(credentials or {})
-    # Weekly draft injection is an out-of-protocol input change: its two import
-    # stages keep the ordinary full baseline capture. Only serialized stages opt in.
-    env['MAAS_PIPELINE_PINNED_BASELINE']='1' if script in PINNED_STAGES else '0'
+    # Legacy full-weekly injection keeps a fresh baseline. Formal import opts
+    # in only because its immutable request is applied inside the journal.
+    env['MAAS_PIPELINE_PINNED_BASELINE']='1' if pinned or script in PINNED_STAGES else '0'
     print('stage',script,flush=True)
-    result=subprocess.run([sys.executable,str(CODE/script),*args],cwd=CODE,env=env)
+    result=timed(script,subprocess.run,[sys.executable,str(CODE/script),*args],cwd=CODE,env=env)
     if result.returncode:
         print('stage exit',script,result.returncode,flush=True)
         if not optional:raise RuntimeError('stage failed: '+script)
     return result.returncode
+
+def import_formal(drafts,secrets):
+    # Drafts enter inside the journal, so its committed baseline can be reused.
+    # The immutable request survives interruption and is replayed on recovery.
+    raw=(json.dumps(drafts,ensure_ascii=False,sort_keys=True)+'\n').encode()
+    path=WORK/'formal-drafts'/(hashlib.sha256(raw).hexdigest()+'.json')
+    if path.exists():
+        if path.read_bytes()!=raw:raise ValueError('draft request collision')
+    else:
+        path.parent.mkdir(parents=True,exist_ok=True);durable_write(path,raw)
+    step('site/scripts/import-weekly.py',['--drafts-file',str(path)],pinned=True)
+    check=step('pipeline/scripts/translate-dynamic-en.py',['--check'],optional=True)
+    if check==1:
+        if not secrets.get('TRANSLATION_API_KEY'):raise ValueError('missing translations and no translation credential')
+        step('pipeline/scripts/translate-dynamic-en.py',credentials={'TRANSLATION_API_KEY':secrets['TRANSLATION_API_KEY']})
+        step('pipeline/scripts/translate-dynamic-en.py',['--check'])
+    elif check!=0:raise RuntimeError('translation completeness check failed')
 
 def initialize(connection,published,blobs):
     version=published['site']['inputVersion'];data=WORK/'data';data.mkdir(exist_ok=True)
@@ -82,11 +104,11 @@ def ingest(parent,code,expected_version=None):
     from psycopg2.extras import Json
     connection=psycopg2.connect(os.environ['MAAS_DATA_DSN']);blobs=FilesystemBlobStore(STORE/'blobs')
     try:
-        version=capture(CODE,'database-writer-'+uuid.uuid4().hex,publish=expected_version is None)
+        version=timed('ingest.capture',capture,CODE,'database-writer-'+uuid.uuid4().hex,publish=expected_version is None)
         if expected_version is not None and version!=expected_version:raise ValueError('recovery input changed; refusing import')
-        raw_manifest=build_manifest(CODE,code);copied=copy_objects(CODE,raw_manifest,blobs)
+        raw_manifest=timed('ingest.raw_manifest',build_manifest,CODE,code);copied=timed('ingest.raw_copy',copy_objects,CODE,raw_manifest,blobs)
         if copied['failures']:raise ValueError('raw copy failed')
-        import_view(connection,CODE,blobs,source_commit=code,parent=parent if version!=parent else None)
+        timed('ingest.database',import_view,connection,CODE,blobs,source_commit=code,parent=parent if version!=parent else None)
         with connection:
             with connection.cursor() as cursor:
                 # Execution logs are audit history, not inputs: replaying an old
@@ -158,12 +180,14 @@ def main():
             step('pipeline/scripts/sync-diff-to-site.py')
             step('pipeline/scripts/fetch-leaderboards.py',credentials={'OPENROUTER_API_KEY':secrets.get('OPENROUTER_API_KEY','')},optional=True)
             step('pipeline/scripts/translate-dynamic-en.py',credentials={'TRANSLATION_API_KEY':secrets.get('TRANSLATION_API_KEY','')},optional=True)
-        if mode in ['weekly','import']:
+        if mode=='weekly':
             for draft in incoming.get('drafts',[]):
                 path=CODE/'data/weekly'/(draft['date']+'.md');path.parent.mkdir(parents=True,exist_ok=True);path.write_text(draft['markdown'])
             step('pipeline/scripts/llm-weekly-digest.py',['--all'],credentials={'LLM_API_KEY':secrets.get('LLM_API_KEY','')},optional=True)
             step('site/scripts/import-weekly.py')
             step('pipeline/scripts/translate-dynamic-en.py',credentials={'TRANSLATION_API_KEY':secrets.get('TRANSLATION_API_KEY','')},optional=True)
+        if mode=='import':
+            import_formal(incoming.get('drafts',[]),secrets)
         step('pipeline/scripts/project-site-data.py')
         step('pipeline/scripts/validate-archive.py');step('pipeline/scripts/validate-price-archive.py')
         if incoming.get('drafts'):

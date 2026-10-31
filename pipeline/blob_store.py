@@ -93,6 +93,11 @@ class FilesystemBlobStore:
 
     def putIfAbsent(self, sha256: str, raw: bytes) -> bool:
         if checksum(raw) != sha256: raise BlobIntegrityError('upload checksum mismatch')
+        # The common case is an already stored object. Verify its bytes through
+        # no-follow descriptors before doing any path-returning/write setup.
+        try:self.get(sha256,expected_bytes=len(raw))
+        except FileNotFoundError:pass
+        else:return False
         target = self.path(sha256)
         target.parent.mkdir(parents=True, exist_ok=True)
         if target.exists(): self.verify(sha256, expected_bytes=len(raw)); return False

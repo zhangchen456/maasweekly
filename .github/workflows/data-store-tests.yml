@@ -65,9 +65,12 @@ jobs:
             scripts
             schemas
             packages
+            site/scripts
             site/src/lib/public-contract
             services/agent-api/src/public-contract
             data/model-registry
+            data/weekly
+            docs/weekly-reviews
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -80,6 +83,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_shadow*.py' -v
           python -m unittest discover -s tests -p 'test_data_publication.py' -v
           python -m unittest discover -s tests -p test_database_writer.py
+          python -m unittest discover -s tests -p test_weekly_publishing.py
           python -m unittest discover -s tests -p test_runtime_control.py
           python -m unittest discover -s tests -p test_runtime_package.py
           python -m unittest discover -s tests -p test_runtime_cleanup.py

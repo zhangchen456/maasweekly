@@ -1,0 +1,62 @@
+name: 周报生产流程
+on:
+  schedule:
+    - cron: '0 1 * * 3'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'data/weekly/*.md'
+      - 'docs/weekly-reviews/*.json'
+      - 'ops/weekly-editorial.py'
+      - '.github/workflows/weekly-editorial.yml'
+permissions:
+  contents: read
+jobs:
+  prepare:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ops
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare last completed Wednesday-to-Tuesday evidence packet
+        run: python3 ops/weekly-editorial.py prepare --out "$RUNNER_TEMP/weekly-packets"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: weekly-editorial-packet
+          path: ${{ runner.temp }}/weekly-packets
+          retention-days: 90
+      - name: Explain next editorial step
+        run: |
+          echo '素材包已准备：先核对官方证据、完成稿件与私有英文，再填写审核回执并提PR。素材准备不等于正式周报已出版。' >> "$GITHUB_STEP_SUMMARY"
+  review:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          sparse-checkout: |
+            ops
+            data/weekly
+            docs/weekly-reviews
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify changed drafts against exact review receipts
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python3 - <<'PY'
+          import os,pathlib,subprocess,sys
+          names=subprocess.check_output(['git','diff','--name-only',os.environ['BASE_SHA'],os.environ['HEAD_SHA'],'--','data/weekly','docs/weekly-reviews'],text=True).splitlines()
+          dates={pathlib.Path(name).stem for name in names if name.endswith(('.md','.json'))}
+          for day in sorted(dates):
+              subprocess.run([sys.executable,'ops/weekly-editorial.py','check','--draft',f'data/weekly/{day}.md','--receipt',f'docs/weekly-reviews/{day}.json'],check=True)
+          PY

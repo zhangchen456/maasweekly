@@ -1,7 +1,5 @@
-name: 周报数据准备
+name: 周报素材与正式稿发布
 on:
-  schedule:
-    - cron: '0 1 * * 1'
   workflow_dispatch:
     inputs:
       mode:
@@ -31,6 +29,7 @@ jobs:
           sparse-checkout: |
             ops
             data/weekly
+            docs/weekly-reviews
       - name: Configure fixed SSH destination
         env:
           DEPLOY_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
@@ -49,9 +48,14 @@ jobs:
           case "$REQUESTED_MODE" in
             aggregate) MODE=aggregate ;;
             import) MODE=import ;;
-            full|'') MODE=weekly ;;
+            full) MODE=weekly ;;
+            '') exit 2 ;;
             *) exit 2 ;;
           esac
-          python3 ops/request-data-update.py --mode "$MODE" --drafts data/weekly
+          if [ "$MODE" = aggregate ]; then
+            python3 ops/request-data-update.py --mode "$MODE"
+          else
+            python3 ops/request-data-update.py --mode "$MODE" --drafts data/weekly
+          fi
       - name: Verify formal weekly publication freshness
         run: python3 ops/check-formal-weekly.py

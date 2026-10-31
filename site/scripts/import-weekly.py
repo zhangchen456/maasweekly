@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 """Import formal drafts and structured projections as one committed input generation."""
+import argparse
+import hashlib
+import json
+from datetime import date
 import importlib.util
 import re
 import sys
@@ -11,7 +15,27 @@ SRC_DIR = SITE_DIR.parent / 'data/weekly'
 DST_DIR = SITE_DIR.parent / EDITORIAL
 
 
+def inject_drafts(path):
+    raw=path.read_bytes()
+    if path.stem!=hashlib.sha256(raw).hexdigest():raise ValueError('draft request checksum mismatch')
+    drafts=json.loads(raw)
+    if not isinstance(drafts,list) or len(drafts)>52:raise ValueError('invalid draft list')
+    seen=set()
+    for draft in drafts:
+        if not isinstance(draft,dict) or set(draft)!={'date','markdown'}:raise ValueError('invalid draft')
+        day=draft['date'];text=draft['markdown']
+        if not isinstance(day,str) or date.fromisoformat(day).isoformat()!=day or day in seen:raise ValueError('invalid or duplicate draft date')
+        if not isinstance(text,str) or len(text.encode())>131072 or '\0' in text:raise ValueError('invalid draft text')
+        seen.add(day)
+    SRC_DIR.mkdir(parents=True,exist_ok=True)
+    from input_snapshot import atomic,safe
+    for draft in drafts:atomic(safe(SITE_DIR.parent,'data/weekly/'+draft['date']+'.md'),draft['markdown'].encode())
+
+
 def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--drafts-file',type=Path);parser.add_argument('--force',action='store_true')
+    args=parser.parse_args()
+    if args.drafts_file:inject_drafts(args.drafts_file)
     DST_DIR.mkdir(parents=True, exist_ok=True)
     count = 0
     for md_file in sorted(SRC_DIR.glob('*.md')):

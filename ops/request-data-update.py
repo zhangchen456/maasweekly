@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 """Thin CI client: fixed SSH action, credential envelope over stdin, no data checkout."""
-import argparse,json,os,re,subprocess
+import argparse,json,os,re,subprocess,sys
 from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('--mode',choices=['update','rebuild','validate','weekly','aggregate','import'],required=True);p.add_argument('--drafts',type=Path);a=p.parse_args()
 request={'mode':a.mode,'secrets':{k:os.environ.get(k,'') for k in ['LLM_API_KEY','TRANSLATION_API_KEY','OPENROUTER_API_KEY']}}
 if a.drafts:
+ # Existing historical issues predate receipts; every reviewed issue plus the
+ # newest issue must pass again before contacting the production writer.
+ files=sorted(a.drafts.glob('*.md'))
+ if not files:raise ValueError('no formal drafts to review or publish')
+ for draft in files:
+  receipt=Path('docs/weekly-reviews')/(draft.stem+'.json')
+  if receipt.exists() or draft==files[-1]:
+   subprocess.run([sys.executable,'ops/weekly-editorial.py','check','--draft',str(draft),'--receipt',str(receipt)],check=True)
  request['drafts']=[{'date':f.stem,'markdown':f.read_text()} for f in sorted(a.drafts.glob('*.md')) if re.fullmatch(r'\d{4}-\d{2}-\d{2}',f.stem)]
  request['sourceCommit']=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
 request['runContext']={k:os.environ.get(k,'') for k in ['GITHUB_RUN_ID','GITHUB_REPOSITORY','GITHUB_EVENT_NAME']}
