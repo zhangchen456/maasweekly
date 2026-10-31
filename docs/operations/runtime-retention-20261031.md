@@ -2,7 +2,7 @@
 
 The new code-only runtime layout accumulated packages under `runtime/` and completed uploads under `incoming/`. The existing cleanup unit called the legacy embedded-release activator, so it did not enforce retention on these new paths.
 
-`ops/runtime-cleanup.py` operates only on code-only runtime packages with validated manifests and matching file inventories/checksums. It retains the union of the current runtime, rollback runtime and newest three installed manifests, plus candidates, slot references and installed counterparts of uploads younger than one hour. A pending switch or invalid current/rollback state prevents deletion. Changed or unmanaged historical content is preserved and reported.
+`ops/runtime-cleanup.py` operates only on code-only runtime packages with validated manifests and matching file inventories/checksums. It retains the union of the current runtime, rollback runtime and newest three installed manifests, plus candidates, slot references, versions still used as process working directories and installed counterparts of uploads younger than one hour. A pending switch or invalid current/rollback state prevents deletion. Changed or unmanaged historical content is preserved and reported.
 
 Completed runtime upload copies older than one hour are verified against their installed package before removal. Uploads are removed before retired runtimes, so a young upload temporarily protects its counterpart until it can be checked. Unknown uploads, legacy releases and shared business data are outside the deletion scope.
 
