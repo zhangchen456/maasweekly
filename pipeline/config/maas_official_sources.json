@@ -323,9 +323,9 @@
     {
       "name": "LMArena",
       "type": "benchmark",
-      "url": "https://lmarena.ai/",
-      "api_url": "https://lmarena.ai/leaderboard",
-      "notes": "200。官方榜单页为 lmarena.ai/leaderboard（原 chat.lmsys.org），实时 Elo 排名，支持按 Category/Model/StyleControl 过滤；无面向公众的文档化 REST API，榜单数据需页面抓取或社区维护的镜像（如需自动化，可用其 leaderboard 页内嵌的 JSON 数据）。"
+      "url": "https://arena.ai/leaderboard/chat/text",
+      "api_url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset",
+      "notes": "Arena 官网明确链接的官方公开数据集，CC BY 4.0。固定发布版本并校验完整文件SHA256；仅 Text Arena overall latest，保留榜单发布日期。网页403或在线查询接口500不作为有效快照；读取失败保留旧数据。"
     }
   ]
 }

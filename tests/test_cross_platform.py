@@ -24,6 +24,17 @@ def snapshot(provider, day='2026-10-02', raw=RAW):
     return ContentSnapshot('snap-'+sha[:24],provider+':pricing','https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing',datetime.fromisoformat(day).replace(tzinfo=timezone.utc).timestamp(),200,'text/html',sha,raw)
 
 class CrossPlatformTests(unittest.TestCase):
+    def test_claude_partner_page_migration_preserves_real_prices_and_blank_cells(self):
+        from pricing.registry import all_entries
+        entry=next(e for e in all_entries() if e.provider_id=='vertex-anthropic')
+        self.assertEqual(entry.url,'https://cloud.google.com/model-garden/partner-models/pricing')
+        raw=(ROOT/'tests/fixtures/pricing/vertex_partner_pricing_2026-10-31.html').read_text()
+        result=VertexPricingExtractor('vertex-anthropic').extract(snapshot('vertex-anthropic','2026-10-31',raw))
+        report=normalize_and_validate(result)
+        self.assertFalse(report.rejected);self.assertEqual(len(report.accepted),88)
+        self.assertEqual({f.region for f in report.accepted},{'global','us','eu'})
+        self.assertFalse(any(f.model_key=='claude-opus-5.5' and f.region=='global' and f.component=='input' and f.context_band.min_input_tokens==200001 for f in report.accepted))
+
     def test_current_claude_table_uses_200k_columns_and_ignores_haiku_100k_columns(self):
         raw = (ROOT/'tests/fixtures/pricing/vertex_pricing_2026-10-26.html').read_text()
         result = VertexPricingExtractor('vertex-anthropic').extract(snapshot('vertex-anthropic', '2026-10-26', raw))
