@@ -1,9 +1,11 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
-import {mkdtempSync,readFileSync,writeFileSync,rmSync} from 'node:fs';
+import {mkdtempSync,readFileSync,writeFileSync,rmSync,symlinkSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
 import {DatasetHolder} from '../dataset.js';
 import {ReleaseFixture} from './fixture.js';
 import {runtimeHealth,createRuntimeHealthHandler,runtimeIdentity} from '../runtime-health.js';
@@ -51,4 +53,13 @@ test('dead jobs, PID reuse and deadlines are visible without inventing completed
  assert.deepEqual(jobAlerts({state:'running',startedAt:at},at,false),['pipeline_interrupted']);
  assert.deepEqual(jobAlerts({state:'running',startedAt:at-101*60000},at,true),['pipeline_timeout']);
  assert.deepEqual(jobAlerts({state:'failed'},at,false),['pipeline_last_run_failed']);
+});
+
+test('monitor CLI runs when invoked through the production current symlink',()=>{
+ const root=mkdtempSync(path.join(tmpdir(),'monitor-entry-'));
+ try{const entry=path.join(root,'entry.js');symlinkSync(fileURLToPath(new URL('../pipeline-monitor-cli.js',import.meta.url)),entry);
+  const env={...process.env};delete env.MAAS_ACCOUNT_DB;
+  const child=spawnSync(process.execPath,[entry],{env,encoding:'utf8'});
+  assert.notEqual(child.status,0);assert.match(child.stderr,/configured monitor service required/);
+ }finally{rmSync(root,{recursive:true,force:true});}
 });
