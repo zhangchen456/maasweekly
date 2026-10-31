@@ -1,0 +1,8 @@
+---
+import {featuredModels} from '../lib/model-pages';
+import {priceUnit} from '../lib/price-display';
+const en=Astro.url.pathname.startsWith('/en/');
+const picks=featuredModels().slice(0,5).map(p=>({...p,input:p.prices.find(x=>x.component==='input'),output:p.prices.find(x=>x.component==='output')}));
+---
+<section class="quote-preview"><h2>{en?'Start with an observed model quote':'从一份有来源的模型报价开始'}</h2><p>{en?'Observed quotes; conditions and dates remain separate. Not a cheapest-model ranking.':'以下为已观察的报价示例，条件和时间分别核对；不同报价不作最低价排名。'}</p><div class="table-scroll"><table><thead><tr><th>{en?'Model':'模型'}</th><th>{en?'Input quote':'输入报价'}</th><th>{en?'Output quote':'输出报价'}</th><th>{en?'Continue':'继续'}</th></tr></thead><tbody>{picks.map(p=><tr><td><a href={`/model/${p.model.modelId}/`}>{p.model.modelName}</a></td><td>{p.input?`${p.input.amount} ${p.input.currency} / ${priceUnit(p.input.unitQuantity,p.input.unitName)}`:'—'}</td><td>{p.output?`${p.output.amount} ${p.output.currency} / ${priceUnit(p.output.unitQuantity,p.output.unitName)}`:'—'}</td><td><a href={`/pricing/?modelId=${encodeURIComponent(p.model.modelId)}#compare`}>{en?'Check conditions and calculate':'核对条件并计算'}</a><small>{p.input?.observedAt??p.dataThrough}</small></td></tr>)}</tbody></table></div></section>
+<style>.quote-preview{padding:24px 0}.quote-preview p,.quote-preview small{color:var(--muted);line-height:1.7}table{border-collapse:collapse;width:100%;min-width:620px}th,td{text-align:left;padding:14px;border-bottom:1px solid var(--line)}small{display:block}a{color:var(--cyan)}.table-scroll{overflow-x:auto}</style>

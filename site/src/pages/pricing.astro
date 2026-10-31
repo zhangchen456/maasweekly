@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import QuotePreview from '../components/QuotePreview.astro';
 import ModelPriceLinks from '../components/ModelPriceLinks.astro';
 import '../styles/pricing.css';
 import PriceWorkspace from '../components/PriceWorkspace.astro';
@@ -11,10 +12,10 @@ const { ledger, gpu, chips, ledgerDate, modelCount, providerCount, gpuRows, chip
   <div class="pricing-page">
     <header class="pricing-hero reveal">
       <div class="pricing-intro">
-        <div class="pricing-kicker">COST &amp; COMPUTE / 价格观察</div>
-        <h1>大模型 API 价格，<br />与算力成本全景。</h1>
-        <p>从一次 API 调用，到一张 GPU，再到国产芯片供给。三种价格尺度放在同一页，帮助你看清成本从哪里来。</p>
-        <div class="pricing-status" aria-label="数据概况">
+
+        <h1>算出你的大模型<br />API 调用成本。</h1>
+        <p>输入你的 Token 用量，查看模型费用和计费条件。无需登录即可计算，保存后可在其他设备继续。</p>
+        <p><a class="cost-entry" href="#compare">开始计算 API 费用</a> <a href="/models/">先查一个模型的报价</a></p><div class="pricing-status" aria-label="数据概况">
           <span><b>{providerCount}</b> 个报价来源</span>
           <span><b>{modelCount}</b> 个模型</span>
           <span>台账更新于 <time datetime={ledger?.meta?.published_at ? new Date(ledger.meta.published_at * 1000).toISOString() : undefined}>{ledger?.meta?.published_at ? new Date(ledger.meta.published_at * 1000).toISOString() : ledgerDate}</time></span>
@@ -28,6 +29,7 @@ const { ledger, gpu, chips, ledgerDate, modelCount, providerCount, gpuRows, chip
     </header>
 
     <ModelPriceLinks />
+
     <p class="section-note"><a href="/guides/token-cost/">{Astro.url.pathname.startsWith('/en/') ? 'How to calculate Token costs →' : 'Token 费用怎么算？查看公式与完整用量示例 →'}</a></p>
 
     <section class="section pricing-section" id="api-pricing">
@@ -43,6 +45,7 @@ const { ledger, gpu, chips, ledgerDate, modelCount, providerCount, gpuRows, chip
       )}
     </section>
 
+    <QuotePreview />
     <section class="section pricing-section" id="gpu-market">
       <div class="section-heading">
         <span class="section-no">02 / GPU MARKET</span>

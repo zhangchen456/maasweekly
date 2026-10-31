@@ -4,7 +4,7 @@ export const TRACKER_URL = 'https://cloud.umami.is/script.js';
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const MODEL_ID = /^[a-z0-9_-]+:[a-z0-9_.-]+$/;
 const UTM = ['utm_source', 'utm_medium', 'utm_campaign'];
-const COPY_KINDS = new Set(['content', 'url', 'brief']);
+const COPY_KINDS = new Set(['content', 'url', 'brief', 'calculation_link', 'calculation_summary']);
 
 export function validateAnalyticsConfig(config) {
   if (typeof config?.enabled !== 'boolean' || typeof config.websiteId !== 'string') {
@@ -91,7 +91,7 @@ export function startAnalytics(win, config, canonicalUrl) {
         } catch { return false; }
       } else if (payload.name === 'copy' && COPY_KINDS.has(data.kind)) {
         result.data.kind = data.kind;
-      } else if (payload.name === 'comparison_completed' || payload.name === 'cost_estimate_completed' || payload.name === 'subscription_click' || payload.name === 'comparison_click' || payload.name === 'search_used' || payload.name === 'beta_activation_intent') {
+      } else if (payload.name === 'comparison_completed' || payload.name === 'cost_estimate_completed' || payload.name === 'cost_estimate_completed_v2' || payload.name === 'subscription_click' || payload.name === 'comparison_click' || payload.name === 'search_used' || payload.name === 'beta_activation_intent') {
         // Intent only; successful business actions belong to server-side records.
       } else return false;
     } else {
@@ -148,7 +148,7 @@ export function startAnalytics(win, config, canonicalUrl) {
   const workspaceResults=new Set();
   win.document.addEventListener('maas:workspace-result', event => {
     const name=event.detail?.event;
-    if(!['comparison_completed','cost_estimate_completed'].includes(name)||workspaceResults.has(name))return;
+    if(!['comparison_completed','cost_estimate_completed','cost_estimate_completed_v2'].includes(name)||workspaceResults.has(name))return;
     workspaceResults.add(name);track(name,{});
   });
 
