@@ -122,14 +122,31 @@ def verify(package, root, *, upload=False):
     return snapshot
 
 
-def plan(root, now=None):
+def active_process_codes(root, proc=Path('/proc')):
+    """A worker or operator may still use a runtime outside the web slots."""
+    codes = set()
+    for process in proc.iterdir():
+        if not process.name.isdigit(): continue
+        try:
+            cwd = Path(os.readlink(process / 'cwd').removesuffix(' (deleted)'))
+            relative = cwd.relative_to(root / 'runtime')
+        except (OSError, ValueError): continue
+        if relative.parts and CODE.fullmatch(relative.parts[0]):
+            package = root / 'runtime' / relative.parts[0]
+            if package.is_dir() and not package.is_symlink(): codes.add(package.name)
+    return codes
+
+
+def plan(root, now=None, live_codes=()):
     now = time.time() if now is None else now
     for name in ['', 'runtime', 'incoming', 'shared']:
         plain_directory(root / name)
     shared = root / 'shared'
     if (shared / 'runtime-switch-pending.json').exists():
         raise ValueError('deployment recovery pending')
-    protected = set(); required = set(); packages = {}; skipped = []
+    protected = set(live_codes); required = set(); packages = {}; skipped = []
+    if any(not isinstance(c, str) or not CODE.fullmatch(c) for c in protected):
+        raise ValueError('invalid live runtime code')
     for name in ['runtime.json', 'runtime-previous.json', 'runtime-candidate.json']:
         p = shared / name
         if not p.exists():
@@ -254,7 +271,7 @@ def main():
         try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
             print(json.dumps({'status': 'deferred', 'reason': 'deployment/data job holds release lock'})); return
-        public, packages, uploads = plan(ROOT)
+        public, packages, uploads = plan(ROOT, live_codes=active_process_codes(ROOT))
         result = apply(ROOT, public, packages, uploads) if args.apply else public
         print(json.dumps(result), flush=True)
         if args.apply and result['skipped']: raise SystemExit(3)
