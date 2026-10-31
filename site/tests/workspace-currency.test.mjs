@@ -8,8 +8,9 @@ const compile=async s=>(await transform(s.replace(/^import[^\n]*\n/gm,'').replac
 const template=read('../src/components/PriceWorkspace.astro').replace(/^---[\s\S]*?---/,'').replace(/<script[\s\S]*?<\/script>/g,'');
 const prices=['a','b'].flatMap(model=>['input','output'].map((component,i)=>({provider:'openai',model,modelId:'openai:'+model,component,amount:String((model==='a'?[2,8]:[14.2,56.8])[i]),amount_per_1m:String((model==='a'?[2,8]:[14.2,56.8])[i]),currency:model==='a'?'USD':'CNY',unit_quantity:1000000,unit_name:'token',region:'global',billing_mode:'realtime',service_tier:'standard',context_band:null,time_condition:null,observed_at:1,field_state:'confirmed'})));
 const data={prices,meta:{published_at:1},fx_snapshot:{base:'USD',rates:{CNY:'7.1'}},modelIdentities:{models:['a','b'].map(k=>({modelId:'openai:'+k,modelName:k})),families:[]}};
-async function setup({lang='en',url='https://daily.maas.click/en/pricing/?modelId=openai:a',saved={}}={}){
- const d=new JSDOM('<html lang="'+lang+'"><body>'+template+'<script id="goal-data" type="application/json">'+JSON.stringify(data)+'</script></body></html>',{url,runScripts:'outside-only'}),w=d.window;
+async function setup({lang='en',url='https://daily.maas.click/en/pricing/?modelId=openai:a',saved={},contextBand}={}){
+ const fixture=contextBand?{...data,prices:prices.map(r=>({...r,context_band:contextBand}))}:data;
+ const d=new JSDOM('<html lang="'+lang+'"><body>'+template+'<script id="goal-data" type="application/json">'+JSON.stringify(fixture)+'</script></body></html>',{url,runScripts:'outside-only'}),w=d.window;
  let clipboard='',stored,restore;
  w.eval(await compile(read('../src/lib/workspace-share.ts')));w.formatTimestamp=v=>String(v);w.recordWorkspaceResult=()=>{};w.currentAccount=()=>null;w.onAccountChange=()=>{};w.savedState=(_key,defaults,apply)=>{restore=value=>apply({...defaults,...value});restore(saved);return value=>{stored=value;}};
  Object.defineProperty(w.navigator,'clipboard',{value:{writeText:async value=>{clipboard=value;}}});w.eval(await compile(read('../src/scripts/price-workspace.ts')));
@@ -17,6 +18,11 @@ async function setup({lang='en',url='https://daily.maas.click/en/pricing/?modelI
  change(id,value){const e=w.document.getElementById(id);e.value=value;e.dispatchEvent(new w.Event('change',{bubbles:true}));},
  async copy(id){w.document.getElementById(id).click();await new Promise(r=>setTimeout(r,0));return clipboard;}};
 }
+test('published and legacy context bounds remain visible next to the selected price',async()=>{
+ for(const [contextBand,label] of [[{min:0,max:200000},'0–200000'],[{min:200001,max:null},'200001–'],[{min_input_tokens:1,max_input_tokens:8192},'1–8192']]){
+  const a=await setup({contextBand});try{assert.ok(a.w.document.getElementById('comparison-table').textContent.includes(label));assert.ok((await a.copy('copy-result')).includes(JSON.stringify(contextBand)));}finally{a.close();}
+ }
+});
 test('English defaults to USD; native USD amounts ignore FX and CNY amounts convert with the stated rate',async()=>{
  const a=await setup();try{
   assert.equal(a.w.document.getElementById('display-currency').value,'USD');assert.match(a.w.document.getElementById('plot').textContent,/US\$4/);
