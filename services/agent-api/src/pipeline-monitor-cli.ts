@@ -75,7 +75,7 @@ export async function relay(monitor:AdminMonitor, shared='/srv/maasweekly/shared
   return sample;
 }
 
-if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
+if(process.argv[1]&&import.meta.url===pathToFileURL(realpathSync(process.argv[1])).href){
   if(process.argv.length!==2||!process.env.MAAS_ACCOUNT_DB)throw Error('configured monitor service required');
   const accounts=new AccountStore(process.env.MAAS_ACCOUNT_DB);
   try {
