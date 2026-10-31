@@ -8,7 +8,7 @@ import { validateAnalyticsConfig } from '../../public/analytics.js';
 import { SITE_CANONICAL } from '../config/public-access';
 import { canonicalUrl } from '../lib/seo';
 import { languageRoute } from '../lib/locales';
-import { englishHtml, englishUi } from '../lib/ui-translation';
+import { englishServerHtml as englishHtml, englishServerUi as englishUi } from '../lib/translation-server';
 validateAnalyticsConfig(analytics);
 interface Props {
   title: string;

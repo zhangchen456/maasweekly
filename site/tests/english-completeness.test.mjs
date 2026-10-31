@@ -54,3 +54,20 @@ await new Promise(resolve=>setTimeout(resolve,0));
 assert.equal(root.querySelector('span').textContent,'3 / 14 records','Filter counts stay English after interactions');
 dom.window.close();
 console.log('English counters, attributes, dynamic updates and original evidence protection passed');
+
+// Public browser code must not include the private server catalog loader.
+const browser=await build({entryPoints:['src/scripts/ui-translation.ts'],bundle:true,write:false,format:'iife',platform:'browser'});
+assert(!browser.outputFiles[0].text.includes('MAAS_PRIVATE_EN_TRANSLATIONS'));
+assert(!browser.outputFiles[0].text.includes('/srv/maasweekly/shared/translations'));
+const privateSource='仅在授权后返回的完整付费报告正文，用于验证译文不会随公开脚本一起分发。';
+const privateTranslate=module.exports.createUiTranslator({[privateSource]:'Private report body delivered only after authorization.'});
+assert.equal(privateTranslate(privateSource),'Private report body delivered only after authorization.');
+assert(!browser.outputFiles[0].text.includes(privateSource));
+const bodyBundle=await build({entryPoints:['src/lib/weekly-body-locale.ts'],bundle:true,write:false,format:'iife',globalName:'weeklyLocale',platform:'browser'});
+const paidDom=new JSDOM('',{runScripts:'outside-only'});paidDom.window.eval(bodyBundle.outputFiles[0].text+';window.weeklyLocale=weeklyLocale;');
+const bilingual='<div data-weekly-locale="zh"><p>付费报告原文</p></div><div data-weekly-locale="en" hidden><p>Paid report translation</p></div>';
+assert.equal(paidDom.window.weeklyLocale.localizedWeeklyHtml(bilingual,'zh'),'<p>付费报告原文</p>');
+assert.equal(paidDom.window.weeklyLocale.localizedWeeklyHtml(bilingual,'en'),'<p>Paid report translation</p>');
+assert.equal(paidDom.window.weeklyLocale.localizedWeeklyHtml('<p>Legacy body</p>','en'),'<p>Legacy body</p>');
+paidDom.window.close();
+console.log('Paid report translations stay behind authenticated body delivery');

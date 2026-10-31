@@ -3,10 +3,11 @@ import supplemental from '../data/ui-translations-en.json' with { type: 'json' }
 import { decodeHTML } from 'entities';
 import { localizedHref } from './locale-routes';
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const catalog: Record<string, string> = { ...uiEnglish, ...supplemental.texts };
+export function createUiTranslator(texts: Record<string,string>) {
+const catalog: Record<string, string> = { ...uiEnglish, ...texts };
 const segments = Object.keys(catalog).filter(k => k.length >= 2).sort((a,b) => b.length-a.length);
 const pattern = new RegExp(segments.map(escape).join('|'), 'g');
-export function englishUi(text: string): string {
+return function englishUi(text: string): string {
   if (!/[\u3400-\u9fff]/.test(text)) return text;
   const trim = text.trim();
   const exact = catalog[trim];
@@ -77,16 +78,18 @@ export function englishUi(text: string): string {
     .replace(/(\d+)\s*个模型/g, '$1 models')
     .replace(/(\d+)\s*项信号/g, '$1 signals')
     .replace(/(\d+)\s*条变化/g, '$1 changes');
+};
 }
+export const englishUi = createUiTranslator(supplemental.texts);
 export function englishHref(href: string): string {
   return localizedHref(href,'en');
 }
 const decode = decodeHTML;
 const encode = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-export function englishHtml(html: string): string {
+export function englishHtml(html: string, translateText: (text:string)=>string = englishUi): string {
   // Do not translate executable code, structured data or quoted original evidence.
   const stack: { tag: string; protected: boolean }[] = [];
-  const translateTag = (tag: string) => tag.replace(/\b(href|title|placeholder|aria-label|aria-roledescription|alt)="([^"]*)"/g, (_m, key, value) => `${key}="${encode(key === 'href' ? englishHref(decode(value)) : englishUi(decode(value)))}"`);
+  const translateTag = (tag: string) => tag.replace(/\b(href|title|placeholder|aria-label|aria-roledescription|alt)="([^"]*)"/g, (_m, key, value) => `${key}="${encode(key === 'href' ? englishHref(decode(value)) : translateText(decode(value)))}"`);
   return html.replace(/<(script|style|pre|code|blockquote)\b[^>]*>[\s\S]*?<\/\1\s*>|<!--[\s\S]*?-->|<[^>]+>|[^<]+/gi, token => {
     if (/^<(script|style)\b/i.test(token)) return token;
     if (/^<(pre|code|blockquote)\b/i.test(token)) return stack.at(-1)?.protected || /^<[^>]*\bdata-original-language(?:\s|=|>)/i.test(token) ? token : token.replace(/^<[^>]+>/, translateTag);
@@ -101,7 +104,7 @@ export function englishHtml(html: string): string {
       return translateTag(token);
     }
     if (stack.at(-1)?.protected) return token;
-    const next = englishUi(decode(token));
+    const next = translateText(decode(token));
     return next === decode(token) ? token : encode(next);
   });
 }
