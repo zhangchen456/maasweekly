@@ -1,0 +1,15 @@
+# 周报恢复进度
+
+2026-10-31。正在实施，尚未完成正式发布。
+
+已确认：weekly-update 的定时 aggregate 只采集、同步并发布素材，不生成 data/weekly 正式稿；正式稿最新仍为10月13日。生产 editorial_issues/editorial_runs/diagnostic_runs 均为空。
+
+已完成：持 release.lock 并复核队列为空后，重启两个 worker；新 PID editorial=3362827、diagnostic=3362844，实际 cwd 均为 runtime/e530ad98ef54224e374ae7ad6f311a31d9ef85da/agent-api，active。
+
+已准备：10月27日完整观察周补刊草稿，来源为生产公开版本 ds_2a019a33ea969f8b3d64826569e4daede615b4ae81ac4bb554eec0ad3de2c8e6 的官方日志记录。明确10月31日补刊，未补造出版日期。
+
+待完成：稿件结构/引用验收、英文交付、提交与独立数据发布、实际阅读/API/权益验收；按正式期号建立漏发检查。邮件只对已有授权订阅者按现有规则交付。增长方面核对活动汇总与采集健康、修正过时复盘记录、演示成品；真人反馈与未来成熟留存需等待实际样本。
+
+新增正式周报独立健康检查：公开weekly API最新期号须与coverage一致，超过10天或未来期号失败；已接周报工作流末尾。4项测试通过，生产现状10月13日/18天已实际失败验证。
+
+英文：公开仅三条预览标题；全文及拆分文本67个新增键在服务器私有translations/ui-en.json，原库备份ui-en.before-weekly-20261031.json。英文完整性/付费边界检查及14项Python翻译测试通过。动态翻译测试依赖未随Git提供的运行数据，当前干净检出不能完成该项，不计通过。
