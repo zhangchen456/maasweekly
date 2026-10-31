@@ -116,7 +116,7 @@ _REGISTRY: list[SourceRegistryEntry] = [
     ),
     SourceRegistryEntry(
         source_key="vertex-anthropic:pricing", provider_id="vertex-anthropic",
-        url="https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+        url="https://cloud.google.com/model-garden/partner-models/pricing",
         page_language="en", region="global", required=False,
         adapter_version="vertex-3", fetcher_version="playwright-1",
     ),
