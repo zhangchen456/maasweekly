@@ -160,6 +160,57 @@ class ShadowTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.do_import()
 
+    def test_inherited_blob_corruption_rolls_back_new_delta_and_retry_succeeds(self):
+        self.do_import()
+        original = entries(self.connection, self.version)
+        meta = original['data/derived/a.json']
+        blob = self.store.path(meta['sha256']); raw = blob.read_bytes()
+        self.write('new.json', {'id':'fixture:new'})
+        new_version = capture(self.root, 'incremental')
+        for replacement in [b'corrupt', None]:
+            if replacement is None:blob.unlink()
+            else:blob.write_bytes(replacement)
+            with self.assertRaises((ValueError,OSError)):self.do_import(self.version)
+            with self.connection.cursor() as c:
+                c.execute('SELECT count(*) FROM maas_data.input_versions WHERE version=%s',(new_version,))
+                self.assertEqual(c.fetchone()[0],0)
+                c.execute("SELECT count(*) FROM maas_data.documents WHERE entity_id='fixture:new'")
+                self.assertEqual(c.fetchone()[0],0)
+            self.connection.commit();blob.write_bytes(raw)
+        self.do_import(self.version)
+        self.assertEqual(len(entries(self.connection,new_version)),3)
+
+    def test_inherited_sql_representation_corruption_blocks_new_version(self):
+        self.do_import()
+        self.write('new.json', {'id':'fixture:new'})
+        new_version=capture(self.root,'new-version')
+        for field,value in [('payload','{"wrong":true}'),('payload_json','{"wrong":true}')]:
+            with self.connection.cursor() as c:
+                c.execute('SELECT '+field+' FROM maas_data.documents WHERE entity_id=%s',('fixture:a',));old=c.fetchone()[0]
+            with self.connection:
+                with self.connection.cursor() as c:c.execute('UPDATE maas_data.documents SET '+field+'=%s WHERE entity_id=%s',(value,'fixture:a'))
+            with self.assertRaises(ValueError):self.do_import(self.version)
+            with self.connection.cursor() as c:
+                c.execute('SELECT count(*) FROM maas_data.input_versions WHERE version=%s',(new_version,));self.assertEqual(c.fetchone()[0],0)
+            self.connection.commit()
+            with self.connection:
+                with self.connection.cursor() as c:c.execute('UPDATE maas_data.documents SET '+field+'=%s WHERE entity_id=%s',(json.dumps(old) if field=='payload' else old,'fixture:a'))
+        self.do_import(self.version)
+
+    def test_unchanged_aliases_are_verified_once_per_object_before_commit(self):
+        from collections import Counter
+        from unittest.mock import patch
+        source=self.root/'data/derived/a.json';(source.parent/'alias.json').write_bytes(source.read_bytes())
+        self.version=capture(self.root,'aliases');self.do_import()
+        inherited={x['sha256'] for x in entries(self.connection,self.version).values()}
+        self.write('new.json', {'id':'fixture:new'});capture(self.root,'incremental')
+        reads=Counter();get=self.store.get
+        def counted(sha,**kwargs):
+            reads[sha]+=1;return get(sha,**kwargs)
+        with patch.object(self.store,'get',side_effect=counted):self.do_import(self.version)
+        self.assertTrue(inherited)
+        for sha in inherited:self.assertEqual(reads[sha],1)
+
     def test_process_crash_after_sql_batch_preserves_old_state_and_retries(self):
         for n in range(502):
             self.write(f'a-{n:04}.json', {'id': f'crash:{n}'})
