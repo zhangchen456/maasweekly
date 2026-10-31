@@ -365,7 +365,7 @@ def parse_report(md_text):
     }
 
 
-def main():
+def main(*, project=True):
     DST_DIR.mkdir(parents=True, exist_ok=True)
     count = 0
     input_hashes = {}
@@ -402,7 +402,7 @@ def main():
 
     write(BASE.parent, 'data/derived/weekly-inputs.json', input_hashes)
     build_timeline()
-    project_site(BASE.parent)
+    if project: project_site(BASE.parent)
 
 
 def parse_event_date(text, report_date):

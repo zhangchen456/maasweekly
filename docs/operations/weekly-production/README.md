@@ -63,3 +63,9 @@ writer日志新增`writer.timing`，包括各脚本、ingest.capture、ingest.ra
 缓存恢复仅枚举可修改输入，避免扫描约20万份历史归档来恢复少量当前文件；原始归档不在恢复动作的写入范围。完整capture、归档门禁和discard仍覆盖历史文件。新增initialize计时用于区分缓存恢复与正式导入耗时。
 
 入库阶段的历史对象验证统一在事务提交前执行：每个唯一哈希只读取一次，并同时检查原始字节、长度、数据库JSON和字段顺序；未变对象也全量验证，任何失败都回滚本次SQL写入。先核对数据库解析清单与固定输入完全一致，再在同一事务复用该清单；不跨任务缓存验证结果。同一哈希出现不同长度会报错，避免去重掩盖错误。JSON不支持字符检测保持原有NUL/代理字符边界，改为正则扫描并对每个对象只算一次。新增database.resolve_parent、write_deltas、resolve_committed_view、verify_all计时。
+
+### 正式发布的快照边界
+
+`import` 将稿件和 `import-provenance` 一起写入周报 journal；完成时仍全量捕获输入。翻译若有新增，由翻译 journal 提交新快照。随后网站投影和归档门禁只读标准输入，入库固定使用最后提交的同一 `inputVersion`，不再重复捕获全库。入库前检查完整文件清单、所有可变输入内容及 pending 状态；数据库入口再次核对预期版本，事务提交前仍逐一验证全部唯一 CAS 对象及 SQL 表示。此优化只适用于串行隔离 writer 的正式 `import`，其他采集和 `resume` 仍保留完整捕获。
+
+网站兼容投影由 writer 在翻译后统一生成；单独运行 `import-weekly.py` 默认仍立即生成投影。`--defer-site-projection` 仅由有后续投影步骤的 writer 使用。恢复须重用原稿件哈希文件和 `--source-commit` 参数，不能跳过归档门禁或全量 CAS 校验。
