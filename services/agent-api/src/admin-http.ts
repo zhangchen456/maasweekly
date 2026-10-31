@@ -1,3 +1,4 @@
+import {pipelineHealth} from './pipeline-monitor.js';
 import { AdminPayments } from './admin-payments.js';
 import { AdminProblems } from './admin-problems.js';
 import { AdminDelivery } from './admin-delivery.js';
@@ -67,7 +68,7 @@ export function createAdminHandler(store:AdminStore|null,holder:DatasetHolder,co
        if(req.method==='GET'&&problemRoute[1]&&!op){reply(200,problems!.detail(id));return;}
        if(req.method==='POST'&&op){const fields:Record<string,string[]>={create:['title','description','reproduction','versionInfo'],update:['title','description','reproduction','versionInfo'],link:['kind','relatedId','confirmed'],unlink:['kind','relatedId','confirmed'],references:['kind','value','trust','source','checkedAt'],'remove-reference':['refId'],progress:['repairStage','refId','releaseRefId','confirmed'],verify:['refId','releaseRefId','result','environment','note'],diagnose:['material','budget'],'cancel-run':['runId'],'reconcile-run':['runId','outcome','note','actualCost']};const c=await adminWriteInput(req,fields[op]!,user.id,requestId,'problems.'+op,'problem',op==='create'?'create':id,op==='create'?undefined:()=>problems!.version(id),16384);if(op==='create'){c.input={...c.input};c.targetId='problem_'+c.idempotencyKey;}reply(200,problems!.write(c,op));return;}
       }
-      if(url.pathname==='/api/admin/health'&&req.method==='GET'){if(url.search)throw new AccountError(400,'invalid_parameter','健康不接受查询参数');reply(200,delivery!.health(holder));return;}
+      if(url.pathname==='/api/admin/health'&&req.method==='GET'){if(url.search)throw new AccountError(400,'invalid_parameter','健康不接受查询参数');reply(200,{...delivery!.health(holder),pipelineMonitor:pipelineHealth(store)});return;}
       if(url.pathname==='/api/admin/delivery'&&req.method==='GET'){reply(200,delivery!.list(url.searchParams));return;}
       const mailRoute=/^\/api\/admin\/delivery\/([^/]+)(?:\/(retry|reconcile))?$/.exec(url.pathname);
       if(mailRoute){if(url.search)throw new AccountError(400,'invalid_parameter','操作与详情不接受查询参数');const id=decodeURIComponent(mailRoute[1]!);if(req.method==='GET'&&!mailRoute[2]){reply(200,delivery!.detail(id));return;}if(req.method==='POST'&&mailRoute[2]){const op=mailRoute[2],c=await adminWriteInput(req,[],user.id,requestId,'delivery.'+op,'mail_delivery',id,()=>delivery!.version(id));reply(200,delivery!.write(c,op));return;}}

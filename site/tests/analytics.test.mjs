@@ -234,11 +234,12 @@ test('subscription CTA records free beta intent before login, but not existing-m
   const dom = browser('<div data-subscription><button id="subscription-plus"></button><p id="subscription-status"></p><span data-current-free></span><span data-current-plus></span><span data-plus-label></span></div>', BASE+'/subscription/');
   let intents=0, logins=0, account=null, change;
   dom.window.document.addEventListener('maas:beta-activation-intent',()=>intents++);
+  dom.window.localizedHref=value=>value;
   dom.window.currentAccount=()=>account;
   dom.window.onAccountChange=fn=>{change=fn;fn();};
   dom.window.openAccountLogin=()=>logins++;
   dom.window.fetch=async()=>({ok:true,json:async()=>({entitlement:{status:'active',source:'beta'},betaAvailable:true})});
-  const source=fs.readFileSync(new URL('../src/scripts/subscription.ts', import.meta.url),'utf8').replace(/^import[^\n]+\n/,'');
+  const source=fs.readFileSync(new URL('../src/scripts/subscription.ts', import.meta.url),'utf8').replace(/^import[^\n]+\n/gm,'');
   dom.window.eval((await transform(source,{loader:'ts'})).code);
   const button=dom.window.document.getElementById('subscription-plus');
   button.click(); assert.equal(intents,1); assert.equal(logins,1);
