@@ -15,6 +15,12 @@ return function englishUi(text: string): string {
   const copyLabel = trim.match(/^(.*)（可全选复制）$/);
   if (copyLabel) return `${englishUi(copyLabel[1])} (select all to copy)`;
   // Handle variable counters before individual words can break their grammar.
+  const formalDescription=trim.match(/^([\d-]+(?: ~ [\d-]+)?) 大模型与 MaaS 平台周报：模型发布、API 定价变化、平台更新及官方来源。$/);
+  if(formalDescription)return `${formalDescription[1]} LLM and MaaS weekly report: model releases, API pricing changes, platform updates and official sources.`;
+  const formalIssue=trim.match(/^第 (\d{4}-\d{2}-\d{2}) 期 · (Plus 深度周报|完整公开样例)$/);
+  if(formalIssue)return `Issue ${formalIssue[1]} · ${formalIssue[2]==='Plus 深度周报'?'Plus in-depth report':'Full public sample'}`;
+  const itemCount=trim.match(/^(\d+) 项$/);
+  if(itemCount)return `${itemCount[1]} items`;
   const counter = trim.match(/^(\d+(?: \/ \d+)?)\s*(项信号|条记录|个模型|条变化)$/);
   if (counter) return text.replace(trim, `${counter[1]} ${{'项信号':'signals','条记录':'records','个模型':'models','条变化':'changes'}[counter[2]]}`);
   const recentCount = trim.match(/^(\d+)\s*[项条]变化\s*·\s*最近\s+([\d.]+)$/);

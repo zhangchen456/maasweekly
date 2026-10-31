@@ -2,7 +2,7 @@
 
 2026-10-31。正在实施，尚未完成正式发布。
 
-已确认：weekly-update 的定时 aggregate 只采集、同步并发布素材，不生成 data/weekly 正式稿；正式稿最新仍为10月13日。生产 editorial_issues/editorial_runs/diagnostic_runs 均为空。
+已确认：weekly-update 的 aggregate 模式只准备素材；定时触发的空模式走 weekly 并导入已有稿件，但两者都不生成新的 data/weekly 正式稿；正式稿最新仍为10月13日。生产 editorial_issues/editorial_runs/diagnostic_runs 均为空。
 
 已完成：持 release.lock 并复核队列为空后，重启两个 worker；新 PID editorial=3362827、diagnostic=3362844，实际 cwd 均为 runtime/e530ad98ef54224e374ae7ad6f311a31d9ef85da/agent-api，active。
 
@@ -13,3 +13,5 @@
 新增正式周报独立健康检查：公开weekly API最新期号须与coverage一致，超过10天或未来期号失败；已接周报工作流末尾。4项测试通过，生产现状10月13日/18天已实际失败验证。
 
 英文：公开仅三条预览标题；全文及拆分文本67个新增键在服务器私有translations/ui-en.json，原库备份ui-en.before-weekly-20261031.json。英文完整性/付费边界检查及14项Python翻译测试通过。动态翻译测试依赖未随Git提供的运行数据，当前干净检出不能完成该项，不计通过。
+
+首轮发布41198279305已成功，10-27期上线并通过期号健康检查。PR39修订稿41198470123继续导入。PR40已部署6ea43e155，私有译文可独立刷新。只读线上英文审计覆盖3页/30期受保护全文，发现新日期描述、期号和计数共3处漏译，正在补通用规则；正文事实译文无漏译。
