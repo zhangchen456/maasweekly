@@ -80,6 +80,7 @@ jobs:
           python -m unittest discover -s tests -p test_import_memory.py
           python -m unittest discover -s tests -p test_runtime_control.py
           python -m unittest discover -s tests -p test_runtime_package.py
+          python -m unittest discover -s tests -p test_runtime_cleanup.py
           python -m unittest discover -s tests -p test_workflow_release_contract.py
       - name: Validate English translations
         if: steps.candidate.outputs.eligible == 'true'

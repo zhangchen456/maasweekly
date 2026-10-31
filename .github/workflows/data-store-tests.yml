@@ -82,6 +82,7 @@ jobs:
           python -m unittest discover -s tests -p test_database_writer.py
           python -m unittest discover -s tests -p test_runtime_control.py
           python -m unittest discover -s tests -p test_runtime_package.py
+          python -m unittest discover -s tests -p test_runtime_cleanup.py
           python -m unittest discover -s tests -p test_workflow_release_contract.py
       - name: Standard input and blob storage regressions
         run: |
