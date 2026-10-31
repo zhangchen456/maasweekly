@@ -60,14 +60,17 @@ def protect(source: str):
     # Quantities written in Chinese must survive the same number checks as Arabic digits.
     # Restrict conversion to explicit measures; do not rewrite idioms such as 十分关注.
     value = re.sub(r'([一二两三四五六七八九])([一二两三四五六七八九])(?=倍)',lambda m:f'{chinese_number(m[1])}–{chinese_number(m[2])}',value)
-    value = re.sub(r'(?<![数几零〇一二两三四五六七八九十百千万亿\d])([零〇一二两三四五六七八九十百千万亿]+)(?=美元|美金|港元|元|个|家|款|位|次|项|条|期|周|天|小时|秒|个月|年|倍|轮|块|金|银|铜)',lambda m:str(chinese_number(m[1])),value)
+    value = re.sub(r'([一二三四五六七八九])成',lambda m:f'{chinese_number(m[1])*10}%',value)
+    value = re.sub(r'(?<![数几零〇一二两三四五六七八九十百千万亿\d])([零〇一二两三四五六七八九十百千万亿]+)(?=美元|美金|港元|元|个|家|款|位|次|项|条|期|周|天|小时|秒|个月|年|倍|轮|块|卡|届|步|件|金|银|铜|大(?:运营商|论坛|事件|平台|产品))',lambda m:str(chinese_number(m[1])),value)
     value = re.sub(r'(?<![数几零〇一二两三四五六七八九十百千万亿\d])([零〇一二两三四五六七八九十百千万亿]*(?:万亿|亿|万))(?=$|[。，；、）)]|级|参数)',lambda m:str(chinese_number(m[1])),value)
     def amount(m):
         n = Decimal(m[1]) * {'万':10000,'亿':100000000,'万亿':1000000000000}[m[2]]
         return format(n, 'f').rstrip('0').rstrip('.') if '.' in format(n, 'f') else format(n, 'f')
     value = re.sub(r'(\d+(?:\.\d+)?)\s*(万亿|亿|万)', amount, value)
     months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+    value = re.sub(r'(?<![\d.])(\d{1,2})\s*[-–]\s*(\d{1,2})\s*月',lambda m:f'{months[int(m[1])-1]}–{months[int(m[2])-1]}' if 1<=int(m[1])<=12 and 1<=int(m[2])<=12 else m[0],value)
     value = re.sub(r'(\d{1,2})\s*月\s*(\d{1,2})\s*日?', lambda m: f'{months[int(m[1])-1]} {int(m[2])}' if 1 <= int(m[1]) <= 12 else m[0], value)
+    value = re.sub(r'(?<![\d.])(\d{1,2})\s*月',lambda m:months[int(m[1])-1] if 1<=int(m[1])<=12 else m[0],value)
     value = re.sub(r'(20\d{2})年(?:底|末)', r'late \1', value)
     value = re.sub(r'(20\d{2})年初', r'early \1', value)
     value = re.sub(r'百万\s*(tokens?|Token[s]?)', 'million tokens', value)
@@ -96,13 +99,21 @@ def restore_and_validate(source: str, raw: str, protected: dict[str, str]):
     expected = Counter(re.findall(r'\d+(?:\.\d+)?', ' '.join(protected.values())))
     actual = Counter(re.findall(r'\d+(?:\.\d+)?', text))
     if actual != expected: raise ValueError('numbers_changed')
-    if re.search(r'不提供|不是|暂无|没有|不能', source) and not re.search(r"\b(no|not|cannot|without|unavailable|missing|unknown)\b|n[’']t\b", text, re.I): raise ValueError('negation_lost')
+    if re.search(r'不提供|不是|暂无|没有|不能', source) and not (re.search(r"\b(no|not|cannot|without|unavailable|missing|unknown)\b|n[’']t\b", text, re.I) or ('不是' in source and re.search(r'\b(rather than|instead of)\b',text,re.I))): raise ValueError('negation_lost')
     if source.count('可能') + source.count('或为') > 0 and not re.search(r'\b(may|might|possibly|perhaps|possible)\b', text, re.I): raise ValueError('uncertainty_lost')
     if ('定价页移除' in source or ('LMArena' in source and '移除' in source)) and re.search(r'\b(discontinued|shutdown|retired)\b', text, re.I): raise ValueError('removal_strengthened')
     return text
 
 
 def normalize_terms(source, translation):
+    if '万' in source or '亿' in source:
+        def readable_amount(match):
+            value=Decimal(match[0])
+            for scale,label in [(Decimal('1e12'),'trillion'),(Decimal('1e9'),'billion'),(Decimal('1e6'),'million')]:
+                if value>=scale:
+                    return format(value/scale,'f').rstrip('0').rstrip('.')+' '+label if '.' in format(value/scale,'f') else format(value/scale,'f')+' '+label
+            return match[0]
+        translation=re.sub(r'(?<![\w./:\-])\d{7,}(?:\.\d+)?(?![\w./:\-])',readable_amount,translation)
     if '量化' in source:
         translation=re.sub(r'quantitative version', 'quantized version', translation, flags=re.I)
     months=['January','February','March','April','May','June','July','August','September','October','November','December']
