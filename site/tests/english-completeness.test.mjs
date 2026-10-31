@@ -18,6 +18,7 @@ assert.equal(englishUi('3 条变化 · 最近 10.26'),'3 changes · latest 10.26
 assert.equal(englishUi('…共 48 条，仅列前 30。'),'… 48 records; showing the first 30.');
 assert.equal(module.exports.englishHref('/pro/weekly/?id=sample#body'),'/en/pro/weekly/?id=sample#body');
 assert.equal(englishUi('搜索全部来源的模型…'),'Search models across all sources…');
+assert.equal(englishHtml('<span> · 摘要更新；变化内容更新；分类更新</span>'),'<span> · Summary updated; change content updated; category updated</span>');
 const evidence='<ul data-original-language><li>输入价格 <span>通义千问 ¥2</span></li><li>删除模型</li></ul>';
 assert.equal(englishHtml(evidence),evidence,'Nested original evidence stays byte-for-byte unchanged');
 assert.match(englishHtml(evidence+'<p>标准条件</p>'),/<p>Standard conditions<\/p>$/,'Protection ends at the marked subtree');
