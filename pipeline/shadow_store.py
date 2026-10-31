@@ -10,6 +10,7 @@ import hashlib
 import json
 import re
 import time
+import sys
 from pathlib import Path
 
 from blob_store import FilesystemBlobStore, safe_path
@@ -183,7 +184,7 @@ def _ensure_source_order(connection, version, files, store):
 
 def _timing(stage, started):
     print(json.dumps({'kind':'writer.timing','stage':'database.'+stage,
-                      'elapsedSeconds':round(time.monotonic()-started,3)}),flush=True)
+                      'elapsedSeconds':round(time.monotonic()-started,3)}),file=sys.stderr,flush=True)
 
 
 def _timed(stage, callback, *args):
