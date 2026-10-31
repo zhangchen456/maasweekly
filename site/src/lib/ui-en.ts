@@ -2,6 +2,7 @@ import { HOME_MODEL_GROUPS } from '../config/home-model-selection';
 // One translation catalog for server-rendered pages and client-rendered controls.
 // Product data, API identifiers, and saved source excerpts are not rewritten.
 export const uiEnglish: Record<string, string> = {
+'分享链接过长，请重新生成。':'The share link is too long. Create a new link.','请先选择模型并填写有效用量。':'Select a model and enter valid usage first.','分享内容过长，请减少模型数量。':'Share data is too long. Select fewer models.','用量参数无效，请手动输入。':'Invalid usage parameter. Enter usage manually.',
 '关注已选模型':'Follow selected models','管理关注和提醒':'Manage follows and reminders',
 "算出你的大模型":"Calculate your LLM",
 "API 调用成本。":"API costs.",
