@@ -1,0 +1,11 @@
+[Unit]
+Description=MaaS Daily pipeline monitoring schedule
+
+[Timer]
+OnBootSec=2min
+OnCalendar=*:0/5:00
+Persistent=true
+Unit=maas-pipeline-monitor.service
+
+[Install]
+WantedBy=timers.target

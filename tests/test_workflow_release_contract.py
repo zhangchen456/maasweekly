@@ -35,5 +35,5 @@ class IndependentPublicationTests(unittest.TestCase):
   self.assertIn('publication compare-and-swap failed',source)
   self.assertLess(source.index("failpoint('after_prepare')"),source.index('durable_write(pointer,body)'))
   source=(BASE/'ops/data-writer/launch.py').read_text()
-  self.assertLess(source.index('verify-runtime-site.mjs'),source.index("docker(root,'publish'"))
+  self.assertLess(source.index('verify-runtime-site.mjs'),source.index("journal.phase('publication'"))
 if __name__=='__main__':unittest.main()
