@@ -13,16 +13,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'pipeline'))
-from english_translation import MODEL, SYSTEM, PROMPT_VERSION, HAN, protect, restore_and_validate, text_key, projected_texts
+from english_translation import MODEL, SYSTEM, PROMPT_VERSION, HAN, protect, restore_and_validate, text_key, projected_texts, normalize_terms
 
 
 def editorial_parts(source):
-    if len(source)<160:return [source]
-    parts=[]
-    for sentence in re.findall(r'[^。；！？\n]+[。；！？\n]*|[。；！？\n]+',source):
-        if len(sentence)>220:parts.extend(re.findall(r'[^，、]+[，、]*|[，、]+',sentence))
-        else:parts.append(sentence)
-    return parts or [source]
+    if len(source)<64:return [source]
+    return re.findall(r'[^，、（）；。！？\n]+|[，、（）；。！？\n]+',source) or [source]
 
 
 def remask(text, protected):
@@ -41,7 +37,7 @@ def translate_source(source, key, url, model, dynamic):
     if len(parts)==1:return dynamic.translate(source,key,url,model)
     translated=[]
     for part in parts:
-        if not HAN.search(part):translated.append(part);continue
+        if not HAN.search(part):translated.append(part.translate(str.maketrans({'，':',','、':',','（':'(', '）':')','；':';','。':'.','！':'!','？':'?'})));continue
         entry=dynamic.translate(part,key,url,model)
         if entry['status']!='success':return {**entry,'source':source}
         translated.append(entry['translation'])
@@ -93,7 +89,9 @@ def main():
     existing=json.loads(args.output.read_text()) if args.output.exists() else {'schemaVersion':1,'model':MODEL,'texts':{}}
     texts=existing['texts']
     cache=json.loads(args.cache.read_text()) if args.cache.exists() else {'schemaVersion':1,'entries':{}}
-    texts.update(projected_texts(cache))
+    validated=projected_texts(cache)
+    texts={s:t for s,t in texts.items() if '万亿' not in s or s in validated}
+    texts.update(validated)
     pending=[s for s in sources if s not in texts]
     print(json.dumps({'required':len(sources),'pending':len(pending),'model':MODEL}),flush=True)
     if args.check: return int(bool(pending))
@@ -114,12 +112,13 @@ def main():
     if batch:batches.append(batch)
     def save():
         args.output.parent.mkdir(parents=True,exist_ok=True);args.cache.parent.mkdir(parents=True,exist_ok=True)
-        args.output.write_text(json.dumps({'schemaVersion':1,'model':model,'texts':texts},ensure_ascii=False,indent=2)+'\n')
-        args.cache.write_text(json.dumps(cache,ensure_ascii=False,indent=2)+'\n')
+        for file,value in [(args.output,{'schemaVersion':1,'model':model,'texts':texts}),(args.cache,cache)]:
+            temporary=file.with_name(file.name+'.tmp')
+            temporary.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n');os.replace(temporary,file)
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
         tasks=[pool.submit(translate_batch,b,key,url,model) for b in batches]
         for index,future in enumerate(concurrent.futures.as_completed(tasks),1):
-            good,missing=future.result();texts.update(good);failed.extend(missing)
+            good,missing=future.result();texts.update({source:normalize_terms(source,value) for source,value in good.items()});failed.extend(missing)
             for source,value in good.items():cache['entries'][text_key(source)]={'source':source,'translation':value,'status':'success','model':model,'promptVersion':PROMPT_VERSION,'quantityVersion':2}
             save()
             if index%10==0: print(json.dumps({'batches':index,'validated':len(texts),'retry':len(failed)}),flush=True)
@@ -132,7 +131,7 @@ def main():
         for index,future in enumerate(concurrent.futures.as_completed(tasks),1):
             entry=future.result()
             cache['entries'][text_key(entry['source'])]=entry
-            if entry['status']=='success':texts[entry['source']]=entry['translation']
+            if entry['status']=='success':texts[entry['source']]=normalize_terms(entry['source'],entry['translation'])
             else:failures+=1
             if index%10==0:
                 save();print(json.dumps({'retriesCompleted':index,'remaining':len(failed)-index,'failed':failures}),flush=True)

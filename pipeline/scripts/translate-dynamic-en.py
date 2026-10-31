@@ -79,6 +79,8 @@ def main():
     ui_sources=BASE/'site/src/data/ui-translation-sources.json'
     if ui_sources.exists():
         from data_location import data_path
+        subprocess.run(['node',str(BASE/'site/scripts/audit-english.mjs'),'--collect','--merge','--output',str(ui_sources)],
+                       cwd=BASE/'site',env={**os.environ,'MAAS_TRANSLATION_SITE':str(BASE/'site')},check=True)
         subprocess.run([sys.executable,str(Path(__file__).with_name('translate-ui-en.py')),
                         '--sources',str(ui_sources),'--output',str(BASE/'site/src/data/ui-translations-en.json'),
                         '--cache',str(data_path(BASE,'data/derived/translations/ui-en.json'))],check=True)
