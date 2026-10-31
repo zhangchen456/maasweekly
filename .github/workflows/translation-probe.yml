@@ -16,7 +16,7 @@ jobs:
           python3 - <<'PYTHON'
           import json, os, time, urllib.request, urllib.error
           started=time.time()
-          payload={'model':'spark-x2.5','messages':[{'role':'system','content':'Translate to English. Return only the translation.'},{'role':'user','content':'总参数 1.6 万亿，激活参数约 480 亿，量化方案降至 397GB。'}],'max_tokens':128,'enable_thinking':False,'thinking':{'type':'disabled'}}
+          payload={'model':'spark-x2.6','messages':[{'role':'system','content':'Translate to English. Return only the translation.'},{'role':'user','content':'总参数 1.6 万亿，激活参数约 480 亿，量化方案降至 397GB。'}],'max_tokens':128,'enable_thinking':False,'thinking':{'type':'disabled'}}
           req=urllib.request.Request('https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+os.environ['TRANSLATION_API_KEY']})
           try:
               with urllib.request.urlopen(req,timeout=90) as r: data=json.load(r)
