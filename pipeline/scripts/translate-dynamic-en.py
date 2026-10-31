@@ -44,7 +44,7 @@ def translate(source, key, url, model):
                     return tokens.pop(0) if tokens else match[0]
                 raw=matcher.sub(remask,raw) if available else raw
             value=restore_and_validate(source, raw, protected)
-            return {'source':source,'translation':value,'model':model,'promptVersion':PROMPT_VERSION,'quantityVersion':2,'status':'success','translatedAt':datetime.now(timezone.utc).isoformat()}
+            return {'source':source,'translation':value,'model':model,'promptVersion':PROMPT_VERSION,'quantityVersion':3,'status':'success','translatedAt':datetime.now(timezone.utc).isoformat()}
         except Exception as error:
             last_reason=str(error) if isinstance(error,ValueError) and str(error) in {'empty_or_untranslated','placeholder_missing_or_duplicated','unsafe_or_unrestored','added_formatting','added_paragraph','numbers_changed','negation_lost','uncertainty_lost','removal_strengthened','untranslated_protected_text','incomplete'} else 'provider_error'
             if attempt < 4: time.sleep(1 + attempt)

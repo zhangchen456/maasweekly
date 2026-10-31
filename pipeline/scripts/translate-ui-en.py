@@ -33,8 +33,13 @@ def remask(text, protected):
 
 
 def translate_source(source, key, url, model, dynamic):
+    if len(source)>=160:
+        model=os.environ.get('TRANSLATION_LONG_MODEL','spark-x2.5')
+        if not model.startswith('spark-'):raise ValueError('Long translations require Spark')
+    whole=dynamic.translate(source,key,url,model)
+    if whole['status']=='success':return whole
     parts=editorial_parts(source)
-    if len(parts)==1:return dynamic.translate(source,key,url,model)
+    if len(parts)==1:return whole
     translated=[]
     for part in parts:
         if not HAN.search(part):translated.append(part.translate(str.maketrans({'，':',','、':',','（':'(', '）':')','；':';','。':'.','！':'!','？':'?'})));continue
@@ -44,7 +49,7 @@ def translate_source(source, key, url, model, dynamic):
     _,protected=protect(source)
     try:
         value=restore_and_validate(source,remask(' '.join(translated),protected),protected)
-        return {'source':source,'translation':value,'status':'success','model':model,'promptVersion':PROMPT_VERSION,'quantityVersion':2}
+        return {'source':source,'translation':value,'status':'success','model':model,'promptVersion':PROMPT_VERSION,'quantityVersion':3}
     except ValueError as error:
         return {'source':source,'status':'failed','model':model,'reason':str(error)}
 
@@ -90,7 +95,7 @@ def main():
     texts=existing['texts']
     cache=json.loads(args.cache.read_text()) if args.cache.exists() else {'schemaVersion':1,'entries':{}}
     validated=projected_texts(cache)
-    texts={s:t for s,t in texts.items() if '万亿' not in s or s in validated}
+    texts={s:t for s,t in texts.items() if not ('万亿' in s or re.search(r'\d\s+(?:万|亿)',s)) or s in validated}
     texts.update(validated)
     pending=[s for s in sources if s not in texts]
     print(json.dumps({'required':len(sources),'pending':len(pending),'model':MODEL}),flush=True)
@@ -115,18 +120,19 @@ def main():
         for file,value in [(args.output,{'schemaVersion':1,'model':model,'texts':texts}),(args.cache,cache)]:
             temporary=file.with_name(file.name+'.tmp')
             temporary.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n');os.replace(temporary,file)
-    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+    workers=int(os.environ.get('TRANSLATION_WORKERS','6'))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
         tasks=[pool.submit(translate_batch,b,key,url,model) for b in batches]
         for index,future in enumerate(concurrent.futures.as_completed(tasks),1):
             good,missing=future.result();texts.update({source:normalize_terms(source,value) for source,value in good.items()});failed.extend(missing)
-            for source,value in good.items():cache['entries'][text_key(source)]={'source':source,'translation':value,'status':'success','model':model,'promptVersion':PROMPT_VERSION,'quantityVersion':2}
+            for source,value in good.items():cache['entries'][text_key(source)]={'source':source,'translation':value,'status':'success','model':model,'promptVersion':PROMPT_VERSION,'quantityVersion':3}
             save()
             if index%10==0: print(json.dumps({'batches':index,'validated':len(texts),'retry':len(failed)}),flush=True)
     print(json.dumps({'individualRetries':len(failed)}),flush=True)
     if args.batch_only:
         save();return 0
     failures=0
-    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
         tasks=[pool.submit(translate_source,source,key,url,model,dynamic) for source in failed]
         for index,future in enumerate(concurrent.futures.as_completed(tasks),1):
             entry=future.result()
