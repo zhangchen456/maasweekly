@@ -14,7 +14,7 @@ const t = (zh, english) => en ? english : zh;
 const canonical = canonicalUrl(Astro.url.pathname);
 const organization = { '@type': 'Organization', name: 'MaaS Daily', url: canonicalUrl('/about/') };
 const schema = { '@context': 'https://schema.org', '@graph': [
-  { '@type': 'Article', headline: guide.title, description: guide.description, inLanguage: en ? 'en' : 'zh-CN', author: organization, publisher: organization, mainEntityOfPage: canonical, datePublished: '2026-10-08', dateModified: '2026-10-08' },
+  { '@type': 'Article', headline: guide.title, description: guide.description, inLanguage: en ? 'en' : 'zh-CN', author: organization, publisher: organization, mainEntityOfPage: canonical, datePublished: '2026-10-08', dateModified: '2026-10-31' },
   { '@type': 'BreadcrumbList', itemListElement: [
     { '@type': 'ListItem', position: 1, name: t('首页', 'Home'), item: canonicalUrl(en ? '/en/' : '/') },
     { '@type': 'ListItem', position: 2, name: t('成本指南', 'Cost guides'), item: canonicalUrl(en ? '/en/guides/' : '/guides/') },
@@ -25,7 +25,7 @@ const schema = { '@context': 'https://schema.org', '@graph': [
 <Layout title={`${guide.title} — MaaS Daily`} description={guide.description}>
   <article class="price-guide">
     <nav aria-label={t('面包屑', 'Breadcrumb')}><a href="/">{t('首页', 'Home')}</a> / <a href="/guides/">{t('成本指南', 'Cost guides')}</a> / {t('本文', 'Article')}</nav>
-    <header><h1>{guide.title}</h1><p class="lead">{guide.lead}</p><p class="byline"><a href="/about/">MaaS Daily</a> · {t('发布与修订：', 'Published and revised: ')}<time datetime="2026-10-08">2026-10-08</time></p></header>
+    <header><h1>{guide.title}</h1><p class="lead">{guide.lead}</p><p class="byline"><a href="/about/">MaaS Daily</a> · {t('发布与修订：', 'Published and revised: ')}<time datetime="2026-10-31">2026-10-31</time></p></header>
     <nav class="contents" aria-label={t('本文目录', 'Contents')}><strong>{t('本文内容', 'In this guide')}</strong><ol>{guide.sections.map((section, i) => <li><a href={`#section-${i + 1}`}>{section.title}</a></li>)}</ol></nav>
     {guide.sections.map((section, i) => <section id={`section-${i + 1}`}><h2>{section.title}</h2>{section.paragraphs.map(paragraph => <p>{paragraph}</p>)}</section>)}
     <section><h2>{t('查报价，继续计算', 'Find quotes and calculate costs')}</h2><ul>{guide.links.map(link => <li><a href={link.href}>{link.label} →</a></li>)}</ul></section>

@@ -5,7 +5,7 @@ export function growthAnalytics(admin:AdminStore,r:AnalyticsRange,now:number,val
  const db=admin.db,start=Number(db.prepare("SELECT created FROM account_value_metadata WHERE key='growth_start'").get()!.created);
  const sql=`WITH activity AS (
   SELECT e.userId,e.created,e.event FROM pro_events e WHERE e.userId IS NOT NULL AND ${valueEvent}
-  UNION ALL SELECT userId,created,event FROM account_value_events WHERE event IN ('model_followed','reminder_enabled','comparison_completed','cost_estimate_completed')
+  UNION ALL SELECT userId,created,event FROM account_value_events WHERE event IN ('model_followed','reminder_enabled','comparison_completed','cost_estimate_completed','cost_estimate_completed_v2')
  ), cohort AS (
   SELECT r.userId,r.created,coalesce(c.firstCampaign,'unknown') AS firstCampaign,coalesce(c.lastCampaign,'unknown') AS lastCampaign,
    CASE WHEN r.created+${7*DAY}<=? THEN 1 ELSE 0 END AS mature,

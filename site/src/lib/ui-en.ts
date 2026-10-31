@@ -2,6 +2,32 @@ import { HOME_MODEL_GROUPS } from '../config/home-model-selection';
 // One translation catalog for server-rendered pages and client-rendered controls.
 // Product data, API identifiers, and saved source excerpts are not rewritten.
 export const uiEnglish: Record<string, string> = {
+'分享链接过长，请重新生成。':'The share link is too long. Create a new link.','请先选择模型并填写有效用量。':'Select a model and enter valid usage first.','分享内容过长，请减少模型数量。':'Share data is too long. Select fewer models.','用量参数无效，请手动输入。':'Invalid usage parameter. Enter usage manually.',
+'关注已选模型':'Follow selected models','管理关注和提醒':'Manage follows and reminders',
+"算出你的大模型":"Calculate your LLM",
+"API 调用成本。":"API costs.",
+"输入你的 Token 用量，查看模型费用和计费条件。无需登录即可计算，保存后可在其他设备继续。":"Enter token usage to estimate model costs and inspect billing conditions. Calculate without signing in; save to continue on other devices.",
+"开始计算 API 费用":"Calculate API costs",
+"先查一个模型的报价":"Find a model quote first",
+"大模型 API 预算怎么算？输入用量，计算调用成本 →":"Planning an LLM API budget? Enter usage and estimate costs \u2192",
+"选择 1–5 个模型，填入用量，查看当前报价下的费用。":"Select 1\u20135 models and enter usage to estimate costs with current quotes.",
+"保存和分享计算结果":"Save and share this calculation",
+"分享链接会包含模型、计费条件和用量假设。打开后按当前报价重算，请勿填入敏感业务信息。":"Links include models, billing conditions and usage assumptions. Opening a link recalculates with current quotes. Do not include sensitive business data.",
+"复制结果链接":"Copy result link",
+"复制费用摘要":"Copy cost summary",
+"保存这组计算":"Save this calculation",
+"关注模型变化":"Follow model changes",
+"请先选择有完整报价的模型，输入有效用量并完成计算。":"Select a model with complete quotes and enter valid usage first.",
+"结果链接已复制，链接包含用量假设，对方将按当前报价重算。":"Link copied. It includes usage assumptions and recalculates with current quotes.",
+"费用摘要已复制。":"Cost summary copied.",
+"计算已保存，可在此页面继续使用。":"Calculation saved. Continue on this page.",
+"保存失败，请稍后重试。":"Could not save. Please retry.",
+"登录后保存这组计算。":"Sign in to save this calculation.",
+"分享参数无效，请重新生成链接。":"Invalid share parameters. Create a new link.",
+"该模型暂没有可计算的报价，请选择其他模型。":"This model has no calculable quotes. Choose another model.",
+"分享中的部分模型或计费条件已不可用，未自动替换。请重新选择后计算。":"Some shared models or conditions are unavailable. No substitutions were made. Select again to calculate.",
+"请输入0至100万之间的用量（单位：百万 tokens）。":"Enter usage between 0 and 1,000,000 (in millions of tokens).",
+
  '每日采集归档从 2026-09-02（W36）开始；':'Daily collection archives begin on 2026-09-02 (W36); ',
  'W35 无每日归档，查看说明与历史周报':'W35 has no daily archive. View the explanation and historical reports',
 

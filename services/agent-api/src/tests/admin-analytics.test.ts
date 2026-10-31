@@ -191,3 +191,7 @@ test('API campaign allowlist matches shared configuration',async()=>{
  const {readFileSync}=await import('node:fs');const {campaigns}=await import('../analytics-campaigns.js');
  assert.deepEqual(campaigns,JSON.parse(readFileSync(new URL('../../../../packages/analytics/campaigns.json',import.meta.url),'utf8')));
 });
+
+test('single-model estimate uses a distinct versioned event in growth reports',()=>{
+ const f=fixture();try{const u=f.login('single-usage@example.test');f.accounts.recordWorkspaceUsage(u.user.id,'cost_estimate_completed_v2');const report=analyticsBusiness(f.admin,analyticsRange(new URLSearchParams(),f.now()+1),f.now()+1);assert.equal(report.growth.firstActions[0]!.event,'cost_estimate_completed_v2');assert.ok(f.accounts.db.prepare("SELECT created FROM account_value_metadata WHERE key='cost_v2_start'").get());}finally{f.accounts.close();}
+});
