@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import time
 from pathlib import Path
 
 from blob_store import FilesystemBlobStore, safe_path
@@ -76,9 +77,11 @@ def _validate_files(files, version):
             raise ValueError('invalid input blob metadata')
 
 
+_JSONB_UNSUPPORTED = re.compile(r'[\x00\ud800-\udfff]')
+
 def _jsonb_safe(value):
     if isinstance(value, str):
-        return not any(ord(c) == 0 or 0xd800 <= ord(c) <= 0xdfff for c in value)
+        return _JSONB_UNSUPPORTED.search(value) is None
     if isinstance(value, dict):
         return all(_jsonb_safe(k) and _jsonb_safe(v) for k, v in value.items())
     if isinstance(value, list):
@@ -88,9 +91,18 @@ def _jsonb_safe(value):
 
 def verify_view(connection, version, store):
     """Verify both original bytes AND the structured database representation."""
-    files = entries(connection, version)
+    return _verify_files(connection, version, entries(connection, version), store)
+
+
+def _verify_files(connection, version, files, store):
+    # Callers supply a freshly resolved database view from this transaction.
+    # Every referenced object is still read and checked, including inherited ones.
     _validate_files(files, version)
-    by_sha = {v['sha256']: v for v in files.values()}
+    by_sha = {}
+    for meta in files.values():
+        previous = by_sha.setdefault(meta['sha256'], meta)
+        if previous['bytes'] != meta['bytes']:
+            raise ValueError('same blob referenced with inconsistent size')
     json_shas = {v['sha256'] for logical, v in files.items() if Path(logical).suffix == '.json'}
     checked = fallback = ordered = 0
     with connection.cursor() as cursor:
@@ -106,15 +118,16 @@ def verify_view(connection, version, store):
                     raise ValueError('document size mismatch')
                 raw = store.get(sha, expected_bytes=size)
                 original = json.loads(raw) if sha in json_shas else None
+                supported = _jsonb_safe(original)
                 if payload_json is not None:
                     decoded = json.loads(payload_json)
                     if json.dumps(decoded, ensure_ascii=True) != json.dumps(original, ensure_ascii=True):
                         raise ValueError('ordered JSON differs from original')
                     ordered += 1
-                    fallback += int(not _jsonb_safe(original))
-                if sha in json_shas and _jsonb_safe(original) and payload != original:
+                    fallback += int(not supported)
+                if sha in json_shas and supported and payload != original:
                     raise ValueError('structured payload differs from original')
-                if sha in json_shas and not _jsonb_safe(original) and (payload is not None or payload_json is None):
+                if sha in json_shas and not supported and (payload is not None or payload_json is None):
                     raise ValueError('exceptional JSON representation is invalid')
                 checked += 1
             # Do not retain the preceding decoded batch while fetching the next.
@@ -150,9 +163,13 @@ def backfill_ordered_json(connection, version, store):
 
 def ensure_source_order(connection, version, store):
     """Backfill small derived ordering metadata from the pinned original bytes."""
-    from psycopg2.extras import Json
     files = entries(connection, version)
     _validate_files(files, version)
+    return _ensure_source_order(connection, version, files, store)
+
+
+def _ensure_source_order(connection, version, files, store):
+    from psycopg2.extras import Json
     meta = files.get('data/price-facts/current.json')
     order = list(json.loads(store.get(meta['sha256'], expected_bytes=meta['bytes'])).get('sources', {})) if meta else []
     with connection.cursor() as cursor:
@@ -162,6 +179,17 @@ def ensure_source_order(connection, version, store):
             raise ValueError('source order metadata differs from original')
         cursor.execute('UPDATE maas_data.input_versions SET source_order=%s WHERE version=%s AND source_order IS NULL', (Json(order), version))
     return order
+
+
+def _timing(stage, started):
+    print(json.dumps({'kind':'writer.timing','stage':'database.'+stage,
+                      'elapsedSeconds':round(time.monotonic()-started,3)}),flush=True)
+
+
+def _timed(stage, callback, *args):
+    started=time.monotonic()
+    try:return callback(*args)
+    finally:_timing(stage,started)
 
 
 def import_view(connection, root, store, *, source_commit, parent=None):
@@ -187,20 +215,21 @@ def import_view(connection, root, store, *, source_commit, parent=None):
                 files = entries(connection, view.version)
                 if files != view.files:
                     raise ValueError('existing database view differs')
-                verify_view(connection, view.version, store)
-                ensure_source_order(connection, view.version, store)
+                _timed('verify_all', _verify_files, connection, view.version, files, store)
+                _ensure_source_order(connection, view.version, files, store)
                 return {'inputVersion': view.version, 'files': len(files), 'deltaFiles': 0, 'idempotent': True}
-            previous = entries(connection, parent) if parent else {}
+            previous = _timed('resolve_parent', entries, connection, parent) if parent else {}
             if parent == view.version:
                 raise ValueError('input cannot parent itself')
             docs, deltas = {}, []
             batch_bytes = 0
             copied = 0
+            delta_started = time.monotonic()
             for logical, meta in view.files.items():
                 if previous.get(logical) == meta:
-                    # Reverify inherited objects too: corruption must not pass
-                    # merely because this batch contains no changes to a path.
-                    store.verify(meta['sha256'], expected_bytes=meta['bytes'])
+                    # The mandatory final _verify_files pass reads every inherited
+                    # object and its SQL representation before this transaction
+                    # can commit. Reading it here too would duplicate that work.
                     continue
                 if docs and (batch_bytes + meta['bytes'] > DOCUMENT_BATCH_BYTES or len(docs) >= DOCUMENT_BATCH_COUNT):
                     execute_values(cursor, '''INSERT INTO maas_data.documents
@@ -237,11 +266,13 @@ def import_view(connection, root, store, *, source_commit, parent=None):
                 execute_values(cursor, '''INSERT INTO maas_data.input_deltas
                   (input_version,logical_path,physical_path,sha256) VALUES %s''', deltas, page_size=1000)
             delta_count = len(deltas)
+            _timing('write_deltas', delta_started)
             del deltas
-            if entries(connection, view.version) != view.files:
+            resolved = _timed('resolve_committed_view', entries, connection, view.version)
+            if resolved != view.files:
                 raise ValueError('database import parity failed')
-            verify_view(connection, view.version, store)
-            ensure_source_order(connection, view.version, store)
+            _timed('verify_all', _verify_files, connection, view.version, resolved, store)
+            _ensure_source_order(connection, view.version, resolved, store)
     return {'inputVersion': view.version, 'files': len(view.files), 'deltaFiles': delta_count,
             'copiedObjects': copied, 'idempotent': False}
 
