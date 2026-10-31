@@ -10,6 +10,7 @@ const site = path.resolve(process.env.MAAS_TRANSLATION_SITE ?? fileURLToPath(new
 import {displayTexts} from './english-audit-text.mjs';
 export {displayTexts} from './english-audit-text.mjs';
 const han = /[\u3400-\u9fff]/;
+const attributes = ['title','placeholder','aria-label','aria-roledescription','alt'];
 function files(root, extension) {
   if (!fs.existsSync(root)) return [];
   return fs.readdirSync(root,{withFileTypes:true}).flatMap(e => e.isDirectory() ? files(path.join(root,e.name),extension) : extension.test(e.name) ? [path.join(root,e.name)] : []);
