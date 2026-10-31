@@ -4,6 +4,9 @@ from pathlib import Path
 from types import SimpleNamespace
 import unittest
 from unittest.mock import AsyncMock, MagicMock, patch
+from datetime import datetime
+import json
+import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('source_fetch', ROOT/'pipeline/scripts/fetch_sources.py')
@@ -12,6 +15,26 @@ spec.loader.exec_module(fetch)
 
 
 class SourceFetchTests(unittest.TestCase):
+    def test_arena_dataset_errors_do_not_fall_through_to_web_page_text(self):
+        with patch.object(fetch,'fetch_arena_dataset',return_value='official dataset') as dataset,patch.object(fetch,'fetch_via_curl') as curl:
+            self.assertEqual(fetch._fetch_page(fetch.ARENA_DATASET_URL),('official dataset',None))
+            dataset.side_effect=ValueError('incomplete file')
+            self.assertEqual(fetch._fetch_page(fetch.ARENA_DATASET_URL),(None,'JSON 结构非法'))
+            curl.assert_not_called()
+
+    def test_transport_migration_sets_a_baseline_without_false_model_removals(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);old=root/'data/snapshots/2026-10-30/LMArena__industry__2026-10-30.md'
+            old.parent.mkdir(parents=True);old.write_text('Old web leaderboard model rows that are not the dataset format')
+            fetch.configure_root(root)
+            try:
+                with patch.object(fetch,'load_sources',return_value={'platforms':[],'industry_sources':[{'name':'LMArena','api_url':fetch.ARENA_DATASET_URL}]}),patch.object(fetch,'fetch_page',return_value=(fetch.ARENA_FORMAT+'\nOfficial new model observations',None)),patch.object(fetch,'run_timestamp',return_value=datetime(2026,10,31)):
+                    result=fetch.main()
+                self.assertEqual(result['success'],1)
+                change=json.loads((root/'data/diff/2026-10-31.json').read_text())['changes'][0]
+                self.assertEqual(change['status'],'first_fetch');self.assertNotIn('removed_lines',change)
+            finally:fetch.configure_root(ROOT)
+
     def test_http_error_body_and_challenge_cannot_become_a_successful_snapshot(self):
         response = SimpleNamespace(returncode=22, stdout='<p>'+'error '*100+'</p>', stderr='')
         with patch('subprocess.run', return_value=response):
