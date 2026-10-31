@@ -1,9 +1,16 @@
 [Unit]
-Description=MaaS Daily release retention (keep three versions)
+Description=MaaS Daily runtime and upload retention (current, rollback, latest three)
 
 [Service]
 Type=oneshot
 User=root
-ExecStart=/usr/local/sbin/maasweekly-activate cleanup
+ExecStart=/usr/bin/python3 /usr/local/lib/maasweekly/runtime-cleanup.py --apply
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/srv/maasweekly/runtime /srv/maasweekly/incoming /srv/maasweekly/shared/runtime-cleanup /srv/maasweekly/locks
+TimeoutStartSec=20min
 Nice=10
 IOSchedulingClass=idle
