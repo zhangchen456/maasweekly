@@ -2,6 +2,7 @@ import { HOME_MODEL_GROUPS } from '../config/home-model-selection';
 // One translation catalog for server-rendered pages and client-rendered controls.
 // Product data, API identifiers, and saved source excerpts are not rewritten.
 export const uiEnglish: Record<string, string> = {
+ '· 摘要更新；变化内容更新；分类更新':'· Summary updated; change content updated; category updated',
  '摘要更新；变化内容更新；分类更新':'Summary updated; change content updated; category updated',
  '摘要更新':'Summary updated','变化内容更新':'Change content updated',
  '摘要更新；变更内容更新；分类更新':'Summary updated; change content updated; category updated',
