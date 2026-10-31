@@ -84,11 +84,56 @@ class WeeklyPublishingTests(unittest.TestCase):
    with patch.object(importer,'SITE_DIR',root/'site'),patch.object(importer,'SRC_DIR',source.parent),patch.dict(os.environ,{'MAAS_PIPELINE_PINNED_BASELINE':'1'}):
     with self.assertRaisesRegex(RuntimeError,'interrupted'):
      with RunJournal(root,'weekly-import','crashed'):
-      importer.inject_drafts(request);raise RuntimeError('interrupted')
+      importer.inject_drafts(request,'a'*40);raise RuntimeError('interrupted')
     self.assertEqual(load_view(root).path('data/weekly/2026-10-27.md').read_text(),'old')
     with RunJournal(root,'weekly-import','crashed',recover=True) as journal:
-     self.assertEqual(source.read_text(),'old');importer.inject_drafts(request);journal.finish('success')
+     self.assertEqual(source.read_text(),'old');self.assertFalse((root/'data/derived/import-provenance'/('a'*40+'.json')).exists());importer.inject_drafts(request,'a'*40);journal.finish('success')
     self.assertEqual(load_view(root).path('data/weekly/2026-10-27.md').read_text(),'new')
     request.write_text('tampered')
     with self.assertRaisesRegex(ValueError,'checksum'):importer.inject_drafts(request)
+ def test_pinned_import_checks_mutations_and_pending_work_without_recapturing(self):
+  from test_public_export import FixtureRepo
+  from input_snapshot import capture,load_view,POINTER
+  fx=FixtureRepo();self.addCleanup(fx.cleanup);root=fx.root
+  record=fx.add_obs();version=capture(root,'baseline')
+  path=root/'data/normalized/source-streams.json';original=path.read_bytes()
+  with patch.object(writer,'CODE',root),patch.object(writer,'capture',side_effect=AssertionError('must reuse committed snapshot')):
+   self.assertEqual(writer.select_ingest_input(pinned_version=version),version)
+   for mutation in ['change','delete','add','pending','pointer','archive-add','archive-delete']:
+    with self.subTest(mutation=mutation):
+     archive=root/f"data/record-revisions/{record['id']}/{record['revision']}.json";archive_raw=archive.read_bytes();archive_extra=archive.parent/'999.json'
+     extra=root/'data/derived/unexpected.json';pending=root/'data/pipeline-pending.json';pointer=root/POINTER;old_pointer=pointer.read_bytes()
+     if mutation=='change':path.write_text('{}')
+     elif mutation=='delete':path.unlink()
+     elif mutation=='add':extra.write_text('{}')
+     elif mutation=='pending':pending.write_text('{}')
+     elif mutation=='archive-add':archive_extra.write_text('{}')
+     elif mutation=='archive-delete':archive.unlink()
+     else:
+      value=json.loads(old_pointer);value['inputVersion']='in_'+'0'*64;pointer.write_text(json.dumps(value))
+     with self.assertRaises((ValueError,FileNotFoundError)):writer.select_ingest_input(pinned_version=version)
+     archive.write_bytes(archive_raw);archive_extra.unlink(missing_ok=True)
+     path.write_bytes(original);extra.unlink(missing_ok=True);pending.unlink(missing_ok=True);pointer.write_bytes(old_pointer)
+ def test_deferred_projection_and_provenance_are_committed_and_recoverable(self):
+  import subprocess
+  from test_public_export import FixtureRepo
+  from input_snapshot import capture,load_view
+  from data_store import project_site
+  fx=FixtureRepo();self.addCleanup(fx.cleanup);capture(fx.root,'baseline')
+  with tempfile.TemporaryDirectory() as temp:
+   raw=json.dumps([{'date':'2026-10-27','markdown':(BASE/'data/weekly/2026-10-27.md').read_text()}]).encode();request=Path(temp)/(hashlib.sha256(raw).hexdigest()+'.json');request.write_bytes(raw)
+   args=[sys.executable,str(BASE/'site/scripts/import-weekly.py'),'--input-root',str(fx.root),'--drafts-file',str(request),'--source-commit','a'*40,'--defer-site-projection']
+   result=subprocess.run(args,env={**os.environ,'MAAS_PIPELINE_PINNED_BASELINE':'1'},capture_output=True,text=True)
+   self.assertEqual(result.returncode,0,result.stderr)
+   view=load_view(fx.root);provenance='data/derived/import-provenance/'+'a'*40+'.json'
+   self.assertEqual(json.loads(view.path(provenance).read_text())['drafts'][0]['sha256'],hashlib.sha256((BASE/'data/weekly/2026-10-27.md').read_bytes()).hexdigest())
+   with patch.object(writer,'CODE',fx.root):self.assertEqual(writer.select_ingest_input(pinned_version=view.version),view.version)
+   project_site(fx.root)
+   self.assertEqual((fx.root/'site/src/content/weekly/2026-10-27.md').read_bytes(),view.path('data/editorial/weekly/2026-10-27.md').read_bytes())
+   # The normal CLI still produces the identical site projection.
+   expected={str(p.relative_to(fx.root/'site')):p.read_bytes() for p in (fx.root/'site').rglob('*') if p.is_file()}
+   result=subprocess.run(args[:-1],env={**os.environ,'MAAS_PIPELINE_PINNED_BASELINE':'1'},capture_output=True,text=True)
+   self.assertEqual(result.returncode,0,result.stderr)
+   actual={str(p.relative_to(fx.root/'site')):p.read_bytes() for p in (fx.root/'site').rglob('*') if p.is_file()}
+   self.assertEqual(actual,expected)
 if __name__=='__main__':unittest.main()
