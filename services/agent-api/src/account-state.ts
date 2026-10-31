@@ -12,7 +12,8 @@ export function validateAccountState(key: unknown, value: unknown): { key: strin
   if (key === 'appearance') valid = keys(['theme']) && typeof v.theme === 'string' && ['system', 'light', 'dark'].includes(v.theme);
   if (key === 'homePrices') valid = keys(['currency', 'fx']) && typeof v.currency === 'string' && ['CNY', 'USD'].includes(v.currency) && (v.fx === null || number(v.fx, .01, 1000));
   if (key === 'explore') valid = keys(['followed', 'query', 'platform', 'type', 'onlyFollowing']) && strings(v.followed, 50) && text(v.query) && text(v.platform) && text(v.type, 40) && typeof v.onlyFollowing === 'boolean';
-  if (key === 'priceWorkspace') valid = keys(['provider', 'query', 'sort', 'modelId', 'familyId', 'selected', 'variants', 'component', 'input', 'output', 'fx'])
+  if (key === 'priceWorkspace') valid = keys(['provider', 'query', 'sort', 'modelId', 'familyId', 'selected', 'variants', 'component', 'input', 'output', 'fx', 'currency'])
+    && (v.currency === undefined || v.currency === 'USD' || v.currency === 'CNY')
     && text(v.provider) && text(v.query) && typeof v.sort === 'string' && ['name', 'input', 'output'].includes(v.sort)
     && (v.modelId === null || text(v.modelId)) && (v.familyId === null || text(v.familyId))
     && strings(v.selected, 5) && typeof v.component === 'string' && ['input', 'output', 'total', 'cache_read', 'cache_write'].includes(v.component)

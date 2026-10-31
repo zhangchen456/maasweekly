@@ -4,6 +4,7 @@ import {readCalculation,calculationLink} from '../lib/workspace-share';
 import { savedState,currentAccount,openAccountLogin,onAccountChange,flushAccountState,accountApi,refreshAccount } from './account-client';
 import type { WorkspaceData, LedgerPrice, WorkspaceModel, PriceVariant, SourceCondition } from '../lib/pricing-workspace';
 interface WorkspaceElements {
+    'display-currency': HTMLSelectElement;
     'currency-shortcut': HTMLButtonElement;
     'updated': HTMLElement;
     'theme': HTMLButtonElement;
@@ -60,6 +61,12 @@ export function startPriceWorkspace() {
         throw new Error('Missing price control: ' + id); return element as WorkspaceElements[K]; };
     const data: WorkspaceData = JSON.parse($('goal-data').textContent ?? '{}');
     const rows = Array.isArray(data.prices) ? data.prices : [];
+    const en = document.documentElement.lang === 'en';
+    const defaultCurrency = en ? 'USD' : 'CNY';
+    let currency: 'USD' | 'CNY' = defaultCurrency;
+    let currencyExplicit = false;
+    const symbol = () => currency === 'USD' ? 'US$' : '¥';
+    const money = (n: number | null) => n === null ? (en ? 'Not available' : '暂无') : symbol() + fmt(n);
     const brands: Record<string, string[]> = { 'vertex-google': ['Google Cloud / Gemini', 'Gemini', 'G'], 'vertex-anthropic': ['Google Cloud / Claude', 'Claude', 'G'], openai: ['OpenAI', 'OpenAI', 'O'], anthropic: ['Anthropic', 'Claude', 'A'], google: ['Google', 'Gemini', 'G'], deepseek: ['DeepSeek', '深度求索', 'D'], qwen: ['通义千问', 'Qwen', 'Q'], glm: ['智谱', 'GLM', 'Z'], kimi: ['Kimi', '月之暗面', 'K'], doubao: ['豆包', '火山引擎', '豆'] };
     function providerMark(p: string) { const wrap = el('span', 'monogram'), src = data.provider_logos?.[p], fallback = brands[p]?.[2] || p.slice(0, 1); if (!src) {
         wrap.textContent = fallback;
@@ -95,17 +102,20 @@ export function startPriceWorkspace() {
     }
     $('fx').value = String(fx);
     function updateFxLabel() {
-        $('currency-shortcut').textContent = '¥ 人民币 · 汇率 ' + fmt(fx);
-        const en = document.documentElement.lang === 'en';
+        $('currency-shortcut').textContent = currency + ' · ' + (en ? 'FX ' : '汇率 ') + fmt(fx);
+        $('display-currency').value = currency;
+        document.getElementById('hero-currency')!.textContent = currency + (en ? ' · estimate' : ' · 估算');
+        document.getElementById('catalog-currency')!.textContent = en ? `Browse quote sources and add models to compare. Units: ${currency} per million tokens.` : `按报价来源浏览，选择模型加入下方对比。价格单位：${currency} / 百万 tokens。`;
         const asOf = snap.as_of || snap.effective_at;
         $('fx-label').textContent = fxManual ? (en ? 'Manual estimate · not a live exchange rate' : '手动估算 · 非实时汇率') : (en ? 'Reference estimate · not a live exchange rate' : '基准估算 · 非实时汇率') + (asOf ? ' · ' + date(asOf) : '');
     }
     updateFxLabel();
-    function cny(r: LedgerPrice | undefined) { if (!r || !['token', 'tokens'].includes(r.unit_name))
+    function displayedAmount(r: LedgerPrice | undefined) { if (!r || !['token', 'tokens'].includes(r.unit_name))
         return null; const n = num(r.amount_per_1m); if (n === null)
-        return null; if (r.currency === 'CNY')
-        return n; if (r.currency === 'USD')
-        return n * fx; const converted = num(r.converted_amount_per_1m); return r.converted_currency === 'CNY' ? converted : null; }
+        return null; if (r.currency === currency)
+        return n; if (r.currency === 'CNY')
+        return n / fx; if (r.currency === 'USD')
+        return n * fx; const converted = num(r.converted_amount_per_1m); if(converted === null)return null; return r.converted_currency === currency ? converted : r.converted_currency === 'CNY' && currency === 'USD' ? converted / fx : r.converted_currency === 'USD' && currency === 'CNY' ? converted * fx : null; }
     function condition(r: LedgerPrice) { const c = parse(r.context_band), t = parse(r.time_condition); const parts = [r.region === 'cn' ? '中国大陆' : r.region === 'global' ? '全球' : r.region || '区域未标注']; if (c) {
         parts.push(typeof c === 'object' ? `${c.min_input_tokens ?? 0}–${c.max_input_tokens ?? '不限'} 输入 tokens` : String(c));
     }
@@ -166,9 +176,9 @@ export function startPriceWorkspace() {
         return;
     } fe.hidden = false; fe.replaceChildren(); const p = el('p', '', '未找到模型：' + filterError.value + '。该 ID 不在当前模型目录中。'); const btn = el('button', '', '清除筛选'); btn.setAttribute('type', 'button'); btn.onclick = () => { filterError = null; syncUrlState(); initSelectors(); renderProviders(); renderCatalog(); renderFilterSummary(); renderFilterError(); }; const row = el('div', 'row'); row.append(p, btn); fe.append(row); }
     function facts(m: WorkspaceModel, c: string) { return m.options[m.variant].rows.filter(r => r.component === c); }
-    function amount(m: WorkspaceModel, c: string): number | null { const rs = facts(m, c); const values = rs.map(cny).filter(n => n !== null); if (!values.length)
+    function amount(m: WorkspaceModel, c: string): number | null { const rs = facts(m, c); const values = rs.map(displayedAmount).filter(n => n !== null); if (!values.length)
         return null; const distinct = [...new Set(values)]; return distinct.length === 1 ? distinct[0] : null; }
-    function priceRange(m: WorkspaceModel, c: string) { const rs = facts(m, c); const values = rs.map(cny).filter(n => n !== null); const distinct = [...new Set(values)]; return distinct.length > 1 ? [Math.min(...distinct), Math.max(...distinct)] : null; }
+    function priceRange(m: WorkspaceModel, c: string) { const rs = facts(m, c); const values = rs.map(displayedAmount).filter(n => n !== null); const distinct = [...new Set(values)]; return distinct.length > 1 ? [Math.min(...distinct), Math.max(...distinct)] : null; }
     ;
     function stale(m: WorkspaceModel) { return m.options[m.variant].rows.some(r => r.field_state !== 'confirmed'); }
     function cost(m: WorkspaceModel, i = input, o = output) { const a = amount(m, 'input'), b = amount(m, 'output'); return i > 0 && a === null || o > 0 && b === null ? null : (a || 0) * i + (b || 0) * o; }
@@ -193,7 +203,7 @@ export function startPriceWorkspace() {
         $('providers').append(b);
     } }
     function cellPrice(m: WorkspaceModel, c: string) { const td = el('td'), v = amount(m, c), rg = priceRange(m, c); const price = el('span', 'price'); if (v !== null)
-        price.append(el('em', '', '¥')); price.append(document.createTextNode(fmt(v))); if (rg)
+        price.append(el('em', '', symbol())); price.append(document.createTextNode(fmt(v))); if (rg)
         price.append(el('em', '', ' 起')); td.append(price); if (rg)
         td.append(el('small', 'model-note', '该条件下 ' + facts(m, c).length + ' 档报价 ' + fmt(rg[0]) + '–' + fmt(rg[1]) + ' · 详情见报价来源')); return td; }
     function renderCatalog() { if (filterError) {
@@ -292,39 +302,39 @@ export function startPriceWorkspace() {
         label.title = m.name;
         const fill = el('div', 'mini-fill');
         fill.style.width = (n === null ? 0 : n / max * 100) + '%';
-        append(row, label, append(el('div', 'mini-track'), fill), el('b', 'number', n === null ? '暂无' : '¥' + fmt(n)));
+        append(row, label, append(el('div', 'mini-track'), fill), el('b', 'number', money(n)));
         $('hero-chart').append(row);
     } }
-    function renderCompare() { const ms = selectedModels(); $('compare-shortcut').textContent = '对比 ' + ms.length + ' / 5 ↓'; $('selection').replaceChildren(); for (const m of ms) {
+    function renderCompare() { const ms = selectedModels(); $('chart-unit').textContent = currency + (component === 'total' ? (en ? ' / selected usage' : ' / 当前用量') : (en ? ' / million tokens' : ' / 百万 tokens')); $('compare-shortcut').textContent = '对比 ' + ms.length + ' / 5 ↓'; $('selection').replaceChildren(); for (const m of ms) {
         const b = append(el('button', '', m.name), el('span', '', '×'));
         b.setAttribute('aria-label', '从对比移除 ' + m.name);
         b.onclick = () => toggle(m);
         $('selection').append(b);
     } $('plot').replaceChildren(); $('comparison-table').replaceChildren(); $('comparison-note').textContent = ms.some(stale) ? '含旧数据，请结合模型详情中的采集日期与来源核对。' : '各模型采用上方选定的计费条件；不同区域、上下文和时段可能影响价格。'; if (ms.length < 1) {
-        $('plot').append(el('div', 'empty', ms.length ? '再加入 1 个模型，即可开始对比。' : '在模型目录中加入 2–5 个模型，开始比较。'));
+        $('plot').append(el('div', 'empty', ms.length ? '再加入 1 个模型，即可开始对比。' : en ? 'Add 1–5 models from the catalog to estimate costs.' : '在模型目录中加入 1–5 个模型，开始计算。'));
         return;
     } const max = Math.max(...ms.map(m => metric(m) || 0), .01); for (const m of ms) {
         const n = metric(m);
         const row = el('div', 'plot-row'), label = append(el('div', 'plot-label', m.name), el('small', '', name(m.provider) + (stale(m) ? ' · 旧数据' : '')));
         const track = el('div', 'track');
-        track.setAttribute('aria-label', m.name + ' ' + (n === null ? '暂无可比报价' : fmt(n) + ' 元'));
+        track.setAttribute('aria-label', m.name + ' ' + (n === null ? '暂无可比报价' : currency + ' ' + fmt(n)));
         if (n !== null) {
             const a = el('div', 'bar input-bar'), b = el('div', 'bar output-bar');
             a.style.width = ((component === 'total' ? (amount(m, 'input') || 0) * input : n) / max * 100) + '%';
             b.style.width = (component === 'total' ? (amount(m, 'output') || 0) * output / max * 100 : 0) + '%';
             track.append(a, b);
         }
-        row.append(label, track, el('div', 'plot-price number', n === null ? '暂无' : '¥' + fmt(n)));
+        row.append(label, track, el('div', 'plot-price number', money(n)));
         $('plot').append(row);
     } const head = el('thead'), hr = append(el('tr'), el('th', '', '价格 / 条件')); ms.forEach(m => hr.append(el('th', '', m.name))); head.append(hr); const body = el('tbody'); for (const c of ['input', 'output', 'cache_read', 'cache_write', 'total', 'condition']) {
         const tr = append(el('tr'), el('td', 'muted', c === 'total' ? '当前用量估算' : c === 'condition' ? '计费条件' : componentNames[c] + ' / 百万'));
         const vals = ms.map(m => c === 'total' ? cost(m) : amount(m, c));
-        ms.forEach((m, i) => { const td = el('td', '', c === 'condition' ? m.options[m.variant].label : vals[i] === null ? '暂无' : '¥' + fmt(vals[i])); tr.append(td); });
+        ms.forEach((m, i) => { const td = el('td', '', c === 'condition' ? m.options[m.variant].label : money(vals[i])); tr.append(td); });
         body.append(tr);
-    } $('comparison-table').append(head, body); $('chart-unit').textContent = component === 'total' ? '元 / 当前用量' : '元 / 百万 tokens'; $('legend-input').textContent = component === 'total' ? '输入成本' : componentNames[component] + '单价'; $('legend-output').hidden = component !== 'total'; }
+    } $('comparison-table').append(head, body); $('chart-unit').textContent = currency + (component === 'total' ? (en ? ' / selected usage' : ' / 当前用量') : (en ? ' / million tokens' : ' / 百万 tokens')); $('legend-input').textContent = component === 'total' ? '输入成本' : componentNames[component] + '单价'; $('legend-output').hidden = component !== 'total'; }
     function showDetails(m: WorkspaceModel) { $('detail-title').textContent = m.name; $('facts').replaceChildren(); for (const r of m.options[m.variant].rows) {
         const d = el('div', 'fact');
-        d.append(el('h3', '', componentNames[r.component] || r.component), el('p', '', `人民币：${cny(r) === null ? '暂无' : '¥' + fmt(cny(r)) + ' / 百万 tokens'} · 原始报价：${r.amount ?? '暂无'} ${r.currency} / ${r.unit_quantity} ${r.unit_name}`), el('p', '', condition(r)), el('p', '', `采集：${date(r.observed_at)} · ${r.field_state === 'confirmed' ? '已确认' : '旧数据 / 待核实'}`));
+        d.append(el('h3', '', componentNames[r.component] || r.component), el('p', '', `${en ? 'Estimate' : '估算'}：${money(displayedAmount(r))} / ${en ? 'million tokens' : '百万 tokens'} · ${en ? 'Original quote' : '原始报价'}：${r.amount ?? '—'} ${r.currency} / ${r.unit_quantity} ${r.unit_name}`), el('p', '', condition(r)), el('p', '', `采集：${date(r.observed_at)} · ${r.field_state === 'confirmed' ? '已确认' : '旧数据 / 待核实'}`));
         if (r.stale_reason)
             d.append(el('p', '', r.stale_reason));
         const src = el('div');
@@ -346,6 +356,7 @@ export function startPriceWorkspace() {
         $('facts').append(d);
     } $('detail').showModal(); }
     $('compare-shortcut').onclick = () => $('compare').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    $('display-currency').onchange = () => { const value = $('display-currency').value; if(value !== 'USD' && value !== 'CNY')return; currency=value; currencyExplicit=true; updateFxLabel(); updateShareContext(); renderCatalog(); renderCompare(); renderHero(); };
     $('currency-shortcut').onclick = () => { $('fx-settings').scrollIntoView({ behavior: 'smooth', block: 'center' }); $('fx').focus({ preventScroll: true }); };
     $('close-detail').onclick = () => $('detail').close();
     $('search').oninput = e => { query = (e.currentTarget as HTMLInputElement | HTMLSelectElement).value.trim(); page = 0; renderProviders(); renderCatalog(); };
@@ -365,11 +376,11 @@ export function startPriceWorkspace() {
     $('input-volume').oninput = volumes;
     $('output-volume').oninput = volumes;
     document.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach(b => b.onclick = () => { const [i, o] = b.dataset.preset!.split(','); $('input-volume').value = i; $('output-volume').value = o; volumes(); estimateCompleted(); });
-    $('fx').onchange = () => { const n = Number($('fx').value); if (!Number.isFinite(n) || n <= 0 || n > 1000) {
+    $('fx').onchange = () => { const n = Number($('fx').value); if (!Number.isFinite(n) || n < .01 || n > 1000) {
         $('fx').value = String(fx);
-        toast('请输入大于 0、且不超过 1000 的汇率。');
+        toast(en ? 'Enter an exchange rate between 0.01 and 1000.' : '请输入0.01至1000之间的汇率。');
         return;
-    } fx = n; fxManual = true; updateFxLabel(); renderCatalog(); renderCompare(); renderHero(); };
+    } fx = n; fxManual = true; updateFxLabel(); updateShareContext(); renderCatalog(); renderCompare(); renderHero(); };
     const syncTheme = () => { root.dataset.theme = document.documentElement.dataset.theme; };
     syncTheme();
     new MutationObserver(syncTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
@@ -384,12 +395,13 @@ export function startPriceWorkspace() {
     let shared:ReturnType<typeof readCalculation>=null,entryError='';
     try{shared=readCalculation(location.hash);}catch(e){entryError=(e as Error).message;selected.clear();}
     if(modelIdFilter){selected.clear();const match=models.find(m=>m.modelId===modelIdFilter);if(match)selected.add(match.key);else entryError='该模型暂没有可计算的报价，请选择其他模型。';}
-    if(shared){selected.clear();modelIdFilter=null;familyIdFilter=null;input=shared.input;output=shared.output;fx=shared.fx;fxManual=true;
+    if(shared){selected.clear();modelIdFilter=null;familyIdFilter=null;input=shared.input;output=shared.output;fx=shared.fx;fxManual=true;currency=shared.v===1?'CNY':shared.currency;currencyExplicit=true;
       for(const key of shared.selected){const m=map.get(key),variant=shared.variants.find(v=>v[0]===key)?.[1],index=m?.options.findIndex(v=>v.key===variant)??-1;
         if(!m||index<0){entryError='分享中的部分模型或计费条件已不可用，未自动替换。请重新选择后计算。';continue;}m.variant=index;selected.add(key);}
     }
-    const status=document.getElementById('share-status')!;const en=document.documentElement.lang==='en';
-    if(shared)status.textContent=en?`Shared observation: ${shared.asOf}. Recalculated with current quotes; CNY per USD assumption ${fx}.`:`分享时的数据时间：${shared.asOf}。当前按本页最新报价重算，人民币汇率假设 ${fx}。`;
+    const status=document.getElementById('share-status')!;
+    function updateShareContext(){if(shared&&!entryError)status.textContent=en?`Shared observation: ${shared.asOf}. Recalculated in ${currency} with current quotes; 1 USD = ${fx} CNY (estimate).`:`分享时的数据时间：${shared.asOf}。当前按本页最新报价以 ${currency} 重算，汇率假设 1 USD = ${fx} CNY。`;}
+    updateShareContext();
     if(entryError)status.textContent=entryError;
     $('input-volume').value=String(input);$('output-volume').value=String(output);updateFxLabel();
     initSelectors();
@@ -399,14 +411,14 @@ export function startPriceWorkspace() {
     renderCatalog();
     renderCompare();
     renderHero();
-    type SavedWorkspace = { provider: string; query: string; sort: string; modelId: string | null; familyId: string | null; selected: string[]; variants: [string, string][]; component: string; input: number; output: number; fx: number | null };
+    type SavedWorkspace = { provider: string; query: string; sort: string; modelId: string | null; familyId: string | null; selected: string[]; variants: [string, string][]; component: string; input: number; output: number; fx: number | null; currency?: 'USD' | 'CNY' };
     const initialFilter = { modelId: modelIdFilter, familyId: familyIdFilter, error: filterError };
     const defaultSelection = [...selected]; const defaultFx = fx;
-    const snapshot = (): SavedWorkspace => ({ provider, query, sort, modelId: modelIdFilter, familyId: familyIdFilter, selected: [...selected], variants: models.filter(m => selected.has(m.key)).map(m => [m.key, m.options[m.variant].key]), component, input, output, fx: fxManual ? fx : null });
-    const defaults: SavedWorkspace = { provider: providers[0] || '', query: '', sort: 'name', modelId: null, familyId: null, selected: defaultSelection, variants: [], component: 'total', input: 1, output: .25, fx: null };
+    const snapshot = (): SavedWorkspace => ({ provider, query, sort, modelId: modelIdFilter, familyId: familyIdFilter, selected: [...selected], variants: models.filter(m => selected.has(m.key)).map(m => [m.key, m.options[m.variant].key]), component, input, output, currency, fx: fxManual ? fx : null });
+    const defaults: SavedWorkspace = { provider: providers[0] || '', query: '', sort: 'name', modelId: null, familyId: null, selected: defaultSelection, variants: [], component: 'total', input: 1, output: .25, currency: defaultCurrency, fx: null };
     let forced:SavedWorkspace|null=(shared||modelIdFilter||entryError||hasUsage)?snapshot():null;
     const save = savedState<SavedWorkspace>('priceWorkspace', defaults, value => {
-      if(forced)value=forced;
+      if(forced)value={...forced,currency:currencyExplicit?forced.currency:value.currency??forced.currency};
       provider = providers.includes(value.provider) ? value.provider : providers[0] || ''; query = value.query; sort = value.sort;
       modelIdFilter = catalogModels.some(m => m.modelId === value.modelId) ? value.modelId : null;
       familyIdFilter = modelIdFilter ? null : catalogFamilies.some(f => f.familyId === value.familyId) ? value.familyId : null;
@@ -414,6 +426,7 @@ export function startPriceWorkspace() {
       if (initialFilter.modelId || initialFilter.familyId || initialFilter.error) { modelIdFilter = initialFilter.modelId; familyIdFilter = initialFilter.familyId; filterError = initialFilter.error; }
       selected.clear(); value.selected.filter(key => models.some(m => m.key === key)).slice(0,5).forEach(key => selected.add(key));
       models.forEach(m => { const variant = value.variants.find(v => v[0] === m.key)?.[1]; const index = m.options.findIndex(v => v.key === variant); m.variant = index < 0 ? 0 : index; });
+      currency = value.currency === 'USD' || value.currency === 'CNY' ? value.currency : defaultCurrency;
       component = value.component; input = value.input; output = value.output; fx = value.fx ?? defaultFx; fxManual = value.fx !== null;
       $('search').value = query; $('sort').value = sort; $('input-volume').value = String(input); $('output-volume').value = String(output); $('input-value').textContent = fmt(input); $('output-value').textContent = fmt(output); $('fx').value = String(fx); page = 0;
       $('components').querySelectorAll<HTMLButtonElement>('button').forEach(button => button.classList.toggle('active', button.dataset.component === component));
@@ -421,8 +434,14 @@ export function startPriceWorkspace() {
     });
     const persist = () => {if(!$('input-volume').checkValidity()||!$('output-volume').checkValidity()||!$('input-volume').value||!$('output-volume').value)return;if(forced)forced=snapshot();save(snapshot());};
     const requireResult=()=>{if(!volumes()||input+output<=0||!selectedModels().length||selectedModels().every(m=>cost(m)===null))throw Error('请先选择有完整报价的模型，输入有效用量并完成计算。');};
-    const summary=()=>`MaaS Daily · 当前用量成本估算\n输入 ${input} 百万 / 输出 ${output} 百万 tokens；人民币汇率 ${fx}\n`+selectedModels().map(m=>`${m.name}：${cost(m)===null?'暂无完整可比报价':'¥'+fmt(cost(m))}；${en?JSON.stringify(m.options[m.variant].rows.map(r=>({region:r.region,billing:r.billing_mode,tier:r.service_tier,context:r.context_band,time:r.time_condition}))):m.options[m.variant].label}`).join('\n')+`\n报价时间 ${date(data.meta.published_at)}；未计缓存优惠、税费及附加项。分享打开后按当前报价重算。`;
-    const copy=async(kind:'calculation_link'|'calculation_summary')=>{try{requireResult();const value=kind==='calculation_link'?calculationLink(location.href,{v:1,selected:[...selected],variants:snapshot().variants,input,output,fx,asOf:date(data.meta.published_at)}):summary();const outputText=en?value.replace('当前用量成本估算','Usage cost estimate').replace('输入 ','Input ').replace('百万 / 输出','million / output').replaceAll('百万 tokens','million tokens').replace('人民币汇率','CNY per USD').replaceAll('暂无完整可比报价','No complete comparable quote').replace('报价时间','Observed').replace('未计缓存优惠、税费及附加项。分享打开后按当前报价重算。','Excludes cache discounts, taxes and extra fees. Links recalculate with current quotes.'):value;await navigator.clipboard.writeText(outputText);document.dispatchEvent(new CustomEvent('maas:copy-success',{detail:{kind}}));status.textContent=kind==='calculation_link'?'结果链接已复制，链接包含用量假设，对方将按当前报价重算。':'费用摘要已复制。';}catch(e){status.textContent=(e as Error).message||'复制失败，请检查浏览器剪贴板权限。';}};
+    const summary=()=>[
+      'MaaS Daily · '+(en?'Usage cost estimate':'当前用量成本估算'),
+      en?`Input ${input} million / output ${output} million tokens; currency ${currency}; 1 USD = ${fx} CNY (estimate).`:`输入 ${input} 百万 / 输出 ${output} 百万 tokens；币种 ${currency}；估算汇率 1 USD = ${fx} CNY。`,
+      ...selectedModels().map(m=>`${m.name}: ${money(cost(m))}; ${en?JSON.stringify(m.options[m.variant].rows.map(r=>({region:r.region,billing:r.billing_mode,tier:r.service_tier,context:r.context_band,time:r.time_condition}))):m.options[m.variant].label}`),
+      (en?'Observed ':'报价时间 ')+date(data.meta.published_at),
+      en?'Excludes cache discounts, taxes and extra fees. Links recalculate with current quotes.':'未计缓存优惠、税费及附加项。分享打开后按当前报价重算。'
+    ].join('\n');
+    const copy=async(kind:'calculation_link'|'calculation_summary')=>{try{requireResult();const value=kind==='calculation_link'?calculationLink(location.href,{v:2,currency,selected:[...selected],variants:snapshot().variants,input,output,fx,asOf:date(data.meta.published_at)}):summary();await navigator.clipboard.writeText(value);document.dispatchEvent(new CustomEvent('maas:copy-success',{detail:{kind}}));status.textContent=kind==='calculation_link'?'结果链接已复制，链接包含用量假设，对方将按当前报价重算。':'费用摘要已复制。';}catch(e){status.textContent=(e as Error).message||'复制失败，请检查浏览器剪贴板权限。';}};
     document.getElementById('share-result')!.onclick=()=>void copy('calculation_link');document.getElementById('copy-result')!.onclick=()=>void copy('calculation_summary');
     let pendingSave=false,pendingFollow=false;
     const followSelected=async()=>{const ids=[...new Set(selectedModels().map(m=>m.modelId).filter((x):x is string=>Boolean(x)))];if(!ids.length){status.textContent=en?'No model identities available to follow.':'所选报价没有可关注的模型标识，请打开模型详情核对。';return;}
