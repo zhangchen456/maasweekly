@@ -57,9 +57,13 @@ def atomic(path: Path, raw: bytes):
 def put_json(root: Path, relative: str, value): atomic(safe(root, relative), (canonical(value) + '\n').encode())
 
 
-def role_files(root: Path):
+def role_files(root: Path, *, mutable_only=False):
     found = {}
     for pattern in PATTERNS:
+        # Restoration never touches immutable archives. Do not glob and resolve
+        # hundreds of thousands of unrelated historical leaves for that operation.
+        # Full capture/validation and discard still inspect the entire archive.
+        if mutable_only and pattern.startswith(IMMUTABLE):continue
         for p in root.glob(pattern):
             if p.is_file(): found[str(p.relative_to(root))] = safe(root, str(p.relative_to(root)))
     return dict(sorted(found.items()))
@@ -158,8 +162,7 @@ def assert_no_pending(root: Path):
 def restore_mutable(root: Path, view: InputView):
     # Restore only compatibility current inputs; never delete immutable archival leaves.
     expected = {logical for logical in view.files if not logical.startswith(IMMUTABLE)}
-    for logical, p in role_files(root).items():
-        if logical.startswith(IMMUTABLE): continue
+    for logical, p in role_files(root,mutable_only=True).items():
         if logical not in expected: p.unlink()
     for logical in sorted(expected):
         target=safe(root,logical);raw=view.path(logical).read_bytes()
