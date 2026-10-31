@@ -121,6 +121,18 @@ class RuntimeCleanupTests(unittest.TestCase):
         (self.root / 'shared/runtime-previous.json').unlink()
         with self.assertRaises(ValueError): cleanup.plan(self.root, 10000)
 
+    def test_runtime_in_use_by_background_process_is_retained(self):
+        proc = self.root / 'proc'; proc.mkdir()
+        for pid, target in [('101', self.paths[3] / 'site'), ('102', self.root / 'shared'),
+                            ('103', self.root / 'runtime' / self.code(99))]:
+            (proc / pid).mkdir(); (proc / pid / 'cwd').symlink_to(target)
+        (proc / '104').mkdir()  # A process exiting while /proc is scanned.
+        live = cleanup.active_process_codes(self.root, proc)
+        self.assertEqual(live, {self.code(3)})
+        public, packages, uploads = cleanup.plan(self.root, 10000, live_codes=live)
+        cleanup.apply(self.root, public, packages, uploads)
+        self.assertTrue(self.paths[3].exists()); self.assertFalse(self.paths[4].exists())
+
     def test_tree_changed_after_verification_is_not_deleted(self):
         original = cleanup.verify
         def changed(package, root, **kwargs):
