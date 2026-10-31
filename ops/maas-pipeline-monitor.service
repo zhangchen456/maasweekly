@@ -1,0 +1,19 @@
+[Unit]
+Description=MaaS Daily pipeline receipts and runtime health
+After=network.target
+
+[Service]
+Type=oneshot
+User=maasagent
+Group=maasagent
+EnvironmentFile=/srv/maasweekly/shared/agent.env
+ExecStart=/usr/bin/node /srv/maasweekly/current/agent-api/dist/pipeline-monitor-cli.js
+TimeoutStartSec=120
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/srv/maasweekly/shared/state
+CapabilityBoundingSet=
+AmbientCapabilities=

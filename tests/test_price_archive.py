@@ -830,8 +830,8 @@ class TestTwoPhaseCommit(unittest.TestCase):
         from pricing.registry import all_entries
         entry = next(e for e in all_entries()
                      if e.provider_id == provider_id)
-        html = (BASE / "data" / "snapshots" / "2026-09-11"
-                / f"pricing__{provider_id}.html").read_text(encoding="utf-8")
+        html = (BASE / "tests" / "fixtures" / "pricing"
+                / f"{provider_id}_pricing.html").read_text(encoding="utf-8")
         sha = hashlib.sha256(html.encode()).hexdigest()
         snap = ContentSnapshot(
             snapshot_id=f"snap-{sha[:24]}", source_key=entry.source_key,

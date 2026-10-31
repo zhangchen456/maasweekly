@@ -4,6 +4,8 @@ import argparse,fcntl,json,os,re,subprocess,tempfile,time,sys
 from pathlib import Path
 from urllib.request import urlopen,Request
 from urllib.error import HTTPError
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from runtime_safety import require_capacity, wait_runtime
 ROOT=Path('/srv/maasweekly')
 SHARED=ROOT/'shared'
 FILES=[SHARED/'nginx/site-root.inc',SHARED/'nginx/agent-upstream.inc',SHARED/'nginx/agent-routes.inc',Path('/etc/nginx/snippets/maasweekly-https.conf')]
@@ -30,15 +32,23 @@ def fetch(port,route):
     try:
         with urlopen('http://127.0.0.1:'+str(port)+route,timeout=20) as r:return r.status,r.read()
     except HTTPError as e:return e.code,e.read()
-def probe(port):
+def probe(port, code=None):
     published=json.loads((SHARED/'public-data/v1/publication.json').read_text())
     status,body=fetch(port,'/api/v1/status')
     if status!=200 or json.loads(body)['datasetVersion']!=published['datasetVersion']:raise ValueError('candidate dataset mismatch')
-    for route in ['/','/en/','/models/','/pricing/','/feed.xml','/feed/weekly.xml','/sitemap.xml','/weekly/2026-10-13/']:
+    # Existing rollback packages predate this capability. New packages must prove
+    # their process code and loaded page input, not just their public dataset.
+    if code:
+        metadata=json.loads((ROOT/'runtime'/code/'metadata/runtime-manifest.json').read_text())
+        if metadata.get('runtimeHealthVersion') == 1:
+            wait_runtime(port,published,code,timeout=5)
+    latest=json.loads(body)['status']['weekly']['latestId']
+    if not isinstance(latest,str) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',latest):raise ValueError('latest weekly missing')
+    for route in ['/','/en/','/models/','/pricing/','/feed.xml','/feed/weekly.xml','/sitemap.xml',f'/weekly/{latest}/',f'/en/weekly/{latest}/']:
         status,body=fetch(port,route)
         if status!=200 or b'data-private-weekly' in body:raise ValueError('candidate public page failed: '+route)
-    if fetch(port,'/_internal/weekly-body/2026-10-13/')[0]!=404:raise ValueError('internal report exposed')
-    if fetch(port,'/api/pro/weekly/2026-10-13')[0]!=401:raise ValueError('report entitlement boundary failed')
+    if fetch(port,'/_internal/weekly-body/'+latest+'/')[0]!=404:raise ValueError('internal report exposed')
+    if fetch(port,'/api/pro/weekly/'+latest)[0]!=401:raise ValueError('report entitlement boundary failed')
     return published['datasetVersion']
 def stage(code):
     package=ROOT/'runtime'/code
@@ -58,7 +68,7 @@ def stage(code):
     atomic(SHARED/'slots'/f'{slot}.env',(''.join(f'{k}={v}\n' for k,v in values.items())).encode())
     run('systemctl','restart','maas-agent@'+slot)
     for _ in range(30):
-        try:dataset=probe(port);break
+        try:dataset=probe(port,code);break
         except Exception:time.sleep(1)
     else:raise ValueError('candidate did not become ready')
     result={'code':code,'slot':slot,'port':port,'datasetVersion':dataset}
@@ -67,7 +77,7 @@ def stage(code):
 def activate(code):
     candidate=json.loads((SHARED/'runtime-candidate.json').read_text())
     if candidate['code']!=code:raise ValueError('stage this exact code first')
-    probe(candidate['port'])
+    probe(candidate['port'],code)
     backup=SHARED/'runtime-recovery'/str(time.time_ns());backup.mkdir(parents=True)
     old=[p.read_bytes() for p in FILES]
     for n,body in enumerate(old):(backup/str(n)).write_bytes(body)
@@ -85,8 +95,10 @@ def activate(code):
             depth += (routes[end]=='{')-(routes[end]=='}');end+=1
         routes=routes[:start]+f'location = {route} {{ proxy_pass http://agent_api; proxy_set_header Host $host; proxy_cache off; }}'+routes[end:]
     snippet=old[3].decode()
+    snippet=snippet.replace('location = /_runtime/health { return 404; }\n','')
     start=snippet.index('location / {');end=snippet.index('\n}',start)+2
-    snippet=snippet[:start]+'''location / {
+    snippet=snippet[:start]+'''location = /_runtime/health { return 404; }
+location / {
     proxy_pass http://agent_api;
     proxy_http_version 1.1;
     proxy_set_header Host $host;
@@ -154,13 +166,14 @@ def install_package(rid):
     import importlib.util,pwd
     module=Path(__file__).with_name('runtime-package.py')
     spec=importlib.util.spec_from_file_location('runtime_package',module);package_module=importlib.util.module_from_spec(spec);spec.loader.exec_module(package_module)
+    require_capacity(ROOT,'code',package_module.MAX_BYTES)
     package,manifest=package_module.install(ROOT/'incoming'/rid,ROOT/'runtime')
     if rid!='rl_'+manifest['codeCommit'][:10]+'_000000000000':raise ValueError('upload/code mismatch')
     active=SHARED/'runtime.json'
     if active.exists():
         current=json.loads(active.read_text())
         if current.get('code')==manifest['codeCommit']:
-            probe(current['port']);return {**current,'status':'already_active'}
+            probe(current['port'],current['code']);return {**current,'status':'already_active'}
     requirements=package/'tooling/requirements.lock.txt'
     if requirements.read_bytes()!=(ROOT/'runtime/build-tools/writer/requirements.lock.txt').read_bytes():raise ValueError('writer dependency image must be rebuilt before this code release')
     (package/'tooling/site/src/data').mkdir(parents=True,exist_ok=True);(package/'tooling/site/src/content').mkdir(parents=True,exist_ok=True)

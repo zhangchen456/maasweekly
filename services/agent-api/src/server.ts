@@ -12,6 +12,7 @@ import { createAdminHandler } from './admin-http.js';
  * 轮询 manifest 热重载（0=禁用），另支持 SIGHUP。
  */
 import http from 'node:http';
+import {createRuntimeHealthHandler, runtimeIdentity} from './runtime-health.js';
 import { performance, monitorEventLoopDelay } from 'node:perf_hooks';
 import { JsonlLogger, instrumentRequest, freshnessSummary } from './observability.js';
 import { randomUUID } from 'node:crypto';
@@ -79,8 +80,7 @@ const holder = new DatasetHolder(DATA_ROOT, {
   maxRetainedBytes: parseInt(process.env.RETAINED_DATASET_MAX_BYTES ?? String(128 * 1024 * 1024), 10),
 });
 const logger = process.env.MAAS_DIAGNOSTICS === '0' ? undefined : new JsonlLogger();
-const releaseName = path.basename(process.env.MAAS_RELEASE_DIR ?? 'local');
-const releaseId = /^rl_[a-f0-9]+_[a-f0-9]+$/.test(releaseName) ? releaseName : 'local';
+const releaseId = runtimeIdentity(process.env.MAAS_RELEASE_DIR);
 const reload = async (force = false) => {
   const started = performance.now();
   const result = await holder.reloadAsync({ force });
@@ -121,7 +121,9 @@ if(siteRuntime&&SITE_ENTRY){
 const proHandler = createProHandler(proStore, holder, proConfig, Boolean(createMailer()),site?.weekly);
 const mcpHandler = instrumentRequest(createMcpHandler(holder, mcpConfig), holder, releaseId, logger?.emit);
 const proMcpHandler = proStore ? createMcpHandler(holder, mcpConfig, {store:proStore,config:proConfig}) : proHandler;
+const runtimeHealthHandler = createRuntimeHealthHandler(holder, releaseId);
 const server = http.createServer((req, res) => {
+  if ((req.url ?? '').split('?')[0] === '/_runtime/health') { runtimeHealthHandler(req, res); return; }
   if(adminStore)trackAnalyticsRequest(adminStore,req,res);
   const pathname = (req.url ?? '').split('?')[0] ?? '';
   if (pathname === '/api/pro/mcp') { void proMcpHandler(req, res); return; }

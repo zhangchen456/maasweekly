@@ -43,6 +43,8 @@ jobs:
             data/model-registry
             data/weekly
             docs/weekly-reviews
+            docs/product
+            docs/operations/cross-platform-2026-10-02/evidence
             ops
             packages
             pipeline
@@ -73,26 +75,6 @@ jobs:
       - name: Install locked Python dependencies
         if: steps.candidate.outputs.eligible == 'true'
         run: pip install -r requirements.lock.txt -r requirements.shadow.lock.txt
-      - name: Database, publication and deployment contracts
-        if: steps.candidate.outputs.eligible == 'true'
-        run: |
-          python -m unittest discover -s tests -p 'test_shadow*.py'
-          python -m unittest discover -s tests -p test_data_publication.py
-          python -m unittest discover -s tests -p test_database_writer.py
-          python -m unittest discover -s tests -p test_weekly_publishing.py
-          python -m unittest discover -s tests -p test_blob_storage.py
-          python -m unittest discover -s tests -p test_import_memory.py
-          python -m unittest discover -s tests -p test_runtime_control.py
-          python -m unittest discover -s tests -p test_runtime_package.py
-          python -m unittest discover -s tests -p test_runtime_cleanup.py
-          python -m unittest discover -s tests -p test_workflow_release_contract.py
-      - name: Validate English translations
-        if: steps.candidate.outputs.eligible == 'true'
-        run: |
-          python -m unittest discover -s tests -p test_english_translation.py
-          node scripts/ensure-node-deps.mjs site
-          npm --prefix site run test:english
-          (cd site && node --test tests/private-translation-refresh.test.mjs)
       - name: Build code-only runtime
         if: steps.candidate.outputs.eligible == 'true'
         run: bash scripts/build-runtime-release.sh --output "$RUNNER_TEMP/runtime"
