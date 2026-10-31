@@ -1,0 +1,53 @@
+import assert from 'node:assert/strict';
+import { build } from 'esbuild';
+import { JSDOM } from 'jsdom';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { displayTexts, auditEnglish } from '../scripts/audit-english.mjs';
+
+const bundle=await build({entryPoints:['src/lib/ui-translation.ts'],bundle:true,write:false,format:'cjs',platform:'node'});
+const module={exports:{}};
+new Function('module','exports',bundle.outputFiles[0].text)(module,module.exports);
+const {englishUi,englishHtml}=module.exports;
+assert.equal(englishUi('2 项信号'),'2 signals');
+assert.equal(englishUi('3 / 14 条记录'),'3 / 14 records');
+assert.equal(englishUi('3 条变化 · 最近 10.26'),'3 changes · latest 10.26');
+assert.equal(englishUi('…共 48 条，仅列前 30。'),'… 48 records; showing the first 30.');
+assert.equal(module.exports.englishHref('/pro/weekly/?id=sample#body'),'/en/pro/weekly/?id=sample#body');
+assert.equal(englishUi('搜索全部来源的模型…'),'Search models across all sources…');
+const evidence='<ul data-original-language><li>输入价格 <span>通义千问 ¥2</span></li><li>删除模型</li></ul>';
+assert.equal(englishHtml(evidence),evidence,'Nested original evidence stays byte-for-byte unchanged');
+assert.match(englishHtml(evidence+'<p>标准条件</p>'),/<p>Standard conditions<\/p>$/,'Protection ends at the marked subtree');
+assert.equal(englishHtml('<blockquote>原始证据</blockquote><pre>输入价格</pre><code>中文标识</code>'),'<blockquote>原始证据</blockquote><pre>输入价格</pre><code>中文标识</code>');
+assert.equal(englishHtml('<pre aria-label="搜索模型">输入价格</pre>'),'<pre aria-label="Search models">输入价格</pre>','Control labels translate even when code content is protected');
+assert.equal(englishHtml('<p>标准条件 &amp; 标准条件</p>'),'<p>Standard conditions &amp; Standard conditions</p>');
+assert.deepEqual(displayTexts('<a data-language="zh">中文</a>'+evidence+'<p>漏译正文</p><input placeholder="漏译提示" /><title>漏译标题</title>'),['漏译正文','漏译提示','漏译标题']);
+const fixture=fs.mkdtempSync(path.join(os.tmpdir(),'maas-english-audit-'));
+try {
+  fs.mkdirSync(path.join(fixture,'en'),{recursive:true});
+  fs.writeFileSync(path.join(fixture,'index.html'),evidence);
+  fs.writeFileSync(path.join(fixture,'en/index.html'),'<ul><li>Translated original evidence</li></ul>');
+  assert.equal(auditEnglish(fixture).failedPages,1,'Losing the evidence marker must not hide rewritten originals');
+  fs.writeFileSync(path.join(fixture,'en/index.html'),evidence);
+  assert.equal(auditEnglish(fixture).failedPages,0);
+} finally {fs.rmSync(fixture,{recursive:true,force:true});}
+
+const observer=await build({entryPoints:['src/scripts/ui-translation.ts'],bundle:true,write:false,format:'iife',platform:'browser'});
+const dom=new JSDOM('<html lang="en"><body><main id="main-content"></main></body></html>',{runScripts:'outside-only'});
+dom.window.eval(observer.outputFiles[0].text);
+const root=dom.window.document.querySelector('main');
+const header=dom.window.document.createElement('header');header.innerHTML='<span id="account-menu-name">标准条件</span><p id="account-menu-status">重试</p><a data-language="zh">中文</a>';dom.window.document.body.prepend(header);
+root.innerHTML='<span>2 项信号</span>'+evidence+'<input placeholder="搜索全部来源的模型…">';
+await new Promise(resolve=>setTimeout(resolve,0));
+assert.equal(root.querySelector('span').textContent,'2 signals');
+assert.equal(root.querySelector('ul').innerHTML,new JSDOM(evidence).window.document.querySelector('ul').innerHTML);
+assert.equal(root.querySelector('input').placeholder,'Search models across all sources…');
+assert.equal(header.querySelector('#account-menu-status').textContent,'Retry','Account feedback outside main also translates');
+assert.equal(header.querySelector('#account-menu-name').textContent,'标准条件','User identity remains unchanged');
+assert.equal(header.querySelector('[data-language="zh"]').textContent,'中文');
+root.querySelector('span').firstChild.data='3 / 14 条记录';
+await new Promise(resolve=>setTimeout(resolve,0));
+assert.equal(root.querySelector('span').textContent,'3 / 14 records','Filter counts stay English after interactions');
+dom.window.close();
+console.log('English counters, attributes, dynamic updates and original evidence protection passed');

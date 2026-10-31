@@ -12,18 +12,22 @@
     "astro": "astro",
     "prebuild": "python3 ../scripts/generate-public-contract.py --check && python3 ../pipeline/scripts/project-site-data.py && python3 ../pipeline/scripts/validate-archive.py && python3 ../pipeline/scripts/validate-price-archive.py",
     "build:skill": "python3 scripts/build-skill-package.py",
-    "build:runtime": "python3 ../scripts/generate-public-contract.py --check && python3 scripts/build-skill-package.py && MAAS_SITE_RENDER_MODE=server astro sync --force && MAAS_SITE_RENDER_MODE=server astro build"
+    "build:runtime": "python3 ../scripts/generate-public-contract.py --check && python3 scripts/build-skill-package.py && MAAS_SITE_RENDER_MODE=server astro sync --force && MAAS_SITE_RENDER_MODE=server astro build",
+    "test:english": "node tests/english-completeness.test.mjs"
   },
   "dependencies": {
     "@astrojs/node": "11.1.9",
     "astro": "^7.2.10",
-    "marked": "^18.0.11"
+    "marked": "^18.0.11",
+    "entities": "^7.0.1"
   },
   "allowScripts": {
     "esbuild": true
   },
   "devDependencies": {
     "fast-xml-parser": "^5.11.1",
-    "jsdom": "^30.1.1"
+    "jsdom": "^30.1.1",
+    "@babel/parser": "^7.28.5",
+    "parse5": "^8.0.0"
   }
 }

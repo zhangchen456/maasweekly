@@ -1,10 +1,33 @@
 import { uiEnglish } from './ui-en';
-import { localizedRoute } from './locale-routes';
+import supplemental from '../data/ui-translations-en.json';
+import { decodeHTML } from 'entities';
+import { localizedHref } from './locale-routes';
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const segments = Object.keys(uiEnglish).filter(k => k.length >= 2).sort((a,b) => b.length-a.length);
+const catalog: Record<string, string> = { ...uiEnglish, ...supplemental.texts };
+const segments = Object.keys(catalog).filter(k => k.length >= 2).sort((a,b) => b.length-a.length);
 const pattern = new RegExp(segments.map(escape).join('|'), 'g');
 export function englishUi(text: string): string {
+  if (!/[\u3400-\u9fff]/.test(text)) return text;
   const trim = text.trim();
+  const exact = catalog[trim];
+  if (exact) return text.replace(trim, exact);
+  const copyLabel = trim.match(/^(.*)（可全选复制）$/);
+  if (copyLabel) return `${englishUi(copyLabel[1])} (select all to copy)`;
+  // Handle variable counters before individual words can break their grammar.
+  const counter = trim.match(/^(\d+(?: \/ \d+)?)\s*(项信号|条记录|个模型|条变化)$/);
+  if (counter) return text.replace(trim, `${counter[1]} ${{'项信号':'signals','条记录':'records','个模型':'models','条变化':'changes'}[counter[2]]}`);
+  const recentCount = trim.match(/^(\d+)\s*[项条]变化\s*·\s*最近\s+([\d.]+)$/);
+  if (recentCount) return `${recentCount[1]} changes · latest ${recentCount[2]}`;
+  const truncatedCount = trim.match(/^…共\s*(\d+)\s*条，仅列前\s*(\d+)。$/);
+  if (truncatedCount) return `… ${truncatedCount[1]} records; showing the first ${truncatedCount[2]}.`;
+  const evidenceCount = trim.match(/^引用此证据的价格事实（(\d+) 条）$/);
+  if (evidenceCount) return `Pricing facts citing this evidence (${evidenceCount[1]})`;
+  const revisionCount = trim.match(/^修订历史（(\d+) 版）$/);
+  if (revisionCount) return `Revision history (${revisionCount[1]} versions)`;
+  const datedWeekday = trim.match(/^(\d{4}-\d{2}-\d{2})\s+周([日一二三四五六])$/);
+  if (datedWeekday) return `${datedWeekday[1]} ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat']['日一二三四五六'.indexOf(datedWeekday[2])]}`;
+  const fullDate = trim.match(/^(\d{4})年(\d{1,2})月(\d{1,2})日$/);
+  if (fullDate) return `${fullDate[1]}-${fullDate[2].padStart(2,'0')}-${fullDate[3].padStart(2,'0')}`;
   const weekTitle = trim.match(/^(\d{4}-W\d{2}) 周归档 — MaaS Daily$/);
   if (weekTitle) return `${weekTitle[1]} Weekly archive — MaaS Daily`;
   const weekDescription = trim.match(/^([\d-]+) ~ ([\d-]+) MaaS 平台每日动态归档：(\d+) 个实质变化$/);
@@ -47,24 +70,37 @@ export function englishUi(text: string): string {
   if (direct) return text.replace(trim, direct);
   const coverage = trim.match(/^截至 ([\d-]+)，本数据集覆盖 ([\d-]+) 至 ([\d-]+)\s*共 (\d+) 条变化记录、(\d+) 条价格事实、(\d+) 条证据、(\d+) 期正式周报。以下是这些数字的产生方法与边界。$/);
   if (coverage) { const [,date,from,to,changes,prices,evidence,reports] = coverage; return `Data through ${date}: ${changes} changes from ${from} to ${to}, ${prices} pricing facts, ${evidence} evidence records and ${reports} published reports. Here is how these figures are produced and what they cover.`; }
-  return text.replace(pattern, key => uiEnglish[key])
+  return text.replace(pattern, key => catalog[key])
+    .replace(/\s至\s/g, ' to ')
+    .replace(/(\d[\d,.]*)\s*元(?=\s|$|[）)])/g, '$1 CNY')
     .replace(/^(\s*)每\s+/, '$1per ')
     .replace(/(\d+)\s*个模型/g, '$1 models')
     .replace(/(\d+)\s*项信号/g, '$1 signals')
     .replace(/(\d+)\s*条变化/g, '$1 changes');
 }
 export function englishHref(href: string): string {
-  if (!href.startsWith('/') || href.startsWith('//')) return href;
-  const match = href.match(/^([^?#]*)([?#].*)?$/)!;
-  return (localizedRoute(match[1], 'en') ?? match[1]) + (match[2] ?? '');
+  return localizedHref(href,'en');
 }
-const decode = (s: string) => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;|&#x27;/g, "'");
+const decode = decodeHTML;
 const encode = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 export function englishHtml(html: string): string {
   // Do not translate executable code, structured data or quoted original evidence.
-  return html.replace(/<(script|style|pre|code|blockquote)\b[^>]*>[\s\S]*?<\/\1\s*>|<[^>]+>|[^<]+/gi, token => {
-    if (/^<(script|style|pre|code|blockquote)\b/i.test(token)) return token;
-    if (token.startsWith('<')) return token.replace(/\b(href|title|placeholder|aria-label|aria-roledescription|alt)="([^"]*)"/g, (_m, key, value) => `${key}="${encode(key === 'href' ? englishHref(decode(value)) : englishUi(decode(value)))}"`);
+  const stack: { tag: string; protected: boolean }[] = [];
+  const translateTag = (tag: string) => tag.replace(/\b(href|title|placeholder|aria-label|aria-roledescription|alt)="([^"]*)"/g, (_m, key, value) => `${key}="${encode(key === 'href' ? englishHref(decode(value)) : englishUi(decode(value)))}"`);
+  return html.replace(/<(script|style|pre|code|blockquote)\b[^>]*>[\s\S]*?<\/\1\s*>|<!--[\s\S]*?-->|<[^>]+>|[^<]+/gi, token => {
+    if (/^<(script|style)\b/i.test(token)) return token;
+    if (/^<(pre|code|blockquote)\b/i.test(token)) return stack.at(-1)?.protected || /^<[^>]*\bdata-original-language(?:\s|=|>)/i.test(token) ? token : token.replace(/^<[^>]+>/, translateTag);
+    if (token.startsWith('<')) {
+      const end = token.match(/^<\/([\w-]+)/);
+      if (end) { if (stack.at(-1)?.tag === end[1].toLowerCase()) stack.pop(); return token; }
+      const start = token.match(/^<([\w-]+)/);
+      if (!start) return token;
+      const protectedNode = !!stack.at(-1)?.protected || /\bdata-original-language(?:\s|=|>)/i.test(token);
+      if (!/^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/i.test(start[1]) && !/\/\s*>$/.test(token)) stack.push({tag:start[1].toLowerCase(),protected:protectedNode});
+      if (protectedNode) return token;
+      return translateTag(token);
+    }
+    if (stack.at(-1)?.protected) return token;
     const next = englishUi(decode(token));
     return next === decode(token) ? token : encode(next);
   });

@@ -81,6 +81,12 @@ jobs:
           python -m unittest discover -s tests -p test_runtime_control.py
           python -m unittest discover -s tests -p test_runtime_package.py
           python -m unittest discover -s tests -p test_workflow_release_contract.py
+      - name: Validate English translations
+        if: steps.candidate.outputs.eligible == 'true'
+        run: |
+          python -m unittest discover -s tests -p test_english_translation.py
+          node scripts/ensure-node-deps.mjs site
+          npm --prefix site run test:english
       - name: Build code-only runtime
         if: steps.candidate.outputs.eligible == 'true'
         run: bash scripts/build-runtime-release.sh --output "$RUNNER_TEMP/runtime"

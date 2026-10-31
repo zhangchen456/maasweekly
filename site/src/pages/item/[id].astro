@@ -393,7 +393,7 @@ const priceCondText = () => {
       {record.diff?.pairs?.length > 0 && (
         <div class="diff-sec">
           <div class="diff-label">变更 {record.diff.pairs.length} 处（旧 → 新）</div>
-          <ul class="line-list">
+          <ul class="line-list" data-original-language>
             {record.diff.pairs.map((p: any) => (
               <li class="line paired">
                 <span class="pair-old">{p.before}</span>
@@ -407,7 +407,7 @@ const priceCondText = () => {
       {record.diff?.added_lines?.length > 0 && (
         <div class="diff-sec">
           <div class="diff-label">新增 {record.diff.added_lines.length} 行</div>
-          <ul class="line-list">
+          <ul class="line-list" data-original-language>
             {record.diff.added_lines.map((l: string) => <li class="line added">{l}</li>)}
           </ul>
         </div>
@@ -415,7 +415,7 @@ const priceCondText = () => {
       {record.diff?.removed_lines?.length > 0 && (
         <div class="diff-sec">
           <div class="diff-label">删除 {record.diff.removed_lines.length} 行</div>
-          <ul class="line-list">
+          <ul class="line-list" data-original-language>
             {record.diff.removed_lines.map((l: string) => <li class="line removed">{l}</li>)}
           </ul>
         </div>
