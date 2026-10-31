@@ -47,6 +47,19 @@ class WeeklyPublishingTests(unittest.TestCase):
   for result in [1,2]:
    with tempfile.TemporaryDirectory() as temp,patch.object(writer,'WORK',Path(temp)),patch.object(writer,'step',side_effect=[0,result]):
     with self.assertRaises((ValueError,RuntimeError)):writer.import_formal([],{})
+ def test_cache_restore_limits_mutation_to_mutable_inputs_and_keeps_final_archive_checks(self):
+  from test_public_export import FixtureRepo
+  from input_snapshot import capture,load_view,restore_mutable,role_files
+  fx=FixtureRepo();self.addCleanup(fx.cleanup);root=fx.root
+  record=fx.add_obs();capture(root,'baseline');view=load_view(root)
+  archive=root/f"data/record-revisions/{record['id']}/{record['revision']}.json";before=archive.read_bytes()
+  mutable=root/'data/normalized/source-streams.json';expected=mutable.read_bytes();mutable.write_text('{}')
+  stray=root/'data/derived/uncommitted.json';stray.write_text('{}')
+  restore_mutable(root,view)
+  self.assertEqual(mutable.read_bytes(),expected);self.assertFalse(stray.exists());self.assertEqual(archive.read_bytes(),before)
+  self.assertNotIn(str(archive.relative_to(root)),role_files(root,mutable_only=True))
+  archive.write_text('{}')
+  with self.assertRaisesRegex(ValueError,'current record differs'):capture(root,'must-not-publish-corruption')
  def test_actual_import_cli_commits_new_draft_and_projection_together(self):
   import subprocess
   from test_public_export import FixtureRepo
