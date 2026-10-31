@@ -1,0 +1,28 @@
+name: Spark English translation backfill
+on:
+  push:
+    branches: [codex/en-translation-backfill-20261031]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Translate display text with existing Spark credentials
+        run: python3 pipeline/scripts/translate-ui-en.py --cache /tmp/ui-en-cache.json
+        env:
+          TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: spark-english-translations
+          path: |
+            site/src/data/ui-translations-en.json
+            /tmp/ui-en-cache.json
+          retention-days: 7
