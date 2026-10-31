@@ -1,0 +1,28 @@
+name: Spark translation connectivity check
+on:
+  push:
+    branches: [codex/en-translation-probe-20261031]
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Check Spark response without exposing credentials
+        env:
+          TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
+        run: |
+          python3 - <<'PYTHON'
+          import json, os, time, urllib.request, urllib.error
+          started=time.time()
+          payload={'model':'spark-x2.5-4b','messages':[{'role':'system','content':'Translate to English. Return only the translation.'},{'role':'user','content':'共 2 条记录'}],'max_tokens':128,'enable_thinking':False,'thinking':{'type':'disabled'}}
+          req=urllib.request.Request('https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+os.environ['TRANSLATION_API_KEY']})
+          try:
+              with urllib.request.urlopen(req,timeout=90) as r: data=json.load(r)
+              choice=data.get('choices',[{}])[0]
+              print(json.dumps({'seconds':round(time.time()-started,1),'finish':choice.get('finish_reason'),'translation':choice.get('message',{}).get('content'),'hasChoices':bool(data.get('choices'))}))
+          except urllib.error.HTTPError as e:
+              print(json.dumps({'httpStatus':e.code,'seconds':round(time.time()-started,1)}))
+              raise SystemExit(1)
+          PYTHON
