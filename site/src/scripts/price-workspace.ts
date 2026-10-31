@@ -87,13 +87,19 @@ export function startPriceWorkspace() {
     function stable(v: SourceCondition) { v = parse(v); return v && typeof v === 'object' ? JSON.stringify(Object.fromEntries(Object.keys(v).sort().map(k => [k, v[k]]))) : String(v || ''); }
     let fx = 7, fxManual = true;
     const snap = data.fx_snapshot || {};
-    const rate = Number(snap.rates?.USD);
-    if (snap.base === 'CNY' && rate > 0 && Number.isFinite(rate)) {
+    // Snapshot rates are units of the target currency per one base currency.
+    const rate = snap.base === 'USD' ? Number(snap.rates?.CNY) : snap.base === 'CNY' ? 1 / Number(snap.rates?.USD) : NaN;
+    if (Number.isFinite(rate) && rate >= .01 && rate <= 1000) {
         fx = rate;
         fxManual = false;
     }
     $('fx').value = String(fx);
-    function updateFxLabel() { $('currency-shortcut').textContent = '¥ 人民币 · 汇率 ' + fmt(fx); $('fx-label').textContent = fxManual ? '手动估算 · 非实时汇率' : '系统汇率 · ' + date(snap.effective_at); }
+    function updateFxLabel() {
+        $('currency-shortcut').textContent = '¥ 人民币 · 汇率 ' + fmt(fx);
+        const en = document.documentElement.lang === 'en';
+        const asOf = snap.as_of || snap.effective_at;
+        $('fx-label').textContent = fxManual ? (en ? 'Manual estimate · not a live exchange rate' : '手动估算 · 非实时汇率') : (en ? 'Reference estimate · not a live exchange rate' : '基准估算 · 非实时汇率') + (asOf ? ' · ' + date(asOf) : '');
+    }
     updateFxLabel();
     function cny(r: LedgerPrice | undefined) { if (!r || !['token', 'tokens'].includes(r.unit_name))
         return null; const n = num(r.amount_per_1m); if (n === null)
