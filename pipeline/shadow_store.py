@@ -193,7 +193,7 @@ def _timed(stage, callback, *args):
     finally:_timing(stage,started)
 
 
-def import_view(connection, root, store, *, source_commit, parent=None):
+def import_view(connection, root, store, *, source_commit, parent=None, expected_input=None):
     """Import one frozen view; parent is explicit, never inferred from wall time."""
     from psycopg2.extras import Json, execute_values
     root = Path(root).resolve()
@@ -206,6 +206,8 @@ def import_view(connection, root, store, *, source_commit, parent=None):
     pointer_bytes = safe_path(root, 'data/inputs-current.json').read_bytes()
     pointer = json.loads(pointer_bytes)
     view = InputView(root, pointer)
+    if expected_input is not None and view.version != expected_input:
+        raise ValueError('committed input pointer changed before import')
     _validate_files(view.files, view.version)
     with connection:
         with connection.cursor() as cursor:

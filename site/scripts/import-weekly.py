@@ -15,7 +15,7 @@ SRC_DIR = SITE_DIR.parent / 'data/weekly'
 DST_DIR = SITE_DIR.parent / EDITORIAL
 
 
-def inject_drafts(path):
+def inject_drafts(path, source_commit=None):
     raw=path.read_bytes()
     if path.stem!=hashlib.sha256(raw).hexdigest():raise ValueError('draft request checksum mismatch')
     drafts=json.loads(raw)
@@ -27,15 +27,23 @@ def inject_drafts(path):
         if not isinstance(day,str) or date.fromisoformat(day).isoformat()!=day or day in seen:raise ValueError('invalid or duplicate draft date')
         if not isinstance(text,str) or len(text.encode())>131072 or '\0' in text:raise ValueError('invalid draft text')
         seen.add(day)
+    if source_commit is not None and not re.fullmatch('[a-f0-9]{40}',source_commit):raise ValueError('invalid source commit')
     SRC_DIR.mkdir(parents=True,exist_ok=True)
     from input_snapshot import atomic,safe
     for draft in drafts:atomic(safe(SITE_DIR.parent,'data/weekly/'+draft['date']+'.md'),draft['markdown'].encode())
+    if source_commit and drafts:
+        target=safe(SITE_DIR.parent,'data/derived/import-provenance/'+source_commit+'.json')
+        value={'sourceCommit':source_commit,'drafts':[{'date':d['date'],'sha256':hashlib.sha256(d['markdown'].encode()).hexdigest()} for d in drafts]}
+        if target.exists() and json.loads(target.read_text())!=value:raise ValueError('draft source identity conflict')
+        atomic(target,(json.dumps(value)+'\n').encode())
 
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--drafts-file',type=Path);parser.add_argument('--force',action='store_true')
+    parser.add_argument('--source-commit');parser.add_argument('--defer-site-projection',action='store_true')
     args=parser.parse_args()
-    if args.drafts_file:inject_drafts(args.drafts_file)
+    if args.source_commit and not args.drafts_file:parser.error('source commit requires drafts')
+    if args.drafts_file:inject_drafts(args.drafts_file,args.source_commit)
     DST_DIR.mkdir(parents=True, exist_ok=True)
     count = 0
     for md_file in sorted(SRC_DIR.glob('*.md')):
@@ -50,7 +58,7 @@ def main():
         (DST_DIR / md_file.name).write_text(frontmatter + body, encoding='utf-8'); count += 1
     spec = importlib.util.spec_from_file_location('weekly_structured', Path(__file__).with_name('extract-structured.py'))
     extractor = importlib.util.module_from_spec(spec); spec.loader.exec_module(extractor)
-    extractor.configure_root(SITE_DIR.parent); extractor.main()
+    extractor.configure_root(SITE_DIR.parent); extractor.main(project=not args.defer_site_projection)
     print(f'Done: {count} formal reports imported with structured projections')
 
 

@@ -6,7 +6,7 @@ CODE=Path('/code');WORK=Path('/work');PUBLIC=Path('/public/v1');STORE=Path('/sto
 sys.path.insert(0,str(CODE/'pipeline'))
 from blob_store import FilesystemBlobStore
 from shadow_store import restore_view,import_view
-from input_snapshot import capture,assert_no_pending,load_view,restore_mutable
+from input_snapshot import capture,assert_no_pending,load_view,restore_mutable,assert_mutable_matches
 from storage_migration import restore,build_manifest,copy_objects,validate_manifest
 from data_publication import durable_write
 ALLOWED={'LLM_API_KEY','TRANSLATION_API_KEY','OPENROUTER_API_KEY'}
@@ -55,7 +55,7 @@ def step(script,args=(),credentials=None,optional=False,pinned=False):
         if not optional:raise RuntimeError('stage failed: '+script)
     return result.returncode
 
-def import_formal(drafts,secrets):
+def import_formal(drafts,secrets,source_commit=None):
     # Drafts enter inside the journal, so its committed baseline can be reused.
     # The immutable request survives interruption and is replayed on recovery.
     raw=(json.dumps(drafts,ensure_ascii=False,sort_keys=True)+'\n').encode()
@@ -64,7 +64,9 @@ def import_formal(drafts,secrets):
         if path.read_bytes()!=raw:raise ValueError('draft request collision')
     else:
         path.parent.mkdir(parents=True,exist_ok=True);durable_write(path,raw)
-    step('site/scripts/import-weekly.py',['--drafts-file',str(path)],pinned=True)
+    args=['--drafts-file',str(path),'--defer-site-projection']
+    if source_commit:args+=['--source-commit',source_commit]
+    step('site/scripts/import-weekly.py',args,pinned=True)
     check=step('pipeline/scripts/translate-dynamic-en.py',['--check'],optional=True)
     if check==1:
         if not secrets.get('TRANSLATION_API_KEY'):raise ValueError('missing translations and no translation credential')
@@ -96,7 +98,20 @@ def initialize(connection,published,blobs):
     for child in (destination/'data').iterdir():child.rename(data/child.name)
     (destination/'data').rmdir();destination.rmdir()
 
-def ingest(parent,code,expected_version=None):
+def select_ingest_input(expected_version=None, pinned_version=None):
+    if pinned_version is not None:
+        if expected_version is not None:raise ValueError('conflicting input modes')
+        assert_no_pending(CODE)
+        view=load_view(CODE)
+        if view is None or view.version!=pinned_version:raise ValueError('committed input pointer changed')
+        timed('ingest.check_mutable',assert_mutable_matches,CODE,view)
+        return view.version
+    version=timed('ingest.capture',capture,CODE,'database-writer-'+uuid.uuid4().hex,publish=expected_version is None)
+    if expected_version is not None and version!=expected_version:raise ValueError('recovery input changed; refusing import')
+    return version
+
+
+def ingest(parent,code,expected_version=None,pinned_version=None):
     # Exit this process before exporting: Python retains large import heaps even
     # after local variables are freed. Import+export must fit the same 1.5GiB cap.
     if os.getuid()==0:raise ValueError('unprivileged writer required')
@@ -104,11 +119,10 @@ def ingest(parent,code,expected_version=None):
     from psycopg2.extras import Json
     connection=psycopg2.connect(os.environ['MAAS_DATA_DSN']);blobs=FilesystemBlobStore(STORE/'blobs')
     try:
-        version=timed('ingest.capture',capture,CODE,'database-writer-'+uuid.uuid4().hex,publish=expected_version is None)
-        if expected_version is not None and version!=expected_version:raise ValueError('recovery input changed; refusing import')
+        version=select_ingest_input(expected_version,pinned_version)
         raw_manifest=timed('ingest.raw_manifest',build_manifest,CODE,code);copied=timed('ingest.raw_copy',copy_objects,CODE,raw_manifest,blobs)
         if copied['failures']:raise ValueError('raw copy failed')
-        timed('ingest.database',import_view,connection,CODE,blobs,source_commit=code,parent=parent if version!=parent else None)
+        timed('ingest.database',import_view,connection,CODE,blobs,source_commit=code,parent=parent if version!=parent else None,expected_input=version)
         with connection:
             with connection.cursor() as cursor:
                 # Execution logs are audit history, not inputs: replaying an old
@@ -186,16 +200,18 @@ def main():
             step('pipeline/scripts/llm-weekly-digest.py',['--all'],credentials={'LLM_API_KEY':secrets.get('LLM_API_KEY','')},optional=True)
             step('site/scripts/import-weekly.py')
             step('pipeline/scripts/translate-dynamic-en.py',credentials={'TRANSLATION_API_KEY':secrets.get('TRANSLATION_API_KEY','')},optional=True)
+        pinned_version=None
         if mode=='import':
-            import_formal(incoming.get('drafts',[]),secrets)
+            import_formal(incoming.get('drafts',[]),secrets,incoming.get('sourceCommit'))
+            pinned_version=load_view(CODE).version
         step('pipeline/scripts/project-site-data.py')
         step('pipeline/scripts/validate-archive.py');step('pipeline/scripts/validate-price-archive.py')
-        if incoming.get('drafts'):
+        if incoming.get('drafts') and mode!='import':
             source=incoming['sourceCommit'];path=CODE/'data/derived/import-provenance'/(source+'.json');path.parent.mkdir(parents=True,exist_ok=True)
             value={'sourceCommit':source,'drafts':[{'date':d['date'],'sha256':hashlib.sha256(d['markdown'].encode()).hexdigest()} for d in incoming['drafts']]}
             if path.exists() and json.loads(path.read_text())!=value:raise ValueError('draft source identity conflict')
             durable_write(path,(json.dumps(value)+'\n').encode())
-        args=['--ingest',parent,code]
+        args=['--ingest-pinned',parent,code,pinned_version] if pinned_version else ['--ingest',parent,code]
         if mode=='resume':args.append(incoming['inputVersion'])
         step('ops/data-writer/run.py',args)
         version=json.loads((WORK/'ingestion.json').read_text())['inputVersion']
@@ -203,7 +219,8 @@ def main():
     finally:connection.close()
 if __name__=='__main__':
     try:
-        if len(sys.argv) in (4,5) and sys.argv[1]=='--ingest':ingest(sys.argv[2],sys.argv[3],sys.argv[4] if len(sys.argv)==5 else None)
+        if len(sys.argv)==5 and sys.argv[1]=='--ingest-pinned':ingest(sys.argv[2],sys.argv[3],pinned_version=sys.argv[4])
+        elif len(sys.argv) in (4,5) and sys.argv[1]=='--ingest':ingest(sys.argv[2],sys.argv[3],sys.argv[4] if len(sys.argv)==5 else None)
         else:main()
     except Exception as error:
         print('data writer failed: '+type(error).__name__,file=sys.stderr);sys.exit(2)

@@ -50,6 +50,16 @@ class ShadowTests(unittest.TestCase):
     def do_import(self, parent=None):
         return import_view(self.connection, self.root, self.store, source_commit='a' * 40, parent=parent)
 
+    def test_expected_input_rejects_pointer_change_before_transaction(self):
+        self.do_import()
+        self.write('new.json', {'id': 'fixture:new'})
+        new_version=capture(self.root,'changed-pointer')
+        with self.assertRaisesRegex(ValueError,'pointer changed'):
+            import_view(self.connection,self.root,self.store,source_commit='a'*40,parent=self.version,expected_input=self.version)
+        with self.connection.cursor() as c:
+            c.execute('SELECT count(*) FROM maas_data.input_versions WHERE version=%s',(new_version,))
+            self.assertEqual(c.fetchone()[0],0)
+
     def test_import_idempotence_and_exact_restore(self):
         self.assertEqual(self.do_import()['deltaFiles'], 2)
         migrate(self.connection)
