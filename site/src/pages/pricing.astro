@@ -36,7 +36,7 @@ const { ledger, gpu, chips, ledgerDate, modelCount, providerCount, gpuRows, chip
       <div class="section-heading">
         <span class="section-no">01 / API PRICING</span>
         <h2>模型 API 价格台账</h2>
-        <p class="section-note">统一折算为人民币与每百万 tokens；可按厂商浏览、搜索模型，并把 2–5 个模型放入用量计算器比较。</p>
+        <p class="section-note">{Astro.url.pathname.startsWith('/en/') ? 'Choose USD or CNY and estimate costs for 1–5 models using your input and output volumes.' : '选择人民币或美元，按实际输入输出用量，估算 1–5 个模型的费用。'}</p>
       </div>
       {ledger ? (
         <div class="ledger-embed"><PriceWorkspace data={ledger} /></div>
