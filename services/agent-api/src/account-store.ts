@@ -46,9 +46,10 @@ export class AccountStore {
     this.db.prepare("INSERT OR IGNORE INTO account_value_metadata VALUES('collection_start',?)").run(this.now());
     this.db.prepare("INSERT OR IGNORE INTO account_value_metadata VALUES('source_start',?)").run(this.now());
     this.db.prepare("INSERT OR IGNORE INTO account_value_metadata VALUES('growth_start',?)").run(this.now());
+    this.db.prepare("INSERT OR IGNORE INTO account_value_metadata VALUES('cost_v2_start',?)").run(this.now());
   }
   recordWorkspaceUsage(userId:string,event:unknown) {
-    if(event!=='comparison_completed' && event!=='cost_estimate_completed')throw new AccountError(400,'invalid_event','无效统计事件');
+    if(event!=='comparison_completed' && event!=='cost_estimate_completed' && event!=='cost_estimate_completed_v2')throw new AccountError(400,'invalid_event','无效统计事件');
     // Browser-reported result, not a server-verified calculation; at most one per account/event/Beijing day.
     return this.transaction(()=>{
       const since=Math.floor((this.now()+28800000)/86400000)*86400000-28800000;

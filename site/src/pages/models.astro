@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import QuotePreview from '../components/QuotePreview.astro';
 import ModelPriceLinks from '../components/ModelPriceLinks.astro';
 import { modelRelease, providerLabels } from '../lib/model-pages';
 const release = modelRelease();
@@ -14,7 +15,9 @@ const models = release.modelIdentities!.models.filter(m => pricedIds.has(m.model
     <p>数据截至 {release.dataThrough}。按模型查看报价与变化；不同地区、计费方式和上下文条件分开列示。</p>
     <p>这是当前公开数据中有报价的模型目录，不能代表所有模型或全部平台覆盖。</p>
   </header>
+  <p><a href="/pricing/#compare">{Astro.url.pathname.startsWith('/en/') ? 'Enter your token usage and calculate API costs →' : '输入 Token 用量，计算模型调用费用 →'}</a></p>
   <ModelPriceLinks />
+  <QuotePreview />
   <p><a href="/guides/">{Astro.url.pathname.startsWith('/en/') ? 'Token costs, caching and platform comparison guides →' : '理解 Token 费用、缓存计费与跨平台比较 →'}</a></p>
   <section class="catalog-section">
     <h2>有可观察报价的模型（{models.length}）</h2>

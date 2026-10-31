@@ -1,2 +1,2 @@
 // Generated from packages/analytics/campaigns.json; checked by tests.
-export const campaigns: readonly string[] = ["pricing-search-v1", "weekly-wechat-v1", "weekly-x-v1", "agent-demo-v1"];
+export const campaigns: readonly string[] = ["pricing-search-v1", "weekly-wechat-v1", "weekly-x-v1", "agent-demo-v1", "growth-01-wechat-v1", "growth-01-x-v1", "growth-02-wechat-v1", "growth-02-x-v1", "growth-03-wechat-v1", "growth-03-x-v1", "growth-04-wechat-v1", "growth-04-x-v1", "growth-05-wechat-v1", "growth-05-x-v1", "growth-06-wechat-v1", "growth-06-x-v1"];

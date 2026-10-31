@@ -35,6 +35,8 @@ const hasContent = prices.length > 0 || changes.length > 0;
     <div class="shell">
       <nav class="model-breadcrumb" aria-label="面包屑"><a href="/">首页</a> / <a href="/models/">模型 API 价格</a> / {model.modelName}</nav>
       <h1>{model.modelName} API 价格与变化</h1>
+      <p>{locale === 'en' ? `Find observed input, output and cache quotes for ${model.modelName}, with original currencies, billing conditions and sources. Enter your usage to estimate costs.` : `${model.modelName} 怎么收费？下方按输入、输出和缓存分别列出已观察的原币种报价与计费条件。输入自己的用量，可继续估算费用。`}</p>
+      <p><a href={`${locale === 'en' ? '/en' : ''}/pricing/?modelId=${encodeURIComponent(model.modelId)}#compare`}>{locale === 'en' ? 'Calculate costs with this model →' : '用这个模型算成本 →'}</a></p>
       <ModelFollow modelId={model.modelId} locale={locale} />
       <div class="model-meta">
         <span class="model-id">{model.modelId}</span>
