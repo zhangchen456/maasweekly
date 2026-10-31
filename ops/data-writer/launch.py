@@ -61,7 +61,7 @@ def execute(root, mode, body, journal):
     if not re.fullmatch('/public/candidates/[a-f0-9]{32}',candidate):raise ValueError('invalid candidate path')
     host=SHARED/'public-data'/candidate.removeprefix('/public/')
     candidate_permissions(host)
-    expected=json.loads((host/'manifest.json').read_text())
+    expected=json.loads((host/'publication.json').read_text())
     publication_identity(expected)
     journal.input_version=expected['site']['inputVersion'];journal.dataset_version=expected['datasetVersion']
     env={**os.environ,'PGHOST':'/var/run/postgresql','PGDATABASE':'maas_data','PGUSER':'maasagent'}
