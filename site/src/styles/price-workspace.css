@@ -5,3 +5,6 @@
 
 .plw .calculator input[type=number]{width:100%;min-height:44px;font:inherit;font-variant-numeric:tabular-nums;color:var(--ink);background:var(--bg);border:1px solid var(--line);padding:10px;box-sizing:border-box}.plw .result-actions{padding:24px 0 40px;border-top:1px solid var(--line)}.plw .result-actions p{max-width:72ch;line-height:1.7;color:var(--muted)}.plw .result-actions button,.plw .result-actions a{min-height:44px;padding:10px 16px;font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);cursor:pointer}.plw input:focus-visible,.plw .result-actions button:focus-visible,.plw .result-actions a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 .plw .calculator .row{display:none}
+
+.plw .currency-control{grid-column:1/-1}.plw .currency-control select{width:100%;min-height:44px;font-size:16px}.plw .plot-row{grid-template-columns:minmax(100px,1fr) minmax(60px,2fr) minmax(90px,auto)}.plw .mini-row{grid-template-columns:minmax(90px,1fr) minmax(60px,1fr) minmax(80px,auto)}
+.plw .plot-price,.plw .mini-row b{overflow-wrap:anywhere;min-width:0}

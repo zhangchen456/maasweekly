@@ -15,6 +15,7 @@ test('costs use the published FX snapshot and preserve explicit user overrides',
   w.eval(await compile(read('../src/scripts/price-workspace.ts')));
   const fx=w.document.getElementById('fx'),label=w.document.getElementById('fx-label');
   assert.equal(Number(fx.value),expected);
+  const currency=w.document.getElementById('display-currency');currency.value='CNY';currency.dispatchEvent(new w.Event('change'));
   assert.match(w.document.getElementById('comparison-table').textContent,new RegExp('¥'+String(expected*4).replace('.','\\.')));
   if(fx_snapshot.as_of){assert.match(label.textContent,/Reference estimate · not a live exchange rate · 2026-09-07/);}
   fx.value='9';fx.dispatchEvent(new w.Event('change'));assert.match(w.document.getElementById('comparison-table').textContent,/¥36/);assert.equal(label.textContent,'Manual estimate · not a live exchange rate');
