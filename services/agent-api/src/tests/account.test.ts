@@ -186,6 +186,8 @@ test('account profile and workspace data persist, isolate users, export safely, 
   now += 61000; const another=login(store,'profile-a@example.com');
   store.updateProfile(a.user,'工作账户');
   store.saveState(a.user.id,'homePrices',{currency:'USD',fx:7.2});
+  const workspace={provider:'openai',query:'',sort:'name',modelId:null,familyId:null,selected:[],variants:[],component:'total',input:1,output:.25,fx:null,currency:'USD'};
+  store.saveState(a.user.id,'priceWorkspace',workspace);
   store.close(); store=new AccountStore(filename,()=>now,SECRET);
   const holder={current:{modelIdentities:catalog,changes:[],dataThrough:'2026-10-03'}} as unknown as DatasetHolder;
   const server=http.createServer(createAccountHandler(store,{async send(){}},holder,{origin:'https://daily.maas.click',secure:true}));
@@ -196,6 +198,12 @@ test('account profile and workspace data persist, isolate users, export safely, 
   try {
     const me=await(await fetch(base+'me',{headers:{Cookie:cookie(a.session)}})).json() as {user:{displayName:string};state:Record<string,unknown>};
     assert.equal(me.user.displayName,'工作账户');assert.deepEqual(me.state.homePrices,{currency:'USD',fx:7.2});
+    assert.deepEqual(me.state.priceWorkspace,workspace,'Workspace currency survives service restart');
+    assert.equal((await post('state',{key:'priceWorkspace',value:{...workspace,currency:'CNY'}})).status,200);
+    assert.equal((store.state(a.user.id).priceWorkspace as {currency:string}).currency,'CNY');
+    for(const currency of ['EUR',null,42])assert.equal((await post('state',{key:'priceWorkspace',value:{...workspace,currency}})).status,400);
+    const {currency: _currency,...legacyWorkspace}=workspace;
+    assert.equal((await post('state',{key:'priceWorkspace',value:legacyWorkspace})).status,200,'Legacy preferences without a currency remain accepted');
     assert.equal((await post('state',{key:'admin',value:{role:'admin'}})).status,400);
     assert.equal((await post('state',{key:'homePrices',value:{currency:'USD',fx:0}})).status,400);
     assert.equal((await post('profile',{displayName:'x'.repeat(61)})).status,400);
