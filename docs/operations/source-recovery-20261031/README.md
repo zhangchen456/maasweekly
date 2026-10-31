@@ -16,3 +16,11 @@ The initial production-network probe returned 419 overall records, published **2
 `pyarrow==19.0.1` is added to the locked dependencies. Build and verify a candidate writer image before updating the server's writer-image pointer and canonical requirements under the existing release lock; preserve the previous pointer and requirements for rollback. No writer permissions, credentials or publication checks change.
 
 Validation covers the real Vertex page fixture, official-file checksum and pinned URLs, streamed category selection, invalid rows, no HTML fallback, and migration without false model removals. Release through the normal code workflow, then run the normal `daily-update.yml` collection (`skip_fetch=false`) and verify the published dataset and both source states. A successful code deployment alone is not a recovered data source.
+
+## Board display recovery
+
+The leaderboard page had a separate manually maintained September 28 file. Source health alone therefore did not update the visible table. The server-side page projector now derives its Arena board from the raw snapshot inventory bound to the exact committed input version. It validates that inventory and reads the checksum-verified CAS object; it never fetches live data or reads a mutable writer cache while rendering/exporting.
+
+The board shows the first 10 of the complete overall records, the native Arena Score, upstream publication date, collection time, official dataset link and CC BY attribution. Historical inputs without an official dataset snapshot keep their existing manual board. Malformed official snapshots block candidate creation. The Chinese and English page explanations distinguish publication from collection.
+
+After the full collection, deploy the projection fix and rebuild data with `skip_fetch=true`. This reuses the already committed source observation and prices; the publication's code/input binding versions the new page materialization even when the seven public business files have the same dataset ID.
