@@ -88,6 +88,7 @@ jobs:
           python -m unittest discover -s tests -p test_english_translation.py
           node scripts/ensure-node-deps.mjs site
           npm --prefix site run test:english
+          (cd site && node --test tests/private-translation-refresh.test.mjs)
       - name: Build code-only runtime
         if: steps.candidate.outputs.eligible == 'true'
         run: bash scripts/build-runtime-release.sh --output "$RUNNER_TEMP/runtime"
