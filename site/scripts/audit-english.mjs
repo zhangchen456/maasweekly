@@ -28,19 +28,7 @@ export async function collectSources(dist) {
     const original = path.join(dist,path.relative(path.join(dist,'en'),file));
     if (fs.existsSync(original)) for (const text of displayTexts(fs.readFileSync(original,'utf8'),{legacyEvidence:true})) add(text);
   }
-  // Paid reports are also checked: their bodies are intentionally outside the web root.
-  for (const root of ['../data/private-weekly','../.local-dev/private-weekly']) for (const file of files(path.resolve(site,root),/\.html$/)) for (const text of displayTexts(fs.readFileSync(file,'utf8'))) add(text);
-  // Mirror the rendered ReportBody fields so new reports can be translated before a build.
-  const markdown=value=>{if(value)for(const text of displayTexts(marked.parse(String(value),{breaks:true,gfm:true})))add(text);};
-  for(const file of files(path.join(site,'src/content/weekly-structured'),/\.json$/)) {
-    const report=JSON.parse(fs.readFileSync(file,'utf8'));
-    for(const row of report.summary_table?.rows??[])for(const index of [0,2,3])markdown(row[index]);
-    for(const item of report.headline??[]){if(item.platform)add(item.platform);if(item.title)add(item.title);markdown(item.detail_markdown);}
-    for(const platform of report.platforms??[]){if(platform.name)add(platform.name);if(platform.status_text)add(platform.status_text);for(const item of [...platform.this_week??[],...platform.recent??[]])markdown(item);}
-    for(const [index,trend] of (report.trends??[]).entries()){if(trend.title)add(`${String(index+1).padStart(2,'0')}. ${trend.title}`);markdown(trend.body_markdown);}
-    for(const row of report.watchpoints?.rows??[])for(const item of row.slice(0,3))markdown(item);
-    for(const event of report.event_index??[])markdown(event.text);
-  }
+  // Authenticated report bodies are collected separately on the server.
   // These are authored descriptions and reports, never the immutable evidence store.
   const dataFiles=[...files(path.join(site,'src/content/platforms'),/\.json$/),...files(path.join(site,'src/data/leaderboards'),/\.json$/),path.join(site,'src/data/industry_sources.json')];
   for (const file of dataFiles) if(fs.existsSync(file)) {
@@ -99,8 +87,8 @@ if (process.argv[1] && path.resolve(process.argv[1])===fileURLToPath(import.meta
   if(process.argv.includes('--collect')) {
     const sources=await collectSources(dist);
     const output=process.argv.includes('--output') ? process.argv[process.argv.indexOf('--output')+1] : path.join(site,'src/data/ui-translation-sources.json');
-    if(process.argv.includes('--merge') && fs.existsSync(output)) sources.push(...JSON.parse(fs.readFileSync(output,'utf8')).texts);
-    fs.writeFileSync(output,JSON.stringify({schemaVersion:1,texts:[...new Set(sources)].sort()},null,2)+'\n');
+    if(process.argv.includes('--merge') && fs.existsSync(output)) { const previous=JSON.parse(fs.readFileSync(output,'utf8')); if(previous.scope!=='public')throw new Error('Only explicitly public sources may be merged');sources.push(...previous.texts); }
+    fs.writeFileSync(output,JSON.stringify({schemaVersion:1,scope:'public',texts:[...new Set(sources)].sort()},null,2)+'\n');
     console.log(JSON.stringify({required:new Set(sources).size,output}));
   } else {
     const report=auditEnglish(dist);

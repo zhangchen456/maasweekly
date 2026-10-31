@@ -10,6 +10,14 @@ sys.path.insert(0,str(ROOT/'pipeline'))
 from english_translation import collect_texts, projected_texts, protect, restore_and_validate, text_key, PROMPT_VERSION, normalize_terms
 
 class EnglishTranslationTests(unittest.TestCase):
+    def test_private_translations_cannot_be_written_into_public_repository(self):
+        spec=importlib.util.spec_from_file_location('translate_ui_scope',ROOT/'pipeline/scripts/translate-ui-en.py')
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        with self.assertRaises(ValueError): module.validate_translation_scope('private',ROOT/'site/src/data/leak.json')
+        with self.assertRaises(ValueError): module.validate_translation_scope(None,ROOT/'site/src/data/translations.json')
+        module.validate_translation_scope('public',ROOT/'site/src/data/translations.json')
+        module.validate_translation_scope('private',Path('/tmp/private-maas-translations.json'))
+
     def test_large_and_chinese_quantities_remain_exact(self):
         _,values=protect('参数 2.88万亿，融资十亿美元，训练三周，近亿元，市值跌破千亿。十分关注，两三倍。')
         joined=' '.join(values.values())

@@ -4,7 +4,7 @@ import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {parse, serialize} from '../site/node_modules/parse5/dist/index.js';
 import {displayTexts} from '../site/scripts/english-audit-text.mjs';
-import {englishHtml} from '../site/src/lib/ui-translation.ts';
+import {englishServerHtml as englishHtml} from '../site/src/lib/translation-server.ts';
 
 const args=Object.fromEntries(process.argv.slice(2).reduce((rows,v,i,a)=>i%2?rows:[...rows,[v,a[i+1]]],[]));
 const root=path.resolve(args['--package-root']);
@@ -75,7 +75,11 @@ try {
   for(const row of dataset.weekly){
     const result=await render('/_internal/weekly-body/'+row.id+'/',true);
     if(result.status===404)continue;
-    const texts=displayTexts(englishHtml(result.body.toString()));
+    const raw=result.body.toString();
+    let english;
+    const find=node=>{if(node.attrs?.some(a=>a.name==='data-weekly-locale'&&a.value==='en'))english=serialize(node);for(const child of node.childNodes??[])find(child);};
+    find(parse(raw));
+    const texts=displayTexts(english??englishHtml(raw));
     if(result.status!==200||texts.length)report.failures.push({url:'private-weekly/'+row.id,status:result.status,texts:[...new Set(texts)]});
     report.privateReports++;
   }

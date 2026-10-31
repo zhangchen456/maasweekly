@@ -79,22 +79,36 @@ def translate_batch(sources, key, url, model):
     return translated,missing
 
 
+def validate_translation_scope(scope, output):
+    if scope not in {'public','private'}:
+        raise ValueError('Sources must declare scope public or private, or supply --scope')
+    if scope == 'private' and output.resolve().is_relative_to(ROOT.resolve()):
+        raise ValueError('Private translations must be written outside the public repository')
+
+
 def main():
     started=time.monotonic()
     parser=argparse.ArgumentParser()
     parser.add_argument('--sources',type=Path,default=ROOT/'site/src/data/ui-translation-sources.json')
     parser.add_argument('--output',type=Path,default=ROOT/'site/src/data/ui-translations-en.json')
     parser.add_argument('--cache',type=Path)
+    parser.add_argument('--scope',choices=['public','private'])
     parser.add_argument('--check',action='store_true')
     parser.add_argument('--batch-only',action='store_true')
     parser.add_argument('--retry-only',action='store_true')
     args=parser.parse_args()
+    source_document=json.loads(args.sources.read_text())
+    scope=args.scope or source_document.get('scope')
+    validate_translation_scope(scope,args.output)
+    if scope == 'private': os.umask(0o077)
     if args.cache is None:
-        args.cache=translation_cache_path(ROOT,'data/derived/translations/ui-en.json')
-    sources=json.loads(args.sources.read_text())['texts']
-    existing=json.loads(args.output.read_text()) if args.output.exists() else {'schemaVersion':1,'model':MODEL,'texts':{}}
+        args.cache=args.output.with_suffix('.cache.json') if scope=='private' else translation_cache_path(ROOT,'data/derived/translations/ui-en.json')
+    sources=source_document['texts']
+    existing=json.loads(args.output.read_text()) if args.output.exists() else {'schemaVersion':1,'scope':scope,'model':MODEL,'texts':{}}
+    if existing.get('scope',scope)!=scope: raise ValueError('Output translation scope mismatch')
     texts=existing['texts']
-    cache=json.loads(args.cache.read_text()) if args.cache.exists() else {'schemaVersion':1,'entries':{}}
+    cache=json.loads(args.cache.read_text()) if args.cache.exists() else {'schemaVersion':1,'scope':scope,'entries':{}}
+    if cache.get('scope')!=scope: raise ValueError('Translation cache scope is missing or mismatched; use a new scoped cache')
     validated=projected_texts(cache)
     texts={s:t for s,t in texts.items() if not ('万亿' in s or re.search(r'\d\s+(?:万|亿)',s)) or s in validated}
     texts.update(validated)
@@ -118,7 +132,7 @@ def main():
     if batch:batches.append(batch)
     def save():
         args.output.parent.mkdir(parents=True,exist_ok=True);args.cache.parent.mkdir(parents=True,exist_ok=True)
-        for file,value in [(args.output,{'schemaVersion':1,'model':model,'texts':texts}),(args.cache,cache)]:
+        for file,value in [(args.output,{'schemaVersion':1,'scope':scope,'model':model,'texts':texts}),(args.cache,cache)]:
             temporary=file.with_name(file.name+'.tmp')
             temporary.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n');os.replace(temporary,file)
     workers=int(os.environ.get('TRANSLATION_WORKERS','3'))

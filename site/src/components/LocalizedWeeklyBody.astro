@@ -1,0 +1,6 @@
+---
+import {englishServerHtml} from '../lib/translation-server';
+const original=await Astro.slots.render('default');
+---
+<div data-weekly-locale="zh"><Fragment set:html={original}/></div>
+<div data-weekly-locale="en" hidden><Fragment set:html={englishServerHtml(original)}/></div>
