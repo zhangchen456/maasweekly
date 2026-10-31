@@ -8,6 +8,9 @@ from english_translation import CACHE, projected_texts
 
 
 def projections(root, view):
+    from arena_projection import from_view
+    arena = from_view(view)
+    arena_name = 'data/derived/leaderboards/lmarena.json'
     yield 'site/src/data/daily_changes.json', compose_daily(root, view=view)
     yield 'site/src/data/weekly-digest.json', compose_weekly(root, view=view)
     yield 'site/src/data/translations-en.json', {
@@ -15,7 +18,9 @@ def projections(root, view):
     for name in sorted(view.files):
         if name.startswith(('data/derived/pricing/', 'data/derived/leaderboards/')) \
                 and name.count('/') == 3 and name.endswith('.json'):
-            yield name, view.read_json(name)
+            yield name, arena if name == arena_name and arena is not None else view.read_json(name)
+    if arena is not None and arena_name not in view.files:
+        yield arena_name, arena
     for name in ['data/normalized/platform-logos.json']:
         if name in view.files:
             yield name, view.read_json(name)

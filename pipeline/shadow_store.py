@@ -337,3 +337,20 @@ class PostgresInputView:
     def read_text(self, logical):
         meta = self.files[logical]
         return self.store.get(meta['sha256'], expected_bytes=meta['bytes']).decode('utf-8')
+
+    def iter_raw_snapshots(self, pattern, *, max_bytes=2 * 1024 * 1024):
+        """Read only this input's committed, checksum-verified raw inventory."""
+        from storage_migration import validate_manifest
+        with self.connection.cursor() as cursor:
+            cursor.execute('SELECT manifest FROM maas_data.input_raw_manifests WHERE input_version=%s', [self.version])
+            row = cursor.fetchone()
+        if not row:
+            return
+        files = validate_manifest(row[0])['files']
+        for name in sorted(files, reverse=True):
+            if not Path(name).match(pattern):
+                continue
+            meta = files[name]
+            if meta['bytes'] > max_bytes:
+                raise ValueError('raw page projection exceeds limit')
+            yield name, self.store.get(meta['rawSha256'], expected_bytes=meta['bytes']).decode('utf-8')
