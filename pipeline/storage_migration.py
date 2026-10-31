@@ -5,7 +5,7 @@ import fcntl
 import mimetypes
 import re
 from pathlib import Path
-from blob_store import BlobStore, BlobIntegrityError, checksum, safe_path
+from blob_store import BlobStore, BlobIntegrityError, checksum, safe_path, read_contained_file
 from input_snapshot import canonical, atomic, assert_no_pending
 
 RESTORE_PENDING = 'data/storage-restore-pending.json'
@@ -30,17 +30,17 @@ def _build_manifest_locked(root: Path, source_commit: str):
     files = {}
     by_hash = {}
     for p in raw_files(root):
-        logical = p.relative_to(root).as_posix(); raw = safe_path(root, logical).read_bytes(); digest = checksum(raw)
+        logical = p.relative_to(root).as_posix(); raw = read_contained_file(root, logical); digest = checksum(raw)
         files[logical] = {'blobId':'blob_'+digest, 'rawSha256':digest, 'bytes':len(raw),
                           'contentType':mimetypes.guess_type(p.name)[0] or 'application/octet-stream'}
         by_hash.setdefault(digest, []).append(logical)
     evidence = {}
     for p in (root/'data/price-evidence').glob('*.json'):
-        record = json.loads(safe_path(root, p.relative_to(root).as_posix()).read_bytes())
+        record = json.loads(read_contained_file(root, p.relative_to(root).as_posix()))
         evidence.setdefault(record['snapshotContentId'], []).append(record['id'])
     snapshots = {}
     for p in sorted((root/'data/price-snapshots').glob('*.json')):
-        raw = safe_path(root, p.relative_to(root).as_posix()).read_bytes(); record = json.loads(raw)
+        raw = read_contained_file(root, p.relative_to(root).as_posix()); record = json.loads(raw)
         refs = by_hash.get(record['content_sha256'], [])
         snapshots[record['id']] = {'metadataPath':p.relative_to(root).as_posix(), 'metadataSha256':checksum(raw),
              'semanticContentHash':record['content_sha256'], 'rawPaths':refs,
@@ -88,7 +88,7 @@ def copy_objects(root: Path, manifest, store: BlobStore, *, only=None, max_objec
         if max_objects is not None and processed >= max_objects: break
         processed += 1
         try:
-            raw = safe_path(root, entry['sourcePath']).read_bytes()
+            raw = read_contained_file(root, entry['sourcePath'])
             if len(raw) != entry['bytes'] or checksum(raw) != digest: raise BlobIntegrityError('source changed after manifest')
             created = store.putIfAbsent(digest, raw)
             store.verify(digest, expected_bytes=entry['bytes'])
@@ -136,7 +136,7 @@ def _restore_locked(root: Path, manifest, reader, *, max_files=None):
         atomic(path, raw); restored += 1; total += len(raw)
     # Reverify all local files before declaring complete, including resumed existing files.
     for logical, entry in manifest['files'].items():
-        raw = safe_path(root, logical).read_bytes()
+        raw = read_contained_file(root, logical)
         if checksum(raw) != entry['rawSha256'] or len(raw) != entry['bytes']: raise BlobIntegrityError('restored file checksum')
     marker.unlink()
     return {'complete':True,'restoredFiles':restored,'existingFiles':existing,'bytes':total}
