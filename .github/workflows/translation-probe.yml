@@ -14,15 +14,23 @@ jobs:
           TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
         run: |
           python3 - <<'PYTHON'
-          import json, os, time, urllib.request, urllib.error
-          started=time.time()
-          payload={'model':'spark-x2.6','messages':[{'role':'system','content':'Translate to English. Return only the translation.'},{'role':'user','content':'总参数 1.6 万亿，激活参数约 480 亿，量化方案降至 397GB。'}],'max_tokens':128,'enable_thinking':False,'thinking':{'type':'disabled'}}
-          req=urllib.request.Request('https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+os.environ['TRANSLATION_API_KEY']})
-          try:
-              with urllib.request.urlopen(req,timeout=90) as r: data=json.load(r)
-              choice=data.get('choices',[{}])[0]
-              print(json.dumps({'seconds':round(time.time()-started,1),'finish':choice.get('finish_reason'),'translation':choice.get('message',{}).get('content'),'hasChoices':bool(data.get('choices'))}))
-          except urllib.error.HTTPError as e:
-              print(json.dumps({'httpStatus':e.code,'seconds':round(time.time()-started,1)}))
-              raise SystemExit(1)
+          import json, os, re, time, urllib.request, urllib.error, concurrent.futures
+          payload={'model':'spark-x2.6','messages':[{'role':'system','content':'Translate to English. Return only the translation.'},{'role':'user','content':'总参数 1.6 万亿，激活参数约 480 亿，量化方案降至 397GB。'}],'max_tokens':1024,'enable_thinking':False,'thinking':{'type':'disabled'}}
+          def probe(index):
+              started=time.time()
+              req=urllib.request.Request('https://maas-api.cn-huabei-1.xf-yun.com/v2/chat/completions',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+os.environ['TRANSLATION_API_KEY']})
+              try:
+                  with urllib.request.urlopen(req,timeout=90) as r: data=json.load(r)
+                  choice=data.get('choices',[{}])[0]
+                  return {'lane':index,'seconds':round(time.time()-started,1),'finish':choice.get('finish_reason'),'translation':choice.get('message',{}).get('content'),'hasChoices':bool(data.get('choices'))}
+              except urllib.error.HTTPError as e:
+                  try:
+                      data=json.loads(e.read());error=data.get('error',data);message=str(error.get('message',error.get('msg','')))[:240];code=error.get('code')
+                  except Exception: message='';code=None
+                  message=message.replace(os.environ['TRANSLATION_API_KEY'],'[redacted]');message=re.sub(r'ak-[A-Za-z0-9_.-]+','[redacted]',message)
+                  return {'lane':index,'httpStatus':e.code,'providerCode':code,'message':message,'seconds':round(time.time()-started,1)}
+          with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+              results=list(pool.map(probe,[1,2,3]))
+          print(json.dumps(results,ensure_ascii=False))
+          raise SystemExit(0 if all(r.get('hasChoices') for r in results) else 1)
           PYTHON
