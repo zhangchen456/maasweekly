@@ -1,0 +1,35 @@
+name: Spark live English supplement
+on:
+  push:
+    branches: [codex/en-live-translation-20261031]
+permissions:
+  contents: read
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            pipeline
+            site/src/data/ui-live-sources.json
+            config
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Translate complete original display strings
+        run: python3 pipeline/scripts/translate-ui-en.py --sources site/src/data/ui-live-sources.json --output /tmp/ui-live-en.json --cache /tmp/ui-live-cache.json
+        env:
+          TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
+          TRANSLATION_MODEL: spark-x2.6
+          TRANSLATION_WORKERS: '3'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: live-english-translations
+          path: |
+            /tmp/ui-live-en.json
+            /tmp/ui-live-cache.json
+          retention-days: 7
