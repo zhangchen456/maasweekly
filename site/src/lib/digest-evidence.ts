@@ -1,4 +1,4 @@
-export interface DigestEvidence {id:string;url:string;observedDate:string;quote?:string;effectiveDates?:string[]}
+export interface DigestEvidence {id:string;url:string;observedDate:string;quote?:string;mentionedDates?:string[]}
 export interface EvidenceItem {text:string;type:string;evidenceVersion?:number;evidence?:DigestEvidence[]}
 export function evidenceLinks(item:EvidenceItem) {
  return item.evidenceVersion===1 ? (item.evidence??[]).filter(e=>{
