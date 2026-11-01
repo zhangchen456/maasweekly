@@ -4,10 +4,10 @@ from decimal import Decimal, InvalidOperation
 from urllib.parse import urlsplit
 
 VERSION = 1
-SUNSET = re.compile(r'\b(?:deprecated|deprecation|retired|retirement|end.of.life|shut.down)\b|停止服务|停止支持|正式下线', re.I)
+SUNSET = re.compile(r'\b(?:retired|retirement|end.of.life|shut.down|discontinued)\b|停止服务|正式下线', re.I)
 RELEASE = re.compile(r'\b(?:released|launch(?:ed)?|introducing)\b|正式发布|正式上线', re.I)
 DATE = re.compile(r'20\d\d[-/.年]\d{1,2}[-/.月]\d{1,2}日?')
-NEGATION = re.compile(r'\b(?:not|never|no longer deprecated)\b|不会|不再下线|未下线|取消下线', re.I)
+NEGATION = re.compile(r'\b(?:not|never|delayed|postponed|no longer deprecated)\b|不会|不再下线|未下线|取消下线|延期|推迟', re.I)
 
 def archived_prices(root, date, prices):
     """Upgrade old flat events only from matching immutable, already validated facts."""
@@ -58,7 +58,7 @@ def catalog(date, changed, prices, aliases):
             dates = DATE.findall(quote)
             if SUNSET.search(quote) and dates and not NEGATION.search(quote):types.append('sunset')
             add({'platform':c['platform'],'sourceType':c['source_type'],'sourceId':c.get('id'),
-                 'url':c['url'],'quote':quote,'eligibleTypes':types,'effectiveDates':dates,
+                 'url':c['url'],'quote':quote,'eligibleTypes':types,'mentionedDates':dates,
                  'recordUrl':c.get('permalink'),'kind':'source'})
     for p in prices[:20]:
         if not safe_url(p.get('evidence_url')):continue
@@ -96,10 +96,12 @@ def price_text(fact):
 def validate_selection(value, entries):
     if not isinstance(value, dict) or set(value) != {'highlights'} or not isinstance(value['highlights'], list) or len(value['highlights']) > 25:
         raise ValueError('invalid digest schema')
-    groups=[];summaries={};seen=set()
+    groups=[];summaries={};seen=set();platforms=set()
     for group in value['highlights']:
         if not isinstance(group, dict) or set(group) != {'platform','items'} or not isinstance(group['platform'], str) or not isinstance(group['items'], list) or not 1 <= len(group['items']) <= 3:
             raise ValueError('invalid digest group')
+        if group['platform'] in platforms:raise ValueError('duplicate platform group')
+        platforms.add(group['platform'])
         items=[]
         for item in group['items']:
             if not isinstance(item, dict) or set(item) != {'type','evidenceId'}:raise ValueError('invalid digest item')
