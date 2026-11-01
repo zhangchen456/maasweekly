@@ -35,7 +35,7 @@ const sample=report.id==='2026-05-03';
 
     {sample ? (data && <ReportBody data={data} />) : <>
       <p class="weekly-preview">{data?.headline?.slice(0,3).map((h:any)=>h.title).join('；')}</p>
-      <section data-weekly-gate data-weekly-id={report.id}><span class="plus-badge">Plus</span><h2>深入理解本周变化</h2><p>完整分析、趋势与观察要点仅向 Plus 用户开放。公测期间免费，无需支付方式。</p><button id="weekly-enable" type="button">登录并免费开启 Plus</button><p id="weekly-status" role="status">正在查询权益…</p></section>
+      <section data-weekly-gate data-weekly-id={report.id}><span class="plus-badge">Plus</span><h2>深入理解本周变化</h2><p>完整分析、趋势与观察要点仅向 Plus 用户开放。Plus 为 US$9.99/月；原公测体验到期后可自行选择订阅，不自动扣款。</p><button id="weekly-enable" type="button">查看 Plus 订阅</button><p id="weekly-status" role="status">正在查询权益…</p></section>
       <div id="weekly-content" hidden></div>
       {!runtime && <template data-private-weekly>{data && <ReportBody data={data} />}</template>}
     </>}
