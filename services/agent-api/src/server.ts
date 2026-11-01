@@ -1,3 +1,5 @@
+import {configuredWaffoLive,WaffoLiveStore} from './waffo-live.js';
+import {createWaffoLiveWebhook} from './waffo-live-http.js';
 import {configuredWaffoTest,WaffoTestStore,createWaffoTestHandler} from './waffo-test.js';
 import { PaymentStore } from './payment-store.js';
 import { createPaymentWebhook } from './payment-http.js';
@@ -109,6 +111,10 @@ const proConfig = { origin: accountOrigin, secure: accountUrl.protocol === 'http
 const adminStore = accountStore ? new AdminStore(accountStore) : null;
 const adminHandler = createAdminHandler(adminStore, holder, proConfig, logger?.emit);
 const paymentWebhook=createPaymentWebhook(adminStore?new PaymentStore(adminStore):null,accountOrigin);
+const liveConfig=configuredWaffoLive(accountOrigin);
+const livePayments=adminStore&&liveConfig?new WaffoLiveStore(adminStore,liveConfig.config,liveConfig.client):null;
+const stopPaymentSync=livePayments?.start();
+const liveWebhook=createWaffoLiveWebhook(livePayments);
 const waffoConfig=configuredWaffoTest(accountOrigin);
 const waffoHandler=createWaffoTestHandler(adminStore&&waffoConfig?new WaffoTestStore(adminStore,waffoConfig.config,waffoConfig.client):null,accountOrigin);
 let site:ReturnType<typeof createSiteHandler>|undefined;
@@ -118,7 +124,7 @@ if(siteRuntime&&SITE_ENTRY){
   const module=await siteRuntime.run(holder.current,()=>import(pathToFileURL(path.resolve(SITE_ENTRY)).href)) as {handler:AstroHandler};
   site=createSiteHandler(holder,siteRuntime,module.handler,accountOrigin);
 }
-const proHandler = createProHandler(proStore, holder, proConfig, Boolean(createMailer()),site?.weekly);
+const proHandler = createProHandler(proStore, holder, proConfig, Boolean(createMailer()),site?.weekly,livePayments);
 const mcpHandler = instrumentRequest(createMcpHandler(holder, mcpConfig), holder, releaseId, logger?.emit);
 const proMcpHandler = proStore ? createMcpHandler(holder, mcpConfig, {store:proStore,config:proConfig}) : proHandler;
 const runtimeHealthHandler = createRuntimeHealthHandler(holder, releaseId);
@@ -127,6 +133,7 @@ const server = http.createServer((req, res) => {
   if(adminStore)trackAnalyticsRequest(adminStore,req,res);
   const pathname = (req.url ?? '').split('?')[0] ?? '';
   if (pathname === '/api/pro/mcp') { void proMcpHandler(req, res); return; }
+  if (pathname==='/api/payment/waffo/live/webhook'){void liveWebhook(req,res);return;}
   if (pathname.startsWith('/api/payment/waffo/')) {void waffoHandler(req,res);return;}
   if (pathname==='/api/payment/webhook') { void paymentWebhook(req,res);return;}
   if (pathname.startsWith('/api/pro/')) { void proHandler(req, res); return; }
@@ -167,8 +174,8 @@ const shutdown = () => {
   logger?.emit({ kind: 'runtime.stopping', releaseId });
   if (timer) clearInterval(timer);
   if (sampleTimer) clearInterval(sampleTimer);
-  loop?.disable(); holder.close();
-  server.close(() => { void (async () => { accountStore?.close();siteRuntime?.uninstall();await siteStore?.close(); await logger?.close(); process.exit(0); })(); });
+  const paymentDrained=stopPaymentSync?.(); loop?.disable(); holder.close();
+  server.close(() => { void (async () => { await paymentDrained;accountStore?.close();siteRuntime?.uninstall();await siteStore?.close(); await logger?.close(); process.exit(0); })(); });
   setTimeout(() => process.exit(0), 3000).unref();
 };
 process.on('SIGTERM', shutdown);
