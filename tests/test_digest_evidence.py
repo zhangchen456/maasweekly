@@ -1,7 +1,7 @@
-import copy, json, sys, unittest
+import copy, json, sys, unittest, tempfile
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'pipeline'))
-from digest_evidence import catalog, validate_selection
+from digest_evidence import catalog, validate_selection, archived_prices
 
 class DigestEvidenceTests(unittest.TestCase):
  def source(self,added=None,removed=None):
@@ -42,5 +42,17 @@ class DigestEvidenceTests(unittest.TestCase):
   c=self.source(['quote']);a=catalog('2026-11-01',[c],[],{});c['added_lines']=['changed'];b=catalog('2026-11-01',[c],[],{});self.assertNotEqual(set(a),set(b))
   for url in ['javascript:alert(1)','https://user:pass@official.test']:
    c['url']=url;self.assertEqual(catalog('2026-11-01',[c],[],{}),{})
+ def test_legacy_price_is_enriched_only_from_matching_archived_version(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp);rid='price_'+'a'*64;vid='pfv_'+'b'*64
+   (root/'data/price-records').mkdir(parents=True);(root/'data/price-facts/versions').mkdir(parents=True)
+   record={'id':rid,'date':'2026-11-01','afterVersionId':vid}
+   (root/'data/price-records'/f'{rid}.json').write_text(json.dumps(record))
+   fact={'version_id':vid,'provider_id':'A','model_key':'Model','component':'cache_read','currency':'USD','unit_quantity':1000000,'unit_name':'token','amount':'0.250000','context_band':{'min':100,'max':200}}
+   (root/'data/price-facts/versions'/f'{vid}.json').write_text(json.dumps(fact))
+   price={'id':rid,'provider':'A','model':'Model','component':'cache_read','currency':'USD','unit_quantity':1000000,'unit_name':'token','current':'0.25'}
+   self.assertEqual(archived_prices(root,'2026-11-01',[price])[0]['currentFact'],fact)
+   for bad in [{**price,'currency':'CNY'},{**price,'current':'0.3'},{**price,'unit_name':'second'}]:self.assertEqual(archived_prices(root,'2026-11-01',[bad]),[])
+   self.assertEqual(archived_prices(root,'2026-11-02',[price]),[])
 
 if __name__=='__main__':unittest.main()
