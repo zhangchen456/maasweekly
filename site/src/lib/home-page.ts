@@ -1,6 +1,7 @@
 import { localizeEditorial } from './dynamic-translation';
 import { readPageProjection } from './page-data';
-export interface HighlightItem {text:string;type:string}
+import { displayItem, type EvidenceItem } from './digest-evidence';
+export interface HighlightItem extends EvidenceItem {}
 export interface PlatformHighlight {platform:string;logo_summary:string;items:HighlightItem[]}
 export interface SourceSignal {platform:string;source_type:string;url:string;kind:string;added_count:number;removed_count:number;added_lines:string[];removed_lines:string[];pairs:{before:string;after:string}[];signal_preview?:string;permalink?:string;llm_summary?:string}
 interface PriceChange {provider:string;model:string;component:string;previous?:string;current:string;currency:string;id?:string;evidence_url?:string}
@@ -38,7 +39,7 @@ const pastWeeks = weeks.slice(1);
 
 // ===== 今日数据拆分 =====
 const substantive = today?.changed?.filter((c) => c.kind === 'substantive') || [];
-const highlights = today?.highlights || []; // v3: [{platform, logo_summary, items:[{text,type}]}]
+const highlights = (today?.highlights || []).map(h=>({...h,items:h.items.map(i=>displayItem(i,locale))}));
 
 // 要点按平台分组（已经是 v3 结构）
 // 有要点或实质变化的平台集合（信号明细按平台分组展示）
@@ -94,7 +95,7 @@ for(const day of [...days].sort((a,b)=>b.date.localeCompare(a.date))) {
   if(day.date<from || day.date>to) continue;
   for(const h of day.highlights ?? []) {
     const group=groups.get(h.platform) ?? {platform:h.platform,items:[]};
-    for(const item of h.items) if(!group.items.some(i=>i.text===item.text && i.type===item.type)) group.items.push({...item,date:day.date,href:`/daily/${weeks.find(w=>w.start<=day.date && w.end>=day.date)?.week ?? ''}/#day-${day.date}`});
+    for(const raw of h.items) {const item=displayItem(raw,locale);if(!group.items.some(i=>i.text===item.text && i.type===item.type)) group.items.push({...item,date:day.date,href:`/daily/${weeks.find(w=>w.start<=day.date && w.end>=day.date)?.week ?? ''}/#day-${day.date}`});}
     if(group.items.length) groups.set(h.platform,group);
   }
 }

@@ -13,7 +13,7 @@ jobs:
     timeout-minutes: 20
     services:
       postgres:
-        image: postgres:17
+        image: postgres:18
         env:
           POSTGRES_DB: maas_shadow_test
           POSTGRES_USER: postgres
