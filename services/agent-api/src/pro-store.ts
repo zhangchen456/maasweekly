@@ -38,6 +38,8 @@ export function csvRows(rows: Record<string,string>[]) {
 }
 
 export function effectiveEntitlement(e: {starts:number;ends:number;revoked:number}|undefined, beta: {created:number}|undefined, available:boolean, now:number) {
+  const graceStart=Number(process.env.PRO_BETA_GRACE_START),graceEnd=Number(process.env.PRO_BETA_GRACE_END);
+  if(beta&&!e?.revoked&&Number.isSafeInteger(graceStart)&&Number.isSafeInteger(graceEnd)&&graceEnd>graceStart&&beta.created<graceStart&&now<graceEnd)return {status:'active',starts:beta.created,ends:graceEnd,source:'beta'};
   if (beta && available && !e?.revoked) return {status:'active',starts:beta.created,ends:null,source:'beta'};
   return {source:'manual',status:!e?'pending':e.revoked?'revoked':e.starts>now?'pending':e.ends<=now?'expired':'active',starts:e?.starts??null,ends:e?.ends??null};
 }
