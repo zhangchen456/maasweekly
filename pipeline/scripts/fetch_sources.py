@@ -31,7 +31,7 @@ DIFF_DIR = BASE_DIR / "data" / "diff"
 
 sys.path.insert(0, str(BASE_DIR / 'pipeline'))
 from run_protocol import current_journal, managed_entry
-from staged_fetch import fetch as staged_fetch, wanted, source_key
+from staged_fetch import fetch as staged_fetch, wanted, observation_key
 from arena_source import URL as ARENA_DATASET_URL, FORMAT as ARENA_FORMAT, fetch_dataset as fetch_arena_dataset
 
 
@@ -47,18 +47,27 @@ def run_timestamp():
     return datetime.fromisoformat(run.data['startedAt']).astimezone(ZoneInfo('Asia/Shanghai')).replace(tzinfo=None) if run else datetime.now(ZoneInfo('Asia/Shanghai')).replace(tzinfo=None)
 
 
-def observed_at(url):
+def observed_at(url, source_id=None):
     run = current_journal()
-    state = run.data['sources'].get(source_key(url), {}) if run else {}
+    state = run.data['sources'].get(observation_key(url, source_id), {}) if run else {}
     stamp = state.get('snapshot', {}).get('fetched_at')
     return datetime.fromtimestamp(stamp, ZoneInfo('Asia/Shanghai')).isoformat() if stamp else run_timestamp().isoformat()
 
 
-def fetch_page(url):
+def resolve_source_id(url, platform=None, source_type=None):
     registry = json.loads((BASE_DIR / 'pipeline/config/source_registry.json').read_text())
-    source_id = next((row['source_id'] for row in registry['sources'] if url in row.get('url_aliases', []) or row.get('primary_url') == url), None)
+    matches = [row for row in registry['sources'] if url in row.get('url_aliases', []) or row.get('primary_url') == url]
+    exact = [row for row in matches if row.get('display_name') == platform and row.get('source_type') == source_type]
+    if len(exact) == 1: return exact[0]['source_id']
+    if len(matches) == 1: return matches[0]['source_id']
+    if matches: raise ValueError('shared source URL requires an unambiguous platform and source type')
+    return None
+
+
+def fetch_page(url, source_id=None):
+    source_id = source_id or resolve_source_id(url)
     version = 'arena-dataset-1' if url == ARENA_DATASET_URL else 'source-text-2' if is_volcengine_doc(url) or is_tencent_doc(url) else 'source-text-1'
-    return staged_fetch(url, lambda: _fetch_page(url), version=version, source_id=source_id)
+    return staged_fetch(url, lambda: _fetch_page(url), version=version, source_id=source_id, identity=source_id)
 
 
 def is_volcengine_doc(url):
@@ -383,13 +392,16 @@ def main():
             if max_sources is not None and stats["total"] >= max_sources:
                 break
             url = sources.get(source_type)
-            if not url or not wanted(url):
+            if not url:
+                continue
+            source_id = resolve_source_id(url, name, source_type)
+            if not wanted(url, source_id):
                 continue
             
             stats["total"] += 1
             print(f"  [{source_type}] {url[:80]}...")
             
-            content, err = fetch_page(url)
+            content, err = fetch_page(url, source_id)
             if err:
                 print(f"    ✗ 失败: {err}")
                 stats["failed"] += 1
@@ -405,7 +417,7 @@ def main():
             stats["success"] += 1
             
             # 保存快照
-            snapshot_path = save_snapshot(name, source_type, content, today, observed_at(url))
+            snapshot_path = save_snapshot(name, source_type, content, today, observed_at(url, source_id))
             print(f"    ✓ 保存: {snapshot_path.name} ({len(content)} chars)")
             
             # 与昨天对比
@@ -458,11 +470,14 @@ def main():
             break
         name = src["name"]
         url = src.get("api_url") or src.get("url")
-        if not url or not wanted(url):
+        if not url:
+            continue
+        source_id = resolve_source_id(url, name, "industry")
+        if not wanted(url, source_id):
             continue
         stats["total"] += 1
         print(f"  [{name}] {url[:80]}...")
-        content, err = fetch_page(url)
+        content, err = fetch_page(url, source_id)
         if err:
             print(f"    ✗ 失败: {err}")
             stats["failed"] += 1
@@ -475,7 +490,7 @@ def main():
             })
             continue
         stats["success"] += 1
-        snapshot_path = save_snapshot(name, "industry", content, today, observed_at(url))
+        snapshot_path = save_snapshot(name, "industry", content, today, observed_at(url, source_id))
         print(f"    ✓ 保存: {snapshot_path.name} ({len(content)} chars)")
         
         yesterday_path = find_yesterday_snapshot(name, "industry", today)
