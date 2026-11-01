@@ -5,7 +5,7 @@ import { AdminStore } from './admin-store.js';
 
 const ident=z.string().min(1).max(200).regex(/^[a-zA-Z0-9:_-]+$/);
 const minor=z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
-export const paymentFactSchema=z.object({id:ident,kind:z.enum(['paid','failed','cancel','terminate','refund','dispute','dispute_won','dispute_lost']),orderId:ident,subscriptionId:ident,objectId:ident,currency:z.string().regex(/^[A-Z]{3}$/),amount:minor,starts:minor,ends:minor,occurredAt:minor}).strict();
+export const paymentFactSchema=z.object({id:ident,kind:z.enum(['paid','failed','cancel','resume','terminate','refund','dispute','dispute_won','dispute_lost']),orderId:ident,subscriptionId:ident,objectId:ident,currency:z.string().regex(/^[A-Z]{3}$/),amount:minor,starts:minor,ends:minor,occurredAt:minor}).strict();
 export type PaymentFact=z.infer<typeof paymentFactSchema>;
 const bad=(message:string)=>new AccountError(400,'invalid_payment',message);
 export function migratePayments(admin:AdminStore) {
@@ -60,12 +60,13 @@ export class PaymentStore {
    this.db.prepare('INSERT INTO paid_orders VALUES(?,?,?,?,?,?,?)').run('order_'+key,userId,sub,'simulator',currency,amount,this.admin.accounts.now());return this.order('order_'+key);
   });
  }
- receive(provider:string,eventId:string,raw:Buffer){
-  ident.parse(eventId);if(provider!=='simulator')throw bad('未配置供应商适配');
+ receive(provider:string,eventId:string,raw:Buffer){return this.admin.accounts.transaction(()=>this.receiveInTransaction(provider,eventId,raw));}
+ receiveInTransaction(provider:string,eventId:string,raw:Buffer){
+  ident.parse(eventId);if(!['simulator','waffo'].includes(provider))throw bad('未配置供应商适配');
   if(raw.length>65536)throw bad('回调过大');const payloadHash=createHash('sha256').update(raw).digest('hex');
-  return this.admin.accounts.transaction(()=>{const old=this.db.prepare('SELECT * FROM paid_events WHERE provider=? AND providerEventId=?').get(provider,eventId);
+  const old=this.db.prepare('SELECT * FROM paid_events WHERE provider=? AND providerEventId=?').get(provider,eventId);
    if(old){if(old.payloadHash!==payloadHash)throw new AccountError(409,'event_conflict','供应商事件内容冲突');return String(old.id);}
-   const id=randomUUID();this.db.prepare('INSERT INTO paid_events VALUES(?,?,?,?,?,?)').run(id,provider,eventId,payloadHash,raw.toString(),this.admin.accounts.now());return id;});
+   const id=randomUUID();this.db.prepare('INSERT INTO paid_events VALUES(?,?,?,?,?,?)').run(id,provider,eventId,payloadHash,raw.toString(),this.admin.accounts.now());return id;
  }
  // Input comes only from a trusted adapter's server-side lookup, never a browser return.
  process(eventId:string,verified:PaymentFact){
@@ -122,7 +123,7 @@ export class PaymentStore {
 // Shared by website/API/MCP/RSS/mail through ProStore.entitlement; no frontend payment decisions.
 type FactRow=Record<string,unknown>;
 export function projectPaidSubscription(facts:FactRow[],now:number){
- const paid=facts.filter(f=>f.kind==='paid'),termination=facts.some(f=>f.kind==='terminate'),cancelAtPeriodEnd=facts.some(f=>f.kind==='cancel');
+ const paid=facts.filter(f=>f.kind==='paid'),termination=facts.some(f=>f.kind==='terminate'),cancelAtPeriodEnd=facts.filter(f=>['cancel','resume'].includes(String(f.kind))).sort((a,b)=>Number(a.occurredAt)-Number(b.occurredAt)).at(-1)?.kind==='cancel';
  const disputes=new Map<string,boolean>();for(const f of facts){if(f.kind==='dispute')disputes.set(String(f.orderId),true);if(f.kind==='dispute_won'||f.kind==='dispute_lost')disputes.set(String(f.orderId),false);}
  const disputed=[...disputes.values()].some(Boolean);
  const usable=paid.filter(f=>{const refunded=facts.filter(r=>r.kind==='refund'&&r.orderId===f.orderId).reduce((n,r)=>checkedMinorTotal(n+Number(r.amount)),0);return refunded<Number(f.amount)&&!facts.some(r=>r.kind==='dispute_lost'&&r.orderId===f.orderId);});
