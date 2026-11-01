@@ -1,3 +1,4 @@
+import { runWorker } from './worker-runtime.js';
 import { ModelTaskLease, boundedModelCall } from './model-task-runtime.js';
 import { pathToFileURL } from 'node:url';
 import { z } from 'zod';
@@ -64,7 +65,6 @@ export class EditorialWorker {
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  if(!process.env.MAAS_ACCOUNT_DB||!process.env.PUBLIC_DATA_ROOT)throw new Error('MAAS_ACCOUNT_DB and PUBLIC_DATA_ROOT required');
  const accounts=new AccountStore(process.env.MAAS_ACCOUNT_DB),holder=new DatasetHolder(process.env.PUBLIC_DATA_ROOT);await holder.reloadAsync();
- const worker=new EditorialWorker(new EditorialService(new EditorialStore(new AdminStore(accounts)),holder));let stopped=false;let wake:(()=>void)|null=null;
- for(const signal of ['SIGINT','SIGTERM'] as const)process.on(signal,()=>{stopped=true;wake?.();});
- try{do{await holder.reloadAsync();const worked=await worker.once();if(process.argv.includes('--once'))break;if(!worked&&!stopped)await new Promise<void>(resolve=>{const timer=setTimeout(resolve,1000);wake=()=>{clearTimeout(timer);resolve();};});}while(!stopped);}finally{holder.close();accounts.close();}
+ const worker=new EditorialWorker(new EditorialService(new EditorialStore(new AdminStore(accounts)),holder));
+ try{await runWorker(()=>worker.once(),{name:'editorial',prepare:()=>holder.reloadAsync(),single:process.argv.includes('--once')});}finally{holder.close();accounts.close();}
 }

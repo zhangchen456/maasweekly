@@ -13,6 +13,8 @@ import re
 import tempfile
 from pathlib import Path
 from typing import Protocol
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
 
 
 class BlobIntegrityError(ValueError): pass
@@ -71,6 +73,22 @@ class BlobStore(Protocol):
     def putIfAbsent(self, sha256: str, raw: bytes) -> bool: ...
     def get(self, sha256: str, *, expected_bytes: int | None = None) -> bytes: ...
     def verify(self, sha256: str, *, expected_bytes: int | None = None) -> bool: ...
+
+
+@contextmanager
+def verified_batch_reader(store, workers=4):
+    """Overlap local immutable-object I/O, not verification or database access.
+
+    Caller supplies a byte/count bounded batch; every get still reopens the
+    original file with NOFOLLOW and checks its size/hash. No cross-run cache.
+    Non-filesystem adapters retain serial semantics (they may not be thread-safe).
+    """
+    def read(item):return store.get(item[0], expected_bytes=item[1])
+    if type(store) is not FilesystemBlobStore or workers == 1:
+        yield lambda batch:map(read, batch)
+    else:
+        with ThreadPoolExecutor(max_workers=workers, thread_name_prefix='verify-blob') as pool:
+            yield lambda batch:pool.map(read, batch)
 
 
 class FilesystemBlobStore:

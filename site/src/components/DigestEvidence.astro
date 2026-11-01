@@ -1,0 +1,6 @@
+---
+import { evidenceLinks, type EvidenceItem } from '../lib/digest-evidence';
+const { item } = Astro.props as { item: EvidenceItem };
+const en=Astro.url.pathname.startsWith('/en/');
+---
+{evidenceLinks(item).map(e=><a class="digest-evidence" href={e.url} rel="noopener noreferrer" title={en ? `Observed ${e.observedDate}` : `观察日期 ${e.observedDate}`}>{en?'Official source':'官方依据'} · {e.observedDate} ↗</a>)}

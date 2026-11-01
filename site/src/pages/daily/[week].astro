@@ -2,6 +2,8 @@
 import { siteRuntime } from '../../lib/runtime';
 import { readPageProjection } from '../../lib/page-data';
 import Layout from '../../layouts/Layout.astro';
+import DigestEvidence from '../../components/DigestEvidence.astro';
+import { displayItem } from '../../lib/digest-evidence';
 import { localizeEditorial } from '../../lib/dynamic-translation';
 import { priceChangeLink } from '../../lib/record-links';
 import { logoFor } from '../../lib/platforms';
@@ -209,13 +211,13 @@ const recordDates = Object.keys(recordsByDate).sort().reverse();
           </div>
           {flat.length > 0 ? (
             <ul class="hl-list">
-              {flat.map((h: any) => (
+              {flat.map((raw: any) => {const h=displayItem(raw,Astro.url.pathname.startsWith('/en/')?'en':'zh');return (
                 <li class={`hl-item ${HL_TYPE[h.type]?.cls || 't-other'}`}>
                   <span class="hl-type">{HL_TYPE[h.type]?.label || '动态'}</span>
                   <span class="hl-platform platform-name">{logoFor(h.platform) && <img class="platform-logo" src={logoFor(h.platform)} alt="" width="28" height="28" loading="lazy" />}{h.platform}</span>
-                  <span class="hl-text">{h.text}</span>
+                  <span class="hl-text">{h.text} <DigestEvidence item={h} /></span>
                 </li>
-              ))}
+              );})}
             </ul>
           ) : (
             <div class="no-hl">当日无要点（{stats.substantive ?? 0} 个信源有变化）</div>

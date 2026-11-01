@@ -31,6 +31,12 @@ class StandardInputTests(unittest.TestCase):
         save_weekly(self.root, weeks)
         self.assertEqual(compose_weekly(self.root), weeks)
         self.assertNotIn('story', json.loads((self.root / WEEKLY).read_text())[0])
+    def test_successful_empty_evidence_selection_clears_previous_summary(self):
+        day={'date':'2026-11-01','changed':[],'highlights':[{'platform':'A','items':[{'text':'old','type':'sunset'}]}]}
+        save_observations(self.root,{'days':[day]});save_day_summaries(self.root,[day])
+        day['highlights']=[]
+        save_day_summaries(self.root,[day],{day['date']:{'status':'success'}})
+        self.assertEqual(compose_daily(self.root)['days'][0]['highlights'],[])
     def test_metadata_uses_exact_prompt_and_never_guesses_legacy(self):
         import hashlib
         meta = provenance({'changed': [{'id': 'obs_test'}]}, 'template', 'model', 'actual prompt')

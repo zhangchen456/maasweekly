@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Root-owned, reversible SSR slot switch. Shared data is never rolled back here."""
-import argparse,fcntl,json,os,re,subprocess,tempfile,time,sys
+import argparse,fcntl,hashlib,json,os,re,subprocess,tempfile,time,sys
 from pathlib import Path
 from urllib.request import urlopen,Request
 from urllib.error import HTTPError
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from runtime_safety import require_capacity, wait_runtime
+import runtime_workers as workers
 ROOT=Path('/srv/maasweekly')
 SHARED=ROOT/'shared'
 FILES=[SHARED/'nginx/site-root.inc',SHARED/'nginx/agent-upstream.inc',SHARED/'nginx/agent-routes.inc',Path('/etc/nginx/snippets/maasweekly-https.conf')]
@@ -53,6 +54,10 @@ def probe(port, code=None):
 def stage(code):
     package=ROOT/'runtime'/code
     if not re.fullmatch('[a-f0-9]{10,40}',code) or package.is_symlink() or not (package/'site/dist/server/entry.mjs').is_file():raise ValueError('invalid runtime code')
+    manifest_path=package/'metadata/runtime-manifest.json'
+    if manifest_path.exists():
+        components=json.loads(manifest_path.read_text()).get('components')
+        if components and (components.get('workerProtocol')!=1 or components.get('controllerProtocol')!=2):raise ValueError('unsupported runtime component protocol')
     for parent in [package,package/'site',package/'site/dist']:parent.chmod(0o755)
     client=package/'site/dist/client'
     for item in [client,*client.rglob('*')]:
@@ -111,8 +116,10 @@ location ~ ^/(?:logos/|brand/|favicon[^/]*\\.(?:svg|png|ico)$|apple-touch-icon\\
     try_files $uri =404;
 }
 '''+snippet[end:]
-    atomic(SHARED/'runtime-switch-pending.json',(json.dumps({'backup':str(backup),'code':code})+'\n').encode())
+    manage_workers=workers.managed(package) or workers.managed((ROOT/'current').resolve())
+    atomic(SHARED/'runtime-switch-pending.json',(json.dumps({'backup':str(backup),'code':code,'workers':manage_workers})+'\n').encode())
     try:
+        if manage_workers:workers.drain()
         atomic(FILES[0],f'root {package}/site/dist/client;\n'.encode())
         atomic(FILES[1],f'upstream agent_api {{ server 127.0.0.1:{port}; }}\n'.encode())
         atomic(FILES[2],routes.encode());atomic(FILES[3],snippet.encode())
@@ -120,15 +127,19 @@ location ~ ^/(?:logos/|brand/|favicon[^/]*\\.(?:svg|png|ico)$|apple-touch-icon\\
         # Test the real TLS virtual host through local nginx, avoiding DNS/edge ambiguity.
         for route in ['/','/en/','/api/v1/status','/feed.xml','/favicon.svg']:
             run('curl','--silent','--show-error','--fail','--max-time','20','--resolve','daily.maas.click:443:127.0.0.1','https://daily.maas.click'+route)
+        previous=json.loads((SHARED/'runtime.json').read_text()) if (SHARED/'runtime.json').exists() else {'legacy':old_current,'slot':'green','recovery':str(backup)}
+        atomic(SHARED/'runtime-previous.json',(json.dumps(previous)+'\n').encode())
+        atomic(SHARED/'runtime.json',(json.dumps(candidate)+'\n').encode())
+        atomic(SHARED/'runtime-mode',b'enabled\n')
+        temp=ROOT/'.runtime-current';temp.unlink(missing_ok=True);temp.symlink_to(package);os.replace(temp,ROOT/'current')
+        if manage_workers:
+            candidate['workers']=workers.start_and_verify(ROOT,package)
+            candidate['controllers']={name:hashlib.sha256(Path(path).read_bytes()).hexdigest() for name,path in [('runtime',__file__),('workers',workers.__file__)]}
+            atomic(SHARED/'runtime.json',(json.dumps(candidate)+'\n').encode())
+        (SHARED/'runtime-switch-pending.json').unlink(missing_ok=True)
     except BaseException:
-        for path,body in zip(FILES,old):atomic(path,body)
-        run('nginx','-t');run('systemctl','reload','nginx');(SHARED/'runtime-switch-pending.json').unlink(missing_ok=True);raise
-    previous=json.loads((SHARED/'runtime.json').read_text()) if (SHARED/'runtime.json').exists() else {'legacy':old_current,'slot':'green','recovery':str(backup)}
-    atomic(SHARED/'runtime-previous.json',(json.dumps(previous)+'\n').encode())
-    atomic(SHARED/'runtime.json',(json.dumps(candidate)+'\n').encode())
-    atomic(SHARED/'runtime-mode',b'enabled\n')
-    temp=ROOT/'.runtime-current';temp.unlink(missing_ok=True);temp.symlink_to(package);os.replace(temp,ROOT/'current')
-    (SHARED/'runtime-switch-pending.json').unlink(missing_ok=True)
+        recover_pending()
+        raise
     retire_previous(previous, candidate)
     return {**candidate,'status':'active','recovery':str(backup)}
 
@@ -153,13 +164,16 @@ def recover_pending():
     if not pending.exists():return
     info=json.loads(pending.read_text());backup=Path(info['backup'])
     if not backup.resolve().is_relative_to((SHARED/'runtime-recovery').resolve()):raise ValueError('invalid recovery path')
+    if info.get('workers'):workers.drain()
     for n,path in enumerate(FILES):atomic(path,(backup/str(n)).read_bytes())
     for name in ['runtime.json','runtime-mode','runtime-previous.json']:
         saved=backup/name
         if saved.exists():atomic(SHARED/name,saved.read_bytes())
         else:(SHARED/name).unlink(missing_ok=True)
     tmp=ROOT/'.runtime-current';tmp.unlink(missing_ok=True);tmp.symlink_to((backup/'current').read_text());os.replace(tmp,ROOT/'current')
-    run('nginx','-t');run('systemctl','reload','nginx');pending.unlink()
+    run('nginx','-t');run('systemctl','reload','nginx')
+    if info.get('workers'):workers.start_and_verify(ROOT,(ROOT/'current').resolve())
+    pending.unlink()
 
 def install_package(rid):
     if not re.fullmatch('rl_[a-f0-9]{10}_000000000000',rid):raise ValueError('invalid runtime upload ID')
@@ -173,7 +187,7 @@ def install_package(rid):
     if active.exists():
         current=json.loads(active.read_text())
         if current.get('code')==manifest['codeCommit']:
-            probe(current['port'],current['code']);return {**current,'status':'already_active'}
+            probe(current['port'],current['code']);workers.start_and_verify(ROOT,package);return {**current,'status':'already_active'}
     requirements=package/'tooling/requirements.lock.txt'
     if requirements.read_bytes()!=(ROOT/'runtime/build-tools/writer/requirements.lock.txt').read_bytes():raise ValueError('writer dependency image must be rebuilt before this code release')
     (package/'tooling/site/src/data').mkdir(parents=True,exist_ok=True);(package/'tooling/site/src/content').mkdir(parents=True,exist_ok=True)
