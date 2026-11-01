@@ -9,6 +9,30 @@ RELEASE = re.compile(r'\b(?:released|launch(?:ed)?|introducing)\b|正式发布|�
 DATE = re.compile(r'20\d\d[-/.年]\d{1,2}[-/.月]\d{1,2}日?')
 NEGATION = re.compile(r'\b(?:not|never|no longer deprecated)\b|不会|不再下线|未下线|取消下线', re.I)
 
+def archived_prices(root, date, prices):
+    """Upgrade old flat events only from matching immutable, already validated facts."""
+    result=[]
+    for original in prices[:20]:
+        p=dict(original)
+        if not p.get('currentFact') and re.fullmatch(r'price_[a-f0-9]{64}', str(p.get('id', ''))):
+            try:
+                record=json.loads((root/'data/price-records'/f"{p['id']}.json").read_text())
+                if record['id']!=p['id'] or record['date']!=date:continue
+                for field,key in [('afterVersionId','currentFact'),('beforeVersionId','previousFact')]:
+                    version=record.get(field)
+                    if not version:continue
+                    if not re.fullmatch(r'pfv_[a-f0-9]{64}',version):raise ValueError('invalid fact reference')
+                    fact=json.loads((root/'data/price-facts/versions'/f'{version}.json').read_text())
+                    if fact['version_id']!=version:raise ValueError('fact identity mismatch')
+                    p[key]=fact
+                fact=p['currentFact']
+                if any(p.get(a)!=fact.get(b) for a,b in [('provider','provider_id'),('model','model_key'),('component','component'),('currency','currency'),('unit_quantity','unit_quantity'),('unit_name','unit_name')]):continue
+                if Decimal(str(p['current']))!=Decimal(str(fact['amount'])):continue
+                if p.get('previous') is not None and Decimal(str(p['previous']))!=Decimal(str(p['previousFact']['amount'])):continue
+            except (OSError, KeyError, ValueError, InvalidOperation):continue
+        result.append(p)
+    return result
+
 def safe_url(value):
     try:
         u = urlsplit(value)

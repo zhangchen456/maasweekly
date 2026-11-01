@@ -40,7 +40,7 @@ BASE = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(BASE / 'pipeline'))
 from data_store import DAILY, WEEKLY, compose_daily, compose_weekly, save_day_summaries, save_weekly, project_site, provenance, record_summary_failure, SUMMARIES
 sys.path.insert(0, str(BASE / "pipeline" / "scripts"))
-from digest_evidence import catalog, validate_selection
+from digest_evidence import catalog, validate_selection, archived_prices
 from diff_clean import filter_and_pair, humanize_line  # noqa: E402
 
 DIFF_DIR = BASE / "data" / "diff"
@@ -146,14 +146,14 @@ def validate_highlight_platforms(result, changed, price_changes):
 def build_day_prompt(date_str: str, changed: list, price_changes: list | None = None) -> str:
     """把当日 substantive 信源 + 价格变化事件组装成喂给 LLM 的文本。"""
     _, aliases = platform_names(changed, price_changes or [])
-    evidence = catalog(date_str, changed, price_changes or [], aliases)
+    evidence = catalog(date_str, changed, archived_prices(BASE,date_str,price_changes or []), aliases)
     return PROMPT + json.dumps(list(evidence.values()), ensure_ascii=False)
 
 
 def process_day(day: dict, api_key: str, base_url: str, model: str) -> dict | None:
     """处理单日：substantive 信源 + 价格变化喂 LLM，返回 {highlights, source_summaries} 或 None（失败）。"""
     changed = [c for c in day.get("changed", []) if c.get("kind") == "substantive"]
-    price_changes = day.get("price_changes") or []
+    price_changes = archived_prices(BASE,day['date'],day.get("price_changes") or [])
     if not changed and not price_changes:
         return {"highlights": [], "source_summaries": {}}
     prompt = build_day_prompt(day["date"], changed, price_changes)
