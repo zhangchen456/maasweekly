@@ -3,7 +3,7 @@
 import argparse,json,os,subprocess,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-PYTHON=['shadow_store','shadow_transfer','shadow_verification','data_publication','database_writer','weekly_publishing','blob_storage','import_memory','runtime_control','runtime_package','runtime_cleanup','workflow_release_contract','standard_inputs','english_translation','pipeline_runtime','current_pricing','price_archive','source_fetch','arena_source','arena_projection','cross_platform','developer_platform_registry','model_public_projection.TestProjectionContract','model_registry.TestProviderMap','public_export','public_retention','monitor_collection','formal_weekly_health','reliability']
+PYTHON=['shadow_store','shadow_transfer','shadow_verification','data_publication','database_writer','weekly_publishing','blob_storage','import_memory','runtime_control','runtime_package','runtime_cleanup','workflow_release_contract','standard_inputs','english_translation','pipeline_runtime','current_pricing','price_archive','source_fetch','source_identity','arena_source','arena_projection','cross_platform','developer_platform_registry','model_public_projection.TestProjectionContract','model_registry.TestProviderMap','public_export','public_retention','monitor_collection','formal_weekly_health','reliability']
 SITE=['english-completeness','private-translation-refresh','account-password','admin-analytics-export','analytics','feedback','pro-scope','theme-preference','time-display','workspace-analytics','workspace-currency','workspace-share']
 def run(args,cwd=ROOT):
  print('+ '+' '.join(map(str,args)),flush=True);subprocess.run(args,cwd=cwd,check=True)

@@ -27,6 +27,8 @@ class SourceFetchTests(unittest.TestCase):
             root=Path(folder);old=root/'data/snapshots/2026-10-30/LMArena__industry__2026-10-30.md'
             old.parent.mkdir(parents=True);old.write_text('Old web leaderboard model rows that are not the dataset format')
             fetch.configure_root(root)
+            config=root/'pipeline/config';config.mkdir(parents=True)
+            (config/'source_registry.json').write_text(json.dumps({'sources':[{'source_id':'lmarena-industry','display_name':'LMArena','source_type':'industry','primary_url':fetch.ARENA_DATASET_URL}]}))
             try:
                 with patch.object(fetch,'load_sources',return_value={'platforms':[],'industry_sources':[{'name':'LMArena','api_url':fetch.ARENA_DATASET_URL}]}),patch.object(fetch,'fetch_page',return_value=(fetch.ARENA_FORMAT+'\nOfficial new model observations',None)),patch.object(fetch,'run_timestamp',return_value=datetime(2026,10,31)),patch.object(fetch,'datetime',wraps=datetime) as clock:
                     clock.now.return_value=datetime(2026,10,31)
