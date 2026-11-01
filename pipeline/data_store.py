@@ -59,7 +59,7 @@ def compose_daily(root: Path, view=None):
         if events: days[date]['price_changes'] = events
     for date, day in days.items():
         summary = summaries.get(date, {})
-        if summary.get('highlights'): day['highlights'] = summary['highlights']
+        if 'highlights' in summary: day['highlights'] = summary['highlights']
         for change in day.get('changed', []):
             key = change.get('id') or f"{change.get('platform')}|{change.get('source_type')}"
             text = summary.get('sourceSummaries', {}).get(key)
@@ -93,7 +93,7 @@ def save_day_summaries(root: Path, days, metadata=None):
     for day in days:
         sources = {c.get('id') or f"{c.get('platform')}|{c.get('source_type')}": c['llm_summary']
                    for c in day.get('changed', []) if c.get('llm_summary')}
-        if day.get('highlights') or sources:
+        if day.get('highlights') or sources or day['date'] in (metadata or {}):
             prev = out.get(day['date'], {})
             out[day['date']] = {'highlights': day.get('highlights', []), 'sourceSummaries': sources,
                                 'provenance': (metadata or {}).get(day['date'], prev.get('provenance', legacy_provenance()))}

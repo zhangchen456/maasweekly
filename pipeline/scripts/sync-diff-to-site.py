@@ -88,8 +88,8 @@ def build_weekly(days: list) -> list:
         flat = []
         for h in hl:
             for item in h.get("items", []):
-                flat.append({"platform": h.get("platform"), "date": d["date"],
-                             "text": item.get("text"), "type": item.get("type")})
+                flat.append({**item, "platform": h.get("platform"), "date": d["date"],
+                             "type": item.get("type") if item.get('evidenceVersion') == 1 and item.get('evidence') else 'other'})
         w["days"][d["date"]] = {
             "substantive": len(substantive),
             "jitter": len(jitter),

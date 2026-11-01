@@ -4,6 +4,7 @@ import fcntl,hashlib,json,os,shutil,subprocess,tempfile,time
 from pathlib import Path
 ROOT=Path('/srv/maasweekly')
 MAPPING={
+ 'ops/runtime_workers.py':'/usr/local/lib/maasweekly/runtime_workers.py',
  'ops/runtime_safety.py':'/usr/local/lib/maasweekly/runtime_safety.py',
  'ops/pipeline_monitor.py':'/usr/local/lib/maasweekly/pipeline_monitor.py',
  'ops/runtime-control.py':'/usr/local/lib/maasweekly/runtime-control.py',

@@ -23,7 +23,7 @@ for folder in ['pipeline','config','data/model-registry','site/scripts','ops/dat
  for p in (root/folder).rglob('*'):
   if p.is_file() and '__pycache__' not in p.parts and p.suffix in ['.py','.json','.sql','.sh']:
    target=out/p.relative_to(root);target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,target)
-for name in ['requirements.lock.txt','ops/backup-data-store.sh','scripts/monitor-collect.py','ops/runtime_safety.py','ops/pipeline_monitor.py','ops/runtime-control.py','ops/maas-pipeline-monitor.service','ops/maas-pipeline-monitor.timer']:
+for name in ['requirements.lock.txt','ops/backup-data-store.sh','scripts/monitor-collect.py','ops/runtime_safety.py','ops/runtime_workers.py','ops/pipeline_monitor.py','ops/runtime-control.py','ops/maas-pipeline-monitor.service','ops/maas-pipeline-monitor.timer']:
  target=out/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(root/name,target)
 (out/'code-commit').write_text(sys.argv[2]+'\n')
 (out/'site/src/data').mkdir(parents=True,exist_ok=True);(out/'site/src/content').mkdir(parents=True,exist_ok=True)
@@ -42,6 +42,7 @@ for p in sorted(root.rglob('*')):
     elif p.is_file():
         files.append({'path':str(p.relative_to(root)),'bytes':p.stat().st_size,'executable':bool(p.stat().st_mode&0o111),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
 manifest={'format':'maas-runtime-candidate-v1','codeCommit':sys.argv[2],'pageFormatVersion':1,'runtimeHealthVersion':1,
+          'components':{'workerProtocol':1,'controllerProtocol':2,'writerRequirementsSha256':hashlib.sha256((root/'tooling/requirements.lock.txt').read_bytes()).hexdigest()},
           'activated':False,'productionCompatible':False,'requires':'isolated Linux SSR/permission/blue-green/rollback acceptance before production activation',
           'dataIncluded':False,'files':files,'totalBytes':sum(f.get('bytes',0) for f in files)}
 (root/'metadata/runtime-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
