@@ -38,7 +38,7 @@ def start_and_verify(root, package, timeout=30):
                 if not pid or status.get('ActiveState') != 'active':continue
                 if Path(f'/proc/{pid}/cwd').resolve(strict=True) != package/'agent-api':continue
                 if protocol == 1:
-                    receipt = json.loads((root/'shared/state'/f'{name}-worker.json').read_text())
+                    receipt = json.loads((root/'shared/state/worker-runtime'/f'{name}-worker.json').read_text())
                     if receipt != {'protocol':1,'pid':pid,'code':package.name,'phase':'ready'}:continue
                 proofs[name] = {'pid':pid,'code':package.name,'protocol':protocol}
             except (OSError, ValueError):continue
