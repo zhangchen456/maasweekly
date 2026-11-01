@@ -1,3 +1,4 @@
+import { runWorker } from './worker-runtime.js';
 import { pathToFileURL } from 'node:url';
 import { AccountStore } from './account-store.js';
 import { AdminStore } from './admin-store.js';
@@ -20,4 +21,4 @@ export class DiagnosticWorker {
  }catch(e){const failure=e instanceof ModelFailure?e:new ModelFailure('invalid_output');p.admin.accounts.transaction(()=>{if(!this.lease.active(id,fence))return;const current=p.run(id),usage=JSON.parse(String(current.usage));usage.push({attempt:current.attempt,error:failure.code,uncertain:failure.uncertain,actualCost:null,at:now()});db.prepare('UPDATE diagnostic_runs SET usage=? WHERE id=?').run(JSON.stringify(usage),id);if(failure.retryable&&Number(current.attempt)<3)db.prepare("UPDATE diagnostic_runs SET state='queued',leaseUntil=0,version=version+1,errorCode=?,availableAt=? WHERE id=?").run(failure.code,now()+2**Number(current.attempt)*1000,id);else finish(failure.uncertain?'needs_review':'failed',null,failure.code);});}finally{clearInterval(timer);}return true;
  }
 }
-if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){if(!process.env.MAAS_ACCOUNT_DB)throw Error('MAAS_ACCOUNT_DB required');const accounts=new AccountStore(process.env.MAAS_ACCOUNT_DB),worker=new DiagnosticWorker(new AdminProblems(new AdminStore(accounts)));let stopped=false;process.on('SIGINT',()=>{stopped=true;});process.on('SIGTERM',()=>{stopped=true;});try{do{const worked=await worker.once();if(process.argv.includes('--once'))break;if(!worked&&!stopped)await new Promise(r=>setTimeout(r,1000));}while(!stopped);}finally{accounts.close();}}
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){if(!process.env.MAAS_ACCOUNT_DB)throw Error('MAAS_ACCOUNT_DB required');const accounts=new AccountStore(process.env.MAAS_ACCOUNT_DB),worker=new DiagnosticWorker(new AdminProblems(new AdminStore(accounts)));try{await runWorker(()=>worker.once(),{name:'diagnostic',single:process.argv.includes('--once')});}finally{accounts.close();}}

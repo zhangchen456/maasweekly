@@ -96,6 +96,7 @@ def verify_view(connection, version, store):
 
 
 def _verify_files(connection, version, files, store):
+    from blob_store import verified_batch_reader
     # Callers supply a freshly resolved database view from this transaction.
     # Every referenced object is still read and checked, including inherited ones.
     _validate_files(files, version)
@@ -106,18 +107,18 @@ def _verify_files(connection, version, files, store):
             raise ValueError('same blob referenced with inconsistent size')
     json_shas = {v['sha256'] for logical, v in files.items() if Path(logical).suffix == '.json'}
     checked = fallback = ordered = 0
-    with connection.cursor() as cursor:
+    with connection.cursor() as cursor, verified_batch_reader(store) as read_batch:
         for batch in document_batches(by_sha):
             cursor.execute('''SELECT sha256,bytes,payload,payload_json FROM maas_data.documents
                               WHERE sha256=ANY(%s)''', (batch,))
             rows = cursor.fetchall()
             if len(rows) != len(batch):
                 raise ValueError('missing structured documents')
-            for sha, size, payload, payload_json in rows:
+            raw_objects = read_batch([(row[0], by_sha[row[0]]['bytes']) for row in rows])
+            for (sha, size, payload, payload_json), raw in zip(rows, raw_objects):
                 meta = by_sha[sha]
                 if size != meta['bytes']:
                     raise ValueError('document size mismatch')
-                raw = store.get(sha, expected_bytes=size)
                 original = json.loads(raw) if sha in json_shas else None
                 supported = _jsonb_safe(original)
                 if payload_json is not None:

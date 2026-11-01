@@ -1,6 +1,7 @@
 ---
 import { logoFor } from '../lib/platforms';
 import BrandMark from './BrandMark.astro';
+import DigestEvidence from './DigestEvidence.astro';
 import { homeOverview, highlightEntities } from '../lib/home-page';
 import type { PlatformHighlight } from '../lib/home-page';
 interface Props { highlights: PlatformHighlight[]; platformOrder: string[]; date?: string; updatedAt?: string }
@@ -13,7 +14,7 @@ const { labels, picks, recentChanges } = homeOverview(highlights, Astro.url.path
     <div class="opening-kicker-row"><p class="home-kicker">MAAS DAILY / 今日重点</p>{picks.length > 1 && <button class="carousel-play" type="button" aria-label="暂停自动轮播">暂停</button>}</div>
     {picks.length > 0 && <h1 class="sr-only">MaaS Daily · 今日模型与平台变化</h1>}
     <div class="highlight-slides">{picks.map((item,index)=><article class="highlight-slide" data-highlight-slide hidden={index !== 0} role="group" aria-roledescription="幻灯片" aria-label={`${index+1} / ${picks.length}`}>
-      <h2 class="highlight-title">{item.platform} · {item.headline}</h2><p class="opening-deck">{item.platform} · {labels[item.type] ?? labels.other}</p><p class="highlight-summary">{item.text}</p><div class="opening-links"><a href={`#signal-${platformOrder.indexOf(item.platform)}`}>查看记录与依据 ↗</a><a href="#market-title">查看各家近期变化 ↓</a></div>
+      <h2 class="highlight-title">{item.platform} · {item.headline}</h2><p class="opening-deck">{item.platform} · {labels[item.type] ?? labels.other}</p><p class="highlight-summary">{item.text}</p><DigestEvidence item={item} /><div class="opening-links"><a href={`#signal-${platformOrder.indexOf(item.platform)}`}>查看记录与依据 ↗</a><a href="#market-title">查看各家近期变化 ↓</a></div>
     </article>)}</div>
     {!picks.length && <h1 id="opening-title">模型与平台，今日观察。</h1>}
     {picks.length > 1 && <div class="carousel-controls"><button type="button" data-carousel-prev aria-label="上一条重点">←</button><div class="carousel-pages" role="group" aria-label="选择重点">{picks.map((item,index)=><button type="button" data-carousel-page={index} aria-pressed={index === 0 ? 'true' : 'false'} aria-label={`第 ${index+1} 条：${item.headline}`}>{String(index+1).padStart(2,'0')}</button>)}</div><button type="button" data-carousel-next aria-label="下一条重点">→</button><span class="carousel-status" aria-live="polite">1 / {picks.length}</span></div>}
@@ -41,7 +42,7 @@ const { labels, picks, recentChanges } = homeOverview(highlights, Astro.url.path
   {recentChanges.groups.map(group => <article class="vendor-change-row" data-recent-platform={group.platform} data-platform={group.platform}>
     <header class="vendor-change-identity"><img src={logoFor(group.platform)} alt="" width="32" height="32" loading="lazy" /><div><h3>{group.platform}</h3><p>{group.items.length} 条变化 · 最近 {group.items[0].date.slice(5).replace('-','.')}</p></div><button class="follow-button" type="button" data-follow={group.platform} aria-pressed="false" aria-label={`关注 ${group.platform}`}>＋ 关注</button></header>
     <div class="vendor-change-body">
-      <ul class="vendor-change-items">{group.items.map((item,index) => <li class="vendor-change-item" data-type={item.type} data-date={item.date} data-order={index}><span class={`change-kind kind-${item.type}`}>{labels[item.type] ?? labels.other}</span><p>{highlightEntities(item.text).map(seg => seg.hl ? <code>{seg.text}</code> : seg.text)}</p><a href={item.href} aria-label={`${group.platform} ${item.date} 的变化记录`}><time datetime={item.date}>{item.date.slice(5).replace('-','.')}</time> ↗</a></li>)}</ul>
+      <ul class="vendor-change-items">{group.items.map((item,index) => <li class="vendor-change-item" data-type={item.type} data-date={item.date} data-order={index}><span class={`change-kind kind-${item.type}`}>{labels[item.type] ?? labels.other}</span><p>{highlightEntities(item.text).map(seg => seg.hl ? <code>{seg.text}</code> : seg.text)} <DigestEvidence item={item} /></p><a href={item.href} aria-label={`${group.platform} ${item.date} 的变化记录`}><time datetime={item.date}>{item.date.slice(5).replace('-','.')}</time> ↗</a></li>)}</ul>
       <details class="vendor-change-more" hidden><summary>展开更多变化</summary><ul class="vendor-change-items"></ul></details>
 
     </div>

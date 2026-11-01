@@ -97,9 +97,10 @@ def capture(root: Path, run_id: str, *, publish=True):
             record = json.loads(raw)
             folder = 'record-revisions' if logical.startswith('data/records/') else 'price-record-revisions'
             revision = safe(root, f'data/{folder}/{record["id"]}/{record["revision"]}.json')
-            if not revision.exists() or json.loads(revision.read_bytes()) != record:
+            revision_raw = revision.read_bytes() if revision.exists() else None
+            if revision_raw is None or json.loads(revision_raw) != record:
                 raise ValueError('current record differs from immutable revision: ' + record['id'])
-            target = revision; raw = revision.read_bytes()
+            target = revision; raw = revision_raw
         elif not logical.startswith(IMMUTABLE):
             checksum = digest(raw)
             target = safe(root, f'data/input-objects/{checksum}{p.suffix}')
