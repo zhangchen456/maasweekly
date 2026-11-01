@@ -10,11 +10,25 @@ from pricing.base import ContentSnapshot
 from run_protocol import current_journal, source_event
 
 
-def source_key(url): return 'http_' + hashlib.sha256(url.encode()).hexdigest()[:24]
+def source_key(url, identity=None):
+    if identity is None: return 'http_' + hashlib.sha256(url.encode()).hexdigest()[:24]
+    # A shared transport URL is not a logical stream identity.
+    return 'source_' + hashlib.sha256(json.dumps([identity, url], separators=(',', ':')).encode()).hexdigest()[:32]
 
-def wanted(url):
+
+def observation_key(url, identity=None):
+    run = current_journal(); key = source_key(url, identity)
+    if run and (run.recover or run.data.get('offline')) and key not in run.data['sources']:
+        legacy = source_key(url); prior = run.data['sources'].get(legacy, {})
+        # Reuse old evidence only for the identity it actually recorded.
+        if prior and prior.get('sourceId') == identity: return legacy
+    return key
+
+
+def wanted(url, identity=None):
     run = current_journal()
-    return not run or not run.data.get('selectedSources') or source_key(url) in run.data['selectedSources']
+    selected = run.data.get('selectedSources') if run else None
+    return not selected or source_key(url, identity) in selected or source_key(url) in selected
 
 
 def publish_state(run, key, state):
@@ -22,7 +36,11 @@ def publish_state(run, key, state):
     from data_store import read, write
     relative = 'data/normalized/source-runtime.json'
     states = read(run.root, relative, {})
-    old = states.get(key, {})
+    old = states.get(key)
+    if old is None:
+        # Preserve this stream's actual success when migrating legacy URL keys.
+        matches = [v for v in states.values() if v.get('sourceId') == state.get('sourceId', key)]
+        old = max(matches, key=lambda v: v.get('latestAttemptAt', 0), default={})
     stamp = state.get('lastSuccessAt') if state.get('outcome') in ('success', 'unchanged') else state.get('latestAttemptAt', time.time())
     if stamp < old.get('latestAttemptAt', 0): return
     count = state.get('parsedCount', 0)
@@ -36,8 +54,8 @@ def publish_state(run, key, state):
     write(run.root, relative, states)
 
 
-def fetch(url, callback, *, version, source_id=None, retries=1, count=None):
-    run = current_journal(); key = source_key(url); started = time.monotonic()
+def fetch(url, callback, *, version, source_id=None, identity=None, retries=1, count=None):
+    run = current_journal(); key = observation_key(url, identity); started = time.monotonic()
     if not run: return callback()
     previous = run.data['sources'].get(key, {})
     snapshot = run.snapshot(key) if run.recover or run.data.get('offline') else None

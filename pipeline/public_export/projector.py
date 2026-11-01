@@ -68,15 +68,16 @@ class SourceStatusIndex:
     """Committed fetch state, with the historical diff window as a legacy fallback."""
 
     def __init__(self, daily_changes: dict, source_registry: list[dict], runtime: dict | None = None):
-        # url → sourceId（primary_url 与 url_aliases 都算）
-        self._url_to_sid: dict[str, str] = {}
+        # Historical rows prefer explicit stream context; a shared URL alone is ambiguous.
+        self._url_to_sids: dict[str, set[str]] = {}
+        self._context_to_sid: dict[str, str] = {}
         for s in source_registry:
             sid = s["source_id"]
             for u in [s.get("primary_url")] + (s.get("url_aliases") or []):
                 if u:
-                    self._url_to_sid[u] = sid
+                    self._url_to_sids.setdefault(u, set()).add(sid)
             # source_type + display 也可兜底定位（failed 条目没有 sourceId）
-            self._url_to_sid.setdefault(f"{s.get('display_name')}|{s.get('source_type')}", sid)
+            self._context_to_sid.setdefault(f"{s.get('display_name')}|{s.get('source_type')}", sid)
         # sourceId → [(date, failed?)...] 按日期排序
         by_day: dict[str, dict[str, set]] = {}   # date → {sid_failed:set, sid_seen:set}
         for day in daily_changes.get("days", []):
@@ -120,11 +121,11 @@ class SourceStatusIndex:
                 self._runtime[sid] = value
 
     def _resolve_entry(self, entry: dict) -> str | None:
-        url = entry.get("url")
-        if url and url in self._url_to_sid:
-            return self._url_to_sid[url]
         key = f"{entry.get('platform')}|{entry.get('source_type')}"
-        return self._url_to_sid.get(key)
+        if key in self._context_to_sid:
+            return self._context_to_sid[key]
+        matches = self._url_to_sids.get(entry.get("url"), set())
+        return next(iter(matches)) if len(matches) == 1 else None
 
     def status_of(self, source_id: str) -> dict:
         """{state, reason, lastAttemptDate, lastSuccessDate}（unknown 时时间为 null）。"""
