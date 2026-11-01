@@ -14,11 +14,11 @@ class DigestEvidenceTests(unittest.TestCase):
   for kind in ['sunset','release','pricing']:
    with self.assertRaises(ValueError):self.select(e,kind)
  def test_sunset_needs_current_explicit_statement_and_date(self):
-  for text in ['Model Alpha deprecated','Model Alpha not deprecated on 2026-12-01']:
+  for text in ['Model Alpha deprecated','Model Alpha deprecated on 2026-12-01','Model Alpha not deprecated on 2026-12-01','Model Alpha retirement postponed on 2026-12-01','Model Alpha 将于2026-12-01停止支持']:
    with self.assertRaises(ValueError):self.select(catalog('2026-11-01',[self.source([text])],[],{}),'sunset')
   e=catalog('2026-11-01',[self.source(['Model Alpha will be retired on 2026-12-01'])],[],{})
   item=self.select(e,'sunset')['highlights'][0]['items'][0]
-  self.assertEqual(item['evidence'][0]['effectiveDates'],['2026-12-01'])
+  self.assertEqual(item['evidence'][0]['mentionedDates'],['2026-12-01'])
   self.assertEqual(item['evidence'][0]['observedDate'],'2026-11-01')
  def test_no_generated_text_or_unbound_evidence(self):
   e=catalog('2026-11-01',[self.source(['Model Alpha released'])],[],{})
