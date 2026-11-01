@@ -172,7 +172,12 @@ def recover_pending():
         else:(SHARED/name).unlink(missing_ok=True)
     tmp=ROOT/'.runtime-current';tmp.unlink(missing_ok=True);tmp.symlink_to((backup/'current').read_text());os.replace(tmp,ROOT/'current')
     run('nginx','-t');run('systemctl','reload','nginx')
-    if info.get('workers'):workers.start_and_verify(ROOT,(ROOT/'current').resolve())
+    if info.get('workers'):
+        proofs=workers.start_and_verify(ROOT,(ROOT/'current').resolve())
+        state=json.loads((SHARED/'runtime.json').read_text())
+        state['workers']=proofs
+        state['controllers']={name:hashlib.sha256(Path(path).read_bytes()).hexdigest() for name,path in [('runtime',__file__),('workers',workers.__file__)]}
+        atomic(SHARED/'runtime.json',(json.dumps(state)+'\n').encode())
     pending.unlink()
 
 def install_package(rid):
