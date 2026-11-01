@@ -1,3 +1,4 @@
+import type { WaffoLiveStore } from './waffo-live.js';
 import { PaymentSimulator } from './payment-simulator.js';
 import { PaymentStore,paymentMonthEnd } from './payment-store.js';
 import { AdminStore } from './admin-store.js';
@@ -27,7 +28,7 @@ async function read(req: IncomingMessage) {
   try { const v = JSON.parse(Buffer.concat(buffers).toString()); if (!v || typeof v !== 'object' || Array.isArray(v)) throw new Error(); return v as Record<string,unknown>; }
   catch { throw new AccountError(400,'invalid_json','请求格式错误'); }
 }
-export function createProHandler(store: ProStore | null, holder: DatasetHolder, config: AccountConfig, mailAvailable: boolean, renderWeekly?: (id:string)=>Promise<string|null>) {
+export function createProHandler(store: ProStore | null, holder: DatasetHolder, config: AccountConfig, mailAvailable: boolean, renderWeekly?: (id:string)=>Promise<string|null>, live?: WaffoLiveStore | null) {
   const limiter = new ClientRateLimiter({capacity:120,refillPerMinute:60,trustLoopbackProxy:config.trustProxy});
   return async (req: IncomingMessage,res: ServerResponse) => {
     const send = (value: unknown, status=200, type='application/json; charset=utf-8') => { res.writeHead(status,{'Content-Type':type}); res.end(type.startsWith('application/json') ? JSON.stringify(value) : String(value)); };
@@ -72,6 +73,18 @@ export function createProHandler(store: ProStore | null, holder: DatasetHolder, 
           if(value===null)throw new AccountError(404,'not_found','周报不存在');html=value;
         }else try{html=readFileSync(path.join(root,id+'.html'),'utf8');}catch{throw new AccountError(404,'not_found','周报暂不可用');}
         store.event('weekly_read',id,user.id);send(html,200,'text/html; charset=utf-8');return;
+      }
+      if(live&&route.startsWith('billing')){
+       const authorize=()=>{if(proUser(store,req,config)?.id!==user.id)throw new AccountError(401,'unauthenticated','会话已失效，请重新登录');};
+       if(route==='billing'&&req.method==='GET'){send({...live.user(user.id),entitlement:store.entitlement(user.id)});return;}
+       if(req.method==='POST'){
+        const allowed:Record<string,string[]>={'billing/checkout':['key'],'billing/cancel':['subscriptionId'],'billing/portal':[],'billing/refresh':[]};
+        if(!allowed[route]||Object.keys(input).some(k=>!allowed[route]!.includes(k)))throw new AccountError(400,'invalid_input','请求参数无效');
+        if(route==='billing/checkout'){send(await live.checkout(user.id,String(input.key??''),authorize));return;}
+        if(route==='billing/cancel'){send(await live.cancel(user.id,String(input.subscriptionId??''),authorize));return;}
+        if(route==='billing/portal'){send(await live.portal(user.id,authorize));return;}
+        if(route==='billing/refresh'){const row=live.db.prepare('SELECT id FROM waffo_checkouts WHERE userId=? ORDER BY created DESC LIMIT 1').get(user.id);if(row)await live.sync(String(row.id));authorize();send({...live.user(user.id),entitlement:store.entitlement(user.id)});return;}
+       }
       }
       if(route==='billing'&&req.method==='GET'){const payments=new PaymentStore(new AdminStore(store.accounts));send({...payments.user(user.id),entitlement:store.entitlement(user.id),checkoutAvailability:process.env.MAAS_PAYMENT_MODE==='simulator'&&['localhost','127.0.0.1'].includes(new URL(config.origin).hostname)?'simulator':'unavailable',reason:'real_sandbox_provider_not_configured'});return;}
       if(['billing/checkout','billing/simulator-result','billing/cancel'].includes(route)&&req.method==='POST'){

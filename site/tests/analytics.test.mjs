@@ -230,7 +230,7 @@ test('free beta intent preserves no arbitrary payload and respects opt-out', () 
   dom.window.close();
 });
 
-test('subscription CTA records free beta intent before login, but not existing-member navigation', async () => {
+test('paid subscription CTA opens login without recording a free beta activation', async () => {
   const dom = browser('<div data-subscription><button id="subscription-plus"></button><p id="subscription-status"></p><span data-current-free></span><span data-current-plus></span><span data-plus-label></span></div>', BASE+'/subscription/');
   let intents=0, logins=0, account=null, change;
   dom.window.document.addEventListener('maas:beta-activation-intent',()=>intents++);
@@ -242,11 +242,11 @@ test('subscription CTA records free beta intent before login, but not existing-m
   const source=fs.readFileSync(new URL('../src/scripts/subscription.ts', import.meta.url),'utf8').replace(/^import[^\n]+\n/gm,'');
   dom.window.eval((await transform(source,{loader:'ts'})).code);
   const button=dom.window.document.getElementById('subscription-plus');
-  button.click(); assert.equal(intents,1); assert.equal(logins,1);
+  button.click(); assert.equal(intents,0); assert.equal(logins,1);
   account={user:{id:'test'}};change();await new Promise(resolve=>setImmediate(resolve));
   assert.equal(button.textContent,'进入 Plus 工作空间');
   // Calling the handler reaches jsdom's unsupported navigation but must not count a beta intention.
-  dom.virtualConsole.removeAllListeners('jsdomError'); button.click();assert.equal(intents,1);
+  dom.virtualConsole.removeAllListeners('jsdomError'); button.click();assert.equal(intents,0);
   dom.window.close();
 });
 

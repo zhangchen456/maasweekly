@@ -29,6 +29,13 @@ export function jobAlerts(job:any, now:number, alive:boolean):string[] {
   if(job.state==='running'&&now-job.startedAt>100*60000)return ['pipeline_timeout'];
   return [];
 }
+export function paymentAlerts(admin:AdminStore):string[]{
+  try {
+    if(!admin.db.prepare("SELECT 1 FROM sqlite_master WHERE name='waffo_checkouts'").get())return [];
+    const issues=admin.db.prepare("SELECT count(*) AS n FROM waffo_checkouts WHERE environment='prod' AND (error IS NOT NULL OR (state NOT IN ('expired','canceled','closed') AND coalesce(nullif(checked,0),created)<?))").get(admin.accounts.now()-10*60000);
+    return Number(issues?.n)>0?['payment_verification_pending']:[];
+  }catch{return ['payment_monitor_failed'];}
+}
 export async function relay(monitor:AdminMonitor, shared='/srv/maasweekly/shared') {
   const root=join(shared,'pipeline-monitor'),inbox=join(root,'inbox');
   const sample:PipelineSample={alerts:[],currentJob:null,runtime:null,disk:null,importedReports:0};
@@ -70,6 +77,7 @@ export async function relay(monitor:AdminMonitor, shared='/srv/maasweekly/shared
     const stat=statfsSync(shared);sample.disk={freeBytes:stat.bavail*stat.bsize,totalBytes:stat.blocks*stat.bsize,freeInodes:stat.ffree};
     if(sample.disk.freeBytes<Math.max(2*1024**3,sample.disk.totalBytes*.05)||sample.disk.freeInodes<10000)sample.alerts.push('disk_capacity_low');
   }catch{sample.alerts.push('disk_measurement_failed');}
+  sample.alerts.push(...paymentAlerts(monitor.admin));
   sample.alerts=[...new Set(sample.alerts)].sort();
   savePipelineSample(monitor.admin,sample);
   return sample;
