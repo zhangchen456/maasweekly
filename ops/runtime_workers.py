@@ -19,7 +19,8 @@ def drain(timeout=210):
                             'maas-'+name+'-worker.service'], check=True, timeout=10)
     deadline = time.monotonic()+timeout
     while True:
-        if all(int(state(name).get('MainPID', 0)) == 0 for name in WORKERS):return
+        states = [state(name) for name in WORKERS]
+        if all(int(s.get('MainPID', 0)) == 0 and s.get('ActiveState') in ('inactive','failed') for s in states):return
         if time.monotonic() >= deadline:raise RuntimeError('worker drain timed out; no process was force-killed')
         time.sleep(.25)
 

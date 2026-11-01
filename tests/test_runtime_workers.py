@@ -45,7 +45,10 @@ class WorkerDrainTests(unittest.TestCase):
    for call in run.call_args_list:
     self.assertIn('--signal=SIGTERM',call.args[0]);self.assertNotIn('stop',call.args[0])
  def test_inactive_workers_need_no_signal(self):
-  with patch.object(workers,'state',return_value={'MainPID':'0'}),patch.object(workers.subprocess,'run') as run:workers.drain();run.assert_not_called()
+  with patch.object(workers,'state',return_value={'MainPID':'0','ActiveState':'inactive'}),patch.object(workers.subprocess,'run') as run:workers.drain();run.assert_not_called()
+ def test_scheduled_restart_is_not_considered_drained(self):
+  with patch.object(workers,'state',return_value={'MainPID':'0','ActiveState':'activating'}):
+   with self.assertRaises(RuntimeError):workers.drain(timeout=0)
  def test_active_wrong_version_cannot_pass(self):
   with tempfile.TemporaryDirectory() as tmp:
    root=Path(tmp);p=root/'runtime'/'a';(p/'metadata').mkdir(parents=True);(p/'metadata/runtime-manifest.json').write_text('{"components":{"workerProtocol":1}}')
