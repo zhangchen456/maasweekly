@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Install audited root helpers from the active, hash-verified runtime. Does not touch backups."""
-import fcntl,hashlib,json,os,shutil,subprocess,tempfile,time
+import fcntl,hashlib,json,os,pwd,shutil,subprocess,tempfile,time
 from pathlib import Path
 ROOT=Path('/srv/maasweekly')
 MAPPING={
@@ -12,6 +12,12 @@ MAPPING={
  'ops/maas-pipeline-monitor.service':'/etc/systemd/system/maas-pipeline-monitor.service',
  'ops/maas-pipeline-monitor.timer':'/etc/systemd/system/maas-pipeline-monitor.timer',
 }
+def prepare_worker_state(root):
+ directory=root/'shared/state/worker-runtime'
+ if directory.is_symlink():raise ValueError('worker state symlink refused')
+ directory.mkdir(mode=0o750,exist_ok=True)
+ account=pwd.getpwnam('maasagent');os.chown(directory,account.pw_uid,account.pw_gid);directory.chmod(0o750)
+
 def main():
  if os.geteuid()!=0:raise ValueError('root required')
  with (ROOT/'locks/release.lock').open('a+b') as lock:
@@ -34,6 +40,7 @@ def main():
    if target.exists():shutil.copy2(target,saved)
    audit.append({'target':str(target),'backup':str(saved) if saved.exists() else None,'sha256':hashlib.sha256(body).hexdigest()})
   (backup/'manifest.json').write_text(json.dumps(audit,indent=2)+'\n')
+  if 'ops/runtime_workers.py' in MAPPING:prepare_worker_state(ROOT)
   try:
    for target,body in bodies.items():
     target=Path(target);fd,name=tempfile.mkstemp(dir=target.parent)
