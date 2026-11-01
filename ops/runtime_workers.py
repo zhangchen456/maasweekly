@@ -6,17 +6,18 @@ WORKERS = ('editorial', 'diagnostic')
 
 def state(name):
     result = subprocess.run(['systemctl', 'show', 'maas-'+name+'-worker.service',
-                             '-p', 'MainPID', '-p', 'ActiveState'], check=True,
+                             '-p', 'MainPID', '-p', 'ActiveState', '-p', 'SendSIGKILL'], check=True,
                             capture_output=True, text=True, timeout=10)
     return dict(line.split('=', 1) for line in result.stdout.splitlines() if '=' in line)
 
 def drain(timeout=210):
-    # kill --signal sends only TERM, unlike stop it has no later forced KILL.
-    # The worker stops claiming and finishes its current fenced task before exit.
+    # Stop cancels pending automatic restarts too. Refuse unless the audited
+    # service configuration disables timeout KILL; an in-flight task may finish.
+    states = [state(name) for name in WORKERS]
+    if any(s.get('SendSIGKILL') != 'no' for s in states):
+        raise RuntimeError('install worker units with SendSIGKILL=no before draining')
     for name in WORKERS:
-        if int(state(name).get('MainPID', 0)):
-            subprocess.run(['systemctl', 'kill', '--kill-whom=main', '--signal=SIGTERM',
-                            'maas-'+name+'-worker.service'], check=True, timeout=10)
+        subprocess.run(['systemctl', 'stop', '--no-block', 'maas-'+name+'-worker.service'], check=True, timeout=10)
     deadline = time.monotonic()+timeout
     while True:
         states = [state(name) for name in WORKERS]

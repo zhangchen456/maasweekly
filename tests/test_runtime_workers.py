@@ -38,17 +38,25 @@ class WorkerSwitchTests(unittest.TestCase):
   self.assertEqual(json.loads((self.shared/'runtime.json').read_text())['workers'],result['workers'])
 
 class WorkerDrainTests(unittest.TestCase):
- def test_drain_timeout_never_issues_stop_or_kill9(self):
-  with patch.object(workers,'state',return_value={'MainPID':'42'}),patch.object(workers.subprocess,'run') as run:
+ def test_drain_timeout_never_issues_forced_kill(self):
+  with patch.object(workers,'state',return_value={'MainPID':'42','SendSIGKILL':'no'}),patch.object(workers.subprocess,'run') as run:
    with self.assertRaises(RuntimeError):workers.drain(timeout=0)
    self.assertEqual(run.call_count,2)
    for call in run.call_args_list:
-    self.assertIn('--signal=SIGTERM',call.args[0]);self.assertNotIn('stop',call.args[0])
- def test_inactive_workers_need_no_signal(self):
-  with patch.object(workers,'state',return_value={'MainPID':'0','ActiveState':'inactive'}),patch.object(workers.subprocess,'run') as run:workers.drain();run.assert_not_called()
+    self.assertEqual(call.args[0][:3],['systemctl','stop','--no-block']);self.assertNotIn('kill',call.args[0])
+ def test_inactive_workers_stop_idempotently(self):
+  with patch.object(workers,'state',return_value={'MainPID':'0','ActiveState':'inactive','SendSIGKILL':'no'}),patch.object(workers.subprocess,'run') as run:workers.drain();self.assertEqual(run.call_count,2)
  def test_scheduled_restart_is_not_considered_drained(self):
-  with patch.object(workers,'state',return_value={'MainPID':'0','ActiveState':'activating'}):
+  with patch.object(workers,'state',return_value={'MainPID':'0','ActiveState':'activating','SendSIGKILL':'no'}),patch.object(workers.subprocess,'run'):
    with self.assertRaises(RuntimeError):workers.drain(timeout=0)
+ def test_unsafe_unit_configuration_refuses_before_stopping_any_worker(self):
+  with patch.object(workers,'state',side_effect=[{'SendSIGKILL':'no'},{'SendSIGKILL':'yes'}]),patch.object(workers.subprocess,'run') as run:
+   with self.assertRaises(RuntimeError):workers.drain(timeout=0)
+   run.assert_not_called()
+ def test_stop_cancels_pending_auto_restart(self):
+  states=[{'MainPID':'0','ActiveState':'activating','SendSIGKILL':'no'}]*2+[{'MainPID':'0','ActiveState':'inactive','SendSIGKILL':'no'}]*2
+  with patch.object(workers,'state',side_effect=states),patch.object(workers.subprocess,'run') as run:
+   workers.drain(timeout=0);self.assertEqual(run.call_count,2)
  def test_active_wrong_version_cannot_pass(self):
   with tempfile.TemporaryDirectory() as tmp:
    root=Path(tmp);p=root/'runtime'/'a';(p/'metadata').mkdir(parents=True);(p/'metadata/runtime-manifest.json').write_text('{"components":{"workerProtocol":1}}')

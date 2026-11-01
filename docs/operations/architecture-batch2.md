@@ -8,9 +8,12 @@ existing writer-image requirements equality check continues to reject incompatib
 packages before staging.
 
 After bootstrapping controller 2, every switch to/from a worker-protocol package
-sends TERM to both fixed worker units, waits for their current fenced task to
+stops both fixed worker units without blocking, cancelling queued automatic restarts,
+and waits for their current fenced task to
 finish (up to 210 seconds), and only then switches `current`. It never escalates to
-KILL. New workers must report ready with their PID/code and have the expected
+KILL: both audited units set `SendSIGKILL=no`, which is checked before stopping any
+worker. A crash loop therefore cannot prevent rollback by continuously restarting.
+The unit also pins the receipt directory for older protocol-1 packages. New workers must report ready with their PID/code and have the expected
 `/proc/PID/cwd`. Failure restores nginx, runtime state and the old workers; the
 pending recovery marker is retained if recovery fails. Old rollback packages use
 process cwd plus systemd state because they lack the new readiness protocol.
