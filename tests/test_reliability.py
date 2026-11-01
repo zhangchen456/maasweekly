@@ -83,4 +83,15 @@ class ReliabilityTests(unittest.TestCase):
   self.assertNotIn('paths',workflow['on'].get('pull_request') or {})
   self.assertIn('scripts/test-runtime.py',(BASE/'.github/workflows/data-store-tests.yml').read_text())
   self.assertIn('scripts/test-runtime.py',(BASE/'scripts/build-runtime-release.sh').read_text())
+ def test_worker_receipt_directory_has_scoped_ownership_and_rejects_links(self):
+  from types import SimpleNamespace
+  spec=importlib.util.spec_from_file_location('install_worker_state',BASE/'ops/install-reliability.py');installer=importlib.util.module_from_spec(spec);spec.loader.exec_module(installer)
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp);parent=root/'shared/state';parent.mkdir(parents=True);parent.chmod(0o755)
+   with patch.object(installer.pwd,'getpwnam',return_value=SimpleNamespace(pw_uid=123,pw_gid=456)),patch.object(installer.os,'chown') as chown:
+    installer.prepare_worker_state(root)
+    directory=parent/'worker-runtime';self.assertEqual(directory.stat().st_mode&0o777,0o750);self.assertEqual(parent.stat().st_mode&0o777,0o755)
+    chown.assert_called_once_with(directory,123,456)
+    directory.rmdir();directory.symlink_to(root)
+    with self.assertRaises(ValueError):installer.prepare_worker_state(root)
 if __name__=='__main__':unittest.main()
