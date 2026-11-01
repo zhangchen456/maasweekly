@@ -23,7 +23,7 @@ for folder in ['pipeline','config','data/model-registry','site/scripts','ops/dat
  for p in (root/folder).rglob('*'):
   if p.is_file() and '__pycache__' not in p.parts and p.suffix in ['.py','.json','.sql','.sh']:
    target=out/p.relative_to(root);target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,target)
-for name in ['requirements.lock.txt','ops/backup-data-store.sh','scripts/monitor-collect.py','ops/runtime_safety.py','ops/runtime_workers.py','ops/pipeline_monitor.py','ops/runtime-control.py','ops/maas-pipeline-monitor.service','ops/maas-pipeline-monitor.timer']:
+for name in ['requirements.lock.txt','ops/backup-data-store.sh','scripts/monitor-collect.py','ops/runtime_safety.py','ops/runtime_workers.py','ops/maas-editorial-worker.service','ops/maas-diagnostic-worker.service','ops/pipeline_monitor.py','ops/runtime-control.py','ops/maas-pipeline-monitor.service','ops/maas-pipeline-monitor.timer']:
  target=out/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(root/name,target)
 (out/'code-commit').write_text(sys.argv[2]+'\n')
 (out/'site/src/data').mkdir(parents=True,exist_ok=True);(out/'site/src/content').mkdir(parents=True,exist_ok=True)
