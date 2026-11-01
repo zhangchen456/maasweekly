@@ -9,10 +9,12 @@ Group=maasagent
 WorkingDirectory=/srv/maasweekly/current/agent-api
 EnvironmentFile=/srv/maasweekly/shared/agent.env
 EnvironmentFile=/srv/maasweekly/shared/diagnostic.env
+Environment=MAAS_WORKER_STATE_DIR=/srv/maasweekly/shared/state/worker-runtime
 ExecStart=/usr/bin/node --preserve-symlinks-main /srv/maasweekly/current/agent-api/dist/diagnostic-worker.js
 Restart=on-failure
 RestartSec=5
 TimeoutStopSec=210
+SendSIGKILL=no
 UMask=0077
 NoNewPrivileges=true
 ProtectSystem=strict
