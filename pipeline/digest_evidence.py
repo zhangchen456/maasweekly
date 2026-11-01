@@ -54,9 +54,20 @@ def catalog(date, changed, prices, aliases):
     return entries
 
 def price_text(fact):
-    conditions = {k:fact[k] for k in ['region','service_tier','billing_mode','context_band','time_condition','effective_at'] if fact.get(k) is not None}
+    conditions = [f"区域 {fact['region']}", f"服务档位 {fact['service_tier']}"]
+    if fact.get('billing_mode'):conditions.append('计费方式 '+fact['billing_mode'])
+    band = fact.get('context_band')
+    if isinstance(band, dict):
+        low = band.get('min_input_tokens', band.get('min', 0))
+        high = band.get('max_input_tokens', band.get('max'))
+        conditions.append(f"输入长度 {low}–{high if high is not None else '不限'} tokens")
+    elif band:conditions.append('输入长度条件 '+str(band))
+    when = fact.get('time_condition')
+    if isinstance(when, dict):conditions.append('适用时段 '+' '.join(str(when[k]) for k in ['period','tz','schedule'] if when.get(k)))
+    elif when:conditions.append('适用时段 '+str(when))
+    if fact.get('effective_at'):conditions.append('生效时间 '+str(fact['effective_at']))
     return (f"{fact['model_key']} · {fact['component']}：{fact['amount']} {fact['currency']} / "
-            f"{fact['unit_quantity']} {fact['unit_name']}；条件："+json.dumps(conditions, ensure_ascii=False, sort_keys=True))
+            f"{fact['unit_quantity']} {fact['unit_name']}；"+'，'.join(conditions))
 
 def validate_selection(value, entries):
     if not isinstance(value, dict) or set(value) != {'highlights'} or not isinstance(value['highlights'], list) or len(value['highlights']) > 25:
