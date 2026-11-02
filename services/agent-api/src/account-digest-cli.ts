@@ -1,4 +1,6 @@
 import path from 'node:path';
+import {Membership,membershipEnabled} from './membership.js';
+import {ProStore} from './pro-store.js';
 import { AccountStore } from './account-store.js';
 import { createMailer } from './account-mail.js';
 import { deliverDigests } from './account-digest.js';
@@ -9,6 +11,7 @@ const mailer = createMailer();
 if (!mailer) throw new Error('mail service not configured');
 const holder = new DatasetHolder(path.resolve(process.env.PUBLIC_DATA_ROOT));
 const store = new AccountStore(path.resolve(process.env.MAAS_ACCOUNT_DB));
+if(membershipEnabled())new Membership(store,new ProStore(store),true);
 try {
   const result = await holder.reloadAsync();
   if (result === 'failed' || !holder.current) throw new Error('dataset unavailable');

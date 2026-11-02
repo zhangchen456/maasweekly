@@ -1,4 +1,5 @@
 /** Bound the rendered response; cache only public GETs under their data version. */
+import {currentAccess} from './membership.js';
 import {createHash} from 'node:crypto';
 import { IncomingMessage, type ServerResponse } from 'node:http';
 import { Socket } from 'node:net';
@@ -33,7 +34,7 @@ export function createSiteHandler(holder:DatasetHolder,runtime:SiteRuntime,handl
   const inFlight=new Map<string,Promise<Rendered>>();let activeRenders=0;
   const render=async(url:string,internal=false)=>{
     const dataset=holder.current;if(!dataset)throw new Error('data unavailable');
-    const key=runtime.run(dataset,()=>runtime.bridge.publicationKey())+':'+url;
+    const key=runtime.run(dataset,()=>runtime.bridge.publicationKey())+':'+(currentAccess()?.tier??'legacy')+':'+url;
     if(!internal&&cache.has(key)){const hit=cache.get(key)!;cache.delete(key);cache.set(key,hit);return hit;}
     if(!internal&&inFlight.has(key))return inFlight.get(key)!;
     if(activeRenders>=8)throw new Error('render capacity');
@@ -74,8 +75,8 @@ export function createSiteHandler(holder:DatasetHolder,runtime:SiteRuntime,handl
         const result=await render(parsed.pathname);
         if(result.status>=500)throw new Error('render unavailable');
         const etag='\"'+createHash('sha256').update(result.body).digest('hex')+'\"';
-        if(result.status===200&&(req.headers['if-none-match']??'').split(',').map(s=>s.trim()).some(s=>s===etag||s==='W/'+etag||s==='*')){res.writeHead(304,{'ETag':etag,'Cache-Control':'no-cache'});res.end();return;}
-        res.writeHead(result.status,{...result.headers,'ETag':etag,'Cache-Control':'no-cache','X-Content-Type-Options':'nosniff',
+        if(result.status===200&&(req.headers['if-none-match']??'').split(',').map(s=>s.trim()).some(s=>s===etag||s==='W/'+etag||s==='*')){res.writeHead(304,{'ETag':etag,'Cache-Control':currentAccess()?'private, no-store':'no-cache','Vary':'Cookie, Authorization'});res.end();return;}
+        res.writeHead(result.status,{...result.headers,'ETag':etag,'Cache-Control':currentAccess()?'private, no-store':'no-cache','Vary':'Cookie, Authorization','X-Content-Type-Options':'nosniff',
           'Content-Length':result.body.length});
         res.end(req.method==='HEAD'?undefined:result.body);
       }catch{send(503,'Page temporarily unavailable');}

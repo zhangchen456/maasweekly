@@ -47,7 +47,7 @@ const hasContent = prices.length > 0 || changes.length > 0;
     </div>
   </section>
 
-  <div class="shell model-detail" data-locale={locale} data-price-layout="compact" data-model-id={model.modelId} data-api-base={PUBLIC_ACCESS.paths.apiBase}
+  <div class="shell model-detail" data-locale={locale} data-price-layout="compact" data-model-id={model.modelId} data-api-base={(siteRuntime()?.membership?.()?'/api/browser':PUBLIC_ACCESS.paths.apiBase)}
     data-dataset-version={datasetVersion} data-from={from} data-to={to}>
     {upstream && <section class="model-section">
       <h2>开发者与调用平台</h2>

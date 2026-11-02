@@ -2,6 +2,7 @@
  * http.ts：路由、ETag/304、CORS、Problem JSON、限流（Task 03 M5）。
  * Node 22 原生 http，零运行时依赖。单请求单 Dataset 实例（重载不混版）。
  */
+import {currentAccess} from './membership.js';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createHash, randomUUID } from 'node:crypto';
 import { markDataset } from './observability.js';
@@ -33,22 +34,22 @@ export interface RouteMeta {
 export const ROUTES: RouteMeta[] = [
   { method: 'GET', path: '/api/v1/changes',
     params: ['provider', 'modelId', 'familyId', 'type', 'q', 'from', 'to', 'limit', 'cursor', 'includeWithdrawn'],
-    statusCodes: [200, 304, 400, 409, 413, 429, 503] },
+    statusCodes: [200, 304, 401, 403, 400, 409, 413, 429, 503] },
   { method: 'GET', path: '/api/v1/items/{id}', params: [],
-    statusCodes: [200, 304, 404, 429, 503] },
+    statusCodes: [200, 304, 401, 403, 404, 429, 503] },
   { method: 'GET', path: '/api/v1/prices',
     params: ['provider', 'model', 'modelId', 'familyId', 'platformId', 'component', 'region', 'billingMode', 'q', 'limit', 'cursor'],
-    statusCodes: [200, 304, 400, 409, 413, 429, 503] },
+    statusCodes: [200, 304, 401, 403, 400, 409, 413, 429, 503] },
   { method: 'GET', path: '/api/v1/evidence/{id}', params: [],
-    statusCodes: [200, 304, 404, 429, 503] },
+    statusCodes: [200, 304, 401, 403, 404, 429, 503] },
   { method: 'GET', path: '/api/v1/weekly',
-    params: ['limit', 'cursor'], statusCodes: [200, 304, 400, 409, 413, 429, 503] },
+    params: ['limit', 'cursor'], statusCodes: [200, 304, 401, 403, 400, 409, 413, 429, 503] },
   { method: 'GET', path: '/api/v1/weekly/{id}', params: [],
-    statusCodes: [200, 304, 404, 429, 503] },
+    statusCodes: [200, 304, 401, 403, 404, 429, 503] },
   { method: 'GET', path: '/api/v1/status', params: [],
-    statusCodes: [200, 304, 429, 503] },
+    statusCodes: [200, 304, 401, 403, 429, 503] },
   { method: 'GET', path: '/api/v1/models', params: [],
-    statusCodes: [200, 304, 429, 503] },
+    statusCodes: [200, 304, 401, 403, 429, 503] },
 ];
 
 // ---------------------------------------------------------------------------
@@ -108,10 +109,10 @@ function sendJson(
   const etag = `"${createHash('sha256').update(body).digest('hex').slice(0, 32)}"`;
   const headers: Record<string, string | number> = {
     'Content-Type': 'application/json; charset=utf-8',
-    'Cache-Control': 'max-age=0, s-maxage=300',
+    'Cache-Control': currentAccess() ? 'private, no-store' : 'max-age=0, s-maxage=300',
     'X-Request-Id': requestId,
     ETag: etag,
-    Vary: 'Accept-Encoding',
+    Vary: 'Accept-Encoding, Cookie, Authorization',
   };
   const inm = req.headers['if-none-match'];
   if (inm === etag || inm === '*') {
@@ -153,7 +154,7 @@ export function createHandler(holder: DatasetHolder, config: ServerConfig) {
     // CORS（匿名，无 credentials）
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'If-None-Match');
+    res.setHeader('Access-Control-Allow-Headers', 'If-None-Match, Authorization');
     res.setHeader('Access-Control-Expose-Headers', 'ETag, Retry-After, X-Request-Id');
     if (req.method === 'OPTIONS') {
       res.writeHead(204, { 'Access-Control-Max-Age': '86400' });

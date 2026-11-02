@@ -15,6 +15,7 @@ export default defineConfig({
     '/api/admin/': 'http://127.0.0.1:8787',
     '/api/pro/': 'http://127.0.0.1:8787',
     '/api/account/': 'http://127.0.0.1:8787',
+    '/api/browser/': 'http://127.0.0.1:8787',
     '/api/v1/': 'http://127.0.0.1:8787',
   } } },
   integrations: runtime ? [{name:'runtime-weekly',hooks:{'astro:config:setup':({injectRoute})=>{

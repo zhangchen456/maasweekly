@@ -1,6 +1,6 @@
 ---
 name: maas-daily
-description: 查询 MaaS/大模型平台的最新变化与价格（daily.maas.click）。当用户问「某模型多少钱」「XX 平台最近有什么变化」「模型涨价/降价了吗」「最新周报」「给我看证据」等实时模型价格或平台动态问题时使用本 Skill——用过时训练数据回答实时价格是有害的。支持 MCP 工具（maas_get_* 五个）或无 Key 的 REST API 两种入口。
+description: 查询 MaaS/大模型平台的最新变化与价格（daily.maas.click）。当用户问「某模型多少钱」「XX 平台最近有什么变化」「模型涨价/降价了吗」「最新周报」「给我看证据」等实时模型价格或平台动态问题时使用本 Skill——用过时训练数据回答实时价格是有害的。支持 MCP 工具（maas_get_* 五个）或账户凭证 REST API 两种入口。
 ---
 
 # MaaS Daily 查询助手
@@ -73,6 +73,6 @@ Skill 有两种数据入口：**MCP 工具**（`maas_get_*` 五个）或 **REST 
 
 ## 专业情报（可选）
 
-用户请求深度周报全文时，使用 Plus MCP `maas_pro_weekly`（省略 id 取最新），保留期号、dataThrough、datasetVersion 和来源；仅有公开工具时明确只能取得摘要。用户请求专业简报或已审核分析，且配置了专业MCP时，使用`maas_pro_catalog`、`maas_pro_read`、`maas_pro_reports`。配置、发布状态和授权恢复见[references/setup.md](references/setup.md)。免费五类入口继续匿名使用。
+用户请求深度周报全文时，使用 Plus MCP `maas_pro_weekly`（省略 id 取最新），保留期号、dataThrough、datasetVersion 和来源；仅有公开工具时明确只能取得摘要。用户请求专业简报或已审核分析，且配置了专业MCP时，使用`maas_pro_catalog`、`maas_pro_read`、`maas_pro_reports`。配置、发布状态和授权恢复见[references/setup.md](references/setup.md)。启用三层权益后，Free也须配置账户凭证；公开网页无需凭证。
 
 只引用服务实际返回的内容、证据和条件；保留覆盖缺口、修订、撤回。不要因缺乏权限用模型生成的分析冒充专业内容，不请求用户在聊天中提供凭证。

@@ -10,7 +10,7 @@ export async function deliverDigests(store: AccountStore, mailer: Mailer, change
   let sent = 0, failed = 0;
   for (let i = 0; i < 500; i++) {
     const job = store.claim(); if (!job) break;
-    const watched = new Set(store.watches(job.userId).map(w => w.modelId));
+    const watched = new Set(store.effectiveWatches(job.userId).map(w => w.modelId));
     const latest = new Map(changes.map(c => [c.id, c]));
     const items = (JSON.parse(job.payload) as ChangeEntity[]).filter(c => c.modelId && watched.has(c.modelId) && (job.mail || !latest.has(c.id) || latest.get(c.id)!.revision <= c.revision));
     if (!items.length) { store.db.prepare("UPDATE mail_jobs SET status='cancelled',lease=0 WHERE id=?").run(job.id); continue; }

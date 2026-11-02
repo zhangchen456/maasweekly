@@ -1,3 +1,4 @@
+import {siteRuntime} from '../lib/runtime';
 /**
  * GET /feed.xml：最近有效变化 RSS（Task 05 §6.1）。
  * 静态构建产出 dist/feed.xml；Content-Type 等响应头由生产服务器决定
@@ -15,7 +16,7 @@ export const GET: APIRoute = () => {
   }
   const release = loadVerifiedRelease(undefined, { select: ['changes'] });
   const items = changesToFeedItems(
-    release.changes!, PUBLIC_ACCESS.canonicalBaseUrl);
+    release.changes!, PUBLIC_ACCESS.canonicalBaseUrl,siteRuntime()?.membership?.()?10:100);
   const xml = buildRss20(
     {
       title: 'MaaS Daily — 最近变化',

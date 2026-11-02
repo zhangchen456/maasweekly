@@ -3,7 +3,7 @@
   "info": {
     "title": "MaaS Daily Public API",
     "version": "1.0",
-    "description": "MaaS 平台变化与价格的匿名只读查询 API。所有响应共享 schemaVersion/datasetVersion/dataThrough/query/coverage 元数据；翻页 cursor 固定 datasetVersion。数据不代表实时，覆盖范围见 coverage。"
+    "description": "MaaS 平台变化与价格的匿名只读查询 API。所有响应共享 schemaVersion/datasetVersion/dataThrough/query/coverage 元数据；翻页 cursor 固定 datasetVersion。数据不代表实时，覆盖范围见 coverage。\n三层权益启用后：Free最近30天、100次/月；Plus全部可查询归档、3000次/月。月额度按Asia/Shanghai重置，成功数据查询计入；公开网页提供独立访客体验。"
   },
   "servers": [
     {
@@ -136,8 +136,19 @@
           },
           "503": {
             "$ref": "#/components/responses/Problem"
+          },
+          "401": {
+            "description": "缺少、过期或已撤销的账户凭证；三层权益关闭时旧匿名接口继续可用。"
+          },
+          "403": {
+            "description": "历史或专业内容超出当前权益范围。"
           }
-        }
+        },
+        "security": [
+          {
+            "AccountToken": []
+          }
+        ]
       }
     },
     "/api/v1/items/{id}": {
@@ -177,8 +188,19 @@
           },
           "503": {
             "$ref": "#/components/responses/Problem"
+          },
+          "401": {
+            "description": "缺少、过期或已撤销的账户凭证；三层权益关闭时旧匿名接口继续可用。"
+          },
+          "403": {
+            "description": "历史或专业内容超出当前权益范围。"
           }
-        }
+        },
+        "security": [
+          {
+            "AccountToken": []
+          }
+        ]
       }
     },
     "/api/v1/prices": {
@@ -310,8 +332,19 @@
           },
           "503": {
             "$ref": "#/components/responses/Problem"
+          },
+          "401": {
+            "description": "缺少、过期或已撤销的账户凭证；三层权益关闭时旧匿名接口继续可用。"
+          },
+          "403": {
+            "description": "历史或专业内容超出当前权益范围。"
           }
-        }
+        },
+        "security": [
+          {
+            "AccountToken": []
+          }
+        ]
       }
     },
     "/api/v1/evidence/{id}": {
@@ -351,8 +384,19 @@
           },
           "503": {
             "$ref": "#/components/responses/Problem"
+          },
+          "401": {
+            "description": "缺少、过期或已撤销的账户凭证；三层权益关闭时旧匿名接口继续可用。"
+          },
+          "403": {
+            "description": "历史或专业内容超出当前权益范围。"
           }
-        }
+        },
+        "security": [
+          {
+            "AccountToken": []
+          }
+        ]
       }
     },
     "/api/v1/weekly": {
@@ -406,8 +450,19 @@
           },
           "503": {
             "$ref": "#/components/responses/Problem"
+          },
+          "401": {
+            "description": "缺少、过期或已撤销的账户凭证；三层权益关闭时旧匿名接口继续可用。"
+          },
+          "403": {
+            "description": "历史或专业内容超出当前权益范围。"
           }
-        }
+        },
+        "security": [
+          {
+            "AccountToken": []
+          }
+        ]
       }
     },
     "/api/v1/weekly/{id}": {
@@ -446,8 +501,19 @@
           },
           "503": {
             "$ref": "#/components/responses/Problem"
+          },
+          "401": {
+            "description": "缺少、过期或已撤销的账户凭证；三层权益关闭时旧匿名接口继续可用。"
+          },
+          "403": {
+            "description": "历史或专业内容超出当前权益范围。"
           }
-        }
+        },
+        "security": [
+          {
+            "AccountToken": []
+          }
+        ]
       }
     },
     "/api/v1/status": {
@@ -500,8 +566,19 @@
           },
           "503": {
             "$ref": "#/components/responses/Problem"
+          },
+          "401": {
+            "description": "缺少、过期或已撤销的账户凭证；三层权益关闭时旧匿名接口继续可用。"
+          },
+          "403": {
+            "description": "历史或专业内容超出当前权益范围。"
           }
-        }
+        },
+        "security": [
+          {
+            "AccountToken": []
+          }
+        ]
       }
     }
   },
@@ -911,6 +988,13 @@
             "type": "string"
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "AccountToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "三层权益启用后，除status外需账户API/MCP凭证；关闭时保留旧匿名基础接口。"
       }
     }
   }

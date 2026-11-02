@@ -74,7 +74,7 @@ if (root) {
     me = await accountApi<Me>('me'); el('login-panel').hidden = true; el('workspace').hidden = false;
     el('user-email').textContent = me.user.email; enabled.checked = me.preferences.emailEnabled;
     try {
-      const response = await fetch('/api/v1/models'); if (!response.ok) throw new Error();
+      const response = await fetch('/api/browser/models'); if (!response.ok) throw new Error();
       models = (await response.json()).models;
     } catch { models = []; }
     const requested = new URL(location.href).searchParams.get('model');
