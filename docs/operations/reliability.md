@@ -6,7 +6,21 @@ PR 和代码发布统一运行 `python3 scripts/test-runtime.py`。CI 必须提�
 
 根控制器是服务器独立的信任边界，不能仅靠代码包更新。首次发布后，以 root 执行 `python3 ops/install-reliability.py`，在 release.lock 下核对已激活包内各 helper 哈希，备份原文件并原子替换；失败恢复旧文件。安装后跑一次真实 rebuild，再执行 `systemctl enable --now maas-pipeline-monitor.timer`。云盘备份不属于此安装器，不启动 OpenList 或任何云盘备份任务。
 
-监控每 5 分钟导入 writer 的原始历史回执及新增分阶段回执，保留实际采集时间；额外保存进程代码、输入/数据版本、阶段耗时、SSR 验证与实际发布结果。当前作业状态包含 PID 启动时间，检测进程退出、PID 重用和 100 分钟超时。后台监控页显示同步时间、过期、运行时错配、磁盘不足和来源陈旧。15 分钟未同步即报异常。异常使监控 service 非零退出，下一次 timer 仍会重试。这一版不配置邮件发送；后台和 systemd 是已接通的告警入口。
+监控每 5 分钟导入 writer 的原始历史回执及新增分阶段回执，保留实际采集时间；额外保存进程代码、输入/数据版本、阶段耗时、SSR 验证与实际发布结果。当前作业状态包含 PID 启动时间，检测进程退出、PID 重用和 100 分钟超时。后台监控页显示同步时间、过期、运行时错配、磁盘不足和来源陈旧。15 分钟未同步即报异常。异常使监控 service 非零退出，下一次 timer 仍会重试。运营邮件由下述独立服务负责。
+
+## 每日数据邮件告警
+
+`maas-daily-data-alert.timer` 每5分钟启动独立Python检查，不依赖网站数据库、本机电脑或本对话。任务失败、异常退出、服务器任务超过100分钟、GitHub任务排队或执行超过110分钟，首次检查即发邮件；北京时间07:00起，公网 `dataThrough` 尚未到当天也即刻告警。数据日期以公网状态为准，同时核对 loopback 实际加载与正式发布清单的完整版本。短暂网络、版本错配、来源异常连续2次确认；公开 GitHub API 不可用连续3次确认，不使用个人GitHub令牌。该服务部署在生产机，不承担整台生产机离线时的外部探活。
+
+首次配置：先发布包含本服务的代码，再由root从已激活包运行 `python3 -B /srv/maasweekly/current/tooling/ops/install-reliability.py --data-alert-to zhangchen456@163.com`。安装器核对各helper清单哈希、备份旧文件，复用服务器正式Resend配置，只将邮件密钥、发件人和该收件人写入 root:root/0600 的 `shared/data-alert.env`，不复制账号库配置或本机OAuth。随后 `systemctl enable --now maas-daily-data-alert.timer`，并启动一次service确认。以后安装不传收件人会保留原配置。`python3 -B /usr/local/lib/maasweekly/daily_data_alert.py --check` 只读检查，不发邮件、不改变去重状态。
+
+`pipeline-monitor/daily.json` 单独保留最近完整update回执，rebuild/import不覆盖它；失败回执保留实际失败阶段。首次安装仅从真实update回执复制并保留原始时间，不生成伪造成功记录。新监控按maasagent最小权限运行，告警状态和SQLite队列放在独立0700目录 `shared/state/data-alerts`。
+
+同一持续异常只通知一次，新增异常原因才发状态更新；跨天延迟不会每天重复轰炸。重试开始不算恢复，必须实际数据达到异常对应日期、版本与来源正常、任务异常后有成功终态，且连续两次健康检查才通知恢复。未曾被接收或可能接收的告警不发送恢复邮件；恢复会取消尚未发出的过时告警。邮件仅包含固定元数据、北京时间、影响、已采取措施和待处理事项，不带原始日志、正文或凭据。
+
+邮件正文及幂等键持久化，超时后用相同请求重试；调用前先记录“可能已接收”，避免进程崩溃重发。Resend幂等键保留24小时，未确认结果的请求23小时后转人工核对，不在过期后盲目重发。明确拒绝的请求可以重试。更改目的邮箱会取消旧目的地的待发邮件，并重新通知仍在持续的异常。service日志仅输出告警种类、日期和计数；非零退出不阻止下次timer执行。查看状态：`systemctl status maas-daily-data-alert.timer maas-daily-data-alert.service`、`journalctl -u maas-daily-data-alert.service`。队列review或发送失败需核对邮件通道；同一邮件通道完全故障时无法通过它自报故障。
+
+验收用独立演练状态库和明确标注“[演练]”的两封邮件，先模拟失败，再模拟真实成功后的两次健康观察；不更改生产任务、发布指针或业务数据。邮件接口接收不等于投递，需另外核对Resend的投递事件。日常健康检查保持静默。
 
 容量门禁在代码安装、writer 启动、数据库备份前执行。按实际数据库大小、公开数据体积、必要时的 writer 缓存体积估算增量峰值，额外保留 max(2 GiB, 磁盘 5%)；同时检查 inode。测量失败或余量不足都停止任务，不自动删除业务数据或备份。代码上传前仍应预留 incoming 空间；安装按包最大允许体积保守预算。并发任务受 release.lock 串行化，但其他系统写入仍可能消耗空间，因此该预算不构成磁盘不会耗尽的保证。
 
