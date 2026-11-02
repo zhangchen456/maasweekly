@@ -12,6 +12,7 @@ const t = (zh: string, english: string) => en ? english : zh;
     <div class="account-dropdown">
       <a class="account-plan-link" href={en ? "/en/subscription/" : "/subscription/"}><span>{t("当前套餐", "Current plan")}</span><strong data-account-plan>—</strong><span>{t("查看订阅 →", "View plans →")}</span></a>
       <div class="account-identity"><strong id="account-menu-name"></strong><span id="account-menu-email"></span></div>
+      <a href={en?'/en/projects/':'/projects/'}>{t('我的项目与成本跟踪','My projects & costs')}</a>
       <a href={en ? '/en/account/' : '/account/'}>{t('账户中心与我的关注', 'Account & watchlist')}</a>
       <a href={en ? "/en/feedback/" : "/feedback/"}>{t("反馈产品问题", "Report a problem")}</a>
       <button id="account-sign-out" type="button">{t('退出登录', 'Sign out')}</button>
