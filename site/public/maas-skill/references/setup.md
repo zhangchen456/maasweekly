@@ -15,7 +15,8 @@ Skill 的 MCP 入口是 `POST https://daily.maas.click/api/mcp`。MCP 工具是�
   "mcpServers": {
     "maas-daily": {
       "type": "http",
-      "url": "https://daily.maas.click/api/mcp"
+      "url": "https://daily.maas.click/api/mcp",
+      "headers": {"Authorization": "Bearer <YOUR_ACCOUNT_TOKEN>"}
     }
   }
 }
@@ -29,7 +30,7 @@ Skill 的 MCP 入口是 `POST https://daily.maas.click/api/mcp`。MCP 工具是�
 
 ## 二、REST API 可用性
 
-Skill 在 MCP 不可用时会 fallback 到 REST（`https://daily.maas.click/api/v1/*`，匿名无需 Key）。REST 可用性取决于执行环境的网络访问。
+Skill 在 MCP 不可用时会 fallback 到 REST（`https://daily.maas.click/api/v1/*`，启用三层权益后需要账户凭证）。REST 可用性取决于执行环境的网络访问。
 
 ### 网络访问检查
 
@@ -75,7 +76,7 @@ Skill 安装完成后，建议在新会话中执行自检：
 
 ## 五、Plus 接入
 
-现有匿名查询保持不变。Plus 全文需单独配置网站生成的 Agent / MCP 通用凭证；不要向用户索要模型厂商API Key，不把凭证粘贴进对话、提示词或Skill正文。原有 Free 连接不会因网页登录或升级自动获得全文权限。下列入口返回404/503时说明暂不可用，不用模型知识补出专业全文。
+三层权益启用后，匿名正式查询改为账户凭证访问；Free每月100次，Plus每月3,000次。Plus 全文需单独配置网站生成的 Agent / MCP 通用凭证；不要向用户索要模型厂商API Key，不把凭证粘贴进对话、提示词或Skill正文。原有 Free 连接不会因网页登录或升级自动获得全文权限。下列入口返回404/503时说明暂不可用，不用模型知识补出专业全文。
 
 专业MCP端点：`https://daily.maas.click/api/pro/mcp`。客户端使用其安全配置/环境变量功能设置`Authorization: Bearer <MAAS_PRO_TOKEN>`请求头；环境变量插值语法按各客户端文档配置，不能假定`${...}`在所有客户端通用。
 
@@ -85,4 +86,12 @@ Skill 安装完成后，建议在新会话中执行自检：
 
 REST入口：`/api/pro/catalog`、`/api/pro/content/{id}`、`/api/pro/me`、`/api/pro/report/{id}`。授权头由客户端注入，不出现在URL。周报 REST 全文入口：`GET /api/pro/weekly/{id}`（返回 HTML）；先用公开 `/api/v1/weekly?limit=1` 取得期号。网站管理页是`/pro/`，开通 Plus 后生成 Agent / MCP 用途凭证，默认有效30天。私有RSS只提供匹配的已发布分析摘要/链接，不包含周报全文。配置示例见网站 `/agent/#plus-access`。
 
-401：检查凭证是否到期/撤销，回网站重新生成；403：检查当前服务权益及凭证用途；404：核对内容ID或撤回状态，不能改用他人的报告ID；503：稍后重试。RSS私有地址只有RSS用途，不能替代通用Token。专业权限错误不影响匿名免费查询。
+401：检查凭证是否到期/撤销，回网站重新生成；403：检查当前服务权益及凭证用途；404：核对内容ID或撤回状态，不能改用他人的报告ID；503：稍后重试。RSS私有地址只有RSS用途，不能替代通用Token。专业权限错误不影响仍在额度和历史范围内的基础查询。
+
+## 三层权益迁移
+
+收到 `token_required` 时，打开 https://daily.maas.click/account/ 登录，创建 API/MCP 访问凭证。凭证仅显示一次，默认30天有效；在客户端安全设置中配置 `Authorization: Bearer`。REST和MCP共用额度。不要索要模型供应商密钥，不将用户凭证写进Skill、仓库、URL或聊天正文。
+
+Free可查询最近30天，Plus可查询全部可用归档，每次历史查询最多90天。`history_access_required` 表示套餐范围不足；`query_quota_exceeded` 表示本月额度不足，按Asia/Shanghai自然月重置。初始化、工具发现、失败查询不计入。遇到额度或权限错误不要反复重试或换浏览器通道绕过。
+
+旧部署若仍支持匿名基础接口，可继续现有连接；以服务实际返回的认证与权益状态为准。

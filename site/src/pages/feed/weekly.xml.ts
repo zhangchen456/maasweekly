@@ -1,3 +1,4 @@
+import {siteRuntime} from '../../lib/runtime';
 /**
  * GET /feed/weekly.xml：最近正式周报 RSS（Task 05 §6.1）。
  * 只含 site/src/content/weekly 正式周报（滚动摘要不进此 feed）。
@@ -14,7 +15,7 @@ export const GET: APIRoute = () => {
   }
   const release = loadVerifiedRelease(undefined, { select: ['weekly'] });
   const items = weeklyToFeedItems(
-    release.weekly!, PUBLIC_ACCESS.canonicalBaseUrl);
+    release.weekly!, PUBLIC_ACCESS.canonicalBaseUrl,siteRuntime()?.membership?.()?5:30);
   const xml = buildRss20(
     {
       title: 'MaaS Daily — 周度报告',

@@ -1,3 +1,4 @@
+import {historyAllowed,currentAccess,historyCutoff} from './membership.js';
 /**
  * query.ts：公开数据查询（Task 03 M4）。无 node:http 依赖——供 MCP 复用。
  *
@@ -17,7 +18,7 @@ export type Endpoint = 'changes' | 'prices' | 'weekly';
 export interface Problem {
   type: string;
   title: string;
-  status: 400 | 404 | 409 | 413 | 429 | 503;
+  status: 400 | 401 | 403 | 404 | 409 | 413 | 429 | 503;
   detail: string;
   code: string;
   recovery: string;
@@ -436,6 +437,7 @@ export function listChanges(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPay
   const out: ChangeEntity[] = [];
   for (let i = start; i < end; i++) {
     const c = candidates[i]!;
+    if(!historyAllowed(c.observationDate,ds.dataThrough)) continue;
     if (p.includeWithdrawn !== true && c.status === 'withdrawn') continue;
     if (p.provider !== undefined && c.providerId !== p.provider) continue;
     if (p.type !== undefined && c.recordType !== p.type) continue;
@@ -500,11 +502,14 @@ export function listWeekly(ds: Dataset, nq: NormalizedQuery, cursor?: CursorPayl
 }
 
 export function getItem(ds: Dataset, id: string): ItemEntity | null {
-  return ds.itemsById.get(id) ?? null;
+  const item=ds.itemsById.get(id);
+  return item&&historyAllowed(item.observationDate,ds.dataThrough)?item:null;
 }
 
 export function getEvidence(ds: Dataset, id: string): EvidenceEntity | null {
-  return ds.evidenceById.get(id) ?? null;
+  const ev=ds.evidenceById.get(id);if(!ev)return null;
+  if(currentAccess()&&!ds.prices.some(p=>p.evidenceId===id)&&![...ds.itemsById.values()].some(i=>i.evidenceIds.includes(id)&&historyAllowed(i.observationDate,ds.dataThrough)))return null;
+  return ev;
 }
 
 export function getWeekly(ds: Dataset, id: string): WeeklyEntity | null {
@@ -587,9 +592,12 @@ export function runListQuery(
     query = { endpoint, params: payload.qp, qh: payload.qh };
     cursor = payload;
   }
-  const page = endpoint === 'changes' ? listChanges(activeDs, query, cursor)
+  const access=currentAccess(),cutoff=access?historyCutoff(current.dataThrough,access.tier):null;
+  if(endpoint==='changes'&&cutoff&&(query.params.from as string)<cutoff)return {problem:{type:'',title:'History access required',status:403,detail:'查询超出当前套餐历史范围',code:'history_access_required',recovery:access?.tier==='visitor'?'注册查看最近30天；Plus查看全部归档':'升级Plus查看全部归档'}};
+  const page = endpoint === 'changes'  ? listChanges(activeDs, query, cursor)
     : endpoint === 'prices' ? listPrices(activeDs, query, cursor)
     : listWeekly(activeDs, query, cursor);
+  if(endpoint==='changes'&&cutoff)page.items=page.items.filter(i=>('observationDate' in i)&&String(i.observationDate)>=cutoff) as typeof page.items;
   return { result: { ds: activeDs, nq: query, page } };
 }
 

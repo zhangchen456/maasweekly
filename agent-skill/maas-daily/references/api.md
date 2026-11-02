@@ -1,6 +1,6 @@
 # API 与工具字段说明
 
-入口二选一：MCP（`POST https://daily.maas.click/api/mcp`，五个 `maas_get_*` 工具）或 REST（`https://daily.maas.click/api/v1/*`，匿名无需 Key）。两者数据、排序、版本完全一致。
+入口二选一：MCP（`POST https://daily.maas.click/api/mcp`，五个 `maas_get_*` 工具）或 REST（`https://daily.maas.click/api/v1/*`，启用三层权益后需要账户凭证）。两者数据、排序、版本完全一致。
 
 ## limit 差异（注意）
 

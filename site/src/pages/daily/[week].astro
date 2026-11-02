@@ -136,6 +136,8 @@ for (const r of weekRecords) {
 const recordDates = Object.keys(recordsByDate).sort().reverse();
 ---
 <Layout title={`${week.week} 周归档 — MaaS Daily`} description={`${week.start} ~ ${week.end} MaaS 平台每日动态归档：${week.totals?.substantive ?? 0} 个实质变化`}>
+{week.restricted&&<aside class="shell"><p>{locale==='en'?'Historical details require a wider history allowance. Register for 30 days or choose Plus for all available history.':'历史明细超出当前范围。注册查看最近30天，Plus查看全部可用归档；以下空白不代表当时没有变化。'}</p><a href={locale==='en'?'/en/account/':'/account/'}>{locale==='en'?'Sign in / Register':'登录／注册'}</a> · <a href={locale==='en'?'/en/subscription/':'/subscription/'}>Plus</a></aside>}
+
   <header class="hero">
     <div class="hero-main">
       <a href="/" class="back-link">← 返回今日</a>

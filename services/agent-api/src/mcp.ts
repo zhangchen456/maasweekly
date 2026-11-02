@@ -9,6 +9,8 @@
  * 畸形 JSON-RPC -32600。stateless 模式下每请求独立，「未初始化」调用
  * 按正常请求处理（协议允许，见 docs/contracts/mcp-v1.md）。
  */
+import type {Membership} from './membership.js';
+import {callMaasTool} from './mcp-tools.js';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
@@ -32,7 +34,7 @@ export const DEFAULT_MCP_CONFIG: McpConfig = {
   rateLimit: { capacity: 30, refillPerMinute: 30 },
 };
 
-export function createMcpHandler(holder: DatasetHolder, config: McpConfig, pro?: {store: ProStore; config: AccountConfig}) {
+export function createMcpHandler(holder: DatasetHolder, config: McpConfig, pro?: {store: ProStore; config: AccountConfig}, membership?:Membership) {
   const limiter = new ClientRateLimiter(config.rateLimit);
 
   return async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> {
@@ -114,7 +116,10 @@ export function createMcpHandler(holder: DatasetHolder, config: McpConfig, pro?:
     //    工具闭包持有 holder，单次调用单 datasetVersion）
     const mcp = new McpServer({ name: 'maas-daily', version: '1.0.0' });
     if (pro) registerProTools(mcp, pro.store, req, pro.config, holder);
-    else registerMaasTools(mcp, holder);
+    else registerMaasTools(mcp, holder, async(name,h,args)=>{
+      const access=membership?.access(req);const refund=access?.userId?membership!.reserve(access.userId):undefined;
+      try{const outcome=await callMaasTool(name,h,args);if(!outcome.ok)refund?.();return outcome;}catch(error){refund?.();throw error;}
+    });
     const transport = new StreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
       enableJsonResponse: true,
