@@ -44,6 +44,14 @@ def collect_texts(value):
     return found
 
 
+def collect_record_texts(record):
+    """Translate editorial summaries, preserving rule-generated source excerpts."""
+    fields = {'title': record.get('title', '')}
+    if record.get('summaryOrigin') != 'rule':
+        fields['text'] = record.get('summary', '')
+    return collect_texts(fields)
+
+
 def protect(source: str):
     value = source.replace('量化版本', 'quantized version')
     value = value.replace('三维','3D').replace('二维','2D')
