@@ -12,6 +12,7 @@ import type { DatasetHolder } from './dataset.js';
 import { ClientRateLimiter } from './rate-limit.js';
 
 export function proUser(store: ProStore, req: IncomingMessage, config: AccountConfig): User | undefined {
+  if(req.headers.authorization&&config.membership){const a=config.membership.access(req);return a.userId?store.accounts.db.prepare('SELECT * FROM users WHERE id=?').get(a.userId) as unknown as User:undefined;}
   if (req.headers.authorization) {
     const match = /^Bearer ([A-Za-z0-9_-]{43})$/.exec(req.headers.authorization);
     if (!match) throw new AccountError(401,'invalid_token','访问凭证无效');

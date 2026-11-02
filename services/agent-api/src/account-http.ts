@@ -1,3 +1,4 @@
+import {historyAllowed, type Membership} from './membership.js';
 import { FeedbackStore } from './feedback-store.js';
 import { randomUUID } from 'node:crypto';
 import type { IncomingMessage, ServerResponse } from 'node:http';
@@ -7,7 +8,7 @@ import type { Mailer } from './account-mail.js';
 import { ClientRateLimiter } from './rate-limit.js';
 import { validateAccountState } from './account-state.js';
 
-export interface AccountConfig { origin: string; secure: boolean; trustProxy?: boolean }
+export interface AccountConfig { origin: string; secure: boolean; trustProxy?: boolean; membership?:Membership }
 const PREFIX = '/api/account/';
 function email(value: unknown): string {
   if (typeof value !== 'string' || value.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) throw new AccountError(400, 'invalid_email', '请输入有效邮箱');
@@ -31,7 +32,7 @@ function reply(res: ServerResponse, status: number, value: unknown) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'Vary': 'Cookie', 'X-Content-Type-Options': 'nosniff' });
   res.end(JSON.stringify(value));
 }
-export function createAccountHandler(store: AccountStore | null, mailer: Mailer | null, holder: DatasetHolder, config: AccountConfig) {
+export function createAccountHandler(store: AccountStore | null, mailer: Mailer | null, holder: DatasetHolder, config: AccountConfig, membership?:Membership) {
   const feedback = store ? new FeedbackStore(store) : null;
   const feedbackLimiter = new ClientRateLimiter({capacity: 10, refillPerMinute: 1, globalCapacity: 50, globalRefillPerMinute: 5, trustLoopbackProxy: config.trustProxy});
   // A normal account session loads several views and saves workspace settings; OTP has its own stricter budget.
@@ -42,7 +43,7 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
   return async (req: IncomingMessage, res: ServerResponse) => {
     try {
       const route = new URL(req.url ?? '/', config.origin).pathname.slice(PREFIX.length);
-      if (route === 'status' && req.method === 'GET') { reply(res, 200, { enabled: Boolean(store), mailAvailable: Boolean(mailer), cadence: 'daily' }); return; }
+      if (route === 'status' && req.method === 'GET') { reply(res, 200, { enabled: Boolean(store), mailAvailable: Boolean(mailer), cadence: membership?'weekly':'daily', ...(membership?{membershipV2:true}:{}) }); return; }
       if (!store) throw new AccountError(503, 'account_unavailable', '账号服务尚未启用');
       const allowance = limiter.take(req);
       if (!allowance.allowed) { res.setHeader('Retry-After', allowance.retryAfterSeconds); throw new AccountError(429, 'rate_limited', '操作频繁，请稍后再试'); }
@@ -82,7 +83,10 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
       }
       const user = store.user(session);
       if (!user) throw new AccountError(401, 'unauthenticated', '请先登录');
-      if (route === 'usage' && req.method === 'POST') {
+      if (membership && route === 'membership' && req.method === 'GET') { reply(res,200,{tier:membership.tier(user.id),limits:membership.limits(user.id),usage:membership.usage(user.id),tokens:membership.tokens(user.id),transition:membership.transition(user.id)});return; }
+      if (membership && route === 'tokens' && req.method === 'POST') { reply(res,201,membership.mint(user.id,String(input.name??'')));return; }
+      if (membership && route === 'tokens/revoke' && req.method === 'POST') { membership.revoke(user.id,String(input.id??''));reply(res,200,{revoked:true});return; }
+      if (route === 'usage'  && req.method === 'POST') {
         if(Object.keys(input).some(k=>k!=='event'))throw new AccountError(400,'invalid_event','无效统计事件');
         store.recordWorkspaceUsage(user.id,input.event);reply(res,200,{recorded:true});return;
       }
@@ -108,6 +112,7 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
       }
       if (route === 'state' && req.method === 'POST') {
         const state = validateAccountState(input.key, input.value);
+        if(membership && state.key==='priceWorkspace' && ((state.value as {selected:string[]}).selected.length>membership.limits(user.id).compare)) throw new AccountError(403,'comparison_limit','比较对象超过当前套餐额度，请升级 Plus');
         store.saveState(user.id, state.key, state.value); reply(res, 200, { saved: true }); return;
       }
       if (route === 'export' && req.method === 'GET') {
@@ -135,7 +140,7 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
       if (route === 'changes' && req.method === 'GET') {
         if (!holder.current) throw new AccountError(503, 'data_unavailable', '变化数据暂不可用');
         const ids = new Set(store.watches(user.id).map(w => w.modelId));
-        const items = holder.current.changes.filter(c => c.modelId && ids.has(c.modelId)).slice(0, 100);
+        const items = holder.current.changes.filter(c => c.modelId && ids.has(c.modelId) && (!membership || historyAllowed(c.observationDate,holder.current!.dataThrough))).slice(0, 100);
         reply(res, 200, { items, dataThrough: holder.current.dataThrough }); return;
       }
       throw new AccountError(404, 'not_found', '页面不存在');

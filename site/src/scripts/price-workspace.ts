@@ -142,6 +142,7 @@ export function startPriceWorkspace() {
     }
     const providers = [...new Set(models.map(m => m.provider))].sort((a, b) => { const rank = (p: string) => order.includes(p) ? order.indexOf(p) : 100; return rank(a) - rank(b) || a.localeCompare(b); });
     let provider = providers[0] || '', query = '', page = 0, sort = 'name', component = 'total', input = 1, output = .25;
+    let membershipV2=false,comparisonLimit=5,membershipGeneration=0,pendingCompare:WorkspaceModel|null=null;
     const selected = new Set<string>();
     for (const p of ['openai', 'anthropic', 'deepseek']) {
         const m = models.find(m => m.provider === p);
@@ -185,11 +186,13 @@ export function startPriceWorkspace() {
     function metric(m: WorkspaceModel) { return component === 'total' ? cost(m) : amount(m, component); }
     function selectedModels() { return [...selected].map(k => map.get(k)).filter((m): m is WorkspaceModel => Boolean(m)); }
     let toastTimer: ReturnType<typeof setTimeout> | undefined;
-    function toast(s: string) { $('toast').textContent = s; clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').textContent = '', 3000); }
+    function toast(s: string) { $('toast').textContent = s;if(s.includes('Plus')){const a=el('a','',en?' View Plus':' 查看 Plus');a.href=en?'/en/subscription/':'/subscription/';$('toast').append(a);} clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').textContent = '', 3000); }
     function toggle(m: WorkspaceModel) { if (selected.has(m.key))
         selected.delete(m.key);
-    else if (selected.size === 5) {
-        toast('最多对比 5 个模型，请先移除一个。');
+    else if (selected.size >= comparisonLimit) {
+        if(membershipV2&&!currentAccount()){pendingCompare=m;forced=snapshot();document.dispatchEvent(new CustomEvent('maas:membership-gate',{detail:{reason:'comparison_login'}}));openAccountLogin();toast(en?'Register to compare up to 3 quotes.':'免费注册后可比较3个报价方案');return;}
+        document.dispatchEvent(new CustomEvent('maas:membership-gate',{detail:{reason:'comparison_plus'}}));
+        toast(en?`Your plan supports ${comparisonLimit} quotes. View Plus for more.`:`当前套餐支持 ${comparisonLimit} 个报价方案，更多比较请查看 Plus`);
         return;
     }
     else
@@ -305,7 +308,7 @@ export function startPriceWorkspace() {
         append(row, label, append(el('div', 'mini-track'), fill), el('b', 'number', money(n)));
         $('hero-chart').append(row);
     } }
-    function renderCompare() { const ms = selectedModels(); $('chart-unit').textContent = currency + (component === 'total' ? (en ? ' / selected usage' : ' / 当前用量') : (en ? ' / million tokens' : ' / 百万 tokens')); $('compare-shortcut').textContent = '对比 ' + ms.length + ' / 5 ↓'; $('selection').replaceChildren(); for (const m of ms) {
+    function renderCompare() { const ms = selectedModels(); $('chart-unit').textContent = currency + (component === 'total' ? (en ? ' / selected usage' : ' / 当前用量') : (en ? ' / million tokens' : ' / 百万 tokens')); $('compare-shortcut').textContent = '对比 ' + ms.length + ' / '+comparisonLimit+' ↓'; $('selection').replaceChildren(); for (const m of ms) {
         const b = append(el('button', '', m.name), el('span', '', '×'));
         b.setAttribute('aria-label', '从对比移除 ' + m.name);
         b.onclick = () => toggle(m);
@@ -424,7 +427,7 @@ export function startPriceWorkspace() {
       familyIdFilter = modelIdFilter ? null : catalogFamilies.some(f => f.familyId === value.familyId) ? value.familyId : null;
       filterError = null;
       if (initialFilter.modelId || initialFilter.familyId || initialFilter.error) { modelIdFilter = initialFilter.modelId; familyIdFilter = initialFilter.familyId; filterError = initialFilter.error; }
-      selected.clear(); value.selected.filter(key => models.some(m => m.key === key)).slice(0,5).forEach(key => selected.add(key));
+      selected.clear(); value.selected.filter(key => models.some(m => m.key === key)).slice(0,comparisonLimit).forEach(key => selected.add(key));
       models.forEach(m => { const variant = value.variants.find(v => v[0] === m.key)?.[1]; const index = m.options.findIndex(v => v.key === variant); m.variant = index < 0 ? 0 : index; });
       currency = value.currency === 'USD' || value.currency === 'CNY' ? value.currency : defaultCurrency;
       component = value.component; input = value.input; output = value.output; fx = value.fx ?? defaultFx; fxManual = value.fx !== null;
@@ -449,7 +452,13 @@ export function startPriceWorkspace() {
     document.getElementById('follow-selected')!.onclick=()=>{forced=snapshot();if(!currentAccount()){pendingFollow=true;openAccountLogin();return;}void followSelected();};
     const finishSave=async()=>{try{save(snapshot());await flushAccountState();status.textContent='计算已保存，可在此页面继续使用。';}catch{status.textContent='保存失败，请稍后重试。';}};
     document.getElementById('save-result')!.onclick=()=>{try{requireResult();forced=snapshot();if(!currentAccount()){pendingSave=true;openAccountLogin();status.textContent='登录后保存这组计算。';return;}void finishSave();}catch(e){status.textContent=(e as Error).message;}};
-    onAccountChange(user=>{if(user&&pendingSave){pendingSave=false;void finishSave();}if(user&&pendingFollow){pendingFollow=false;void followSelected();}});
+    async function updateMembership(){const generation=++membershipGeneration;try{const s=await fetch('/api/account/status').then(r=>r.json());if(generation!==membershipGeneration)return;membershipV2=s.membershipV2===true;if(!membershipV2)return;
+      comparisonLimit=1;if(currentAccount()){const m=await accountApi<{limits:{compare:number}}>('membership');if(generation!==membershipGeneration)return;comparisonLimit=m.limits.compare;}
+      while(selected.size>comparisonLimit)selected.delete([...selected].at(-1)!);renderCatalog();renderCompare();renderHero();
+      if(currentAccount()&&pendingCompare){const m=pendingCompare;pendingCompare=null;toggle(m);}
+    }catch{if(generation===membershipGeneration&&membershipV2)comparisonLimit=1;}}
+    void updateMembership();
+    onAccountChange(user=>{void updateMembership();if(user&&pendingSave){pendingSave=false;void finishSave();}if(user&&pendingFollow){pendingFollow=false;void followSelected();}});
     root.addEventListener('input', persist); root.addEventListener('change', persist);
     root.addEventListener('click', event => { if ((event.target as HTMLElement).closest('button') && !(event.target as HTMLElement).closest('#theme')) persist(); });
     $('search').maxLength = 200;

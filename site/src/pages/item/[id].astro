@@ -53,10 +53,14 @@ export async function getStaticPaths() {
 }
 
 const runtime=siteRuntime();
-const record = runtime ? await runtime.record(Astro.params.id??'') : Astro.props.record;
+const rawRecord = runtime ? await runtime.record(Astro.params.id??'') : Astro.props.record;
+const record=rawRecord?structuredClone(rawRecord):null;
 if(!record)return new Response('Not found',{status:404});
 const en = Astro.url.pathname.startsWith('/en/');
 const localizedSummary=record.summary ? localizeEditorial({text:record.summary},en?'en':'zh').text : '';
+const membership=runtime?.membership?.();
+const restricted=Boolean(membership?.cutoff&&(record.date??record.observationDate)<membership.cutoff);
+if(restricted){record.diff={};record.comparison=null;record.beforeEvidenceId=null;record.afterEvidenceId=null;}
 const rid: string = record.id;
 const isPrice: boolean = record.recordType === 'price_change';
 
@@ -64,7 +68,8 @@ const isPrice: boolean = record.recordType === 'price_change';
 const revRoot = isPrice ? 'price-record-revisions' : 'record-revisions';
 const revDir = path.join(process.cwd(), '..', 'data', revRoot, rid);
 let revisions: any[] = [];
-if(runtime)revisions=await runtime.revisions(rid);
+if(restricted)revisions=[];
+else if(runtime)revisions=await runtime.revisions(rid);
 else try {
   revisions = fs.readdirSync(revDir)
     .filter((f: string) => f.endsWith('.json'))
@@ -153,6 +158,7 @@ const priceCondText = () => {
   </header>
 
   <section class="record-body">
+    {restricted&&<div class="card"><p>{en?'This record is outside your history allowance. Register for 30 days or choose Plus for all available history.':'此记录超出当前历史范围。注册查看最近30天，Plus查看全部可用归档。'}</p><a href={en?'/en/account/':'/account/'}>{en?'Sign in / Register':'登录／注册'}</a> · <a href={en?'/en/subscription/':'/subscription/'}>Plus</a></div>}
     <div class="card">
       <h2>变化明细</h2>
       <div class="pv-grid">
@@ -353,6 +359,7 @@ const priceCondText = () => {
   </header>
 
   <section class="record-body">
+    {restricted&&<div class="card"><p>{en?'This record is outside your history allowance. Register for 30 days or choose Plus for all available history.':'此记录超出当前历史范围。注册查看最近30天，Plus查看全部可用归档。'}</p><a href={en?'/en/account/':'/account/'}>{en?'Sign in / Register':'登录／注册'}</a> · <a href={en?'/en/subscription/':'/subscription/'}>Plus</a></div>}
     <div class="card summary-card">
       <h2>摘要</h2>
       {record.summary ? (
@@ -388,6 +395,7 @@ const priceCondText = () => {
       </div>
     )}
 
+    {!restricted&&<>
     <div class="card">
       <h2>变化摘录</h2>
       <p class="muted completeness-note">{completenessNote}</p>
@@ -428,6 +436,7 @@ const priceCondText = () => {
       )}
     </div>
 
+    </>}
     {revisions.length > 1 && (
       <div class="card">
         <h2>修订历史（{revisions.length} 版）</h2>

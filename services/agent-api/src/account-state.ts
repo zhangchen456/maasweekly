@@ -16,9 +16,9 @@ export function validateAccountState(key: unknown, value: unknown): { key: strin
     && (v.currency === undefined || v.currency === 'USD' || v.currency === 'CNY')
     && text(v.provider) && text(v.query) && typeof v.sort === 'string' && ['name', 'input', 'output'].includes(v.sort)
     && (v.modelId === null || text(v.modelId)) && (v.familyId === null || text(v.familyId))
-    && strings(v.selected, 5) && typeof v.component === 'string' && ['input', 'output', 'total', 'cache_read', 'cache_write'].includes(v.component)
+    && strings(v.selected, 10) && typeof v.component === 'string' && ['input', 'output', 'total', 'cache_read', 'cache_write'].includes(v.component)
     && number(v.input, 0, 1000000) && number(v.output, 0, 1000000) && (v.fx === null || number(v.fx, .01, 1000))
-    && Array.isArray(v.variants) && v.variants.length <= 5 && v.variants.every(x => Array.isArray(x) && x.length === 2 && text(x[0]) && text(x[1], 1500));
+    && Array.isArray(v.variants) && v.variants.length <= 10 && v.variants.every(x => Array.isArray(x) && x.length === 2 && text(x[0]) && text(x[1], 1500));
   if (!valid) throw new AccountError(400, 'invalid_state', '保存的数据格式不正确');
   return { key, value };
 }

@@ -7,6 +7,14 @@ import { proUser } from './pro-http.js';
 import type { DatasetHolder } from './dataset.js';
 import type { AccountConfig } from './account-http.js';
 export function registerProTools(mcp: McpServer, store: ProStore, req: IncomingMessage, config: AccountConfig, holder: DatasetHolder) {
+  if(config.membership){
+    const register=mcp.registerTool.bind(mcp);
+    mcp.registerTool=((name:any,options:any,callback:any)=>register(name,options,async(...args:any[])=>{
+      const user=proUser(store,req,config);if(!user)throw new AccountError(401,'unauthenticated','请配置访问凭证');
+      const refund=config.membership!.reserve(user.id);
+      try{const result=await callback(...args);if(result?.isError)refund();return result;}catch(error){refund();throw error;}
+    })) as typeof mcp.registerTool;
+  }
   const output = (value: unknown) => ({content:[{type:'text' as const,text:JSON.stringify(value)}]});
   mcp.registerTool('maas_pro_catalog',{description:'审核后的专业情报目录和公开预览；全文需专业权益。',inputSchema:{}},async () => output(store.contents().map(c => ({id:c.id,title:c.title,kind:c.kind,version:c.version,preview:c.preview,period:c.period}))));
   const authenticated = () => { const u=proUser(store,req,config); if (!u) throw new AccountError(401,'unauthenticated','在客户端配置 Authorization: Bearer 凭证'); store.require(u.id); return u; };

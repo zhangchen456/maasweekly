@@ -1,3 +1,4 @@
+import {Membership,membershipEnabled,membershipContext} from './membership.js';
 import {configuredWaffoLive,WaffoLiveStore} from './waffo-live.js';
 import {createWaffoLiveWebhook} from './waffo-live-http.js';
 import {configuredWaffoTest,WaffoTestStore,createWaffoTestHandler} from './waffo-test.js';
@@ -105,9 +106,11 @@ const accountOrigin = process.env.MAAS_ACCOUNT_ORIGIN ?? 'https://daily.maas.cli
 const accountUrl = new URL(accountOrigin);
 if (accountOrigin !== accountUrl.origin || (accountUrl.protocol !== 'https:' && !['localhost', '127.0.0.1'].includes(accountUrl.hostname))) throw new Error('invalid MAAS_ACCOUNT_ORIGIN');
 const accountStore = process.env.MAAS_ACCOUNT_DB ? new AccountStore(path.resolve(process.env.MAAS_ACCOUNT_DB)) : null;
-const accountHandler = createAccountHandler(accountStore, createMailer(), holder, { origin: accountOrigin, secure: accountUrl.protocol === 'https:', trustProxy: TRUST_PROXY });
 const proStore = accountStore ? new ProStore(accountStore) : null;
-const proConfig = { origin: accountOrigin, secure: accountUrl.protocol === 'https:', trustProxy: TRUST_PROXY };
+if(membershipEnabled()&&(!accountStore||!proStore))throw new Error('membership requires account database');
+const membership=membershipEnabled()&&accountStore&&proStore?new Membership(accountStore,proStore,accountUrl.protocol==='https:'):undefined;
+const accountHandler=createAccountHandler(accountStore,createMailer(),holder,{origin:accountOrigin,secure:accountUrl.protocol==='https:',trustProxy:TRUST_PROXY},membership);
+const proConfig = { origin: accountOrigin, secure: accountUrl.protocol === 'https:', trustProxy: TRUST_PROXY, membership };
 const adminStore = accountStore ? new AdminStore(accountStore) : null;
 const adminHandler = createAdminHandler(adminStore, holder, proConfig, logger?.emit);
 const paymentWebhook=createPaymentWebhook(adminStore?new PaymentStore(adminStore):null,accountOrigin);
@@ -125,10 +128,30 @@ if(siteRuntime&&SITE_ENTRY){
   site=createSiteHandler(holder,siteRuntime,module.handler,accountOrigin);
 }
 const proHandler = createProHandler(proStore, holder, proConfig, Boolean(createMailer()),site?.weekly,livePayments);
-const mcpHandler = instrumentRequest(createMcpHandler(holder, mcpConfig), holder, releaseId, logger?.emit);
+const mcpHandler = instrumentRequest(createMcpHandler(holder, mcpConfig,undefined,membership), holder, releaseId, logger?.emit);
 const proMcpHandler = proStore ? createMcpHandler(holder, mcpConfig, {store:proStore,config:proConfig}) : proHandler;
 const runtimeHealthHandler = createRuntimeHealthHandler(holder, releaseId);
 const server = http.createServer((req, res) => {
+  if(membership){
+    try{
+      const pathname=new URL(req.url??'/',accountOrigin).pathname;
+      if(pathname.startsWith('/api/payment/')||pathname==='/_runtime/health'){dispatch(req,res);return;}
+      const access=membership.access(req);
+      const machine=pathname.startsWith('/api/v1/')||pathname==='/api/mcp'||pathname==='/api/pro/mcp';
+      const browser=pathname.startsWith('/api/browser/');
+      if(machine&&req.method!=='OPTIONS'&&pathname!=='/api/v1/status'&&!access.machine){res.writeHead(401,{'Content-Type':'application/problem+json','Cache-Control':'no-store'});res.end(JSON.stringify({status:401,code:'token_required',detail:'请登录账户创建API/MCP访问凭证',recovery:'/account/'}));return;}
+      if(browser&&access.machine){res.writeHead(403,{'Content-Type':'application/problem+json','Cache-Control':'no-store'});res.end(JSON.stringify({code:'session_required',detail:'浏览器数据通道使用网站会话；机器查询请使用/api/v1或/api/mcp'}));return;}
+      if(browser)req.url=req.url!.replace('/api/browser/','/api/v1/');
+      if((machine||pathname.startsWith('/api/pro/'))&&access.machine&&req.method==='GET'&&pathname!=='/api/v1/status'){
+        const refund=membership.reserve(access.userId!);res.once('finish',()=>{if(res.statusCode!==200)refund();});
+      }
+      membershipContext.run(pathname==='/feed.xml'||pathname==='/feed/weekly.xml'?{tier:'visitor'}:access,()=>dispatch(req,res));return;
+    }catch(error){const e=error as {status?:number;code?:string;message?:string};res.writeHead(e.status??503,{'Content-Type':'application/problem+json','Cache-Control':'no-store'});res.end(JSON.stringify({status:e.status??503,code:e.code??'membership_unavailable',detail:e.status?e.message:'权益暂不可用'}));return;}
+  }
+  if((req.url??'').startsWith('/api/browser/'))req.url=req.url!.replace('/api/browser/','/api/v1/');
+  dispatch(req,res);
+});
+function dispatch(req:http.IncomingMessage,res:http.ServerResponse){
   if ((req.url ?? '').split('?')[0] === '/_runtime/health') { runtimeHealthHandler(req, res); return; }
   if(adminStore)trackAnalyticsRequest(adminStore,req,res);
   const pathname = (req.url ?? '').split('?')[0] ?? '';
@@ -146,7 +169,7 @@ const server = http.createServer((req, res) => {
   }
   if(site&&!pathname.startsWith('/api/')){void site.handle(req,res);return;}
   void restHandler(req, res);
-});
+}
 const loop = logger ? monitorEventLoopDelay({ resolution: 20 }) : undefined;
 loop?.enable();
 const sample = () => {

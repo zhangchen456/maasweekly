@@ -66,3 +66,22 @@ test('SSR public responses support stable ETag and weak conditional GET',async()
   const cached=await fetch(url,{headers:{'If-None-Match':'W/'+etag}});assert.equal(cached.status,304);assert.equal(await cached.text(),'');
  }finally{server?.closeAllConnections();if(server)await new Promise<void>(resolve=>server!.close(()=>resolve()));holder.close();rmSync(root,{recursive:true,force:true});}
 });
+
+test('membership SSR cache and projections cannot mix visitor, Free and Plus historical data',async()=>{
+ const {membershipContext}=await import('../membership.js');const {createSiteHandler}=await import('../site-http.js');const http=await import('node:http');
+ const {root,fx}=fixture();
+ const old='2026-10-01',recent='2026-11-01';
+ const rt=new SiteRuntime({prepare:async manifest=>({inputVersion:manifest.site!.inputVersion,codeCommit:code,projections:new Map<string,unknown>([
+ ['site/src/data/daily_changes.json',{days:[{date:recent,changed:['RECENT']},{date:old,changed:['HISTORICAL_SECRET']}]}],
+ ['site/src/data/weekly-digest.json',[{week:'2026-W40',start:old,end:'2026-10-04',days:{},highlights:['HISTORICAL_SECRET'],story:{story:'HISTORICAL_SECRET'}}]],
+ ['site/src/data/record-index.json',[{date:old}]],['site/src/data/price-record-index.json',[]]])}),document:async()=>null,revisions:async()=>[],factsForEvidence:async()=>[]});
+ const holder=new DatasetHolder(root,{publicationFile:'publication.json',prepare:d=>rt.prepare(d)});let server:any;
+ try{
+  fx.writeRelease(ds(1),{dataThrough:'2026-11-02',changes:[{id:'recent',observationDate:recent},{id:'old',observationDate:old}]});bind(root,1);await holder.reloadAsync();
+  const site=createSiteHandler(holder,rt,async(_req,res)=>{res.writeHead(200,{'Content-Type':'text/html'});res.end(JSON.stringify({release:rt.bridge.release().changes,daily:rt.bridge.projection('daily_changes.json'),weekly:rt.bridge.dailyWeek('2026-W40')}));},'http://localhost');
+  server=http.createServer((req,res)=>membershipContext.run({tier:req.headers['x-test-tier']==='plus'?'plus':'visitor'},()=>void site.handle(req,res)));await new Promise<void>(r=>server.listen(0,'127.0.0.1',r));const url=`http://127.0.0.1:${server.address().port}/`;
+  const plus=await fetch(url,{headers:{'x-test-tier':'plus'}});assert.match(await plus.text(),/HISTORICAL_SECRET/);
+  const visitor=await fetch(url);const text=await visitor.text();assert.ok(!text.includes('HISTORICAL_SECRET'));assert.ok(text.includes('RECENT'));assert.match(visitor.headers.get('cache-control')??'',/private/);
+  const again=await fetch(url,{headers:{'x-test-tier':'plus'}});assert.match(await again.text(),/HISTORICAL_SECRET/);
+ }finally{server?.closeAllConnections();if(server)await new Promise<void>(r=>server.close(()=>r()));holder.close();rmSync(root,{recursive:true,force:true});}
+});

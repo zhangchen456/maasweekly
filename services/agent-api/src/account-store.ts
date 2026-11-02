@@ -170,11 +170,14 @@ export class AccountStore {
   saveState(id: string, key: string, value: unknown) {
     this.db.prepare('INSERT INTO account_state VALUES(?,?,?,?) ON CONFLICT(userId,key) DO UPDATE SET value=excluded.value,updated=excluded.updated').run(id, key, JSON.stringify(value), this.now());
   }
+  watchLimit: (id:string)=>number = () => 50;
+  digestEligible: (id:string)=>boolean = () => true;
+  effectiveWatches(id:string){return this.watches(id);}
   watches(id: string) { return this.db.prepare('SELECT modelId,since FROM watches WHERE userId=? ORDER BY since DESC,modelId').all(id) as unknown as {modelId: string; since: number}[]; }
   watch(id: string, modelId: string, catalog: ModelIdentityCatalog) {
     if (!catalog.models.some(m => m.modelId === modelId)) throw new AccountError(400, 'unknown_model', '请选择目录中的模型');
     this.transaction(() => {
-      if (this.watches(id).length >= 50 && !this.watches(id).some(w => w.modelId === modelId)) throw new AccountError(400, 'watch_limit', '最多关注 50 个模型');
+      if (this.watches(id).length >= this.watchLimit(id) && !this.watches(id).some(w => w.modelId === modelId)) throw new AccountError(400, 'watch_limit', `当前套餐最多关注 ${this.watchLimit(id)} 个模型，升级 Plus 可关注 50 个`);
       const inserted=this.db.prepare('INSERT OR IGNORE INTO watches VALUES(?,?,?)').run(id, modelId, this.now());
       if (inserted.changes) this.valueEvent(id,'model_followed',modelId);
     });
@@ -201,7 +204,8 @@ export class AccountStore {
       let count = 0;
       const users = this.db.prepare('SELECT * FROM users WHERE emailEnabled=1').all() as unknown as User[];
       for (const user of users) {
-        const watches = new Map(this.watches(user.id).map(w => [w.modelId, Math.max(w.since, user.emailSince)]));
+        if (!this.digestEligible(user.id)) continue;
+        const watches = new Map(this.effectiveWatches(user.id).map(w => [w.modelId, Math.max(w.since, user.emailSince)]));
         const items = changes.filter(c => {
           const since = c.modelId ? watches.get(c.modelId) : undefined;
           const when = Date.parse(c.updatedAt ?? c.observedAt ?? `${c.observationDate}T00:00:00+08:00`);
@@ -220,8 +224,9 @@ export class AccountStore {
     return this.transaction(() => {
       // Any expired attempt is uncertain. Require supplier evidence before reexecution.
       this.db.prepare("UPDATE mail_jobs SET status='review' WHERE status='pending' AND lease>0 AND lease<=?").run(this.now());
-      const job = this.db.prepare("SELECT j.* FROM mail_jobs j JOIN users u ON u.id=j.userId WHERE j.status='pending' AND u.emailEnabled=1 AND j.lease=0 AND j.created<=? ORDER BY j.created LIMIT 1").get(this.now()) as unknown as Job | undefined;
+      const job = (this.db.prepare("SELECT j.* FROM mail_jobs j JOIN users u ON u.id=j.userId WHERE j.status='pending' AND u.emailEnabled=1 AND j.lease=0 AND j.created<=? ORDER BY j.created").all(this.now()) as unknown as Job[]).find(j=>this.digestEligible(j.userId));
       if (!job) return null;
+      if(!this.digestEligible(job.userId))return null;
       const lease=this.now()+5*MINUTE;
       this.db.prepare('UPDATE mail_jobs SET lease=? WHERE id=?').run(lease, job.id);
       const user = this.db.prepare('SELECT * FROM users WHERE id=?').get(job.userId) as unknown as User;
