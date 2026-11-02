@@ -2,5 +2,21 @@
 import { evidenceLinks, type EvidenceItem } from '../lib/digest-evidence';
 const { item } = Astro.props as { item: EvidenceItem };
 const en=Astro.url.pathname.startsWith('/en/');
+const evidence=evidenceLinks(item);
 ---
-{evidenceLinks(item).map(e=><a class="digest-evidence" href={e.url} rel="noopener noreferrer" title={en ? `Observed ${e.observedDate}` : `观察日期 ${e.observedDate}`}>{en?'Official source':'官方依据'} · {e.observedDate} ↗</a>)}
+{evidence.length ? evidence.map(e=><a class="digest-evidence" href={e.url} rel="noopener noreferrer" title={en ? `Observed ${e.observedDate}` : `观察日期 ${e.observedDate}`}>{en?'Official source':'官方依据'} · {e.observedDate} ↗</a>) : item.relatedSources?.length ? (
+ <details class="digest-sources">
+  <summary>{en?'Sources that day':'当日来源'}</summary>
+  <ul>{item.relatedSources.map(source=><li><a href={(source.url.startsWith('/')&&en?'/en':'')+source.url} rel="noopener noreferrer">{source.host||(en?'Archived change':'变化记录')} ↗</a>{source.recordUrl&&<a href={(en?'/en':'')+source.recordUrl}>{en?'Archived change':'变化记录'} ↗</a>}</li>)}</ul>
+ </details>
+) : null}
+<style>
+ .digest-sources{margin-top:4px;font-size:12px;line-height:1.8;color:var(--paper-soft)}
+ .digest-sources summary{width:fit-content;cursor:pointer;color:var(--paper-soft)}
+ .digest-sources summary:hover{color:var(--acid)}
+ .digest-sources summary:focus-visible,.digest-sources a:focus-visible{outline:2px solid var(--acid);outline-offset:3px}
+ .digest-sources ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+ .digest-sources li{display:flex;flex-wrap:wrap;gap:4px 16px;min-width:0}
+ .digest-sources a{font-size:12px;color:var(--paper-soft);overflow-wrap:anywhere;white-space:normal;text-underline-offset:3px}
+ .digest-sources a:hover{color:var(--acid)}
+</style>

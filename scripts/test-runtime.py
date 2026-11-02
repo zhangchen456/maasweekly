@@ -24,5 +24,6 @@ def main():
   run(['node','--test',*[f'tests/{name}.test.mjs' for name in SITE]],ROOT/'site')
   run(['npm','run','build:runtime'],ROOT/'site')
   run(['node','scripts/verify-membership-site.mjs'])
+  run(['node','scripts/verify-digest-site.mjs'])
  print(json.dumps({'gate':'runtime','suite':a.suite,'postgresConfigured':bool(os.environ.get('MAAS_SHADOW_TEST_DSN')),'status':'passed'}))
 if __name__=='__main__':main()

@@ -2,6 +2,7 @@
 import { logoFor } from '../lib/platforms';
 import BrandMark from './BrandMark.astro';
 import DigestEvidence from './DigestEvidence.astro';
+import DigestNote from './DigestNote.astro';
 import { homeOverview, highlightEntities } from '../lib/home-page';
 import type { PlatformHighlight } from '../lib/home-page';
 interface Props { highlights: PlatformHighlight[]; platformOrder: string[]; date?: string; updatedAt?: string }
@@ -25,6 +26,7 @@ const { labels, picks, recentChanges } = homeOverview(highlights, Astro.url.path
 <section class="market-section vendor-changes" aria-labelledby="market-title" data-latest-date={recentChanges.to}>
   <div class="market-heading"><h2 id="market-title">各家产品，最近发生了什么</h2><div class="edition"><time datetime={date}>{date?.replaceAll('-','.')}</time><button id="copy-brief" type="button">复制简报 ↗</button><span id="copy-status" role="status"></span></div></div>
   <p class="market-note" id="change-range-note">近 7 天 · {recentChanges.from} — {recentChanges.to} · 按厂家与平台汇总，重复摘要合并，保留最近记录。</p>
+  <DigestNote />
   <div class="range-switch" role="group" aria-label="动态时间范围"><button type="button" data-range="today" aria-pressed="false">今天</button><button type="button" data-range="week" aria-pressed="true">近 7 天</button></div>
   <div class="explore-bar" aria-label="动态筛选">
     <label class="search-field"><span aria-hidden="true">⌕</span><input id="signal-search" type="search" placeholder="搜索平台、模型或关键词…" aria-label="搜索厂家与产品变化"/><kbd>/</kbd></label>
@@ -42,7 +44,7 @@ const { labels, picks, recentChanges } = homeOverview(highlights, Astro.url.path
   {recentChanges.groups.map(group => <article class="vendor-change-row" data-recent-platform={group.platform} data-platform={group.platform}>
     <header class="vendor-change-identity"><img src={logoFor(group.platform)} alt="" width="32" height="32" loading="lazy" /><div><h3>{group.platform}</h3><p>{group.items.length} 条变化 · 最近 {group.items[0].date.slice(5).replace('-','.')}</p></div><button class="follow-button" type="button" data-follow={group.platform} aria-pressed="false" aria-label={`关注 ${group.platform}`}>＋ 关注</button></header>
     <div class="vendor-change-body">
-      <ul class="vendor-change-items">{group.items.map((item,index) => <li class="vendor-change-item" data-type={item.type} data-date={item.date} data-order={index}><span class={`change-kind kind-${item.type}`}>{labels[item.type] ?? labels.other}</span><p>{highlightEntities(item.text).map(seg => seg.hl ? <code>{seg.text}</code> : seg.text)} <DigestEvidence item={item} /></p><a href={item.href} aria-label={`${group.platform} ${item.date} 的变化记录`}><time datetime={item.date}>{item.date.slice(5).replace('-','.')}</time> ↗</a></li>)}</ul>
+      <ul class="vendor-change-items">{group.items.map((item,index) => <li class="vendor-change-item" data-type={item.type} data-date={item.date} data-order={index}><span class={`change-kind kind-${item.type}`}>{labels[item.type] ?? labels.other}</span><div class="vendor-change-text"><p>{highlightEntities(item.text).map(seg => seg.hl ? <code>{seg.text}</code> : seg.text)}</p><DigestEvidence item={item} /></div><a href={item.href} aria-label={`${group.platform} ${item.date} 的变化记录`}><time datetime={item.date}>{item.date.slice(5).replace('-','.')}</time> ↗</a></li>)}</ul>
       <details class="vendor-change-more" hidden><summary>展开更多变化</summary><ul class="vendor-change-items"></ul></details>
 
     </div>

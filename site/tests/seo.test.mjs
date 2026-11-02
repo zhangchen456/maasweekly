@@ -97,9 +97,9 @@ const from=new Date(Date.parse(to+'T00:00:00Z')-6*86400000).toISOString().slice(
 const expected=new Set(daily.filter(d=>d.date>=from && d.date<=to).flatMap(d=>(d.highlights??[]).filter(h=>h.items.length).map(h=>h.platform)));
 assert.deepEqual(new Set([...home.querySelectorAll('[data-recent-platform]')].map(el=>el.dataset.recentPlatform)),expected);
 for(const row of home.querySelectorAll('[data-recent-platform]')) {
-  const entries=[...row.querySelectorAll('.vendor-change-items li')];
+  const entries=[...row.querySelectorAll('.vendor-change-item')];
   assert.equal(new Set(entries.map(el=>el.querySelector('p').textContent)).size,entries.length);
-  for(const a of row.querySelectorAll('.vendor-change-items a')) assert(existsSync(path.join(dist,a.getAttribute('href').split('#')[0],'index.html')));
+  for(const a of row.querySelectorAll('.vendor-change-item > a')) assert(existsSync(path.join(dist,a.getAttribute('href').split('#')[0],'index.html')));
   for(const time of row.querySelectorAll('time')) assert(time.dateTime>=from && time.dateTime<=to);
 }
 for(const slide of home.querySelectorAll('[data-highlight-slide]')) assert(slide.querySelector('h2').textContent.includes(slide.querySelector('.opening-deck').textContent.split(' · ')[0]));
