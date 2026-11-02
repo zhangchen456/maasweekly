@@ -13,7 +13,7 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(BASE / 'pipeline'))
 from data_store import read, write, compose_daily, compose_weekly, project_site
-from english_translation import CACHE, MODEL, PROMPT_VERSION, SYSTEM, collect_texts, protect, restore_and_validate, text_key, projected_texts, translation_cache_path
+from english_translation import CACHE, MODEL, PROMPT_VERSION, SYSTEM, collect_texts, collect_record_texts, protect, restore_and_validate, text_key, projected_texts, translation_cache_path
 
 
 def translate(source, key, url, model):
@@ -59,7 +59,7 @@ def main():
     for folder in ['records','price-records']:
         for file in (BASE/'data'/folder).glob('*.json'):
             record=json.loads(file.read_text())
-            texts |= collect_texts({'title':record.get('title',''),'text':record.get('summary','')})
+            texts |= collect_record_texts(record)
     cache=read(BASE,CACHE,{'schemaVersion':1,'entries':{}})
     key=os.environ.get('TRANSLATION_API_KEY',''); model=os.environ.get('TRANSLATION_MODEL',MODEL)
     available=projected_texts(cache)

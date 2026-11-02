@@ -3,7 +3,7 @@
 // 数据源：data/records/*.json（obs_）+ data/price-records/*.json（price_）
 // 修订历史：data/record-revisions/<id>/ 与 data/price-record-revisions/<id>/
 import { siteRuntime } from '../../lib/runtime';
-import {localizeEditorial} from '../../lib/dynamic-translation';
+import {localizeRecordSummary} from '../../lib/dynamic-translation';
 import Layout from '../../layouts/Layout.astro';
 import { logoFor } from '../../lib/platforms';
 import fs from 'node:fs';
@@ -57,7 +57,7 @@ const rawRecord = runtime ? await runtime.record(Astro.params.id??'') : Astro.pr
 const record=rawRecord?structuredClone(rawRecord):null;
 if(!record)return new Response('Not found',{status:404});
 const en = Astro.url.pathname.startsWith('/en/');
-const localizedSummary=record.summary ? localizeEditorial({text:record.summary},en?'en':'zh').text : '';
+const localizedSummary=localizeRecordSummary(record,en?'en':'zh');
 const membership=runtime?.membership?.();
 const restricted=Boolean(membership?.cutoff&&(record.date??record.observationDate)<membership.cutoff);
 if(restricted){record.diff={};record.comparison=null;record.beforeEvidenceId=null;record.afterEvidenceId=null;}

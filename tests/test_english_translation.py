@@ -7,7 +7,7 @@ from unittest.mock import patch
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'pipeline'))
-from english_translation import collect_texts, projected_texts, protect, restore_and_validate, text_key, PROMPT_VERSION, normalize_terms
+from english_translation import collect_texts, collect_record_texts, projected_texts, protect, restore_and_validate, text_key, PROMPT_VERSION, normalize_terms
 
 class EnglishTranslationTests(unittest.TestCase):
     def test_private_translations_cannot_be_written_into_public_repository(self):
@@ -71,6 +71,16 @@ class EnglishTranslationTests(unittest.TestCase):
               'changed':[{'llm_summary':'信源解读','added_lines':['原始证据'],'signal_preview':'原文预览','url':'https://example.com/中文'}],
               'sourceSummaries':{'id':'补充解读'}}
         self.assertEqual(collect_texts(data),{'新增模型','模型上线','信源解读','补充解读'})
+
+    def test_record_translation_excludes_raw_rule_previews_without_changing_evidence(self):
+        import copy
+        original='来源原文' * 15000
+        record={'title':'来源更新','summaryOrigin':'rule','summary':original,'diff':{'added_lines':[original]}}
+        before=copy.deepcopy(record)
+        self.assertEqual(collect_record_texts(record),{'来源更新'})
+        self.assertEqual(record,before)
+        for origin in ['llm','manual',None]:
+            self.assertEqual(collect_record_texts({**record,'summaryOrigin':origin}),{'来源更新',original})
 
     def test_protection_units_identifiers_dates(self):
         source='10月5日，gpt-6.1-sol 使用 thinking_budget；输入 $12/MTok，超过10万 tokens。'
