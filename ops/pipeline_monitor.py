@@ -110,7 +110,10 @@ def export_sources(shared, package, gid=None):
     """Reuse committed stage receipts, preserving actual fetch times on replays."""
     path = Path(package) / 'tooling/scripts/monitor-collect.py'
     spec = importlib.util.spec_from_file_location('live_monitor_collector', path)
-    collector = importlib.util.module_from_spec(spec); spec.loader.exec_module(collector)
+    collector = importlib.util.module_from_spec(spec)
+    # Runtime packages are immutable. Source loading must neither consume nor create
+    # __pycache__ entries that invalidate their verified file inventory.
+    exec(compile(path.read_bytes(), str(path), 'exec'), collector.__dict__)
     batches, skipped = collector.collect(Path(shared) / 'data-store/writer', config_root=Path(package) / 'tooling')
     for batch in batches:
         # This namespace avoids changing the identity/content of pre-migration imports.
