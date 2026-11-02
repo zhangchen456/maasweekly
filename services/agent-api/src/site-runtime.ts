@@ -60,10 +60,10 @@ export class SiteRuntime {
       },
       evidence:async id=>{
         const s=this.current();
-        if(!/^ev_[0-9a-f]{64}$/.test(id)||!getEvidence(s.dataset,id))return null;
+        if(!/^ev_[0-9a-f]{64}$/.test(id)||!s.dataset.evidenceById.has(id))return null;
         const value=await this.store.document(s.inputVersion,`data/price-evidence/${id}.json`);
         if(!value||typeof value!=='object'||(value as {id?:unknown}).id!==id)throw new SiteDataError();
-        return value;
+        return getEvidence(s.dataset,id)?value:{...value,excerptText:'',restricted:true};
       },
       facts:async id=>Boolean(getEvidence(this.current().dataset,id))
         ?(await this.store.factsForEvidence(this.current().inputVersion,id)).filter((f:any)=>!currentAccess()||currentAccess()?.tier==='plus'||this.current().dataset.prices.some(p=>p.id===f.version_id)):[],
