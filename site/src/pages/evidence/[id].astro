@@ -161,7 +161,8 @@ const observedRange = relatedFacts.length > 0
     <div class="card">
       <h2>摘录</h2>
       <p class="muted">以下为当时官方页面的安全文本化摘录，本站不执行来源 HTML。观察时间见下方关联事实。</p>
-      <pre class="excerpt" data-original-language={Boolean(record.excerptText)}>{record.excerptText || (Astro.url.pathname.startsWith('/en/') ? 'No excerpt available' : '（无摘录内容）')}</pre>
+      {record.restricted&&<p>{Astro.url.pathname.startsWith('/en/')?'This historical excerpt requires a wider history allowance. The official source remains available above.':'此历史摘录超出当前套餐范围，上方官方来源仍可访问。'} <a href={Astro.url.pathname.startsWith('/en/')?'/en/account/':'/account/'}>{Astro.url.pathname.startsWith('/en/')?'Sign in / Register':'登录／注册'}</a> · <a href={Astro.url.pathname.startsWith('/en/')?'/en/subscription/':'/subscription/'}>Plus</a></p>}
+      {!record.restricted&&<pre class="excerpt" data-original-language={Boolean(record.excerptText)}>{record.excerptText || (Astro.url.pathname.startsWith('/en/') ? 'No excerpt available' : '（无摘录内容）')}</pre>}
     </div>
 
     {relatedFacts.length > 0 && (
