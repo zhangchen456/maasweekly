@@ -24,6 +24,8 @@ export function relatedSourceLinks(context?:DigestContext):RelatedSource[] {
   const existing=found.get(key);
   if(!existing||(!existing.recordUrl&&url&&recordUrl))found.set(key,{url:key,host:url?.hostname??'',recordUrl:url?recordUrl:undefined});
  }
+ // The archive index may repeat a record already linked beside its source page.
+ for(const source of found.values())if(source.recordUrl)found.delete(source.recordUrl);
  return [...found.values()];
 }
 export function displayItem<T extends EvidenceItem>(item:T, _locale='zh', context?:DigestContext):T {
