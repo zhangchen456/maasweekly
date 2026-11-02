@@ -3,6 +3,7 @@ import { siteRuntime } from '../../lib/runtime';
 import { readPageProjection } from '../../lib/page-data';
 import Layout from '../../layouts/Layout.astro';
 import DigestEvidence from '../../components/DigestEvidence.astro';
+import DigestNote from '../../components/DigestNote.astro';
 import { displayItem } from '../../lib/digest-evidence';
 import { localizeEditorial } from '../../lib/dynamic-translation';
 import { priceChangeLink } from '../../lib/record-links';
@@ -192,6 +193,7 @@ const recordDates = Object.keys(recordsByDate).sort().reverse();
       <h2>逐日要点</h2>
       <p class="section-note">该周每日要点，按日倒序。</p>
     </div>
+    {weekDays.length>0 && <DigestNote />}
     {weekDays.map((date) => {
       // 优先取 daily_changes.json 的 v3 分组 highlights（带 logo_summary），否则用展平结构
       const grouped = daysByDate[date]?.highlights || [];
@@ -213,11 +215,11 @@ const recordDates = Object.keys(recordsByDate).sort().reverse();
           </div>
           {flat.length > 0 ? (
             <ul class="hl-list">
-              {flat.map((raw: any) => {const h=displayItem(raw,Astro.url.pathname.startsWith('/en/')?'en':'zh');return (
+              {flat.map((raw: any) => {const h=displayItem(raw,locale,{platform:raw.platform,date,sources:[...(daysByDate[date]?.changed??[]).map((c:any)=>({...c,date})),...(recordsByDate[date]??[])]});return (
                 <li class={`hl-item ${HL_TYPE[h.type]?.cls || 't-other'}`}>
                   <span class="hl-type">{HL_TYPE[h.type]?.label || '动态'}</span>
                   <span class="hl-platform platform-name">{logoFor(h.platform) && <img class="platform-logo" src={logoFor(h.platform)} alt="" width="28" height="28" loading="lazy" />}{h.platform}</span>
-                  <span class="hl-text">{h.text} <DigestEvidence item={h} /></span>
+                  <div class="hl-text">{h.text} <DigestEvidence item={h} /></div>
                 </li>
               );})}
             </ul>

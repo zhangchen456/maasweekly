@@ -96,7 +96,7 @@ document.addEventListener('keydown', (event) => {
 });
 document.querySelector('#copy-brief')?.addEventListener('click', async () => {
   const visible = cards.filter((card) => !card.hidden);
-  const text = ['MaaS Daily · ' + document.querySelector('#change-range-note')?.textContent, ...visible.map((card) => `${card.dataset.platform}\n${[...card.querySelectorAll<HTMLElement>('.vendor-change-item')].filter((item) => !item.hidden).map((item) => '• ' + item.textContent?.trim()).join('\n')}`)].join('\n\n');
+  const text = ['MaaS Daily · ' + document.querySelector('#change-range-note')?.textContent, ...visible.map((card) => `${card.dataset.platform}\n${[...card.querySelectorAll<HTMLElement>('.vendor-change-item')].filter((item) => !item.hidden).map((item) => '• ' + (item.querySelector('p')?.textContent ?? item.textContent)?.trim()).join('\n')}`)].join('\n\n');
   const status = document.querySelector('#copy-status')!;
   if (!visible.length) { status.textContent = '当前筛选下没有可复制的要点'; return; }
   try { await navigator.clipboard.writeText(text); document.dispatchEvent(new CustomEvent('maas:copy-success', { detail: { kind: 'brief' } })); status.textContent = '已复制当前筛选的简报'; } catch { status.textContent = '浏览器未允许复制，请选中文字复制'; }

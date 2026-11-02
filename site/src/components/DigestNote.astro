@@ -1,0 +1,14 @@
+---
+const en=Astro.url.pathname.startsWith('/en/');
+---
+<details class="digest-note">
+ <summary>{en?'About summaries and sources':'摘要与来源说明'}</summary>
+ <p>{en?'Summaries are organized with AI assistance. “Official source” links to evidence for an individual item. “Sources that day” lists that platform’s sources for the date; older summaries can be read alongside those records. These source lists are context, not claim-by-claim citations.':'内容由 AI 辅助整理。「官方依据」对应具体要点；「当日来源」汇集该平台当天的来源页面与变化记录。部分早期摘要未保留逐条引用，可展开当日来源对照阅读。'}</p>
+</details>
+<style>
+ .digest-note{margin:12px 0 20px;font-size:12px;line-height:1.85;color:var(--paper-soft);max-width:72ch}
+ .digest-note summary{cursor:pointer;width:fit-content}
+ .digest-note summary:hover{color:var(--acid)}
+ .digest-note summary:focus-visible{outline:2px solid var(--acid);outline-offset:4px}
+ .digest-note p{margin:8px 0 0;text-wrap:pretty}
+</style>
