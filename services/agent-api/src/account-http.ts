@@ -1,3 +1,5 @@
+import {projectQuotes} from './project-cost.js';
+import type {ProjectStore} from './project-store.js';
 import {historyAllowed, type Membership} from './membership.js';
 import { FeedbackStore } from './feedback-store.js';
 import { randomUUID } from 'node:crypto';
@@ -32,7 +34,7 @@ function reply(res: ServerResponse, status: number, value: unknown) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'Vary': 'Cookie', 'X-Content-Type-Options': 'nosniff' });
   res.end(JSON.stringify(value));
 }
-export function createAccountHandler(store: AccountStore | null, mailer: Mailer | null, holder: DatasetHolder, config: AccountConfig, membership?:Membership) {
+export function createAccountHandler(store: AccountStore | null, mailer: Mailer | null, holder: DatasetHolder, config: AccountConfig, membership?:Membership, projects?:ProjectStore) {
   const feedback = store ? new FeedbackStore(store) : null;
   const feedbackLimiter = new ClientRateLimiter({capacity: 10, refillPerMinute: 1, globalCapacity: 50, globalRefillPerMinute: 5, trustLoopbackProxy: config.trustProxy});
   // A normal account session loads several views and saves workspace settings; OTP has its own stricter budget.
@@ -53,7 +55,7 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
       const session = (req.headers.cookie ?? '').split(';').map(s => s.trim()).find(s => s.startsWith(`${cookieName}=`))?.slice(cookieName.length + 1) ?? '';
       if (route === 'feedback' && req.method === 'POST' && !feedbackLimiter.take(req).allowed) throw new AccountError(429, 'rate_limited', '提交频繁，请稍后再试');
       if (route === 'feedback' && req.method === 'POST' && !store.user(session)) throw new AccountError(401, 'unauthenticated', '请先登录后提交反馈');
-      const input = req.method === 'POST' ? await body(req, route === 'feedback' ? 9 * 1024 * 1024 : 8192) : {};
+      const input = req.method === 'POST' ? await body(req, route === 'feedback' ? 9 * 1024 * 1024 : route.startsWith('projects')?32768:8192) : {};
       if (route === 'request-code' && req.method === 'POST') {
         if (!mailer) throw new AccountError(503, 'mail_unavailable', '邮件服务尚未配置，请稍后再试');
         if (!authLimiter.take(req).allowed) throw new AccountError(429, 'rate_limited', '发送频繁，请稍后再试');
@@ -79,10 +81,27 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
       }
       if (route === 'unsubscribe' && req.method === 'POST') {
         if (typeof input.token !== 'string' || input.token.length > 100 || !store.unsubscribe(input.token)) throw new AccountError(400, 'invalid_token', '退订链接无效');
-        reply(res, 200, { message: '已关闭邮件提醒，关注列表仍保留' }); return;
+        if(projects){const u=store.db.prepare('SELECT id FROM users WHERE unsubscribeToken=?').get(input.token);if(u)store.db.prepare('UPDATE cost_projects SET emailEnabled=0 WHERE userId=?').run(String(u.id));}
+        reply(res, 200, { message: '已关闭模型与项目邮件提醒，配置仍保留' }); return;
       }
       const user = store.user(session);
       if (!user) throw new AccountError(401, 'unauthenticated', '请先登录');
+      if(projects && (route==='projects'||route.startsWith('projects/'))){
+        const parts=route.split('/');
+        if(parts.length===1&&req.method==='GET'){reply(res,200,{items:projects.list(user.id),plus:projects.pro.entitlement(user.id).status==='active',mailAvailable:Boolean(mailer)});return;}
+        const ds=holder.current;if(!ds)throw new AccountError(503,'data_unavailable','价格数据暂不可用');
+        if(route==='projects/catalog'&&req.method==='GET'){reply(res,200,{items:projectQuotes(ds,store.now()),datasetVersion:ds.version,dataThrough:ds.dataThrough});return;}
+        if(route==='projects/preview'&&req.method==='POST'){if(Object.keys(input).some(k=>k!=='project'))throw new AccountError(400,'invalid_project','预览参数无效');reply(res,200,projects.preview(user.id,input.project,ds));return;}
+        if(parts.length===2&&req.method==='GET'){reply(res,200,projects.detail(user.id,parts[1]!));return;}
+        if(req.method==='POST'&&(parts.length===1||parts.length===3&&parts[2]==='baseline')){
+          if(Object.keys(input).some(k=>!['project','datasetVersion','requestKey','revision'].includes(k)))throw new AccountError(400,'invalid_project','保存参数无效');
+          reply(res,200,projects.save(user.id,parts.length===1?null:parts[1]!,input as any,ds));return;}
+        if(req.method==='POST'&&parts.length===3&&parts[2]==='action'){
+          if(Object.keys(input).some(k=>!['action','revision','enabled'].includes(k)))throw new AccountError(400,'invalid_action','操作参数无效');
+          if(input.action==='email'&&input.enabled&&!mailer)throw new AccountError(503,'mail_unavailable','邮件服务暂不可用');
+          reply(res,200,projects.action(user.id,parts[1]!,input as any,ds));return;}
+        throw new AccountError(404,'not_found','项目接口不存在');
+      }
       if (membership && route === 'membership' && req.method === 'GET') { reply(res,200,{tier:membership.tier(user.id),limits:membership.limits(user.id),usage:membership.usage(user.id),tokens:membership.tokens(user.id),transition:membership.transition(user.id)});return; }
       if (membership && route === 'tokens' && req.method === 'POST') { reply(res,201,membership.mint(user.id,String(input.name??'')));return; }
       if (membership && route === 'tokens/revoke' && req.method === 'POST') { membership.revoke(user.id,String(input.id??''));reply(res,200,{revoked:true});return; }
@@ -116,7 +135,7 @@ export function createAccountHandler(store: AccountStore | null, mailer: Mailer 
         store.saveState(user.id, state.key, state.value); reply(res, 200, { saved: true }); return;
       }
       if (route === 'export' && req.method === 'GET') {
-        reply(res, 200, { user: { email: user.email, ...store.profile(user) }, preferences: { emailEnabled: Boolean(user.emailEnabled) }, watches: store.watches(user.id), state: store.state(user.id) }); return;
+        reply(res, 200, { user: { email: user.email, ...store.profile(user) }, preferences: { emailEnabled: Boolean(user.emailEnabled) }, watches: store.watches(user.id), state: store.state(user.id), ...(projects?{projects:projects.list(user.id)}:{}) }); return;
       }
       if (route === 'logout-all' && req.method === 'POST') {
         store.logoutAll(user.id); res.setHeader('Set-Cookie', cookie('', 0)); reply(res, 200, { authenticated: false }); return;

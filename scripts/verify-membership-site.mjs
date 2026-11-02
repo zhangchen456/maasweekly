@@ -13,7 +13,7 @@ const key=Symbol.for('maas.site-data.v1');globalThis[key]=bridge;
 try{
  const {handler}=await import(pathToFileURL(path.join(root,'site/dist/server/entry.mjs')));
  for(tier of ['visitor','free','plus']){
-  for(const route of ['/subscription/','/en/subscription/','/account/','/en/account/','/changes/','/en/changes/','/agent/','/en/agent/']){
+  for(const route of ['/subscription/','/en/subscription/','/account/','/en/account/','/changes/','/en/changes/','/agent/','/en/agent/','/projects/','/en/projects/']){
    const result=await capturePage(handler,route,'http://localhost');assert.equal(result.status,200,`${tier} ${route}`);
    const html=result.body.toString();assert.ok(!html.includes('>undefined<'),route+' renders undefined');
    if(route.includes('subscription')){assert.ok(html.includes('3,000'));assert.ok(html.includes('100'));assert.ok(!html.includes('P1'));}
@@ -23,5 +23,5 @@ try{
    const result=await capturePage(handler,route,'http://localhost');assert.equal(result.status,200);const html=result.body.toString();assert.ok(html.includes('openai.com'));assert.equal(html.includes(secret),tier==='plus',tier+' history access');
   }
  }
- console.log(JSON.stringify({status:'passed',rendered:36,tiers:['visitor','free','plus'],historicalDiffProtected:true,fixture:true}));
+ console.log(JSON.stringify({status:'passed',rendered:42,tiers:['visitor','free','plus'],historicalDiffProtected:true,fixture:true}));
 }finally{delete globalThis[key];}

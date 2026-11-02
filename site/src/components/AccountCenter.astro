@@ -7,6 +7,7 @@ const t = (zh: string, english: string) => en ? english : zh;
 <Layout title={t("账户中心 — MaaS Daily", "Your account — MaaS Daily")} description={t("管理账户、关注与保存的偏好。", "Manage your account, watchlist and saved preferences.")} noindex={true} locale={locale}>
   <div class="account-page" data-account-page data-account-center>
     <header class="account-heading"><p class="eyebrow">YOUR ACCOUNT</p><h1>{t("你的账户，你的工作空间。", "Your account. Your workspace.")}</h1><p>{t("管理个人信息与模型关注。登录后，平台上的关注、对比与偏好会随账户保存。", "Manage your profile and watchlist. Your follows, comparisons and preferences are saved to your account.")}</p></header>
+    <p><a href={en?'/en/projects/':'/projects/'}>{t('我的项目与成本跟踪 →','My projects & cost tracking →')}</a></p>
     <p id="account-message" role="status" aria-live="polite">{t('正在连接账号服务…', 'Connecting to your account…')}</p>
     <section id="login-panel" class="login-layout" hidden>
       <div><h2>{t('登录或注册', 'Sign in or register')}</h2><p>{t('首次使用请验证邮箱注册，并设置密码。已有账号使用邮箱和密码登录。', 'Verify your email to register and set a password. Sign in with your email and password.')}</p></div>

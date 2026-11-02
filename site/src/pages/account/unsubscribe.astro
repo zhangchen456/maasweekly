@@ -1,8 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+const en=Astro.url.pathname.startsWith('/en/');
 ---
 <Layout title="关闭邮件提醒 — MaaS Daily" noindex={true}>
-  <section class="unsubscribe"><h1>关闭邮件提醒</h1><p>关闭后不再接收模型变化摘要。账号和关注列表仍保留，你可以随时重新开启。</p><button id="unsubscribe-confirm">确认关闭邮件提醒</button><p id="unsubscribe-message" role="status" aria-live="polite"></p><a href="/account/">返回我的关注 →</a></section>
+  <section class="unsubscribe"><h1>关闭邮件提醒</h1><p>{en?'This turns off model and project digest emails. Your account, watches and projects are retained. Professional briefings have a separate subscription setting.':'关闭后不再接收模型和项目汇总邮件。账号、关注和项目仍保留；专业简报邮件单独管理。'}</p><button id="unsubscribe-confirm">确认关闭邮件提醒</button><p id="unsubscribe-message" role="status" aria-live="polite"></p><a href="/account/">返回我的关注 →</a></section>
 </Layout>
 <script>
   import { accountApi } from '../../scripts/account';

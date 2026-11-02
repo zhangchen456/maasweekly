@@ -172,6 +172,9 @@ export class AccountStore {
   }
   watchLimit: (id:string)=>number = () => 50;
   digestEligible: (id:string)=>boolean = () => true;
+  mailEligible: (id:string,jobId:string)=>boolean = id=>!!this.db.prepare('SELECT 1 FROM users WHERE id=? AND emailEnabled=1').get(id);
+  retainDigest: (id:string,jobId:string)=>boolean = ()=>false;
+  onUnsubscribe: (id:string)=>void = ()=>{};
   effectiveWatches(id:string){return this.watches(id);}
   watches(id: string) { return this.db.prepare('SELECT modelId,since FROM watches WHERE userId=? ORDER BY since DESC,modelId').all(id) as unknown as {modelId: string; since: number}[]; }
   watch(id: string, modelId: string, catalog: ModelIdentityCatalog) {
@@ -183,21 +186,22 @@ export class AccountStore {
     });
   }
   unwatch(id: string, modelId: string) { this.db.prepare('DELETE FROM watches WHERE userId=? AND modelId=?').run(id, modelId); }
-  preferences(id: string, enabled: boolean) {
+  preferences(id: string, enabled: boolean, unsubscribeAll = false) {
     this.transaction(() => {
       const previous=this.db.prepare('SELECT emailEnabled FROM users WHERE id=?').get(id);
       if (enabled && previous && !previous.emailEnabled) this.valueEvent(id,'reminder_enabled');
       this.db.prepare('UPDATE users SET emailSince=CASE WHEN emailEnabled=0 AND ?=1 THEN ? ELSE emailSince END,emailEnabled=? WHERE id=?').run(Number(enabled), this.now(), Number(enabled), id);
+      if(!enabled&&unsubscribeAll)this.onUnsubscribe(id);
       if (!enabled) this.cancelPending(id);
     });
   }
   cancelPending(id: string) {
-    this.db.prepare("UPDATE mail_jobs SET status='cancelled' WHERE userId=? AND status='pending'").run(id);
+    for(const row of this.db.prepare("SELECT id FROM mail_jobs WHERE userId=? AND status='pending'").all(id)){if(!this.retainDigest(id,String(row.id)))this.db.prepare("UPDATE mail_jobs SET status='cancelled' WHERE id=?").run(String(row.id));}
   }
   unsubscribe(value: string): boolean {
     const user = this.db.prepare('SELECT * FROM users WHERE unsubscribeToken=?').get(value) as unknown as User | undefined;
     if (!user) return false;
-    this.preferences(user.id, false); return true;
+    this.preferences(user.id, false, true); return true;
   }
   enqueue(changes: readonly ChangeEntity[]) {
     return this.transaction(() => {
@@ -224,7 +228,7 @@ export class AccountStore {
     return this.transaction(() => {
       // Any expired attempt is uncertain. Require supplier evidence before reexecution.
       this.db.prepare("UPDATE mail_jobs SET status='review' WHERE status='pending' AND lease>0 AND lease<=?").run(this.now());
-      const job = (this.db.prepare("SELECT j.* FROM mail_jobs j JOIN users u ON u.id=j.userId WHERE j.status='pending' AND u.emailEnabled=1 AND j.lease=0 AND j.created<=? ORDER BY j.created").all(this.now()) as unknown as Job[]).find(j=>this.digestEligible(j.userId));
+      const job = (this.db.prepare("SELECT j.* FROM mail_jobs j JOIN users u ON u.id=j.userId WHERE j.status='pending' AND j.lease=0 AND j.created<=? ORDER BY j.created").all(this.now()) as unknown as Job[]).find(j=>this.digestEligible(j.userId)&&this.mailEligible(j.userId,j.id));
       if (!job) return null;
       if(!this.digestEligible(job.userId))return null;
       const lease=this.now()+5*MINUTE;

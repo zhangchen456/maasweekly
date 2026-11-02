@@ -1,3 +1,5 @@
+import {ProjectDelivery} from './project-mail.js';
+import {ProjectStore} from './project-store.js';
 import {Membership,membershipEnabled,membershipContext} from './membership.js';
 import {configuredWaffoLive,WaffoLiveStore} from './waffo-live.js';
 import {createWaffoLiveWebhook} from './waffo-live-http.js';
@@ -82,6 +84,7 @@ const holder = new DatasetHolder(DATA_ROOT, {
   maxRetainedVersions: parseInt(process.env.RETAINED_DATASET_MAX_VERSIONS ?? '2', 10),
   maxRetainedBytes: parseInt(process.env.RETAINED_DATASET_MAX_BYTES ?? String(128 * 1024 * 1024), 10),
 });
+let projects:ProjectStore|undefined;
 const logger = process.env.MAAS_DIAGNOSTICS === '0' ? undefined : new JsonlLogger();
 const releaseId = runtimeIdentity(process.env.MAAS_RELEASE_DIR);
 const reload = async (force = false) => {
@@ -95,6 +98,7 @@ const reload = async (force = false) => {
       unresolvedPrices: holder.current.prices.filter(price => !price.modelId).length } : undefined,
     evidenceIntegrity: result === 'changed' ? 'validated' : undefined,
     cache: holder.cacheState, counters: { ...holder.metrics } });
+  if(projects&&holder.current&&(result==='changed'||force)){try{if(projects.refreshAll(holder.current).failed)logger?.emit({kind:'projects.refresh_failed'});}catch{logger?.emit({kind:'projects.refresh_failed'});}}
   return result;
 };
 await reload();
@@ -109,7 +113,9 @@ const accountStore = process.env.MAAS_ACCOUNT_DB ? new AccountStore(path.resolve
 const proStore = accountStore ? new ProStore(accountStore) : null;
 if(membershipEnabled()&&(!accountStore||!proStore))throw new Error('membership requires account database');
 const membership=membershipEnabled()&&accountStore&&proStore?new Membership(accountStore,proStore,accountUrl.protocol==='https:'):undefined;
-const accountHandler=createAccountHandler(accountStore,createMailer(),holder,{origin:accountOrigin,secure:accountUrl.protocol==='https:',trustProxy:TRUST_PROXY},membership);
+projects=accountStore&&proStore?new ProjectStore(accountStore,proStore):undefined;
+if(projects){new ProjectDelivery(projects);if(holder.current)if(projects.refreshAll(holder.current).failed)logger?.emit({kind:'projects.refresh_failed'});}
+const accountHandler=createAccountHandler(accountStore,createMailer(),holder,{origin:accountOrigin,secure:accountUrl.protocol==='https:',trustProxy:TRUST_PROXY},membership,projects);
 const proConfig = { origin: accountOrigin, secure: accountUrl.protocol === 'https:', trustProxy: TRUST_PROXY, membership };
 const adminStore = accountStore ? new AdminStore(accountStore) : null;
 const adminHandler = createAdminHandler(adminStore, holder, proConfig, logger?.emit);
@@ -185,6 +191,8 @@ server.listen(PORT, HOST, () => {
     ready: Boolean(holder.current) });
   sample();
 });
+const projectTimer=projects?setInterval(()=>{try{if(holder.current)if(projects!.refreshAll(holder.current).failed)logger?.emit({kind:'projects.refresh_failed'});}catch{logger?.emit({kind:'projects.refresh_failed'});}},300000):undefined;
+projectTimer?.unref();
 const sampleTimer = logger ? setInterval(sample, 60000) : undefined;
 sampleTimer?.unref();
 const timer = RELOAD_MS > 0 ? setInterval(() => { void reload(); }, RELOAD_MS) : undefined;
@@ -197,6 +205,7 @@ const shutdown = () => {
   logger?.emit({ kind: 'runtime.stopping', releaseId });
   if (timer) clearInterval(timer);
   if (sampleTimer) clearInterval(sampleTimer);
+  if(projectTimer)clearInterval(projectTimer);
   const paymentDrained=stopPaymentSync?.(); loop?.disable(); holder.close();
   server.close(() => { void (async () => { await paymentDrained;accountStore?.close();siteRuntime?.uninstall();await siteStore?.close(); await logger?.close(); process.exit(0); })(); });
   setTimeout(() => process.exit(0), 3000).unref();
