@@ -21,7 +21,7 @@ def check(rows, today, max_age_days=10):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--root', default='https://daily.maas.click/api/v1/')
+    parser.add_argument('--root', default='https://daily.maas.click/api/browser/')
     args = parser.parse_args()
     def load(relative):
         with urllib.request.urlopen(args.root.rstrip('/')+'/'+relative, timeout=30) as response:
