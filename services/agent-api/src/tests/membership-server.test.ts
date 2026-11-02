@@ -21,7 +21,7 @@ test('real dispatcher enforces credentials, history and metering across REST and
  const auth={authorization:`Bearer ${token.token}`};
  try{
   let ready=false;for(let n=0;n<100;n++){try{const r=await fetch(base+'/api/v1/status');if(r.ok){ready=true;break;}}catch{}await new Promise(r=>setTimeout(r,25));}assert.ok(ready,'test server ready');
-  const webhook=await fetch(base+'/api/payment/webhook',{method:'POST',headers:{authorization:'Bearer provider-specific-credential','content-type':'application/json'},body:'{}'});assert.notEqual((await webhook.json()).code,'invalid_token','provider callbacks bypass account bearer authentication');
+  const webhook=await fetch(base+'/api/payment/webhook',{method:'POST',headers:{authorization:'Bearer provider-specific-credential','content-type':'application/json'},body:'{}'});assert.notEqual(((await webhook.json()) as {code?:string}).code,'invalid_token','provider callbacks bypass account bearer authentication');
   assert.equal((await fetch(base+'/api/v1/changes')).status,401);
   const visitor=await fetch(base+'/api/browser/changes');assert.equal(visitor.status,200);assert.equal(((await visitor.json()) as any).items.length,1);assert.match(visitor.headers.get('cache-control')??'',/no-store/);
   assert.equal((await fetch(base+'/api/browser/changes?from=2026-10-01&to=2026-11-03')).status,403);
