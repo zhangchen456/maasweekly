@@ -1,0 +1,20 @@
+[Unit]
+Description=MaaS Daily independent update watchdog and operator email
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=maasagent
+Group=maasagent
+EnvironmentFile=/srv/maasweekly/shared/data-alert.env
+ExecStart=/usr/bin/python3 -B /usr/local/lib/maasweekly/daily_data_alert.py
+TimeoutStartSec=120
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/maasweekly/shared/state/data-alerts
+CapabilityBoundingSet=
+AmbientCapabilities=
