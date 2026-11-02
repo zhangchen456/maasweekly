@@ -3,7 +3,7 @@ from pathlib import Path
 from unittest.mock import patch
 BASE=Path(__file__).resolve().parents[1];sys.path.insert(0,str(BASE/'ops'))
 from runtime_safety import accepts_runtime,publication_identity,wait_runtime,capacity_budget,CapacityError,require_capacity,GIB
-from pipeline_monitor import RunJournal
+from pipeline_monitor import RunJournal,export_sources
 spec=importlib.util.spec_from_file_location('writer_launch',BASE/'ops/data-writer/launch.py');launch=importlib.util.module_from_spec(spec);spec.loader.exec_module(launch)
 CODE='a'*40
 MANIFEST={'datasetVersion':'ds_'+'b'*64,'site':{'inputVersion':'in_'+'c'*64,'codeCommit':CODE,'formatVersion':1}}
@@ -60,6 +60,22 @@ class ReliabilityTests(unittest.TestCase):
    self.assertEqual((run['result'],run['publication'],run['validation']),('partial','completed','passed'))
    self.assertEqual(final['contexts'][0]['codeCommit'],CODE);self.assertNotIn('SECRET',json.dumps(rows));self.assertNotIn('TOKEN',json.dumps(rows))
    self.assertEqual(json.loads((shared/'pipeline-monitor/current.json').read_text())['state'],'failed')
+ def test_monitor_export_preserves_immutable_runtime_inventory(self):
+  import hashlib,shutil
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp).resolve();package=root/'runtime'/CODE;tooling=package/'tooling';shared=root/'shared'
+   (tooling/'scripts').mkdir(parents=True);(tooling/'pipeline/config').mkdir(parents=True)
+   (shared/'data-store/writer/data').mkdir(parents=True)
+   shutil.copy2(BASE/'scripts/monitor-collect.py',tooling/'scripts/monitor-collect.py')
+   (tooling/'pipeline/config/source_registry.json').write_text(json.dumps({'sources':[]}))
+   (tooling/'pipeline/config/public_providers.json').write_text(json.dumps({'sourceToProvider':{},'pricingSourceKeyToSourceId':{}}))
+   def inventory():return {str(p.relative_to(package)):hashlib.sha256(p.read_bytes()).hexdigest() for p in package.rglob('*') if p.is_file()}
+   original=inventory()
+   # Exercise the real collector twice, as startup/failure/retry exports do.
+   for _ in range(2):
+    result=export_sources(shared,package)
+    self.assertEqual(result['runs'],0);self.assertEqual(inventory(),original)
+   self.assertFalse(list(package.rglob('__pycache__')))
  def test_root_helper_install_is_hash_checked_and_rolls_back(self):
   import hashlib
   spec=importlib.util.spec_from_file_location('install_reliability',BASE/'ops/install-reliability.py');installer=importlib.util.module_from_spec(spec);spec.loader.exec_module(installer)
