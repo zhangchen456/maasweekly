@@ -2,6 +2,7 @@ import type { PublicRelease } from './release';
 /** Installed by the API process. Reads are pinned by AsyncLocalStorage per request. */
 export interface SiteBridge {
   version:1;
+  membership?():{tier:string;cutoff:string|null}|null;
   release():PublicRelease;
   json(name:string,optional?:boolean):unknown;
   projection(name:string):unknown;

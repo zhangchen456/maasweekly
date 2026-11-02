@@ -1,4 +1,6 @@
 /** Same-process SSR bridge: one immutable Dataset per request, no second full load. */
+import {getEvidence} from './query.js';
+import {currentAccess,historyAllowed,historyCutoff} from './membership.js';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import type { Dataset } from './dataset.js';
 import type { SiteDataStore, PageInputs } from './site-data-store.js';
@@ -13,6 +15,7 @@ export interface SiteRelease {
 interface Snapshot extends PageInputs { dataset:Dataset; release:SiteRelease }
 export interface SiteBridge {
   version:1;
+  membership():{tier:string;cutoff:string|null}|null;
   publicationKey():string;
   release():SiteRelease;
   json(name:string,optional?:boolean):unknown;
@@ -38,7 +41,7 @@ export class SiteRuntime {
   private context=new AsyncLocalStorage<Snapshot>();
   readonly bridge:SiteBridge;
   constructor(private store:Pick<SiteDataStore,'prepare'|'document'|'revisions'|'factsForEvidence'>) {
-    this.bridge={version:1,publicationKey:()=>{const s=this.current();return s.dataset.version+':'+s.inputVersion+':'+s.codeCommit;},release:()=>this.current().release,
+    this.bridge={version:1,membership:()=>{const a=currentAccess();return a?{tier:a.tier,cutoff:historyCutoff(this.current().dataset.dataThrough,a.tier)}:null;},publicationKey:()=>{const s=this.current();return s.dataset.version+':'+s.inputVersion+':'+s.codeCommit;},release:()=>{const s=this.current();return currentAccess()?{...s.release,changes:s.release.changes.filter(c=>historyAllowed(c.observationDate,s.dataset.dataThrough))}:s.release;},
       json:(name,optional)=>this.json(name,optional),projection:name=>this.projection(name),
       hasItem:id=>this.current().dataset.itemsById.has(id),
       record:async id=>{
@@ -57,13 +60,13 @@ export class SiteRuntime {
       },
       evidence:async id=>{
         const s=this.current();
-        if(!/^ev_[0-9a-f]{64}$/.test(id)||!s.dataset.evidenceById.has(id))return null;
+        if(!/^ev_[0-9a-f]{64}$/.test(id)||!getEvidence(s.dataset,id))return null;
         const value=await this.store.document(s.inputVersion,`data/price-evidence/${id}.json`);
         if(!value||typeof value!=='object'||(value as {id?:unknown}).id!==id)throw new SiteDataError();
         return value;
       },
-      facts:async id=>this.current().dataset.evidenceById.has(id)
-        ?this.store.factsForEvidence(this.current().inputVersion,id):[],
+      facts:async id=>Boolean(getEvidence(this.current().dataset,id))
+        ?(await this.store.factsForEvidence(this.current().inputVersion,id)).filter((f:any)=>!currentAccess()||currentAccess()?.tier==='plus'||this.current().dataset.prices.some(p=>p.id===f.version_id)):[],
       weekly:id=>this.current().dataset.weekly.find(row=>row.id===id)??null,
       dailyWeek:id=>this.dailyWeek(id)};
   }
@@ -94,7 +97,14 @@ export class SiteRuntime {
   private current(){const value=this.context.getStore();if(!value)throw new SiteDataError();return value;}
   private json(name:string,optional=false){
     const values=this.current().projections;
-    if(values.has(name))return values.get(name);
+    if(values.has(name)){
+      const value=values.get(name);if(!currentAccess())return value;
+      const allowed=(date:string)=>historyAllowed(date,this.current().dataset.dataThrough);
+      if(name.endsWith('/daily_changes.json')){const d=value as {days:{date:string}[]};return {...d,days:d.days.filter(day=>allowed(day.date))};}
+      if(name.endsWith('/record-index.json')||name.endsWith('/price-record-index.json'))return (value as {date:string}[]).filter(row=>allowed(row.date));
+      if(name.endsWith('/weekly-digest.json'))return (value as {start:string;end:string;week:string}[]).map(w=>allowed(w.start)?w:{week:w.week,start:w.start,end:w.end,days:{},highlights:[],totals:(w as any).totals,indexOnly:true,restricted:true});
+      return value;
+    }
     if(optional)return null;
     throw new SiteDataError();
   }
@@ -107,8 +117,8 @@ export class SiteRuntime {
     if(!/^\d{4}-W\d{2}$/.test(id))return null;
     const weeks=this.projection('weekly-digest.json') as {week:string}[];
     const found=weeks.find(w=>w.week===id);if(found)return found;
-    const records=this.projection('record-index.json') as {date:string}[];
-    const prices=this.projection('price-record-index.json') as {date:string}[];
+    const records=this.current().projections.get('site/src/data/record-index.json') as {date:string}[];
+    const prices=this.current().projections.get('site/src/data/price-record-index.json') as {date:string}[];
     const matching=records.filter(row=>isoWeek(row.date)===id);
     if(!matching.length&&!prices.some(row=>isoWeek(row.date)===id))return null;
     const [year,week]=id.split('-W');
@@ -116,6 +126,6 @@ export class SiteRuntime {
     const monday=new Date(jan4);monday.setUTCDate(jan4.getUTCDate()-((jan4.getUTCDay()+6)%7)+(Number(week)-1)*7);
     const sunday=new Date(monday);sunday.setUTCDate(monday.getUTCDate()+6);
     return {week:id,start:monday.toISOString().slice(0,10),end:sunday.toISOString().slice(0,10),
-      days:{},highlights:[],indexOnly:true,recordCount:matching.length};
+      days:{},highlights:[],indexOnly:true,restricted:!historyAllowed(sunday.toISOString().slice(0,10),this.current().dataset.dataThrough),recordCount:matching.length};
   }
 }

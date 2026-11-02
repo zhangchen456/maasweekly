@@ -1,4 +1,3 @@
-// Thin Umami Cloud adapter: no identity storage, collector or retry queue.
 import './language.js';
 export const TRACKER_URL = 'https://cloud.umami.is/script.js';
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -64,9 +63,6 @@ export function startAnalytics(win, config, canonicalUrl) {
   if (win.__maasAnalyticsStarted) return null;
   win.__maasAnalyticsStarted = true;
   let lastPage = null;
-
-  // The native tracker owns pageviews. Query-only filter changes and repeated
-  // initialization are cancelled here; a fresh document/refresh is a new view.
   win.maasAnalyticsBeforeSend = (type, payload) => {
     if (type !== 'event' || excluded(win)) return false;
     const url = cleanPageUrl(payload.url, canonicalUrl);
@@ -91,8 +87,9 @@ export function startAnalytics(win, config, canonicalUrl) {
         } catch { return false; }
       } else if (payload.name === 'copy' && COPY_KINDS.has(data.kind)) {
         result.data.kind = data.kind;
+      } else if (payload.name === 'membership_gate' && ['comparison_login','comparison_plus','history_access'].includes(data.reason)) {
+        result.data.reason=data.reason;
       } else if (payload.name === 'comparison_completed' || payload.name === 'cost_estimate_completed' || payload.name === 'cost_estimate_completed_v2' || payload.name === 'subscription_click' || payload.name === 'comparison_click' || payload.name === 'search_used' || payload.name === 'beta_activation_intent') {
-        // Intent only; successful business actions belong to server-side records.
       } else return false;
     } else {
       if (path === lastPage) return false;
@@ -104,7 +101,6 @@ export function startAnalytics(win, config, canonicalUrl) {
   const track = (name, data) => {
     if (excluded(win) || typeof win.umami?.track !== 'function') return;
     try {
-      // Never wait for analytics inside the product's navigation/copy handlers.
       const pending = win.umami.track(name, data);
       pending?.catch?.(() => {});
     } catch { /* Provider failure must not change product behavior. */ }
@@ -134,10 +130,12 @@ export function startAnalytics(win, config, canonicalUrl) {
       }
     } catch { /* Not a trackable link. */ }
   };
-  // Capture before filter handlers replace their DOM or change the query URL.
   win.document.addEventListener('click', click, true);
   win.document.addEventListener('auxclick', click, true);
-  win.document.addEventListener('maas:copy-success', event => {
+  win.document.addEventListener('maas:membership-gate', event => {
+    if (['comparison_login','comparison_plus','history_access'].includes(event.detail?.reason)) track('membership_gate', {reason:event.detail.reason});
+  });
+  win.document.addEventListener('maas:copy-success' , event => {
     if (COPY_KINDS.has(event.detail?.kind)) track('copy', { kind: event.detail.kind });
   });
 
@@ -151,8 +149,6 @@ export function startAnalytics(win, config, canonicalUrl) {
     if(!['comparison_completed','cost_estimate_completed','cost_estimate_completed_v2'].includes(name)||workspaceResults.has(name))return;
     workspaceResults.add(name);track(name,{});
   });
-
-  // One committed search interaction, never the entered text or field name.
   win.document.addEventListener('change', event => {
     if (event.target?.matches?.('input[type="search"]') && event.target.value.trim()) {
       track('search_used', {});
@@ -170,8 +166,6 @@ export function startAnalytics(win, config, canonicalUrl) {
   win.document.head.append(script);
   return script;
 }
-
-// Static public module: Astro emits this tag only for an enabled configuration.
 if (typeof window !== 'undefined') {
   const tag = document.querySelector('script[data-maas-analytics]');
   if (tag) {

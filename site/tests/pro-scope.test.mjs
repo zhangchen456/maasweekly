@@ -14,7 +14,7 @@ test('scope checkboxes retain multiple choices, search preserves selection, impo
   const settings={scope:{providers:['a'],models:[],families:[],topics:['price']},emailEnabled:false};
   win.fetch=async (url,options)=>{
     calls.push({url,body:options?.body?JSON.parse(options.body):null});
-    const data=url==='/api/v1/models'?models:url==='/api/v1/status'?{status:{providers:[{providerId:'a',displayName:'Alpha'},{providerId:'b',displayName:'Beta'}]}}:url==='/api/pro/me'?{entitlement:{status:'active',source:'beta'},reports:[],settings,mailAvailable:true}:url==='/api/pro/settings'?{matching:[]}:{items:[]};
+    const data=url==='/api/browser/models'?models:url==='/api/browser/status'?{status:{providers:[{providerId:'a',displayName:'Alpha'},{providerId:'b',displayName:'Beta'}]}}:url==='/api/pro/me'?{entitlement:{status:'active',source:'beta'},reports:[],settings,mailAvailable:true}:url==='/api/pro/settings'?{matching:[]}:{items:[]};
     return {ok:true,json:async()=>data};
   };
   const script=fs.readFileSync(new URL('../src/scripts/pro.ts',import.meta.url),'utf8').replace(/^import .*;\n/,'');

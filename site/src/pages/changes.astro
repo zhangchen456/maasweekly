@@ -1,4 +1,5 @@
 ---
+import { siteRuntime } from '../lib/runtime';
 // /changes/：变化浏览（T07-4A.2）。消费 public release changes（已有 modelId/familyId，
 // T07-3 合同）。运行时 REST 分页加载（不把全量 changes 注入 HTML）。
 // 支持 modelId/familyId 筛选 + 可点击标签 + URL 状态。
@@ -13,7 +14,8 @@ import { PUBLIC_ACCESS } from '../config/public-access';
 // catalog missing/corrupt → build fail（不静默容错——release integrity contract）
 const release = modelRelease();
 const catalog = release.modelIdentities!;
-const apiBase = PUBLIC_ACCESS.paths.apiBase; // /api/v1
+const en=Astro.url.pathname.startsWith('/en/');
+const apiBase = (siteRuntime()?.membership?.()?'/api/browser':PUBLIC_ACCESS.paths.apiBase); // /api/v1
 
 
 ---
@@ -37,6 +39,9 @@ const apiBase = PUBLIC_ACCESS.paths.apiBase; // /api/v1
         <option value="source_observation">来源观察</option>
       </select>
     </div>
+    <div class="changes-toolbar"><label>From / 起始 <input id="history-from" type="date" /></label><label>To / 截至（不含） <input id="history-to" type="date" /></label><button id="history-search" type="button">{en?'Search':'查询'}</button></div>
+    <p>{siteRuntime()?.membership?.()?(en?'Visitor: 7 days · Free: 30 days · Plus: all available history. Up to 90 days per query.':'访客最近7天 · Free最近30天 · Plus全部可查询归档。每次最多查询90天。'):''}</p>
+    <div id="history-access" hidden role="status"><p>{en?'Your query exceeds your history allowance. Register for 30 days or choose Plus for all available history.':'查询超出当前范围。注册可查最近30天，Plus可查全部可用归档。'}</p><button id="history-login" type="button">{en?'Sign in / Register':'登录／注册'}</button> · <a href="/subscription/">{en?'View Plus':'查看 Plus'}</a></div>
     <div id="filter-summary" class="filter-summary" hidden></div>
     <div id="filter-error" class="filter-error" hidden></div>
     <div id="changes-list" class="changes-list"></div>
@@ -73,6 +78,7 @@ const apiBase = PUBLIC_ACCESS.paths.apiBase; // /api/v1
         if(mid){if(catalogModels.some(m=>m.modelId===mid))modelIdFilter=mid;else filterError={type:'modelId',value:mid}}
         else if(fid){if(catalogFamilies.some(f=>f.familyId===fid))familyIdFilter=fid;else filterError={type:'familyId',value:fid}}
         query=q||'';typeFilter=ty||'';
+        $('history-from').value=u.searchParams.get('from')||'';$('history-to').value=u.searchParams.get('to')||'';
         $('q').value=query;
         const tf=$('type-filter');tf.value=typeFilter;
       }
@@ -83,6 +89,7 @@ const apiBase = PUBLIC_ACCESS.paths.apiBase; // /api/v1
         if(familyIdFilter)u.searchParams.set('familyId',familyIdFilter);
         if(query)u.searchParams.set('q',query);
         if(typeFilter)u.searchParams.set('type',typeFilter);
+        for(const key of ['from','to']){$('history-'+key).value?u.searchParams.set(key,$('history-'+key).value):u.searchParams.delete(key);}
         history.pushState(null,'',u);
       }
       function el(tag,cls,text){const x=document.createElement(tag);if(cls)x.className=cls;if(text!==undefined)x.textContent=String(text);return x}
@@ -108,6 +115,7 @@ const apiBase = PUBLIC_ACCESS.paths.apiBase; // /api/v1
         if(cursor){params.set('cursor',cursor)}
         else{
           params.set('limit','20');
+          for(const key of ['from','to'])if($('history-'+key).value)params.set(key,$('history-'+key).value);
           if(modelIdFilter)params.set('modelId',modelIdFilter);
           if(familyIdFilter)params.set('familyId',familyIdFilter);
           if(typeFilter)params.set('type',typeFilter);
@@ -115,6 +123,8 @@ const apiBase = PUBLIC_ACCESS.paths.apiBase; // /api/v1
         }
         try{
           const res=await fetch(apiBase+'/changes?'+params.toString());
+          $('history-access').hidden=true;
+          if(res.status===403){document.dispatchEvent(new CustomEvent('maas:membership-gate',{detail:{reason:'history_access'}}));$('changes-list').replaceChildren();$('history-access').hidden=false;$('prev').disabled=true;$('next').disabled=true;return;}
           if(res.status===400){
             const body=await res.json().catch(()=>({}));
             // 400 按 body.code 区分错误类型（不统一当 identity error）
@@ -138,6 +148,9 @@ const apiBase = PUBLIC_ACCESS.paths.apiBase; // /api/v1
         }
       }
 
+      $('history-search').onclick=()=>{filterError=null;resetCursorStack();syncUrlState();renderAll();};
+      $('history-login').onclick=()=>document.getElementById('account-login-open')?.click();
+      document.addEventListener('maas:membership-refresh',()=>{filterError=null;resetCursorStack();fetchChanges();});
       function renderChanges(items){
         const list=$('changes-list');list.replaceChildren();
         $('empty-state').hidden=items.length>0;
