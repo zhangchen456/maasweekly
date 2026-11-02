@@ -46,3 +46,9 @@ test('context cannot upgrade a malformed evidence reference to a verified label'
  const item=displayItem({text:'old',type:'sunset',evidenceVersion:1,evidence:[{id:'bad',url:'https://official.test',observedDate:context.date}]},'en',context);
  assert.equal(item.type,'other');assert.equal(evidenceLinks(item).length,0);assert.equal(item.relatedSources.length,1);
 });
+
+test('archive fallback never repeats a record already attached to its source page',()=>{
+ const source=context.sources[0];
+ const links=relatedSourceLinks({...context,sources:[source,{platform:context.platform,date:context.date,permalink}]});
+ assert.equal(links.length,1);assert.equal(links[0].recordUrl,permalink);
+});

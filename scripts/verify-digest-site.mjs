@@ -41,6 +41,7 @@ try {
   assert.equal(doc.querySelector('.digest-note').hasAttribute('open'),false);
   const folders=[...doc.querySelectorAll('.digest-sources')];assert.equal(folders.length,1,route+' contextual source access');
   assert.equal(folders[0].hasAttribute('open'),false);assert(folders[0].querySelector('a'));
+  const sourceHrefs=[...folders[0].querySelectorAll('a')].map(a=>a.getAttribute('href'));assert.equal(new Set(sourceHrefs).size,sourceHrefs.length,'each source or record appears once');
   assert.equal(doc.querySelector('p details'),null,'disclosures are valid block markup');
   if(route==='/') {
    const row=doc.querySelector('.vendor-change-item[data-date="2026-10-31"]');assert.equal(row.dataset.type,'other');assert.equal(row.querySelector('p').textContent,legacy);
