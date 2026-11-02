@@ -76,6 +76,37 @@ class ReliabilityTests(unittest.TestCase):
     result=export_sources(shared,package)
     self.assertEqual(result['runs'],0);self.assertEqual(inventory(),original)
    self.assertFalse(list(package.rglob('__pycache__')))
+ def test_daily_receipt_survives_rebuild_and_retains_actual_failure_stage(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   shared=Path(tmp).resolve();journal=RunJournal(shared,CODE,'update',{'GITHUB_REPOSITORY':'owner/repo','GITHUB_RUN_ID':'123'})
+   def fail():raise RuntimeError('private upstream error')
+   with self.assertRaises(RuntimeError):journal.phase('capacity-preflight',fail)
+   journal.finish(RuntimeError('private error'))
+   daily=shared/'pipeline-monitor/daily.json';original=daily.read_bytes();value=json.loads(original)
+   self.assertEqual(value['failureStage'],'capacity-preflight');self.assertEqual(value['state'],'failed')
+   self.assertEqual(value['runLink'],'https://github.com/owner/repo/actions/runs/123');self.assertNotIn('private',original.decode())
+   rebuild=RunJournal(shared,CODE,'rebuild');rebuild.finish()
+   self.assertEqual(daily.read_bytes(),original)
+   self.assertEqual(json.loads((daily.parent/'current.json').read_text())['mode'],'rebuild')
+ def test_alert_environment_is_scoped_and_daily_bootstrap_preserves_timestamp(self):
+  from types import SimpleNamespace
+  spec=importlib.util.spec_from_file_location('install_alerts',BASE/'ops/install-reliability.py');installer=importlib.util.module_from_spec(spec);spec.loader.exec_module(installer)
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp).resolve();(root/'shared/state').mkdir(parents=True);(root/'shared/pipeline-monitor').mkdir()
+   (root/'shared/agent.env').write_text('RESEND_API_KEY="test-key"\nMAAS_MAIL_FROM="MaaS <mail@example.com>"\nDB_PASSWORD="never-copy"\n')
+   body=installer.alert_environment(root,'operator@example.com').decode()
+   self.assertEqual({line.split('=')[0] for line in body.splitlines()},{'RESEND_API_KEY','MAAS_MAIL_FROM','MAAS_DATA_ALERT_TO'})
+   self.assertNotIn('never-copy',body)
+   with self.assertRaises(ValueError):installer.alert_environment(root,'operator@example.com\nOTHER=value')
+   current=root/'shared/pipeline-monitor/current.json';current.write_text(json.dumps({'mode':'update','updatedAt':12345}))
+   with patch.object(installer.pwd,'getpwnam',return_value=SimpleNamespace(pw_uid=123,pw_gid=456)),patch.object(installer.os,'chown'):
+    installer.prepare_alert_state(root);daily=current.with_name('daily.json')
+    self.assertEqual(json.loads(daily.read_text())['updatedAt'],12345);self.assertEqual(daily.stat().st_mode&0o777,0o640)
+    self.assertEqual((root/'shared/state/data-alerts').stat().st_mode&0o777,0o700)
+    current.write_text(json.dumps({'mode':'rebuild','updatedAt':99999}));installer.prepare_alert_state(root)
+    self.assertEqual(json.loads(daily.read_text())['updatedAt'],12345)
+    daily.unlink();daily.symlink_to(current)
+    with self.assertRaises(ValueError):installer.prepare_alert_state(root)
  def test_root_helper_install_is_hash_checked_and_rolls_back(self):
   import hashlib
   spec=importlib.util.spec_from_file_location('install_reliability',BASE/'ops/install-reliability.py');installer=importlib.util.module_from_spec(spec);spec.loader.exec_module(installer)

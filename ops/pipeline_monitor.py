@@ -53,6 +53,7 @@ class RunJournal:
         self.code, self.mode, self.sequence = code, mode, 0
         self.started = self.now()
         self.validation, self.published = 'not_run', False
+        self.failure_stage = None
         self.input_version = self.dataset_version = None
         self.trigger = {'schedule': 'schedule', 'workflow_dispatch': 'manual', 'workflow_call': 'workflow'}.get((context or {}).get('GITHUB_EVENT_NAME'), 'unknown')
         repo, run = (context or {}).get('GITHUB_REPOSITORY', ''), (context or {}).get('GITHUB_RUN_ID', '')
@@ -62,13 +63,16 @@ class RunJournal:
         self.current('starting', 'running')
 
     def current(self, stage, state, error=None):
-        write_json(self.root / 'current.json', {
+        value = {
             'schemaVersion': 1, 'id': self.id, 'mode': self.mode, 'codeCommit': self.code,
             'pid': os.getpid(), 'processStart': self.process_start,
             'startedAt': self.started, 'updatedAt': self.now(), 'stage': stage, 'state': state,
             'inputVersion': self.input_version, 'datasetVersion': self.dataset_version,
-            'errorCode': error,
-        }, self.gid)
+            'errorCode': error, 'failureStage': self.failure_stage, 'runLink': self.link,
+        }
+        write_json(self.root / 'current.json', value, self.gid)
+        if self.mode == 'update':
+            write_json(self.root / 'daily.json', value, self.gid)
 
     def receipt(self, stage, started, succeeded, *, final=False, error=None):
         self.sequence += 1
@@ -93,6 +97,7 @@ class RunJournal:
         try:
             value = action(*args, **kwargs)
         except BaseException:
+            self.failure_stage = self.failure_stage or stage
             if stage == 'ssr-validation': self.validation = 'failed'
             self.receipt(stage, started, False, error='validation_failed' if stage == 'ssr-validation' else 'execution_failed')
             raise

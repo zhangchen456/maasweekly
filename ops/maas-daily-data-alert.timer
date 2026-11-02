@@ -1,0 +1,11 @@
+[Unit]
+Description=Check daily publication and workflow status every five minutes
+
+[Timer]
+OnBootSec=90s
+OnCalendar=*:0/5:00
+Persistent=true
+Unit=maas-daily-data-alert.service
+
+[Install]
+WantedBy=timers.target
