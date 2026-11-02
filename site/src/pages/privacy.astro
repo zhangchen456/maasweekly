@@ -1,15 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const en=Astro.url.pathname.startsWith('/en/');
 ---
 <Layout title="隐私政策 — MaaS Daily" description="MaaS Daily 隐私政策：数据收集、用途、服务商、保存方式和个人信息权利。">
   <article class="prose legal-page">
     <h1>隐私政策</h1>
-    <p>生效及最后更新日期：2026 年 10 月 30 日 · 版本 1.0</p>
+    <p>{en?'Effective and last updated: November 2, 2026 · Version 1.1':'生效及最后更新日期：2026 年 11 月 2 日 · 版本 1.1'}</p>
     <p>MaaS Daily 的运营者及个人信息处理者为<strong>章晨（中国，个人运营）</strong>。隐私咨询、数据访问、更正、删除及账户注销申请，请联系 <a href="mailto:zhangchen3508@gmail.com">zhangchen3508@gmail.com</a>。本政策适用于 https://daily.maas.click/ 提供的服务。</p>
     <h2>1. 收集的信息与用途</h2>
     <ul>
       <li><strong>账户信息：</strong>邮箱、您填写的显示名称、账户标识、注册时间、密码的加盐哈希及登录会话，用于验证身份、登录、账户安全和提供服务。我们不以明文保存账户密码。</li>
       <li><strong>使用与偏好：</strong>关注的模型、保存的比较与偏好、邮件提醒开关、套餐及额度、导出或工具调用等服务使用记录，用于同步设置、提供功能、计量及分析服务使用情况。部分业务事件关联账户，并非匿名统计。</li>
+      <li><strong>{en?'Project cost tracking: ':'项目成本跟踪：'}</strong>{en?'Project names, monthly token assumptions, usage notes, selected model/platform and billing conditions, saved baselines, estimates and notification preferences are stored to calculate and deliver the tracking service. These project details are not sent to optional analytics. Imports from the calculator use this tab’s session storage; project email requires separate opt-in.':'保存项目名称、月用量假设、用量依据、模型与平台及计费条件、基线版本、成本估算和通知设置，用于计算、保存及投递您选择的跟踪服务。这些项目明细不发送至可选访问统计。从计算器导入使用当前标签页会话存储；项目邮件需单独开启。'}</li>
       <li><strong>访问统计：</strong>页面路径、访问时间、来源站点、经筛选的推广参数、浏览器与设备相关信息、语言、屏幕尺寸及点击事件，用于了解访问和改进网站。我们的统计适配器不发送密码、邮箱、搜索输入内容或任意完整查询参数；注册来源记录搜索、社交、AI、推荐等渠道类别及预先配置的推广活动编号，不保存任意推广文本。经浏览器报告的价格对比与成本估算完成事件可关联登录账户，用于分析首次使用和回访；不发送用量、金额或模型选择明细，并尊重下述可选统计设置。</li>
       <li><strong>反馈与通信：</strong>反馈标题、描述、页面路径、您上传的截图、回复和邮件投递状态，用于处理问题、发送您请求的通知及排查投递故障。请在上传截图前遮盖无关个人信息。</li>
       <li><strong>订单与支付：</strong>在您使用收银台时，支付服务处理您提交的邮箱、账单资料及支付信息。本站接收订单标识、商品、金额、币种、付款与订阅状态，以及回调中提供的买家邮箱、账单信息或支付方式末四位等字段，用于核对订单、权益、退款和争议。本站不保存完整卡号或银行卡安全码。管理员测试订单与正式账户权益分开处理。</li>
