@@ -99,3 +99,13 @@ test('ordinary reminder opt-out retains separately enabled project mail; global 
   assert.equal(s.accounts.unsubscribe(s.owner.unsubscribeToken),true);assert.equal(delivery.events(job).length,0);assert.equal(s.accounts.db.prepare('SELECT status FROM mail_jobs WHERE id=?').get(job)!.status,'cancelled');assert.equal(s.store.detail(id,a.id).emailEnabled,false);
  }finally{s.close();}
 });
+
+test('confirmed rejection retries the exact frozen project set after another project opted out before composition',async()=>{
+ const {ProjectDelivery}=await import('../project-mail.js'),{deliverDigests}=await import('../account-digest.js'),{MailSendError}=await import('../mail-ledger.js');const s=setup();try{
+  const delivery=new ProjectDelivery(s.store),a=s.save(),b=s.save({...s.input(),name:'EXCLUDED_PROJECT'},'second_project_123456'),id=s.owner.id;s.setTime(now+1);
+  for(const p of [a,b])s.store.action(id,p.id,{action:'email',enabled:true,revision:1},s.holder.current!);s.setTime(now+2);s.store.refreshAll(s.publish(2,rows=>rows[0]!.amount='1.5'));delivery.enqueue();s.store.action(id,b.id,{action:'email',enabled:false,revision:1},s.holder.current!);
+  const sent:any[]=[];const failed=await deliverDigests(s.accounts,{send:async(m:any)=>{sent.push(m);throw new MailSendError('provider_rejected',true);}},[],'https://daily.maas.click',false,delivery);assert.equal(failed.failed,1);assert.ok(!sent[0].text.includes('EXCLUDED_PROJECT'));
+  const job=String(s.accounts.db.prepare('SELECT jobId FROM cost_mail_batches').get()!.jobId);s.accounts.db.prepare("UPDATE mail_jobs SET status='pending',lease=0 WHERE id=?").run(job);
+  const retry=await deliverDigests(s.accounts,{send:async(m:any)=>{sent.push(m);}},[],'https://daily.maas.click',false,delivery);assert.equal(retry.sent,1);assert.deepEqual(sent[0],sent[1]);
+ }finally{s.close();}
+});

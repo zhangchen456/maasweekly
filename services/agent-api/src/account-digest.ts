@@ -24,8 +24,8 @@ export async function deliverDigests(store: AccountStore, mailer: Mailer, change
       const composed: Mail = { to: job.user.email, subject: projectEvents.length?`MaaS Daily · ${projectEvents.length} 个项目成本／报价变化`:`MaaS Daily · 你关注的模型有 ${items.length} 条变化`, key: `digest-${job.id}`,
         text: `${projectEvents.length?'项目成本跟踪（按保存的月用量估算，不代表真实账单）：\n\n'+projects!.text(job.id,origin)+'\n\n':''}${lines.length?'其他关注模型变化：\n\n'+lines.join('\n\n'):''}\n\n查看我的关注：${origin}/account/\n关闭邮件提醒：${unsubscribe.href}\n\n仅匹配明确关联模型的记录；项目按保存用量估算，详情页包含条件与来源。项目邮件可在项目页关闭；上方退订链接关闭此账户的模型及项目汇总邮件。` };
       const mail = job.mail ? JSON.parse(job.mail) as Mail : composed;
-      if (!job.mail) store.freezeMail(job.id, JSON.stringify(mail));
-      if(!store.mailEligible(job.userId,job.id)||(job.mail&&projects?.hasBatch(job.id)&&projectEvents.length!==JSON.parse(String(store.db.prepare('SELECT eventIds FROM cost_mail_batches WHERE jobId=?').get(job.id)?.eventIds??'[]')).length)){store.db.prepare("UPDATE mail_jobs SET status='cancelled' WHERE id=?").run(job.id);ledger.finish('digest',job.id,job.lease,attempt,'cancelled');continue;}
+      if(!job.mail){if(projects)projects.freeze(job.id,JSON.stringify(mail),projectEvents.map(e=>e.id));else store.freezeMail(job.id,JSON.stringify(mail));}
+      if(!store.mailEligible(job.userId,job.id)||(job.mail&&projects?.hasBatch(job.id)&&!projects.frozenMatches(job.id))){store.db.prepare("UPDATE mail_jobs SET status='cancelled' WHERE id=?").run(job.id);ledger.finish('digest',job.id,job.lease,attempt,'cancelled');continue;}
       await ledger.send('digest',job.id,job.lease,attempt,mailer,mail);
       if(ledger.state('digest',job.id)==='accepted')sent++;else failed++;
     } catch { ledger.finish('digest',job.id,job.lease,attempt,'unknown',undefined,'composition_failed');failed++; }
