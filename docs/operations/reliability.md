@@ -10,7 +10,7 @@ PR 和代码发布统一运行 `python3 scripts/test-runtime.py`。CI 必须提�
 
 ## 每日数据邮件告警
 
-`maas-daily-data-alert.timer` 每5分钟启动独立Python检查，不依赖本机电脑或本对话。任务失败、异常退出、服务器任务超过100分钟、GitHub任务排队或执行超过110分钟，首次检查即发邮件；北京时间11:00起，公网 `dataThrough` 尚未到当天也即刻告警（2026-11-03由07:00放宽，给GitHub触发波动及完整采集留出余量）。只有数据迟到门槛放宽，明确失败不等待11:00。数据日期以公网状态为准，同时核对 loopback 实际加载与正式发布清单的完整版本。短暂网络、版本错配、来源、资源和服务异常连续2次确认；公开 GitHub API 不可用连续3次确认，不使用个人GitHub令牌。该服务部署在生产机，不承担整台生产机离线时的外部探活。
+`maas-daily-data-alert.timer` 每5分钟启动独立Python检查，不依赖本机电脑或本对话。任务失败、异常退出、服务器任务超过100分钟、GitHub任务排队或执行超过110分钟，首次检查即发邮件；北京时间13:00起，公网 `dataThrough` 尚未到当天也即刻告警（2026-11-03由07:00放宽：当天05:00任务实际10:51触发，另预留完整采集及缓冲时间）。只有数据迟到门槛放宽，明确失败不等待13:00。数据日期以公网状态为准，同时核对 loopback 实际加载与正式发布清单的完整版本。短暂网络、版本错配、来源、资源和服务异常连续2次确认；公开 GitHub API 不可用连续3次确认，不使用个人GitHub令牌。该服务部署在生产机，不承担整台生产机离线时的外部探活。
 
 首次配置：先发布包含本服务的代码，再由root从已激活包运行 `python3 -B /srv/maasweekly/current/tooling/ops/install-reliability.py --data-alert-to zhangchen456@163.com`。安装器核对各helper清单哈希、备份旧文件，复用服务器正式Resend配置，只将邮件密钥、发件人和该收件人写入 root:root/0600 的 `shared/data-alert.env`，不复制账号库配置或本机OAuth。随后 `systemctl enable --now maas-daily-data-alert.timer`，并启动一次service确认。以后安装不传收件人会保留原配置。`python3 -B /usr/local/lib/maasweekly/daily_data_alert.py --check` 只读检查，不发邮件、不改变去重状态。
 
@@ -24,7 +24,7 @@ PR 和代码发布统一运行 `python3 scripts/test-runtime.py`。CI 必须提�
 
 ## 每日综合巡检邮件
 
-`maas-daily-inspection.timer` 每天北京时间12:00在服务器开始完整巡检，完成后向原运营收件人发送一封`[MaaSDaily] 每日巡检 YYYY-MM-DD`，健康日也发送。Persistent补执行与人工复查共用日期/收件人去重键，同一天不会重复发；正文、幂等键、23小时未知投递保护和重试复用原告警队列。实际发送失败继续由5分钟告警服务重试；accepted只表示服务商接收。巡检异常导致执行失败或记录超过26小时未完成会被原监控发现；首次缺少记录在12:30后报警。20分钟执行上限防止外部站点长期阻塞。
+`maas-daily-inspection.timer` 每天北京时间13:15在服务器开始完整巡检，完成后向原运营收件人发送一封`[MaaSDaily] 每日巡检 YYYY-MM-DD`，健康日也发送。Persistent补执行与人工复查共用日期/收件人去重键，同一天不会重复发；正文、幂等键、23小时未知投递保护和重试复用原告警队列。实际发送失败继续由5分钟告警服务重试；accepted只表示服务商接收。巡检异常导致执行失败或记录超过26小时未完成会被原监控发现；首次缺少记录在13:45后报警。20分钟执行上限防止外部站点长期阻塞。
 
 邮件包括当天数据、最近真实任务时间和状态、内容/报价来源，磁盘总量/已用/可用/inode、内存/交换空间、1/5/15分钟负载、业务库体积、核心服务/定时器、邮件队列状态计数和最早积压时间、最近本地账号备份时间。备份文件存在不代表本次做了恢复演练。活跃蓝绿槽位按runtime识别，备用槽位不报错；两云盘timer与OpenList按预期暂停检查，保留的旧失败service不作为新故障。资源/服务每5分钟检查；磁盘≥80%或可用<8GiB提醒，≥90%或可用<3GiB标为危急，inode≥90%提醒；可用内存<10%、负载>CPU数量2倍也需要持续两次确认。
 
@@ -34,7 +34,7 @@ PR 和代码发布统一运行 `python3 scripts/test-runtime.py`。CI 必须提�
 
 核心站内页面最多读取8MiB以覆盖报价页的完整外链；外部站点只读取最多4KiB确认响应，仍不保留正文。读取到上限会继续披露覆盖不完整，不能把截断页面标为完整检查。
 
-部署仍先发布完整代码包，再从已激活包通过哈希验证安装器更新helper和单元，随后启用`maas-daily-inspection.timer`。首次上线可以启动一次service发送当天完整报告；12:00再次执行会复查但不重复发邮件。只读预览：`runuser -u maasagent -- python3 -B /usr/local/lib/maasweekly/daily_inspection.py --preview`；JSON核对使用`--check`。这两种模式不写告警状态、不发送邮件。正式快照在`shared/state/data-alerts/inspection.json`，权限0600。
+部署仍先发布完整代码包，再从已激活包通过哈希验证安装器更新helper和单元，随后启用`maas-daily-inspection.timer`。首次上线可以启动一次service发送当天完整报告；13:15再次执行会复查但不重复发邮件。只读预览：`runuser -u maasagent -- python3 -B /usr/local/lib/maasweekly/daily_inspection.py --preview`；JSON核对使用`--check`。这两种模式不写告警状态、不发送邮件。正式快照在`shared/state/data-alerts/inspection.json`，权限0600。
 
 巡检不读取权限受限的运行包目录：安装器从已激活包核对并复制公开信源配置为`/usr/local/lib/maasweekly/inspection-sources.json`（root所有、0644），不会扩大运行包权限，也不复制密钥或个人配置。
 

@@ -14,7 +14,7 @@ import daily_data_alert as alert
 SENDER='MaaS Daily <hello@example.com>'
 TO='operator@example.com'
 def epoch(value):return datetime.fromisoformat(value).replace(tzinfo=alert.ZONE).timestamp()
-NOW=epoch('2026-11-02T12:00:00')
+NOW=epoch('2026-11-02T13:15:00')
 
 def sample(now=NOW):
     daily={'id':'pipeline_'+'a'*32,'state':'succeeded','mode':'update','stage':'finished','failureStage':None,
@@ -41,7 +41,7 @@ class DailyAlerts(unittest.TestCase):
     def healthy_after(self):
         s=sample(NOW+300);s['current']['updatedAt']=int((NOW+100)*1000);return s
     def test_beijing_deadline_and_old_success_do_not_disguise_stale_data(self):
-        for timestamp,late in [('2026-11-02T07:00:00',False),('2026-11-02T10:59:59',False),('2026-11-02T11:00:00',True)]:
+        for timestamp,late in [('2026-11-02T07:00:00',False),('2026-11-02T12:59:59',False),('2026-11-02T13:00:00',True)]:
             s=sample(epoch(timestamp));s['dataThrough']='2026-11-01'
             self.assertEqual('publication_late' in alert.conditions(s),late)
         s=sample();s['dataThrough']='2026-11-01';s['current']['mode']='rebuild'

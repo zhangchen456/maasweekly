@@ -19,11 +19,11 @@ from test_daily_data_alert import sample, epoch, Mailer, SENDER, TO
 
 class InspectionTests(unittest.TestCase):
     def test_delayed_github_start_is_tolerated_but_real_failures_are_not(self):
-        value=sample(epoch('2026-11-03T10:59:59'));value['dataThrough']='2026-11-02'
+        value=sample(epoch('2026-11-03T12:59:59'));value['dataThrough']='2026-11-02'
         self.assertNotIn('publication_late',alert.conditions(value))
         value['github'].update(conclusion='failure',updatedAt=value['checkedAt'])
         self.assertIn('workflow_failed',alert.conditions(value))
-        value['checkedAt']=epoch('2026-11-03T11:00:00')
+        value['checkedAt']=epoch('2026-11-03T13:00:00')
         self.assertIn('publication_late',alert.conditions(value))
 
     def test_resource_incident_blocks_false_recovery_and_deduplicates(self):
@@ -123,7 +123,7 @@ class InspectionTests(unittest.TestCase):
         value=sample();value['operations']={'issues':[],'services':[]}
         value['links']={'site':[],'external':[{'url':'https://example.com','status':'restricted','httpStatus':403}], 'discovered':2,'checked':1,'omitted':1,'pageBodyTruncated':False}
         text=inspection.report_text(value)
-        self.assertIn('访问受限，需复核',text);self.assertIn('覆盖不完整',text);self.assertIn('11:00',text)
+        self.assertIn('访问受限，需复核',text);self.assertIn('覆盖不完整',text);self.assertIn('13:00',text)
 
 
 if __name__=='__main__':unittest.main()
