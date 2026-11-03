@@ -32,6 +32,8 @@ PR 和代码发布统一运行 `python3 scripts/test-runtime.py`。CI 必须提�
 
 每日检查11个入口：中英文首页、报价、归档、订阅页，账号入口、公开status API及RSS；合并配置中68条主要官方信源与上述页面实际外链（去重，最多300）。没有遍历全部历史证据详情页，超出数量或页面读取上限会明确标为未覆盖。403/401/429列为访问受限、需复核，与404/410、5xx、DNS/TLS/连接/超时/重定向异常分列；TLS到期少于14天提示核对续期。仅HTTPS/443、每次重定向验证公共IP并固定实际连接地址，不携带Cookies、认证信息或代理环境；邮件中去除URL查询与fragment，不保留外部响应正文。
 
+核心站内页面最多读取8MiB以覆盖报价页的完整外链；外部站点只读取最多4KiB确认响应，仍不保留正文。读取到上限会继续披露覆盖不完整，不能把截断页面标为完整检查。
+
 部署仍先发布完整代码包，再从已激活包通过哈希验证安装器更新helper和单元，随后启用`maas-daily-inspection.timer`。首次上线可以启动一次service发送当天完整报告；12:00再次执行会复查但不重复发邮件。只读预览：`runuser -u maasagent -- python3 -B /usr/local/lib/maasweekly/daily_inspection.py --preview`；JSON核对使用`--check`。这两种模式不写告警状态、不发送邮件。正式快照在`shared/state/data-alerts/inspection.json`，权限0600。
 
 巡检不读取权限受限的运行包目录：安装器从已激活包核对并复制公开信源配置为`/usr/local/lib/maasweekly/inspection-sources.json`（root所有、0644），不会扩大运行包权限，也不复制密钥或个人配置。
