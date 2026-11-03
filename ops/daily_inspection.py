@@ -24,7 +24,7 @@ def report_text(sample):
     rows = ['MaaSDaily 每日巡检', '检查时间：'+local_time(sample['checkedAt']),
             '数据截至：'+(sample.get('dataThrough') or '未能确认'),
             '发布与实际加载：'+('一致' if sample.get('consistent') else '异常或未能确认'),
-            '当天数据迟到告警时间：11:00（Asia/Shanghai）；明确失败、进程退出和服务异常仍及时检查。']
+            '当天数据迟到告警时间：13:00（Asia/Shanghai）；明确失败、进程退出和服务异常仍及时检查。']
     reasons=conditions(sample)
     from daily_data_alert import LABELS
     rows+=['当前告警条件：'+('；'.join(LABELS[x] for x in sorted(reasons)) if reasons else '无')]
