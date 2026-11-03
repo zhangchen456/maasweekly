@@ -14,6 +14,12 @@ MAPPING={
  'ops/maas-pipeline-monitor.service':'/etc/systemd/system/maas-pipeline-monitor.service',
  'ops/maas-pipeline-monitor.timer':'/etc/systemd/system/maas-pipeline-monitor.timer',
  'ops/daily_data_alert.py':'/usr/local/lib/maasweekly/daily_data_alert.py',
+ 'ops/operations_checks.py':'/usr/local/lib/maasweekly/operations_checks.py',
+ 'ops/daily_inspection.py':'/usr/local/lib/maasweekly/daily_inspection.py',
+ 'ops/maas-daily-inspection.service':'/etc/systemd/system/maas-daily-inspection.service',
+ 'ops/maas-daily-inspection.timer':'/etc/systemd/system/maas-daily-inspection.timer',
+ 'ops/maas-account-health.service':'/etc/systemd/system/maas-account-health.service',
+ 'pipeline/config/source_registry.json':'/usr/local/lib/maasweekly/inspection-sources.json',
  'ops/maas-daily-data-alert.service':'/etc/systemd/system/maas-daily-data-alert.service',
  'ops/maas-daily-data-alert.timer':'/etc/systemd/system/maas-daily-data-alert.timer',
 }

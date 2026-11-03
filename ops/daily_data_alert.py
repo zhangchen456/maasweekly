@@ -14,23 +14,35 @@ import urllib.request
 import uuid
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
+from operations_checks import system_snapshot
 
 ZONE = ZoneInfo('Asia/Shanghai')
 ROOT = Path('/srv/maasweekly/shared')
 GITHUB = 'https://api.github.com/repos/zhangchen456/maasweekly/actions/workflows/daily-update.yml/runs?branch=main&per_page=5'
 ORIGIN = 'https://daily.maas.click'
 FAILURES = {'failure', 'timed_out', 'cancelled', 'action_required', 'startup_failure', 'stale'}
+DEADLINE_HOUR = 11
 LABELS = {
  'workflow_failed': '每日更新工作流失败或被取消',
  'task_failed': '服务器上的每日采集任务失败',
  'task_interrupted': '采集进程已退出但没有完成回执',
  'task_timeout': '每日更新任务运行超时',
- 'publication_late': '已超过07:00，尚未确认当天数据发布',
+ 'publication_late': '已超过11:00，尚未确认当天数据发布',
  'runtime_unavailable': '未能读取线上服务或公网数据状态',
  'runtime_mismatch': '服务加载的数据与正式发布版本不一致',
  'sources_degraded': '部分内容或报价来源更新状态需要核对',
  'monitor_input_unavailable': '未能读取每日任务监控记录',
  'github_check_unavailable': '连续未能核对GitHub任务状态',
+ 'disk_pressure': '磁盘空间或inode余量偏低',
+ 'memory_pressure': '可用内存持续低于10%',
+ 'load_pressure': '系统负载持续高于CPU数量的2倍',
+ 'resource_check_unavailable': '未能完整读取服务器资源状态',
+ 'service_unhealthy': '核心服务或定时任务异常',
+ 'service_check_unavailable': '未能完整核对核心服务状态',
+ 'paused_jobs_changed': '预期暂停的云盘任务状态发生变化或无法确认',
+ 'backup_unhealthy': '账号本地备份缺失、超过26小时或无法读取',
+ 'inspection_stale': '每日巡检超过26小时未完成或缺少有效记录',
+ 'mail_queue_unhealthy': '邮件队列需人工核对、积压超过1小时或无法读取',
 }
 IMMEDIATE = {'workflow_failed', 'task_failed', 'task_interrupted', 'task_timeout', 'publication_late'}
 
@@ -112,6 +124,7 @@ def collect(now, transport=None, shared=ROOT):
               'sourcesHealthy': False, 'githubKnown': False, 'github': None,
               'daily': None, 'current': None, 'jobAlive': False, 'inputError': False,
               'runtimeError': False, 'githubError': False}
+    runtime_for_ops = {}
     try:
         current = validate_job(read_json(shared/'pipeline-monitor/current.json', 65536))
         sample['current'] = {k: current.get(k) for k in ['id','state','mode','stage','startedAt','updatedAt','failureStage','runLink']}
@@ -125,6 +138,7 @@ def collect(now, transport=None, shared=ROOT):
         sample['inputError'] = True
     try:
         runtime = read_json(shared/'runtime.json', 65536)
+        runtime_for_ops = runtime
         publication = read_json(shared/'public-data/v1/publication.json')
         if type(runtime.get('port')) is not int or not 1024 <= runtime['port'] <= 65535:
             raise ValueError('invalid port')
@@ -136,12 +150,28 @@ def collect(now, transport=None, shared=ROOT):
         if not valid_day(date):
             raise ValueError('invalid published date')
         sample['dataThrough'] = date
+        status = public.get('status', {})
+        sample['sources'] = {}
+        for name in ['sourceStreams', 'priceStreams']:
+            rows = status.get(name, [])
+            sample['sources'][name] = {'total': len(rows), 'ok': sum(row.get('state') == 'ok' for row in rows),
+                'problems': [{k: row.get(k) for k in ['sourceId', 'sourceKey', 'state', 'lastSuccessDate', 'lastSuccessAt']} for row in rows if row.get('state') != 'ok']}
         sample['consistent'] = bool(health.get('ready') and not health.get('lastReloadError')
             and health.get('processCode') == runtime['code'] and health.get('publication') == expected
             and health.get('dataThrough') == date and public.get('datasetVersion') == expected['datasetVersion'])
         sample['sourcesHealthy'] = health.get('freshness', {}).get('freshness') == 'fresh'
     except (OSError, ValueError, KeyError, TypeError, AttributeError):
         sample['runtimeError'] = True
+    sample['operations'] = system_snapshot(shared, runtime_for_ops, now=now)
+    inspection = shared/'state/data-alerts/inspection.json'
+    try:
+        checked = read_json(inspection)['checkedAt']
+        if not isinstance(checked, (int, float)) or checked > now+60 or now-checked > 26*3600:
+            raise ValueError('inspection stale')
+    except (OSError, ValueError, KeyError, TypeError):
+        local = datetime.fromtimestamp(now, ZONE)
+        if (local.hour, local.minute) >= (12, 30):
+            sample['operations']['issues'].append('inspection_stale')
     try:
         runs = transport.request(GITHUB, headers={'Accept':'application/vnd.github+json'}, timeout=8)['workflow_runs']
         if not isinstance(runs, list) or not runs:
@@ -151,17 +181,20 @@ def collect(now, transport=None, shared=ROOT):
             raise ValueError('invalid workflow metadata')
         created = datetime.fromisoformat(run['created_at'].replace('Z', '+00:00')).timestamp()
         updated = datetime.fromisoformat(run['updated_at'].replace('Z', '+00:00')).timestamp()
-        sample['github'] = {'id': run['id'], 'status':run['status'], 'conclusion':run.get('conclusion'), 'createdAt':created, 'updatedAt':updated}
+        sample['github'] = {'id': run['id'], 'status':run['status'], 'conclusion':run.get('conclusion'), 'createdAt':created, 'updatedAt':updated,
+                            'event': run.get('event') if run.get('event') in ['schedule', 'workflow_dispatch'] else 'other'}
         sample['githubKnown'] = True
     except (OSError, ValueError, KeyError, TypeError, AttributeError):
         sample['githubError'] = True
     return sample
 
 
-def conditions(sample, deadline_hour=7):
+def conditions(sample, deadline_hour=DEADLINE_HOUR):
     now = sample['checkedAt'];today = day(now);local = datetime.fromtimestamp(now, ZONE)
     baseline = today if local.hour >= deadline_hour else (local.date()-timedelta(days=1)).isoformat()
     issues = {};daily=sample.get('daily');current=sample.get('current');gh=sample.get('github')
+    for reason in sample.get('operations', {}).get('issues', []):
+        if reason in LABELS: issues[reason] = baseline
     if sample.get('inputError'):
         issues['monitor_input_unavailable'] = baseline
     if sample.get('runtimeError'):
@@ -240,6 +273,7 @@ class AlertStore:
         payload TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'pending',attempts INTEGER NOT NULL DEFAULT 0,
         firstAttempt REAL,messageId TEXT,error TEXT,uncertain INTEGER NOT NULL DEFAULT 0);
         ''');self.db.commit();os.chmod(file,0o600)
+        self.db.execute('CREATE TABLE IF NOT EXISTS reports(day TEXT NOT NULL,destination TEXT NOT NULL,job TEXT NOT NULL,PRIMARY KEY(day,destination))');self.db.commit()
 
     def close(self):self.db.close()
 
@@ -249,17 +283,28 @@ class AlertStore:
 
     def queue(self, episode, kind, reasons, sample, sender, recipient, *, rehearsal=False):
         identifier='ops_'+uuid.uuid4().hex;now=sample['checkedAt'];recovery=kind=='recovery'
-        title='每日数据更新已恢复' if recovery else '每日数据更新异常' if kind=='alert' else '每日数据更新异常状态更新'
+        operational=bool((set(episode.get('seen',[]))|set(reasons)) - {'workflow_failed','task_failed','task_interrupted','task_timeout','publication_late','runtime_unavailable','runtime_mismatch','sources_degraded','monitor_input_unavailable','github_check_unavailable'})
+        title=('运行状态已恢复' if recovery else '运行巡检异常' if kind=='alert' else '运行巡检异常状态更新') if operational else ('每日数据更新已恢复' if recovery else '每日数据更新异常' if kind=='alert' else '每日数据更新异常状态更新')
         subject='[MaaSDaily] '+('[演练] ' if rehearsal else '')+title
-        rows=[('本邮件为告警链路验收演练，未修改真实任务或发布数据。' if rehearsal else '每日数据更新自动监控通知。'),
+        rows=[('本邮件为告警链路验收演练，未修改真实任务或发布数据。' if rehearsal else '运行与数据更新自动监控通知。'),
               '发现时间：'+local_time(episode['openedAt']), '本次检查：'+local_time(now),
               '需要确认的数据日期：'+episode['targetDate'], '当前公网数据截至：'+(sample.get('dataThrough') or '暂无法读取，尚未验证')]
         if recovery:rows+=['已确认：服务和正式数据版本一致，异常条件已连续两次检查消失。','需要处理：目前无需操作。']
         else:
-            rows+=['问题：'+'；'.join(LABELS[r] for r in sorted(reasons)),'影响：当天数据更新或交付状态需要核对；尚未验证的状态不会作为更新成功。']
+            rows+=['问题：'+'；'.join(LABELS[r] for r in sorted(reasons)),'影响：服务、资源或数据交付状态需要核对；尚未验证的状态不会作为恢复成功。']
             job=sample.get('daily')
-            if job:rows+=['最近每日任务状态：'+job['state']+'；阶段：'+str(job.get('failureStage') or job['stage'])]
-            rows+=['已采取措施：已记录异常，并继续每5分钟复查。','需要处理：请核对任务记录和失败阶段；恢复确认后会发送恢复通知。']
+            if job:rows+=['最近每日任务开始时间：'+local_time(job['startedAt']/1000),
+                          '最近每日任务状态：'+job['state']+'；阶段：'+str(job.get('failureStage') or job['stage'])]
+            ops=sample.get('operations', {})
+            disk=ops.get('resources', {}).get('disk')
+            if disk:rows+=['磁盘：已用 '+str(disk['usedPercent'])+'%，可用 '+str(round(disk['availableBytes']/1024**3,2))+' GiB']
+            memory=ops.get('resources',{}).get('memory')
+            if memory:rows+=['可用内存：'+str(memory['availablePercent'])+'%']
+            load=ops.get('resources',{}).get('load')
+            if load:rows+=['负载（1/5/15分钟）：'+', '.join(str(round(x,2)) for x in load['averages'])+'；CPU数量：'+str(load['cpuCount'])]
+            bad=[r['unit'] for r in ops.get('services',[]) if r['status'] not in ['normal','running','expected_paused']]
+            if bad:rows+=['异常服务：'+', '.join(bad)]
+            rows+=['已采取措施：已记录异常，并继续每5分钟复查。','需要处理：请核对上述异常项；任务异常时查看任务记录与失败阶段。恢复确认后会发送恢复通知。']
         if sample.get('github'):rows+=['任务记录：https://github.com/zhangchen456/maasweekly/actions/runs/'+str(sample['github']['id'])]
         rows+=['网站：'+ORIGIN+'/']
         mail={'from':sender,'to':[recipient],'subject':subject,'text':'\n\n'.join(rows)}
@@ -267,7 +312,18 @@ class AlertStore:
                         [identifier,episode['id'],kind,now,json.dumps(mail,ensure_ascii=False,sort_keys=True)])
         return identifier
 
-    def observe(self, sample, sender, recipient, *, rehearsal=False, deadline_hour=7):
+    def queue_report(self, sample, sender, recipient, text):
+        report_day=day(sample['checkedAt']);destination=hashlib.sha256((sender+'\0'+recipient).encode()).hexdigest()
+        identifier='ops_'+uuid.uuid4().hex
+        with self.db:
+            cursor=self.db.execute('INSERT OR IGNORE INTO reports VALUES(?,?,?)',[report_day,destination,identifier])
+            if not cursor.rowcount:return 0
+            mail={'from':sender,'to':[recipient],'subject':'[MaaSDaily] 每日巡检 '+report_day,'text':text}
+            self.db.execute('INSERT INTO jobs(id,episode,kind,created,payload) VALUES(?,?,?,?,?)',
+                [identifier,'report_'+report_day+'_'+destination[:16],'inspection',sample['checkedAt'],json.dumps(mail,ensure_ascii=False,sort_keys=True)])
+        return 1
+
+    def observe(self, sample, sender, recipient, *, rehearsal=False, deadline_hour=DEADLINE_HOUR):
         raw=conditions(sample,deadline_hour);state=self.load();destination=hashlib.sha256((sender+'\0'+recipient).encode()).hexdigest();counts={r:state['counts'].get(r,0)+1 for r in raw}
         confirmed={r:target for r,target in raw.items() if counts[r]>=(1 if r in IMMEDIATE else 3 if r=='github_check_unavailable' else 2)}
         episode=state['episode'];queued=0

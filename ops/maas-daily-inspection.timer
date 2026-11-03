@@ -1,0 +1,10 @@
+[Unit]
+Description=MaaS Daily operator inspection at noon Shanghai time
+
+[Timer]
+OnCalendar=*-*-* 12:00:00 Asia/Shanghai
+Persistent=true
+Unit=maas-daily-inspection.service
+
+[Install]
+WantedBy=timers.target
