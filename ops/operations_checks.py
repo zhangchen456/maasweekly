@@ -15,6 +15,7 @@ from urllib.parse import urljoin, urlsplit, urlunsplit
 
 GIB = 1024 ** 3
 ORIGIN = 'https://daily.maas.click'
+HTML_LIMIT = 8 * 1024 * 1024
 PUBLIC_PATHS = ['/', '/en/', '/pricing/', '/en/pricing/', '/changes/', '/en/changes/', '/subscription/', '/en/subscription/', '/account/', '/api/v1/status', '/feed.xml']
 RUNNING = ['nginx.service', 'docker.service', 'postgresql.service', 'maas-editorial-worker.service', 'maas-diagnostic-worker.service']
 TIMERS = ['maas-pipeline-monitor', 'maas-daily-data-alert', 'maas-release-cleanup', 'maas-account-health', 'maas-account-backup', 'maas-account-digest', 'maas-account-digest-retry', 'maas-daily-inspection']
@@ -203,7 +204,7 @@ class PublicProbe:
         current = url
         try:
             for hop in range(6):
-                status, location, body, expiry = self.exchange(current, started+18, 1024*1024 if include_body else 4096)
+                status, location, body, expiry = self.exchange(current, started+18, HTML_LIMIT if include_body else 4096)
                 if status in [301, 302, 303, 307, 308] and location:
                     current = urljoin(current, location)
                     continue
@@ -211,7 +212,7 @@ class PublicProbe:
                 result['status'] = 'ok' if 200 <= status < 300 else 'restricted' if status in [401, 403, 429] else 'http_error'
                 if include_body and result['status'] == 'ok':
                     result['body'] = body.decode('utf-8', errors='replace')
-                    result['bodyTruncated'] = len(body) == 1024*1024
+                    result['bodyTruncated'] = len(body) == HTML_LIMIT
                 break
             else:
                 result.update(status='redirect_error', reason='too_many_redirects')
