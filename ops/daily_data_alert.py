@@ -21,13 +21,13 @@ ROOT = Path('/srv/maasweekly/shared')
 GITHUB = 'https://api.github.com/repos/zhangchen456/maasweekly/actions/workflows/daily-update.yml/runs?branch=main&per_page=5'
 ORIGIN = 'https://daily.maas.click'
 FAILURES = {'failure', 'timed_out', 'cancelled', 'action_required', 'startup_failure', 'stale'}
-DEADLINE_HOUR = 11
+DEADLINE_HOUR = 13
 LABELS = {
  'workflow_failed': '每日更新工作流失败或被取消',
  'task_failed': '服务器上的每日采集任务失败',
  'task_interrupted': '采集进程已退出但没有完成回执',
  'task_timeout': '每日更新任务运行超时',
- 'publication_late': '已超过11:00，尚未确认当天数据发布',
+ 'publication_late': '已超过13:00，尚未确认当天数据发布',
  'runtime_unavailable': '未能读取线上服务或公网数据状态',
  'runtime_mismatch': '服务加载的数据与正式发布版本不一致',
  'sources_degraded': '部分内容或报价来源更新状态需要核对',
@@ -170,7 +170,7 @@ def collect(now, transport=None, shared=ROOT):
             raise ValueError('inspection stale')
     except (OSError, ValueError, KeyError, TypeError):
         local = datetime.fromtimestamp(now, ZONE)
-        if (local.hour, local.minute) >= (12, 30):
+        if (local.hour, local.minute) >= (13, 45):
             sample['operations']['issues'].append('inspection_stale')
     try:
         runs = transport.request(GITHUB, headers={'Accept':'application/vnd.github+json'}, timeout=8)['workflow_runs']
