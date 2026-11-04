@@ -56,6 +56,9 @@ case "$cmd" in
     reason="${rest#* --reason }"
     exec sudo -n "$ACTIVATE" rollback "$rid" --reason "$reason"
     ;;
+  weekly-evidence )
+    exec sudo -n "$ACTIVATE" weekly-evidence
+    ;;
   data-update )
     exec sudo -n "$ACTIVATE" data-update
     ;;

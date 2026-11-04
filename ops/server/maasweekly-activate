@@ -728,6 +728,11 @@ if [ -f "$ROOT/shared/runtime-mode" ]; then
   esac
 fi
 case "$cmd" in
+  weekly-evidence)
+    [ $# -eq 0 ] || die "weekly-evidence takes no arguments" 2
+    acquire_lock
+    /usr/sbin/runuser -u maasagent -- /usr/bin/python3 /usr/local/lib/maasweekly/weekly-editorial.py export --public-root "$ROOT/shared/public-data/v1"
+    ;;
   data-update)
     [ $# -eq 0 ] || die "data-update takes no arguments" 2
     exec /bin/bash /usr/local/lib/maasweekly/data-job.sh
