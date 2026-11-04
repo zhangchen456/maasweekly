@@ -92,7 +92,7 @@ def main(argv=()):
    for target,body in bodies.items():
     target=Path(target);fd,name=tempfile.mkstemp(dir=target.parent)
     with os.fdopen(fd,'wb') as stream:stream.write(body);stream.flush();os.fsync(stream.fileno())
-    mode=0o600 if target==ROOT/'shared/data-alert.env' else (0o755 if str(target) in ['/usr/local/sbin/maasweekly-activate','/usr/local/bin/maasweekly-deploy-shell'] else 0o644)
+    mode=0o600 if target==ROOT/'shared/data-alert.env' else {'/usr/local/sbin/maasweekly-activate':0o750,'/usr/local/bin/maasweekly-deploy-shell':0o755}.get(str(target),0o644)
     os.chmod(name,mode);os.replace(name,target)
    subprocess.run(['systemctl','daemon-reload'],check=True)
   except BaseException:
