@@ -19,12 +19,12 @@
 从 Actions 下载本期素材包；也可运行：
 
 ```sh
-python3 ops/weekly-editorial.py prepare --out /tmp/weekly-packets
-# 历史补刊须明确指定已完整结束的周二
-python3 ops/weekly-editorial.py prepare --period 2026-10-27 --out /tmp/weekly-backfill
+python3 ops/weekly-editorial.py prepare --production --out /tmp/weekly-packets
 ```
 
-API的to是排他边界，工具会自动取期末次日，避免漏掉周二。跨页数据版本变化、分页重复或超出上限均失败，不能把部分数据当完整素材。素材保留完整观察原文；其中LLM摘要不作为独立证据。保留数据版本及覆盖范围，缺测明确记录。
+生产任务复用固定部署SSH凭据及 `ops/known_hosts.production`，只调用无参数的 `weekly-evidence`。服务器持有发布锁，以 `maasagent` 读取已发布的固定数据快照，核对 changes 文件字节数、SHA256、记录数、唯一ID及完整周期覆盖后导出；不修改发布数据或账户权限，也不调用受套餐历史窗口限制的访客接口。需先从已激活、哈希核对的代码包安装 `weekly-editorial.py`、受限shell及激活helper（`ops/install-reliability.py`）。
+
+显式 `--root` 的API模式用于有相应访问能力的环境；API的to是排他边界，工具会自动取期末次日，避免漏掉周二。跨页数据版本变化、分页重复或超出上限均失败，不能把部分数据当完整素材。素材保留完整观察原文；其中LLM摘要不作为独立证据。保留数据版本及覆盖范围，缺测明确记录。生产固定命令只导出最新完整周期，历史补刊需在受控的历史数据环境单独准备。
 
 优先写模型/API变化、定价和计费条件、迁移或下线、接入限制与设置。首次抓取、网页导航变化、空报价不直接写成新品或涨价。观察日期与发布日期分开，未来生效项只写预告。金额注明币种、单位、上下文区间和渠道；面向海外的图使用美元。结论说明适用条件，不夸大厂商能力描述。
 
