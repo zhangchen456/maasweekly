@@ -4,6 +4,9 @@ import argparse,fcntl,hashlib,json,os,pwd,re,shutil,subprocess,sys,tempfile,time
 from pathlib import Path
 ROOT=Path('/srv/maasweekly')
 MAPPING={
+ 'ops/weekly-editorial.py':'/usr/local/lib/maasweekly/weekly-editorial.py',
+ 'ops/server/maasweekly-activate':'/usr/local/sbin/maasweekly-activate',
+ 'ops/server/maasweekly-deploy-shell':'/usr/local/bin/maasweekly-deploy-shell',
  'ops/runtime_workers.py':'/usr/local/lib/maasweekly/runtime_workers.py',
  'ops/maas-editorial-worker.service':'/etc/systemd/system/maas-editorial-worker.service',
  'ops/maas-diagnostic-worker.service':'/etc/systemd/system/maas-diagnostic-worker.service',
@@ -89,7 +92,8 @@ def main(argv=()):
    for target,body in bodies.items():
     target=Path(target);fd,name=tempfile.mkstemp(dir=target.parent)
     with os.fdopen(fd,'wb') as stream:stream.write(body);stream.flush();os.fsync(stream.fileno())
-    os.chmod(name,0o600 if target==ROOT/'shared/data-alert.env' else 0o644);os.replace(name,target)
+    mode=0o600 if target==ROOT/'shared/data-alert.env' else (0o755 if str(target) in ['/usr/local/sbin/maasweekly-activate','/usr/local/bin/maasweekly-deploy-shell'] else 0o644)
+    os.chmod(name,mode);os.replace(name,target)
    subprocess.run(['systemctl','daemon-reload'],check=True)
   except BaseException:
    for item in audit:

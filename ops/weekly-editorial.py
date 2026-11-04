@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Prepare evidence packets and verify reviewed formal drafts; never auto-publish prose."""
-import argparse, hashlib, json, re, urllib.parse, urllib.request
+import argparse, hashlib, json, os, re, subprocess, urllib.parse, urllib.request
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -34,12 +34,41 @@ def collect(root,start,end,fetch=load):
     else:raise ValueError('packet pagination limit reached; refusing partial evidence')
     return {'schemaVersion':1,'periodStart':str(start),'periodEnd':str(end),'datasetVersion':version,'coverage':coverage,'observations':rows}
 
-def prepare(root,out,today,requested=None):
+def collect_published(root,start,end):
+    """Read one published immutable collection; caller holds the publication lock."""
+    manifest=json.loads((root/'publication.json').read_bytes())
+    version=manifest['datasetVersion']
+    if not re.fullmatch(r'ds_[0-9a-f]{64}',version):raise ValueError('invalid published dataset')
+    name=f'releases/{version}/changes.json'
+    entries=[entry for entry in manifest['files'] if entry['path']==name]
+    if len(entries)!=1:raise ValueError('published changes manifest missing or duplicated')
+    entry=entries[0];raw=(root/name).read_bytes()
+    if len(raw)!=entry['bytes'] or hashlib.sha256(raw).hexdigest()!=entry['sha256']:raise ValueError('published changes checksum mismatch')
+    rows=json.loads(raw)
+    if not isinstance(rows,list) or len(rows)!=manifest['coverage']['changes']['count']:raise ValueError('published changes count mismatch')
+    coverage=manifest['coverage']['changes']
+    if coverage['from']>str(start) or manifest['dataThrough']<str(end):raise ValueError('published data does not cover the completed period')
+    if len({row['id'] for row in rows})!=len(rows):raise ValueError('duplicate published observation')
+    selected=[row for row in rows if str(start)<=row['observationDate']<=str(end) and row['status']!='withdrawn']
+    return {'schemaVersion':1,'periodStart':str(start),'periodEnd':str(end),'datasetVersion':version,'coverage':manifest['coverage'],'observations':selected}
+
+def collect_production(start,end):
+    result=subprocess.run(['ssh','-i',os.environ.get('MAAS_SSH_KEY',str(Path.home()/'.ssh/id_ed25519')),
+        '-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile=ops/known_hosts.production',
+        '-o','ConnectTimeout=30','-o','ServerAliveInterval=15','maasdeploy@47.237.135.97','weekly-evidence'],
+        check=True,stdout=subprocess.PIPE,timeout=120)
+    packet=json.loads(result.stdout)
+    if packet['periodStart']!=str(start) or packet['periodEnd']!=str(end):raise ValueError('production packet period mismatch')
+    return packet
+
+def prepare(root,out,today,requested=None,production=False):
     start,end=period(today)
     if requested:
         end=date.fromisoformat(requested);start=end-timedelta(days=6)
         if end.weekday()!=1 or end>=today:raise ValueError('period must end on a completed Tuesday')
-    packet=collect(root,start,end);folder=out/end.isoformat();folder.mkdir(parents=True,exist_ok=False)
+    if production and requested:raise ValueError('production command only exports the latest completed period')
+    packet=collect_production(start,end) if production else collect(root,start,end)
+    folder=out/end.isoformat();folder.mkdir(parents=True,exist_ok=False)
     (folder/'evidence.json').write_text(json.dumps(packet,ensure_ascii=False,indent=2)+'\n')
     summary=[f'# 周报素材 {end}',f'追踪周期：{start} ~ {end}',f"数据版本：{packet['datasetVersion']}",
         '这是选题素材，不是已核实的发布稿。逐条复核原始增删行和官方来源；LLM摘要仅供检索，观察日期不等于发布日期。',
@@ -84,9 +113,11 @@ def check(draft,receipt,today):
 
 def main():
     parser=argparse.ArgumentParser();sub=parser.add_subparsers(dest='command',required=True)
-    prep=sub.add_parser('prepare');prep.add_argument('--root',default='https://daily.maas.click/api/v1');prep.add_argument('--out',type=Path,required=True);prep.add_argument('--period')
+    prep=sub.add_parser('prepare');prep.add_argument('--root',default='https://daily.maas.click/api/v1');prep.add_argument('--out',type=Path,required=True);prep.add_argument('--period');prep.add_argument('--production',action='store_true')
+    export=sub.add_parser('export');export.add_argument('--public-root',type=Path,required=True)
     verify=sub.add_parser('check');verify.add_argument('--draft',type=Path,required=True);verify.add_argument('--receipt',type=Path,required=True)
     args=parser.parse_args();today=datetime.now(ZoneInfo('Asia/Shanghai')).date()
-    if args.command=='prepare':prepare(args.root,args.out,today,args.period)
+    if args.command=='prepare':prepare(args.root,args.out,today,args.period,args.production)
+    elif args.command=='export':print(json.dumps(collect_published(args.public_root,*period(today)),ensure_ascii=False))
     else:print(json.dumps(check(args.draft,args.receipt,today)))
 if __name__=='__main__':main()
