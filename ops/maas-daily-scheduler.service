@@ -1,0 +1,11 @@
+[Unit]
+Description=MaaS Daily independent scheduled collection fallback
+After=network-online.target docker.service postgresql.service
+Wants=network-online.target
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/bin/python3 -B /usr/local/lib/maasweekly/daily_scheduler.py
+TimeoutStartSec=100min
+TimeoutStopSec=45
+UMask=0077

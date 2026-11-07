@@ -50,6 +50,18 @@ class ReliabilityTests(unittest.TestCase):
    with patch.object(launch,'SHARED',shared),patch.object(launch,'STORE',store),patch.object(launch,'wait_runtime',return_value=healthy()) as wait,patch.object(launch,'require_capacity'),patch.object(launch,'docker',side_effect=docker),patch.object(launch,'candidate_permissions'),patch.object(launch,'command'):
     launch.execute(Path('/runtime')/CODE,'rebuild',b'{}',journal)
     self.assertEqual(wait.call_args.args,(8788,expected,CODE));self.assertTrue(journal.published);self.assertEqual(journal.validation,'passed')
+ def test_failed_full_delivery_gate_preserves_publication_and_never_starts_backup(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   shared=Path(tmp).resolve();(shared/'public-data/v1').mkdir(parents=True);store=shared/'data-store';(store/'writer').mkdir(parents=True)
+   pointer=shared/'public-data/v1/publication.json';pointer.write_text(json.dumps(MANIFEST));(shared/'runtime.json').write_text(json.dumps({'port':8788}))
+   candidate=shared/'public-data/candidates'/('e'*32);candidate.mkdir(parents=True);(candidate/'publication.json').write_text(json.dumps(MANIFEST))
+   (store/'writer/candidate.json').write_text(json.dumps({'candidate':'/public/candidates/'+candidate.name}))
+   journal=RunJournal(shared,CODE,'rebuild')
+   with patch.object(launch,'SHARED',shared),patch.object(launch,'STORE',store),patch.object(launch,'wait_runtime',return_value=healthy()),patch.object(launch,'require_capacity'),patch.object(launch,'candidate_permissions'),patch.object(launch,'docker') as docker,patch.object(launch,'command',side_effect=RuntimeError('English incomplete')) as command:
+    with self.assertRaises(RuntimeError):launch.execute(Path('/runtime')/CODE,'rebuild',b'{}',journal)
+    self.assertEqual(docker.call_count,1);self.assertEqual(command.call_count,1);self.assertEqual(journal.validation,'failed')
+    self.assertEqual(json.loads(pointer.read_text()),MANIFEST)
+
  def test_journal_preserves_published_but_failed_acceptance(self):
   with tempfile.TemporaryDirectory() as tmp:
    shared=Path(tmp).resolve();journal=RunJournal(shared,CODE,'rebuild',{'GITHUB_RUN_ID':'123','GITHUB_REPOSITORY':'owner/repo','TOKEN':'secret'})

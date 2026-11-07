@@ -1,0 +1,8 @@
+[Unit]
+Description=Check missed daily collection independently of GitHub
+[Timer]
+OnCalendar=*-*-* 05..12:10,25,40,55:00 Asia/Shanghai
+Persistent=true
+Unit=maas-daily-scheduler.service
+[Install]
+WantedBy=timers.target
