@@ -15,6 +15,7 @@ import uuid
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from operations_checks import system_snapshot
+from reliability_observation import initialize as observation_initialize, observe as record_observation
 
 ZONE = ZoneInfo('Asia/Shanghai')
 ROOT = Path('/srv/maasweekly/shared')
@@ -23,6 +24,11 @@ ORIGIN = 'https://daily.maas.click'
 FAILURES = {'failure', 'timed_out', 'cancelled', 'action_required', 'startup_failure', 'stale'}
 DEADLINE_HOUR = 13
 LABELS = {
+ 'weekly_overdue': '本期正式周报超过周四交付时间或期号无效',
+ 'delivery_unverified': '实际页面或周报中英文交付未通过验收',
+ 'scheduler_unready': '独立采集调度未就绪',
+ 'cache_cleanup_stale': '重复缓存清理长期未完成',
+ 'capacity_headroom': '下一轮更新容量余量不足',
  'workflow_failed': '每日更新工作流失败或被取消',
  'task_failed': '服务器上的每日采集任务失败',
  'task_interrupted': '采集进程已退出但没有完成回执',
@@ -127,12 +133,12 @@ def collect(now, transport=None, shared=ROOT):
     runtime_for_ops = {}
     try:
         current = validate_job(read_json(shared/'pipeline-monitor/current.json', 65536))
-        sample['current'] = {k: current.get(k) for k in ['id','state','mode','stage','startedAt','updatedAt','failureStage','runLink']}
+        sample['current'] = {k: current.get(k) for k in ['id','state','mode','stage','startedAt','updatedAt','failureStage','runLink','trigger']}
         daily_path = shared/'pipeline-monitor/daily.json'
         daily = validate_job(read_json(daily_path, 65536)) if daily_path.exists() else current
         if daily.get('mode') != 'update':
             raise ValueError('daily receipt unavailable')
-        sample['daily'] = {k: daily.get(k) for k in ['id','state','mode','stage','startedAt','updatedAt','failureStage','runLink']}
+        sample['daily'] = {k: daily.get(k) for k in ['id','state','mode','stage','startedAt','updatedAt','failureStage','runLink','trigger']}
         sample['jobAlive'] = alive(daily) if daily['state'] == 'running' else False
     except (OSError, ValueError, KeyError, TypeError, AttributeError):
         sample['inputError'] = True
@@ -150,6 +156,7 @@ def collect(now, transport=None, shared=ROOT):
         if not valid_day(date):
             raise ValueError('invalid published date')
         sample['dataThrough'] = date
+        sample['formalWeekly']=publication.get('coverage',{}).get('weekly',{}).get('latestId')
         status = public.get('status', {})
         sample['sources'] = {}
         for name in ['sourceStreams', 'priceStreams']:
@@ -165,7 +172,9 @@ def collect(now, transport=None, shared=ROOT):
     sample['operations'] = system_snapshot(shared, runtime_for_ops, now=now)
     inspection = shared/'state/data-alerts/inspection.json'
     try:
-        checked = read_json(inspection)['checkedAt']
+        inspected=read_json(inspection);checked = inspected['checkedAt']
+        if inspected.get('delivery',{}).get('status')!='passed':sample['operations']['issues'].append('delivery_unverified')
+        if any(x.get('status')!='ok' for x in inspected.get('links',{}).get('site',[])):sample['operations']['issues'].append('delivery_unverified')
         if not isinstance(checked, (int, float)) or checked > now+60 or now-checked > 26*3600:
             raise ValueError('inspection stale')
     except (OSError, ValueError, KeyError, TypeError):
@@ -193,6 +202,13 @@ def conditions(sample, deadline_hour=DEADLINE_HOUR):
     now = sample['checkedAt'];today = day(now);local = datetime.fromtimestamp(now, ZONE)
     baseline = today if local.hour >= deadline_hour else (local.date()-timedelta(days=1)).isoformat()
     issues = {};daily=sample.get('daily');current=sample.get('current');gh=sample.get('github')
+    if 'formalWeekly' in sample:
+        since_tuesday=(local.weekday()-1)%7
+        due=local.date()-timedelta(days=since_tuesday or 7)
+        after_deadline=since_tuesday>2 or (since_tuesday==2 and local.hour>=12)
+        latest=sample['formalWeekly']
+        if not valid_day(latest) or latest>today or (after_deadline and latest<str(due)):
+            issues['weekly_overdue']=today
     for reason in sample.get('operations', {}).get('issues', []):
         if reason in LABELS: issues[reason] = baseline
     if sample.get('inputError'):
@@ -206,7 +222,8 @@ def conditions(sample, deadline_hour=DEADLINE_HOUR):
     date = sample.get('dataThrough')
     if local.hour >= deadline_hour and (not valid_day(date) or date < today):
         issues['publication_late'] = today
-    if sample.get('githubError'):
+    local_delivery=bool(daily and daily.get('trigger')=='schedule' and daily.get('state')=='succeeded' and sample.get('consistent') and sample.get('sourcesHealthy') and date==today and day(daily['updatedAt']/1000)==today)
+    if sample.get('githubError') and not local_delivery:
         issues['github_check_unavailable'] = baseline
     recovered_publish = bool(current and current['state']=='succeeded' and sample.get('consistent')
         and date == today and daily and current['updatedAt'] > daily['updatedAt'])
@@ -225,7 +242,7 @@ def conditions(sample, deadline_hour=DEADLINE_HOUR):
                              and sample.get('consistent') and date == today)
         if gh['status']=='completed' and gh['conclusion'] in FAILURES and not newer_success:
             issues['workflow_failed'] = day(gh['createdAt'])
-        elif gh['status']!='completed' and now-gh['createdAt'] > 110*60:
+        elif not newer_success and gh['status']!='completed' and now-gh['createdAt'] > 110*60:
             issues['task_timeout'] = day(gh['createdAt'])
     return issues
 
@@ -273,6 +290,7 @@ class AlertStore:
         payload TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'pending',attempts INTEGER NOT NULL DEFAULT 0,
         firstAttempt REAL,messageId TEXT,error TEXT,uncertain INTEGER NOT NULL DEFAULT 0);
         ''');self.db.commit();os.chmod(file,0o600)
+        observation_initialize(self.db)
         self.db.execute('CREATE TABLE IF NOT EXISTS reports(day TEXT NOT NULL,destination TEXT NOT NULL,job TEXT NOT NULL,PRIMARY KEY(day,destination))');self.db.commit()
 
     def close(self):self.db.close()
@@ -328,6 +346,7 @@ class AlertStore:
         confirmed={r:target for r,target in raw.items() if counts[r]>=(1 if r in IMMEDIATE else 3 if r=='github_check_unavailable' else 2)}
         episode=state['episode'];queued=0
         with self.db:
+            if not rehearsal:record_observation(self.db,sample,confirmed)
             if state.get('destination') and state['destination']!=destination:
                 self.db.execute("UPDATE jobs SET status='cancelled' WHERE status='pending'")
                 if episode:episode['seen']=[]
@@ -343,7 +362,7 @@ class AlertStore:
                     self.queue(episode,kind,confirmed,sample,sender,recipient,rehearsal=rehearsal);queued+=1
                     episode['seen']=sorted(set(episode['seen'])|set(confirmed))
             elif episode:
-                recovered=bool(not raw and sample.get('consistent') and sample.get('sourcesHealthy') and sample.get('githubKnown')
+                recovered=bool(not raw and sample.get('consistent') and sample.get('sourcesHealthy') and (sample.get('githubKnown') or (sample.get('daily') or {}).get('trigger')=='schedule')
                                and (sample.get('dataThrough') or '')>=episode['targetDate'])
                 episode['healthy']=episode.get('healthy',0)+1 if recovered else 0
                 if recovered and set(episode['seen']) & {'workflow_failed','task_failed','task_interrupted','task_timeout'}:
