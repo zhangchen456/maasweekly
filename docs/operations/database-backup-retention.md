@@ -20,6 +20,9 @@ Every run verifies each regular dump's SHA256, archive table of contents, timest
 regular-file status and unchanged metadata. Incomplete, unknown, damaged, linked or
 changing files block cleanup and raise `database_backup_retention_unhealthy` through
 the existing watchdog. Known migration/legacy bundles are excluded and never removed.
+The pinned migration dump has one existing hard link inside its approved cutover
+bundle: that exact inode pair is verified and preserved. Other hard links block
+cleanup, and deletion always requires a single-link file.
 Before the first deletion, an operator must place actual isolated restore evidence in
 `shared/backup-retention/restore-proof.json`; all three pinned hashes must match.
 This evidence records the bootstrap restore drill, not a daily restore exercise.
