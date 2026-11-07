@@ -81,10 +81,19 @@ export class SiteDataStore {
   }
   async factsForEvidence(version: string, id: string): Promise<unknown[]> {
     if (!/^ev_[0-9a-f]{64}$/.test(id)) throw new SiteDataError();
-    const result = await this.query<{payload_json:string}>(`${CHAIN}
-      SELECT d.payload_json FROM maas_data.documents d
-      WHERE left(d.entity_id,4)='pfv_' AND (d.payload->>'evidence_id'=$2 OR d.payload IS NULL)
-      AND d.sha256=(SELECT x.sha256 FROM maas_data.input_deltas x JOIN chain c ON c.version=x.input_version
+    // Keep the indexed evidence lookup separate from the lossless-text fallback.
+    // An OR with payload IS NULL makes PostgreSQL inspect every historical fact's
+    // JSONB instead of seeking in documents_fact_evidence (160k+ facts in production).
+    // Materialize only these candidates before resolving the pinned version;
+    // tombstones, replacements and JSONB-incompatible source text still apply.
+    const result = await this.query<{payload_json:string}>(`${CHAIN}, matching AS MATERIALIZED (
+      SELECT sha256,entity_id,payload_json FROM maas_data.documents
+      WHERE left(entity_id,4)='pfv_' AND payload->>'evidence_id'=$2
+      UNION ALL
+      SELECT sha256,entity_id,payload_json FROM maas_data.documents
+      WHERE left(entity_id,4)='pfv_' AND payload IS NULL
+    ) SELECT d.payload_json FROM matching d
+      WHERE d.sha256=(SELECT x.sha256 FROM maas_data.input_deltas x JOIN chain c ON c.version=x.input_version
         WHERE x.logical_path='data/price-facts/versions/'||d.entity_id||'.json' ORDER BY c.depth LIMIT 1)
       ORDER BY d.entity_id`, [version,id]);
     return result.rows.map(row=>JSON.parse(row.payload_json)).filter(value=>value.evidence_id===id);
