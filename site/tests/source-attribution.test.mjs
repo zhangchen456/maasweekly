@@ -56,3 +56,12 @@ test('server campaign allowlist matches canonical public config',()=>{
  const server=fs.readFileSync(new URL('../../services/agent-api/src/analytics-campaigns.ts',import.meta.url),'utf8');
  assert.deepEqual(JSON.parse(server.match(/= (\[.*\]);/)[1]),campaigns);
 });
+
+test('automated browsers clear attribution instead of adding test campaign registrations',()=>{
+ const d=page('https://daily.maas.click/en/pricing/?utm_source=x&utm_campaign=growth-01-x-v1');
+ assert.equal(d.window.registrationSource().firstCampaign,'growth-01-x-v1');
+ Object.defineProperty(d.window.navigator,'webdriver',{value:true});
+ assert.equal(d.window.registrationSource(),undefined);
+ assert.equal(d.window.sessionStorage.getItem('maas-source-session-v1'),null);
+ d.window.close();
+});

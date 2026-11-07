@@ -5,6 +5,15 @@ import {JSDOM} from 'jsdom';
 import {transform} from 'esbuild';
 const read=p=>fs.readFileSync(new URL(p,import.meta.url),'utf8');
 const compile=async s=>(await transform(s.replace(/^import[^\n]*\n/gm,'').replace(/export /g,''),{loader:'ts'})).code;
+test('automated estimates do not emit browser events or account usage',async()=>{
+ const d=new JSDOM('',{url:'https://daily.maas.click/pricing/',runScripts:'outside-only'}),w=d.window,calls=[],events=[];
+ Object.defineProperty(w.navigator,'webdriver',{value:true});
+ w.currentAccount=()=>({user:{id:'test-account'}});w.accountApi=async(...args)=>calls.push(args);
+ w.document.addEventListener('maas:workspace-result',e=>events.push(e.detail));
+ w.eval(await compile(read('../src/scripts/workspace-analytics.ts')));
+ w.recordWorkspaceResult('comparison_completed');w.recordWorkspaceResult('cost_estimate_completed_v2');
+ assert.equal(events.length,0);assert.equal(calls.length,0);w.close();
+});
 test('costs use the published FX snapshot and preserve explicit user overrides',async()=>{
  const template=read('../src/components/PriceWorkspace.astro').replace(/^---[\s\S]*?---/,'').replace(/<script[\s\S]*?<\/script>/g,'');
  const prices=['input','output'].map((component,i)=>({provider:'openai',model:'a',modelId:'openai:a',component,amount:String([2,8][i]),amount_per_1m:String([2,8][i]),currency:'USD',unit_quantity:1000000,unit_name:'token',region:'global',billing_mode:'realtime',service_tier:'standard',context_band:null,time_condition:null,observed_at:1,field_state:'confirmed'}));
