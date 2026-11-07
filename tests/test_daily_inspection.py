@@ -18,6 +18,20 @@ from test_daily_data_alert import sample, epoch, Mailer, SENDER, TO
 
 
 class InspectionTests(unittest.TestCase):
+    def test_fresh_inspection_replaces_old_delivery_failure_and_catches_new_failure(self):
+        for delivery,site,failed in [
+            ({'status':'passed'},[{'status':'ok'}],False),
+            ({'status':'failed'},[{'status':'ok'}],True),
+            ({'status':'passed'},[{'status':'http_error','httpStatus':503}],True),
+            ({'status':'passed'},[],True),
+        ]:
+            with self.subTest(delivery=delivery,site=site):
+                value=sample();value['operations']={'issues':['delivery_unverified','inspection_stale','disk_pressure']}
+                result=inspection.inspect(sample=value,links={'site':site},delivery=delivery)
+                self.assertEqual('delivery_unverified' in result['operations']['issues'],failed)
+                self.assertNotIn('inspection_stale',result['operations']['issues'])
+                self.assertIn('disk_pressure',result['operations']['issues'])
+
     def test_known_evidence_regression_is_checked_when_entrypoints_have_no_evidence_links(self):
         record='/item/obs_'+'a'*64+'/'
         evidence=checks.EVIDENCE_REGRESSION_PATH
