@@ -24,6 +24,8 @@ ORIGIN = 'https://daily.maas.click'
 FAILURES = {'failure', 'timed_out', 'cancelled', 'action_required', 'startup_failure', 'stale'}
 DEADLINE_HOUR = 13
 LABELS = {
+ 'database_backup_retention_unhealthy': '数据库备份保留任务失败、需人工核查或超过26小时未完成',
+ 'database_backup_budget': '常规数据库备份超过4GiB软预算，保护点仍保留',
  'weekly_overdue': '本期正式周报超过周四交付时间或期号无效',
  'delivery_unverified': '实际页面或周报中英文交付未通过验收',
  'scheduler_unready': '独立采集调度未就绪',

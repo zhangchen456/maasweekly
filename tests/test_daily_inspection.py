@@ -176,5 +176,21 @@ class InspectionTests(unittest.TestCase):
         text=inspection.report_text(value)
         self.assertIn('访问受限，需复核',text);self.assertIn('覆盖不完整',text);self.assertIn('13:00',text)
 
+    def test_database_retention_failure_staleness_and_soft_budget_are_visible(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);proc,run=self.host_fixture(root)
+            directory=root/'backup-retention';directory.mkdir()
+            for status,age,budget,expected in [
+                ('completed',0,False,set()),
+                ('failed',0,False,{'database_backup_retention_unhealthy'}),
+                ('completed',26*3600+1,False,{'database_backup_retention_unhealthy'}),
+                ('completed',0,True,{'database_backup_budget'}),
+            ]:
+                (directory/'current.json').write_text(json.dumps(dict(status=status,checkedAt=1000000-age,overBudget=budget)))
+                with patch.object(checks.subprocess,'run',return_value=SimpleNamespace(returncode=0)):
+                    result=checks.system_snapshot(root,{'slot':'blue'},now=1000000,run=run,proc=proc)
+                self.assertEqual({i for i in result['issues'] if i.startswith('database_backup_')},expected)
+                for issue in expected:self.assertIn(issue,alert.LABELS)
+
 
 if __name__=='__main__':unittest.main()
