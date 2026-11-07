@@ -17,6 +17,9 @@ from urllib.parse import urljoin, urlsplit, urlunsplit
 GIB = 1024 ** 3
 ORIGIN = 'https://daily.maas.click'
 HTML_LIMIT = 8 * 1024 * 1024
+# Stable public page that exposed the fact-query timeout; also works when
+# landing pages render evidence links only after client-side data loading.
+EVIDENCE_REGRESSION_PATH = '/evidence/ev_0000d9f560afd87baeac156c40e3e924206310917d1f27c372104b325259decd/'
 PUBLIC_PATHS = ['/', '/en/', '/pricing/', '/en/pricing/', '/changes/', '/en/changes/', '/subscription/', '/en/subscription/', '/account/', '/api/v1/status', '/feed.xml']
 RUNNING = ['nginx.service', 'docker.service', 'postgresql.service', 'maas-editorial-worker.service', 'maas-diagnostic-worker.service']
 TIMERS = ['maas-pipeline-monitor', 'maas-daily-data-alert', 'maas-release-cleanup', 'maas-account-health', 'maas-account-backup', 'maas-account-digest', 'maas-account-digest-retry', 'maas-daily-inspection']
@@ -266,6 +269,8 @@ def inspect_links(registry_file, *, probe=None, limit=300, registry=None):
     missing = []
     for prefix in ['/item/', '/evidence/']:
         candidates = sorted(path for path in details if path.startswith(prefix))
+        if not candidates and prefix == '/evidence/':
+            candidates = [EVIDENCE_REGRESSION_PATH]
         if candidates:
             row = probe.check(ORIGIN+candidates[0])
             row['detailSample'] = True
