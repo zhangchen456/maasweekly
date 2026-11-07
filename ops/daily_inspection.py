@@ -18,9 +18,13 @@ def inspect(now=None, shared=ROOT, registry_file=Path('/usr/local/lib/maasweekly
     sample = collect(now, shared=shared) if sample is None else sample
     sample['links'] = inspect_links(registry_file) if links is None else links
     sample['delivery']=check_delivery(shared) if delivery is None else delivery
-    operations=sample.get('operations',{})
-    if sample['delivery']['status']!='passed':operations.setdefault('issues',[]).append('delivery_unverified')
-    operations['issues']=[reason for reason in operations.get('issues',[]) if reason != 'inspection_stale']
+    operations=sample.setdefault('operations',{})
+    # collect() contains the previous inspection; this report must describe
+    # the delivery and links just checked, including a new failure or recovery.
+    operations['issues']=[reason for reason in operations.get('issues',[]) if reason not in {'inspection_stale','delivery_unverified'}]
+    site=sample['links'].get('site',[])
+    if sample['delivery']['status']!='passed' or not site or any(row.get('status')!='ok' for row in site):
+        operations['issues'].append('delivery_unverified')
     return sample
 
 
