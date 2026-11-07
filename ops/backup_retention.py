@@ -22,6 +22,7 @@ PINS = frozenset(['maas_data-20261029T045733Z.dump',
                  'maas_data-20261107T085212Z.dump'])
 EXCLUDED = {'cutover-final-20261029T163617Z', 'legacy-metadata-inventory.json', 'legacy-metadata.tar.gz'}
 SOFT_BUDGET = 4 * 1024**3
+MIGRATION_DUMP = 'maas_data-20261029T163600Z.dump'
 
 
 def stamp(name):
@@ -36,10 +37,10 @@ def fingerprint(info):
             info.st_ctime_ns, info.st_mode, info.st_nlink]
 
 
-def regular(path):
+def regular(path, *, links=1):
     fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
     info = os.fstat(fd)
-    if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1:
+    if not stat.S_ISREG(info.st_mode) or info.st_nlink != links:
         os.close(fd)
         raise ValueError('backup is not a single regular file')
     return fd, info
@@ -49,7 +50,19 @@ def inspect_file(path, now, *, toc=None):
     created = stamp(path.name)
     if not datetime(2000, 1, 1, tzinfo=timezone.utc).timestamp() <= created <= now:
         raise ValueError('backup timestamp anomaly')
-    fd, before = regular(path)
+    # The approved migration bundle contains a hard link to its pinned dump.
+    # Recognize exactly that existing pair; every other linked file fails closed.
+    paired = None
+    if path.name == MIGRATION_DUMP and path.lstat().st_nlink == 2:
+        paired = path.parent/'cutover-final-20261029T163617Z'/path.name
+        if MIGRATION_DUMP not in PINS or paired.resolve() != paired:
+            raise ValueError('unsafe migration pair')
+        paired_before = paired.lstat()
+        original = path.lstat()
+        if (not stat.S_ISREG(paired_before.st_mode) or paired_before.st_nlink != 2 or
+            (paired_before.st_dev, paired_before.st_ino) != (original.st_dev, original.st_ino)):
+            raise ValueError('unexpected migration hard link')
+    fd, before = regular(path, links=2 if paired else 1)
     try:
         if before.st_mtime > now or before.st_size == 0:
             raise ValueError('backup timestamp or size anomaly')
@@ -75,6 +88,8 @@ def inspect_file(path, now, *, toc=None):
                 fingerprint(side_before) != fingerprint(os.fstat(side_fd)) or
                 fingerprint(side_before) != fingerprint(side.lstat())):
                 raise ValueError('backup changed during verification')
+            if paired and fingerprint(paired.lstat()) != fingerprint(paired_before):
+                raise ValueError('migration pair changed during verification')
         finally:
             os.close(side_fd)
         return dict(name=path.name, createdAt=created, modifiedAt=before.st_mtime,
@@ -189,7 +204,7 @@ def apply_plan(base, value, directory, gid=None):
     protected = select(value['rows'], value['checkedAt'])
     by_name = {r['name']: r for r in value['rows']}
     for row in value['delete']:
-        if row['name'] in protected or row != by_name.get(row['name']):
+        if row['name'] in protected or row != by_name.get(row['name']) or row['fingerprint'][-1] != 1:
             raise ValueError('unsafe deletion selection')
     audit = directory/('audit-'+str(time.time_ns())+'.json')
     value = {**value, 'status': 'started', 'removed': []}

@@ -122,6 +122,27 @@ class BackupRetentionTests(unittest.TestCase):
             with patch.object(b,'SOFT_BUDGET',1):result=b.apply_plan(base,plan,d)
             self.assertTrue(result['overBudget']);self.assertTrue(all((base/name).exists() for name in plan['protected']))
 
+    def test_only_exact_pinned_migration_hardlink_pair_is_accepted_and_never_deleted(self):
+        for case in ['known','wrong_inode','extra_link','symlink_bundle']:
+            with self.subTest(case=case),tempfile.TemporaryDirectory() as t:
+                base,d=self.fixture(Path(t).resolve());bundle=base/'cutover-final-20261029T163617Z';bundle.mkdir()
+                original=base/b.MIGRATION_DUMP;paired=bundle/b.MIGRATION_DUMP
+                os.link(original,paired)
+                if case=='wrong_inode':
+                    paired.unlink();paired.write_bytes(original.read_bytes());os.link(original,base/'unexpected_link')
+                if case=='extra_link':os.link(original,base/'unexpected_link')
+                if case=='symlink_bundle':
+                    moved=base.parent/'moved_bundle';bundle.rename(moved);bundle.symlink_to(moved)
+                if case!='known':
+                    self.assertRaises(ValueError,b.make_plan,base,NOW,toc=lambda p:None)
+                else:
+                    plan=b.make_plan(base,NOW,toc=lambda p:None)
+                    self.assertIn(b.MIGRATION_DUMP,plan['protected'])
+                    result=b.apply_plan(base,plan,d)
+                    self.assertEqual(result['deleted'],1)
+                    self.assertEqual(original.stat().st_ino,paired.stat().st_ino)
+                    self.assertEqual(original.stat().st_nlink,2)
+
     def test_only_accepted_successful_daily_job_with_fresh_backup_runs(self):
         with tempfile.TemporaryDirectory() as t:
             root=Path(t).resolve();base,d=self.fixture(root)
