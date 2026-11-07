@@ -1,0 +1,14 @@
+[Unit]
+Description=Verified duplicate data candidate retention
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/bin/python3 -B /usr/local/lib/maasweekly/cache_retention.py --apply
+TimeoutStartSec=20min
+UMask=0077
+Nice=10
+IOSchedulingClass=idle
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/maasweekly/shared/public-data/candidates /srv/maasweekly/shared/cache-retention /srv/maasweekly/locks

@@ -55,7 +55,7 @@ class RunJournal:
         self.validation, self.published = 'not_run', False
         self.failure_stage = None
         self.input_version = self.dataset_version = None
-        self.trigger = {'schedule': 'schedule', 'workflow_dispatch': 'manual', 'workflow_call': 'workflow'}.get((context or {}).get('GITHUB_EVENT_NAME'), 'unknown')
+        self.trigger = {'server_schedule':'schedule','schedule': 'schedule', 'workflow_dispatch': 'manual', 'workflow_call': 'workflow'}.get((context or {}).get('GITHUB_EVENT_NAME'), 'unknown')
         repo, run = (context or {}).get('GITHUB_REPOSITORY', ''), (context or {}).get('GITHUB_RUN_ID', '')
         self.link = f'https://github.com/{repo}/actions/runs/{run}' if re.fullmatch(r'[\w.-]+/[\w.-]+', repo) and re.fullmatch(r'\d+', run) else None
         try: self.process_start = Path(f'/proc/{os.getpid()}/stat').read_text().rsplit(')', 1)[1].split()[19]
@@ -65,7 +65,7 @@ class RunJournal:
     def current(self, stage, state, error=None):
         value = {
             'schemaVersion': 1, 'id': self.id, 'mode': self.mode, 'codeCommit': self.code,
-            'pid': os.getpid(), 'processStart': self.process_start,
+            'pid': os.getpid(), 'processStart': self.process_start, 'trigger': self.trigger,
             'startedAt': self.started, 'updatedAt': self.now(), 'stage': stage, 'state': state,
             'inputVersion': self.input_version, 'datasetVersion': self.dataset_version,
             'errorCode': error, 'failureStage': self.failure_stage, 'runLink': self.link,

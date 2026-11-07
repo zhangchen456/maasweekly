@@ -3,7 +3,7 @@
 import argparse,json,os,subprocess,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-PYTHON=['digest_platforms','digest_evidence','batch_verification','runtime_workers','shadow_store','shadow_transfer','shadow_verification','data_publication','database_writer','weekly_publishing','weekly_evidence','blob_storage','import_memory','runtime_control','runtime_package','runtime_cleanup','workflow_release_contract','standard_inputs','english_translation','pipeline_runtime','current_pricing','price_archive','source_fetch','source_identity','arena_source','arena_projection','cross_platform','developer_platform_registry','model_public_projection.TestProjectionContract','model_registry.TestProviderMap','public_export','public_retention','monitor_collection','formal_weekly_health','reliability','daily_data_alert','daily_inspection']
+PYTHON=['cache_retention','daily_scheduler','reliability_observation','digest_platforms','digest_evidence','batch_verification','runtime_workers','shadow_store','shadow_transfer','shadow_verification','data_publication','database_writer','weekly_publishing','weekly_evidence','blob_storage','import_memory','runtime_control','runtime_package','runtime_cleanup','workflow_release_contract','standard_inputs','english_translation','pipeline_runtime','current_pricing','price_archive','source_fetch','source_identity','arena_source','arena_projection','cross_platform','developer_platform_registry','model_public_projection.TestProjectionContract','model_registry.TestProviderMap','public_export','public_retention','monitor_collection','formal_weekly_health','reliability','daily_data_alert','daily_inspection']
 SITE=['record-summary-translation','projects','membership-workspace','billing','digest-evidence','english-completeness','private-translation-refresh','account-password','admin-analytics-export','analytics','feedback','pro-scope','theme-preference','time-display','workspace-analytics','workspace-currency','workspace-share']
 def run(args,cwd=ROOT):
  print('+ '+' '.join(map(str,args)),flush=True);subprocess.run(args,cwd=cwd,check=True)
@@ -22,6 +22,7 @@ def main():
  if a.suite in ('all','site'):
   run(['node','scripts/ensure-node-deps.mjs','site'])
   run(['node','--test',*[f'tests/{name}.test.mjs' for name in SITE]],ROOT/'site')
+  run(['node','--test','scripts/tests/delivery-contract.test.mjs'])
   run(['npm','run','build:runtime'],ROOT/'site')
   run(['node','scripts/verify-membership-site.mjs'])
   run(['node','scripts/verify-digest-site.mjs'])

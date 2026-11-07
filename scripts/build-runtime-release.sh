@@ -15,6 +15,7 @@ mkdir -p "$output/agent-api" "$output/site" "$output/metadata" "$output/scripts"
 cp -R services/agent-api/dist services/agent-api/package.json services/agent-api/package-lock.json "$output/agent-api/"
 cp -R site/dist site/package.json site/package-lock.json "$output/site/"
 cp scripts/verify-runtime-site.mjs "$output/scripts/"
+site/node_modules/.bin/esbuild scripts/delivery-contract.mjs --bundle --platform=node --format=esm --outfile="$output/scripts/delivery-contract.mjs"
 python3 - "$output" "$commit" <<'TOOLING'
 from pathlib import Path
 import shutil,sys
@@ -23,7 +24,7 @@ for folder in ['pipeline','config','data/model-registry','site/scripts','ops/dat
  for p in (root/folder).rglob('*'):
   if p.is_file() and '__pycache__' not in p.parts and p.suffix in ['.py','.json','.sql','.sh']:
    target=out/p.relative_to(root);target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,target)
-for name in ['ops/weekly-editorial.py','ops/server/maasweekly-activate','ops/server/maasweekly-deploy-shell','requirements.lock.txt','ops/backup-data-store.sh','scripts/monitor-collect.py','ops/runtime_safety.py','ops/runtime_workers.py','ops/maas-editorial-worker.service','ops/maas-diagnostic-worker.service','ops/pipeline_monitor.py','ops/runtime-control.py','ops/maas-pipeline-monitor.service','ops/maas-pipeline-monitor.timer','ops/daily_data_alert.py','ops/operations_checks.py','ops/daily_inspection.py','ops/maas-daily-inspection.service','ops/maas-daily-inspection.timer','ops/maas-account-health.service','ops/maas-daily-data-alert.service','ops/maas-daily-data-alert.timer','ops/install-reliability.py']:
+for name in ['ops/daily_scheduler.py','ops/cache_retention.py','ops/delivery_checks.py','ops/reliability_observation.py','ops/maas-daily-scheduler.service','ops/maas-daily-scheduler.timer','ops/maas-data-cache-cleanup.service','ops/maas-data-cache-cleanup.timer','ops/weekly-editorial.py','ops/server/maasweekly-activate','ops/server/maasweekly-deploy-shell','requirements.lock.txt','ops/backup-data-store.sh','scripts/monitor-collect.py','ops/runtime_safety.py','ops/runtime_workers.py','ops/maas-editorial-worker.service','ops/maas-diagnostic-worker.service','ops/pipeline_monitor.py','ops/runtime-control.py','ops/maas-pipeline-monitor.service','ops/maas-pipeline-monitor.timer','ops/daily_data_alert.py','ops/operations_checks.py','ops/daily_inspection.py','ops/maas-daily-inspection.service','ops/maas-daily-inspection.timer','ops/maas-account-health.service','ops/maas-daily-data-alert.service','ops/maas-daily-data-alert.timer','ops/install-reliability.py']:
  target=out/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(root/name,target)
 (out/'code-commit').write_text(sys.argv[2]+'\n')
 (out/'site/src/data').mkdir(parents=True,exist_ok=True);(out/'site/src/content').mkdir(parents=True,exist_ok=True)

@@ -4,6 +4,15 @@ import argparse,fcntl,hashlib,json,os,pwd,re,shutil,subprocess,sys,tempfile,time
 from pathlib import Path
 ROOT=Path('/srv/maasweekly')
 MAPPING={
+ 'ops/daily_scheduler.py':'/usr/local/lib/maasweekly/daily_scheduler.py',
+ 'ops/cache_retention.py':'/usr/local/lib/maasweekly/cache_retention.py',
+ 'ops/delivery_checks.py':'/usr/local/lib/maasweekly/delivery_checks.py',
+ 'ops/reliability_observation.py':'/usr/local/lib/maasweekly/reliability_observation.py',
+ 'ops/maas-daily-scheduler.service':'/etc/systemd/system/maas-daily-scheduler.service',
+ 'ops/maas-daily-scheduler.timer':'/etc/systemd/system/maas-daily-scheduler.timer',
+ 'ops/maas-data-cache-cleanup.service':'/etc/systemd/system/maas-data-cache-cleanup.service',
+ 'ops/maas-data-cache-cleanup.timer':'/etc/systemd/system/maas-data-cache-cleanup.timer',
+
  'ops/weekly-editorial.py':'/usr/local/lib/maasweekly/weekly-editorial.py',
  'ops/server/maasweekly-activate':'/usr/local/sbin/maasweekly-activate',
  'ops/server/maasweekly-deploy-shell':'/usr/local/bin/maasweekly-deploy-shell',
@@ -63,7 +72,7 @@ def alert_environment(root,recipient):
  return ('\n'.join(k+'='+quote(v) for k,v in values.items())+'\n').encode()
 
 def main(argv=()):
- parser=argparse.ArgumentParser();parser.add_argument('--data-alert-to');args=parser.parse_args(argv)
+ parser=argparse.ArgumentParser();parser.add_argument('--data-alert-to');parser.add_argument('--enable-daily-scheduler',action='store_true');args=parser.parse_args(argv)
  if os.geteuid()!=0:raise ValueError('root required')
  with (ROOT/'locks/release.lock').open('a+b') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX)
@@ -86,6 +95,16 @@ def main(argv=()):
    if target.exists():shutil.copy2(target,saved)
    audit.append({'target':str(target),'backup':str(saved) if saved.exists() else None,'sha256':hashlib.sha256(body).hexdigest()})
   (backup/'manifest.json').write_text(json.dumps(audit,indent=2)+'\n')
+  if 'ops/daily_scheduler.py' in MAPPING:
+   gid=pwd.getpwnam('maasagent').pw_gid
+   for name in ['scheduler','cache-retention']:
+    directory=ROOT/'shared'/name
+    if directory.is_symlink():raise ValueError('unsafe operations directory')
+    directory.mkdir(mode=0o750,exist_ok=True);os.chown(directory,0,gid);directory.chmod(0o750)
+   if args.enable_daily_scheduler:
+    enabled=ROOT/'shared/scheduler/enabled'
+    if enabled.is_symlink():raise ValueError('unsafe scheduler enable marker')
+    enabled.write_text('Independent daily collection enabled by operator.\n');enabled.chmod(0o644)
   if 'ops/runtime_workers.py' in MAPPING:prepare_worker_state(ROOT)
   if 'ops/daily_data_alert.py' in MAPPING:prepare_alert_state(ROOT)
   try:

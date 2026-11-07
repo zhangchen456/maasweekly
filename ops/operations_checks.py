@@ -22,10 +22,10 @@ HTML_LIMIT = 8 * 1024 * 1024
 EVIDENCE_REGRESSION_PATH = '/evidence/ev_0000d9f560afd87baeac156c40e3e924206310917d1f27c372104b325259decd/'
 PUBLIC_PATHS = ['/', '/en/', '/pricing/', '/en/pricing/', '/changes/', '/en/changes/', '/subscription/', '/en/subscription/', '/account/', '/api/v1/status', '/feed.xml']
 RUNNING = ['nginx.service', 'docker.service', 'postgresql.service', 'maas-editorial-worker.service', 'maas-diagnostic-worker.service']
-TIMERS = ['maas-pipeline-monitor', 'maas-daily-data-alert', 'maas-release-cleanup', 'maas-account-health', 'maas-account-backup', 'maas-account-digest', 'maas-account-digest-retry', 'maas-daily-inspection']
-ONESHOTS = ['maas-release-cleanup', 'maas-account-health', 'maas-account-backup', 'maas-account-digest', 'maas-account-digest-retry', 'maas-daily-inspection']
+TIMERS = ['maas-daily-scheduler','maas-data-cache-cleanup','maas-pipeline-monitor', 'maas-daily-data-alert', 'maas-release-cleanup', 'maas-account-health', 'maas-account-backup', 'maas-account-digest', 'maas-account-digest-retry', 'maas-daily-inspection']
+ONESHOTS = ['maas-daily-scheduler','maas-data-cache-cleanup','maas-release-cleanup', 'maas-account-health', 'maas-account-backup', 'maas-account-digest', 'maas-account-digest-retry', 'maas-daily-inspection']
 PAUSED = ['maas-cloud-backup@daily.timer', 'maas-cloud-backup@history.timer', 'openlist.service']
-SERVICE_LABELS = {'nginx':'网站入口','docker':'数据采集容器','postgresql':'业务数据库',
+SERVICE_LABELS = {'maas-daily-scheduler':'独立采集调度','maas-data-cache-cleanup':'重复数据缓存清理','nginx':'网站入口','docker':'数据采集容器','postgresql':'业务数据库',
     'maas-editorial-worker':'编辑任务服务','maas-diagnostic-worker':'辅助诊断服务',
     'maas-pipeline-monitor':'数据管线监控','maas-daily-data-alert':'异常监控与通知',
     'maas-release-cleanup':'发布包清理','maas-account-health':'账号运维检查',
@@ -141,6 +141,17 @@ def system_snapshot(shared, runtime=None, *, now=None, run=command, proc=Path('/
         finally:db.close()
     except (OSError,ValueError,sqlite3.Error):
         result['mail']={'status':'unknown'};issues.add('mail_queue_unhealthy')
+    if (shared/'scheduler/enabled').exists():
+        if not (shared/'scheduler/credentials.enc').is_file():issues.add('scheduler_unready')
+    if (shared/'cache-retention').exists():
+        try:
+            cleanup=json.loads((shared/'cache-retention/current.json').read_text())
+            if cleanup.get('status')!='completed' or not 0<=now-cleanup['checkedAt']<=26*3600:issues.add('cache_cleanup_stale')
+            capacity=json.loads((shared/'cache-retention/capacity.json').read_text())
+            result['nextUpdateCapacity']={k:capacity[k] for k in ['checkedAt','requiredFreeBytes','estimatedPeakBytes','reserveBytes']}
+            if not 0<=now-capacity['checkedAt']<=26*3600:issues.add('cache_cleanup_stale')
+            elif result['resources']['disk']['availableBytes']<capacity['requiredFreeBytes']:issues.add('capacity_headroom')
+        except (OSError,ValueError,KeyError,TypeError):issues.add('cache_cleanup_stale')
     result['issues'] = sorted(issues)
     return result
 
