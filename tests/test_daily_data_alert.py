@@ -40,6 +40,17 @@ class DailyAlerts(unittest.TestCase):
         s=sample();s['daily']['state']='failed';s['current']=copy.deepcopy(s['daily']);s['github']['conclusion']='failure';return s
     def healthy_after(self):
         s=sample(NOW+300);s['current']['updatedAt']=int((NOW+100)*1000);return s
+    def test_confirmed_local_scheduled_delivery_does_not_depend_on_github_read_api(self):
+        s=sample();s['daily']['trigger']='schedule';s.update(githubKnown=False,githubError=True)
+        self.assertNotIn('github_check_unavailable',alert.conditions(s))
+        s['dataThrough']='2026-11-01';self.assertIn('github_check_unavailable',alert.conditions(s))
+
+    def test_weekly_deadline_checks_real_formal_period(self):
+        s=sample(epoch('2026-11-12T11:59:00'));s['formalWeekly']='2026-11-03'
+        self.assertNotIn('weekly_overdue',alert.conditions(s))
+        s['checkedAt']=epoch('2026-11-12T12:00:00');self.assertIn('weekly_overdue',alert.conditions(s))
+        s['formalWeekly']='2026-11-10';self.assertNotIn('weekly_overdue',alert.conditions(s))
+
     def test_beijing_deadline_and_old_success_do_not_disguise_stale_data(self):
         for timestamp,late in [('2026-11-02T07:00:00',False),('2026-11-02T12:59:59',False),('2026-11-02T13:00:00',True)]:
             s=sample(epoch(timestamp));s['dataThrough']='2026-11-01'
@@ -152,6 +163,7 @@ class DailyAlerts(unittest.TestCase):
         (root/'pipeline-monitor/current.json').write_text(json.dumps(job));(root/'pipeline-monitor/daily.json').write_text(json.dumps(job))
         (root/'runtime.json').write_text(json.dumps({'port':8788,'code':'code'}))
         pub={'datasetVersion':'ds_test','site':{'inputVersion':'in_test','codeCommit':'code','formatVersion':1}}
+        pub['coverage']={'weekly':{'latestId':'2026-10-27'}}
         (root/'public-data/v1/publication.json').write_text(json.dumps(pub));identity={**pub['site'],'datasetVersion':'ds_test'}
         values=[{'ready':True,'processCode':'code','publication':identity,'dataThrough':'2026-11-02','freshness':{'freshness':'fresh'}},
                 {'dataThrough':'2026-11-02','datasetVersion':'ds_test'},

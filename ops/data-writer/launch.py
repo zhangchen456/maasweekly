@@ -2,9 +2,12 @@
 """Root-controlled fixed data job; credentials only cross stdin, never argv or files."""
 import fcntl,json,os,pwd,re,stat,subprocess,sys,time
 from pathlib import Path
+from datetime import datetime
+from zoneinfo import ZoneInfo
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from runtime_safety import require_capacity, wait_runtime, publication_identity
 from pipeline_monitor import RunJournal, export_sources
+from daily_scheduler import decision, remember_credentials
 ROOT=Path('/srv/maasweekly');SHARED=ROOT/'shared';STORE=SHARED/'data-store'
 def command(args,**kwargs):return subprocess.run(args,check=True,**kwargs)
 def runtime():
@@ -65,7 +68,11 @@ def execute(root, mode, body, journal):
     publication_identity(expected)
     journal.input_version=expected['site']['inputVersion'];journal.dataset_version=expected['datasetVersion']
     env={**os.environ,'PGHOST':'/var/run/postgresql','PGDATABASE':'maas_data','PGUSER':'maasagent'}
-    journal.phase('ssr-validation',command,['runuser','-u','maasagent','--','node',str(root/'scripts/verify-runtime-site.mjs'),'--package-root',str(root),'--data-root',str(host)],env=env)
+    acceptance=[]
+    if mode=='update':acceptance+=['--expected-through',datetime.now(ZoneInfo('Asia/Shanghai')).date().isoformat()]
+    request=json.loads(body)
+    if mode=='import' and request.get('drafts'):acceptance+=['--weekly-period',max(x['date'] for x in request['drafts'])]
+    journal.phase('ssr-validation',command,['runuser','-u','maasagent','--','node',str(root/'scripts/verify-runtime-site.mjs'),'--package-root',str(root),'--data-root',str(host),*acceptance],env=env)
     if mode in ['validate','aggregate']:print('data committed and SSR validation passed; not published');return
     journal.phase('capacity-before-backup',require_capacity,ROOT,'publish')
     journal.phase('database-backup',command,['runuser','-u','maasdata','--','bash',str(root/'tooling/ops/backup-data-store.sh')])
@@ -93,6 +100,12 @@ def main():
     if not isinstance(context,dict) or any(not isinstance(v,str) or len(v)>256 for v in context.values()):raise ValueError('invalid run context')
     with (ROOT/'locks/release.lock').open('a+b') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
+        if mode=='update':
+            remember_credentials(SHARED,incoming.get('secrets',{}))
+            if context.get('GITHUB_EVENT_NAME') in ['schedule','server_schedule']:
+                outcome=decision(SHARED,enforce_window=False)
+                if outcome!='start':
+                    print(json.dumps({'status':'skipped','reason':outcome}));return
         root=runtime();gid=pwd.getpwnam('maasagent').pw_gid
         journal=RunJournal(SHARED,root.name,mode,context,gid=gid)
         error=None

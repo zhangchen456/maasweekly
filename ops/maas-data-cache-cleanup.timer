@@ -1,0 +1,8 @@
+[Unit]
+Description=Hourly duplicate candidate cache cleanup
+[Timer]
+OnCalendar=*-*-* *:35:00 Asia/Shanghai
+Persistent=true
+Unit=maas-data-cache-cleanup.service
+[Install]
+WantedBy=timers.target

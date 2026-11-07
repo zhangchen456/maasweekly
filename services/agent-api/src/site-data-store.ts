@@ -8,6 +8,16 @@ const CHAIN = `WITH RECURSIVE chain AS (
  UNION ALL SELECT v.version,v.parent_version,c.depth+1
  FROM maas_data.input_versions v JOIN chain c ON v.version=c.parent_version
 )`;
+export const EVIDENCE_FACTS_SQL = `${CHAIN}, matching AS MATERIALIZED (
+      SELECT sha256,entity_id,payload_json FROM maas_data.documents
+      WHERE left(entity_id,4)='pfv_' AND payload->>'evidence_id'=$2
+      UNION ALL
+      SELECT sha256,entity_id,payload_json FROM maas_data.documents
+      WHERE left(entity_id,4)='pfv_' AND payload IS NULL
+    ) SELECT d.payload_json FROM matching d
+      WHERE d.sha256=(SELECT x.sha256 FROM maas_data.input_deltas x JOIN chain c ON c.version=x.input_version
+        WHERE x.logical_path='data/price-facts/versions/'||d.entity_id||'.json' ORDER BY c.depth LIMIT 1)
+      ORDER BY d.entity_id`;
 export class SiteDataError extends Error {
   constructor() { super('versioned site data unavailable'); }
 }
@@ -86,16 +96,7 @@ export class SiteDataStore {
     // JSONB instead of seeking in documents_fact_evidence (160k+ facts in production).
     // Materialize only these candidates before resolving the pinned version;
     // tombstones, replacements and JSONB-incompatible source text still apply.
-    const result = await this.query<{payload_json:string}>(`${CHAIN}, matching AS MATERIALIZED (
-      SELECT sha256,entity_id,payload_json FROM maas_data.documents
-      WHERE left(entity_id,4)='pfv_' AND payload->>'evidence_id'=$2
-      UNION ALL
-      SELECT sha256,entity_id,payload_json FROM maas_data.documents
-      WHERE left(entity_id,4)='pfv_' AND payload IS NULL
-    ) SELECT d.payload_json FROM matching d
-      WHERE d.sha256=(SELECT x.sha256 FROM maas_data.input_deltas x JOIN chain c ON c.version=x.input_version
-        WHERE x.logical_path='data/price-facts/versions/'||d.entity_id||'.json' ORDER BY c.depth LIMIT 1)
-      ORDER BY d.entity_id`, [version,id]);
+    const result = await this.query<{payload_json:string}>(EVIDENCE_FACTS_SQL, [version,id]);
     return result.rows.map(row=>JSON.parse(row.payload_json)).filter(value=>value.evidence_id===id);
   }
   close() { return this.pool.end(); }

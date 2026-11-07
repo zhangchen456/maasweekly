@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {readFileSync,readdirSync} from 'node:fs';
 import {Pool,type PoolConfig} from 'pg';
-import {SiteDataStore} from '../site-data-store.js';
+import {SiteDataStore,EVIDENCE_FACTS_SQL} from '../site-data-store.js';
 const dsn=process.env.MAAS_SHADOW_TEST_DSN;
 function config():PoolConfig {
  if(dsn?.startsWith('postgres'))return {connectionString:dsn};
@@ -40,5 +40,25 @@ test('evidence lookup preserves inheritance, replacements, tombstones and lossle
   assert.deepEqual(await store.factsForEvidence(versions[2]!,ev),[inherited,exceptional,added]);
   assert.deepEqual(await store.factsForEvidence(versions[2]!,'ev_'+'c'.repeat(64)),[]);
   assert.deepEqual(await store.factsForEvidence('in_'+'9'.repeat(64),ev),[]);
+  // Production had ~160k facts. Synthetic scale and skew must retain the indexed plan.
+  // These unrelated historical objects are deliberately absent from the pinned version.
+  for(const end of [100000,200000]) {
+   await db.query(`INSERT INTO maas_data.documents(sha256,bytes,payload,entity_id,payload_json)
+     SELECT repeat(md5('scale-'||i),2),2048,
+       jsonb_build_object('evidence_id','ev_'||repeat(md5(i::text),2),'padding',repeat('x',2048)),
+       'pfv_'||repeat(md5(i::text),2),jsonb_build_object('evidence_id','ev_'||repeat(md5(i::text),2))::text
+     FROM generate_series($1::int,$2::int) i`,[end-99999,end]);
+   await db.query('ANALYZE maas_data.documents');
+   const plan=(await db.query('EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) '+EVIDENCE_FACTS_SQL,[versions[2],ev])).rows[0]['QUERY PLAN'][0].Plan;
+   let indexed=false;const visit=(n:any)=>{
+    if(n['Index Name']==='documents_fact_evidence')indexed=true;
+    if(n['Relation Name']==='documents'){assert.notEqual(n['Node Type'],'Seq Scan','historical facts must not be scanned');assert((n['Rows Removed by Filter']??0)<1000,'fallback must not filter the full historical index');}
+    for(const child of n.Plans??[])visit(child);
+   };visit(plan);assert(indexed,'evidence expression index must be used');
+   const started=performance.now();
+   assert.deepEqual(await store.factsForEvidence(versions[2]!,ev),[inherited,exceptional,added]);
+   assert(performance.now()-started<2000,'evidence query must retain headroom below the 5-second production timeout');
+  }
+
  }finally{await store?.close();await db.end();}
 });

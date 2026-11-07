@@ -9,13 +9,17 @@ import tempfile
 import time
 from daily_data_alert import AlertStore, ResendMailer, ROOT, collect, conditions, local_time, day
 from operations_checks import inspect_links, service_label
+from delivery_checks import check as check_delivery
+from reliability_observation import inspection as record_inspection
 
 
-def inspect(now=None, shared=ROOT, registry_file=Path('/usr/local/lib/maasweekly/inspection-sources.json'), *, sample=None, links=None):
+def inspect(now=None, shared=ROOT, registry_file=Path('/usr/local/lib/maasweekly/inspection-sources.json'), *, sample=None, links=None, delivery=None):
     now = time.time() if now is None else now
     sample = collect(now, shared=shared) if sample is None else sample
     sample['links'] = inspect_links(registry_file) if links is None else links
+    sample['delivery']=check_delivery(shared) if delivery is None else delivery
     operations=sample.get('operations',{})
+    if sample['delivery']['status']!='passed':operations.setdefault('issues',[]).append('delivery_unverified')
     operations['issues']=[reason for reason in operations.get('issues',[]) if reason != 'inspection_stale']
     return sample
 
@@ -25,6 +29,7 @@ def report_text(sample):
             '数据截至：'+(sample.get('dataThrough') or '未能确认'),
             '发布与实际加载：'+('一致' if sample.get('consistent') else '异常或未能确认'),
             '当天数据迟到告警时间：13:00（Asia/Shanghai）；明确失败、进程退出和服务异常仍及时检查。']
+    rows+=['实际交付验收：'+('通过' if sample.get('delivery',{}).get('status')=='passed' else '未通过或未验证')]
     reasons=conditions(sample)
     from daily_data_alert import LABELS
     rows+=['当前告警条件：'+('；'.join(LABELS[x] for x in sorted(reasons)) if reasons else '无')]
@@ -116,6 +121,7 @@ def main():
         fcntl.flock(lock,fcntl.LOCK_EX)
         mailer=ResendMailer();store=AlertStore(directory)
         try:
+            with store.db:record_inspection(store.db,sample)
             save_snapshot(directory,sample)
             queued=store.queue_report(sample,mailer.sender,mailer.recipient,text)
             result=store.deliver(mailer,time.time())
