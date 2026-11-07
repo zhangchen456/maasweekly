@@ -5,7 +5,7 @@
   "draftSha256": "16deb7a89b7c264851f92d498327470a79496607695082cf31066f6e893abed1",
   "datasetVersion": "ds_88252331fd2033581cb1abbe5a2e9ce37b49cc1775cd21a83e70783e15e8469c",
   "reviewedBy": "Codex",
-  "reviewedAt": "2026-11-07T16:33:05.153947+08:00",
+  "reviewedAt": "2026-11-07T17:02:59.821148+08:00",
   "checks": {
     "evidence": true,
     "observationDates": true,
@@ -20,5 +20,14 @@
     "obs_da8e8b631dab03ddd5e87b87a69b4b7754873d9763b9d4eaf854b61b41f53752",
     "obs_f9a917948f0f47fd034a6974fd0840ab0937367565e7adbc4b936aa67d784e3e"
   ],
-  "verification": "Five saved official-source diffs reviewed; Anthropic current official release notes and linked feature docs cross-checked. Structured parse: 4 headlines, 2 platforms, 1 trend, 2 watchpoints, 5 indexed records. Private translation/permission boundary tests passed; production import must validate all new English translations before atomic publication. Final private rendered output will be checked after import."
+  "verification": "Five saved official-source diffs reviewed; Anthropic current official release notes and linked feature docs cross-checked. Structured parse: 4 headlines, 2 platforms, 1 trend, 2 watchpoints, 5 indexed records. Import translation check covered summaries only; post-publication full-body audit detected missing private translations. Added 53 reviewed private catalog entries with an atomic replacement and backup. Actual server render now passes: English body 5214 characters, zero Han characters; both public previews exclude private locale bodies; anonymous full-body endpoint 401 and external internal route 404. This final audit supersedes the earlier boundary-test-only English check.",
+  "finalVerification": {
+    "datasetVersion": "ds_0040ad8a8683deabbb5ed4b6cb4b0b404f18396dd5b5ceb6e472b8b5e6d6cd65",
+    "runtimeCode": "0c20b354c72671c78f180abaceb02815931cccad",
+    "publicationRun": 42356153991,
+    "freshnessRun": 42357391564,
+    "privateRenderStatus": 200,
+    "englishHasHan": false,
+    "publicPreviewHasPrivateBody": false
+  }
 }
