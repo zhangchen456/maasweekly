@@ -88,7 +88,8 @@ def report_text(sample):
         days=round((min(expiries)-sample['checkedAt'])/86400,1)
         rows+=['网站TLS证书剩余有效期：'+str(days)+'天'+('（少于14天，需核对续期）' if days<14 else '')]
     if links['omitted'] or links.get('pageBodyTruncated'):rows+=['覆盖不完整：有链接超出检查上限或页面读取上限，不能据此认定所有链接正常。']
-    rows+=['检查范围：网站11个公开入口、配置中的主要官方信源及这些入口的外部链接；不遍历全部历史详情页。',
+    if links.get('detailSamplesMissing'):rows+=['未发现可抽查的详情入口：'+'、'.join(links['detailSamplesMissing'])]
+    rows+=['检查范围：网站11个公开入口、各1条记录与价格证据详情抽样、主要官方信源及入口外链；不遍历全部历史详情页。',
            'DNS、TLS、超时、重定向和HTTP错误按实际响应报告；访问受限与失效分开。',
            '网站：https://daily.maas.click/']
     return '\n'.join(rows)

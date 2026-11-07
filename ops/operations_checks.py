@@ -5,6 +5,7 @@ from html.parser import HTMLParser
 import ipaddress
 import json
 import os
+import re
 from pathlib import Path
 import socket
 import sqlite3
@@ -232,12 +233,16 @@ class PublicProbe:
 
 class Anchors(HTMLParser):
     def __init__(self):
-        super().__init__(); self.links = set()
+        super().__init__(); self.links = set(); self.details = set()
     def handle_starttag(self, tag, attrs):
         if tag == 'a':
             href = dict(attrs).get('href', '')
             if href.startswith(('https://', 'http://')):
                 self.links.add(href.split('#', 1)[0])
+            # Sample only canonical public detail routes discovered on the site.
+            # Never forward queries, credentials or arbitrary internal links.
+            if re.fullmatch(r'/(?:item/(?:obs|price)_|evidence/ev_)[0-9a-f]{64}/', href):
+                self.details.add(href)
 
 
 def inspect_links(registry_file, *, probe=None, limit=300, registry=None):
@@ -246,21 +251,31 @@ def inspect_links(registry_file, *, probe=None, limit=300, registry=None):
     registry = json.loads(Path(registry_file).read_text()) if registry is None else registry
     for source in registry['sources']:
         targets.add(source['primary_url'])
-    site = []
+    site = []; details = set()
     for path in PUBLIC_PATHS:
         row = probe.check(ORIGIN+path, include_body=path != '/feed.xml')
         body = row.pop('body', '')
         if body:
             parser = Anchors(); parser.feed(body)
+            details.update(parser.details)
             for url in parser.links:
                 try:external_host=urlsplit(url).hostname != urlsplit(ORIGIN).hostname
                 except ValueError:external_host=True
                 if external_host:targets.add(url)
         site.append(row)
+    missing = []
+    for prefix in ['/item/', '/evidence/']:
+        candidates = sorted(path for path in details if path.startswith(prefix))
+        if candidates:
+            row = probe.check(ORIGIN+candidates[0])
+            row['detailSample'] = True
+            site.append(row)
+        else:
+            missing.append(prefix)
     ordered = sorted(targets)
     # Registry entries are checked first; excess coverage is reported, never silently marked healthy.
     primary = {source['primary_url'] for source in registry['sources']}
     ordered.sort(key=lambda url: (url not in primary, url))
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
         external = list(executor.map(probe.check, ordered[:limit]))
-    return {'checkedAt': time.time(), 'site': site, 'external': external, 'discovered': len(ordered), 'checked': len(external), 'omitted': max(0, len(ordered)-limit), 'pageBodyTruncated': any(row.get('bodyTruncated') for row in site), 'scope': '11 public entrypoints, configured primary source URLs and outbound anchors on those entrypoints; historical detail pages are not crawled.'}
+    return {'checkedAt': time.time(), 'site': site, 'external': external, 'discovered': len(ordered), 'checked': len(external), 'omitted': max(0, len(ordered)-limit), 'detailSamplesMissing': missing, 'pageBodyTruncated': any(row.get('bodyTruncated') for row in site), 'scope': '11 public entrypoints, up to one record and one evidence detail sample, configured primary source URLs and outbound anchors; other historical details are not crawled.'}

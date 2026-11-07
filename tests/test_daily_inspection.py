@@ -18,6 +18,24 @@ from test_daily_data_alert import sample, epoch, Mailer, SENDER, TO
 
 
 class InspectionTests(unittest.TestCase):
+    def test_detail_sampling_detects_database_page_failure_without_crawling_or_private_urls(self):
+        record='/item/obs_'+'a'*64+'/'
+        evidence='/evidence/ev_'+'b'*64+'/'
+        calls=[]
+        class Probe:
+            def check(self,url,include_body=False):
+                calls.append(url)
+                result={'url':url,'status':'http_error' if url.endswith(evidence) else 'ok','httpStatus':503 if url.endswith(evidence) else 200}
+                if include_body:result['body']=''.join('<a href="'+p+'">link</a>' for p in [record,evidence,'/_internal/weekly-body/2026-11-03/',evidence+'?token=secret','//127.0.0.1/admin','/evidence/ev_'+'c'*64+'/'])
+                return result
+        result=checks.inspect_links(None,probe=Probe(),registry={'sources':[]})
+        details=[r for r in result['site'] if r.get('detailSample')]
+        self.assertEqual(len(details),2)
+        self.assertEqual([r['httpStatus'] for r in details],[200,503])
+        self.assertEqual(len(calls),len(checks.PUBLIC_PATHS)+2)
+        self.assertEqual(result['detailSamplesMissing'],[])
+        self.assertFalse(any('token' in u or '_internal' in u or '127.0.0.1' in u for u in calls))
+
     def test_delayed_github_start_is_tolerated_but_real_failures_are_not(self):
         value=sample(epoch('2026-11-03T12:59:59'));value['dataThrough']='2026-11-02'
         self.assertNotIn('publication_late',alert.conditions(value))
