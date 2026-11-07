@@ -47,6 +47,33 @@ test('invalid configuration fails before tracker creation', () => {
   assert.deepEqual(validateAnalyticsConfig({ enabled: false, websiteId: '' }), { enabled: false, websiteId: '' });
 });
 
+test('browser automation and payment test pages never load the production tracker', () => {
+  for (const path of ['/subscription/waffo-test', '/subscription/waffo-test/', '/en/subscription/waffo-test/']) {
+    const dom = browser('', BASE + path);
+    assert.equal(startAnalytics(dom.window, enabled, BASE), null);
+    assert.equal(dom.window.document.querySelector('script'), null);
+    dom.window.close();
+  }
+  const dom = browser();
+  Object.defineProperty(dom.window.navigator, 'webdriver', { value: true });
+  assert.equal(startAnalytics(dom.window, enabled, BASE), null);
+  assert.equal(dom.window.document.querySelector('script'), null);
+  dom.window.close();
+});
+
+test('test-page navigation and events are excluded while the public subscription page still counts', () => {
+  const dom = browser();
+  startAnalytics(dom.window, enabled, BASE);
+  const send = dom.window.maasAnalyticsBeforeSend;
+  assert.ok(send('event', payload('/subscription/')));
+  assert.equal(send('event', payload('/subscription/waffo-test/?utm_source=qa')), false);
+  assert.equal(send('event', { ...payload('/en/subscription/waffo-test/'), name: 'subscription_click', data: {} }), false);
+  assert.ok(send('event', payload('/pricing/?utm_source=x&utm_campaign=growth-01-x-v1')));
+  dom.window.localStorage.setItem('umami.disabled', '1');
+  assert.equal(send('event', payload('/leaderboards/')), false);
+  dom.window.close();
+});
+
 test('only approved UTM is retained; hashes, search terms, tokens and referrer queries are discarded', () => {
   assert.equal(cleanPageUrl('/changes/?q=private&token=secret&utm_source=github&utm_campaign=launch#email', BASE),
     '/changes/?utm_source=github&utm_campaign=launch');

@@ -51,15 +51,19 @@ export function cleanReferrer(value, base) {
 }
 
 function excluded(win) {
-  if (win.navigator.doNotTrack === '1') return true;
+  if (win.navigator.doNotTrack === '1' || win.navigator.webdriver === true) return true;
   try { return Boolean(win.localStorage.getItem('umami.disabled')); }
   catch { return false; }
+}
+
+function excludedPath(path) {
+  return /^\/(?:en\/)?(?:admin|api|subscription\/waffo-test)(?:\/|$)/.test(path);
 }
 
 export function startAnalytics(win, config, canonicalUrl) {
   validateAnalyticsConfig(config);
   const canonical = new URL(canonicalUrl);
-  if (!config.enabled || win.location.origin !== canonical.origin || excluded(win)) return null;
+  if (!config.enabled || win.location.origin !== canonical.origin || excluded(win) || excludedPath(win.location.pathname)) return null;
   if (win.__maasAnalyticsStarted) return null;
   win.__maasAnalyticsStarted = true;
   let lastPage = null;
@@ -68,7 +72,7 @@ export function startAnalytics(win, config, canonicalUrl) {
     const url = cleanPageUrl(payload.url, canonicalUrl);
     if (!url) return false;
     const path = new URL(url, canonicalUrl).pathname;
-    if (path.startsWith('/admin') || path.startsWith('/api/')) return false;
+    if (excludedPath(path)) return false;
     const result = { website: config.websiteId, hostname: canonical.hostname,
       url, referrer: cleanReferrer(payload.referrer, canonicalUrl), title: pageType(path) };
     if (/^[a-z0-9-]{1,24}$/i.test(payload.language || '')) result.language = payload.language;
