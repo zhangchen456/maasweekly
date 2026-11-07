@@ -11,7 +11,7 @@ function channel(host:string):Source {
 }
 export function registrationSource(win:Window=window) {
  try {
-  if(win.navigator.doNotTrack==='1'||win.localStorage.getItem('umami.disabled')){win.sessionStorage.removeItem(KEY);return undefined;}
+  if(win.navigator.webdriver===true||win.navigator.doNotTrack==='1'||win.localStorage.getItem('umami.disabled')){win.sessionStorage.removeItem(KEY);return undefined;}
   const now=Date.now(), url=new URL(win.location.href);
   let current:Source|undefined;
   const source=url.searchParams.get('utm_source');
