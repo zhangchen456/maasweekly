@@ -67,6 +67,10 @@ class BackupRetentionTests(unittest.TestCase):
             self.backup(base,'maas_data-20261030T020000Z.dump')
             selected=b.make_plan(base,NOW,frozen=frozen,toc=lambda p:None)
             self.assertEqual([r['name'] for r in selected['delete']],[OLD])
+            proposal=copy.deepcopy(frozen);proposal['files'][0]['action']='proposed_delete'
+            self.assertRaises(ValueError,b.make_plan,base,NOW,frozen=proposal,toc=lambda p:None)
+            wrong_count={**frozen,'summary':{'candidateCount':99}}
+            self.assertRaises(ValueError,b.make_plan,base,NOW,frozen=wrong_count,toc=lambda p:None)
             frozen['files'][0]['sha256']='0'*64
             self.assertRaises(ValueError,b.make_plan,base,NOW,frozen=frozen,toc=lambda p:None)
 

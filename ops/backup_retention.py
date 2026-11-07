@@ -158,11 +158,15 @@ def make_plan(base, now, *, frozen=None, toc=None):
     protected = select(rows, now)
     candidates = [r for r in rows if r['name'] not in protected]
     if frozen is not None:
+        if any(r['action'] not in {'keep','delete'} for r in frozen['files']):
+            raise ValueError('frozen manifest must use explicit keep/delete actions')
         actual = {r['name']: r for r in rows}
         for old in frozen['files']:
             if old['name'] not in actual or any(actual[old['name']][k] != old[k] for k in ['bytes', 'sha256', 'sidecarBytes']):
                 raise ValueError('approved inventory changed')
         allowed = {r['name']: r for r in frozen['files'] if r['action'] == 'delete'}
+        if len(allowed) != frozen.get('summary', {}).get('candidateCount', len(allowed)):
+            raise ValueError('frozen manifest count mismatch')
         candidates = [r for r in candidates if r['name'] in allowed]
         if {r['name'] for r in candidates} != set(allowed):
             raise ValueError('approved deletion set changed')
