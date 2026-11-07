@@ -152,6 +152,14 @@ def system_snapshot(shared, runtime=None, *, now=None, run=command, proc=Path('/
             if not 0<=now-capacity['checkedAt']<=26*3600:issues.add('cache_cleanup_stale')
             elif result['resources']['disk']['availableBytes']<capacity['requiredFreeBytes']:issues.add('capacity_headroom')
         except (OSError,ValueError,KeyError,TypeError):issues.add('cache_cleanup_stale')
+    if (shared/'backup-retention').exists():
+        try:
+            retained=json.loads((shared/'backup-retention/current.json').read_text())
+            result['databaseBackupRetention']=retained
+            if retained.get('status')!='completed' or not 0<=now-retained['checkedAt']<=26*3600:
+                issues.add('database_backup_retention_unhealthy')
+            if retained.get('overBudget'):issues.add('database_backup_budget')
+        except (OSError,ValueError,KeyError,TypeError):issues.add('database_backup_retention_unhealthy')
     result['issues'] = sorted(issues)
     return result
 
