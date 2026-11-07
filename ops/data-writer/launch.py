@@ -8,6 +8,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from runtime_safety import require_capacity, wait_runtime, publication_identity
 from pipeline_monitor import RunJournal, export_sources
 from daily_scheduler import decision, remember_credentials
+from backup_retention import after_success as retain_backups
 ROOT=Path('/srv/maasweekly');SHARED=ROOT/'shared';STORE=SHARED/'data-store'
 def command(args,**kwargs):return subprocess.run(args,check=True,**kwargs)
 def runtime():
@@ -84,6 +85,7 @@ def execute(root, mode, body, journal):
         current=json.loads((SHARED/'public-data/v1/publication.json').read_text())
         journal.published=publication_identity(current)==publication_identity(expected)
     health=journal.phase('runtime-acceptance',wait_runtime,state['port'],expected,root.name)
+    journal.runtime_accepted=True
     print(json.dumps({'status':'published','datasetVersion':expected['datasetVersion'],
                       'runtime':health,'codeDeployment':False,'gitCommit':False}),flush=True)
     if 'pricing_all_failed' in receipt.get('warnings',[]):
@@ -118,6 +120,8 @@ def main():
         except BaseException as failure:
             error=error or failure
         journal.finish(error)
+        retention=retain_backups(ROOT,journal,error)
+        if retention['status']!='skipped':print(json.dumps({'backupRetention':retention}),flush=True)
         if error:raise error
 if __name__=='__main__':
     try:main()
