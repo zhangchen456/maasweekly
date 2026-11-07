@@ -267,7 +267,13 @@ def inspect_links(registry_file, *, probe=None, limit=300, registry=None):
     for prefix in ['/item/', '/evidence/']:
         candidates = sorted(path for path in details if path.startswith(prefix))
         if candidates:
-            row = probe.check(ORIGIN+candidates[0])
+            # Landing pages link to records; evidence links live on the record.
+            # Read just the one sampled record to discover the evidence sample.
+            row = probe.check(ORIGIN+candidates[0], include_body=prefix == '/item/')
+            body = row.pop('body', '')
+            if body:
+                parser = Anchors(); parser.feed(body)
+                details.update(parser.details)
             row['detailSample'] = True
             site.append(row)
         else:

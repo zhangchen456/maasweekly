@@ -18,6 +18,26 @@ from test_daily_data_alert import sample, epoch, Mailer, SENDER, TO
 
 
 class InspectionTests(unittest.TestCase):
+    def test_evidence_is_discovered_from_sampled_record_when_absent_on_entrypoints(self):
+        record='/item/obs_'+'a'*64+'/'
+        evidence='/evidence/ev_'+'b'*64+'/'
+        calls=[]
+        class Probe:
+            def check(self,url,include_body=False):
+                calls.append(url)
+                result={'url':url,'status':'http_error' if url.endswith(evidence) else 'ok','httpStatus':503 if url.endswith(evidence) else 200}
+                if include_body:
+                    target=evidence if url.endswith(record) else record
+                    result['body']='<a href="'+target+'">link</a><a href="/_internal/private/">private</a>'
+                return result
+        result=checks.inspect_links(None,probe=Probe(),registry={'sources':[]})
+        details=[r for r in result['site'] if r.get('detailSample')]
+        self.assertEqual([r['httpStatus'] for r in details],[200,503])
+        self.assertEqual(len(calls),len(checks.PUBLIC_PATHS)+2)
+        self.assertEqual(result['detailSamplesMissing'],[])
+        self.assertTrue(all('body' not in row for row in result['site']))
+        self.assertFalse(any('_internal' in url for url in calls))
+
     def test_detail_sampling_detects_database_page_failure_without_crawling_or_private_urls(self):
         record='/item/obs_'+'a'*64+'/'
         evidence='/evidence/ev_'+'b'*64+'/'
