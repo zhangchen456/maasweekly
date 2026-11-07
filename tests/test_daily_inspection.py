@@ -18,17 +18,16 @@ from test_daily_data_alert import sample, epoch, Mailer, SENDER, TO
 
 
 class InspectionTests(unittest.TestCase):
-    def test_evidence_is_discovered_from_sampled_record_when_absent_on_entrypoints(self):
+    def test_known_evidence_regression_is_checked_when_entrypoints_have_no_evidence_links(self):
         record='/item/obs_'+'a'*64+'/'
-        evidence='/evidence/ev_'+'b'*64+'/'
+        evidence=checks.EVIDENCE_REGRESSION_PATH
         calls=[]
         class Probe:
             def check(self,url,include_body=False):
                 calls.append(url)
                 result={'url':url,'status':'http_error' if url.endswith(evidence) else 'ok','httpStatus':503 if url.endswith(evidence) else 200}
                 if include_body:
-                    target=evidence if url.endswith(record) else record
-                    result['body']='<a href="'+target+'">link</a><a href="/_internal/private/">private</a>'
+                    result['body']='<a href="'+record+'">link</a><a href="/_internal/private/">private</a>'
                 return result
         result=checks.inspect_links(None,probe=Probe(),registry={'sources':[]})
         details=[r for r in result['site'] if r.get('detailSample')]
