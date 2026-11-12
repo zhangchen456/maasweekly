@@ -8,7 +8,7 @@ umask 077
 stamp=$(date -u +%Y%m%dT%H%M%SZ)
 temp=$(mktemp "$root/.dump.XXXXXXXX")
 trap 'rm -f "$temp"' EXIT
-pg_dump --format=custom --no-owner --no-privileges --dbname=maas_data --file="$temp"
+pg_dump --format=custom --no-owner --no-privileges --lock-wait-timeout=30s --dbname=maas_data --file="$temp"
 pg_restore --list "$temp" >/dev/null
 target="$root/maas_data-$stamp.dump"
 # Never overwrite an older backup with an identical-second invocation.

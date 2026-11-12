@@ -948,9 +948,12 @@ def validate_price_archive(data_root: Path, *, versions_root: Path,
             errors.append(f"版本文件名与 id 不一致: {f.stem}")
         if v.get("version_id") != fact_version_id(v):
             errors.append(f"版本 id 与内容不匹配（不可变契约破坏）: {f.stem}")
-        versions[f.stem] = v
+        # Later checks need only references and ordering. Keeping every parsed
+        # fact retains all pricing terms for the lifetime of this full scan.
+        versions[f.stem] = {key: v.get(key) for key in
+                            ("fact_key", "observed_at", "evidence_id")}
 
-    snapshots: dict[str, dict] = {}
+    snapshots: set[str] = set()
     for f in sorted(snapshots_root.glob("psnap_*.json")):
         try:
             s = json.loads(f.read_text(encoding="utf-8"))
@@ -962,9 +965,9 @@ def validate_price_archive(data_root: Path, *, versions_root: Path,
                                                    s["content_sha256"]):
             errors.append(f"快照 id 不一致: {f.stem}")
         else:
-            snapshots[s["id"]] = s
+            snapshots.add(s["id"])
 
-    evidence: dict[str, dict] = {}
+    evidence: set[str] = set()
     for f in sorted(evidence_root.glob("ev_*.json")):
         try:
             r = json.loads(f.read_text(encoding="utf-8"))
@@ -980,7 +983,7 @@ def validate_price_archive(data_root: Path, *, versions_root: Path,
             errors.append(f"证据 excerpt_hash 不符: {r['id']}")
         if r.get("completeness") not in COMPLETENESS_LEVELS:
             errors.append(f"证据 completeness 非法: {r['id']}")
-        evidence[r["id"]] = r
+        evidence.add(r["id"])
         # 证据 id 须从五要素重算一致（内容寻址契约：改动任一要素应产生新证据
         # 文件，而非原地篡改现有文件）
         expected_id = evidence_id(
@@ -994,6 +997,8 @@ def validate_price_archive(data_root: Path, *, versions_root: Path,
         if psnap_id and psnap_id not in snapshots:
             errors.append(f"证据引用不存在的快照: {r['id']} → {psnap_id}")
 
+    index_fields = ("date", "provider", "model", "component",
+                    "changeType", "status", "permalink")
     records: dict[str, dict] = {}
     for f in sorted(records_root.glob("price_*.json")):
         try:
@@ -1011,7 +1016,7 @@ def validate_price_archive(data_root: Path, *, versions_root: Path,
         if not isinstance(top, int) or top < 1:
             errors.append(f"revision 非法: {rid}")
             continue
-        records[rid] = r
+        records[rid] = {field: r.get(field) for field in index_fields}
         rev_dir = revisions_root / rid
         latest = None
         for rev in range(1, top + 1):
@@ -1122,8 +1127,7 @@ def validate_price_archive(data_root: Path, *, versions_root: Path,
             if it is None:
                 errors.append(f"价格索引缺失记录: {rid}")
                 continue
-            for field in ("date", "provider", "model", "component",
-                          "changeType", "status", "permalink"):
+            for field in index_fields:
                 if it.get(field) != r.get(field):
                     errors.append(f"价格索引字段不一致: {rid}.{field}")
         for rid in idx:

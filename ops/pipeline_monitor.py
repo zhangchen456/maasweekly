@@ -5,10 +5,114 @@ import json
 import os
 import pwd
 import re
+import stat
 import tempfile
 import time
 import uuid
 from pathlib import Path
+
+
+def boot_id():
+    try:
+        value=Path('/proc/sys/kernel/random/boot_id').read_text().strip()
+        return value if re.fullmatch(r'[a-f0-9-]{36}',value) else None
+    except OSError:return None
+
+
+def process_alive(job):
+    try:
+        if job.get('bootId') and job['bootId']!=boot_id():return False
+        if not job.get('bootId'):
+            started=job.get('startedAt')
+            boot=next(int(line.split()[1]) for line in Path('/proc/stat').read_text().splitlines() if line.startswith('btime '))
+            if type(started) is int and started<boot*1000:return False
+        pid=job['pid']
+        if type(pid) is not int or pid<=1 or not re.fullmatch(r'\d+',job['processStart']):return False
+        actual=Path(f'/proc/{pid}/stat').read_text().rsplit(')',1)[1].split()[19]
+        return actual==job['processStart']
+    except (OSError,KeyError,TypeError,ValueError,StopIteration):return False
+
+
+def _read_metadata(path,limit=4*1024*1024):
+    fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
+    try:
+        info=os.fstat(fd)
+        if not stat.S_ISREG(info.st_mode) or info.st_size>limit:raise ValueError('invalid monitor metadata')
+        with os.fdopen(os.dup(fd),'rb') as stream:raw=stream.read(limit+1)
+        if len(raw)>limit:raise ValueError('monitor metadata too large')
+        return json.loads(raw)
+    finally:os.close(fd)
+
+
+def reconcile_interrupted(shared,*,stop_orphan,gid=None,now=None,alive=process_alive):
+    """Caller holds release.lock. Close dead attempts without discarding checkpoints.
+
+    Unknown exit times are recorded at detection, without an invented elapsedMs.
+    A durable final receipt wins over an interrupted final metadata write.
+    """
+    root=Path(shared)/'pipeline-monitor';observed=int(time.time()*1000) if now is None else now
+    if root.resolve()!=root or (root/'inbox').resolve()!=root/'inbox':raise ValueError('unsafe monitor root')
+    candidates={}
+    for name in ['current.json','daily.json']:
+        path=root/name
+        if not path.exists():continue
+        value=_read_metadata(path,65536)
+        if value.get('state')!='running':continue
+        if (value.get('schemaVersion')!=1 or not re.fullmatch(r'pipeline_[a-f0-9]{32}',value.get('id',''))
+                or not re.fullmatch(r'[a-f0-9]{40}',value.get('codeCommit',''))
+                or not re.fullmatch(r'[-a-z]+',value.get('mode',''))
+                or not re.fullmatch(r'[-a-z]+',value.get('stage',''))
+                or type(value.get('pid')) is not int or value['pid']<=1
+                or type(value.get('startedAt')) is not int or value['startedAt']>observed):
+            raise ValueError('invalid interrupted job metadata')
+        candidates[value['id']]=value
+    recovered=[]
+    for identifier,original in candidates.items():
+        if alive(original):continue
+        terminal=None;stages=[]
+        for path in (root/'inbox').glob('report_*.json'):
+            value=_read_metadata(path)
+            for run in value.get('batch',{}).get('runs',[]):
+                if str(run.get('id','')).startswith(identifier+'_s'):stages.append(run)
+                if run.get('id')==identifier+'_job':
+                    if terminal is not None and terminal!=run:raise ValueError('conflicting terminal receipts')
+                    terminal=run
+        audit={'observedAt':observed,'original':original,
+               'actualExitTimeUnknown':terminal is None,'existingTerminalReceipt':terminal is not None}
+        write_json(root/'reconciled'/(identifier+'.json'),audit,gid)
+        audit['orphanCleanup']=stop_orphan(original)
+        if terminal is None:
+            attempted=original['stage'] in ['publication','runtime-acceptance'] or any(r.get('stage')=='publication' for r in stages)
+            validated=any(r.get('stage')=='ssr-validation' and r.get('state')=='succeeded' and r.get('validation')=='passed' for r in stages)
+            published=False;publication=Path(shared)/'public-data/v1/publication.json'
+            if attempted and validated and publication.exists():
+                actual=_read_metadata(publication)
+                published=(actual.get('datasetVersion')==original.get('datasetVersion')
+                    and actual.get('site',{}).get('inputVersion')==original.get('inputVersion')
+                    and actual.get('site',{}).get('codeCommit')==original['codeCommit'])
+            audit['publishedPointerMatchesInterruptedTarget']=published
+            run={'id':identifier+'_job','kind':'data-pipeline','trigger':original.get('trigger','unknown'),
+                 'state':'succeeded' if published else 'failed','stage':original['mode'],'startedAt':original['startedAt'],
+                 'finishedAt':observed,'observedAt':observed,'inputVersion':original.get('inputVersion'),
+                 'outputVersion':original.get('inputVersion'),'result':'partial' if published else 'failed','validation':'passed' if validated else 'not_run',
+                 'publication':'completed' if published else 'not_run','errorCode':'interrupted','runLink':original.get('runLink'),'sources':[]}
+            name,value=report({'schemaVersion':1,'batchId':identifier+'_interrupted','sources':[],'runs':[run]})
+            write_json(root/'inbox'/name,value,gid);terminal=run
+        succeeded=terminal.get('state')=='succeeded' and terminal.get('result') in ['success','unchanged']
+        if terminal.get('state') not in ['succeeded','failed','cancelled'] or type(terminal.get('finishedAt')) is not int:
+            raise ValueError('invalid existing terminal receipt')
+        final={**original,'state':'succeeded' if succeeded else 'failed','stage':'finished',
+               'updatedAt':terminal['finishedAt'],'failureStage':None if succeeded else original.get('failureStage') or original['stage'],
+               'errorCode':None if succeeded else terminal.get('errorCode') or 'interrupted'}
+        # Persist the evidence before replacing either pointer; replay is idempotent.
+        write_json(root/'reconciled'/(identifier+'.json'),audit,gid)
+        for name in ['current.json','daily.json']:
+            path=root/name
+            if path.exists():
+                current=_read_metadata(path,65536)
+                if current.get('id')==identifier and current.get('state')=='running':write_json(path,final,gid)
+        recovered.append({'id':identifier,'state':final['state']})
+    return recovered
 
 
 def write_json(path, value, gid=None):
@@ -50,6 +154,7 @@ class RunJournal:
         self.gid = gid
         self.now = now or (lambda: int(time.time() * 1000))
         self.id = 'pipeline_' + uuid.uuid4().hex
+        self.boot = boot_id()
         self.code, self.mode, self.sequence = code, mode, 0
         self.started = self.now()
         self.validation, self.published = 'not_run', False
@@ -66,6 +171,7 @@ class RunJournal:
         value = {
             'schemaVersion': 1, 'id': self.id, 'mode': self.mode, 'codeCommit': self.code,
             'pid': os.getpid(), 'processStart': self.process_start, 'trigger': self.trigger,
+            'bootId': self.boot,
             'startedAt': self.started, 'updatedAt': self.now(), 'stage': stage, 'state': state,
             'inputVersion': self.input_version, 'datasetVersion': self.dataset_version,
             'errorCode': error, 'failureStage': self.failure_stage, 'runLink': self.link,

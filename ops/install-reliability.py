@@ -4,6 +4,8 @@ import argparse,fcntl,hashlib,json,os,pwd,re,shutil,subprocess,sys,tempfile,time
 from pathlib import Path
 ROOT=Path('/srv/maasweekly')
 MAPPING={
+ 'ops/data_job_resources.py':'/usr/local/lib/maasweekly/data_job_resources.py',
+ 'ops/data-writer/job.sh':'/usr/local/lib/maasweekly/data-job.sh',
  'ops/backup_retention.py':'/usr/local/lib/maasweekly/backup_retention.py',
  'ops/daily_scheduler.py':'/usr/local/lib/maasweekly/daily_scheduler.py',
  'ops/cache_retention.py':'/usr/local/lib/maasweekly/cache_retention.py',
@@ -98,7 +100,7 @@ def main(argv=()):
   (backup/'manifest.json').write_text(json.dumps(audit,indent=2)+'\n')
   if 'ops/daily_scheduler.py' in MAPPING:
    gid=pwd.getpwnam('maasagent').pw_gid
-   for name in ['scheduler','cache-retention','backup-retention']:
+   for name in ['scheduler','cache-retention','backup-retention','pipeline-resources']:
     directory=ROOT/'shared'/name
     if directory.is_symlink():raise ValueError('unsafe operations directory')
     directory.mkdir(mode=0o750,exist_ok=True);os.chown(directory,0,gid);directory.chmod(0o750)
