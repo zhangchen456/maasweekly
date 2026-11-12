@@ -74,7 +74,10 @@ class DataJobResources:
         self.low=self.low+1 if available<RESERVE else 0
         if self.low>=LOW_SAMPLES:
             self.state['reason']='host_memory_headroom';self.record(True);raise ResourcePressure('host_memory_headroom')
-        if self.container:self.inspect_container()
+        if self.container:
+            try:self.inspect_container()
+            except ResourcePressure as error:
+                self.state['reason']=str(error);self.record(True);raise
         self.record();return value
 
     def admit(self):
