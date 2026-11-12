@@ -30,7 +30,10 @@ def docker(root,mode,body,resources):
     args += [image,'python','/code/ops/data-writer/run.py']
     log=STORE/'reports'/('writer-'+str(time.time_ns())+'-'+mode+'.log')
     with log.open('wb') as output:
-        try:result=resources.run(args,input=body,stdout=output,stderr=subprocess.STDOUT,timeout=5400,check=False,on_abort=resources.stop_container)
+        try:
+            result=resources.run(args,input=body,stdout=output,stderr=subprocess.STDOUT,timeout=5400,check=False,on_abort=resources.stop_container)
+            # A disconnected Docker client can exit while its daemon-owned job survives.
+            if result.returncode:resources.stop_container()
         finally:resources.end_container()
     if result.returncode:raise RuntimeError('data job failed; log='+str(log))
     print('data stage completed:',mode,flush=True)

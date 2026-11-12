@@ -9,6 +9,15 @@ CODE='a'*40
 MANIFEST={'datasetVersion':'ds_'+'b'*64,'site':{'inputVersion':'in_'+'c'*64,'codeCommit':CODE,'formatVersion':1}}
 def healthy():return dict(schemaVersion=1,ready=True,processCode=CODE,publication=publication_identity(MANIFEST),lastReloadError=None,lastReloadAt='2026-11-01T00:00:00Z')
 class ReliabilityTests(unittest.TestCase):
+ def test_disconnected_docker_client_stops_owned_container_before_forgetting_cid(self):
+  from types import SimpleNamespace
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp);shared=root/'shared';store=shared/'data-store';(store/'reports').mkdir(parents=True);(root/'tooling').mkdir()
+   (root/'tooling/code-commit').write_text(CODE);(shared/'data-writer-image').write_text('sha256:'+'d'*64)
+   resources=Mock();resources.container_arguments.return_value=[];resources.run.return_value=SimpleNamespace(returncode=1)
+   with patch.object(launch,'SHARED',shared),patch.object(launch,'STORE',store),patch.object(launch.pwd,'getpwnam',return_value=SimpleNamespace(pw_uid=123,pw_gid=456)):
+    with self.assertRaises(RuntimeError):launch.docker(root,'update',b'{}',resources)
+   self.assertEqual([call[0] for call in resources.mock_calls],['container_arguments','run','stop_container','end_container'])
  def test_exact_loaded_identity_and_error_are_required(self):
   self.assertTrue(accepts_runtime(healthy(),MANIFEST,CODE))
   for field,value in [('inputVersion','in_'+'d'*64),('codeCommit','d'*40),('formatVersion',2),('datasetVersion','ds_'+'d'*64)]:
