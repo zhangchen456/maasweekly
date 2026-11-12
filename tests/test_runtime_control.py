@@ -12,6 +12,7 @@ class RuntimeControlTests(unittest.TestCase):
   self.before=[p.read_bytes() for p in self.files];(self.root/'current').symlink_to('releases/old')
   (self.shared/'runtime-candidate.json').write_text(json.dumps({'code':'a'*10,'slot':'blue','port':8788,'datasetVersion':'ds_test'}))
   self.patches=[patch.object(control,'ROOT',self.root),patch.object(control,'SHARED',self.shared),patch.object(control,'FILES',self.files),patch.object(control,'probe',return_value='ds_test'),patch.object(control.time,'sleep'),patch.object(control.subprocess,'run')]
+  self.patches.append(patch.object(control,'boot_state',return_value={'blue':False,'green':True}))
   for p in self.patches:p.start();self.addCleanup(p.stop)
  def test_stage_exposes_only_public_client_assets_to_nginx(self):
   package=self.root/'runtime'/('a'*10);server=package/'site/dist/server';server.mkdir(parents=True);(server/'entry.mjs').write_text('code');server.chmod(0o750)
@@ -31,11 +32,22 @@ class RuntimeControlTests(unittest.TestCase):
   self.assertEqual((self.root/'current').readlink(),Path('releases/old'))
   self.assertFalse((self.shared/'runtime-mode').exists())
  def test_success_switches_both_routes_and_pointer_and_preserves_recovery(self):
-  with patch.object(control,'run'):result=control.activate('a'*10)
+  with patch.object(control,'run') as run:result=control.activate('a'*10)
   self.assertEqual(result['status'],'active');self.assertTrue((self.shared/'runtime-mode').exists())
   self.assertIn(b'proxy_pass http://agent_api',self.files[2].read_bytes());self.assertIn(b'8788',self.files[1].read_bytes())
   self.assertEqual((self.root/'current').resolve(),self.root/'runtime'/('a'*10))
   self.assertEqual(Path(result['recovery'],'0').read_bytes(),self.before[0])
+  run.assert_any_call('systemctl','enable','maas-agent@blue');run.assert_any_call('systemctl','disable','maas-agent@green')
+ def test_failed_boot_switch_restores_saved_boot_state(self):
+  failed=False;calls=[]
+  def run(*args):
+   nonlocal failed
+   calls.append(args)
+   if args==('systemctl','disable','maas-agent@green') and not failed:failed=True;raise subprocess.CalledProcessError(1,args)
+  with patch.object(control,'run',side_effect=run):
+   with self.assertRaises(subprocess.CalledProcessError):control.activate('a'*10)
+  self.assertIn(('systemctl','enable','maas-agent@green'),calls);self.assertEqual(calls[-1],('systemctl','disable','maas-agent@blue'))
+  self.assertEqual((self.root/'current').readlink(),Path('releases/old'))
  def test_interrupted_switch_recovers_recorded_files_and_pointer(self):
   backup=self.shared/'runtime-recovery'/'test';backup.mkdir(parents=True)
   for n,b in enumerate(self.before):(backup/str(n)).write_bytes(b)

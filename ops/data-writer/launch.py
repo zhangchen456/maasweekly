@@ -1,35 +1,37 @@
 #!/usr/bin/env python3
 """Root-controlled fixed data job; credentials only cross stdin, never argv or files."""
-import fcntl,json,os,pwd,re,stat,subprocess,sys,time
+import fcntl,json,os,pwd,re,signal,stat,subprocess,sys,time
 from pathlib import Path
 from datetime import datetime
 from zoneinfo import ZoneInfo
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from runtime_safety import require_capacity, wait_runtime, publication_identity
-from pipeline_monitor import RunJournal, export_sources
+from pipeline_monitor import RunJournal, export_sources, reconcile_interrupted
+from data_job_resources import DataJobResources, install_signal_handlers, stop_orphan_writer
 from daily_scheduler import decision, remember_credentials
 from backup_retention import after_success as retain_backups
 ROOT=Path('/srv/maasweekly');SHARED=ROOT/'shared';STORE=SHARED/'data-store'
-def command(args,**kwargs):return subprocess.run(args,check=True,**kwargs)
+def command(args,*,resources,**kwargs):return resources.run(args,check=True,**kwargs)
 def runtime():
     value=json.loads((SHARED/'runtime.json').read_text());code=value['code']
     if not re.fullmatch('[a-f0-9]{10,40}',code):raise ValueError('invalid runtime')
     return ROOT/'runtime'/code
 
-def docker(root,mode,body):
+def docker(root,mode,body,resources):
     writer=STORE/'writer';public=SHARED/'public-data';uid=pwd.getpwnam('maasdata').pw_uid;gid=pwd.getpwnam('maasdata').pw_gid
     image=(SHARED/'data-writer-image').read_text().strip()
     if not re.fullmatch('sha256:[a-f0-9]{64}',image):raise ValueError('pin the local writer image digest')
     mounts=[(root/'tooling','/code','ro'),(writer,'/work','rw'),(writer/'data','/code/data','rw'),(root/'tooling/data/model-registry','/code/data/model-registry','ro'),(writer/'site-data','/code/site/src/data','rw'),(writer/'content','/code/site/src/content','rw'),(STORE/'blobs','/store/blobs','rw'),(public,'/public','rw'),(Path('/var/run/postgresql'),'/var/run/postgresql','ro')]
-    args=['docker','run','--rm','-i','--init','--name','maas-data-writer','--user',f'{uid}:{gid}','--read-only','--tmpfs','/tmp:rw,size=256m','--shm-size','256m','--memory','1536m','--memory-swap','2560m','--cpus','1','--pids-limit','256','--cap-drop','ALL','--cap-add','SYS_CHROOT','--security-opt','no-new-privileges','--security-opt','seccomp='+str(root/'tooling/ops/data-writer/seccomp.json'),'-e','MAAS_DATA_DSN=dbname=maas_data user=maasdata host=/var/run/postgresql','-e','MAAS_CODE_COMMIT='+(root/'tooling/code-commit').read_text().strip()]
+    args=['docker','run','--rm','-i','--init','--name','maas-data-writer','--user',f'{uid}:{gid}','--read-only','--tmpfs','/tmp:rw,size=256m','--shm-size','256m','--cpus','1','--pids-limit','256','--cap-drop','ALL','--cap-add','SYS_CHROOT','--security-opt','no-new-privileges','--security-opt','seccomp='+str(root/'tooling/ops/data-writer/seccomp.json'),'-e','MAAS_DATA_DSN=dbname=maas_data user=maasdata host=/var/run/postgresql','-e','MAAS_CODE_COMMIT='+(root/'tooling/code-commit').read_text().strip()]
+    # Dynamic memory budget reserves host headroom; native I/O limits apply before the writer starts.
+    args+=resources.container_arguments(mode)
+    args+=['-e','PGOPTIONS=-c statement_timeout=600000 -c lock_timeout=30000']
     for source,target,access in mounts:args+=['-v',f'{source}:{target}:{access}']
     args += [image,'python','/code/ops/data-writer/run.py']
     log=STORE/'reports'/('writer-'+str(time.time_ns())+'-'+mode+'.log')
     with log.open('wb') as output:
-        try:result=subprocess.run(args,input=body,stdout=output,stderr=subprocess.STDOUT,timeout=5400)
-        except BaseException:
-            subprocess.run(['docker','stop','--time','20','maas-data-writer'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-            raise
+        try:result=resources.run(args,input=body,stdout=output,stderr=subprocess.STDOUT,timeout=5400,check=False,on_abort=resources.stop_container)
+        finally:resources.end_container()
     if result.returncode:raise RuntimeError('data job failed; log='+str(log))
     print('data stage completed:',mode,flush=True)
 
@@ -53,13 +55,14 @@ def candidate_permissions(host):
                 finally:os.close(file)
     finally:os.close(fd)
 
-def execute(root, mode, body, journal):
+def execute(root, mode, body, journal, resources):
     published=json.loads((SHARED/'public-data/v1/publication.json').read_text())
     state=json.loads((SHARED/'runtime.json').read_text())
     journal.input_version=published['site']['inputVersion'];journal.dataset_version=published['datasetVersion']
+    journal.phase('resource-preflight',resources.admit)
     journal.phase('runtime-preflight',wait_runtime,state['port'],published,root.name)
     journal.phase('capacity-preflight',require_capacity,ROOT,mode)
-    journal.phase('writer-'+mode,docker,root,mode,body)
+    journal.phase('writer-'+mode,docker,root,mode,body,resources)
     if mode=='prepare':return
     receipt=json.loads((STORE/'writer/candidate.json').read_text());candidate=receipt['candidate']
     if not re.fullmatch('/public/candidates/[a-f0-9]{32}',candidate):raise ValueError('invalid candidate path')
@@ -73,12 +76,12 @@ def execute(root, mode, body, journal):
     if mode=='update':acceptance+=['--expected-through',datetime.now(ZoneInfo('Asia/Shanghai')).date().isoformat()]
     request=json.loads(body)
     if mode=='import' and request.get('drafts'):acceptance+=['--weekly-period',max(x['date'] for x in request['drafts'])]
-    journal.phase('ssr-validation',command,['runuser','-u','maasagent','--','node',str(root/'scripts/verify-runtime-site.mjs'),'--package-root',str(root),'--data-root',str(host),*acceptance],env=env)
+    journal.phase('ssr-validation',command,['runuser','-u','maasagent','--','node',str(root/'scripts/verify-runtime-site.mjs'),'--package-root',str(root),'--data-root',str(host),*acceptance],resources=resources,env=env,timeout=600)
     if mode in ['validate','aggregate']:print('data committed and SSR validation passed; not published');return
     journal.phase('capacity-before-backup',require_capacity,ROOT,'publish')
-    journal.phase('database-backup',command,['runuser','-u','maasdata','--','bash',str(root/'tooling/ops/backup-data-store.sh')])
+    journal.phase('database-backup',command,['runuser','-u','maasdata','--','bash',str(root/'tooling/ops/backup-data-store.sh')],resources=resources,timeout=600)
     try:
-        journal.phase('publication',docker,root,'publish',b'{"mode":"publish"}')
+        journal.phase('publication',docker,root,'publish',b'{"mode":"publish"}',resources)
     finally:
         # A process can fail after the atomic pointer commit. Record that outcome
         # independently of runtime acceptance, never claim that nothing published.
@@ -91,7 +94,7 @@ def execute(root, mode, body, journal):
     if 'pricing_all_failed' in receipt.get('warnings',[]):
         raise RuntimeError('other data published using previous prices; all live pricing sources failed')
 
-def main():
+def _main():
     os.umask(0o077)
     if os.geteuid()!=0:raise ValueError('root required')
     body=sys.stdin.buffer.read(1048577)
@@ -102,6 +105,7 @@ def main():
     if not isinstance(context,dict) or any(not isinstance(v,str) or len(v)>256 for v in context.values()):raise ValueError('invalid run context')
     with (ROOT/'locks/release.lock').open('a+b') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
+        reconcile_interrupted(SHARED,stop_orphan=lambda job:stop_orphan_writer(SHARED,job),gid=pwd.getpwnam('maasagent').pw_gid)
         if mode=='update':
             remember_credentials(SHARED,incoming.get('secrets',{}))
             if context.get('GITHUB_EVENT_NAME') in ['schedule','server_schedule']:
@@ -110,19 +114,29 @@ def main():
                     print(json.dumps({'status':'skipped','reason':outcome}));return
         root=runtime();gid=pwd.getpwnam('maasagent').pw_gid
         journal=RunJournal(SHARED,root.name,mode,context,gid=gid)
-        error=None
+        error=None;resources=None
         try:
-            execute(root,mode,body,journal)
+            resources=journal.phase('resource-setup',DataJobResources,ROOT,journal.id,gid)
+            execute(root,mode,body,journal,resources)
         except BaseException as failure:
             error=failure
         try:
             journal.phase('monitor-export',export_sources,SHARED,root,gid)
         except BaseException as failure:
             error=error or failure
+        if resources:
+            try:resources.finish(error)
+            except BaseException as failure:error=error or failure
         journal.finish(error)
         retention=retain_backups(ROOT,journal,error)
         if retention['status']!='skipped':print(json.dumps({'backupRetention':retention}),flush=True)
         if error:raise error
+def main():
+    handlers=install_signal_handlers()
+    try:return _main()
+    finally:
+        for number,handler in handlers.items():signal.signal(number,handler)
+
 if __name__=='__main__':
     try:main()
     except Exception as error:

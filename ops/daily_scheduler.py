@@ -1,8 +1,10 @@
 """Host trigger using encrypted credentials and the existing locked data publisher."""
-import argparse,fcntl,json,os,subprocess,sys,tempfile,time
+import argparse,fcntl,json,os,pwd,subprocess,sys,tempfile,time
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
+from pipeline_monitor import reconcile_interrupted
+from data_job_resources import stop_orphan_writer
 ROOT=Path('/srv/maasweekly');ZONE=ZoneInfo('Asia/Shanghai')
 KEYS={'LLM_API_KEY','TRANSLATION_API_KEY','OPENROUTER_API_KEY'}
 def local_day(milliseconds):return datetime.fromtimestamp(milliseconds/1000,ZONE).date().isoformat()
@@ -36,6 +38,11 @@ def main():
  ap=argparse.ArgumentParser();ap.add_argument('--check',action='store_true');args=ap.parse_args()
  shared=ROOT/'shared';directory=shared/'scheduler'
  if not (directory/'enabled').is_file():print(json.dumps({'decision':'disabled'}));return
+ if not args.check:
+  with (ROOT/'locks/release.lock').open('a+b') as release:
+   try:fcntl.flock(release,fcntl.LOCK_EX|fcntl.LOCK_NB)
+   except BlockingIOError:print(json.dumps({'decision':'busy'}));return
+   reconcile_interrupted(shared,stop_orphan=lambda job:stop_orphan_writer(shared,job),gid=pwd.getpwnam('maasagent').pw_gid)
  outcome=decision(shared)
  if args.check:print(json.dumps({'decision':outcome,'credentialsReady':(directory/'credentials.enc').is_file()}));return
  with (directory/'trigger.lock').open('a+b') as lock:
@@ -49,5 +56,5 @@ def main():
   secrets=json.loads(result.stdout);assert secrets.get('LLM_API_KEY') and secrets.get('TRANSLATION_API_KEY')
   # Publisher rechecks under release.lock, closing the race with delayed GitHub runs.
   request={'mode':'update','secrets':secrets,'runContext':{'GITHUB_EVENT_NAME':'server_schedule'}}
-  subprocess.run([sys.executable,'-B','/usr/local/lib/maasweekly/data-update.py'],input=json.dumps(request).encode(),check=True,timeout=5700)
+  subprocess.run(['/bin/bash','/usr/local/lib/maasweekly/data-job.sh'],input=json.dumps(request).encode(),check=True,timeout=6000)
 if __name__=='__main__':main()
