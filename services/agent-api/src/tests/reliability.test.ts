@@ -50,9 +50,35 @@ test('pipeline receipts and contexts commit atomically, reject conflicting repla
 test('dead jobs, PID reuse and deadlines are visible without inventing completed runs',()=>{
  const proc='123 (worker) '+Array.from({length:22},(_,i)=>i===19?'456':'0').join(' ');
  assert.equal(jobAlive({pid:123,processStart:'456'},()=>proc),true);assert.equal(jobAlive({pid:123,processStart:'789'},()=>proc),false);
+ const read=(file:string)=>file.endsWith('/boot_id')?'new-boot\n':proc;
+ assert.equal(jobAlive({pid:123,processStart:'456',bootId:'old-boot'},read),false);
+ assert.equal(jobAlive({pid:123,processStart:'456',bootId:'new-boot'},read),true);
  assert.deepEqual(jobAlerts({state:'running',startedAt:at},at,false),['pipeline_interrupted']);
  assert.deepEqual(jobAlerts({state:'running',startedAt:at-101*60000},at,true),['pipeline_timeout']);
  assert.deepEqual(jobAlerts({state:'failed'},at,false),['pipeline_last_run_failed']);
+});
+
+test('real Python interruption reconciliation imports through the exact monitoring protocol',()=>{
+ const root=mkdtempSync(path.join(tmpdir(),'interruption-contract-'));
+ const accounts=new AccountStore(':memory:',()=>at,'test-secret-more-than-thirty-two-characters');
+ try{
+  const script=`import json,sys
+from pathlib import Path
+sys.path.insert(0,sys.argv[1])
+from pipeline_monitor import RunJournal,reconcile_interrupted
+root=Path(sys.argv[2]).resolve();now=int(sys.argv[3])
+j=RunJournal(root,'a'*40,'update',now=lambda:now-1000)
+j.current('writer-update','running')
+reconcile_interrupted(root,stop_orphan=lambda job:{'writerPresent':False},now=now,alive=lambda job:False)
+print(json.dumps([{'name':p.name,'value':json.loads(p.read_text())} for p in (root/'pipeline-monitor/inbox').glob('*.json')]))`;
+  const child=spawnSync(process.env.PYTHON??'python3',['-c',script,fileURLToPath(new URL('../../../../ops/',import.meta.url)),root,String(at)],{encoding:'utf8'});
+  assert.equal(child.status,0,child.stderr);
+  const rows=JSON.parse(child.stdout);assert.equal(rows.length,1);
+  const monitor=new AdminMonitor(new AdminStore(accounts));
+  for(const row of rows)assert.equal(ingestPipelineReport(monitor,row.name,row.value).duplicate,false);
+  const stored=accounts.db.prepare('SELECT state,errorCode FROM monitor_runs').get()!;
+  assert.equal(stored.state,'failed');assert.equal(stored.errorCode,'interrupted');
+ }finally{accounts.close();rmSync(root,{recursive:true,force:true});}
 });
 
 test('monitor CLI runs when invoked through the production current symlink',()=>{

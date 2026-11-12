@@ -19,7 +19,10 @@ export function readLocalJson(file:string, limit=4*1024*1024):any {
 }
 export function jobAlive(job:any, read=(file:string)=>readFileSync(file,'utf8')) {
   if(!Number.isSafeInteger(job.pid)||job.pid<=1||typeof job.processStart!=='string'||!/^\d+$/.test(job.processStart))return false;
-  try{return read(`/proc/${job.pid}/stat`).split(')').pop()!.trim().split(/\s+/)[19]===job.processStart;}
+  try{
+    if(job.bootId&&read('/proc/sys/kernel/random/boot_id').trim()!==job.bootId)return false;
+    return read(`/proc/${job.pid}/stat`).split(')').pop()!.trim().split(/\s+/)[19]===job.processStart;
+  }
   catch{return false;}
 }
 export function jobAlerts(job:any, now:number, alive:boolean):string[] {

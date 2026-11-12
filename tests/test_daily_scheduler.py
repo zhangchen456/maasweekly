@@ -1,4 +1,4 @@
-import importlib.util,json,sys,tempfile,unittest
+import importlib.util,json,os,sys,tempfile,unittest
 from pathlib import Path
 from datetime import datetime
 from unittest.mock import patch
@@ -32,3 +32,24 @@ class SchedulerTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as t:
    root=Path(t).resolve();self.fixture(root)
    self.assertEqual(s.decision(root,datetime(2026,11,7,14,tzinfo=s.ZONE),enforce_window=False),'start')
+ def test_scheduled_request_uses_the_same_independent_job_unit_as_ci(self):
+  with tempfile.TemporaryDirectory() as t:
+   root=Path(t).resolve();shared=root/'shared';shared.mkdir();self.fixture(shared)
+   directory=shared/'scheduler';directory.mkdir();(directory/'enabled').touch();(directory/'credentials.enc').write_bytes(b'ENCRYPTED')
+   (root/'locks').mkdir();(root/'locks/release.lock').touch()
+   secrets={'LLM_API_KEY':'PRIVATE-digest','TRANSLATION_API_KEY':'PRIVATE-translate'}
+   results=[type('R',(),{'returncode':0,'stdout':json.dumps(secrets).encode()})(),type('R',(),{'returncode':0})()]
+   with patch.object(s,'ROOT',root),patch.object(s.sys,'argv',['daily_scheduler.py']),patch.object(s,'decision',return_value='start'),patch.object(s.pwd,'getpwnam',return_value=type('P',(),{'pw_gid':os.getgid()})()),patch.object(s.subprocess,'run',side_effect=results) as run:
+    s.main()
+   args=run.call_args_list[-1]
+   self.assertEqual(args.args[0],['/bin/bash','/usr/local/lib/maasweekly/data-job.sh']);self.assertEqual(args.kwargs['timeout'],6000)
+   self.assertEqual(json.loads(args.kwargs['input'])['runContext']['GITHUB_EVENT_NAME'],'server_schedule')
+   self.assertNotIn('PRIVATE',str(args.args))
+   self.assertTrue(all(b'PRIVATE' not in p.read_bytes() for p in shared.rglob('*') if p.is_file()))
+ def test_check_mode_never_reconciles_or_decrypts(self):
+  with tempfile.TemporaryDirectory() as t:
+   root=Path(t).resolve();shared=root/'shared';shared.mkdir();self.fixture(shared)
+   directory=shared/'scheduler';directory.mkdir();(directory/'enabled').touch()
+   with patch.object(s,'ROOT',root),patch.object(s.sys,'argv',['daily_scheduler.py','--check']),patch.object(s,'reconcile_interrupted') as reconcile,patch.object(s.subprocess,'run') as run:
+    s.main()
+   reconcile.assert_not_called();run.assert_not_called()

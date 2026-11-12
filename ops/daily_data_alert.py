@@ -15,6 +15,7 @@ import uuid
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from operations_checks import system_snapshot
+from pipeline_monitor import process_alive
 from reliability_observation import initialize as observation_initialize, observe as record_observation
 
 ZONE = ZoneInfo('Asia/Shanghai')
@@ -105,15 +106,7 @@ class Transport:
 
 
 def alive(job):
-    try:
-        pid = job['pid']
-        if type(pid) is not int or pid <= 1 or not re.fullmatch(r'\d+', job['processStart']):
-            return False
-        actual = Path(f'/proc/{pid}/stat').read_text().rsplit(')', 1)[1].split()[19]
-        return actual == job['processStart']
-    except (OSError, KeyError, TypeError):
-        return False
-
+    return process_alive(job)
 
 def validate_job(job):
     if (not isinstance(job, dict) or job.get('schemaVersion') != 1 or not isinstance(job.get('id'), str)

@@ -17,6 +17,30 @@ def atomic(path,body):
     with os.fdopen(fd,'wb') as f:f.write(body);f.flush();os.fsync(f.fileno())
     os.chmod(name,0o644);os.replace(name,path)
 
+def boot_state():
+    result={}
+    for slot in ('blue','green'):
+        state=subprocess.run(['systemctl','is-enabled','maas-agent@'+slot],capture_output=True,text=True,timeout=10)
+        value=state.stdout.strip()
+        if value not in ('enabled','disabled'):raise ValueError('unexpected API boot state')
+        result[slot]=value=='enabled'
+    return result
+
+def sync_boot_slot(slot):
+    if slot not in ('blue','green',None):raise ValueError('invalid API boot slot')
+    if slot:run('systemctl','enable','maas-agent@'+slot)
+    for other in ('blue','green'):
+        if other!=slot:run('systemctl','disable','maas-agent@'+other)
+
+def restore_boot_state(backup):
+    saved=backup/'boot-state.json'
+    if not saved.exists():return  # Backward compatible with older recovery records.
+    states=json.loads(saved.read_text())
+    if set(states)!= {'blue','green'} or any(type(v) is not bool for v in states.values()):raise ValueError('invalid saved API boot state')
+    for enabled in (True,False):
+        for slot,value in states.items():
+            if value is enabled:run('systemctl','enable' if enabled else 'disable','maas-agent@'+slot)
+
 def retire_previous(previous, candidate):
     """Drain old requests only after the new route and recovery state are durable."""
     slot = previous.get('slot')
@@ -84,6 +108,7 @@ def activate(code):
     if candidate['code']!=code:raise ValueError('stage this exact code first')
     probe(candidate['port'],code)
     backup=SHARED/'runtime-recovery'/str(time.time_ns());backup.mkdir(parents=True)
+    (backup/'boot-state.json').write_text(json.dumps(boot_state()))
     old=[p.read_bytes() for p in FILES]
     for n,body in enumerate(old):(backup/str(n)).write_bytes(body)
     old_current=os.readlink(ROOT/'current')
@@ -136,6 +161,7 @@ location ~ ^/(?:logos/|brand/|favicon[^/]*\\.(?:svg|png|ico)$|apple-touch-icon\\
             candidate['workers']=workers.start_and_verify(ROOT,package)
             candidate['controllers']={name:hashlib.sha256(Path(path).read_bytes()).hexdigest() for name,path in [('runtime',__file__),('workers',workers.__file__)]}
             atomic(SHARED/'runtime.json',(json.dumps(candidate)+'\n').encode())
+        sync_boot_slot(slot)
         (SHARED/'runtime-switch-pending.json').unlink(missing_ok=True)
     except BaseException:
         recover_pending()
@@ -157,6 +183,7 @@ def rollback():
     run('nginx','-t');run('systemctl','reload','nginx')
     tmp=ROOT/'.runtime-current';tmp.unlink(missing_ok=True);tmp.symlink_to(previous['legacy']);os.replace(tmp,ROOT/'current')
     for name in ['runtime.json','runtime-mode']:(SHARED/name).unlink(missing_ok=True)
+    sync_boot_slot(None)
     return {'status':'legacy_restored'}
 
 def recover_pending():
@@ -178,6 +205,7 @@ def recover_pending():
         state['workers']=proofs
         state['controllers']={name:hashlib.sha256(Path(path).read_bytes()).hexdigest() for name,path in [('runtime',__file__),('workers',workers.__file__)]}
         atomic(SHARED/'runtime.json',(json.dumps(state)+'\n').encode())
+    restore_boot_state(backup)
     pending.unlink()
 
 def install_package(rid):

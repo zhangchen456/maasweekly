@@ -1,6 +1,6 @@
 import copy,importlib.util,json,sys,tempfile,unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch,Mock
 BASE=Path(__file__).resolve().parents[1];sys.path.insert(0,str(BASE/'ops'))
 from runtime_safety import accepts_runtime,publication_identity,wait_runtime,capacity_budget,CapacityError,require_capacity,GIB
 from pipeline_monitor import RunJournal,export_sources
@@ -33,7 +33,7 @@ class ReliabilityTests(unittest.TestCase):
    (shared/'public-data/v1/publication.json').write_text(json.dumps(MANIFEST));(shared/'runtime.json').write_text(json.dumps({'port':8788}))
    journal=RunJournal(shared,CODE,'rebuild')
    with patch.object(launch,'SHARED',shared),patch.object(launch,'wait_runtime',return_value=healthy()),patch.object(launch,'require_capacity',side_effect=CapacityError('full')),patch.object(launch,'docker') as docker,patch.object(launch,'command') as command:
-    with self.assertRaises(CapacityError):launch.execute(Path('/runtime')/CODE,'rebuild',b'{}',journal)
+    with self.assertRaises(CapacityError):launch.execute(Path('/runtime')/CODE,'rebuild',b'{}',journal,Mock())
     docker.assert_not_called();command.assert_not_called()
    self.assertEqual(json.loads((shared/'public-data/v1/publication.json').read_text()),MANIFEST)
  def test_candidate_acceptance_uses_full_publication_not_public_manifest(self):
@@ -44,11 +44,11 @@ class ReliabilityTests(unittest.TestCase):
    expected=copy.deepcopy(MANIFEST);expected['site']['inputVersion']='in_'+'d'*64
    (candidate/'manifest.json').write_text(json.dumps({'datasetVersion':expected['datasetVersion']}));(candidate/'publication.json').write_text(json.dumps(expected))
    (store/'writer/candidate.json').write_text(json.dumps({'candidate':'/public/candidates/'+candidate.name}))
-   def docker(root,mode,body):
+   def docker(root,mode,body,resources):
     if mode=='publish':pointer.write_text(json.dumps(expected))
    journal=RunJournal(shared,CODE,'rebuild')
    with patch.object(launch,'SHARED',shared),patch.object(launch,'STORE',store),patch.object(launch,'wait_runtime',return_value=healthy()) as wait,patch.object(launch,'require_capacity'),patch.object(launch,'docker',side_effect=docker),patch.object(launch,'candidate_permissions'),patch.object(launch,'command'):
-    launch.execute(Path('/runtime')/CODE,'rebuild',b'{}',journal)
+    launch.execute(Path('/runtime')/CODE,'rebuild',b'{}',journal,Mock())
     self.assertEqual(wait.call_args.args,(8788,expected,CODE));self.assertTrue(journal.published);self.assertEqual(journal.validation,'passed')
  def test_failed_full_delivery_gate_preserves_publication_and_never_starts_backup(self):
   with tempfile.TemporaryDirectory() as tmp:
@@ -58,7 +58,7 @@ class ReliabilityTests(unittest.TestCase):
    (store/'writer/candidate.json').write_text(json.dumps({'candidate':'/public/candidates/'+candidate.name}))
    journal=RunJournal(shared,CODE,'rebuild')
    with patch.object(launch,'SHARED',shared),patch.object(launch,'STORE',store),patch.object(launch,'wait_runtime',return_value=healthy()),patch.object(launch,'require_capacity'),patch.object(launch,'candidate_permissions'),patch.object(launch,'docker') as docker,patch.object(launch,'command',side_effect=RuntimeError('English incomplete')) as command:
-    with self.assertRaises(RuntimeError):launch.execute(Path('/runtime')/CODE,'rebuild',b'{}',journal)
+    with self.assertRaises(RuntimeError):launch.execute(Path('/runtime')/CODE,'rebuild',b'{}',journal,Mock())
     self.assertEqual(docker.call_count,1);self.assertEqual(command.call_count,1);self.assertEqual(journal.validation,'failed')
     self.assertEqual(json.loads(pointer.read_text()),MANIFEST)
 
@@ -142,6 +142,17 @@ class ReliabilityTests(unittest.TestCase):
   self.assertNotIn('paths',workflow['on'].get('pull_request') or {})
   self.assertIn('scripts/test-runtime.py',(BASE/'.github/workflows/data-store-tests.yml').read_text())
   self.assertIn('scripts/test-runtime.py',(BASE/'scripts/build-runtime-release.sh').read_text())
+ def test_actual_tooling_pack_contains_every_installed_helper(self):
+  import os,runpy
+  script=(BASE/'scripts/build-runtime-release.sh').read_text().split("<<'TOOLING'\n",1)[1].split('\nTOOLING',1)[0]
+  names=runpy.run_path(str(BASE/'ops/install-reliability.py'))['MAPPING']
+  previous=Path.cwd()
+  try:
+   os.chdir(BASE)
+   with tempfile.TemporaryDirectory() as tmp,patch.object(sys,'argv',['tooling',tmp,CODE]):
+    exec(compile(script,'tooling-pack','exec'),{})
+    for name in names:self.assertEqual((Path(tmp)/'tooling'/name).read_bytes(),(BASE/name).read_bytes())
+  finally:os.chdir(previous)
  def test_worker_receipt_directory_has_scoped_ownership_and_rejects_links(self):
   from types import SimpleNamespace
   spec=importlib.util.spec_from_file_location('install_worker_state',BASE/'ops/install-reliability.py');installer=importlib.util.module_from_spec(spec);spec.loader.exec_module(installer)
